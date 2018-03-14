@@ -1,69 +1,87 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    
+    <section class="content">
+	    <div class="col-md-3"></div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+		    <div class="col-md-6">
+	         
+	        @if(Session::has('IS_AUTHENTICATED'))
+	        	<div class="alert alert-danger alert-dismissible">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>  
+	                {{ Session::get('IS_AUTHENTICATED') }}
+          		</div>
+	        @endif
 
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+	        @if(Session::has('IS_UNACTIVATED'))
+	        	<div class="alert alert-danger alert-dismissible">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>  
+	                {{ Session::get('IS_UNACTIVATED') }}
+          		</div>
+	        @endif
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+	          <div class="box box-default">
+	            <div class="box-header with-border">
+	              <h3 class="box-title">Login</h3>
+	            </div>
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+	            <form class="form-horizontal" method="POST" action="{{ route('auth.login') }}">
+	              
+	              @csrf
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+	              <div class="box-body">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+	                <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
+	                  <label for="username" class="col-sm-2 control-label">Username</label>
+	                  <div class="col-sm-10">
+	                    <input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ old('username') }}">
+	                    
+	                    @if ($errors->has('username'))
+                            <span class="help-block"> {{ $errors->first('username') }} </span>
+                        @endif
 
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+	                  </div>
+	                </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+	                <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+	                  <label for="password" class="col-sm-2 control-label">Password</label>
+	                  <div class="col-sm-10">
+	                    <input class="form-control" name="password" id="password" placeholder="Password" type="password">
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	                    @if ($errors->has('password'))
+                            <span class="help-block">{{ $errors->first('password') }}</span>
+                        @endif
+
+	                  </div>
+	                </div>
+
+
+	                <div class="form-group">
+	                  <div class="col-sm-offset-2 col-sm-10">
+	                    <div class="checkbox">
+	                      <label>
+	                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>Remember
+	                      </label>
+	                    </div>
+	                  </div>
+	                </div>
+
+	              </div>
+	             
+	              <div class="box-footer">
+	                <button type="submit" class="btn btn-default">Sign in</button>
+	              </div>
+	              
+	            </form>
+	          </div>
+	        </div>
+
+        <div class="col-md-3"></div>
+
+	</section>
+
 @endsection
