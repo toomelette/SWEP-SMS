@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
@@ -9,8 +10,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 
+
 class LoginController extends Controller{
    
+
 
     use AuthenticatesUsers;
 
