@@ -40,24 +40,23 @@ class AuthSubscriber{
 
 		if($this->auth->user()->is_active == false){
 
-            $this->session->flash('IS_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the IT Personel to activate your account.');
+            $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personel to activate your account.');
             $this->auth->logout();
 
         }elseif($this->auth->user()->is_logged == true){
 
-            $this->session->flash('IS_AUTHENTICATED','Your account is currently log-in to another device!  Please logout your account in the another device and try again.');
+            $this->session->flash('AUTH_AUTHENTICATED','Your account is currently log-in to another device!  Please logout your account and try again.');
             $this->auth->logout();
 
         }else{
 
         	$user = $this->user->find($this->auth->user()->id);
         	$user->update(['is_logged' => 1]);
-            return redirect()->intended('admin/home');
+            return redirect()->intended('dashboard/home');
 
         }
 
 	}
-
 
 
 

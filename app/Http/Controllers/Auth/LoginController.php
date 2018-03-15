@@ -20,7 +20,7 @@ class LoginController extends Controller{
 
     protected $auth;
     protected $event;
-    protected $redirectTo = 'admin/home';
+    protected $redirectTo = 'dashboard/home';
 
 
 
