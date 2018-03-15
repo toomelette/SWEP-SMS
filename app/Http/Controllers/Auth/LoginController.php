@@ -66,7 +66,9 @@ class LoginController extends Controller{
     public function logout(Request $request){
 
         $this->event->fire('auth.logout', $request);
+
         $this->guard()->logout();
+        
         return redirect('/');
 
     }
