@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use Session;
 use Illuminate\Http\Request;
+use Illuminate\Events\Dispatcher;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -15,14 +15,21 @@ class LoginController extends Controller{
     use AuthenticatesUsers;
 
 
+    protected $auth;
+    protected $event;
     protected $redirectTo = 'admin/home';
 
 
-    public function __construct(){
+
+    public function __construct(Dispatcher $event){
+
+        $this->auth = auth();
+        $this->event = $event;
 
         $this->middleware('guest')->except('logout');
-    
+
     }
+
 
 
     
@@ -34,33 +41,33 @@ class LoginController extends Controller{
 
 
 
+
     protected function login(Request $request){
 
-        $remember = $request->has('remember') ? true : false;
+        $this->validateLogin($request);
 
-        if (Auth::attempt($this->credentials($request), $remember)){
+        if ($this->auth->guard()->attempt($this->credentials($request))){
 
-            if(Auth::user()->is_active == false){
-
-                Session::flash('IS_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the IT Personel to activate your account.');
-                Auth::logout();
-
-            }elseif(Auth::user()->is_logged == true){
-
-                Session::flash('IS_AUTHENTICATED','Your account is currently log-in to another device!  Please logout your account in the another device and try again.');
-                Auth::logout();
-
-            }else{
-
-                return redirect()->intended('admin/home');
-
-            }
+            $this->event->fire('auth.login');
         
         }
 
-        return $this->sendFailedLoginResponse($request);        
+        return $this->sendFailedLoginResponse($request);   
 
     }
+
+
+
+
+
+    public function logout(Request $request){
+
+        $this->event->fire('auth.logout', $request);
+        $this->guard()->logout();
+        return redirect('/');
+
+    }
+
 
 
 
