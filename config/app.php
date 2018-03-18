@@ -159,7 +159,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Collective\Html\HtmlServiceProvider::class,
 
         /** CUSTOM PROVIDERS **/
         App\Providers\ViewComposerServiceProvider::class,
@@ -212,7 +212,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
+        /** View Helper **/
+        'FormHelper' => App\Swep\ViewHelpers\FormHelper::class,
+        'HtmlHelper' => App\Swep\ViewHelpers\HtmlHelper::class,
+        'JSHelper' => App\Swep\ViewHelpers\JSHelper::class,  
     ],
 
 ];

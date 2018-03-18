@@ -42,7 +42,9 @@
 
                   @foreach($user_menu->getUserNav() as $userNav)
 
-                    <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}"><a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a></li>
+                    <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
+                      <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
+                    </li>
 
                   @endforeach
 

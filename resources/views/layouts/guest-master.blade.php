@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{asset('template/bower_components/Ionicons/css/ionicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('template/dist/css/AdminLTE.min.css')}}">
     <link rel="stylesheet" href="{{asset('template/dist/css/skins/_all-skins.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
   </head>
   <body class="hold-transition skin-green layout-top-nav">
     <div class="wrapper">
@@ -52,7 +52,6 @@
     <script src="{{ asset('template/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('template/bower_components/fastclick/lib/fastclick.js') }}"></script>
     <script src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('template/dist/js/demo.js') }}"></script>
     
     @yield('scripts')
   </body>
