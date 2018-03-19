@@ -2,7 +2,7 @@
 
 namespace App\Swep\ViewComposers;
 
-use DB;
+
 use View;
 use Auth;
 use App\UserMenu;

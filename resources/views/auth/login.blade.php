@@ -96,20 +96,7 @@
 
 
 @section('scripts')
-
-	<script type="text/javascript">
 			
-	$(document).ready(function(){
-		$('#show_password').on('change',function(){
-			var is_checked = $(this).prop('checked');
-			if (is_checked) {
-				$('#password').attr('type','text');
-			} else {
-				$('#password').attr('type','Password');
-			}
-		});
-	});
-
-	</script>
+	{!! JSHelper::show_password('password', 'show_password') !!}
 	
 @endsection

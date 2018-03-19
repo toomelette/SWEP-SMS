@@ -72,31 +72,8 @@
 
 
 @section('scripts')
-
-    <script type="text/javascript">
             
-    $(document).ready(function(){
-
-        $('#show_password').on('change',function(){
-            var is_checked = $(this).prop('checked');
-            if (is_checked) {
-                $('#password').attr('type','text');
-            } else {
-                $('#password').attr('type','Password');
-            }
-        });
-
-        $('#show_c_password').on('change',function(){
-            var is_checked = $(this).prop('checked');
-            if (is_checked) {
-                $('#c_password').attr('type','text');
-            } else {
-                $('#c_password').attr('type','Password');
-            }
-        });
-
-    });
-
-    </script>
+    {!! JSHelper::show_password('password', 'show_password') !!}
+    {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
     
 @endsection

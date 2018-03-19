@@ -13,6 +13,11 @@ class User extends Authenticatable{
     use Notifiable;
 
 
+    protected $dates = ['created_at', 'updated_at', 'last_login_time'];
+   
+
+    public $timestamps = false;
+
 
     protected $fillable = [
 
@@ -38,14 +43,43 @@ class User extends Authenticatable{
         'last_login_time',
         'last_login_machine',
         'last_login_ip',
+
     ];
 
-    
 
 
     protected $hidden = [
 
         'password', 'remember_token',
+
+    ];
+
+
+
+    protected $attributes = [
+
+        'user_id' => '', 
+        'email' => '', 
+        'username' => '', 
+        'password' => '', 
+        'lastname' => '', 
+        'middlename' => '', 
+        'firstname' => '', 
+        'position' => '', 
+        'is_logged' => false, 
+        'is_active' => false,
+        'color' => '', 
+        'created_at' => null, 
+        'updated_at' => null,
+        'machine_created' => '',
+        'machine_updated' => '', 
+        'ip_created' => '',
+        'ip_updated' => '',
+        'user_created' => '',
+        'user_updated' => '',
+        'last_login_time' => null,
+        'last_login_machine' => '',
+        'last_login_ip' => '',
 
     ];
 
@@ -60,7 +94,14 @@ class User extends Authenticatable{
     }
     
 
+    /** SCOPES **/
 
+    public function scopeUsernameExist($query, $value){
+
+        return $query->where('username', $value)->count();
+
+    }
+    
 
     
 }

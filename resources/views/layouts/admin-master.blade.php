@@ -9,15 +9,9 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/font-awesome/css/font-awesome.min.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/Ionicons/css/ionicons.min.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{asset('template/dist/css/AdminLTE.min.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{asset('template/dist/css/skins/_all-skins.min.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{asset('css/app.css')}}">
+    @include('layouts.css-plugins')
     
   </head>
-
 
   <body class="hold-transition skin-green sidebar-mini">
     
@@ -44,16 +38,16 @@
 
     </div>
 
-    <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>  
-    <script type="text/javascript" src="{{ asset('template/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('template/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('template/bower_components/fastclick/lib/fastclick.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('template/plugins/pjax/jquery.pjax.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
-    @yield('scripts')
-    
+    @include('layouts.js-plugins')
+
+    <script type="text/javascript">
+      
+        @yield('scripts')
+
+    </script>
+
+
   </body>
 
 </html>
