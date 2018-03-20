@@ -40,12 +40,9 @@
 
 
     @include('layouts.js-plugins')
-
-    <script type="text/javascript">
       
-        @yield('scripts')
+    @yield('scripts')
 
-    </script>
 
 
   </body>
