@@ -78,10 +78,10 @@
 
                     <tr>
                       
-                      <td style="min-width:80px; max-width:80px;">
+                      <td>
                           
-                        <select id="menu" class="form-control select2" style="width: 90%;">
-                          <option>Select</option>
+                        <select id="menu" class="form-control select2" style="width: 60%;">
+                          <option value="">Select</option>
                           @foreach($menu_all as $data) 
                             <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
                           @endforeach
@@ -89,10 +89,9 @@
 
                       </td>
 
-                      <td style="min-width:100px; max-width:100px;">
+                      <td style="min-width:50px; min-width:50px; max-width:50px">
 
-                        <select id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width: 90%;">
-                          <option>Select</option>
+                        <select id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width: 60%;">
                         </select>
 
                       </td>
@@ -130,6 +129,7 @@
 
   <script type="text/javascript">
 
+
     {!! JSHelper::show_password('password', 'show_password') !!}
     {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
 
@@ -140,8 +140,8 @@
             $('select').select2('destroy');
             var content ='<tr>' +
                           '<td>' +
-                            '<select id="menu" class="form-control select2" style="width: 90%;">' +
-                              '<option>Select</option>' +
+                            '<select name="menu[]" id="menu" class="form-control select2">' +
+                              '<option value="">Select</option>' +
                               '@foreach($menu_all as $data)' +
                                 '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
                               '@endforeach' +
@@ -149,8 +149,7 @@
                           '</td>' +
 
                           '<td>' +
-                            '<select id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width: 90%;">' +
-                              '<option>Select</option>' +
+                            '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus">' +
                             '</select>' +
 
                           '</td>' +
@@ -192,7 +191,7 @@
                           $(parent).find("#submenu").append("<option value='" + value.submenu_id + "'>"+ value.name +"</option>");
                       });
 
-                      $(parent).find("#submenu").append("<option value>Select</option>");  
+                      $(parent).find("#submenu").append("<option value>Select</option>");
           
                   }
               });
@@ -201,6 +200,8 @@
           }
       });
     });
+
+
   </script>
     
     
