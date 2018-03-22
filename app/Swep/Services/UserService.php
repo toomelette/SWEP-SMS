@@ -9,9 +9,11 @@ use App\Submenu;
 use App\UserMenu;
 use App\UserSubmenu;
 use Illuminate\Http\Request;
+use Illuminate\Events\Dispatcher;
 
+use Carbon\Carbon;
+use Auth;
 
- 
 class UserService{
 
 
@@ -20,16 +22,18 @@ class UserService{
     protected $user_menu;
     protected $submenu;
     protected $user_submenu;
+    protected $event;
 
 
 
-    public function __construct(User $user, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubMenu $user_submenu){
+    public function __construct(User $user, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubMenu $user_submenu, Dispatcher $event){
 
         $this->user = $user;
         $this->menu = $menu;
         $this->user_menu = $user_menu;
         $this->submenu = $submenu;
         $this->user_submenu = $user_submenu;
+        $this->event = $event;
 
     }
 
@@ -59,20 +63,7 @@ class UserService{
             $user->password = Hash::make($request->password);
             $user->save();
 
-                for($i = 0; $i < count($request->menu); $i++){
-
-                    $menu = $this->menu->whereMenuId($request->menu[$i])->first();
-
-                    $user_menu = new UserMenu;
-                    $user_menu->user_id = $user->user_id;
-                    $user_menu->menu_id = $menu->menu_id;
-                    $user_menu->name = $menu->name;
-                    $user_menu->route = $menu->route;
-                    $user_menu->icon = $menu->icon;
-                    $user_menu->is_dropdown = $menu->is_dropdown;            
-                    $user_menu->save();
-
-                }
+            $this->event->fire('user.create', [$user, $request]);
 
             return 'saved';
 

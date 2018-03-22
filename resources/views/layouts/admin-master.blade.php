@@ -13,7 +13,7 @@
     
   </head>
 
-  <body class="hold-transition skin-green sidebar-mini">
+  <body class="hold-transition {!! Auth::check() ? Auth::user()->color : '' !!}">
     
     <div class="wrapper">
 

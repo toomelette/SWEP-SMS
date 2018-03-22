@@ -103,5 +103,40 @@ class User extends Authenticatable{
     }
     
 
+    /** GETTERS **/
     
+    public function getLastUserAttribute(){
+
+        $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
+
+        if($user != null){
+
+          return str_replace('U', '', $user->user_id);
+
+        }
+
+        return null;
+
+    }
+
+
+
+    public function getUserIdIncrementAttribute(){
+
+        $id = '10001';
+
+        if($id != null){
+
+            $num =  $this->lastUser + 1;
+            
+            $id = 'U' . $num;
+        
+        }
+
+        return $id;
+
+    }
+
+
+
 }

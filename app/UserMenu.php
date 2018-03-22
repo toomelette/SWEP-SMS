@@ -57,4 +57,40 @@ class UserMenu extends Model{
 
 
 
+    public function getLastUserMenuAttribute(){
+
+        $usermenu = $this->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();
+        
+        if($usermenu != null){
+
+          return str_replace('UM', '', $usermenu->user_menu_id);
+
+        }
+
+        return null; 
+
+    }
+
+
+
+
+    public function getUserMenuIdIncrementAttribute(){
+
+        $id = 'UM10000001';
+
+        if($this->lastUserMenu != null){
+
+            $num =  $this->lastUserMenu + 1;
+            
+            $id = 'UM' . $num;
+
+        }
+
+        return $id;
+
+    }
+
+
+
+
 }
