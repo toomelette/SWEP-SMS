@@ -13,6 +13,7 @@ class UserMenu extends Model{
 
 
 	protected $table = 'user_menu';
+  public $timestamps = false;
     
 
 	/** RELATIONSHIPS **/

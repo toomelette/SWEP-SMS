@@ -66,41 +66,96 @@
               
               <div class="box-body">
                 
-                <table id="table_body" class="table table-bordered">
+                <table class="table table-bordered">
 
-                  <tbody>
+                  <tr>
+                    <th>Menus</th>
+                    <th>Submenus</th>
+                    <th style="width: 40px"></th>
+                  </tr>
+
+                <tbody id="table_body">
+
+
+                  @if(old('menu'))
+                    
+                    @foreach(old('menu') as $key => $value)
+
+                      <tr>
+
+                        <td style="width:450px;">
+                          <select name="menu[]" id="menu" class="form-control select2" style="width: 90%;">
+                            <option value="">Select</option>
+                            @foreach($menu_all as $data)  
+                                <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
+                            @endforeach
+                          </select>
+                          <br><small class="text-danger">{{ $errors->first('menu.'.$key) }}</small>
+                        </td>
+
+
+                        <td style="min-width:50px; min-width:50px; max-width:50px">
+                          <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width: 80%;">
+                              <option value="">Select</option>
+                              @foreach($submenu_all as $data)
+
+                                  @if(old('submenu') && $data->menu_id == old('menu.'.$key))
+                                        
+                                      <option value="{{ $data->submenu_id }}" {!! in_array($data->submenu_id, old('submenu')) ? 'selected' : '' !!}>{{$data->name}}</option>
+
+                                  @else
+
+                                      <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
+
+                                  @endif
+
+                              @endforeach
+                          </select>
+                        </td>
+
+
+                        <td>
+                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                        </td>
+
+                      </tr>
+
+                    @endforeach
+
+                  @else
 
                     <tr>
-                      <th>Menus</th>
-                      <th>Submenus</th>
-                      <th style="width: 40px"></th>
-                    </tr>
 
-                    <tr>
-                      
-                      <td>
-                          
-                        <select id="menu" class="form-control select2" style="width: 60%;">
+                      <td style="width:450px;">
+                        <select name="menu[]" id="menu" class="form-control select2" style="width:90%;">
                           <option value="">Select</option>
                           @foreach($menu_all as $data) 
                             <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
                           @endforeach
                         </select>
-
                       </td>
 
-                      <td style="min-width:50px; min-width:50px; max-width:50px">
 
-                        <select id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width: 60%;">
+                      <td>
+                        <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width:80%;">
+                            <option value="">Select</option>
+                            @foreach($submenu_all as $data)
+                                <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
+                            @endforeach
+
                         </select>
-
                       </td>
+
 
                       <td>
                           <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
                       </td>
 
                     </tr>
+
+                  @endif
+
+
 
                   </tbody>
                 </table>
@@ -139,8 +194,8 @@
         $("#add_row").on("click", function() {
             $('select').select2('destroy');
             var content ='<tr>' +
-                          '<td>' +
-                            '<select name="menu[]" id="menu" class="form-control select2">' +
+                          '<td style="width:450px;">' +
+                            '<select name="menu[]" id="menu" class="form-control select2" style="width:90%;">' +
                               '<option value="">Select</option>' +
                               '@foreach($menu_all as $data)' +
                                 '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
@@ -149,7 +204,11 @@
                           '</td>' +
 
                           '<td>' +
-                            '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus">' +
+                            '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width:80%;">' +
+                              '<option value="">Select</option>' +
+                              '@foreach($submenu_all as $data)' +
+                                  '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
+                              '@endforeach' +
                             '</select>' +
 
                           '</td>' +

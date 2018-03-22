@@ -13,6 +13,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         View::composer('*', 'App\Swep\ViewComposers\UserMenuComposer');
         View::composer(['dashboard.user.create'], 'App\Swep\ViewComposers\MenuComposer');
+        View::composer(['dashboard.user.create'], 'App\Swep\ViewComposers\SubmenuComposer');
         
     }
 

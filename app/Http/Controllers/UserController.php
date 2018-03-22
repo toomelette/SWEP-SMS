@@ -42,7 +42,7 @@ class UserController extends Controller{
     
 
 
-    public function store(UserFormRequest $request){
+    public function store(Request $request){
 
         return $this->user_service->store($request);    
 
