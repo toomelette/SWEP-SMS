@@ -41,13 +41,11 @@ class UserSubscriber{
 
 
 
-
 	public function subscribe($events){
 
 		$events->listen('user.create', 'App\Swep\Subscribers\UserSubscriber@onCreate');
 
 	}
-
 
 
 
@@ -81,7 +79,7 @@ class UserSubscriber{
 
         }
 
-        $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created.');
+        $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
         return redirect()->back();
         
 	}
@@ -124,7 +122,7 @@ class UserSubscriber{
         $user_menu->name = $menu->name;
         $user_menu->route = $menu->route;
         $user_menu->icon = $menu->icon;
-        $user_menu->is_dropdown = $menu->is_dropdown;            
+        $user_menu->is_dropdown = $menu->is_dropdown;       
         $user_menu->save();
 
 	}

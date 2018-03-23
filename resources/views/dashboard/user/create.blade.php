@@ -14,9 +14,13 @@
         <h3 class="box-title">Form</h3>
       </div>
       
-      <form class="form-horizontal" method="POST" action="{{ route('dashboard.user.store') }}">
+      <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.store') }}">
 
         <div class="box-body">
+
+          @if(Session::has('USER_CREATE_FAIL_USERNAME_EXIST'))
+            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_CREATE_FAIL_USERNAME_EXIST')) !!}
+          @endif
 
           <div class="col-md-11">
                   
@@ -43,7 +47,7 @@
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'username', 'text', 'Username', 'Username', old('username'), $errors->has('username'), $errors->first('username')
+                  'username', 'text', 'Username', 'Username', old('username'), $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username')
               ) !!}
 
               {!! FormHelper::password_inline(
@@ -180,14 +184,32 @@
 @endsection
 
 
+
+@section('modals')
+
+  @if(Session::has('USER_CREATE_SUCCESS'))
+
+    {!! HtmlHelper::modal(
+      'user_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('USER_CREATE_SUCCESS'), route('dashboard.user.create')
+    ) !!}
+
+  @endif
+
+@endsection 
+
+
+
+
 @section('scripts')
 
   <script type="text/javascript">
 
-
     {!! JSHelper::show_password('password', 'show_password') !!}
     {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
-
+    
+    @if(Session::has('USER_CREATE_SUCCESS'))
+      $('#user_create').modal('show');
+    @endif
 
     /** ADD ROW **/
     $(document).ready(function() {
@@ -262,6 +284,5 @@
 
 
   </script>
-    
     
 @endsection

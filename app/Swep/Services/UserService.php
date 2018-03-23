@@ -58,7 +58,7 @@ class UserService{
 
         }
 
-        $this->session->flash('USER_CREATE_FAIL_USERNAME_EXIST', 'The username you provided is already used by an existing account. Please provide a another username.');
+        $this->session->flash('USER_CREATE_FAIL_USERNAME_EXIST', 'The username you provided is already used by an existing account. Please provide another username.');
         return redirect()->back()->withInput();
 
     }

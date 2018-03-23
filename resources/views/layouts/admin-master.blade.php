@@ -40,7 +40,9 @@
 
 
     @include('layouts.js-plugins')
-      
+    
+    @yield('modals')
+
     @yield('scripts')
 
 
