@@ -60,33 +60,20 @@ class UserSubscriber{
             $menu = $this->menu->whereMenuId($request->menu[$i])->first();
 
             $user_menu = new UserMenu;
-            $user_menu->user_menu_id = $this->user_menu->userMenuIdIncrement;
-            $user_menu->user_id = $user->user_id;
-            $user_menu->menu_id = $menu->menu_id;
-            $user_menu->name = $menu->name;
-            $user_menu->route = $menu->route;
-            $user_menu->icon = $menu->icon;
-            $user_menu->is_dropdown = $menu->is_dropdown;            
-            $user_menu->save();
+            $this->createUserMenu($user_menu, $user, $menu);
 
             if($request->submenu > 0){
 
                 foreach($request->submenu as $data_submenu){
 
-                $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+                	$submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
 
-                if($menu->menu_id === $submenu->menu_id){
+	                if($menu->menu_id === $submenu->menu_id){
 
-                    $user_submenu = new UserSubMenu;
-                    $user_submenu->submenu_id = $submenu->submenu_id;
-			        $user_submenu->user_menu_id = $user_menu->user_menu_id;
-			        $user_submenu->user_id = $user_menu->user_id;
-			        $user_submenu->is_nav = $submenu->is_nav;
-			        $user_submenu->name = $submenu->name;
-			        $user_submenu->route = $submenu->route;
-			        $user_submenu->save();
+	                    $user_submenu = new UserSubMenu;
+	                    $this->createUserSubmenu($user_submenu, $submenu, $user_menu);
 
-                }
+	                }
 
                 }
 
@@ -94,12 +81,15 @@ class UserSubscriber{
 
         }
 
-
-
+        $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created.');
+        return redirect()->back();
+        
 	}
 
 
 
+
+	/** DEFAULTS **/
 
 	public function createDefaults($user){
 
@@ -119,6 +109,37 @@ class UserSubscriber{
         $user->last_login_machine = null;
         $user->last_login_ip = null;
         $user->save();
+
+	}
+
+
+
+	/**  **/
+
+	public function createUserMenu($user_menu, $user, $menu){
+
+		$user_menu->user_menu_id = $this->user_menu->userMenuIdIncrement;
+        $user_menu->user_id = $user->user_id;
+        $user_menu->menu_id = $menu->menu_id;
+        $user_menu->name = $menu->name;
+        $user_menu->route = $menu->route;
+        $user_menu->icon = $menu->icon;
+        $user_menu->is_dropdown = $menu->is_dropdown;            
+        $user_menu->save();
+
+	}
+
+
+
+	public function createUserSubmenu($user_submenu, $submenu, $user_menu){
+
+        $user_submenu->submenu_id = $submenu->submenu_id;
+        $user_submenu->user_menu_id = $user_menu->user_menu_id;
+        $user_submenu->user_id = $user_menu->user_id;
+        $user_submenu->is_nav = $submenu->is_nav;
+        $user_submenu->name = $submenu->name;
+        $user_submenu->route = $submenu->route;
+        $user_submenu->save();
 
 	}
 

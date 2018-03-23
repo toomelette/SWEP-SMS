@@ -45,11 +45,13 @@ class AuthSubscriber{
 
 		if($this->auth->user()->is_active == false){
 
+			$this->session->flush();
             $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personel to activate your account.');
             $this->auth->logout();
 
         }elseif($this->auth->user()->is_logged == true){
 
+        	$this->session->flush();
             $this->session->flash('AUTH_AUTHENTICATED','Your account is currently log-in to another device!  Please logout your account and try again.');
             $this->auth->logout();
 
@@ -67,7 +69,8 @@ class AuthSubscriber{
 
 
 	public function onLogout($request){
-
+		
+		$this->session->flush();
 		$user = $this->user->find($this->auth->user()->id);
 		$user->update(['is_logged' => 0]);
 		$request->session()->invalidate();

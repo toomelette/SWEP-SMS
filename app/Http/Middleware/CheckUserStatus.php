@@ -35,12 +35,14 @@ class CheckUserStatus{
             if($this->auth->user()->is_logged == false){
 
                 $this->auth->logout();
+                $this->session->flush();
                 $this->session->flash('CHECK_NOT_LOGGED_IN', 'You have been SIGNED OUT somewhere! Please Sign in again.');
                 return redirect('/');
 
             }elseif($this->auth->user()->is_active == false){
 
                 $this->auth->logout();
+                $this->session->flush();
                 $this->session->flash('CHECK_NOT_ACTIVE', 'You have been DEACTIVATED! Please contact the designated IT Personel.');
                 return redirect('/');
 
@@ -50,6 +52,7 @@ class CheckUserStatus{
 
         }
 
+        $this->session->flush();
         $this->session->flash('CHECK_UNAUTHENTICATED', 'Please Sign in to start your session.');
         return redirect('/'); 
     
