@@ -61,6 +61,7 @@
           </div>
 
 
+          <!-- USER MENU DYNAMIC TABLE GRID -->
           <div class="col-md-12" style="padding-top:50px;">
             <div class="box box-solid">
               <div class="box-header with-border">
@@ -68,13 +69,13 @@
                 <button id="add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
               </div>
               
-              <div class="box-body">
+              <div class="box-body no-padding">
                 
                 <table class="table table-bordered">
 
                   <tr>
                     <th>Menus</th>
-                    <th>Submenus</th>
+                    <th>Menu Modules</th>
                     <th style="width: 40px"></th>
                   </tr>
 
@@ -99,7 +100,7 @@
 
 
                         <td style="min-width:50px; min-width:50px; max-width:50px">
-                          <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width: 80%;">
+                          <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
                               <option value="">Select</option>
                               @foreach($submenu_all as $data)
 
@@ -141,7 +142,7 @@
 
 
                       <td>
-                        <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width:80%;">
+                        <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">
                             <option value="">Select</option>
                             @foreach($submenu_all as $data)
                                 <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
@@ -167,7 +168,7 @@
               </div>
 
             </div>
-        </div>
+          </div>
 
         </div>
 
