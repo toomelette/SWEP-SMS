@@ -10,5 +10,3 @@
 <link type="text/css" rel="stylesheet" href="{{asset('template/dist/css/AdminLTE.min.css')}}">
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/dist/css/skins/_all-skins.min.css')}}">
-
-<link type="text/css" rel="stylesheet" href="{{asset('css/app.css')}}">

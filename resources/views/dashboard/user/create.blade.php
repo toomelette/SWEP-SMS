@@ -91,8 +91,10 @@
                         <td style="width:450px;">
                           <select name="menu[]" id="menu" class="form-control select2" style="width: 90%;">
                             <option value="">Select</option>
-                            @foreach($menu_all as $data)  
+                            @foreach($menu_all as $data) 
+
                                 <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
+
                             @endforeach
                           </select>
                           <br><small class="text-danger">{{ $errors->first('menu.'.$key) }}</small>
@@ -105,13 +107,9 @@
                               @foreach($submenu_all as $data)
 
                                   @if(old('submenu') && $data->menu_id == old('menu.'.$key))
-                                        
                                       <option value="{{ $data->submenu_id }}" {!! in_array($data->submenu_id, old('submenu')) ? 'selected' : '' !!}>{{$data->name}}</option>
-
                                   @else
-
                                       <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
-
                                   @endif
 
                               @endforeach
@@ -135,7 +133,9 @@
                         <select name="menu[]" id="menu" class="form-control select2" style="width:90%;">
                           <option value="">Select</option>
                           @foreach($menu_all as $data) 
+
                             <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
+
                           @endforeach
                         </select>
                       </td>
@@ -145,7 +145,9 @@
                         <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">
                             <option value="">Select</option>
                             @foreach($submenu_all as $data)
+
                                 <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
+                                
                             @endforeach
 
                         </select>
@@ -191,13 +193,12 @@
   @if(Session::has('USER_CREATE_SUCCESS'))
 
     {!! HtmlHelper::modal(
-      'user_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('USER_CREATE_SUCCESS'), route('dashboard.user.create')
+      'user_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('USER_CREATE_SUCCESS')
     ) !!}
 
   @endif
 
 @endsection 
-
 
 
 
@@ -208,9 +209,11 @@
     {!! JSHelper::show_password('password', 'show_password') !!}
     {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
     
+
     @if(Session::has('USER_CREATE_SUCCESS'))
       $('#user_create').modal('show');
     @endif
+
 
     /** ADD ROW **/
     $(document).ready(function() {
@@ -227,7 +230,7 @@
                           '</td>' +
 
                           '<td>' +
-                            '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Select a Submenus" style="width:80%;">' +
+                            '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
                               '<option value="">Select</option>' +
                               '@foreach($submenu_all as $data)' +
                                   '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
@@ -282,7 +285,6 @@
           }
       });
     });
-
 
   </script>
     

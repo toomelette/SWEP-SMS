@@ -8,15 +8,15 @@ class HtmlHelper{
 
 
 
-    public static function modal($id, $header, $message, $close_route){
+    public static function modal($id, $header, $message){
 
        return '<div class="modal fade" id="'. $id .'" data-backdrop="static">
 			      <div class="modal-dialog">
 			        <div class="modal-content">
 			          <div class="modal-header">
-			            <a href="'. $close_route .'" type="button" class="close">
+			            <button class="close" data-dismiss="modal">
 			              <span aria-hidden="true">&times;</span>
-			            </a>
+			            </button>
 			            <h4 class="modal-title">'. $header .'</h4>
 
 			          </div>
@@ -24,7 +24,7 @@ class HtmlHelper{
 			            <p style="font-size: 17px;">'. $message .'</p>
 			          </div>
 			          <div class="modal-footer">
-			            <a href="'. $close_route .'" class="btn btn-default">Close</a>
+			            <button class="btn btn-default" data-dismiss="modal">Close</button>
 			          </div>
 			        </div>
 			      </div>

@@ -31,12 +31,12 @@ class UserService{
 
 
 
-    public function fetchAll(Request $request){
+    public function fetchAll(){
     	
-
+        $users = $this->user->paginate(10);
+        return view('dashboard.user.index', compact('users', $users));
 
     }
-
 
 
 
@@ -55,6 +55,9 @@ class UserService{
             $user->save();
 
             $this->event->fire('user.create', [$user, $request]);
+
+            $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
+            return redirect()->back();
 
         }
 

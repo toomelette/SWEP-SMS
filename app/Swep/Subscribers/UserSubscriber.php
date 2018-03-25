@@ -3,7 +3,6 @@
 namespace App\Swep\Subscribers;
 
 use Auth;
-use Session;
 use App\User;
 use App\Menu;
 use App\SubMenu;
@@ -22,7 +21,6 @@ class UserSubscriber{
 	protected $user_menu;
 	protected $carbon;
 	protected $auth;
-	protected $session;
 
 
 
@@ -35,7 +33,6 @@ class UserSubscriber{
 		$this->user_submenu = $user_submenu;
 		$this->carbon = $carbon;
 		$this->auth = auth();
-		$this->session = session();
 
 	}
 
@@ -78,9 +75,6 @@ class UserSubscriber{
             }
 
         }
-
-        $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
-        return redirect()->back();
         
 	}
 
@@ -92,7 +86,7 @@ class UserSubscriber{
 	public function createDefaults($user){
 
 		$user->user_id = $this->user->userIdIncrement;
-        $user->is_logged = false;
+        $user->is_online = false;
         $user->is_active = false;
         $user->color = 'skin-green sidebar-mini';
         $user->created_at = $this->carbon->now();
@@ -112,7 +106,7 @@ class UserSubscriber{
 
 
 
-	/**  **/
+	/** UTILITY METHODS **/
 
 	public function createUserMenu($user_menu, $user, $menu){
 
@@ -140,7 +134,6 @@ class UserSubscriber{
         $user_submenu->save();
 
 	}
-
 
 
 

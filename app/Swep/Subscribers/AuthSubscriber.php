@@ -49,7 +49,7 @@ class AuthSubscriber{
             $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personel to activate your account.');
             $this->auth->logout();
 
-        }elseif($this->auth->user()->is_logged == true){
+        }elseif($this->auth->user()->is_online == true){
 
         	$this->session->flush();
             $this->session->flash('AUTH_AUTHENTICATED','Your account is currently log-in to another device!  Please logout your account and try again.');
@@ -72,7 +72,7 @@ class AuthSubscriber{
 		
 		$this->session->flush();
 		$user = $this->user->find($this->auth->user()->id);
-		$user->update(['is_logged' => 0]);
+		$user->update(['is_online' => 0]);
 		$request->session()->invalidate();
 
 	}
@@ -84,7 +84,7 @@ class AuthSubscriber{
 
 		return [
 
-			'is_logged' => 1,
+			'is_online' => 1,
 			'last_login_time' => $this->carbon->now(),
 			'last_login_machine' => gethostname(),
 			'last_login_ip' => request()->ip()

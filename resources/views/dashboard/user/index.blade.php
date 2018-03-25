@@ -23,6 +23,7 @@
 
         <!-- Table Grid -->
          <div class="box">
+
             <div class="box-header with-border">
                 <h3 class="box-title">Table Grid</h3>
                 <div class="box-tools">
@@ -37,39 +38,38 @@
                 </div>
             </div>
 
-            <div class="box-body no-padding">
+            <div class="box-body">
                 <table class="table table-bordered">
-                    <tbody>
+                  <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Online</th>
+                    <th>Active</th>
+                    <th style="width: 150px">Action</th>
+                  </tr>
+                  @foreach($users as $data)
+                    <tr>
+                      <td>{{ $data->username }}</td>
+                      <td>{{ $data->lastname }}</td>
+                      <td>{{ $data->is_logged }}</td>
+                      <td>{{ $data->is_active }}</td>
+                      <td> 
+                        <select name="action" id="action" class="form-control input-sm">
+                            <option value="">Select</option>
+                        </select>
+                      </td>
+                    </tr>
+                  @endforeach
 
-                        <tr>
-                          <th>Username</th>
-                          <th>Name</th>
-                          <th>Online</th>
-                          <th>Active</th>
-                          <th style="width: 150px">Action</th>
-                        </tr>
-
-                        <tr>
-                          <td class="">Update software</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td> 
-                            <select name="action" id="action" class="form-control input-sm">
-                                <option value="">Select</option>
-                            </select>
-                          </td>
-                        </tr>
-
-                  </tbody>
                 </table>
             </div>
 
             <div class="box-footer">
-                Footer
+                {!! $users->render('vendor.pagination.bootstrap-4') !!}
             </div>
 
         </div>
+
     </section>
 
 @endsection

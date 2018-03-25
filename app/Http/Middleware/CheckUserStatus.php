@@ -32,7 +32,7 @@ class CheckUserStatus{
 
         if($this->auth->guard()->check()){
 
-            if($this->auth->user()->is_logged == false){
+            if($this->auth->user()->is_online == false){
 
                 $this->auth->logout();
                 $this->session->flush();
