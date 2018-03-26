@@ -31,12 +31,24 @@ class UserService{
 
 
 
-    public function fetchAll(){
-    	
-        $users = $this->user->paginate(10);
+    public function fetchAll(Request $request){
+
+        $user = $this->user->newQuery();
+        
+        $user->search($request->q);
+
+        $user->filterIsOnline($request->online);
+
+        $user->filterIsActive($request->active);
+
+        $users = $user->populate();
+
+        $request->flash();
+        
         return view('dashboard.user.index', compact('users', $users));
 
     }
+
 
 
 
@@ -45,11 +57,11 @@ class UserService{
         if(!$this->user->usernameExist($request->username) == 1){
 
             $user = new User;
-            $user->firstname = $request->firstname;
-            $user->middlename = $request->middlename;
-            $user->lastname = $request->lastname;
+            $user->firstname = strtoupper($request->firstname);
+            $user->middlename = strtoupper($request->middlename);
+            $user->lastname = strtoupper($request->lastname);
             $user->email = $request->email;
-            $user->position = $request->position;
+            $user->position = strtoupper($request->position);
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
             $user->save();

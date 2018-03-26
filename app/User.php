@@ -21,6 +21,7 @@ class User extends Authenticatable{
 
     protected $fillable = [
 
+        'slug',
         'user_id', 
         'email', 
         'username', 
@@ -58,6 +59,7 @@ class User extends Authenticatable{
 
     protected $attributes = [
 
+        'slug' => '',
         'user_id' => '', 
         'email' => '', 
         'username' => '', 
@@ -94,17 +96,17 @@ class User extends Authenticatable{
     }
     
 
-    /** SCOPES **/
-
-    public function scopeUsernameExist($query, $value){
-
-        return $query->where('username', $value)->count();
-
-    }
-    
 
     /** GETTERS **/
     
+    public function getFullnameAttribute(){
+
+        return strtoupper($this->firstname . " " . substr($this->middlename , 0, 1) . ". " . $this->lastname);
+
+    }
+
+
+
     public function getLastUserAttribute(){
 
         $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
@@ -118,6 +120,7 @@ class User extends Authenticatable{
         return null;
 
     }
+
 
 
 
@@ -135,6 +138,84 @@ class User extends Authenticatable{
 
         return $id;
 
+    }
+
+
+
+    /** SCOPES **/
+
+    public function scopeUsernameExist($query, $value){
+
+        return $query->where('username', $value)->count();
+
+    }
+
+
+
+    public function scopeSearch($query, $key){
+
+        if(!$key == null){
+
+            return $query->where(function ($query) use ($key) {
+                    $query->where('firstname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                          ->orwhere('lastname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('username', 'LIKE', '%'. $key .'%');
+            });
+
+        }
+
+    }
+
+
+
+    public function scopeFilterIsOnline($query, $value){
+
+        if(!$value == null){
+
+            return $query->where('is_online', $this->getBoolean($value));
+
+        }
+
+    }
+
+
+
+    public function scopeFilterIsActive($query, $value){
+
+        if(!$value == null){
+
+            return $query->where('is_active', $this->getBoolean($value));
+
+        }
+
+    }
+
+
+
+
+    public function scopePopulate($query){
+
+        return $query->orderBy('updated_at', 'DESC')->paginate(10);
+
+    }
+
+
+
+    /** UTILS **/
+
+    public function getBoolean($value){
+
+        if($value == 'true'){
+
+            return true;
+
+        }elseif($value == 'false'){
+
+            return false;
+
+        }
+        
     }
 
 

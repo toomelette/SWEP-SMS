@@ -24,9 +24,9 @@ class UserController extends Controller{
 
 
 
-    public function index(){
+    public function index(Request $request){
 
-        return $this->user_service->fetchAll();
+        return $this->user_service->fetchAll($request);
 
     }
 
