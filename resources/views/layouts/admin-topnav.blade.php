@@ -25,8 +25,9 @@
               <p>
                 @if(Auth::check())
                   {{ Auth::user()->firstname .' '. Auth::user()->lastname }}
+                  <small>{{ Auth::user()->position }}</small>
                 @endif
-                <small>Web Developer</small>
+                
               </p>
             </li>
             <li class="user-footer">

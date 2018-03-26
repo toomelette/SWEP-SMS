@@ -60,18 +60,18 @@ class UserController extends Controller{
     
 
 
-    public function edit($id){
+    public function edit($slug){
 
-        
+        return $this->user_service->edit($slug);
 
     }
 
     
 
 
-    public function update(Request $request, $id){
+    public function update(UserFormRequest $request, $slug){
 
-
+        return $this->user_service->update($request, $slug);
         
     }
 

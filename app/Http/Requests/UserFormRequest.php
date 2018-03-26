@@ -24,9 +24,15 @@ class UserFormRequest extends FormRequest{
             'email'=>'required|string|email|max:90',
             'position'=>'required|string|max:90',
             'username'=>'required|string|max:45',
-            'password'=>'required|min:6|max:50|string|confirmed',
 
         ];
+
+
+        if($this->request->get('password')){
+
+            $rules['password'] = 'required|min:6|max:50|string|confirmed';
+
+        }
 
 
         if(count($this->request->get('menu')) > 0){

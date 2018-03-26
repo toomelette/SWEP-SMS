@@ -99,7 +99,9 @@
             </div>
 
             @if($users->isEmpty())
-              <center><p>No Records found!</p></center>
+            <div style="padding :5px;">
+              <center><h4>No Records found!</h4></center>
+            </div>
             @endif
 
             <div class="box-footer">

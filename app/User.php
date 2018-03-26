@@ -123,7 +123,6 @@ class User extends Authenticatable{
 
 
 
-
     public function getUserIdIncrementAttribute(){
 
         $id = '10001';
@@ -192,6 +191,13 @@ class User extends Authenticatable{
     }
 
 
+
+    public function scopeFindSlug($query, $slug){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
+    
 
 
     public function scopePopulate($query){

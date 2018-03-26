@@ -6,6 +6,7 @@ use Hash;
 use Input;
 use Session;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 
@@ -16,14 +17,16 @@ class UserService{
 	protected $user;
     protected $event;
     protected $session;
+    protected $str;
 
 
 
-    public function __construct(User $user, Dispatcher $event){
+    public function __construct(User $user, Dispatcher $event, Str $str){
 
         $this->user = $user;
         $this->event = $event;
         $this->session = session();
+        $this->str = $str;
 
 
     }
@@ -45,7 +48,7 @@ class UserService{
 
         $request->flash();
         
-        return view('dashboard.user.index', compact('users', $users));
+        return view('dashboard.user.index')->with('users', $users);
 
     }
 
@@ -57,6 +60,7 @@ class UserService{
         if(!$this->user->usernameExist($request->username) == 1){
 
             $user = new User;
+            $user->slug = $this->str->random(16);
             $user->firstname = strtoupper($request->firstname);
             $user->middlename = strtoupper($request->middlename);
             $user->lastname = strtoupper($request->lastname);
@@ -92,7 +96,9 @@ class UserService{
 
     public function edit($slug){
 
-    	
+    	$user = $this->user->findSlug($slug);
+
+        return view('dashboard.user.edit')->with('user', $user);
 
     }
 
@@ -101,7 +107,9 @@ class UserService{
 
     public function update(Request $request, $slug){
 
-
+        $user = $this->user->findSlug($slug);
+        
+        dd($user);
 
     }
 
