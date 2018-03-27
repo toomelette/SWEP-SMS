@@ -80,17 +80,17 @@
                     <th style="width: 150px">Action</th>
                   </tr>
                   @foreach($users as $data) 
-                    <tr>
+                    <tr {!! Session::has('USER_UPDATE_SUCCESS') && Session::get('USER_UPDATE_SUCCESS_SLUG') == $data->slug ? 'style="background-color: #b3e5fc;"' : '' !!} >
                       <td>{{ $data->username }}</td>
                       <td>{{ $data->fullname }}</td>
                       <td>{!! $data->is_online == 1 ? '<span class="badge bg-green"><i class="fa fa-check "></i></span>' : '<span class="badge bg-red"><i class="fa fa-times "></i></span>' !!}</td>
                       <td>{!! $data->is_active == 1 ? '<span class="badge bg-green"><i class="fa fa-check "></i></span>' : '<span class="badge bg-red"><i class="fa fa-times "></i></span>' !!}</td>
                       <td> 
-                        <select id="action" class="form-control input-sm" onchange="location = this.value;">
+                        <select id="action" class="form-control input-sm">
                             <option value="">Select</option>
                             <option value="{{ route('dashboard.user.show', $data->slug) }}">Details</option>
                             <option value="{{ route('dashboard.user.edit', $data->slug) }}">Edit</option>
-                            <option value="{{ route('dashboard.user.destroy', $data->slug) }}">Delete</option>
+                            <option value="" data-url="{{ route('dashboard.user.destroy', $data->slug) }}" id="delete_button">Delete</option>
                         </select>
                       </td>
                     </tr>
@@ -120,21 +120,89 @@
 @endsection
 
 
+@section('modals')
+
+  @if(Session::has('USER_UPDATE_SUCCESS'))
+
+    {!! HtmlHelper::modal(
+      'user_update', '<i class="fa fa-fw fa-check"></i> Updated!', Session::get('USER_UPDATE_SUCCESS')
+    ) !!}
+
+  @endif
+
+
+  <div class="modal fade" id="user_delete" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"><i class="fa fa-fw fa-alert"></i> Delete ?</h4>
+        </div>
+        <div class="modal-body" id="delete_body">
+          <form method="POST" id="form">
+            @csrf
+            <input name="_method" value="DELETE" type="hidden">
+            <p style="font-size: 17px;">Are you sure, you want to delete this record?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection 
+
+
 @section('scripts')
 
     <script type="text/javascript">
 
-        $(document).ready(function($){
-
-           $("#filter_form").submit(function() {
-                $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
-                return true;
-            });
-
-            $("form").find( ":input" ).prop( "disabled", false );
-        
+        $(document).on("change", "#action", function () {
+           if(this.value !== ""){
+              location = this.value;
+           }
         });
 
+        // CALL UPDATE SUCCESS MODAL
+        @if(Session::has('USER_UPDATE_SUCCESS'))
+          $('#user_update').modal('show');
+        @endif
+
+        // CALL DELETE MODAL
+        $(document).on("click", "#delete_button", function () {
+            $('#user_delete').modal('show');
+            var url = $(this).data("url");
+            $("#delete_body #form").attr("action", url);
+        });
+
+        // FORM CONTROL VARIABLES
+        $(document).ready(function($){
+          $("#filter_form").submit(function() {
+            $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
+            return true;
+          });
+          $("form").find( ":input" ).prop( "disabled", false );
+        });
+
+        // DELETE TOAST
+        @if(Session::has('USER_DELETE_SUCCESS'))
+          $.toast({
+            text: '<span style="font-size:15px;">{!! Session::get('USER_DELETE_SUCCESS') !!}</span>',
+            showHideTransition: 'fade',
+            allowToastClose: true,
+            hideAfter: 7500,
+            loader: false,
+            position: 'top-center',
+            bgColor: '#444',
+            textColor: '#eee',
+            textAlign: 'left',
+          });
+        @endif
     </script>
     
 @endsection

@@ -78,9 +78,9 @@ class UserController extends Controller{
     
 
 
-    public function destroy($id){
+    public function destroy($slug){
 
-
+        return $this->user_service->delete($slug);
         
     }
 

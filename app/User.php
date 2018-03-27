@@ -94,6 +94,14 @@ class User extends Authenticatable{
         return $this->hasMany('App\UserMenu','user_id','user_id');
 
     }
+
+
+
+    public function userSubmenu() {
+
+        return $this->hasMany('App\UserSubmenu','user_id','user_id');
+
+    }
     
 
 

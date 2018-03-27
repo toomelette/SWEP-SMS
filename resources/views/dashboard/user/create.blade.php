@@ -18,8 +18,8 @@
 
         <div class="box-body">
 
-          @if(Session::has('USER_CREATE_FAIL_USERNAME_EXIST'))
-            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_CREATE_FAIL_USERNAME_EXIST')) !!}
+          @if(Session::has('USER_FORM_FAIL_USERNAME_EXIST'))
+            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_FORM_FAIL_USERNAME_EXIST')) !!}
           @endif
 
           <div class="col-md-11">

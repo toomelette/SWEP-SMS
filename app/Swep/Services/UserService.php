@@ -77,7 +77,7 @@ class UserService{
 
         }
 
-        $this->session->flash('USER_CREATE_FAIL_USERNAME_EXIST', 'The username you provided is already used by an existing account. Please provide another username.');
+        $this->session->flash('USER_FORM_FAIL_USERNAME_EXIST', 'The username you provided is already used by an existing account. Please provide another username.');
         return redirect()->back()->withInput();
 
     }
@@ -108,8 +108,20 @@ class UserService{
     public function update(Request $request, $slug){
 
         $user = $this->user->findSlug($slug);
-        
-        dd($user);
+        $user->firstname = strtoupper($request->firstname);
+        $user->middlename = strtoupper($request->middlename);
+        $user->lastname = strtoupper($request->lastname);
+        $user->email = $request->email;
+        $user->position = strtoupper($request->position);
+        $user->username = $request->username;
+        $user->save();
+
+        $this->event->fire('user.update', [$user, $request]);
+
+        $this->session->flash('USER_UPDATE_SUCCESS', 'The User has been successfully updated!');
+        $this->session->flash('USER_UPDATE_SUCCESS_SLUG', $user->slug);
+
+        return redirect()->route('dashboard.user.index');
 
     }
 
@@ -118,7 +130,12 @@ class UserService{
 
     public function delete($slug){
 
-
+        $user = $this->user->findSlug($slug);
+        $user->delete();
+        $user->userMenu()->delete();
+        $user->userSubmenu()->delete();
+        $this->session->flash('USER_DELETE_SUCCESS', 'Record successfully removed!');
+        return redirect()->back();
 
     }
 

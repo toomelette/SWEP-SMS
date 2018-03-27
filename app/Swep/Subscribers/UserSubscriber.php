@@ -41,6 +41,7 @@ class UserSubscriber{
 	public function subscribe($events){
 
 		$events->listen('user.create', 'App\Swep\Subscribers\UserSubscriber@onCreate');
+        $events->listen('user.update', 'App\Swep\Subscribers\UserSubscriber@onUpdate');
 
 	}
 
@@ -81,6 +82,43 @@ class UserSubscriber{
 
 
 
+    public function onUpdate($user, $request){
+
+        $this->updateDefaults($user);
+        $user->userMenu()->delete();
+        $user->userSubmenu()->delete();
+
+        for($i = 0; $i < count($request->menu); $i++){
+
+            $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+
+            $user_menu = new UserMenu;
+            $this->createUserMenu($user_menu, $user, $menu);
+
+            if($request->submenu > 0){
+
+                foreach($request->submenu as $data_submenu){
+
+                    $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+
+                    if($menu->menu_id === $submenu->menu_id){
+
+                        $user_submenu = new UserSubMenu;
+                        $this->createUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                    }
+
+                }
+
+            }
+
+        }
+        
+    }
+
+
+
+
 	/** DEFAULTS **/
 
 	public function createDefaults($user){
@@ -103,6 +141,18 @@ class UserSubscriber{
         $user->save();
 
 	}
+
+
+
+    public function updateDefaults($user){
+
+        $user->updated_at = $this->carbon->now();
+        $user->machine_updated = gethostname();
+        $user->ip_updated = request()->ip();
+        $user->user_updated = $this->auth->user()->user_id;
+        $user->save();
+
+    }
 
 
 

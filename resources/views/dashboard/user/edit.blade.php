@@ -18,10 +18,6 @@
 
         <div class="box-body">
 
-          @if(Session::has('USER_CREATE_FAIL_USERNAME_EXIST'))
-            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_CREATE_FAIL_USERNAME_EXIST')) !!}
-          @endif
-
           <div class="col-md-11">
               
               <input name="_method" value="PUT" type="hidden">
@@ -181,33 +177,9 @@
 @endsection
 
 
-
-@section('modals')
-
-  @if(Session::has('USER_CREATE_SUCCESS'))
-
-    {!! HtmlHelper::modal(
-      'user_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('USER_CREATE_SUCCESS')
-    ) !!}
-
-  @endif
-
-@endsection 
-
-
-
 @section('scripts')
 
-  <script type="text/javascript">
-
-    {!! JSHelper::show_password('password', 'show_password') !!}
-    {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
-    
-
-    @if(Session::has('USER_CREATE_SUCCESS'))
-      $('#user_create').modal('show');
-    @endif
-
+  <script type="text/javascript">    
 
     /** ADD ROW **/
     $(document).ready(function() {
