@@ -28,7 +28,7 @@ class UserMenu extends Model{
 
     public function userSubMenu() {
 
-    	return $this->hasMany('App\UserSubMenu','user_menu_id','user_menu_id');
+    	return $this->hasMany('App\UserSubmenu','user_menu_id','user_menu_id');
 
    	}
 
@@ -42,6 +42,15 @@ class UserMenu extends Model{
 
     }
 
+
+
+    public function getFetchUserSubmenu() {
+
+        return $this->userSubmenu->where('user_menu_id', $this->user_menu_id);
+
+
+
+    }
 
 
 

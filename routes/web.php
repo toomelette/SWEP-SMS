@@ -18,6 +18,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/home', 'HomeController@index')->name('home');
 
 	/** USER ROUTES **/
+	Route::post('/dashboard/user/activate/{slug}', 'UserController@activate')->name('user.activate');
+	Route::post('/dashboard/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
+	Route::post('/dashboard/user/logout/{slug}', 'UserController@logout')->name('user.logout');
 	Route::resource('user', 'UserController');
 
 });

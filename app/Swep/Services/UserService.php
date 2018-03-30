@@ -4,6 +4,7 @@ namespace App\Swep\Services;
 
 use Hash;
 use Input;
+use Cache;
 use Session;
 use App\User;
 use Illuminate\Support\Str;
@@ -17,17 +18,14 @@ class UserService{
 	protected $user;
     protected $event;
     protected $session;
-    protected $str;
 
 
 
-    public function __construct(User $user, Dispatcher $event, Str $str){
+    public function __construct(User $user, Dispatcher $event){
 
         $this->user = $user;
         $this->event = $event;
         $this->session = session();
-        $this->str = $str;
-
 
     }
 
@@ -36,15 +34,21 @@ class UserService{
 
     public function fetchAll(Request $request){
 
-        $user = $this->user->newQuery();
-        
-        $user->search($request->q);
+        $key = str_slug($request->fullUrl(), '_');
 
-        $user->filterIsOnline($request->online);
+        $users = Cache::remember('user:all:' . $key, 240, function() use ($request){
 
-        $user->filterIsActive($request->active);
+            $user = $this->user->newQuery();
+            
+            $user->search($request->q);
 
-        $users = $user->populate();
+            $user->filterIsOnline($request->online);
+
+            $user->filterIsActive($request->active);
+
+            return $user->populate();
+
+        });
 
         $request->flash();
         
@@ -60,7 +64,6 @@ class UserService{
         if(!$this->user->usernameExist($request->username) == 1){
 
             $user = new User;
-            $user->slug = $this->str->random(16);
             $user->firstname = strtoupper($request->firstname);
             $user->middlename = strtoupper($request->middlename);
             $user->lastname = strtoupper($request->lastname);
@@ -86,8 +89,12 @@ class UserService{
 
 
     public function show($slug){
+        
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        });     
 
-
+        return view('dashboard.user.show')->with('user', $user);
 
     }
 
@@ -96,7 +103,9 @@ class UserService{
 
     public function edit($slug){
 
-    	$user = $this->user->findSlug($slug);
+    	$user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
 
         return view('dashboard.user.edit')->with('user', $user);
 
@@ -107,7 +116,10 @@ class UserService{
 
     public function update(Request $request, $slug){
 
-        $user = $this->user->findSlug($slug);
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+        
         $user->firstname = strtoupper($request->firstname);
         $user->middlename = strtoupper($request->middlename);
         $user->lastname = strtoupper($request->lastname);
@@ -130,11 +142,79 @@ class UserService{
 
     public function delete($slug){
 
-        $user = $this->user->findSlug($slug);
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+
         $user->delete();
-        $user->userMenu()->delete();
-        $user->userSubmenu()->delete();
-        $this->session->flash('USER_DELETE_SUCCESS', 'Record successfully removed!');
+        $this->event->fire('user.delete', $user);
+        $this->session->flash('USER_DELETE_SUCCESS', 'User successfully removed!');
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function activate($slug){
+
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+
+        if($user->is_active == 0){
+
+            $user->update(['is_active' => 1]);
+            $this->event->fire('user.activate', $user);
+            $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
+            return redirect()->back();
+
+        }
+
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function deactivate($slug){
+
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+
+        if($user->is_active == 1){
+
+            $user->update(['is_active' => 0]);
+            $this->event->fire('user.deactivate', $user);
+            $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
+            return redirect()->back();
+
+        }
+
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function logout($slug){
+
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+
+        if($user->is_active == 1 && $user->is_online == 1){
+
+            $user->update(['is_online' => 0]);
+            $this->event->fire('user.logout', $user);
+            $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
+            return redirect()->back();
+
+        }
+
         return redirect()->back();
 
     }

@@ -22,7 +22,85 @@ class JSHelper{
 				});';
 
     }
+
+
+
+
+    public static function toast($message){
+
+       return '$.toast({
+	            text: "'. $message .'",
+	            showHideTransition: "fade",
+	            allowToastClose: true,
+	            hideAfter: 7500,
+	            loader: false,
+	            position: "top-center",
+	            bgColor: "#444",
+	            textColor: "#eee",
+	            textAlign: "left",
+	          });';
+
+    }
+
+
+
+
+    public static function form_variable_rule($id){
+
+       return '$(document).ready(function($){
+		          $("#'. $id .'").submit(function() {
+		            $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
+		            return true;
+		          });
+		          $("form").find( ":input" ).prop( "disabled", false );
+		        });';
+
+    }
     
+
+
+
+    public static function form_submitter_via_action($data_action, $form){
+
+       return '$(document).on("change", "#action", function () {
+       				var element = $(this).children("option:selected");
+       				if(element.data("action") == "'. $data_action .'"){
+		            	$("#'. $form .'").attr("action", element.data("url"));
+		            	$("#'. $form .'").submit();
+		        	}
+		        });';
+
+    }
+
+
+
+
+    public static function modal_confirm_delete_caller($modal){
+
+       return '$(document).on("change", "#action", function () {
+			      var element = $(this).children("option:selected");
+			      if(element.data("action") == "delete"){
+			        $("#'. $modal .'").modal("show");
+			        $("#delete_body #form").attr("action", element.data("url"));
+			        $("#action").val("");
+			      }
+			    });';
+
+    }
+
+
+
+
+    public static function table_action_rule(){
+
+       return '$(document).on("change", "#action", function () {
+       			  var element = $(this).children("option:selected");
+	           	  if(element.data("type") == "1" ){ 
+	           	  	location = element.data("url");
+	           	  }
+		       });';
+
+    }
 
 
 

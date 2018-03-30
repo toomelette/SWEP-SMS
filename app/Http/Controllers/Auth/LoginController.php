@@ -55,7 +55,7 @@ class LoginController extends Controller{
         
         }
 
-        return $this->sendFailedLoginResponse($request);   
+        return $this->sendFailedLoginResponse($request);
 
     }
 

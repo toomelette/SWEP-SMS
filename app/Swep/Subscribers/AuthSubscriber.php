@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use App\User;
 use Carbon\Carbon;
+use App\Swep\BackEndHelpers\CacheHelper;
 
 
 
@@ -59,6 +60,9 @@ class AuthSubscriber{
 
         	$user = $this->user->find($this->auth->user()->id);
         	$user->update($this->loginDefaults());
+
+        	CacheHelper::deletePattern('swep_cache:user:all:*');
+
             return redirect()->intended('dashboard/home');
 
         }
@@ -73,6 +77,9 @@ class AuthSubscriber{
 		$this->session->flush();
 		$user = $this->user->find($this->auth->user()->id);
 		$user->update(['is_online' => 0]);
+
+		CacheHelper::deletePattern('swep_cache:user:all:*');
+		
 		$request->session()->invalidate();
 
 	}

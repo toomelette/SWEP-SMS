@@ -213,11 +213,13 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'Carbon' => Carbon\Carbon::class,
 
         /** View Helper **/
         'FormHelper' => App\Swep\ViewHelpers\FormHelper::class,
         'HtmlHelper' => App\Swep\ViewHelpers\HtmlHelper::class,
         'JSHelper' => App\Swep\ViewHelpers\JSHelper::class,  
+        'CacheHelper' => App\Swep\BackEndHelpers\CacheHelper::class, 
     ],
 
 ];

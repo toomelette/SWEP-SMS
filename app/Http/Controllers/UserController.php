@@ -44,16 +44,16 @@ class UserController extends Controller{
 
     public function store(UserFormRequest $request){
 
-        return $this->user_service->store($request);    
+        return $this->user_service->store($request);
 
     }
 
     
 
 
-    public function show($id){
+    public function show($slug){
 
-        
+        return $this->user_service->show($slug);
 
     }
 
@@ -81,6 +81,33 @@ class UserController extends Controller{
     public function destroy($slug){
 
         return $this->user_service->delete($slug);
+        
+    }
+
+
+
+
+    public function activate($slug){
+
+        return $this->user_service->activate($slug);
+        
+    }
+
+
+
+
+    public function deactivate($slug){
+
+        return $this->user_service->deactivate($slug);
+        
+    }
+
+
+
+
+    public function logout($slug){
+
+        return $this->user_service->logout($slug);
         
     }
 
