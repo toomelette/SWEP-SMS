@@ -44,7 +44,7 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($users as $data) 
-                <tr {!! Session::has('USER_UPDATE_SUCCESS') && Session::get('USER_UPDATE_SUCCESS_SLUG') == $data->slug ? 'style="background-color: #b3e5fc;"' : '' !!} >
+                <tr {!! Session::get('USER_UPDATE_SUCCESS_SLUG') == $data->slug || Session::get('USER_RESET_PASSWORD_SLUG') == $data->slug ? 'style="background-color: #b3e5fc;"' : '' !!} >
                   <td>{{ $data->username }}</td>
                   <td>{{ $data->fullname }}</td>
                   <td>{!! $data->is_online == 1 ? '<span class="badge bg-green"><i class="fa fa-check "></i></span>' : '<span class="badge bg-red"><i class="fa fa-times "></i></span>' !!}</td>
@@ -65,6 +65,9 @@
                       @else
                         <option data-type="0" data-action="deactivate" data-url="{{ route('dashboard.user.deactivate', $data->slug) }}">Deactivate</option>
                       @endif
+
+                      <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
+
                     </select>
                   </td>
                 </tr>
@@ -108,74 +111,13 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('user_delete') !!}
+  @include('modals.user.user_index')
 
 @endsection 
 
 
 @section('scripts')
 
-  <script type="text/javascript">
-
-    // ACTION DROPDOWN RULE
-    {!! JSHelper::table_action_rule() !!}
-
-
-    // CALL UPDATE SUCCESS MODAL
-    @if(Session::has('USER_UPDATE_SUCCESS'))
-      $('#user_update').modal('show');
-    @endif
-
-
-    // CALL CONFIRM DELETE MODAL
-    {!! JSHelper::modal_confirm_delete_caller('user_delete') !!}
-
-
-    // CALL LOGOUT FORM
-    {!! JSHelper::form_submitter_via_action('logout', 'from_user_logout') !!}
-
-
-    // CALL ACTIVATE FORM
-    {!! JSHelper::form_submitter_via_action('activate', 'from_user_activate') !!}
-
-
-    // CALL DEACTIVATE FORM
-    {!! JSHelper::form_submitter_via_action('deactivate', 'from_user_deactivate') !!}
-
-
-    // FORM VARIABLES RULE
-    {!! JSHelper::form_variable_rule('filter_form') !!}
-
-
-    // UPDATE TOAST
-    @if(Session::has('USER_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_UPDATE_SUCCESS')) !!}
-    @endif
-
-
-    // DELETE TOAST
-    @if(Session::has('USER_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_DELETE_SUCCESS')) !!}
-    @endif
-
-
-    // LOGOUT TOAST
-    @if(Session::has('USER_LOGOUT_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_LOGOUT_SUCCESS')) !!}
-    @endif
-
-
-    // ACTIVATE TOAST
-    @if(Session::has('USER_ACTIVATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_ACTIVATE_SUCCESS')) !!}
-    @endif
-
-
-    // DEACTIVATE TOAST
-    @if(Session::has('USER_DEACTIVATE_SUCCESS'))
-        {!! JSHelper::toast(Session::get('USER_DEACTIVATE_SUCCESS')) !!}
-    @endif
-
-  </script>
+  @include('scripts.user.user_index')
     
 @endsection

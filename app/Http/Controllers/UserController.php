@@ -113,4 +113,22 @@ class UserController extends Controller{
 
 
 
+
+    public function resetPassword($slug){
+
+        return $this->user_service->resetPassword($slug);
+        
+    }
+
+
+
+
+    public function resetPasswordPost(Request $request, $slug){
+
+        return $this->user_service->resetPasswordPost($request, $slug);
+        
+    }
+
+
+
 }

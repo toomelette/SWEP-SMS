@@ -1,0 +1,1 @@
+{!! HtmlHelper::modal_delete('user_delete') !!}

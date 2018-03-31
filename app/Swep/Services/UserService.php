@@ -2,6 +2,7 @@
  
 namespace App\Swep\Services;
 
+use Auth;
 use Hash;
 use Input;
 use Cache;
@@ -10,7 +11,7 @@ use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
-
+use Illuminate\Support\Facades\Validator;
 
 class UserService{
 
@@ -186,7 +187,7 @@ class UserService{
 
         if($user->is_active == 1){
 
-            $user->update(['is_active' => 0]);
+            $user->update(['is_active' => 0, 'is_online' => 0]);
             $this->event->fire('user.deactivate', $user);
             $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
             return redirect()->back();
@@ -218,6 +219,84 @@ class UserService{
         return redirect()->back();
 
     }
+
+
+
+
+    public function resetPassword($slug){
+
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+
+        return view('dashboard.user.reset_password')->with('user', $user);
+
+    }
+
+
+
+
+    public function resetPasswordPost(Request $request, $slug){
+
+        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+
+        $validator = $this->resetPasswordValidate($request);
+
+        if ($request->username == Auth::user()->username && Hash::check($request->user_password, Auth::user()->password)) {
+            
+            if($user->username == Auth::user()->username){
+
+                $this->session->flash('USER_RESET_PASSWORD_OWN_ACCOUNT_FAIL', 'Please refer to profile page if you want to reset your own password.');
+                return redirect()->back();
+
+            }else{
+
+                $user->password = Hash::make($request->password);
+                $user->is_online = 0;
+                $user->save();
+
+                $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
+                $this->session->flash('USER_RESET_PASSWORD_SLUG', $user->slug);
+                return redirect()->route('dashboard.user.index');
+
+            }
+            
+        }
+
+        $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
+        return redirect()->back()->withErrors($validator, 'user');
+
+    }
+
+
+
+    //Utility Methods
+    public function resetPasswordValidate(Request $request){
+
+        $messages = [
+
+            'password.required'  => 'Password field is required.',
+            'password.confirmed'  => 'The Password Confirmation does not match.',
+            'password.string'  => 'Invalid Input! You must enter a string value.',
+            'password.min'  => 'The Password field may not be lesser than 6 characters.',
+            'password.max'  => 'The Password field may not be greater than 50 characters.',
+
+        ];
+
+        $validator = Validator::make($request->all(),[
+
+            'username' => 'required|max:50|string|',
+            'user_password' => 'required|max:50|string|',
+            'password' => 'required|min:6|max:50|string|confirmed'
+
+        ], $messages);
+
+
+        return $validator->validate();
+
+    }   
 
 
 

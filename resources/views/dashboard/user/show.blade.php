@@ -4,7 +4,11 @@
 
 <section class="content-header">
     <h1>User Details</h1>
+    <div class="pull-right" style="margin-top: -25px;">
+      <a data-pjax="" href="" class="btn btn-sm btn-default" onclick="window.history.back()"><i class="fa fa-arrow-left"></i> Back</a>
+    </div>
 </section>
+
 
 <section class="content">
   
@@ -42,7 +46,7 @@
         <div class="box-body">
           <dl class="dl-horizontal" style="padding-bottom:60px;">
             <dt>Last Login Time:</dt>
-            <dd>{{ Carbon::parse($user->last_login_time)->format('M d, Y') }}</dd>
+            <dd>{{ Carbon::parse($user->last_login_time)->format('M d, Y h:i A') }}</dd>
             <dt>Last Login Machine:</dt>
             <dd>{{ $user->last_login_machine }}</dd>
             <dt>Last Login IP:</dt>
@@ -61,7 +65,7 @@
 
           <dl class="dl-horizontal col-sm-6">
             <dt>Time Created:</dt>
-            <dd>{{ Carbon::parse($user->created_at)->format('M d, Y') }}</dd>
+            <dd>{{ Carbon::parse($user->created_at)->format('M d, Y h:i A') }}</dd>
             <dt>Machine Created:</dt>
             <dd>{{ $user->machine_created }}</dd>
             <dt>IP Created:</dt>
@@ -72,7 +76,7 @@
 
           <dl class="dl-horizontal col-sm-6">
             <dt>Time Updated:</dt>
-            <dd>{{ Carbon::parse($user->updated_at)->format('M d, Y') }}</dd>
+            <dd>{{ Carbon::parse($user->updated_at)->format('M d, Y h:i A') }}</dd>
             <dt>Machine Updated:</dt>
             <dd>{{ $user->machine_updated }}</dd>
             <dt>IP Updated:</dt>
@@ -120,18 +124,6 @@
 
   </div>
 
-         
-  
-
 </section>
 
-@endsection
-
-
-@section('scripts')
-
-  <script type="text/javascript">    
-
-  </script>
-    
 @endsection

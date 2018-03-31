@@ -62,6 +62,7 @@ class AuthSubscriber{
         	$user->update($this->loginDefaults());
 
         	CacheHelper::deletePattern('swep_cache:user:all:*');
+        	CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
 
             return redirect()->intended('dashboard/home');
 
@@ -79,6 +80,7 @@ class AuthSubscriber{
 		$user->update(['is_online' => 0]);
 
 		CacheHelper::deletePattern('swep_cache:user:all:*');
+		CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
 		
 		$request->session()->invalidate();
 

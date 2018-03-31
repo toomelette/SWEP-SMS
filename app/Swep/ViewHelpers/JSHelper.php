@@ -41,21 +41,6 @@ class JSHelper{
 	          });';
 
     }
-
-
-
-
-    public static function form_variable_rule($id){
-
-       return '$(document).ready(function($){
-		          $("#'. $id .'").submit(function() {
-		            $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
-		            return true;
-		          });
-		          $("form").find( ":input" ).prop( "disabled", false );
-		        });';
-
-    }
     
 
 
