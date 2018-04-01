@@ -5,7 +5,7 @@ namespace App\Swep\ViewComposers;
 
 use View;
 use Auth;
-use App\UserMenu;
+use App\Models\UserMenu;
 use Illuminate\Cache\Repository as Cache;
 
 
@@ -30,19 +30,15 @@ class UserMenuComposer{
 
     public function compose($view){
 
-        $user_menu = [];
+        $user_menus = [];
 
         if($this->auth->check()){
-
-            $user_menu = $this->cache->remember('user_menu:byUserId:'. $this->auth->user()->user_id .'', 240, function(){
-
+            $user_menus = $this->cache->remember('user_menu:byUserId:'. $this->auth->user()->user_id .'', 240, function(){
             	return $this->user_menu->where('user_id', $this->auth->user()->user_id )->get();
-
             });
-
         }
         
-    	$view->with('user_menu', $user_menu);
+    	$view->with('global_user_menus', $user_menus);
     	
     }
 

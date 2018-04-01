@@ -5,7 +5,7 @@
   {!! JSHelper::show_password('user_password', 'show_user_password') !!}
 
 
-  //CALL RESET PASSWORD CONFIRMATION
+  //CALL RESET PASSWORD CONFIRMATION MODAL
   $(document).on("click", "#reset_button", function () {
     var password = $("#password").val();
     var password_confirmation = $("#password_confirmation").val();

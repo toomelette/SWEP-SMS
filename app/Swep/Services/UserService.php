@@ -5,27 +5,31 @@ namespace App\Swep\Services;
 use Auth;
 use Hash;
 use Input;
-use Cache;
 use Session;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Cache\Repository as Cache;
 
 class UserService{
 
 
 	protected $user;
     protected $event;
+    protected $cache;
+    protected $auth;
     protected $session;
 
 
 
-    public function __construct(User $user, Dispatcher $event){
+    public function __construct(User $user, Dispatcher $event, Cache $cache){
 
         $this->user = $user;
         $this->event = $event;
+        $this->cache = $cache;
+        $this->auth = auth();
         $this->session = session();
 
     }
@@ -37,7 +41,7 @@ class UserService{
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $users = Cache::remember('user:all:' . $key, 240, function() use ($request){
+        $users = $this->cache->remember('user:all:' . $key, 240, function() use ($request){
 
             $user = $this->user->newQuery();
             
@@ -91,7 +95,7 @@ class UserService{
 
     public function show($slug){
         
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         });     
 
@@ -104,7 +108,7 @@ class UserService{
 
     public function edit($slug){
 
-    	$user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+    	$user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
@@ -117,7 +121,7 @@ class UserService{
 
     public function update(Request $request, $slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
         
@@ -143,7 +147,7 @@ class UserService{
 
     public function delete($slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
@@ -159,7 +163,7 @@ class UserService{
 
     public function activate($slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
@@ -181,7 +185,7 @@ class UserService{
 
     public function deactivate($slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
@@ -203,7 +207,7 @@ class UserService{
 
     public function logout($slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
@@ -225,7 +229,7 @@ class UserService{
 
     public function resetPassword($slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
@@ -238,15 +242,15 @@ class UserService{
 
     public function resetPasswordPost(Request $request, $slug){
 
-        $user = Cache::remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
 
         $validator = $this->resetPasswordValidate($request);
 
-        if ($request->username == Auth::user()->username && Hash::check($request->user_password, Auth::user()->password)) {
+        if ($request->username == $this->auth->user()->username && Hash::check($request->user_password, $this->auth->user()->password)) {
             
-            if($user->username == Auth::user()->username){
+            if($user->username == $this->auth->user()->username){
 
                 $this->session->flash('USER_RESET_PASSWORD_OWN_ACCOUNT_FAIL', 'Please refer to profile page if you want to reset your own password.');
                 return redirect()->back();

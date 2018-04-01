@@ -4,7 +4,7 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Submenu;
+use App\Models\Submenu;
 use Illuminate\Cache\Repository as Cache;
 
 
@@ -20,20 +20,18 @@ class SubmenuComposer{
 
 		$this->submenu = $submenu;
 		$this->cache = $cache;
-	}
 
+	}
 
 
 
     public function compose($view){
 
-        $submenu_all = $this->cache->remember('submenu:all', 240, function(){
-
+        $submenus = $this->cache->remember('submenu:all', 240, function(){
         	return $this->submenu->select('menu_id','submenu_id', 'name', 'is_nav')->get();
-
         });
         
-    	$view->with('submenu_all', $submenu_all);
+    	$view->with('global_submenus_all', $submenus);
 
     }
 

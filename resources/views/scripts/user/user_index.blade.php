@@ -56,7 +56,7 @@
     @endif
 
 
-    // RESET PASSWORD SUCCESS
+    // RESET PASSWORD SUCCESS TOAST
     @if(Session::has('USER_RESET_PASSWORD_SUCCESS'))
         {!! JSHelper::toast(Session::get('USER_RESET_PASSWORD_SUCCESS')) !!}
     @endif

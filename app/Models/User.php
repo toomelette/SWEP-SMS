@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,10 +11,9 @@ class User extends Authenticatable{
 
 
     use Notifiable;
-
+    
 
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
-   
 
     public $timestamps = false;
 
@@ -91,7 +90,7 @@ class User extends Authenticatable{
 
     public function userMenu() {
 
-        return $this->hasMany('App\UserMenu','user_id','user_id');
+        return $this->hasMany('App\Models\UserMenu','user_id','user_id');
 
     }
 
@@ -99,7 +98,7 @@ class User extends Authenticatable{
 
     public function userSubmenu() {
 
-        return $this->hasMany('App\UserSubmenu','user_id','user_id');
+        return $this->hasMany('App\Models\UserSubmenu','user_id','user_id');
 
     }
     

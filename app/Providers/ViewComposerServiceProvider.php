@@ -14,6 +14,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer('*', 'App\Swep\ViewComposers\UserMenuComposer');
         View::composer(['dashboard.user.create', 'dashboard.user.edit'], 'App\Swep\ViewComposers\MenuComposer');
         View::composer(['dashboard.user.create', 'dashboard.user.edit'], 'App\Swep\ViewComposers\SubmenuComposer');
+        View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\ProjectsComposer');
         
     }
 

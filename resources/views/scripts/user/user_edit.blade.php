@@ -8,7 +8,7 @@
                           '<td style="width:450px;">' +
                             '<select name="menu[]" id="menu" class="form-control select2" style="width:90%;">' +
                               '<option value="">Select</option>' +
-                              '@foreach($menu_all as $data)' +
+                              '@foreach($global_menus_all as $data)' +
                                 '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
                               '@endforeach' +
                             '</select>' +
@@ -17,7 +17,7 @@
                           '<td>' +
                             '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
                               '<option value="">Select</option>' +
-                              '@foreach($submenu_all as $data)' +
+                              '@foreach($global_submenus_all as $data)' +
                                   '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
                               '@endforeach' +
                             '</select>' +

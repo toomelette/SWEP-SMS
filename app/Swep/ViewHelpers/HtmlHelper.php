@@ -77,7 +77,7 @@ class HtmlHelper{
     
 
 
-    public static function table_header($refresh_route){
+    public static function table_search($refresh_route){
 
        return '<div class="box-title">  
                 <div class="input-group input-group-sm" style="width: 250px;">

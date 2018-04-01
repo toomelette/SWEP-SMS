@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Submenu extends Model{
 
     public function menu() {
 
-    	return $this->belongsTo('App\Menu','menu_id','menu_id');
+    	return $this->belongsTo('App\Models\Menu','menu_id','menu_id');
 
    	}
 

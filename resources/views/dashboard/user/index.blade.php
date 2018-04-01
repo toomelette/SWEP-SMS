@@ -8,32 +8,34 @@
 
       <section class="content">
         
-        <!-- FORM START -->
+        <!-- Form Start -->
         <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.user.index') }}">
 
         <!-- Advance Filters -->
         {!! HtmlHelper::filter_open() !!}
 
           {!! FormHelper::static_select_for_filter(
-            '2', 'online', old('online'), ['Online' => 'true', 'Offline' => 'false'], 'Login Status', 'submit_user_filter'
+            '2', 'online', 'Login Status', old('online'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter'
           ) !!}
 
           {!! FormHelper::static_select_for_filter(
-            '2', 'active', old('active'), ['Active' => 'true', 'Inactive' => 'false'], 'User Status', 'submit_user_filter'
+            '2', 'active', 'User Status', old('active'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter'
           ) !!}
 
         {!! HtmlHelper::filter_close() !!}
 
-        <!-- Table Grid -->
+
         <div class="box" id="pjax-container">
 
+          <!-- Table Search -->
           <div class="box-header with-border">
-            {!! HtmlHelper::table_header(route('dashboard.user.index')) !!}
+            {!! HtmlHelper::table_search(route('dashboard.user.index')) !!}
           </div>
 
-        <!-- FORM END -->  
+        <!-- Form End -->  
         </form>
 
+          <!-- Table Grid -->
           <div class="box-body no-padding">
             <table class="table table-bordered">
               <tr>

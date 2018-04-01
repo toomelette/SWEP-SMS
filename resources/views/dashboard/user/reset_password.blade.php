@@ -3,10 +3,10 @@
 @section('content')
 
 <section class="content-header">
-    <h1>User Reset Password</h1>
-    <div class="pull-right" style="margin-top: -25px;">
-      <a data-pjax="" href="" class="btn btn-sm btn-default" onclick="window.history.back()"><i class="fa fa-arrow-left"></i> Back</a>
-    </div>
+  <h1>User Reset Password</h1>
+  <div class="pull-right" style="margin-top: -25px;">
+    <a href="{{ url()->previous() }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>
+  </div>
 </section>
 
 <section class="content">

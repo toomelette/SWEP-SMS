@@ -4,14 +4,14 @@ namespace App\Swep\Subscribers;
 
 use Auth;
 use Cache;
-use App\User;
-use App\Menu;
-use App\SubMenu;
-use App\UserMenu;
-use App\UserSubMenu;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Menu;
+use App\Models\SubMenu;
+use App\Models\UserMenu;
+use App\Models\UserSubMenu;
 use Illuminate\Support\Str;
-use App\Swep\BackEndHelpers\CacheHelper;
+use App\Swep\Helpers\CacheHelper;
 
 
 

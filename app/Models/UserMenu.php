@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Auth;
 use Route;
@@ -20,7 +20,7 @@ class UserMenu extends Model{
 
 	public function user() {
       
-      return $this->belongsTo('App\User','user_id','user_id');
+      return $this->belongsTo('App\Models\User','user_id','user_id');
 
     }
 
@@ -28,7 +28,7 @@ class UserMenu extends Model{
 
     public function userSubMenu() {
 
-    	return $this->hasMany('App\UserSubmenu','user_menu_id','user_menu_id');
+    	return $this->hasMany('App\Models\UserSubmenu','user_menu_id','user_menu_id');
 
    	}
 

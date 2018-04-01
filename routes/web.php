@@ -25,4 +25,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/dashboard/user/{slug}/reset_password', 'UserController@resetPasswordPost')->name('user.reset_password_post');
 	Route::resource('user', 'UserController');
 
+	/** DISBURSEMENT VOUCHERS ROUTES **/
+	Route::resource('disbursement_voucher', 'DisbursementVoucherController');
+
 });

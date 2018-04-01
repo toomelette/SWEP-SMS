@@ -219,7 +219,8 @@ return [
         'FormHelper' => App\Swep\ViewHelpers\FormHelper::class,
         'HtmlHelper' => App\Swep\ViewHelpers\HtmlHelper::class,
         'JSHelper' => App\Swep\ViewHelpers\JSHelper::class,  
-        'CacheHelper' => App\Swep\BackEndHelpers\CacheHelper::class, 
+        'CacheHelper' => App\Swep\Helpers\CacheHelper::class, 
+        'SanitizeHelper' => App\Swep\Helpers\SanitizeHelper::class, 
     ],
 
 ];

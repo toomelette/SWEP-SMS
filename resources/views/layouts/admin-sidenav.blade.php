@@ -18,7 +18,7 @@
       
       @if(Auth::check())
 
-        @foreach($user_menu as $user_menu)
+        @foreach($global_user_menus as $user_menu)
 
           @if($user_menu->is_dropdown == false)
 

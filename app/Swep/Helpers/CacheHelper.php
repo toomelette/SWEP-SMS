@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Swep\BackEndHelpers;
+namespace App\Swep\Helpers;
 
 use Cache;
 

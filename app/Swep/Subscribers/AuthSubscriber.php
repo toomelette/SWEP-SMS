@@ -4,9 +4,9 @@ namespace App\Swep\Subscribers;
 
 use Auth;
 use Session;
-use App\User;
 use Carbon\Carbon;
-use App\Swep\BackEndHelpers\CacheHelper;
+use App\Models\User;
+use App\Swep\Helpers\CacheHelper;
 
 
 
