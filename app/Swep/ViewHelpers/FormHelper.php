@@ -19,7 +19,19 @@ class FormHelper{
 
 
 
-    public static function dynamic_select($class, $key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first){
+    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first){
+
+       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+                <label for="'. $key .'">'. $label .'</label>
+                <input class="form-control" id="priceformat" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'">
+                '. self::error_message($error_has, $error_first) .'
+              </div>';
+
+    }
+
+
+
+    public static function select_dynamic($class, $key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first){
       
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
@@ -29,6 +41,18 @@ class FormHelper{
                 </select>
               </div>';
                 
+    }
+
+
+
+    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first){
+
+       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+                <label for="'. $key .'">'. $label .'</label>
+                <textarea id="editor" name="'. $key .'" rows="10" cols="80">'. $old_value .'</textarea>
+                '. self::error_message($error_has, $error_first) .'
+              </div>';
+
     }
 
 
@@ -58,7 +82,7 @@ class FormHelper{
                   <div class="col-sm-2">
                     <div class="checkbox">
                         <label>
-                            <input name="show_'. $key .'" id="show_'. $key .'" type="checkbox">Show
+                            <input name="show_'. $key .'" id="show_'. $key .'" type="checkbox"> Show
                         </label>
                     </div>
                   </div>
@@ -68,7 +92,7 @@ class FormHelper{
 
 
 
-    public static function static_select_for_filter($class, $key, $label, $old_value, $array, $form){
+    public static function select_static_for_filter($class, $key, $label, $old_value, $array, $form){
       
       $string = "'";
 

@@ -72,15 +72,6 @@
 							@endif
 						</div>
 					</div>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" name="show_password" id="show_password">Show Password
-								</label>
-							</div>
-						</div>
-					</div>
 				</div>
 				
 				<div class="box-footer">
@@ -92,11 +83,4 @@
 	</div>
 	<div class="col-md-3"></div>
 </section>
-@endsection
-
-
-@section('scripts')
-			
-	{!! JSHelper::show_password('password', 'show_password') !!}
-	
 @endsection

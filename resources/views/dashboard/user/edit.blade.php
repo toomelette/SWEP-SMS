@@ -83,7 +83,7 @@
                           <td style="width:450px;">
                             <select name="menu[]" id="menu" class="form-control select2" style="width: 90%;">
                               <option value="">Select</option>
-                              @foreach($menu_all as $data) 
+                              @foreach($global_menus_all as $data) 
                                   <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
                               @endforeach
                             </select>
@@ -93,7 +93,7 @@
                           <td style="min-width:50px; min-width:50px; max-width:50px">
                             <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
                                 <option value="">Select</option>
-                                @foreach($submenu_all as $data)
+                                @foreach($global_submenus_all as $data)
                                     @if(old('submenu') && $data->menu_id == old('menu.'.$key))
                                         <option value="{{ $data->submenu_id }}" {!! in_array($data->submenu_id, old('submenu')) ? 'selected' : '' !!}>{{$data->name}}</option>
                                     @else

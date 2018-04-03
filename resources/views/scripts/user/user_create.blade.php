@@ -54,12 +54,12 @@
   /** AJAX **/
   $(document).ready(function() {
     $(document).on("change", "#menu", function() {
-        var id = $(this).val();
+        var key = $(this).val();
         var parent = $(this).closest('tr');
         console.log(parent);
-        if(id) {
+        if(key) {
             $.ajax({
-                url: "/api/dropdown_response_submenu_from_menu/" + id,
+                url: "/api/dropdown_response_submenu_from_menu/" + key,
                 type: "GET",
                 dataType: "json",
                 success:function(data) {   

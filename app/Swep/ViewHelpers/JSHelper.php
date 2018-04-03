@@ -89,4 +89,38 @@ class JSHelper{
 
 
 
+    public static function ajax_select_to_select($id_from, $id_to, $route, $key, $value){
+
+      $string = "'";
+
+      return '$(document).ready(function() {
+			        $("#'. $id_from .'").on("change", function() {
+			            var key = $(this).val();
+			            if(key) {
+			                $.ajax({
+			                    url: "'. $route .'"+key,
+			                    type: "GET",
+			                    dataType: "json",
+			                    success:function(data) {       
+			                      
+			                        $("#'. $id_to .'").empty();
+
+		                        	$.each(data, function(key, value) {
+	                        			$("#'. $id_to .'").append("<option value='. $string .'"+ value.'. $key .' +"'. $string .'>"+ value.'.$value.' +"</option>");
+	                        		});
+
+		                        	$("#'. $id_to .'").append("<option value>Select</option>");  
+			            
+			                    }
+			                });
+			            }else{
+			            	$("#'. $id_to .'").empty();
+			            }
+			        });
+			    });';
+
+    }
+
+
+
 }

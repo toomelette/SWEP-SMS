@@ -12,19 +12,20 @@
   </head>
 
   <body class="hold-transition {!! Auth::check() ? Auth::user()->color : '' !!}">
-    
+
+    <div id="loader"></div>
+
     <div class="wrapper">
 
       @include('layouts.admin-topnav')
 
-      @include('layouts.admin-sidenav')
+      @include('layouts.admin-sidenav') 
 
-      <div class="content-wrapper">
+      <div class="content-wrapper"> 
 
         @yield('content')
-      
-      </div>
 
+      </div>
 
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
@@ -35,7 +36,6 @@
       </footer>
 
     </div>
-
 
     @include('layouts.js-plugins')
     

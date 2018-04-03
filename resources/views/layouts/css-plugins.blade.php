@@ -13,6 +13,10 @@
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/toast/jquery.toast.min.css')}}">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link type="text/css" rel="stylesheet" href="{{asset('template/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('css/font.css') }}">
 
 
