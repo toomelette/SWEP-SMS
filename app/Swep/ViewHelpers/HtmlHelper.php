@@ -65,6 +65,33 @@ class HtmlHelper{
 
 
 
+
+    public static function modal_print($id, $header, $message, $print_route){
+
+       return '<div class="modal fade" id="'. $id .'">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			            <span aria-hidden="true">&times;</span></button>
+			          <h4 class="modal-title">'. $header .'</h4>
+			        </div>
+			        <div class="modal-body">
+			          <p><p style="font-size: 17px;">'. $message .'</p></p>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			          <a href="'. $print_route .'" type="button" class="btn btn-success">Print</a>
+			        </div>
+			      </div>
+			    </div>
+			  </div>';
+			    
+    }
+
+
+
+
     public static function alert($type, $header, $message){
 
        return '<div class="alert alert-'. $type .' alert-dismissible">

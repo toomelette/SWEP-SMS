@@ -27,35 +27,35 @@
               @csrf    
 
               {!! FormHelper::textbox_inline(
-                  'firstname', 'text', 'Firstname', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname')
+                  'firstname', 'text', 'Firstname', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'middlename', 'text', 'Middlename', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename')
+                  'middlename', 'text', 'Middlename', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'lastname', 'text', 'Lastname', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname')
+                  'lastname', 'text', 'Lastname', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'email', 'email', 'Email', 'Email', old('email'), $errors->has('email'), $errors->first('email')
+                  'email', 'email', 'Email', 'Email', old('email'), $errors->has('email'), $errors->first('email'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'position', 'text', 'Position', 'Position / Plantilla', old('position'), $errors->has('position'), $errors->first('position')
+                  'position', 'text', 'Position', 'Position / Plantilla', old('position'), $errors->has('position'), $errors->first('position'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'username', 'text', 'Username', 'Username', old('username'), $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username')
+                  'username', 'text', 'Username', 'Username', old('username'), $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
               ) !!}
 
               {!! FormHelper::password_inline(
-                  'password', 'Password', 'Password', $errors->has('password'), $errors->first('password')
+                  'password', 'Password', 'Password', $errors->has('password'), $errors->first('password'), ''
               ) !!}
 
               {!! FormHelper::password_inline(
-                  'password_confirmation', 'Confirm Password', 'Confirm Password', '', ''
+                  'password_confirmation', 'Confirm Password', 'Confirm Password', '', '', ''
               ) !!}
 
           </div>
@@ -173,13 +173,13 @@
 
 @section('modals')
 
-  @include('modals.user.user_create')
+  @include('modals.user.create')
 
 @endsection 
 
 
 @section('scripts')
 
-  @include('scripts.user.user_create')
+  @include('scripts.user.create')
     
 @endsection

@@ -34,11 +34,11 @@
               @csrf    
 
               {!! FormHelper::password_inline(
-                  'password', 'New Password', 'New Password', $errors->has('password'), $errors->first('password')
+                  'password', 'New Password', 'New Password', $errors->has('password'), $errors->first('password'), ''
               ) !!}
 
               {!! FormHelper::password_inline(
-                  'password_confirmation', 'Confirm Password', 'Confirm Password', '', ''
+                  'password_confirmation', 'Confirm Password', 'Confirm Password', '', '', ''
               ) !!}
 
           </div>
@@ -60,13 +60,13 @@
     
 @section('modals')
 
-  @include('modals.user.user_reset_password')
+  @include('modals.user.reset_password')
     
 @endsection
 
 
 @section('scripts')
 
-  @include('scripts.user.user_reset_password')
+  @include('scripts.user.reset_password')
     
 @endsection

@@ -25,7 +25,7 @@ class DepartmentsComposer{
     public function compose($view){
 
         $departments = $this->cache->remember('departments:all', 240, function(){
-        	return $this->departments->select('department_id', 'name')->get();
+        	return $this->departments->select('name')->get();
         });
         
     	$view->with('global_departments_all', $departments);

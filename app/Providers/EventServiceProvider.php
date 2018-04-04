@@ -31,6 +31,7 @@ class EventServiceProvider extends ServiceProvider{
 
         'App\Swep\Subscribers\AuthSubscriber',
         'App\Swep\Subscribers\UserSubscriber',
+        'App\Swep\Subscribers\DisbursementVoucherSubscriber',
 
     ];
 

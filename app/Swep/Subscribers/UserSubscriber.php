@@ -3,7 +3,6 @@
 namespace App\Swep\Subscribers;
 
 use Auth;
-use Cache;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Menu;
@@ -29,7 +28,7 @@ class UserSubscriber{
 
 
 
-	public function __construct(User $user, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubMenu $user_submenu, Carbon $carbon, Str $str, Cache $cache){
+	public function __construct(User $user, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubMenu $user_submenu, Carbon $carbon, Str $str){
 
 		$this->user = $user;
 		$this->menu = $menu;
@@ -38,7 +37,6 @@ class UserSubscriber{
 		$this->user_submenu = $user_submenu;
 		$this->carbon = $carbon;
         $this->str = $str;
-        $this->cache = $cache;
 		$this->auth = auth();
 
 	}

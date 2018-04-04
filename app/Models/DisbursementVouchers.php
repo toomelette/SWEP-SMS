@@ -8,7 +8,7 @@ class DisbursementVouchers extends Model{
 
 	protected $table = 'disbursement_vouchers';
 
-	protected $dates = ['created_at', 'updated_at', 'date'];
+	protected $dates = ['created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
 	public $timestamps = false;
 
@@ -54,7 +54,7 @@ class DisbursementVouchers extends Model{
         'user_id' => '', 
         'doc_no' => '', 
         'dv_no' => '', 
-        'date' => '', 
+        'date' => null, 
         'project_id' => '', 
         'fund_source' => '', 
         'mode_of_payment' => '', 
@@ -66,13 +66,13 @@ class DisbursementVouchers extends Model{
         'department_unit_name' => '',
         'account_code' => '',
         'explanation' => '', 
-        'amount' => '',
+        'amount' => 0.00,
         'certified_by' => '',
         'certified_by_position' => '',
-        'certified_by_sig_date' => '',
+        'certified_by_sig_date' => null,
         'approved_by' => '',
         'approved_by_position' => '',
-        'approved_by_sig_date' => '',
+        'approved_by_sig_date' => null,
         'created_at' => null,
         'updated_at' => null,
         'machine_created' => '',

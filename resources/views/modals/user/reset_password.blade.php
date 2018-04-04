@@ -1,4 +1,3 @@
-
 // USER RESET CONFIRMATION MODAL  
 <div class="modal fade" id="user_reset_password" data-backdrop="static">
     <div class="modal-dialog">
@@ -17,11 +16,11 @@
             <input id="password_confirmation_in_modal" type="hidden" name="password_confirmation" value="">
 
             {!! FormHelper::textbox_inline(
-                'username', 'text', 'Username', 'Username', old('username'), $errors->has('username'), $errors->first('username')
+                'username', 'text', 'Username', 'Username', old('username'), $errors->has('username'), $errors->first('username'), ''
             ) !!}
 
             {!! FormHelper::password_inline(
-                'user_password', 'Password', 'Password', $errors->has('user_password'), $errors->first('user_password')
+                'user_password', 'Password', 'Password', $errors->has('user_password'), $errors->first('user_password'), ''
             ) !!}
 
         </div>

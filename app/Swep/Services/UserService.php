@@ -4,10 +4,8 @@ namespace App\Swep\Services;
 
 use Auth;
 use Hash;
-use Input;
 use Session;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Validator;
@@ -273,6 +271,7 @@ class UserService{
         return redirect()->back()->withErrors($validator, 'user');
 
     }
+
 
 
 

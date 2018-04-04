@@ -113,13 +113,13 @@
 
 @section('modals')
 
-  @include('modals.user.user_index')
+  @include('modals.user.index')
 
 @endsection 
 
 
 @section('scripts')
 
-  @include('scripts.user.user_index')
+  @include('scripts.user.index')
     
 @endsection

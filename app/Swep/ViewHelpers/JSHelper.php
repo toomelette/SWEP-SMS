@@ -123,4 +123,17 @@ class JSHelper{
 
 
 
+    public static function input_uppercase($id){
+
+       return '$(function() {
+				    $("'. $id .'").keyup(function() {
+				        this.value = this.value.toLocaleUpperCase();
+				    });
+				});';
+				
+    }
+
+
+
+
 }

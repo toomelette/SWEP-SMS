@@ -28,27 +28,27 @@
               @csrf    
 
               {!! FormHelper::textbox_inline(
-                  'firstname', 'text', 'Firstname', 'Firstname', $user->firstname, $errors->has('firstname'), $errors->first('firstname')
+                  'firstname', 'text', 'Firstname', 'Firstname', $user->firstname, $errors->has('firstname'), $errors->first('firstname'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'middlename', 'text', 'Middlename', 'Middlename', $user->middlename, $errors->has('middlename'), $errors->first('middlename')
+                  'middlename', 'text', 'Middlename', 'Middlename', $user->middlename, $errors->has('middlename'), $errors->first('middlename'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'lastname', 'text', 'Lastname', 'Lastname', $user->lastname, $errors->has('lastname'), $errors->first('lastname')
+                  'lastname', 'text', 'Lastname', 'Lastname', $user->lastname, $errors->has('lastname'), $errors->first('lastname'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'email', 'email', 'Email', 'Email', $user->email, $errors->has('email'), $errors->first('email')
+                  'email', 'email', 'Email', 'Email', $user->email, $errors->has('email'), $errors->first('email'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'position', 'text', 'Position', 'Position / Plantilla', $user->position, $errors->has('position'), $errors->first('position')
+                  'position', 'text', 'Position', 'Position / Plantilla', $user->position, $errors->has('position'), $errors->first('position'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'username', 'text', 'Username', 'Username', $user->username, $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username')
+                  'username', 'text', 'Username', 'Username', $user->username, $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
               ) !!}
 
           </div>
@@ -170,6 +170,6 @@
 
 @section('scripts')
 
-  @include('scripts.user.user_edit')
+  @include('scripts.user.edit')
     
 @endsection

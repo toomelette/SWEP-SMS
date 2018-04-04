@@ -7,11 +7,11 @@ class FormHelper{
 
 
 
-    public static function textbox($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first){
+    public static function textbox($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'">
+                <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -19,11 +19,11 @@ class FormHelper{
 
 
 
-    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first){
+    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control" id="priceformat" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'">
+                <input class="form-control" id="priceformat" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -31,11 +31,11 @@ class FormHelper{
 
 
 
-    public static function select_dynamic($class, $key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first){
+    public static function select_dynamic($class, $key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first, $extra_attr){
       
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <select name="'. $key .'" id="'. $key .'" class="form-control">
+                <select name="'. $key .'" id="'. $key .'" class="form-control" '. $extra_attr .'>
                   <option value="">Select</option>
                   '. self::dynamic_options($array, $var1, $var2, $old_value) .'
                 </select>
@@ -45,11 +45,11 @@ class FormHelper{
 
 
 
-    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first){
+    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <textarea id="editor" name="'. $key .'" rows="10" cols="80">'. $old_value .'</textarea>
+                <textarea id="editor" name="'. $key .'" rows="10" cols="80" '. $extra_attr .'>'. $old_value .'</textarea>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -57,12 +57,12 @@ class FormHelper{
 
 
 
-    public static function textbox_inline($key, $type, $label, $placeholder, $old_value, $error_has, $error_first){
+    public static function textbox_inline($key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group '. self::error_response($error_has) .'">
                   <label for="'. $key .'" class="col-sm-2 control-label">'. $label .'</label>
                   <div class="col-sm-10">
-                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'">
+                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                     '. self::error_message($error_has, $error_first) .'
                   </div>
                 </div>';
@@ -71,12 +71,12 @@ class FormHelper{
 
 
 
-    public static function password_inline($key, $label, $placeholder, $error_has, $error_first){
+    public static function password_inline($key, $label, $placeholder, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group '. self::error_response($error_has) .'">
                   <label for="'. $key .'" class="col-sm-2 control-label">'. $label .'</label>
                   <div class="col-sm-8">
-                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="password" placeholder="'. $placeholder .'">
+                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="password" placeholder="'. $placeholder .'" '. $extra_attr .'>
                     '. self::error_message($error_has, $error_first) .'
                   </div>
                   <div class="col-sm-2">

@@ -49,8 +49,8 @@ class ApiController extends Controller{
     public function dropdownResponseDepartmentUnitsFromDepartments(Request $request, $key){
 
     	if($request->Ajax()){
-    		$response_department_units = $this->cache->remember('api:response_department_units_from_department:byDepartmentId:'. $key .'', 240, function() use ($key){
-        		return $this->department_unit->select('name')->where('department_id', $key)->get();
+    		$response_department_units = $this->cache->remember('api:response_department_units_from_department:byDepartmentName:'. $key .'', 240, function() use ($key){
+        		return $this->department_unit->select('name')->where('department_name', $key)->get();
        		});
 	    	return json_encode($response_department_units);
 	    }
@@ -64,8 +64,8 @@ class ApiController extends Controller{
     public function dropdownResponseAccountsFromDepartments(Request $request, $key){
 
     	if($request->Ajax()){
-    		$response_accounts = $this->cache->remember('api:response_account_from_department:byDepartmentId:'. $key .'', 240, function() use ($key){
-        		return $this->account->select('account_code')->where('department_id', $key)->get();
+    		$response_accounts = $this->cache->remember('api:response_account_from_department:byDepartmentName:'. $key .'', 240, function() use ($key){
+        		return $this->account->select('account_code')->where('department_name', $key)->get();
        		});
 	    	return json_encode($response_accounts);
 	    }
