@@ -13,8 +13,6 @@
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/toast/jquery.toast.min.css')}}">
 
-<link type="text/css" rel="stylesheet" href="{{asset('template/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
-
 <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/font.css') }}">

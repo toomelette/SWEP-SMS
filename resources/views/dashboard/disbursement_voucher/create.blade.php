@@ -70,6 +70,37 @@
             '2', 'amount', 'text', 'Amount:', 'Amount', old('amount'), $errors->has('amount'), $errors->first('amount')
           ) !!}
 
+
+          <div class="attachment col-md-6" style="padding-bottom:20px;">
+            <h3>Certified:</h3>
+            @foreach($global_signatories_all as $data)
+              @if($data->type == 2)
+                <span style="font-size:18px;">
+                  <b>{!! $data->employee_name !!}</b>
+                </span><br>
+                <span style="font-size:14px;">
+                  {!! $data->employee_position !!}
+                </span>
+              @endif
+            @endforeach
+          </div>
+
+
+          <div class="attachment col-md-6" style="padding-bottom:20px;">
+            <h3>Approved:</h3>
+            @foreach($global_signatories_all as $data)
+              @if($data->type == 1)
+                <span style="font-size:18px;">
+                  <b>{!! $data->employee_name !!}</b>
+                </span><br>
+                <span style="font-size:14px;">
+                  {!! $data->employee_position !!}
+                </span>
+              @endif
+            @endforeach
+          </div>
+
+
         </div>
 
         <div class="box-footer">
