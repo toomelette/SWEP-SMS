@@ -62,6 +62,12 @@
             '2', 'account_code', 'Account Code:', old('account_code'), $global_accounts_all, 'account_code', 'account_code', $errors->has('account_code'), $errors->first('account_code'), ''
           ) !!}
 
+          <div class="col-md-12">
+            <div class="alert alert-warning">
+              Note: Please put your computations in the <strong>Explanation Field</strong>, and the Total/Net of your computation in the <strong>Amount Field.</strong>
+            </div>
+          </div>
+
           {!! FormHelper::textarea(
             '10', 'explanation', 'Explanation', old('explanation'), $errors->has('explanation'), $errors->first('explanation'), ''
           ) !!}

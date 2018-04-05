@@ -12,11 +12,13 @@ use Illuminate\Cache\Repository as Cache;
 class DisbursementVoucherService{
 
 
+
 	protected $disbursement_voucher;
     protected $event;
     protected $cache;
     protected $auth;
     protected $session;
+
 
 
 
@@ -32,6 +34,7 @@ class DisbursementVoucherService{
 
 
 
+
     public function store(Request $request){
 
         $disbursement_voucher = $this->disbursement_voucher->create($request->except(['amount', 'payee', 'address']));
@@ -41,6 +44,20 @@ class DisbursementVoucherService{
         return redirect()->back();
 
     }
+
+
+
+
+    public function show($slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });     
+
+        return view('dashboard.disbursement_voucher.show')->with('disbursement_voucher', $disbursement_voucher);
+
+    }
+
 
 
 

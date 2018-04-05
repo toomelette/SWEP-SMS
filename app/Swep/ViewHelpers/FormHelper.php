@@ -39,6 +39,7 @@ class FormHelper{
                   <option value="">Select</option>
                   '. self::dynamic_options($array, $var1, $var2, $old_value) .'
                 </select>
+                '. self::error_message($error_has, $error_first) .'
               </div>';
                 
     }

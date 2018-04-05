@@ -103,7 +103,7 @@ class UserFormRequest extends FormRequest{
 
         foreach($this->request->get('menu') as $key => $value) {
 
-            $messages['menu.'.$key.'.required'] = ' Menu Field is Required.';
+            $messages['menu.'.$key.'.required'] = 'Menu Field is Required.';
             $messages['menu.'.$key.'.string'] = ' Invalid Input! You must enter a string value.';
 
         }

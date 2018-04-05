@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DisbursementVoucherFormRequest;
 use App\Swep\Services\DisbursementVoucherService;
 
 
@@ -37,7 +38,7 @@ class DisbursementVoucherController extends Controller{
 
 
    
-    public function store(Request $request){
+    public function store(DisbursementVoucherFormRequest $request){
 
         return $this->disbursement_voucher->store($request);
         
@@ -47,7 +48,7 @@ class DisbursementVoucherController extends Controller{
     
     public function show($slug){
 
-
+        return $this->disbursement_voucher->show($slug);
         
     }
 

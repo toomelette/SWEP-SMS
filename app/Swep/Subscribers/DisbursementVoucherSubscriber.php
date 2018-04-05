@@ -38,11 +38,13 @@ class DisbursementVoucherSubscriber{
 
 
 
+
 	public function subscribe($events){
 
 		$events->listen('dv.create', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onCreate');
 
 	}
+
 
 
 

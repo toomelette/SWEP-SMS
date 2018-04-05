@@ -6,43 +6,23 @@
 	<div class="col-md-6">
 		
 		@if(Session::has('AUTH_AUTHENTICATED'))
-			<div class="alert alert-danger alert-dismissible">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4><i class="icon fa fa-ban"></i> Oops!</h4>
-				{{ Session::get('AUTH_AUTHENTICATED') }}
-			</div>
+			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_AUTHENTICATED')) !!}
 		@endif
 
 		@if(Session::has('AUTH_UNACTIVATED'))
-			<div class="alert alert-danger alert-dismissible">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4><i class="icon fa fa-ban"></i> Oops!</h4>
-				{{ Session::get('AUTH_UNACTIVATED') }}
-			</div>
+			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_UNACTIVATED')) !!}
 		@endif
 
 		@if(Session::has('CHECK_UNAUTHENTICATED'))
-			<div class="alert alert-danger alert-dismissible">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4><i class="icon fa  fa-exclamation-triangle"></i> Oops!</h4>
-				{{ Session::get('CHECK_UNAUTHENTICATED') }}
-			</div>
+			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_UNAUTHENTICATED')) !!}
 		@endif
 
 		@if(Session::has('CHECK_NOT_LOGGED_IN'))
-			<div class="alert alert-danger alert-dismissible">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4><i class="icon fa  fa-exclamation-triangle"></i> Oops!</h4>
-				{{ Session::get('CHECK_NOT_LOGGED_IN') }}
-			</div>
+			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_LOGGED_IN')) !!}
 		@endif
 
 		@if(Session::has('CHECK_NOT_ACTIVE'))
-			<div class="alert alert-danger alert-dismissible">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4><i class="icon fa  fa-exclamation-triangle"></i> Oops!</h4>
-				{{ Session::get('CHECK_NOT_ACTIVE') }}
-			</div>
+			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
 		@endif
 
 		<div class="box box-default">
@@ -80,6 +60,7 @@
 				
 			</form>
 		</div>
+
 	</div>
 	<div class="col-md-3"></div>
 </section>

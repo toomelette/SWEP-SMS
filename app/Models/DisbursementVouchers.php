@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class DisbursementVouchers extends Model{
 
+    
+
 	protected $table = 'disbursement_vouchers';
 
 	protected $dates = ['created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
 	public $timestamps = false;
+
 
 
 	protected $fillable = [
@@ -86,5 +89,18 @@ class DisbursementVouchers extends Model{
 
 
 
+
+
+    // SCOPES
+
+    public function scopeFindSlug($query, $slug){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
+
     
+
+
+
 }
