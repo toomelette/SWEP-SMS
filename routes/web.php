@@ -26,6 +26,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('user', 'UserController');
 
 	/** DISBURSEMENT VOUCHERS ROUTES **/
+	Route::get('/disbursement_voucher/print/{slug}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
 	Route::resource('disbursement_voucher', 'DisbursementVoucherController');
 
 });

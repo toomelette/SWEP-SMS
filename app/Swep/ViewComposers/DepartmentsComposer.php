@@ -16,8 +16,10 @@ class DepartmentsComposer{
 
 
 	public function __construct(Departments $departments, Cache $cache){
+
 		$this->departments = $departments;
 		$this->cache = $cache;
+		
 	}
 
 

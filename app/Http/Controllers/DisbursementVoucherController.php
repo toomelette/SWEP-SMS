@@ -76,5 +76,14 @@ class DisbursementVoucherController extends Controller{
         
     }
 
+
+
+    public function print($slug){
+
+        return $this->disbursement_voucher->print($slug);
+        
+    }
+
+    
     
 }

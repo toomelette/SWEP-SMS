@@ -61,4 +61,17 @@ class DisbursementVoucherService{
 
 
 
+    public function print($slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });     
+
+        return view('printables.disbursement_voucher')->with('disbursement_voucher', $disbursement_voucher);
+
+    }
+
+
+
+
 }
