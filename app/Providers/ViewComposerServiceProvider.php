@@ -20,7 +20,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\DepartmentsComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\DepartmentUnitsComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\AccountsComposer');
-        View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\SignatoriesComposer');
+        View::composer(['printables.disbursement_voucher'], 'App\Swep\ViewComposers\SignatoriesComposer');
         
     }
 
