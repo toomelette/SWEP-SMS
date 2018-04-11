@@ -30,7 +30,7 @@
   </style>
 
 </head>
-<body {{-- onload="window.print();" --}}>
+<body onload="window.print();" onafterprint="window.close()">
 
 <div style="border:solid;">
 
@@ -38,7 +38,7 @@
 
 
       {{-- HEADER --}}
-      <div class="row" style="padding:20px;">
+      <div class="row" style="padding:10px;">
         
         <div class="col-md-1"></div>
 
@@ -66,7 +66,7 @@
       {{-- DOCUMENT NAME --}}
       <div class="row" style="border-top:solid;">
         
-        <div class="col-sm-9" style="border-right:solid; text-align: center; padding-top:10px; padding-bottom:10px;"> 
+        <div class="col-sm-9" style="border-right:solid; text-align: center; padding-top:9px; padding-bottom:9px;"> 
           <span style="font-weight:bold; font-size:20px;">DISBURSEMENT VOUCHER</span>
         </div>
 
@@ -86,8 +86,19 @@
           <br><span style="font-size:12px; font-weight:bold;">Payment</span>
         </div>
 
-        <div class="col-sm-10 div-height">
-          <p>Test</p>
+        <div class="col-sm-10" style="padding-top:5px;">
+          @foreach($global_mode_of_payment_all as $data)
+            <div class="col-sm-1" style="padding-left: 50px;">
+              @if($data->mode_of_payment_id == $disbursement_voucher->mode_of_payment)
+                <div style="width: 20px; height: 20px; border: 10px solid;"></div>
+              @else
+                <div style="width: 20px; height: 20px; border: 3px solid;"></div>
+              @endif
+            </div>
+            <div class="col-sm-1" style="padding-left: 20px;">
+              <span style="font-weight:bold;">{{ $data->description }}</span>
+            </div>
+          @endforeach
         </div>
 
       </div>
@@ -97,7 +108,7 @@
       <div class="row" style="border-top:solid; overflow:hidden;">
         
         <div class="col-sm-2 div-height" style="border-right:solid;"> 
-          <p style="font-size:12px; padding-top:12px; padding-bottom:5px; padding-left: 3px; font-weight:bold;">Payee:</p>
+          <p style="font-size:12px; padding-top:10px; padding-bottom:5px; padding-left: 3px; font-weight:bold;">Payee:</p>
         </div>
 
         <div class="col-sm-4 div-height" style="border-right:solid; padding-left: 0;">
@@ -121,7 +132,7 @@
       <div class="row" style="border-top:solid; overflow:hidden;">
         
         <div class="col-sm-2 div-height" style="border-right:solid;"> 
-          <p style="font-size:12px; padding-top:15px; padding-bottom:5px; padding-left: 3px; font-weight:bold;">Address:</p>
+          <p style="font-size:12px; padding-top:10px; padding-bottom:5px; padding-left: 3px; font-weight:bold;">Address:</p>
         </div>
 
         <div class="col-sm-4 div-height" style="border-right:solid; padding-left: 0;">
@@ -132,21 +143,20 @@
         <div class="col-sm-6" style="padding:0%; margin-top:-6px; overflow:hidden;">
           
           <div class="col-sm-12" style="border-bottom:solid; width: 100%; text-align: center;">
-            <span style="font-size:9px;">Resposibility Center</span>
+            <span style="font-size:10px; font-weight:bold;">Resposibility Center</span>
           </div>
 
-          <div class="col-sm-6" style="border-right:solid; padding-left:0;">
+          <div class="col-sm-6" style="border-right:solid; padding-left:0; line-height:1.3;">
             <span style="font-size:9px; padding-left:2px;">Office/Unit/Project:</span>
             <br><span style="font-size:12px; font-weight:bold; padding-left:15px;">{!! $disbursement_voucher->department_unit_name !!}</span>
           </div>
 
-          <div class="col-sm-6" style="padding-left:0;">
+          <div class="col-sm-6" style="padding-left:0; line-height:1.3;">
             <span style="font-size:9px; padding-left:2px;">Code:</span>
             <br><span style="font-size:12px; font-weight:bold; padding-left:15px; padding-bottom:5px;">{!! $disbursement_voucher->account_code !!}</span>
           </div>
 
         </div>
-
 
       </div>
 
@@ -168,7 +178,7 @@
       {{-- EXPLANATION VALUE --}}
       <div class="row" style="border-top:solid; height:20em; overflow: hidden;">
         
-        <div class="col-sm-9" style="border-right:solid; padding-left:20px; margin-bottom: -200px; padding-bottom: 200px;"> 
+        <div class="col-sm-9" style="border-right:solid; padding-left:20px; margin-bottom: -250px; padding-bottom: 250px;"> 
           <p style="font-family:Arial; font-size:16px; white-space: pre-wrap; white-space: -moz-pre-wrap;  white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{!! $disbursement_voucher->explanation !!}</p>
         </div>
 
@@ -333,7 +343,7 @@
 
 
       {{-- CHECK / ADA NO. --}}
-      <div class="row" style="padding-bottom: 10px;">
+      <div class="row" style="padding-bottom: 5px; overflow:hidden;">
         
         <div class="col-sm-2 div-height" style="border-right:solid; border-top: solid;">
           <p style="font-size:10px;">&nbsp;Check/ADA No.:</p>
@@ -355,21 +365,21 @@
 
 
       {{-- SIGNATURE 2 --}}
-      <div class="row" style="padding-bottom: 10px; border-top:solid;">
+      <div class="row" style="padding-bottom: 5px; border-top:solid; overflow:hidden;">
         
-        <div class="col-sm-2" style="border-right:solid;">
+        <div class="col-sm-2 div-height" style="border-right:solid;">
           <p style="font-size:11px;">&nbsp;Signature:</p>
         </div>
 
-        <div class="col-sm-2" style="border-right:solid;"> 
+        <div class="col-sm-2 div-height" style="border-right:solid;"> 
           &nbsp;
         </div>
 
-        <div class="col-sm-1" style="border-right:solid; padding-left:0;"> 
+        <div class="col-sm-1 div-height" style="border-right:solid; padding-left:0;"> 
          <p style="font-size:9px;">&nbsp;Date:</p>
         </div>
 
-        <div class="col-sm-3" style="border-right:solid; padding-left:0;"> 
+        <div class="col-sm-3 div-height" style="border-right:solid; padding-left:0;"> 
           <p style="font-size:9px;">&nbsp;Printed Name:</p>
         </div>
 
@@ -381,7 +391,7 @@
 
 
       {{-- OR --}}
-      <div class="row" style="padding-bottom: 10px;">
+      <div class="row" style="padding-bottom: 5px;">
         
         <div class="col-sm-8 div-height" style="border-right:solid; border-top:solid;">
           <p style="font-size:10px;">&nbsp;Official Receipt (OR)/Other Documents:</p>
@@ -407,8 +417,8 @@
   </div>
 
   <div class="col-sm-4 div-height" style="border-right:solid; padding-left:0; line-height: 1.2;"> 
-    <span style="font-size:12px;">FM-AFD-ACC-001, Rev. 00</span>
-    <br><span style="font-size:12px;">Effective Date : March 12, 2015</span>
+    <span style="font-size:11px;">FM-AFD-ACC-001, Rev. 00</span>
+    <br><span style="font-size:11px;">Effective Date : March 12, 2015</span>
   </div>
 
 </div>
@@ -417,10 +427,3 @@
 </body>
 </html>
 
-@section('scripts')
-
-  <script type="text/javascript">
-    $('body').layout('fix')
-  </script>
-
-@endsection

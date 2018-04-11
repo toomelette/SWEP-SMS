@@ -1,4 +1,4 @@
-// USER RESET CONFIRMATION MODAL  
+{{-- USER RESET CONFIRMATION MODAL --}}  
 <div class="modal fade" id="user_reset_password" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">

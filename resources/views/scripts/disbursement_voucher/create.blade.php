@@ -5,5 +5,4 @@
 
 	$('#dv_create').modal('show');
 
-
 </script>

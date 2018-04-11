@@ -16,7 +16,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.user.create', 'dashboard.user.edit'], 'App\Swep\ViewComposers\SubmenuComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\ProjectsComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\FundSourceComposer');
-        View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\ModeOfPaymentComposer');
+        View::composer(['dashboard.disbursement_voucher.create', 'printables.disbursement_voucher'], 'App\Swep\ViewComposers\ModeOfPaymentComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\DepartmentsComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\DepartmentUnitsComposer');
         View::composer(['dashboard.disbursement_voucher.create'], 'App\Swep\ViewComposers\AccountsComposer');

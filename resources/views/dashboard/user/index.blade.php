@@ -8,18 +8,18 @@
 
       <section class="content">
         
-        <!-- Form Start -->
+        {{-- Form Start --}}
         <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.user.index') }}">
 
-        <!-- Advance Filters -->
+        {{-- Advance Filters --}}
         {!! HtmlHelper::filter_open() !!}
 
           {!! FormHelper::select_static_for_filter(
-            '2', 'online', 'Login Status', old('online'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter'
+            '2', 'online', 'Login Status', old('online'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', ''
           ) !!}
 
           {!! FormHelper::select_static_for_filter(
-            '2', 'active', 'User Status', old('active'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter'
+            '2', 'active', 'User Status', old('active'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', ''
           ) !!}
 
         {!! HtmlHelper::filter_close() !!}
@@ -27,15 +27,15 @@
 
         <div class="box" id="pjax-container">
 
-          <!-- Table Search -->
+          {{-- Table Search --}}        
           <div class="box-header with-border">
             {!! HtmlHelper::table_search(route('dashboard.user.index')) !!}
           </div>
 
-        <!-- Form End -->  
+        {{-- Form End --}}  
         </form>
 
-          <!-- Table Grid -->
+          {{-- Table Grid --}}        
           <div class="box-body no-padding">
             <table class="table table-bordered">
               <tr>

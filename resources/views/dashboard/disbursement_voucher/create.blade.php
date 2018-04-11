@@ -21,15 +21,15 @@
           @csrf    
 
           {!! FormHelper::select_dynamic(
-            '4', 'project_id', 'Station:', old('project_id'), $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), ''
+            '4', 'project_id', 'Station:', old('project_id'), $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '4', 'fund_source', 'Fund Source:', old('fund_source'), $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source'), $errors->first('fund_source'), ''
+            '4', 'fund_source', 'Fund Source:', old('fund_source'), $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source'), $errors->first('fund_source'), '', ''
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '4', 'mode_of_payment', 'Mode Of Payment:', old('mode_of_payment'), $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), ''
+            '4', 'mode_of_payment', 'Mode Of Payment:', old('mode_of_payment'), $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
           ) !!}
 
 
@@ -51,15 +51,15 @@
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '2', 'department_name', 'Department:', old('department_name'), $global_departments_all, 'name', 'name', $errors->has('department_name'), $errors->first('department_name'), ''
+            '2', 'department_name', 'Department:', old('department_name'), $global_departments_all, 'name', 'name', $errors->has('department_name'), $errors->first('department_name'), 'select2', ''
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '2', 'department_unit_name', 'Unit:', old('department_unit_name'), $global_department_units_all, 'name', 'name', $errors->has('department_unit_name'), $errors->first('department_unit_name'), ''
+            '2', 'department_unit_name', 'Unit:', old('department_unit_name'), $global_department_units_all, 'name', 'name', $errors->has('department_unit_name'), $errors->first('department_unit_name'), 'select2', ''
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '2', 'account_code', 'Account Code:', old('account_code'), $global_accounts_all, 'account_code', 'account_code', $errors->has('account_code'), $errors->first('account_code'), ''
+            '2', 'account_code', 'Account Code:', old('account_code'), $global_accounts_all, 'account_code', 'account_code', $errors->has('account_code'), $errors->first('account_code'), 'select2', ''
           ) !!}
 
           <div class="col-md-12">

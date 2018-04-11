@@ -61,13 +61,18 @@ class DisbursementVoucherService{
 
 
 
-    public function print($slug){
+    public function print($slug, $type){
 
         $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
             return $this->disbursement_voucher->findSlug($slug);
-        });     
+        });    
 
-        return view('printables.disbursement_voucher')->with('disbursement_voucher', $disbursement_voucher);
+        if($type == 'front'){
+            return view('printables.disbursement_voucher')->with('disbursement_voucher', $disbursement_voucher);
+        }elseif($type == 'back'){
+            return view('printables.disbursement_voucher_back');
+        }
+        return abort(404);
 
     }
 

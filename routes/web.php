@@ -26,7 +26,20 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('user', 'UserController');
 
 	/** DISBURSEMENT VOUCHERS ROUTES **/
-	Route::get('/disbursement_voucher/print/{slug}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
+	Route::get('/disbursement_voucher/print/{slug}/{type}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
 	Route::resource('disbursement_voucher', 'DisbursementVoucherController');
 
 });
+
+
+/** Testing **/
+
+Route::get('/dashboard/test', function(){
+
+	$public_ip = file_get_contents("http://ipecho.net/plain");
+    $data = (unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='. $public_ip)));
+
+    dd($data);
+    //dd($data['geoplugin_countryName']);
+    
+} )->name('showLogin');

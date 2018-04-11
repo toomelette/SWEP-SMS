@@ -1,5 +1,5 @@
 
-// DV CREATE SUCCESS
+{{-- DV CREATE SUCCESS --}}
 @if(Session::has('SESSION_DV_CREATE_SUCCESS'))
 
   {!! HtmlHelper::modal_print(

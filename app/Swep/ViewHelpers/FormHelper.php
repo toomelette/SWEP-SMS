@@ -31,11 +31,11 @@ class FormHelper{
 
 
 
-    public static function select_dynamic($class, $key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first, $extra_attr){
+    public static function select_dynamic($class, $key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first, $select2, $extra_attr){
       
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <select name="'. $key .'" id="'. $key .'" class="form-control" '. $extra_attr .'>
+                <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>
                   <option value="">Select</option>
                   '. self::dynamic_options($array, $var1, $var2, $old_value) .'
                 </select>
@@ -93,13 +93,13 @@ class FormHelper{
 
 
 
-    public static function select_static_for_filter($class, $key, $label, $old_value, $array, $form){
+    public static function select_static_for_filter($class, $key, $label, $old_value, $array, $form, $select2){
       
       $string = "'";
 
        return '<div class="form-group col-md-'. $class .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <select name="'. $key .'" id="'. $key .'" class="form-control input-sm" onchange="document.getElementById('. $string .''. $form .''. $string .').click()">
+                <select name="'. $key .'" id="'. $key .'" class="form-control input-sm '. $select2 .'" onchange="document.getElementById('. $string .''. $form .''. $string .').click()">
                   <option value="">Select</option>
                   '. self::static_options($array, $old_value) .'
                 </select>

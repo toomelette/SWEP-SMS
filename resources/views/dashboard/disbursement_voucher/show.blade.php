@@ -15,7 +15,8 @@
         <h3 class="box-title">Details</h3>
 
         <div class="box-tools">
-          <a href="{{ route('dashboard.disbursement_voucher.print', $disbursement_voucher->slug) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
+          <a href="{{ route('dashboard.disbursement_voucher.print', [$disbursement_voucher->slug, 'front']) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Front</a>&nbsp;
+          <a href="{{ route('dashboard.disbursement_voucher.print', [$disbursement_voucher->slug, 'back']) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Back</a>
         </div>
 
       </div>

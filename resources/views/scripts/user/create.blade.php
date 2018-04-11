@@ -9,7 +9,7 @@
   @endif
 
 
-  /** ADD ROW **/
+  {{-- ADD ROW --}}
   $(document).ready(function() {
       $("#add_row").on("click", function() {
           $('select').select2('destroy');
@@ -45,13 +45,13 @@
    });
 
 
-  /** DELETE ROW **/
+  {{-- DELETE ROW --}}
   $(document).on("click","#delete_row" ,function(e) {
       $(this).closest('tr').remove();
   });
 
 
-  /** AJAX **/
+  {{-- AJAX --}}
   $(document).ready(function() {
     $(document).on("change", "#menu", function() {
         var key = $(this).val();
