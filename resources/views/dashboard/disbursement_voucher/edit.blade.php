@@ -95,15 +95,31 @@
 @endsection
 
 
+
+
 @section('modals')
 
-  @include('modals.disbursement_voucher.update')
+  {{-- DV CREATE SUCCESS --}}
+  @if(Session::has('SESSION_DV_UPDATE_SUCCESS'))
+
+    {!! HtmlHelper::modal_print(
+      'dv_update', '<i class="fa fa-fw fa-check"></i> Updated!', Session::get('SESSION_DV_UPDATE_SUCCESS'), route('dashboard.disbursement_voucher.show', Session::get('SESSION_DV_UPDATE_SUCCESS_SLUG'))
+    ) !!}
+
+  @endif
 
 @endsection 
 
 
 @section('scripts')
 
-  @include('scripts.disbursement_voucher.update')
+  <script type="text/javascript">
+  
+    {!! JSHelper::ajax_select_to_select('department_name', 'department_unit_name', '/api/dropdown_response_department_units_from_department/', 'name', 'name') !!}
+    {!! JSHelper::ajax_select_to_select('department_name', 'account_code', '/api/dropdown_response_accounts_from_department/', 'account_code', 'account_code') !!}
+
+    $('#dv_update').modal('show');
+
+  </script>
     
 @endsection

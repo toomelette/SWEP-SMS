@@ -57,16 +57,70 @@
 
 @endsection
 
+
+
+
     
 @section('modals')
 
-  @include('modals.user.reset_password')
-    
+  {{-- USER RESET CONFIRMATION MODAL --}}  
+  <div class="modal fade" id="user_reset_password" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"><i class="fa fa-key"></i> &nbsp;User Confirmation</h4>
+        </div>
+        <div class="modal-body">
+          <form id="reset_password_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.reset_password_post', $user->slug) }}">
+            @csrf
+            <p style="font-size: 17px;">Confirm first your identity before resetting someone's password!</p><br>
+            <input id="password_in_modal" type="hidden" name="password" value="">
+            <input id="password_confirmation_in_modal" type="hidden" name="password_confirmation" value="">
+
+            {!! FormHelper::textbox_inline(
+                'username', 'text', 'Username', 'Username', old('username'), $errors->has('username'), $errors->first('username'), ''
+            ) !!}
+
+            {!! FormHelper::password_inline(
+                'user_password', 'Password', 'Password', $errors->has('user_password'), $errors->first('user_password'), ''
+            ) !!}
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Sign-in</button>
+        </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 
 @section('scripts')
 
-  @include('scripts.user.reset_password')
+  <script type="text/javascript">
+
+    {!! JSHelper::show_password('password', 'show_password') !!}
+    {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
+    {!! JSHelper::show_password('user_password', 'show_user_password') !!}
+
+    {{-- CALL RESET PASSWORD CONFIRMATION MODAL --}}
+    $(document).on("click", "#reset_button", function () {
+      var password = $("#password").val();
+      var password_confirmation = $("#password_confirmation").val();
+      $("#user_reset_password").modal("show");
+      $("#reset_password_form #password_in_modal").attr("value", password);
+      $("#reset_password_form #password_confirmation_in_modal").attr("value", password_confirmation);
+    });
+
+  </script>
     
 @endsection

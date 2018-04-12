@@ -95,17 +95,76 @@
 @endsection
 
 
+
+
+
+
 @section('modals')
 
+  {!! HtmlHelper::modal_delete('dv_delete') !!}
 
+  <div class="modal fade" id="dv_set_no" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="dv_set_no_form" class="form-horizontal" method="POST" autocomplete="off">
+            @csrf
+            <p style="font-size: 17px;">Set DV No.</p><br>
 
-  @include('modals.disbursement_voucher.index')
+            {!! FormHelper::textbox_inline(
+                'dv_no', 'text', 'DV No.', 'DV No.', old('dv_no'), $errors->has('dv_no'), $errors->first('dv_no'), ''
+            ) !!}
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
 
 @endsection 
 
 
 @section('scripts')
 
-  @include('scripts.disbursement_voucher.index')
+  <script type="text/javascript">
+
+    {{-- CALL CONFIRM DELETE MODAL --}}
+    {!! JSHelper::modal_confirm_delete_caller('dv_delete') !!}
+
+
+    {{-- FORM VARIABLES RULE --}}
+    {!! JSHelper::table_action_rule() !!}
+
+
+    {{-- DV DELETE TOAST --}}
+    @if(Session::has('SESSION_DV_DELETE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('SESSION_DV_DELETE_SUCCESS')) !!}
+    @endif
+
+
+    {{-- DV SET NO TOAST --}}
+    @if(Session::has('SESSION_DV_SET_NO_SUCCESS'))
+      {!! JSHelper::toast(Session::get('SESSION_DV_SET_NO_SUCCESS')) !!}
+    @endif
+    
+
+    $(document).on("change", "#action", function () {
+      var element = $(this).children("option:selected");
+      if(element.data("action") == "set_dv_no"){
+        $("#dv_set_no").modal("show");
+        $("#dv_set_no_form").attr("action", element.data("url"));
+          $("#dv_set_no_form #dv_no").val(element.data("value"));
+        $(this).val("");
+      }
+    });
+
+  </script>
     
 @endsection
