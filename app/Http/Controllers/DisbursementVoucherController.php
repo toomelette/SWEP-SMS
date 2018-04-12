@@ -23,9 +23,10 @@ class DisbursementVoucherController extends Controller{
 
 
     
-    public function index(){
+    public function index(Request $request){
 
-        
+        return $this->disbursement_voucher->fetchAll($request);
+
     }
 
 
@@ -56,15 +57,15 @@ class DisbursementVoucherController extends Controller{
     
     public function edit($slug){
 
-
+        return $this->disbursement_voucher->edit($slug);
         
     }
 
 
 
-    public function update(Request $request, $slug){
+    public function update(DisbursementVoucherFormRequest $request, $slug){
 
-
+        return $this->disbursement_voucher->update($request, $slug);
         
     }
 
@@ -72,7 +73,7 @@ class DisbursementVoucherController extends Controller{
     
     public function destroy($slug){
 
-
+        return $this->disbursement_voucher->destroy($slug);
         
     }
 
@@ -84,6 +85,13 @@ class DisbursementVoucherController extends Controller{
         
     }
 
-    
+        
+
+    public function setNo(Request $request, $slug){
+
+        return $this->disbursement_voucher->setNo($request, $slug);
+        
+    }
+
     
 }

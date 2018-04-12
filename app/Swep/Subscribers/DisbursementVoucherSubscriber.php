@@ -42,6 +42,7 @@ class DisbursementVoucherSubscriber{
 	public function subscribe($events){
 
 		$events->listen('dv.create', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onCreate');
+        $events->listen('dv.update', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onUpdate');
 
 	}
 
@@ -65,6 +66,20 @@ class DisbursementVoucherSubscriber{
 
 
 
+    public function onUpdate($disbursement_voucher, $request){
+
+        $this->updateDefaults($disbursement_voucher);
+
+        $disbursement_voucher->payee = strtoupper($request->payee);
+        $disbursement_voucher->address = strtoupper($request->address);
+        $disbursement_voucher->amount = str_replace(',', '', $request->amount);
+        $disbursement_voucher->save();
+
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
+        
+    }
+
+
 
 	// Defaults
 	public function createDefaults($disbursement_voucher){
@@ -85,6 +100,17 @@ class DisbursementVoucherSubscriber{
 
 	}
 
+
+
+    public function updateDefaults($disbursement_voucher){
+
+        $disbursement_voucher->updated_at = $this->carbon->now();
+        $disbursement_voucher->machine_updated = gethostname();
+        $disbursement_voucher->ip_updated = request()->ip();
+        $disbursement_voucher->user_updated = $this->auth->user()->user_id;
+        $disbursement_voucher->save();
+
+    }
 
 
 

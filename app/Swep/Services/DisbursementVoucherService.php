@@ -7,6 +7,7 @@ use Session;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use App\Models\DisbursementVouchers;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Cache\Repository as Cache;
 
 class DisbursementVoucherService{
@@ -35,12 +36,39 @@ class DisbursementVoucherService{
 
 
 
+    public function fetchAll(Request $request){
+
+        $disbursement_vouchers = $this->disbursement_voucher->populate();
+        return view('dashboard.disbursement_voucher.index')->with('disbursement_vouchers', $disbursement_vouchers);
+
+    }
+
+
+
+
     public function store(Request $request){
 
         $disbursement_voucher = $this->disbursement_voucher->create($request->except(['amount', 'payee', 'address']));
         $this->event->fire('dv.create', [ $disbursement_voucher, $request ]);
         $this->session->flash('SESSION_DV_CREATE_SUCCESS_SLUG', $disbursement_voucher->slug);
         $this->session->flash('SESSION_DV_CREATE_SUCCESS', 'Your Voucher has been successfully Created!');
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function update(Request $request, $slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });
+
+        $disbursement_voucher->update($request->except(['amount', 'payee', 'address']));
+        $this->event->fire('dv.update', [ $disbursement_voucher, $request ]);
+        $this->session->flash('SESSION_DV_UPDATE_SUCCESS_SLUG', $disbursement_voucher->slug);
+        $this->session->flash('SESSION_DV_UPDATE_SUCCESS', 'Your Voucher has been successfully Updated!');
         return redirect()->back();
 
     }
@@ -55,6 +83,34 @@ class DisbursementVoucherService{
         });     
 
         return view('dashboard.disbursement_voucher.show')->with('disbursement_voucher', $disbursement_voucher);
+
+    }
+
+
+
+
+    public function edit($slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });     
+
+        return view('dashboard.disbursement_voucher.edit')->with('disbursement_voucher', $disbursement_voucher);
+
+    }
+
+
+
+
+    public function destroy($slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });
+
+        $disbursement_voucher->delete();
+        $this->session->flash('SESSION_DV_DELETE_SUCCESS', 'Your Voucher has been successfully Deleted!');
+        return redirect()->back();
 
     }
 
@@ -76,6 +132,37 @@ class DisbursementVoucherService{
 
     }
 
+
+
+
+    public function setNo(Request $request, $slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });    
+
+        $validator = $this->setNoValidate($request);
+
+        $disbursement_voucher->update(['dv_no' => $request->dv_no]);
+
+        $this->session->flash('SESSION_DV_SET_NO_SUCCESS', 'DV No. successfully set!');
+        return redirect()->back();
+
+    }
+
+
+
+
+    //Utility Methods
+    public function setNoValidate(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'dv_no' => 'nullable|max:50|string',
+        ]);
+
+        return $validator->validate();
+
+    }
 
 
 

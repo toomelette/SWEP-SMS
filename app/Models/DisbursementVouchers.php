@@ -88,11 +88,28 @@ class DisbursementVouchers extends Model{
     ];
 
 
+    //RELATIONSHIPS
+    public function user(){
+        return $this->hasOne('App\Models\User', 'user_id', 'user_id');
+    }
 
+
+    public function project(){
+        return $this->hasOne('App\Models\Projects', 'project_id', 'project_id');
+    }
+
+
+    public function fundSource(){
+        return $this->hasOne('App\Models\FundSource', 'fund_source_id', 'fund_source');
+    }
+
+
+    public function modeOfPayment(){
+        return $this->hasOne('App\Models\ModeOfPayment', 'mode_of_payment_id', 'mode_of_payment');
+    }
 
 
     // SCOPES
-
     public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)->firstOrFail();
@@ -100,6 +117,11 @@ class DisbursementVouchers extends Model{
     }
 
     
+    public function scopePopulate($query){
+
+        return $query->orderBy('updated_at', 'DESC')->paginate(10);
+
+    }
 
 
 

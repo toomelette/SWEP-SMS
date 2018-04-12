@@ -84,6 +84,7 @@
           @endif
 
           <div class="box-footer">
+            <strong>Displaying {{ $users->firstItem() > 0 ? $users->firstItem() : 0 }} - {{ $users->lastItem() > 0 ? $users->lastItem() : 0 }} out of {{ $users->total()}} Records</strong>
             {!! $users->appends([
                   'q'=>Input::get('q'), 
                   'online' => Input::get('online'), 

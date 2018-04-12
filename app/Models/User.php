@@ -86,7 +86,16 @@ class User extends Authenticatable{
 
 
 
-    /** RELATIONSHIPS **/
+    /** RELATIONSHIPS **/   
+
+
+    public function disbursementVouchers() {
+      
+      return $this->belongsTo('App\Models\DisbursementVouchers','user_id','user_id');
+
+    }
+
+
 
     public function userMenu() {
 

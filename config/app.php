@@ -214,6 +214,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Input::class,
         'Carbon' => Carbon\Carbon::class,
+        'Str' => 'Illuminate\Support\Str',
 
         /** View Helper **/
         'FormHelper' => App\Swep\ViewHelpers\FormHelper::class,

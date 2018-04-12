@@ -84,7 +84,7 @@ class UserMenu extends Model{
 
     public function getUserMenuIdIncrementAttribute(){
 
-        $id = 'UM10000001';
+        $id = '10000001';
 
         if($this->lastUserMenu != null){
 

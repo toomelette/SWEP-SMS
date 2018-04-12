@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="content-header">
-    <h1>Create User</h1>
+    <h1>Update User</h1>
     <div class="pull-right" style="margin-top: -25px;">
       <a href="{{ url()->previous() }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>
     </div>

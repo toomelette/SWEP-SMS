@@ -67,7 +67,7 @@ class JSHelper{
 			      if(element.data("action") == "delete"){
 			        $("#'. $modal .'").modal("show");
 			        $("#delete_body #form").attr("action", element.data("url"));
-			        $("#action").val("");
+			        $(this).val("");
 			      }
 			    });';
 
