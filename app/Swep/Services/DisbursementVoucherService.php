@@ -38,7 +38,34 @@ class DisbursementVoucherService{
 
     public function fetchAll(Request $request){
 
-        $disbursement_vouchers = $this->disbursement_voucher->populate();
+        $disbursement_voucher = $this->disbursement_voucher->newQuery();
+
+        $disbursement_voucher->search($request->q);
+
+        if($request->fs != null){
+           $disbursement_voucher->whereFundSource($request->fs); 
+        }
+        
+        if($request->pi != null){
+            $disbursement_voucher->whereProjectId($request->pi);
+        }
+
+        if($request->dn != null){
+            $disbursement_voucher->whereDepartmentName($request->dn);
+        }
+
+        if($request->dun != null){
+            $disbursement_voucher->whereDepartmentUnitName($request->dun);
+        }
+
+        if($request->ac != null){
+            $disbursement_voucher->whereAccountCode($request->ac);
+        }
+
+        $disbursement_vouchers = $disbursement_voucher->populate();
+
+        $request->flash();
+
         return view('dashboard.disbursement_voucher.index')->with('disbursement_vouchers', $disbursement_vouchers);
 
     }

@@ -36,7 +36,7 @@
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Mode of Payment: <strong>{{ $disbursement_voucher->modeOfPayment->description }}</strong></span>
+          <span style="font-size: 15px; ">Mode of Payment: <strong>{{ count($disbursement_voucher->modeOfPayment) != 0 ? $disbursement_voucher->modeOfPayment->description : ''  }}</strong></span>
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">

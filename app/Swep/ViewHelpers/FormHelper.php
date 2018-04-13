@@ -109,6 +109,23 @@ class FormHelper{
 
 
 
+
+    public static function select_dynamic_for_filter($class, $key, $label, $old_value, $array, $var1, $var2, $form, $select2){
+      
+      $string = "'";
+
+       return '<div class="form-group col-md-'. $class .'">
+                <label for="'. $key .'">'. $label .'</label>
+                <select name="'. $key .'" id="'. $key .'" class="form-control input-sm '. $select2 .'" onchange="document.getElementById('. $string .''. $form .''. $string .').click()">
+                  <option value="">Select</option>
+                  '. self::dynamic_options($array, $var1, $var2, $old_value) .'
+                </select>
+              </div>';
+                
+    }
+
+
+
     /** UTILITY METHODS **/
 
     public static function error_response($error_has){

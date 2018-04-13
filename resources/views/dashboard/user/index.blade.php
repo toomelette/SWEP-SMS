@@ -15,14 +15,14 @@
         {!! HtmlHelper::filter_open() !!}
 
           {!! FormHelper::select_static_for_filter(
-            '2', 'online', 'Login Status', old('online'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', ''
+            '2', 'ol', 'Login Status', old('ol'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', ''
           ) !!}
 
           {!! FormHelper::select_static_for_filter(
-            '2', 'active', 'User Status', old('active'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', ''
+            '2', 'a', 'User Status', old('a'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', ''
           ) !!}
 
-        {!! HtmlHelper::filter_close() !!}
+        {!! HtmlHelper::filter_close('submit_user_filter') !!}
 
 
         <div class="box" id="pjax-container">

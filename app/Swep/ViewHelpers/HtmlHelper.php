@@ -138,10 +138,10 @@ class HtmlHelper{
 
 
 
-    public static function filter_close(){
+    public static function filter_close($id){
 
        return '</div>
-            <button type="submit" id="submit_user_filter" style="display:none;">Filter</button>
+            <button type="submit" id="'. $id .'" style="display:none;">Filter</button>
         </div>';
 
     }

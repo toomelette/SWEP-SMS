@@ -51,6 +51,7 @@ class DisbursementVouchers extends Model{
     ];
 
 
+
     protected $attributes = [
 
         'slug' => '',
@@ -88,6 +89,7 @@ class DisbursementVouchers extends Model{
     ];
 
 
+
     //RELATIONSHIPS
     public function user(){
         return $this->hasOne('App\Models\User', 'user_id', 'user_id');
@@ -109,7 +111,23 @@ class DisbursementVouchers extends Model{
     }
 
 
+
     // SCOPES
+    public function scopeSearch($query, $key){
+
+        $query->where(function ($query) use ($key) {
+            $query->where('payee', 'LIKE', '%'. $key .'%')
+                 ->orwhere('dv_no', 'LIKE', '%'. $key .'%')
+                 ->orwhere('doc_no', 'LIKE', '%'. $key .'%')
+                 ->orwhere('department_name', 'LIKE', '%'. $key .'%')
+                 ->orwhere('department_unit_name', 'LIKE', '%'. $key .'%')
+                 ->orwhere('account_code', 'LIKE', '%'. $key .'%')
+                 ->orwhere('fund_source', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
     public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)->firstOrFail();

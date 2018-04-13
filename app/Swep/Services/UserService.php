@@ -45,9 +45,9 @@ class UserService{
             
             $user->search($request->q);
 
-            $user->filterIsOnline($request->online);
+            $user->filterIsOnline($request->ol);
 
-            $user->filterIsActive($request->active);
+            $user->filterIsActive($request->a);
 
             return $user->populate();
 

@@ -14,15 +14,27 @@
         {{-- Advance Filters --}}
         {!! HtmlHelper::filter_open() !!}
 
-          {!! FormHelper::select_static_for_filter(
-            '2', 'online', 'Login Status', old('online'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', ''
+          {!! FormHelper::select_dynamic_for_filter(
+            '2', 'fs', 'Fund Source', old('fs'), $global_fund_source_all, 'fund_source_id', 'description', 'submit_dv_filter', ''
           ) !!}
 
-          {!! FormHelper::select_static_for_filter(
-            '2', 'active', 'User Status', old('active'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', ''
+          {!! FormHelper::select_dynamic_for_filter(
+            '2', 'pi', 'Station', old('pi'), $global_projects_all, 'project_id', 'project_address', 'submit_dv_filter', ''
           ) !!}
 
-        {!! HtmlHelper::filter_close() !!}
+          {!! FormHelper::select_dynamic_for_filter(
+            '2', 'dn', 'Department', old('dn'), $global_departments_all, 'name', 'name', 'submit_dv_filter', ''
+          ) !!}
+
+          {!! FormHelper::select_dynamic_for_filter(
+            '2', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'name', 'submit_dv_filter', ''
+          ) !!}
+
+          {!! FormHelper::select_dynamic_for_filter(
+            '2', 'ac', 'Account Code', old('ac'), $global_accounts_all, 'account_code', 'account_code', 'submit_dv_filter', ''
+          ) !!}
+
+        {!! HtmlHelper::filter_close('submit_dv_filter') !!}
 
 
         <div class="box" id="pjax-container">
@@ -81,8 +93,11 @@
             <strong>Displaying {{ $disbursement_vouchers->firstItem() > 0 ? $disbursement_vouchers->firstItem() : 0 }} - {{ $disbursement_vouchers->lastItem() > 0 ? $disbursement_vouchers->lastItem() : 0 }} out of {{ $disbursement_vouchers->total()}} Records</strong>
             {!! $disbursement_vouchers->appends([
                   'q'=>Input::get('q'), 
-                  'online' => Input::get('online'), 
-                  'active' => Input::get('active'),
+                  'fs' => Input::get('fs'), 
+                  'pi' => Input::get('pi'),
+                  'dn' => Input::get('dn'),
+                  'dun' => Input::get('dun'),
+                  'ac' => Input::get('ac'),
                 ])->render('vendor.pagination.bootstrap-4')
             !!}
           </div>
