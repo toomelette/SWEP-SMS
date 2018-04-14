@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 // PJAX Form Caller
 $(document).on('submit', 'form[data-pjax]', function(event) {
- 	$.pjax.submit(event, '#pjax-container')
+ 	$.pjax.submit(event, '#pjax-container');
 });
 
 
@@ -74,6 +74,5 @@ $(document).on('ready pjax:success', function() {
         });
         $("form").find( ":input" ).prop( "disabled", false );
     });
-
 
 });

@@ -116,7 +116,7 @@ class HtmlHelper{
               </div>
 
               <div class="box-tools">
-                <a data-pjax href="'. $refresh_route .'" class="btn btn-sm btn-default">Refresh Data &nbsp;<i class="fa fa-refresh"></i></a>
+                <a href="'. $refresh_route .'" class="btn btn-sm btn-default">Refresh Data &nbsp;<i class="fa fa-refresh"></i></a>
               </div>';
 
     }

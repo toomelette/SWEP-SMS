@@ -58,6 +58,24 @@ class FormHelper{
 
 
 
+    public static function datepicker($class, $key, $label, $old_value, $error_has, $error_first){
+
+       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+                <label for="'. $key .'">'. $label .'</label>
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input id="'. $key .'" name="'. $key .'"  value="'. $old_value .'" type="text" class="form-control">
+                </div>
+
+                '. self::error_message($error_has, $error_first) .'
+              </div>';
+
+    }
+
+
+
     public static function textbox_inline($key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group '. self::error_response($error_has) .'">

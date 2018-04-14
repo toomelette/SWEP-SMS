@@ -136,31 +136,15 @@ class JSHelper{
 
 
 
-    public static function print_div($button, $div){
+    public static function datepicker_caller($id, $format, $position){
 
-      $string = "'";
-
-      return '<script>
-		    	$("#'.$button.'").on("click", function () {
-		            var divContents = $("#'.$div.'").html();
-		            var printWindow = window.open("", "", "height=800,width=1000");
-		            printWindow.document.write("<html><head><title></title>");
-		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://'.$_SERVER['HTTP_HOST'].'/template/bower_components/bootstrap/dist/css/bootstrap.min.css">'.$string.');
-		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://'.$_SERVER['HTTP_HOST'].'/template/bower_components/font-awesome/css/font-awesome.min.css">'.$string.');
-		            printWindow.document.write('.$string.'<link type="text/css" rel="stylesheet" href="http://'.$_SERVER['HTTP_HOST'].'/template/dist/css/AdminLTE.min.css">'.$string.');
-		            printWindow.document.write("</head><body>");
-		            printWindow.document.write(divContents);
-		            printWindow.document.write("</body></html>");
-		            printWindow.document.close();
-		            setInterval(function () { 
-		      			printWindow.print();
-		      			printWindow.close();
-		    		}, 1000);
-		    	});
-			</script>';
-
+       return '$("#'. $id .'").datepicker({
+			      autoclose: true,
+			      dateFormat: "'. $format .'",
+			      orientation: "'. $position .'"
+			    });';
+				
     }
-
 
 
 

@@ -115,13 +115,19 @@ class User extends Authenticatable{
 
     /** GETTERS **/
     
+    public function getFullnameShortAttribute(){
+
+        return strtoupper(substr($this->firstname , 0, 1) . ". " . $this->lastname);
+
+    }
+
+
     public function getFullnameAttribute(){
 
         return strtoupper($this->firstname . " " . substr($this->middlename , 0, 1) . ". " . $this->lastname);
 
     }
-
-
+    
 
     public function getLastUserAttribute(){
 

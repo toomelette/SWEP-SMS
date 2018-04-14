@@ -4,6 +4,7 @@ namespace App\Swep\Services;
 
 use Auth;
 use Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use App\Models\DisbursementVouchers;
@@ -38,31 +39,7 @@ class DisbursementVoucherService{
 
     public function fetchAll(Request $request){
 
-        $disbursement_voucher = $this->disbursement_voucher->newQuery();
-
-        $disbursement_voucher->search($request->q);
-
-        if($request->fs != null){
-           $disbursement_voucher->whereFundSource($request->fs); 
-        }
-        
-        if($request->pi != null){
-            $disbursement_voucher->whereProjectId($request->pi);
-        }
-
-        if($request->dn != null){
-            $disbursement_voucher->whereDepartmentName($request->dn);
-        }
-
-        if($request->dun != null){
-            $disbursement_voucher->whereDepartmentUnitName($request->dun);
-        }
-
-        if($request->ac != null){
-            $disbursement_voucher->whereAccountCode($request->ac);
-        }
-
-        $disbursement_vouchers = $disbursement_voucher->populate();
+        $disbursement_vouchers = $this->fetchValidate($request);
 
         $request->flash();
 
@@ -188,6 +165,46 @@ class DisbursementVoucherService{
         ]);
 
         return $validator->validate();
+
+    }
+
+
+
+
+    public function fetchValidate(Request $request){
+
+        $df = Carbon::parse($request->df)->format('Y-m-d');
+        $dt = Carbon::parse($request->dt)->format('Y-m-d');
+
+        $disbursement_voucher = $this->disbursement_voucher->newQuery();
+
+        $disbursement_voucher->search($request->q);
+
+        if($request->fs != null){
+           $disbursement_voucher->whereFundSource($request->fs); 
+        }
+        
+        if($request->pi != null){
+            $disbursement_voucher->whereProjectId($request->pi);
+        }
+
+        if($request->dn != null){
+            $disbursement_voucher->whereDepartmentName($request->dn);
+        }
+
+        if($request->dun != null){
+            $disbursement_voucher->whereDepartmentUnitName($request->dun);
+        }
+
+        if($request->ac != null){
+            $disbursement_voucher->whereAccountCode($request->ac);
+        }
+
+        if($request->df != null || $request->dt != null){
+            $disbursement_voucher->whereBetween('date', [$df, $dt]);
+        }
+
+        return $disbursement_voucher->populate();
 
     }
 
