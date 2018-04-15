@@ -39,11 +39,34 @@ class DisbursementVoucherService{
 
     public function fetchAll(Request $request){
 
-        $disbursement_vouchers = $this->fetchValidate($request);
+        $key = str_slug($request->fullUrl(), '_');
+
+        $disbursement_vouchers = $this->cache->remember('disbursement_voucher:all:'. $key, 240, function() use ($request){
+            $disbursement_voucher = $this->fetchRequest($request);
+            return $disbursement_voucher->populate();
+        });
 
         $request->flash();
 
         return view('dashboard.disbursement_voucher.index')->with('disbursement_vouchers', $disbursement_vouchers);
+
+    }
+
+
+
+
+    public function fetchByUser(Request $request){
+
+        $key = str_slug($request->fullUrl(), '_');
+
+        $disbursement_vouchers = $this->cache->remember('disbursement_voucher:byUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
+            $disbursement_voucher = $this->fetchRequest($request);
+            return $disbursement_voucher->populateByUser($this->auth->user()->user_id);
+        });
+
+        $request->flash();
+
+        return view('dashboard.disbursement_voucher.user_index')->with('disbursement_vouchers', $disbursement_vouchers);
 
     }
 
@@ -113,6 +136,7 @@ class DisbursementVoucherService{
         });
 
         $disbursement_voucher->delete();
+        $this->event->fire('dv.destroy', $disbursement_voucher);
         $this->session->flash('SESSION_DV_DELETE_SUCCESS', 'Your Voucher has been successfully Deleted!');
         return redirect()->back();
 
@@ -145,10 +169,8 @@ class DisbursementVoucherService{
             return $this->disbursement_voucher->findSlug($slug);
         });    
 
-        $validator = $this->setNoValidate($request);
-
         $disbursement_voucher->update(['dv_no' => $request->dv_no]);
-
+        $this->event->fire('dv.set_no', $disbursement_voucher);
         $this->session->flash('SESSION_DV_SET_NO_SUCCESS', 'DV No. successfully set!');
         return redirect()->back();
 
@@ -158,27 +180,17 @@ class DisbursementVoucherService{
 
 
     //Utility Methods
-    public function setNoValidate(Request $request){
-
-        $validator = Validator::make($request->all(),[
-            'dv_no' => 'nullable|max:50|string',
-        ]);
-
-        return $validator->validate();
-
-    }
-
-
-
-
-    public function fetchValidate(Request $request){
+    
+    public function fetchRequest(Request $request){
 
         $df = Carbon::parse($request->df)->format('Y-m-d');
         $dt = Carbon::parse($request->dt)->format('Y-m-d');
 
         $disbursement_voucher = $this->disbursement_voucher->newQuery();
 
-        $disbursement_voucher->search($request->q);
+        if($request->q != null){
+           $disbursement_voucher->search($request->q);
+        }
 
         if($request->fs != null){
            $disbursement_voucher->whereFundSource($request->fs); 
@@ -204,7 +216,7 @@ class DisbursementVoucherService{
             $disbursement_voucher->whereBetween('date', [$df, $dt]);
         }
 
-        return $disbursement_voucher->populate();
+        return $disbursement_voucher;
 
     }
 

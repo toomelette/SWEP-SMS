@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Swep\Services\UserService;
 use App\Http\Requests\UserFormRequest;
+use App\Http\Requests\UserFilterRequest;
+use App\Http\Requests\UserResetPasswordRequest;
 
 
 class UserController extends Controller{
@@ -24,7 +26,7 @@ class UserController extends Controller{
 
 
 
-    public function index(Request $request){
+    public function index(UserFilterRequest $request){
 
         return $this->user_service->fetchAll($request);
 
@@ -123,7 +125,7 @@ class UserController extends Controller{
 
 
 
-    public function resetPasswordPost(Request $request, $slug){
+    public function resetPasswordPost(UserResetPasswordRequest $request, $slug){
 
         return $this->user_service->resetPasswordPost($request, $slug);
         

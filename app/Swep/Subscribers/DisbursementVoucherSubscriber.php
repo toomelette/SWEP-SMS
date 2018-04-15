@@ -43,6 +43,8 @@ class DisbursementVoucherSubscriber{
 
 		$events->listen('dv.create', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onCreate');
         $events->listen('dv.update', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onUpdate');
+        $events->listen('dv.destroy', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onDestroy');
+        $events->listen('dv.set_no', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onSetNo');
 
 	}
 
@@ -61,6 +63,9 @@ class DisbursementVoucherSubscriber{
         $disbursement_voucher->approved_by = $this->getSignatory('1')->employee_name;
         $disbursement_voucher->approved_by_position = $this->getSignatory('1')->employee_position;
         $disbursement_voucher->save();
+
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:all:*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         
 	}
 
@@ -75,6 +80,28 @@ class DisbursementVoucherSubscriber{
         $disbursement_voucher->amount = str_replace(',', '', $request->amount);
         $disbursement_voucher->save();
 
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:all:*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
+        
+    }
+
+
+
+    public function onDestroy($disbursement_voucher){
+
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:all:*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
+        
+    }
+
+
+
+    public function onSetNo($disbursement_voucher){
+
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:all:*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         CacheHelper::deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
         
     }

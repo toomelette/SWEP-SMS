@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
+use Session;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -50,4 +52,22 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+
+
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+
+        Session::flash('CHECK_NOT_LOGGED_IN', 'You have been SIGNED OUT somewhere! Please Sign in again.');
+        return redirect()->guest(route('auth.login'));
+
+    }
+
+
+
+
 }

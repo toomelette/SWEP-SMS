@@ -142,5 +142,11 @@ class DisbursementVouchers extends Model{
     }
 
 
+    public function scopePopulateByUser($query, $id){
+
+        return $query->where('user_id', $id)->orderBy('updated_at', 'DESC')->paginate(10);
+
+    }
+
 
 }

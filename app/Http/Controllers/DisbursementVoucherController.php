@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\DisbursementVoucherFormRequest;
 use App\Swep\Services\DisbursementVoucherService;
+use App\Http\Requests\DisbursementVoucherFormRequest;
+use App\Http\Requests\DisbursementVoucherSetNoRequest;
+use App\Http\Requests\DisbursementVoucherFilterRequest;
 
 
 
@@ -12,7 +13,6 @@ class DisbursementVoucherController extends Controller{
 
 
     protected $disbursement_voucher;
-
 
 
     public function __construct(DisbursementVoucherService $disbursement_voucher){
@@ -23,9 +23,17 @@ class DisbursementVoucherController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(DisbursementVoucherFilterRequest $request){
 
         return $this->disbursement_voucher->fetchAll($request);
+
+    }
+
+
+
+    public function userIndex(DisbursementVoucherFilterRequest $request){
+
+        return $this->disbursement_voucher->fetchByUser($request);
 
     }
 
@@ -87,11 +95,12 @@ class DisbursementVoucherController extends Controller{
 
         
 
-    public function setNo(Request $request, $slug){
+    public function setNo(DisbursementVoucherSetNoRequest $request, $slug){
 
         return $this->disbursement_voucher->setNo($request, $slug);
         
     }
+
 
     
 }

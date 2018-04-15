@@ -51,6 +51,7 @@ class UserSubscriber{
         $events->listen('user.activate', 'App\Swep\Subscribers\UserSubscriber@onActivate');
         $events->listen('user.deactivate', 'App\Swep\Subscribers\UserSubscriber@onDeactivate');
         $events->listen('user.logout', 'App\Swep\Subscribers\UserSubscriber@onLogout');
+        $events->listen('user.reset_password', 'App\Swep\Subscribers\UserSubscriber@onResetPassword');
 
 	}
 
@@ -171,6 +172,17 @@ class UserSubscriber{
 
 
     public function onLogout($user){
+
+        CacheHelper::deletePattern('swep_cache:user:all:*');
+        CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+
+    }
+
+
+
+
+    public function onResetPassword($user){
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');

@@ -15,9 +15,8 @@ class CheckUserRouteExist{
 
     public function __construct(UserMenu $user_menu, UserSubmenu $user_submenu){
 
-            $this->user_menu = $user_menu;
-
-            $this->user_submenu = $user_submenu;
+        $this->user_menu = $user_menu;
+        $this->user_submenu = $user_submenu;
         
     }
   

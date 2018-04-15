@@ -29,13 +29,15 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // PROJECT
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
-                        'dashboard.disbursement_voucher.index'], 'App\Swep\ViewComposers\ProjectsComposer');
+                        'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\ProjectsComposer');
 
 
         // FUND SOURCE
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
-                        'dashboard.disbursement_voucher.index'], 'App\Swep\ViewComposers\FundSourceComposer');
+                        'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\FundSourceComposer');
 
 
         // MODE OF PAYMENT
@@ -47,19 +49,22 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // DEPARTMENT
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
-                        'dashboard.disbursement_voucher.index'], 'App\Swep\ViewComposers\DepartmentsComposer');
+                        'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\DepartmentsComposer');
 
 
         // DEPARTMENT UNITS
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
-                        'dashboard.disbursement_voucher.index'], 'App\Swep\ViewComposers\DepartmentUnitsComposer');
+                        'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\DepartmentUnitsComposer');
 
 
         //ACCOUNTS
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
-                        'dashboard.disbursement_voucher.index'], 'App\Swep\ViewComposers\AccountsComposer');
+                        'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\AccountsComposer');
         
 
         //SIGNATORIES

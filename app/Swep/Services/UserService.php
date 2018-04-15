@@ -43,11 +43,17 @@ class UserService{
 
             $user = $this->user->newQuery();
             
-            $user->search($request->q);
+            if($request->q != null){
+                $user->search($request->q);
+            }
+            
+            if($request->ol != null){
+                $user->filterIsOnline($request->ol);
+            }
 
-            $user->filterIsOnline($request->ol);
-
-            $user->filterIsActive($request->a);
+            if($request->a != null){
+                 $user->filterIsActive($request->a);
+            }
 
             return $user->populate();
 
@@ -244,7 +250,6 @@ class UserService{
             return $this->user->findSlug($slug);
         }); 
 
-        $validator = $this->resetPasswordValidate($request);
 
         if ($request->username == $this->auth->user()->username && Hash::check($request->user_password, $this->auth->user()->password)) {
             
@@ -258,7 +263,7 @@ class UserService{
                 $user->password = Hash::make($request->password);
                 $user->is_online = 0;
                 $user->save();
-
+                $this->event->fire('user.reset_password', $user);
                 $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
                 $this->session->flash('USER_RESET_PASSWORD_SLUG', $user->slug);
                 return redirect()->route('dashboard.user.index');
@@ -268,38 +273,10 @@ class UserService{
         }
 
         $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
-        return redirect()->back()->withErrors($validator, 'user');
+        return redirect()->back();
 
     }
 
-
-
-
-    //Utility Methods
-    public function resetPasswordValidate(Request $request){
-
-        $messages = [
-
-            'password.required'  => 'Password field is required.',
-            'password.confirmed'  => 'The Password Confirmation does not match.',
-            'password.string'  => 'Invalid Input! You must enter a string value.',
-            'password.min'  => 'The Password field may not be lesser than 6 characters.',
-            'password.max'  => 'The Password field may not be greater than 50 characters.',
-
-        ];
-
-        $validator = Validator::make($request->all(),[
-
-            'username' => 'required|max:50|string|',
-            'user_password' => 'required|max:50|string|',
-            'password' => 'required|min:6|max:50|string|confirmed'
-
-        ], $messages);
-
-
-        return $validator->validate();
-
-    }   
 
 
 

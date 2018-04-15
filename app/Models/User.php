@@ -175,16 +175,12 @@ class User extends Authenticatable{
 
     public function scopeSearch($query, $key){
 
-        if(!$key == null){
-
-            return $query->where(function ($query) use ($key) {
-                    $query->where('firstname', 'LIKE', '%'. $key .'%')
-                          ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                          ->orwhere('lastname', 'LIKE', '%'. $key .'%')
-                          ->orwhere('username', 'LIKE', '%'. $key .'%');
-            });
-
-        }
+        return $query->where(function ($query) use ($key) {
+                $query->where('firstname', 'LIKE', '%'. $key .'%')
+                      ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                      ->orwhere('lastname', 'LIKE', '%'. $key .'%')
+                      ->orwhere('username', 'LIKE', '%'. $key .'%');
+        });
 
     }
 
@@ -192,11 +188,7 @@ class User extends Authenticatable{
 
     public function scopeFilterIsOnline($query, $value){
 
-        if(!$value == null){
-
-            return $query->where('is_online', $this->getBoolean($value));
-
-        }
+        return $query->where('is_online', $this->getBoolean($value));
 
     }
 
@@ -204,11 +196,7 @@ class User extends Authenticatable{
 
     public function scopeFilterIsActive($query, $value){
 
-        if(!$value == null){
-
-            return $query->where('is_active', $this->getBoolean($value));
-
-        }
+        return $query->where('is_active', $this->getBoolean($value));
 
     }
 
