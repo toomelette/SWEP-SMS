@@ -3,15 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class DisbursementVouchers extends Model{
 
-    
+    use Sortable;
 
 	protected $table = 'disbursement_vouchers';
 
 	protected $dates = ['created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
+    public $sortable = ['payee', 'account_code'];
+    
 	public $timestamps = false;
 
 
@@ -143,14 +147,14 @@ class DisbursementVouchers extends Model{
     
     public function scopePopulate($query){
 
-        return $query->orderBy('updated_at', 'DESC')->paginate(10);
+        return $query->sortable()->paginate(10);
 
     }
 
 
     public function scopePopulateByUser($query, $id){
 
-        return $query->where('user_id', $id)->orderBy('updated_at', 'DESC')->paginate(10);
+        return $query->where('user_id', $id)->sortable()->paginate(10);
 
     }
 

@@ -66,7 +66,7 @@
                 <th>User</th>
                 <th>Doc No.</th>
                 <th>DV No.</th>
-                <th>Payee</th>
+                <th>@sortablelink('payee', 'Payee')</th>
                 <th>Account Code</th>
                 <th>Date</th>
                 <th>Status</th>
