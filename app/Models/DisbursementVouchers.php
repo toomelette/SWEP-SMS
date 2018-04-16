@@ -122,7 +122,13 @@ class DisbursementVouchers extends Model{
                  ->orwhere('department_name', 'LIKE', '%'. $key .'%')
                  ->orwhere('department_unit_name', 'LIKE', '%'. $key .'%')
                  ->orwhere('account_code', 'LIKE', '%'. $key .'%')
-                 ->orwhere('fund_source', 'LIKE', '%'. $key .'%');
+                 ->orwhere('fund_source', 'LIKE', '%'. $key .'%')
+                 ->orwhereHas('user', function ($query) use ($key) {
+                    $query->where('firstname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                          ->orwhere('lastname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('username', 'LIKE', '%'. $key .'%');
+                });
         });
 
     }

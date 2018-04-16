@@ -73,8 +73,13 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($disbursement_vouchers as $data) 
-                <tr>
-                  <td>{!! count($data->user) != 0 ? SanitizeHelper::xss_safe(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
+                <tr
+                  {!! HtmlHelper::table_highlighter( $data->slug, [ 
+                      Session::get('SESSION_DV_SET_NO_SUCCESS_SLUG'),
+                    ])
+                  !!}
+                >
+                  <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
                   <td>{{ $data->doc_no }}</td>
                   <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : SanitizeHelper::html_encode($data->dv_no) !!}</td>
                   <td>{{ $data->payee  }}</td>

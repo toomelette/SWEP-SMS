@@ -5,7 +5,7 @@
 <section class="content-header">
     <h1>Update User</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      <a href="{{ url()->previous() }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>
+      {!! HtmlHelper::back_button(['dashboard.user.index']) !!}
     </div>
 </section>
 
@@ -222,6 +222,7 @@
           console.log(parent);
           if(id) {
               $.ajax({
+                  headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
                   url: "/api/dropdown_response_submenu_from_menu/" + id,
                   type: "GET",
                   dataType: "json",

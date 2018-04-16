@@ -5,7 +5,7 @@
 <section class="content-header">
   <h1>User Reset Password</h1>
   <div class="pull-right" style="margin-top: -25px;">
-    <a href="{{ url()->previous() }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>
+    {!! HtmlHelper::back_button(['dashboard.user.index']) !!}
   </div>
 </section>
 

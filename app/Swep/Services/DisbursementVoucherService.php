@@ -96,6 +96,7 @@ class DisbursementVoucherService{
         $this->event->fire('dv.update', [ $disbursement_voucher, $request ]);
         $this->session->flash('SESSION_DV_UPDATE_SUCCESS_SLUG', $disbursement_voucher->slug);
         $this->session->flash('SESSION_DV_UPDATE_SUCCESS', 'Your Voucher has been successfully Updated!');
+
         return redirect()->back();
 
     }
@@ -171,6 +172,7 @@ class DisbursementVoucherService{
 
         $disbursement_voucher->update(['dv_no' => $request->dv_no]);
         $this->event->fire('dv.set_no', $disbursement_voucher);
+        $this->session->flash('SESSION_DV_SET_NO_SUCCESS_SLUG', $disbursement_voucher->slug);
         $this->session->flash('SESSION_DV_SET_NO_SUCCESS', 'DV No. successfully set!');
         return redirect()->back();
 

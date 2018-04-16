@@ -46,7 +46,15 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($users as $data) 
-                <tr {!! Session::get('USER_UPDATE_SUCCESS_SLUG') == $data->slug || Session::get('USER_RESET_PASSWORD_SLUG') == $data->slug ? 'style="background-color: #b3e5fc;"' : '' !!} >
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
+                        Session::get('USER_UPDATE_SUCCESS_SLUG'), 
+                        Session::get('USER_RESET_PASSWORD_SLUG'),  
+                        Session::get('USER_ACTIVATE_SUCCESS_SLUG'),
+                        Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
+                        Session::get('USER_LOGOUT_SUCCESS_SLUG'),
+                      ]) 
+                    !!}
+                >
                   <td>{{ $data->username }}</td>
                   <td>{{ $data->fullname }}</td>
                   <td>{!! $data->is_online == 1 ? '<span class="badge bg-green"><i class="fa fa-check "></i></span>' : '<span class="badge bg-red"><i class="fa fa-times "></i></span>' !!}</td>

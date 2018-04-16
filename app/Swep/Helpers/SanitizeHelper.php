@@ -11,6 +11,7 @@ class SanitizeHelper {
 
 
 	public static function html_encode($str, $default = ''){
+
 		if(empty($str)){
 			$str = $default;
 		}
@@ -35,6 +36,7 @@ class SanitizeHelper {
 		}
 		
 		return $out;
+
 	}
 
 
@@ -42,6 +44,7 @@ class SanitizeHelper {
 
 
 	public static function html_attribute_encode($str, $default = ''){
+
 		if(empty($str)){
 			$str = $default;
 		}
@@ -65,6 +68,7 @@ class SanitizeHelper {
 		}
 		
 		return $out;
+
 	}
 
 
@@ -72,6 +76,7 @@ class SanitizeHelper {
 
 
 	public static function xml_encode($str, $default = ''){
+
 		if(empty($str)){
 			$str = $default;
 		}
@@ -96,6 +101,7 @@ class SanitizeHelper {
 		}
 		
 		return $out;
+
 	}
 
 
@@ -128,6 +134,7 @@ class SanitizeHelper {
 		}
 		
 		return $out;
+
 	}
 	
 
@@ -171,6 +178,7 @@ class SanitizeHelper {
 		}
 		
 		return $out . "'";
+
 	}
 	
 
@@ -228,15 +236,6 @@ class SanitizeHelper {
 		}
 		
 		return ltrim($out, '&') . ($inStr ? '"' : '');
-	}
-
-
-
-
-
-	public static function xss_safe($data){
-
-	  	return htmlspecialchars($data, ENT_QUOTES | ENT_HTML401, 'UTF-8');
 
 	}
 
@@ -246,6 +245,7 @@ class SanitizeHelper {
 	/** Utility Methods **/
 
 	public static function unichr($u){
+
 		if(SanitizeHelper::$haveUnicode == true){
 			return mb_convert_encoding(pack("N",$u), 'UTF-8', 'UCS-4BE');
 		}
@@ -257,23 +257,27 @@ class SanitizeHelper {
 
 
 	public static function uniord($u){
+
 		if(SanitizeHelper::$haveUnicode == true){
 			$c = unpack("N", mb_convert_encoding($u, 'UCS-4BE', 'UTF-8'));
 			return $c[1];
 		}
 		
 		return ord($u);
+		
 	}
 	
 
 
 
 	public static function unicharat($str, $cnt){
+
 		if(SanitizeHelper::$haveUnicode == true){
 			return mb_substr($str, $cnt, 1);
 		}
 		
 		return substr($str, $cnt, 1);
+
 	}
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Swep\ViewHelpers;
 
+
+use URL;
 use Input;
 
 
@@ -119,10 +121,38 @@ class HtmlHelper{
               </div>
 
               <div class="box-tools">
+              	<div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-default">Action</button>
+                  <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
                 <a href="'. $refresh_route .'" class="btn btn-sm btn-default">Refresh Data &nbsp;<i class="fa fa-refresh"></i></a>
               </div>';
 
     }
+
+
+
+
+    public static function table_highlighter($slug, $sessions = []){
+
+       foreach($sessions as $data){
+       		if($slug == $data){
+       			return 'style="background-color: #b3e5fc;"';
+       		}
+    	}
+
+    }
+
 
 
 
@@ -151,11 +181,32 @@ class HtmlHelper{
 
 
 
+    public static function back_button($route = []){
+
+    	foreach($route as $data){
+	    	if(self::previous_route() == $data){
+	        	return '<a href="#" onclick="window.history.back()" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>';
+	    	}
+    	}
+
+
+     }
+
+
+
 
     /** UTILITY METHODS **/
     public static function collapsed_filter(){
 
        return Input::except('q', 'page') ? '' : 'collapsed-box';
+
+    }
+
+
+
+    public static function previous_route(){
+
+       return app('router')->getRoutes()->match(app('request')->create(URL::previous()))->getName();
 
     }
 

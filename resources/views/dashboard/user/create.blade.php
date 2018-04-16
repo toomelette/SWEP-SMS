@@ -245,6 +245,7 @@
         console.log(parent);
         if(key) {
             $.ajax({
+                headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
                 url: "/api/dropdown_response_submenu_from_menu/" + key,
                 type: "GET",
                 dataType: "json",

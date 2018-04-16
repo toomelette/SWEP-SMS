@@ -11,7 +11,7 @@
     
   </head>
 
-  <body class="hold-transition {!! Auth::check() ? SanitizeHelper::xss_safe(Auth::user()->color) : '' !!}">
+  <body class="hold-transition {!! Auth::check() ? SanitizeHelper::html_encode(Auth::user()->color) : '' !!}">
 
     <div id="loader"></div>
 

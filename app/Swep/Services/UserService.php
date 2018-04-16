@@ -176,6 +176,7 @@ class UserService{
             $user->update(['is_active' => 1]);
             $this->event->fire('user.activate', $user);
             $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
+            $this->session->flash('USER_ACTIVATE_SUCCESS_SLUG', $user->slug);
             return redirect()->back();
 
         }
@@ -198,6 +199,7 @@ class UserService{
             $user->update(['is_active' => 0, 'is_online' => 0]);
             $this->event->fire('user.deactivate', $user);
             $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
+            $this->session->flash('USER_DEACTIVATE_SUCCESS_SLUG', $user->slug);
             return redirect()->back();
 
         }
@@ -220,6 +222,7 @@ class UserService{
             $user->update(['is_online' => 0]);
             $this->event->fire('user.logout', $user);
             $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
+            $this->session->flash('USER_LOGOUT_SUCCESS_SLUG', $user->slug);
             return redirect()->back();
 
         }

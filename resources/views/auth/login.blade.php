@@ -36,7 +36,7 @@
 					<div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
 						<label for="username" class="col-sm-2 control-label">Username</label>
 						<div class="col-sm-10">
-							<input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ old('username') }}">
+							<input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ SanitizeHelper::html_attribute_encode(old('username')) }}">
 							
 							@if ($errors->has('username'))
 							<span class="help-block"> {{ $errors->first('username') }} </span>
