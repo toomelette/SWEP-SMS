@@ -2,16 +2,21 @@
 
 namespace App\Swep\ViewHelpers;
 
+use App\Swep\Helpers\SanitizeHelper;
+
+
 
 class FormHelper{
 
 
 
+    /** Default **/
+
     public static function textbox($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::xss_safe($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -23,7 +28,7 @@ class FormHelper{
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control" id="priceformat" name="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <input class="form-control" id="priceformat" name="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::xss_safe($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -66,7 +71,7 @@ class FormHelper{
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input id="'. $key .'" name="'. $key .'"  value="'. $old_value .'" type="text" class="form-control">
+                  <input id="'. $key .'" name="'. $key .'"  value="'. SanitizeHelper::xss_safe($old_value) .'" type="text" class="form-control">
                 </div>
 
                 '. self::error_message($error_has, $error_first) .'
@@ -76,12 +81,14 @@ class FormHelper{
 
 
 
+    /** Inlines **/
+
     public static function textbox_inline($key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group '. self::error_response($error_has) .'">
                   <label for="'. $key .'" class="col-sm-2 control-label">'. $label .'</label>
                   <div class="col-sm-10">
-                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. $old_value .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::xss_safe($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                     '. self::error_message($error_has, $error_first) .'
                   </div>
                 </div>';
@@ -109,6 +116,10 @@ class FormHelper{
                 
     }
 
+
+
+
+    /** For Filters **/
 
 
     public static function select_static_for_filter($class, $key, $label, $old_value, $array, $form, $select2){
@@ -141,6 +152,7 @@ class FormHelper{
               </div>';
                 
     }
+
 
 
 

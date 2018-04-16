@@ -20,14 +20,14 @@ class DisbursementVoucherFilterRequest extends FormRequest{
 
         return [
             
-            'q' => 'nullable|max:50|string',
+            'q' => 'nullable|max:45|string',
             'fs' => 'nullable|max:4|min:4|string',
             'pi' => 'nullable|max:4|min:4|string',
-            'dn' => 'nullable|max:20|string',
-            'dun' => 'nullable|max:20|string',
-            'ac' => 'nullable|max:20|string',
-            'df' => 'date_format:"mm/dd/yy"|nullable',
-            'dt' => 'date_format:"mm/dd/yy"|nullable',
+            'dn' => 'nullable|max:45|string',
+            'dun' => 'nullable|max:45|string',
+            'ac' => 'nullable|max:45|string',
+            'df' => 'date_format:"m/d/Y"|nullable',
+            'dt' => 'date_format:"m/d/Y"|nullable',
 
         ];
     }

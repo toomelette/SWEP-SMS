@@ -104,6 +104,9 @@ class HtmlHelper{
     
 
 
+
+    /** Wrappers **/
+
     public static function table_search($refresh_route){
 
        return '<div class="box-title">  
@@ -147,12 +150,15 @@ class HtmlHelper{
     }
 
 
+
+
     /** UTILITY METHODS **/
     public static function collapsed_filter(){
 
        return Input::except('q', 'page') ? '' : 'collapsed-box';
 
     }
+
 
 
 

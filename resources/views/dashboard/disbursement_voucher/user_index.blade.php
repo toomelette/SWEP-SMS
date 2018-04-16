@@ -74,7 +74,7 @@
               @foreach($disbursement_vouchers as $data) 
                 <tr>
                   <td>{{ $data->doc_no }}</td>
-                  <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : $data->dv_no !!}</td>
+                  <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : SanitizeHelper::xss_safe($data->dv_no) !!}</td>
                   <td>{{ $data->payee  }}</td>
                   <td>{{ $data->account_code }}</td>
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>

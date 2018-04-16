@@ -17,7 +17,7 @@ class DisbursementVoucherSetNoRequest extends FormRequest{
 
         return [
         
-            'dv_no' => 'nullable|max:50|string',
+            'dv_no' => 'nullable|max:45|string',
 
         ];
 

@@ -74,9 +74,9 @@
               </tr>
               @foreach($disbursement_vouchers as $data) 
                 <tr>
-                  <td>{!! count($data->user) != 0 ? Str::limit($data->user->fullnameShort, 25) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
+                  <td>{!! count($data->user) != 0 ? SanitizeHelper::xss_safe(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
                   <td>{{ $data->doc_no }}</td>
-                  <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : $data->dv_no !!}</td>
+                  <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : SanitizeHelper::html_encode($data->dv_no) !!}</td>
                   <td>{{ $data->payee  }}</td>
                   <td>{{ $data->account_code }}</td>
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
