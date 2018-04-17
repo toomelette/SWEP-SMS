@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -10,10 +11,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable{
 
 
-    use Notifiable;
+    use Notifiable, Sortable;
     
 
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
+
+    public $sortable = ['username', 'firstname', 'is_online', 'is_active'];
 
     public $timestamps = false;
 
@@ -212,7 +215,7 @@ class User extends Authenticatable{
 
     public function scopePopulate($query){
 
-        return $query->orderBy('updated_at', 'DESC')->paginate(10);
+        return $query->sortable()->paginate(10);
 
     }
 

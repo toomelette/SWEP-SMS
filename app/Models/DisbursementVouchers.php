@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+
 use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Database\Eloquent\Model;
+
 
 
 class DisbursementVouchers extends Model{
@@ -14,7 +16,7 @@ class DisbursementVouchers extends Model{
 
 	protected $dates = ['created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
-    public $sortable = ['payee', 'account_code'];
+    public $sortable = ['doc_no', 'dv_no', 'payee', 'account_code', 'date'];
     
 	public $timestamps = false;
 

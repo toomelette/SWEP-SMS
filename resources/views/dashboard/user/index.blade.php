@@ -39,10 +39,10 @@
           <div class="box-body no-padding">
             <table class="table table-bordered">
               <tr>
-                <th>Username</th>
-                <th>Name</th>
-                <th>Online</th>
-                <th>Active</th>
+                <th>@sortablelink('username', 'Username')</th>
+                <th>@sortablelink('firstname', 'Name')</th>
+                <th>@sortablelink('is_online', 'Online')</th>
+                <th>@sortablelink('is_active', 'Active')</th>
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($users as $data) 
@@ -94,9 +94,11 @@
           <div class="box-footer">
             <strong>Displaying {{ $users->firstItem() > 0 ? $users->firstItem() : 0 }} - {{ $users->lastItem() > 0 ? $users->lastItem() : 0 }} out of {{ $users->total()}} Records</strong>
             {!! $users->appends([
-                  'q'=>Input::get('q'), 
-                  'online' => Input::get('online'), 
-                  'active' => Input::get('active'),
+                  'q'=> Request::get('q'), 
+                  'online' => Request::get('online'), 
+                  'active' => Request::get('active'),
+                  'sort' => Request::get('sort'),
+                  'order' => Request::get('order'),
                 ])->render('vendor.pagination.bootstrap-4')
             !!}
           </div>

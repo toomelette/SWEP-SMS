@@ -63,12 +63,12 @@
           <div class="box-body no-padding">
             <table class="table table-bordered">
               <tr>
-                <th>User</th>
-                <th>Doc No.</th>
-                <th>DV No.</th>
+                <th>@sortablelink('user.firstname', 'User')</th>
+                <th>@sortablelink('doc_no', 'Doc No.')</th>
+                <th>@sortablelink('dv_no', 'Doc No.')</th>
                 <th>@sortablelink('payee', 'Payee')</th>
-                <th>Account Code</th>
-                <th>Date</th>
+                <th>@sortablelink('account_code', 'Account Code')</th>
+                <th>@sortablelink('date', 'Date')</th>
                 <th>Status</th>
                 <th style="width: 150px">Action</th>
               </tr>
@@ -109,14 +109,16 @@
           <div class="box-footer">
             <strong>Displaying {{ $disbursement_vouchers->firstItem() > 0 ? $disbursement_vouchers->firstItem() : 0 }} - {{ $disbursement_vouchers->lastItem() > 0 ? $disbursement_vouchers->lastItem() : 0 }} out of {{ $disbursement_vouchers->total()}} Records</strong>
             {!! $disbursement_vouchers->appends([
-                'q'=>Input::get('q'), 
-                'fs' => Input::get('fs'), 
-                'pi' => Input::get('pi'),
-                'dn' => Input::get('dn'),
-                'dun' => Input::get('dun'),
-                'ac' => Input::get('ac'),
-                'df' => Input::get('df'),
-                'dt' => Input::get('dt'),
+                'q'=> Request::get('q'), 
+                'fs' => Request::get('fs'), 
+                'pi' => Request::get('pi'),
+                'dn' => Request::get('dn'),
+                'dun' => Request::get('dun'),
+                'ac' => Request::get('ac'),
+                'df' => Request::get('df'),
+                'dt' => Request::get('dt'),
+                'sort' => Request::get('sort'),
+                'order' => Request::get('order'),
               ])->render('vendor.pagination.bootstrap-4')
             !!}
           </div>
