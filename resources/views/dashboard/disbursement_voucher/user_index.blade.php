@@ -78,7 +78,15 @@
                   <td>{{ $data->payee  }}</td>
                   <td>{{ $data->account_code }}</td>
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
-                  <td>{!! $data->dv_no == null ? '<span class="label label-warning">Filed..</span>' : '<span class="label label-primary">Processing..</span>' !!}</td>
+                  <td>
+                    @if($data->processed_at == null && $data->checked_at == null)
+                      <span class="label label-warning">Filed..</span>
+                    @elseif($data->processed_at != null && $data->checked_at == null)
+                      <span class="label label-primary">Processing..</span>
+                    @elseif($data->processed_at != null && $data->checked_at != null)
+                      <span class="label label-success">Completed!</span>
+                    @endif
+                  </td>
                   <td> 
                     <select id="action" class="form-control input-sm">
                       <option value="">Select</option>

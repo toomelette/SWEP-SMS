@@ -102,5 +102,12 @@ class DisbursementVoucherController extends Controller{
     }
 
 
+
+    public function confirmCheck($slug){
+
+        return $this->disbursement_voucher->confirmCheck($slug);
+        
+    }
+
     
 }

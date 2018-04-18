@@ -18,17 +18,19 @@ class DisbursementVoucherService{
 	protected $disbursement_voucher;
     protected $event;
     protected $cache;
+    protected $carbon;
     protected $auth;
     protected $session;
 
 
 
 
-    public function __construct(DisbursementVouchers $disbursement_voucher, Dispatcher $event, Cache $cache){
+    public function __construct(DisbursementVouchers $disbursement_voucher, Dispatcher $event, Cache $cache, Carbon $carbon){
 
         $this->disbursement_voucher = $disbursement_voucher;
         $this->event = $event;
         $this->cache = $cache;
+        $this->carbon = $carbon;
         $this->auth = auth();
         $this->session = session();
 
@@ -181,12 +183,37 @@ class DisbursementVoucherService{
 
 
 
-    //Utility Methods
+    public function confirmCheck($slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });
+
+        if($disbursement_voucher->processed_at != null){
+
+            $disbursement_voucher->update(['checked_at' => $this->carbon->now()]);
+            $this->event->fire('dv.confirm_check', $disbursement_voucher);
+            $this->session->flash('SESSION_DV_CONFIRM_CHECK_SUCCESS_SLUG', $disbursement_voucher->slug);
+            $this->session->flash('SESSION_DV_CONFIRM_CHECK_SUCCESS', 'Voucher Status successfully updated!');
+            return redirect()->back();
+
+        }
+
+        $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED_SLUG', $disbursement_voucher->slug);
+        $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED', 'Voucher Status failed to  updated! Please check the DV No. if it is set.');
+        return redirect()->back();
+
+    }
+
+
+
+
+    // Utility Methods
     
     public function fetchRequest(Request $request){
 
-        $df = Carbon::parse($request->df)->format('Y-m-d');
-        $dt = Carbon::parse($request->dt)->format('Y-m-d');
+        $df = $this->carbon->parse($request->df)->format('Y-m-d');
+        $dt = $this->carbon->parse($request->dt)->format('Y-m-d');
 
         $disbursement_voucher = $this->disbursement_voucher->newQuery();
 

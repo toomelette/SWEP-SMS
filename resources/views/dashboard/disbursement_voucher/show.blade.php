@@ -28,6 +28,10 @@
       <div class="box-body">
 
         <div class="col-md-12" style="padding-bottom:10px;">
+          <span style="font-size: 15px; ">DV No.: <strong>{{ $disbursement_voucher->dv_no }}</strong></span>
+        </div>
+
+        <div class="col-md-12" style="padding-bottom:10px;">
           <span style="font-size: 15px; ">Station: <strong>{{ $disbursement_voucher->project->project_address }}</strong></span>
         </div>
 
@@ -69,13 +73,38 @@
 
         <div class="col-md-12" style="padding-bottom:10px;">
           <span style="font-size: 15px; ">Explanation:</span><br>
-          <div style="border:solid; padding:10px;">
+          <div style="border:solid 1px; padding:10px;">
             {!! $disbursement_voucher->explanation !!}
           </div>
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
           <span style="font-size: 15px; ">Amount: <strong>{{ $disbursement_voucher->amount }}</strong></p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="box">
+        
+      <div class="box-header with-border">
+        <h3 class="box-title">Progress</h3>
+      </div>
+      
+      <div class="box-body">
+
+        <div class="col-md-12" style="padding-bottom:10px;">
+          <span style="font-size: 15px; ">Filed: <strong>{{ $disbursement_voucher->created_at != null ? Carbon::parse($disbursement_voucher->created_at)->format('M d, Y h:i A') : '' }}</strong></span>
+        </div>
+
+        <div class="col-md-12" style="padding-bottom:10px;">
+          <span style="font-size: 15px; ">Processed: <strong>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->processed_at)->format('M d, Y h:i A') : '' }}</strong></span>
+        </div>
+
+        <div class="col-md-12" style="padding-bottom:10px;">
+          <span style="font-size: 15px; ">Completed: <strong>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->checked_at)->format('M d, Y h:i A') : '' }}</strong></span>
         </div>
 
       </div>

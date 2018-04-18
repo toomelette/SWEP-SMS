@@ -14,7 +14,7 @@ class DisbursementVouchers extends Model{
 
 	protected $table = 'disbursement_vouchers';
 
-	protected $dates = ['created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
+	protected $dates = ['processed_at', 'checked_at', 'created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
     public $sortable = ['doc_no', 'dv_no', 'payee', 'account_code', 'date'];
     
@@ -47,6 +47,8 @@ class DisbursementVouchers extends Model{
         'approved_by',
         'approved_by_position',
         'approved_by_sig_date',
+        'processed_at',
+        'checked_at',
         'created_at',
         'updated_at',
         'machine_created',
@@ -83,6 +85,8 @@ class DisbursementVouchers extends Model{
         'approved_by' => '',
         'approved_by_position' => '',
         'approved_by_sig_date' => null,
+        'processed_at' => null,
+        'checked_at' => null,
         'created_at' => null,
         'updated_at' => null,
         'machine_created' => '',
@@ -159,6 +163,7 @@ class DisbursementVouchers extends Model{
         return $query->where('user_id', $id)->sortable()->paginate(10);
 
     }
+
 
 
 }

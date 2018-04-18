@@ -28,10 +28,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** DISBURSEMENT VOUCHERS ROUTES **/
 	Route::get('/disbursement_voucher/print/{slug}/{type}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
 	Route::post('/disbursement_voucher/{slug}/set_no', 'DisbursementVoucherController@setNo')->name('disbursement_voucher.set_no_post');
+	Route::post('/disbursement_voucher/confirm_check/{slug}', 'DisbursementVoucherController@confirmCheck')->name('disbursement_voucher.confirm_check');
 	Route::get('/disbursement_voucher/user_index', 'DisbursementVoucherController@userIndex')->name('disbursement_voucher.user_index');
 	Route::resource('disbursement_voucher', 'DisbursementVoucherController');
 
 });
+
 
 
 /** Testing **/

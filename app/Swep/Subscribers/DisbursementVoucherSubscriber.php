@@ -45,6 +45,7 @@ class DisbursementVoucherSubscriber{
         $events->listen('dv.update', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onUpdate');
         $events->listen('dv.destroy', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onDestroy');
         $events->listen('dv.set_no', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onSetNo');
+        $events->listen('dv.confirm_check', 'App\Swep\Subscribers\DisbursementVoucherSubscriber@onConfirmCheck');
 
 	}
 
@@ -100,12 +101,23 @@ class DisbursementVoucherSubscriber{
 
     public function onSetNo($disbursement_voucher){
 
+        $disbursement_voucher->processed_at = $this->carbon->now();
+        $disbursement_voucher->save();
         CacheHelper::deletePattern('swep_cache:disbursement_voucher:all:*');
         CacheHelper::deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         CacheHelper::deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
         
     }
 
+
+
+    public function onConfirmCheck($disbursement_voucher){
+
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:all:*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
+        CacheHelper::deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
+          
+    }
 
 
 	// Defaults
@@ -115,6 +127,8 @@ class DisbursementVoucherSubscriber{
         $disbursement_voucher->user_id = $this->auth->user()->user_id;
         $disbursement_voucher->doc_no = 'DV' . rand(10000000, 99999999);
         $disbursement_voucher->date = $this->carbon->format('Y-m-d');
+        $disbursement_voucher->processed_at = null;
+        $disbursement_voucher->checked_at = null;
         $disbursement_voucher->created_at = $this->carbon->now();
         $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->machine_created = gethostname();

@@ -76,6 +76,7 @@
                 <tr
                   {!! HtmlHelper::table_highlighter( $data->slug, [ 
                       Session::get('SESSION_DV_SET_NO_SUCCESS_SLUG'),
+                      Session::get('SESSION_DV_CONFIRM_CHECK_SUCCESS_SLUG'),
                     ])
                   !!}
                 >
@@ -85,14 +86,30 @@
                   <td>{{ $data->payee  }}</td>
                   <td>{{ $data->account_code }}</td>
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
-                  <td>{!! $data->dv_no == null ? '<span class="label label-warning">Filed..</span>' : '<span class="label label-primary">Processing..</span>' !!}</td>
+                  <td>
+                    @if($data->processed_at == null && $data->checked_at == null)
+                      <span class="label label-warning">Filed..</span>
+                    @elseif($data->processed_at != null && $data->checked_at == null)
+                      <span class="label label-primary">Processing..</span>
+                    @elseif($data->processed_at != null && $data->checked_at != null)
+                      <span class="label label-success">Completed!</span>
+                    @endif
+                  </td>
                   <td> 
                     <select id="action" class="form-control input-sm">
+
                       <option value="">Select</option>
+
                       <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
+
                       <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>
+
                       <option data-type="0" data-action="delete" data-url="{{ route('dashboard.disbursement_voucher.destroy', $data->slug) }}">Delete</option>
+
                       <option data-type="0" data-action="set_dv_no" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}">Set DV No.</option>
+                      @if($data->processed_at !=null)
+                        <option data-type="0" data-action="confirm_check" data-url="{{ route('dashboard.disbursement_voucher.confirm_check', $data->slug) }}">Confirm Check</option>
+                      @endif
                     </select>
                   </td>
                 </tr>
@@ -127,6 +144,9 @@
 
     </section>
 
+    <form id="from_confirm_check" method="POST" style="display: none;">
+      @csrf
+    </form>
 
 @endsection
 
@@ -138,6 +158,8 @@
 @section('modals')
 
   {!! HtmlHelper::modal_delete('dv_delete') !!}
+
+  {!! HtmlHelper::modal('dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')) !!}
 
   <div class="modal fade" id="dv_set_no" data-backdrop="static">
     <div class="modal-dialog">
@@ -190,6 +212,22 @@
       {!! JSHelper::toast(Session::get('SESSION_DV_SET_NO_SUCCESS')) !!}
     @endif
     
+
+    {{-- DV CONFIRM CHECK SUCCESS TOAST --}}
+    @if(Session::has('SESSION_DV_CONFIRM_CHECK_SUCCESS'))
+      {!! JSHelper::toast(Session::get('SESSION_DV_CONFIRM_CHECK_SUCCESS')) !!}
+    @endif
+
+    
+    {{-- CALL CONFIRM CHECK --}}
+    {!! JSHelper::form_submitter_via_action('confirm_check', 'from_confirm_check') !!}
+
+
+    {{-- CALL CONFIRM CHECK FAILED MODAL --}}
+    @if(Session::has('SESSION_DV_CONFIRM_CHECK_FAILED'))
+      $('#dv_confirm_check_failed').modal('show');
+    @endif
+
 
     $(document).on("change", "#action", function () {
       var element = $(this).children("option:selected");
