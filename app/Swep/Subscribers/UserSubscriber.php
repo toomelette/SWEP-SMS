@@ -240,7 +240,8 @@ class UserSubscriber{
         $user_menu->name = $menu->name;
         $user_menu->route = $menu->route;
         $user_menu->icon = $menu->icon;
-        $user_menu->is_dropdown = $menu->is_dropdown;       
+        $user_menu->is_menu = $menu->is_menu;
+        $user_menu->is_dropdown = $menu->is_dropdown;      
         $user_menu->save();
 
 	}

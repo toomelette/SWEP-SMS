@@ -20,7 +20,9 @@
 
         @foreach($global_user_menus as $user_menu)
 
-          @if($user_menu->is_dropdown == false)
+          @if($user_menu->is_menu == true)
+
+            @if($user_menu->is_dropdown == false)
 
             <li class="{!! Route::currentRouteNamed($user_menu->route) ? 'active' : '' !!}">
               <a href="{{ route($user_menu->route) }}">
@@ -28,29 +30,31 @@
               </a>
             </li>
 
-          @else
+            @else
 
-            <li class="treeview {!! Route::currentRouteNamed($user_menu->route) ? 'active' : '' !!}">
-              <a href="#">
-                <i class="fa {{ $user_menu->icon }}"></i> <span>{{ $user_menu->name }}</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
+              <li class="treeview {!! Route::currentRouteNamed($user_menu->route) ? 'active' : '' !!}">
+                <a href="#">
+                  <i class="fa {{ $user_menu->icon }}"></i> <span>{{ $user_menu->name }}</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
 
-                <ul class="treeview-menu">
+                  <ul class="treeview-menu">
 
-                  @foreach($user_menu->getUserNav() as $userNav)
+                    @foreach($user_menu->getUserNav() as $userNav)
 
-                    <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
-                      <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
-                    </li>
+                      <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
+                        <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
+                      </li>
 
-                  @endforeach
+                    @endforeach
 
-                </ul>
+                  </ul>
 
-            </li>
+              </li>
+
+            @endif
 
           @endif
 

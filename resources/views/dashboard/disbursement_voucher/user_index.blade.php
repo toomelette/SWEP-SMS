@@ -64,7 +64,7 @@
             <table class="table table-bordered">
               <tr>
                 <th>@sortablelink('doc_no', 'Doc No.')</th>
-                <th>@sortablelink('dv_no', 'Doc No.')</th>
+                <th>@sortablelink('dv_no', 'DV No.')</th>
                 <th>@sortablelink('payee', 'Payee')</th>
                 <th>@sortablelink('account_code', 'Account Code')</th>
                 <th>@sortablelink('date', 'Date')</th>
