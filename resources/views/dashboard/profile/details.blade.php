@@ -103,7 +103,7 @@
               @csrf
 
               {!! FormHelper::textbox_inline(
-                  'username', 'text', 'Username', 'Username', old('username'), $errors->has('username') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('username'), ''
+                  'username', 'text', 'Username', 'Username', old('username') ? old('username') : Auth::user()->username, $errors->has('username') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('username'), ''
               ) !!}
 
               {!! FormHelper::password_inline(
