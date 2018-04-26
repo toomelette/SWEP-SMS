@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\ProfileService;
-use App\Http\Requests\ProfileUpdateAccountRequest;
+use App\Http\Requests\ProfileUpdateAccountUsernameRequest;
+use App\Http\Requests\ProfileUpdateAccountPasswordRequest;
+use App\Http\Requests\ProfileUpdateAccountColorRequest;
 
 
 class ProfileController extends Controller{
@@ -34,14 +36,30 @@ class ProfileController extends Controller{
 
 
 
-    public function updateAccount(ProfileUpdateAccountRequest $request, $slug){
+    public function updateAccountUsername(ProfileUpdateAccountUsernameRequest $request, $slug){
 
-        return $this->profile_service->updateAccount($request, $slug);
+        return $this->profile_service->updateAccountUsername($request, $slug);
         
     }
 
 
 
 
+    public function updateAccountPassword(ProfileUpdateAccountPasswordRequest $request, $slug){
+
+        return $this->profile_service->updateAccountPassword($request, $slug);
+        
+    }
+
+
     
+
+    public function updateAccountColor(ProfileUpdateAccountColorRequest $request, $slug){
+
+        return $this->profile_service->updateAccountColor($request, $slug);
+        
+    }
+
+
+
 }

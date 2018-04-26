@@ -40,7 +40,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** PROFILE **/
 
 	Route::get('/profile', 'ProfileController@details')->name('profile.details');
-	Route::post('/profile/update_account/{slug}', 'ProfileController@updateAccount')->name('profile.update_account');
+	Route::post('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
+	Route::post('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
+	Route::post('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
 
 });
 

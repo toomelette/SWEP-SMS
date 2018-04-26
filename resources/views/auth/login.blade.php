@@ -25,6 +25,10 @@
 			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
 		@endif
 
+		@if(Session::has('PROFILE_UPDATE_ACCOUNT_SUCCESS'))
+			{!! HtmlHelper::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_ACCOUNT_SUCCESS')) !!}
+		@endif
+
 		<div class="box box-default">
 			<div class="box-header with-border">
 				<h3 class="box-title">Login</h3>
