@@ -33,7 +33,7 @@
             <h3 class="box-title">User Details</h3>
         </div>
 
-        <div class="box-body">
+        <div class="box-body" style="padding-left:30px;">
 
           {{-- Personal Info --}}
 

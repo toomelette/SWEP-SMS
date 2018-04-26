@@ -82,7 +82,13 @@
                 >
                   <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
                   <td>{{ $data->doc_no }}</td>
-                  <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : SanitizeHelper::html_encode($data->dv_no) !!}</td>
+                  <td>
+                    @if($data->dv_no == null)
+                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;"><b>Not Set!</b></a> 
+                    @else
+                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-green" style="text-decoration:underline;"><b>{{ SanitizeHelper::html_encode($data->dv_no) }}</b></a>
+                    @endif
+                  </td>
                   <td>{{ $data->payee  }}</td>
                   <td>{{ $data->account_code }}</td>
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
@@ -90,7 +96,7 @@
                     @if($data->processed_at == null && $data->checked_at == null)
                       <span class="label label-warning">Filed..</span>
                     @elseif($data->processed_at != null && $data->checked_at == null)
-                      <span class="label label-primary">Processing..</span>
+                      <span class="label label-primary">Processing..</span> | <a href="#" id="dv_confirm_check_link" data-url="{{ route('dashboard.disbursement_voucher.confirm_check', $data->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-check"></i></a>
                     @elseif($data->processed_at != null && $data->checked_at != null)
                       <span class="label label-success">Completed!</span>
                     @endif
@@ -106,10 +112,6 @@
 
                       <option data-type="0" data-action="delete" data-url="{{ route('dashboard.disbursement_voucher.destroy', $data->slug) }}">Delete</option>
 
-                      <option data-type="0" data-action="set_dv_no" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}">Set DV No.</option>
-                      @if($data->processed_at !=null)
-                        <option data-type="0" data-action="confirm_check" data-url="{{ route('dashboard.disbursement_voucher.confirm_check', $data->slug) }}">Confirm Check</option>
-                      @endif
                     </select>
                   </td>
                 </tr>
@@ -144,7 +146,7 @@
 
     </section>
 
-    <form id="from_confirm_check" method="POST" style="display: none;">
+    <form id="dv_confirm_check_form" method="POST" style="display: none;">
       @csrf
     </form>
 
@@ -228,15 +230,17 @@
       $('#dv_confirm_check_failed').modal('show');
     @endif
 
-
-    $(document).on("change", "#action", function () {
-      var element = $(this).children("option:selected");
-      if(element.data("action") == "set_dv_no"){
+    {{-- CALL DV SET NO MODAL --}}
+    $(document).on("click", "#dv_set_no_link", function () {
         $("#dv_set_no").modal("show");
-        $("#dv_set_no_form").attr("action", element.data("url"));
-          $("#dv_set_no_form #dv_no").val(element.data("value"));
-        $(this).val("");
-      }
+        $("#dv_set_no_form").attr("action", $(this).data("url"));
+        $("#dv_set_no_form #dv_no").val($(this).data("value"));
+    });
+
+    {{-- SUBMIT DV CONFIRM CHECK FORM --}}
+    $(document).on("click", "#dv_confirm_check_link", function () {
+        $("#dv_set_no_form").attr("action", $(this).data("url"));
+        $("#dv_set_no_form").submit();
     });
 
 
