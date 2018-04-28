@@ -55,6 +55,8 @@ class DisbursementVouchers extends Model{
         'machine_updated',
         'ip_created',
         'ip_updated',
+        'user_created',
+        'user_updated',
 
     ];
 

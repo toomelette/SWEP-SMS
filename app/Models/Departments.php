@@ -15,6 +15,7 @@ class Departments extends Model{
 
 
 
+
 	public function accounts() {
 
         return $this->hasMany('App\Models\Accounts','department_id','department_id');

@@ -86,7 +86,7 @@
                     @if($data->dv_no == null)
                       <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;"><b>Not Set!</b></a> 
                     @else
-                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-green" style="text-decoration:underline;"><b>{{ SanitizeHelper::html_encode($data->dv_no) }}</b></a>
+                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" style="text-decoration:underline;"><b>{{ $data->dv_no }}</b></a>
                     @endif
                   </td>
                   <td>{{ $data->payee  }}</td>
