@@ -70,25 +70,25 @@
 
                   <tbody id="table_body">
 
-                      <tr>
+                      <tr id="table_row">
 
                         <td>
                           <div class="form-group">
-                            <input type="text" name="sub_name[]" class="form-control" placeholder="Name">
+                            <input type="text" name="row[0][sub_name]" class="form-control" placeholder="Name">
                           </div>
                         </td>
 
 
                         <td>
                           <div class="form-group">
-                            <input type="text" name="sub_route[]" class="form-control" placeholder="Route">
+                            <input type="text" name="row[0][sub_route]" class="form-control" placeholder="Route">
                           </div>
                         </td>
 
 
                         <td>
                           <div class="form-group">
-                            <select name="sub_is_nav[]" class="form-control">
+                            <select name="row[0][sub_is_nav]" class="form-control">
                               <option value="">Select</option>
                                 <option value="true">1</option>
                                 <option value="false">0</option>
@@ -147,45 +147,48 @@
   @endif
 
 
+
   {{-- ADD ROW --}}
+
   $(document).ready(function() {
     $("#add_row").on("click", function() {
-        var content ='<tr>' +
+      var i = $("#table_body").children().length;
+      var content ='<tr>' +
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row[' + i + '][sub_name]" class="form-control" placeholder="Name">' +
+                        '</div>' +
+                      '</td>' +
 
-                        '<td>' +
-                          '<div class="form-group">' +
-                            '<input type="text" name="sub_name[]" class="form-control" placeholder="Name">' +
-                          '</div>' +
-                        '</td>' +
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row[' + i + '][sub_route]" class="form-control" placeholder="Route">' +
+                        '</div>' +
+                      '</td>' +
 
-                        '<td>' +
-                          '<div class="form-group">' +
-                            '<input type="text" name="sub_route[]" class="form-control" placeholder="Route">' +
-                          '</div>' +
-                        '</td>' +
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<select name="row[' + i + '][sub_is_nav]" class="form-control">' +
+                            '<option value="">Select</option>' +
+                            '<option value="true">1</option>' +
+                            '<option value="false">0</option>' +
+                          '</select>' +
+                        '</div>' +
+                      '</td>' +
 
-                        '<td>' +
-                          '<div class="form-group">' +
-                            '<select name="sub_is_nav[]" class="form-control">' +
-                              '<option value="">Select</option>' +
-                              '<option value="true">1</option>' +
-                              '<option value="false">0</option>' +
-                            '</select>' +
-                          '</div>' +
-                        '</td>' +
+                      '<td>' +
+                          '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
 
-                        '<td>' +
-                            '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
-                        '</td>' +
-
-                      '</tr>';
-
+                    '</tr>';
       $("#table_body").append($(content));
     });
   });
 
 
+
   {{-- DELETE ROW --}}
+
   $(document).on("click","#delete_row" ,function(e) {
       $(this).closest('tr').remove();
   });

@@ -77,4 +77,40 @@ class Menu extends Model{
 
 
 
+     // GETTERS
+
+    public function getLastMenuAttribute(){
+
+        $menu = $this->select('menu_id')->orderBy('menu_id', 'desc')->first();
+
+        if($menu != null){
+
+          return str_replace('M', '', $menu->menu_id);
+
+        }
+
+        return null;
+
+    }
+
+
+
+    public function getMenuIdIncrementAttribute(){
+
+        $id = '10001';
+
+        if($id != null){
+
+            $num =  $this->lastMenu + 1;
+            
+            $id = 'U' . $num;
+        
+        }
+
+        return $id;
+
+    }
+
+
+
 }

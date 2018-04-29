@@ -10,8 +10,8 @@ use App\Swep\Services\MenuService;
 class MenuController extends Controller{
 
 
-
     protected $menu;
+
 
 
     public function __construct(MenuService $menu){
@@ -19,7 +19,6 @@ class MenuController extends Controller{
         $this->menu = $menu;
 
     }
-
 
 
     
@@ -31,7 +30,6 @@ class MenuController extends Controller{
 
     
 
-
     public function create(){
         
         return view('dashboard.menu.create');
@@ -39,7 +37,6 @@ class MenuController extends Controller{
     }
 
    
-
 
     public function store(Request $request){
         
