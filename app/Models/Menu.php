@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model{
 
+
     protected $table = 'menu';
 
     protected $dates = ['created_at', 'updated_at'];
@@ -103,7 +104,7 @@ class Menu extends Model{
 
             $num =  $this->lastMenu + 1;
             
-            $id = 'U' . $num;
+            $id = 'M' . $num;
         
         }
 

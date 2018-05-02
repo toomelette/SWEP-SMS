@@ -18,4 +18,43 @@ class Submenu extends Model{
 
 
 
+
+
+   	// GETTERS
+
+    public function getLastSubmenuAttribute(){
+
+        $submenu = $this->select('submenu_id')->orderBy('submenu_id', 'desc')->first();
+
+        if($submenu != null){
+
+          return str_replace('SM', '', $submenu->submenu_id);
+
+        }
+
+        return null;
+
+    }
+
+
+
+    public function getSubmenuIdIncrementAttribute(){
+
+        $id = '100001';
+
+        if($id != null){
+
+            $num =  $this->lastSubmenu + 1;
+            
+            $id = 'SM' . $num;
+        
+        }
+
+        return $id;
+
+    }
+
+
+
+
 }

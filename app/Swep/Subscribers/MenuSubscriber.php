@@ -5,9 +5,10 @@ namespace App\Swep\Subscribers;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Menu;
-use App\Models\SubMenu;
+use App\Models\Submenu;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\CacheHelper;
+use App\Swep\Helpers\DataTypeHelper;
 
 
 
@@ -22,7 +23,7 @@ class MenuSubscriber{
 
 
 
-    public function __construct(Menu $menu, SubMenu $submenu, Carbon $carbon, Str $str){
+    public function __construct(Menu $menu, Submenu $submenu, Carbon $carbon, Str $str){
 
         $this->menu = $menu;
         $this->submenu = $submenu;
@@ -34,6 +35,7 @@ class MenuSubscriber{
 
 
 
+
     public function subscribe($events){
 
         $events->listen('menu.create', 'App\Swep\Subscribers\MenuSubscriber@onCreate');
@@ -42,17 +44,27 @@ class MenuSubscriber{
 
 
 
-    // public function onCreate($menu, $request){
 
-    //     $this->createDefaults($menu);
+    public function onCreate($menu, $request){
 
-    //     for($i = 0; $i < count($request->menu); $i++){
+        $this->createDefaults($menu);
 
+        $rows = $request->row;
 
+        foreach ($rows as $row) {
+            
+            $submenu = new Submenu;
+            $submenu->submenu_id = $this->submenu->submenuIdIncrement;
+            $submenu->menu_id = $menu->menu_id;
+            $submenu->name = $row['sub_name'];
+            $submenu->route = $row['sub_route'];
+            $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);
+            $submenu->save();
 
-    //     }
-        
-    // }
+        }
+
+    
+    }
 
 
 
@@ -85,25 +97,6 @@ class MenuSubscriber{
         $menu->save();
 
     }
-
-
-
-    /** UTILITY METHODS **/
-
-    // public function createUserMenu($user_menu, $user, $menu){
-
-    //     $user_menu->user_menu_id = $this->user_menu->userMenuIdIncrement;
-    //     $user_menu->user_id = $user->user_id;
-    //     $user_menu->menu_id = $menu->menu_id;
-    //     $user_menu->name = $menu->name;
-    //     $user_menu->route = $menu->route;
-    //     $user_menu->icon = $menu->icon;
-    //     $user_menu->is_menu = $menu->is_menu;
-    //     $user_menu->is_dropdown = $menu->is_dropdown;
-    //     $user_menu->save();
-
-    // }
-
 
 
 

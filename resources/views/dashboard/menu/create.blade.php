@@ -131,8 +131,8 @@
 
 @section('modals')
 
-  @if(Session::has('USER_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('user_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('USER_CREATE_SUCCESS')) !!}
+  @if(Session::has('MENU_CREATE_SUCCESS'))
+    {!! HtmlHelper::modal('menu_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('MENU_CREATE_SUCCESS')) !!}
   @endif
 
 @endsection 
@@ -142,10 +142,10 @@
 
   <script type="text/javascript">
 
-  @if(Session::has('USER_CREATE_SUCCESS'))
-    $('#user_create').modal('show');
-  @endif
 
+  @if(Session::has('MENU_CREATE_SUCCESS'))
+    $('#menu_create').modal('show');
+  @endif
 
 
   {{-- ADD ROW --}}

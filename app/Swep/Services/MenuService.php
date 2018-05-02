@@ -8,6 +8,7 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Cache\Repository as Cache;
+use App\Swep\Helpers\DataTypeHelper;
 
 class MenuService{
 
@@ -35,7 +36,19 @@ class MenuService{
 
     public function store(Request $request){
 
-        dd($request);
+        $menu = new Menu;
+        $menu->name = $request->name;
+        $menu->route = $request->route;
+        $menu->icon = $request->icon;
+        $menu->is_menu = DataTypeHelper::boolean($request->is_menu);
+        $menu->is_dropdown = DataTypeHelper::boolean($request->is_dropdown);
+        $menu->save();
+
+        $this->event->fire('menu.create', [$menu, $request]);
+
+        $this->session->flash('MENU_CREATE_SUCCESS', 'The Menu has been successfully created!');
+        
+        return redirect()->back();
 
     }
 
