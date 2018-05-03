@@ -31,7 +31,7 @@
             ) !!}
 
             {!! FormHelper::textbox(
-              '4', 'route', 'text', 'Route:', 'Route', old('tin'), $errors->has('tin'), $errors->first('route'), ''
+              '4', 'route', 'text', 'Route:', 'Route', old('tin'), $errors->has('route'), $errors->first('route'), ''
             ) !!}
 
             {!! FormHelper::textbox(
@@ -70,7 +70,52 @@
 
                   <tbody id="table_body">
 
-                      <tr id="table_row">
+
+                    @if(old('row'))
+
+                      @foreach(old('row') as $key => $value)
+
+                        <tr>
+
+                          <td>
+                            <div class="form-group">
+                              <input type="text" name="row[{{ $key }}][sub_name]" class="form-control" placeholder="Name" value="{{ $value['sub_name'] }}">
+                              <small class="text-danger">{{ $errors->first('sub_name.'.$key) }}</small>
+                            </div>
+                          </td>
+
+
+                          <td>
+                            <div class="form-group">
+                              <input type="text" name="row[{{ $key }}][sub_route]" class="form-control" placeholder="Route" value="{{ $value['sub_route'] }}">
+                              <small class="text-danger">{{ $errors->first('sub_route.'.$key) }}</small>
+                            </div>
+                          </td>
+
+
+                          <td>
+                            <div class="form-group">
+                              <select name="row[{{ $key }}][sub_is_nav]" class="form-control">
+                                <option value="">Select</option>
+                                  <option value="true" {!! $value['sub_is_nav'] == "true" ? 'selected' : '' !!}>1</option>
+                                  <option value="false" {!! $value['sub_is_nav'] == "false" ? 'selected' : '' !!}>0</option>
+                              </select>
+                              <small class="text-danger">{{ $errors->first('sub_is_nav.'.$key) }}</small>
+                            </div>
+                          </td>
+
+
+                          <td>
+                              <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+                    @else
+
+                      <tr>
 
                         <td>
                           <div class="form-group">
@@ -102,6 +147,9 @@
                         </td>
 
                       </tr>
+
+
+                    @endif
 
                     </tbody>
                 </table>

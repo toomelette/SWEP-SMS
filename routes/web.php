@@ -57,8 +57,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 Route::get('/dashboard/test', function(){
 
-	$test = \Hash::make('admin101');
 	$slug = \Str::random(16);
-    dd($slug);
-    
+	dd($slug);
+	    
 } )->name('showLogin');

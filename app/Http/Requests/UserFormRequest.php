@@ -37,9 +37,9 @@ class UserFormRequest extends FormRequest{
 
         if(count($this->request->get('menu')) > 0){
 
-          foreach($this->request->get('menu') as $key => $value){
+            foreach($this->request->get('menu') as $key => $value){
 
-            $rules['menu.'.$key] = 'required|string';
+                $rules['menu.'.$key] = 'required|string';
 
             } 
 

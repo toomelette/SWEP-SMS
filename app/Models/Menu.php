@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class Menu extends Model{
 
+
+    use Sortable;
 
     protected $table = 'menu';
 
@@ -70,15 +74,40 @@ class Menu extends Model{
    	}
 
 
+
+
     public function submenu() {
 
     	return $this->hasMany('App\Models\Submenu','menu_id','menu_id');
 
    	}
 
+    
 
 
-     // GETTERS
+    // SCOPE
+
+    public function scopeSearch($query, $key){
+
+        return $query->where(function ($query) use ($key) {
+                $query->where('name', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+    public function scopePopulate($query){
+
+        return $query->sortable()->paginate(10);
+
+    }
+
+
+
+
+    // GETTERS
 
     public function getLastMenuAttribute(){
 
@@ -93,6 +122,7 @@ class Menu extends Model{
         return null;
 
     }
+
 
 
 
@@ -111,6 +141,7 @@ class Menu extends Model{
         return $id;
 
     }
+
 
 
 

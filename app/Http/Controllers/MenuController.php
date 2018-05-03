@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\MenuService;
+use App\Http\Requests\MenuFormRequest;
 
 
 
@@ -22,9 +23,9 @@ class MenuController extends Controller{
 
 
     
-    public function index(){
+    public function index(Request $request){
         
-
+        return $this->menu->fetchAll($request);
 
     }
 
@@ -38,7 +39,7 @@ class MenuController extends Controller{
 
    
 
-    public function store(Request $request){
+    public function store(MenuFormRequest $request){
         
         return $this->menu->store($request);
 
@@ -48,7 +49,7 @@ class MenuController extends Controller{
 
 
 
-    public function show($id){
+    public function show($slug){
         
 
 
@@ -58,7 +59,7 @@ class MenuController extends Controller{
 
 
 
-    public function edit($id){
+    public function edit($slug){
         
 
 
@@ -67,7 +68,7 @@ class MenuController extends Controller{
 
 
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $slug){
         
 
 
@@ -76,7 +77,7 @@ class MenuController extends Controller{
     
 
 
-    public function destroy($id){
+    public function destroy($slug){
         
 
 

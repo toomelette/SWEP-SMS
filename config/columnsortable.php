@@ -2,6 +2,21 @@
 
 return [
 
+    'columns' => [
+        'alpha'   => [
+            'rows'  => ['description', 'email', 'name', 'slug'],
+            'class' => 'pull-right fa fa-sort',
+        ],
+        'amount'  => [
+            'rows'  => ['amount', 'price'],
+            'class' => 'pull-right fa fa-sort',
+        ],
+        'numeric' => [
+            'rows'  => ['created_at', 'updated_at', 'level', 'id', 'phone_number'],
+            'class' => 'pull-right fa fa-sort',
+        ],
+    ],
+
     /*
     whether icons should be enabled
      */

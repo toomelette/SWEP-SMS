@@ -34,6 +34,33 @@ class MenuService{
 
 
 
+
+    public function fetchAll(Request $request){
+
+        $key = str_slug($request->fullUrl(), '_');
+
+        $menus = $this->cache->remember('menu:all:' . $key, 240, function() use ($request){
+
+            $menu = $this->menu->newQuery();
+            
+            if($request->q != null){
+                $menu->search($request->q);
+            }
+
+            return $menu->populate();
+
+        });
+
+        $request->flash();
+        
+        return view('dashboard.menu.index')->with('menus', $menus);
+
+    }
+
+
+
+
+
     public function store(Request $request){
 
         $menu = new Menu;
