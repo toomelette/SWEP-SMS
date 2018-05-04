@@ -1,9 +1,12 @@
-@extends('layouts.admin-master')
+  @extends('layouts.admin-master')
 
 @section('content')
 
 <section class="content-header">
-    <h1>Create Menu</h1>
+    <h1>Edit Menu</h1>
+    <div class="pull-right" style="margin-top: -25px;">
+      {!! HtmlHelper::back_button(['dashboard.menu.index']) !!}
+    </div>
 </section>
 
 <section class="content">
@@ -14,7 +17,7 @@
         <h3 class="box-title">Form</h3>
       </div>
       
-      <form method="POST" autocomplete="off" action="{{ route('dashboard.menu.store') }}">
+      <form method="POST" autocomplete="off" action="{{ route('dashboard.menu.update', $menu->slug) }}">
 
         <div class="box-body">
 
@@ -23,27 +26,29 @@
           @endif
 
           <div class="col-md-11">
-                  
+            
+            <input name="_method" value="PUT" type="hidden">
+            
             @csrf    
 
             {!! FormHelper::textbox(
-              '4', 'name', 'text', 'Name:', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
+              '4', 'name', 'text', 'Name:', 'Name', old('name') ? old('name') : $menu->name, $errors->has('name'), $errors->first('name'), ''
             ) !!}
 
             {!! FormHelper::textbox(
-              '4', 'route', 'text', 'Route:', 'Route', old('route'), $errors->has('route'), $errors->first('route'), ''
+              '4', 'route', 'text', 'Route:', 'Route', old('route') ? old('route') : $menu->route, $errors->has('route'), $errors->first('route'), ''
             ) !!}
 
             {!! FormHelper::textbox(
-              '4', 'icon', 'text', 'Icon:', 'Icon', old('icon'), $errors->has('icon'), $errors->first('icon'), ''
+              '4', 'icon', 'text', 'Icon:', 'Icon', old('icon') ? old('icon') : $menu->icon, $errors->has('icon'), $errors->first('icon'), ''
             ) !!}
 
             {!! FormHelper::select_static(
-              '4', 'is_menu', 'Is Menu', old('is_menu'), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
+              '4', 'is_menu', 'Is Menu', old('is_menu') ? old('is_menu') : DataTypeHelper::boolean_to_string($menu->is_menu), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}
             
             {!! FormHelper::select_static(
-              '4', 'is_dropdown', 'Is Dropdown', old('is_dropdown'), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
+              '4', 'is_dropdown', 'Is Dropdown', old('is_dropdown') ? old('is_dropdown') : DataTypeHelper::boolean_to_string($menu->is_dropdown), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
             ) !!}
 
           </div>
@@ -115,39 +120,42 @@
 
                     @else
 
-                      <tr>
+                      @foreach($menu->submenu as $key => $data)
 
-                        <td>
-                          <div class="form-group">
-                            <input type="text" name="row[0][sub_name]" class="form-control" placeholder="Name">
-                          </div>
-                        </td>
+                        <tr>
 
-
-                        <td>
-                          <div class="form-group">
-                            <input type="text" name="row[0][sub_route]" class="form-control" placeholder="Route">
-                          </div>
-                        </td>
+                          <td>
+                            <div class="form-group">
+                              <input type="text" name="row[{{ $key }}][sub_name]" class="form-control" placeholder="Name" value="{{ $data->name }}">
+                            </div>
+                          </td>
 
 
-                        <td>
-                          <div class="form-group">
-                            <select name="row[0][sub_is_nav]" class="form-control">
-                              <option value="">Select</option>
-                                <option value="true">1</option>
-                                <option value="false">0</option>
-                            </select>
-                          </div>
-                        </td>
+                          <td>
+                            <div class="form-group">
+                              <input type="text" name="row[{{ $key }}][sub_route]" class="form-control" placeholder="Route" value="{{ $data->route }}">
+                            </div>
+                          </td>
 
 
-                        <td>
-                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                        </td>
+                          <td>
+                            <div class="form-group">
+                              <select name="row[{{ $key }}][sub_is_nav]" class="form-control">
+                                <option value="">Select</option>
+                                  <option value="true" {{ $data->is_nav == true ? 'selected' : '' }}>1</option>
+                                  <option value="false" {{ $data->is_nav == false ? 'selected' : '' }}>0</option>
+                              </select>
+                            </div>
+                          </td>
 
-                      </tr>
 
+                          <td>
+                              <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
 
                     @endif
 
@@ -176,24 +184,9 @@
 
 
 
-
-@section('modals')
-
-  @if(Session::has('MENU_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('menu_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('MENU_CREATE_SUCCESS')) !!}
-  @endif
-
-@endsection 
-
-
 @section('scripts')
 
   <script type="text/javascript">
-
-
-  @if(Session::has('MENU_CREATE_SUCCESS'))
-    $('#menu_create').modal('show');
-  @endif
 
 
   {{-- ADD ROW --}}

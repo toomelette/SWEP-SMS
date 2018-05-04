@@ -83,5 +83,44 @@ class MenuService{
 
 
 
+    public function edit($slug){
+
+        $menu = $this->cache->remember('menu:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->menu->findSlug($slug);
+        }); 
+
+        return view('dashboard.menu.edit')->with('menu', $menu);
+
+    }
+
+
+
+
+
+    public function update(Request $request, $slug){
+
+        $menu = $this->cache->remember('menu:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->menu->findSlug($slug);
+        }); 
+
+        $menu->name = $request->name;
+        $menu->route = $request->route;
+        $menu->icon = $request->icon;
+        $menu->is_menu = DataTypeHelper::boolean($request->is_menu);
+        $menu->is_dropdown = DataTypeHelper::boolean($request->is_dropdown);
+        $menu->save();
+
+        $this->event->fire('menu.update', [$menu, $request]);
+
+        $this->session->flash('MENU_UPDATE_SUCCESS', 'The Menu has been successfully updated!');
+        $this->session->flash('MENU_UPDATE_SUCCESS_SLUG', $menu->slug);
+
+
+        return redirect()->route('dashboard.menu.index');
+
+    }
+
+
+
 
 }

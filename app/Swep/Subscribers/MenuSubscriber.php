@@ -39,8 +39,10 @@ class MenuSubscriber{
     public function subscribe($events){
 
         $events->listen('menu.create', 'App\Swep\Subscribers\MenuSubscriber@onCreate');
+        $events->listen('menu.update', 'App\Swep\Subscribers\MenuSubscriber@onUpdate');
 
     }
+
 
 
 
@@ -50,21 +52,60 @@ class MenuSubscriber{
 
         $rows = $request->row;
 
-        foreach ($rows as $row) {
-            
-            $submenu = new Submenu;
-            $submenu->menu_id = $menu->menu_id;
-            $submenu->name = $row['sub_name'];
-            $submenu->route = $row['sub_route'];
-            $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);
-            $this->submenuCreateDefaults($submenu);    
-            $submenu->save();
+        if(count($rows) > 0){
+
+            foreach ($rows as $row) {
+                
+                $submenu = new Submenu;
+                $submenu->menu_id = $menu->menu_id;
+                $submenu->name = $row['sub_name'];
+                $submenu->route = $row['sub_route'];
+                $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);
+                $this->submenuCreateDefaults($submenu);    
+                $submenu->save();
+
+            }
+        }
+        
+        CacheHelper::deletePattern('swep_cache:menu:all');
+        CacheHelper::deletePattern('swep_cache:menu:all:*');
+
+    }
+
+
+
+
+
+    public function onUpdate($menu, $request){
+
+        $this->updateDefaults($menu);
+
+        $rows = $request->row;
+
+        $menu->submenu()->delete();
+
+        if(count($rows) > 0){
+
+            foreach ($rows as $row) {
+                
+                $submenu = new Submenu;
+                $submenu->menu_id = $menu->menu_id;
+                $submenu->name = $row['sub_name'];
+                $submenu->route = $row['sub_route'];
+                $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);
+                $this->submenuCreateDefaults($submenu);  
+                $submenu->save();
+
+            }
 
         }
 
+        CacheHelper::deletePattern('swep_cache:menu:bySlug:'. $menu->slug .'');
         CacheHelper::deletePattern('swep_cache:menu:all');
+        CacheHelper::deletePattern('swep_cache:menu:all:*');
 
     }
+
 
 
 

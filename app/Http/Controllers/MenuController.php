@@ -61,16 +61,16 @@ class MenuController extends Controller{
 
     public function edit($slug){
         
-
+        return $this->menu->edit($slug);
 
     }
 
 
 
 
-    public function update(Request $request, $slug){
+    public function update(MenuFormRequest $request, $slug){
         
-
+        return $this->menu->update($request, $slug);
 
     }
 
@@ -82,4 +82,6 @@ class MenuController extends Controller{
 
 
     }
+
+    
 }

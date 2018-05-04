@@ -107,6 +107,16 @@ class Menu extends Model{
 
 
 
+    public function scopeFindSlug($query, $slug){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
+
+
+
+
+
     // GETTERS
 
     public function getLastMenuAttribute(){

@@ -42,7 +42,6 @@
                   <td> 
                     <select id="action" class="form-control input-sm">
                       <option value="">Select</option>
-                      <option data-type="1" data-url="{{ route('dashboard.menu.show', $data->slug) }}">Details</option>
                       <option data-type="1" data-url="{{ route('dashboard.menu.edit', $data->slug) }}">Edit</option>
                       <option data-type="0" data-action="delete" data-url="{{ route('dashboard.menu.destroy', $data->slug) }}">Delete</option>
                     </select>

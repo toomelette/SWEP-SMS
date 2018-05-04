@@ -20,6 +20,8 @@ class MenuFormRequest extends FormRequest{
 
     public function rules(){
         
+        $rows = $this->request->get('row');
+
         $rules = [
             
             'name'=>'required|string|max:45',
@@ -32,13 +34,13 @@ class MenuFormRequest extends FormRequest{
 
 
 
-        if(count($this->request->get('row')) > 0){
+        if(count($rows) > 0){
 
-            foreach($this->request->get('row') as $key => $value){
-
-                $rules['sub_name.'.$key] = 'required|string|max:45';
-                $rules['sub_route.'.$key] = 'required|string|max:45';
-                $rules['sub_is_nav.'.$key] = 'required|string|max:45';
+            foreach($rows as $key => $value){
+                    
+                $rules['row.'.$key.'.sub_name'] = 'required|string|max:45';
+                $rules['row.'.$key.'.sub_route'] = 'required|string|max:45';
+                $rules['row.'.$key.'.sub_is_nav'] = 'required|string|max:6';
 
             } 
 
@@ -53,6 +55,8 @@ class MenuFormRequest extends FormRequest{
 
 
     public function messages(){
+
+        $rows = $this->request->get('row');
 
         $messages = [
 
@@ -78,23 +82,25 @@ class MenuFormRequest extends FormRequest{
 
         ];
 
+        if(count($rows) > 0){
 
-        foreach($this->request->get('row') as $key => $value) {
+            foreach($rows as $key => $value) {
 
-            $messages['sub_name.'. $key .'.required'] = 'Name Field is Required.';
-            $messages['sub_name.'. $key .'.string'] = 'Invalid Input! You must enter a string value.';
-            $messages['sub_name.'. $key .'.max'] = 'The Name field may not be greater than 45 characters.';
+                $messages['row.'. $key .'.sub_name.required'] = 'Name Field is Required.';
+                $messages['row.'. $key .'.sub_name.string'] = 'Invalid Input! You must enter a string value.';
+                $messages['row.'. $key .'.sub_name.max'] = 'The Name field may not be greater than 45 characters.';
+                
+                $messages['row.'. $key .'.sub_route.required'] = 'Route Field is Required.';
+                $messages['row.'. $key .'.sub_route.string'] = 'Invalid Input! You must enter a string value.';
+                $messages['row.'. $key .'.sub_route.max'] = 'The Route field may not be greater than 45 characters.';
+
+                $messages['row.'. $key .'.sub_is_nav.required'] = 'Is Nav Field is Required.';
+                $messages['row.'. $key .'.sub_is_nav.string'] = 'Invalid Input! You must enter a string value.';
+                $messages['row.'. $key .'.sub_is_nav.max'] = 'The Is Nav field may not be greater than 45 characters.';
+
+            }
             
-            $messages['sub_route.'. $key .'.required'] = 'Route Field is Required.';
-            $messages['sub_route.'. $key .'.string'] = 'Invalid Input! You must enter a string value.';
-            $messages['sub_route.'. $key .'.max'] = 'The Route field may not be greater than 45 characters.';
-
-            $messages['sub_is_nav.'. $key .'.required'] = 'Is Nav Field is Required.';
-            $messages['sub_is_nav.'. $key .'.string'] = 'Invalid Input! You must enter a string value.';
-            $messages['sub_is_nav.'. $key .'.max'] = 'The Is Nav field may not be greater than 45 characters.';
-
         }
-
         return $messages;
 
     }
