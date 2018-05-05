@@ -19,7 +19,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** USER ROUTES **/
-
 	Route::post('/dashboard/user/activate/{slug}', 'UserController@activate')->name('user.activate');
 	Route::post('/dashboard/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
 	Route::post('/dashboard/user/logout/{slug}', 'UserController@logout')->name('user.logout');
@@ -29,7 +28,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** DISBURSEMENT VOUCHERS ROUTES **/
-
 	Route::get('/disbursement_voucher/user_index', 'DisbursementVoucherController@userIndex')->name('disbursement_voucher.user_index');
 	Route::get('/disbursement_voucher/print/{slug}/{type}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
 	Route::post('/disbursement_voucher/{slug}/set_no', 'DisbursementVoucherController@setNo')->name('disbursement_voucher.set_no_post');
@@ -38,7 +36,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** PROFILE **/
-
 	Route::get('/profile', 'ProfileController@details')->name('profile.details');
 	Route::post('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
 	Route::post('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
@@ -46,8 +43,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MENU **/
-
 	Route::resource('menu', 'MenuController');
+
+	/** SIGNATORIES **/
+	Route::resource('signatories', 'SignatoriesController');
 	
 });
 

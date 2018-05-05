@@ -8,7 +8,6 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Menu extends Model{
 
-
     use Sortable;
 
     protected $table = 'menu';
@@ -130,7 +129,7 @@ class Menu extends Model{
         }
 
         return null;
-
+        
     }
 
 
