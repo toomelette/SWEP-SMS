@@ -19,9 +19,11 @@ class SignatoriesFormRequest extends FormRequest{
     public function rules(){
 
         return [
+
             'employee_name' => 'required|max:90|string',
             'employee_position' => 'required|max:90|string',
-            'type' => 'required|max:2|string',
+            'type' => 'required|max:20|int|unique:signatories',
+            
         ];
     
     }
@@ -41,7 +43,7 @@ class SignatoriesFormRequest extends FormRequest{
             'employee_position.string'  => 'Invalid Input! You must enter a string value.',
 
             'type.required'  => 'Type field is required.',
-            'type.max'  => 'The Type field may not be greater than 2 characters.',
+            'type.max'  => 'The Type field may not be greater than 20.',
             'type.string'  => 'Invalid Input! You must enter a string value.',
 
         ];

@@ -76,7 +76,7 @@ class DisbursementVoucherService{
 
 
     public function store(Request $request){
-
+        
         $disbursement_voucher = $this->disbursement_voucher->create($request->except(['amount', 'payee', 'address']));
         $this->event->fire('dv.create', [ $disbursement_voucher, $request ]);
         $this->session->flash('SESSION_DV_CREATE_SUCCESS_SLUG', $disbursement_voucher->slug);

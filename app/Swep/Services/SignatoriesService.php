@@ -59,13 +59,11 @@ class SignatoriesService{
 
 
     public function store(Request $request){
-
+        
         $signatory = $this->signatory->create($request->all());
         $this->event->fire('signatories.create', [ $signatory, $request ]);
-
         $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
         $this->session->flash('SIGNATORY_CREATE_SUCCESS_SLUG', $signatory->slug);
-
         return redirect()->back();
 
     }

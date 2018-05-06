@@ -32,7 +32,7 @@ class Signatories extends Model{
         'ip_updated',
         'user_created',
         'user_updated',
-
+        
     ];
 
 
@@ -50,16 +50,16 @@ class Signatories extends Model{
         'ip_updated' => '',
         'user_created' => '',
         'user_updated' => '',
+
     ];
 
 
 
 
     // SCOPES
-
     public function scopePopulate($query){
 
-        return $query->orderBy('updated_at', 'desc')->sortable()->paginate(10);
+        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
 
     }
 

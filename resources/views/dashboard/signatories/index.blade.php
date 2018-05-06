@@ -7,41 +7,46 @@
       </section>
 
       <section class="content">
-        
 
+        <div class="panel box box-default">
+          <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#signatory_create">
+            <h4 class="box-title">
+              <span>
+                Create Signatory
+              </span>
+            </h4>
 
-        <div class="box">
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-parent="#accordion" href="#signatory_create"><i class="fa fa-caret-down"></i></button>
+            </div>
 
-   
-          <div class="box-header with-border">
-            <h3 class="box-title">Create Signatory</h3>
           </div>
 
           {{-- Form Create --}}
           <form method="POST" autocomplete="off" action="{{ route('dashboard.signatories.store') }}">
-      
-            <div class="box-body">
+            <div id="signatory_create" class="panel-collapse collapse {{ $errors->any() || Session::has('SIGNATORY_CREATE_SUCCESS') ? 'in' : '' }}">
+              <div class="box-body">
+                
+                @csrf
+
+                {!! FormHelper::textbox(
+                   '4', 'employee_name', 'text', 'Employee Name:', 'Employee Name', old('employee_name'), $errors->has('employee_name'), $errors->first('employee_name'), ''
+                ) !!}
+
+                {!! FormHelper::textbox(
+                  '4', 'employee_position', 'text', 'Position:', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), ''
+                ) !!}
+
+                {!! FormHelper::textbox(
+                  '4', 'type', 'text', 'Type:', 'Type', old('type'), $errors->has('type'), $errors->first('type'), ''
+                ) !!}
               
-              @csrf
+              </div>
 
-              {!! FormHelper::textbox(
-                '4', 'employee_name', 'text', 'Name:', 'Name', old('employee_name'), $errors->has('employee_name'), $errors->first('employee_name'), ''
-              ) !!}
-
-              {!! FormHelper::textbox(
-                '4', 'employee_position', 'text', 'Position:', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), ''
-              ) !!}
-
-              {!! FormHelper::textbox(
-                '4', 'type', 'text', 'Type:', 'Type', old('type'), $errors->has('type'), $errors->first('type'), ''
-              ) !!}
-            
+              <div class="box-footer">
+                <button type="submit" class="btn btn-default">Save</button>
+              </div>
             </div>
-
-            <div class="box-footer">
-              <button type="submit" class="btn btn-default">Save</button>
-            </div>
-
           </form>
 
         </div>
@@ -135,13 +140,6 @@
     @if(Session::has('SIGNATORY_CREATE_SUCCESS'))
       {!! JSHelper::toast(Session::get('SIGNATORY_CREATE_SUCCESS')) !!}
     @endif
-
-
-    {{-- DELETE TOAST --}}
-    @if(Session::has('MENU_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('MENU_DELETE_SUCCESS')) !!}
-    @endif
-
 
   </script>
     
