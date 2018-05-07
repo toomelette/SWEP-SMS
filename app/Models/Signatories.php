@@ -14,6 +14,8 @@ class Signatories extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
 
+    public $sortable = ['employee_name', 'employee_position', 'type'];
+
 	public $timestamps = false;
 
 
@@ -32,8 +34,9 @@ class Signatories extends Model{
         'ip_updated',
         'user_created',
         'user_updated',
-        
+
     ];
+
 
 
     protected $attributes = [
@@ -77,6 +80,11 @@ class Signatories extends Model{
 
 
 
+    public function scopeFindSlug($query, $slug){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
 
 
 }

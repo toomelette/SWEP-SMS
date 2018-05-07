@@ -35,7 +35,7 @@ class SignatoriesController extends Controller{
 
     public function create(){
 
-
+        return view('dashboard.signatories.create');
         
     }
 
@@ -62,11 +62,9 @@ class SignatoriesController extends Controller{
 
 
 
-    public function edit($id){
+    public function edit($slug){
 
-
-
-
+        return $this->signatory->edit($slug);
         
     }
 
@@ -74,18 +72,18 @@ class SignatoriesController extends Controller{
 
 
 
-    public function update(Request $request, $id){
+    public function update(SignatoriesFormRequest $request, $slug){
 
-
+        return $this->signatory->update($request, $slug);
         
     }
 
 
 
 
-    public function destroy($id){
+    public function destroy($slug){
         
-
+        return $this->signatory->destroy($slug);
 
     }
 

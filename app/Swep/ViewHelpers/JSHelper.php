@@ -32,7 +32,7 @@ class JSHelper{
 	            text: "'. $message .'",
 	            showHideTransition: "fade",
 	            allowToastClose: true,
-	            hideAfter: 1500,
+	            hideAfter: 2000,
 	            loader: false,
 	            position: "top-center",
 	            bgColor: "#444",

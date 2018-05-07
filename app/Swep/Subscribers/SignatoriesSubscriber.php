@@ -37,6 +37,7 @@ class SignatoriesSubscriber{
 
         $events->listen('signatories.create', 'App\Swep\Subscribers\SignatoriesSubscriber@onCreate');
         $events->listen('signatories.update', 'App\Swep\Subscribers\SignatoriesSubscriber@onUpdate');
+        $events->listen('signatories.delete', 'App\Swep\Subscribers\SignatoriesSubscriber@onDelete');
 
     }
 
@@ -56,10 +57,22 @@ class SignatoriesSubscriber{
 
     public function onUpdate($signatory, $request){
 
-
+        $this->updateDefaults($signatory);
+        CacheHelper::deletePattern('swep_cache:signatories:all:*');
+        CacheHelper::deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
 
     }
 
+
+
+
+
+    public function onDelete($slug){
+
+        CacheHelper::deletePattern('swep_cache:signatories:all:*');
+        CacheHelper::deletePattern('swep_cache:signatories:bySlug:'. $slug .'');
+
+    }
 
 
 
@@ -85,7 +98,10 @@ class SignatoriesSubscriber{
 
     public function updateDefaults($signatory){
 
-
+        $signatory->updated_at = $this->carbon->now();
+        $signatory->machine_updated = gethostname();
+        $signatory->ip_updated = request()->ip();
+        $signatory->user_updated = $this->auth->user()->user_id;
 
     }
 

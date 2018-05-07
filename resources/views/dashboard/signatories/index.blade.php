@@ -3,55 +3,10 @@
 @section('content')
     
       <section class="content-header">
-          <h1>Menu List</h1>
+          <h1>Signatories List</h1>
       </section>
 
       <section class="content">
-
-        <div class="panel box box-default">
-          <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#signatory_create">
-            <h4 class="box-title">
-              <span>
-                Create Signatory
-              </span>
-            </h4>
-
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-parent="#accordion" href="#signatory_create"><i class="fa fa-caret-down"></i></button>
-            </div>
-
-          </div>
-
-          {{-- Form Create --}}
-          <form method="POST" autocomplete="off" action="{{ route('dashboard.signatories.store') }}">
-            <div id="signatory_create" class="panel-collapse collapse {{ $errors->any() || Session::has('SIGNATORY_CREATE_SUCCESS') ? 'in' : '' }}">
-              <div class="box-body">
-                
-                @csrf
-
-                {!! FormHelper::textbox(
-                   '4', 'employee_name', 'text', 'Employee Name:', 'Employee Name', old('employee_name'), $errors->has('employee_name'), $errors->first('employee_name'), ''
-                ) !!}
-
-                {!! FormHelper::textbox(
-                  '4', 'employee_position', 'text', 'Position:', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), ''
-                ) !!}
-
-                {!! FormHelper::textbox(
-                  '4', 'type', 'text', 'Type:', 'Type', old('type'), $errors->has('type'), $errors->first('type'), ''
-                ) !!}
-              
-              </div>
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-default">Save</button>
-              </div>
-            </div>
-          </form>
-
-        </div>
-
-
 
         {{-- Form Start --}}
         <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.signatories.index') }}">
@@ -77,7 +32,7 @@
               </tr>
               @foreach($signatories as $data) 
                 <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('SIGNATORY_CREATE_SUCCESS_SLUG')
+                        Session::get('SIGNATORY_UPDATE_SUCCESS_SLUG')
                       ]) 
                     !!}
                 >
@@ -104,10 +59,7 @@
 
           <div class="box-footer">
             <strong>Displaying {{ $signatories->firstItem() > 0 ? $signatories->firstItem() : 0 }} - {{ $signatories->lastItem() > 0 ? $signatories->lastItem() : 0 }} out of {{ $signatories->total()}} Records</strong>
-            {!! $signatories->appends([
-                  'q'=> Request::get('q'),
-                ])->render('vendor.pagination.bootstrap-4')
-            !!}
+            {!! $signatories->appends(['q'=> Request::get('q'),])->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>
@@ -131,14 +83,17 @@
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('menu_delete') !!}
 
-
     {{-- FORM VARIABLES RULE --}}
     {!! JSHelper::table_action_rule() !!}
 
+    {{-- UPDATE TOAST --}}
+    @if(Session::has('SIGNATORY_UPDATE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('SIGNATORY_UPDATE_SUCCESS')) !!}
+    @endif
 
-    {{-- CREATE TOAST --}}
-    @if(Session::has('SIGNATORY_CREATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('SIGNATORY_CREATE_SUCCESS')) !!}
+    {{-- DELETE TOAST --}}
+    @if(Session::has('SIGNATORY_DELETE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('SIGNATORY_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

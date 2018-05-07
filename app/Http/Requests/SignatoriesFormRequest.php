@@ -22,7 +22,7 @@ class SignatoriesFormRequest extends FormRequest{
 
             'employee_name' => 'required|max:90|string',
             'employee_position' => 'required|max:90|string',
-            'type' => 'required|max:20|int|unique:signatories',
+            'type' => 'required|max:20|int',
             
         ];
     
