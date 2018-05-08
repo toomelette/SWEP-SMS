@@ -15,6 +15,41 @@ class Departments extends Model{
 
 
 
+	protected $fillable = [
+
+        'slug',
+        'name',
+        'created_at', 
+        'updated_at',
+        'machine_created',
+        'machine_updated', 
+        'ip_created',
+        'ip_updated',
+        'user_created',
+        'user_updated',
+
+    ];
+
+
+
+
+    protected $attributes = [
+
+        'slug' => '',
+        'name' => '',
+        'created_at' => null, 
+        'updated_at' => null,
+        'machine_created' => '',
+        'machine_updated' => '', 
+        'ip_created' => '',
+        'ip_updated' => '',
+        'user_created' => '',
+        'user_updated' => '',
+
+    ];
+
+
+
 
 	public function accounts() {
 
@@ -30,6 +65,43 @@ class Departments extends Model{
 
     }
 
+
+
+
+    // GETTERS
+
+    public function getLastDepartmentAttribute(){
+
+        $department = $this->select('department_id')->orderBy('department_id', 'desc')->first();
+
+        if($department != null){
+
+          return str_replace('D', '', $department->department_id);
+
+        }
+
+        return null;
+        
+    }
+
+
+
+
+    public function getDepartmentIdIncrementAttribute(){
+
+        $id = '1001';
+
+        if($id != null){
+
+            $num =  $this->lastDepartment + 1;
+            
+            $id = 'D' . $num;
+        
+        }
+
+        return $id;
+
+    }
 
 
 }

@@ -21,11 +21,11 @@
           @csrf    
 
           {!! FormHelper::textbox(
-             '4', 'employee_name', 'text', 'Employee Name:', 'Employee Name', old('employee_name'), $errors->has('employee_name'), $errors->first('employee_name'), ''
+             '4', 'employee_name', 'text', 'Employee Name:', 'Employee Name', old('employee_name'), $errors->has('employee_name'), $errors->first('employee_name'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::textbox(
-            '4', 'employee_position', 'text', 'Position:', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), ''
+            '4', 'employee_position', 'text', 'Position:', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::textbox(
@@ -64,6 +64,6 @@
       $('#signatory_create').modal('show');
     @endif
 
-  </script>
+  </script> 
     
 @endsection

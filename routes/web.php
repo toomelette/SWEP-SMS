@@ -47,6 +47,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** SIGNATORIES **/
 	Route::resource('signatories', 'SignatoriesController');
+
+	/** DEPARTMENTS **/
+	Route::resource('department', 'DepartmentController');
 	
 });
 

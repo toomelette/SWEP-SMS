@@ -62,7 +62,6 @@ $(document).pjax('a[data-pjax]', '#pjax-container');
 
 
 
-
 // PJAX INITIALIZATIONS
 $(document).on('ready pjax:success', function() {
     
@@ -75,4 +74,14 @@ $(document).on('ready pjax:success', function() {
         $("form").find( ":input" ).prop( "disabled", false );
     });
 
+});
+
+
+
+
+// Input to Uppercase
+$(document).on('blur', "input[data-transform=uppercase]", function () {
+    $(this).val(function (_, val) {
+        return val.toUpperCase();
+    });
 });
