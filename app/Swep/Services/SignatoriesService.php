@@ -64,7 +64,7 @@ class SignatoriesService{
         $this->event->fire('signatories.create', [ $signatory, $request ]);
         $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
         return redirect()->back();
-
+        
     }
 
 

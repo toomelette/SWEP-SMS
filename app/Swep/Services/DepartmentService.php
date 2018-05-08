@@ -35,7 +35,23 @@ class DepartmentService{
 
     public function fetchAll(Request $request){
 
-       
+       $key = str_slug($request->fullUrl(), '_');
+
+        $departments = $this->cache->remember('departments:all:' . $key, 240, function() use ($request){
+
+            $department = $this->department->newQuery();
+            
+            if($request->q != null){
+                $department->search($request->q);
+            }
+
+            return $department->populate();
+
+        });
+
+        $request->flash();
+        
+        return view('dashboard.department.index')->with('departments', $departments);
 
     }
 
@@ -56,6 +72,11 @@ class DepartmentService{
 
     public function edit($slug){
 
+        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->department->findSlug($slug);
+        }); 
+
+        return view('dashboard.department.edit')->with('department', $department);
 
     }
 
@@ -64,6 +85,15 @@ class DepartmentService{
 
     public function update(Request $request, $slug){
 
+        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->department->findSlug($slug);
+        });
+
+        $department->update($request->all());
+        $this->event->fire('department.update', [ $department, $request ]);
+        $this->session->flash('DEPARTMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
+        $this->session->flash('DEPARTMENT_UPDATE_SUCCESS_SLUG', $department->slug);
+        return redirect()->route('dashboard.department.index');
 
     }
 
@@ -72,8 +102,18 @@ class DepartmentService{
 
     public function destroy($slug){
 
+        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->department->findSlug($slug);
+        });
+        
+        $department->delete();
+        $this->event->fire('department.delete', [ $department ]);
+        $this->session->flash('DEPARTMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');
+        $this->session->flash('DEPARTMENT_DELETE_SUCCESS_SLUG', $department->slug);
+        return redirect()->route('dashboard.department.index');
 
     }
+
 
 
 }

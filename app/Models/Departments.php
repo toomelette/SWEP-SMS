@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class Departments extends Model{
 
+    use Sortable;
 
     protected $table = 'departments';
 
     protected $dates = ['created_at', 'updated_at'];
+
+    public $sortable = ['name'];
 
 	public $timestamps = false;
 
@@ -65,6 +70,34 @@ class Departments extends Model{
 
     }
 
+
+
+
+    // SCOPES
+
+    public function scopePopulate($query){
+
+        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+
+    }
+
+
+
+    public function scopeSearch($query, $key){
+
+        return $query->where(function ($query) use ($key) {
+                $query->where('name', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+    public function scopeFindSlug($query, $slug){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
 
 
 

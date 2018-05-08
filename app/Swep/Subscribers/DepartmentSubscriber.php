@@ -58,7 +58,10 @@ class DepartmentSubscriber{
 
     public function onUpdate($department, $request){
 
-        
+        $this->updateDefaults($department);
+        CacheHelper::deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
+        CacheHelper::deletePattern('swep_cache:departments:all:*');
+        CacheHelper::deletePattern('swep_cache:departments:all');
 
     }
 
@@ -66,9 +69,11 @@ class DepartmentSubscriber{
 
 
 
-    public function onDelete($slug){
+    public function onDelete($department){
 
-       
+        CacheHelper::deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
+        CacheHelper::deletePattern('swep_cache:departments:all:*');
+        CacheHelper::deletePattern('swep_cache:departments:all');
 
     }
 

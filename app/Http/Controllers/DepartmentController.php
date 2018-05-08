@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\DepartmentService;
+use App\Http\Requests\DepartmentFormRequest;
 
 
 
@@ -24,16 +25,14 @@ class DepartmentController extends Controller{
 
 
 
-
     
-    public function index(){
+    public function index(Request $request){
 
-        
+        return $this->department->fetchAll($request);
     
     }
 
     
-
 
 
     public function create(){
@@ -45,14 +44,12 @@ class DepartmentController extends Controller{
     
 
 
-
-    public function store(Request $request){
+    public function store(DepartmentFormRequest $request){
 
         return $this->department->store($request);
         
     }
 
-   
 
 
 
@@ -62,35 +59,33 @@ class DepartmentController extends Controller{
         
     }
 
-    
 
 
 
-    public function edit($id){
+    public function edit($slug){
 
-
+        return $this->department->edit($slug);
         
     }
 
+
+
+
+    public function update(DepartmentFormRequest $request, $slug){
+
+        return $this->department->update($request, $slug);
+
+    }
+
     
 
 
+    public function destroy($slug){
 
-    public function update(Request $request, $id){
-
-
+       return $this->department->destroy($slug); 
 
     }
 
-    
-    
-
-
-    public function destroy($id){
-
-        
-
-    }
 
 
 
