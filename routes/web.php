@@ -50,6 +50,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** DEPARTMENTS **/
 	Route::resource('department', 'DepartmentController');
+
+	/** DEPARTMENT UNITS **/
+	Route::resource('department_unit', 'DepartmentUnitController');
 	
 });
 

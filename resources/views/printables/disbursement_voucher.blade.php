@@ -332,7 +332,7 @@
         
         <div class="col-sm-8" style="border-right:solid;"> 
           <span style="border-right: solid; border-bottom: solid; padding-top:4px; padding-right:4px; padding-left:4px; padding-bottom:2px; font-weight:bold;">C</span>
-          <span style="font-weight:bold; font-weight:bold; margin-left:10px;">Recieved Payment:</span>
+          <span style="font-weight:bold; font-weight:bold; margin-left:10px;">Received Payment:</span>
         </div>
 
         <div class="col-sm-4" style="border-right:solid; padding-left:0;"> 
@@ -413,7 +413,7 @@
 <div class="row">
   
   <div class="col-sm-8 div-height">
-    <p style="font-size:10px;">Username: {!! Auth::user()->username !!} | &nbsp; IP Address: {{ $disbursement_voucher->ip_created }} &nbsp;|&nbsp; Computer Name: {{ $disbursement_voucher->machine_created }}</p>
+    <p style="font-size:10px;">Username: {!! Auth::user()->username !!}</p>
   </div>
 
   <div class="col-sm-4 div-height" style="border-right:solid; padding-left:0; line-height: 1.2;"> 

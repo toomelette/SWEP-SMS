@@ -1,0 +1,65 @@
+@extends('layouts.admin-master')
+
+@section('content')
+    
+  <section class="content-header">
+      <h1>Edit Department Unit</h1>
+      <div class="pull-right" style="margin-top: -25px;">
+        {!! HtmlHelper::back_button(['dashboard.department_unit.index']) !!}
+      </div>
+  </section>
+
+  <section class="content">
+
+    <div class="box">
+    
+      <div class="box-header with-border">
+        <h3 class="box-title">Form</h3>
+      </div>
+      
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.department_unit.update', $department_unit->slug) }}">
+
+        <div class="box-body">
+     
+          @csrf    
+
+          <input name="_method" value="PUT" type="hidden">
+          
+          {!! FormHelper::select_dynamic(
+          '4', 'department_id', 'Department:', old('department_id') ? old('department_id') : $department_unit->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
+          ) !!}
+
+          <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') ? old('department_name') : $department_unit->department_name }}">
+
+          {!! FormHelper::textbox(
+             '4', 'name', 'text', 'Name:', 'Name', old('name') ? old('name') : $department_unit->name, $errors->has('name'), $errors->first('name'), ''
+          ) !!}
+
+          {!! FormHelper::textbox(
+             '4', 'description', 'text', 'Description:', 'Description', old('description') ? old('description') : $department_unit->description , $errors->has('description'), $errors->first('description'), ''
+          ) !!}
+
+        </div>
+
+        <div class="box-footer">
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+@endsection
+
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+    {!! JSHelper::ajax_select_to_input('department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name') !!}
+
+  </script> 
+    
+@endsection

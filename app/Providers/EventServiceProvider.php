@@ -36,6 +36,7 @@ class EventServiceProvider extends ServiceProvider{
         'App\Swep\Subscribers\MenuSubscriber',
         'App\Swep\Subscribers\SignatoriesSubscriber',
         'App\Swep\Subscribers\DepartmentSubscriber',
+        'App\Swep\Subscribers\DepartmentUnitSubscriber',
 
     ];
 

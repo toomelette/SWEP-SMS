@@ -124,6 +124,35 @@ class JSHelper{
 
 
 
+    public static function ajax_select_to_input($id_from, $id_to, $route, $value){
+
+      $string = "'";
+
+      return '$(document).ready(function() {
+	                $("#'.$id_from.'").on("change", function() {
+	                    var id = $(this).val();
+	                    if(id) {
+	                        $.ajax({
+	                        	headers: {"X-CSRF-TOKEN": $('. $string .'meta[name="csrf-token"]'. $string .').attr("content")},
+	                            url: "'.$route.'"+id,
+	                            type: "GET",
+	                            dataType: "json",
+	                            success:function(data) {
+	                                $("#'.$id_to.'").empty();
+	                                $.each(data, function(key, value) {
+	                                		$("#'.$id_to.'").val(value.'.$value.');
+	                                }); 
+	                            }
+	                        });
+	                    }else{
+	                        $("#'.$id_to.'").val("");
+	                    }
+	                });
+	            });';
+
+    }
+
+
 
     public static function datepicker_caller($id, $format, $position){
 
