@@ -49,6 +49,7 @@ class DepartmentSubscriber{
         $this->createDefaults($department);
         CacheHelper::deletePattern('swep_cache:departments:all:*');
         CacheHelper::deletePattern('swep_cache:departments:all');
+        CacheHelper::deletePattern('swep_cache:api:response_department_from_department:*');
 
     }
 
@@ -62,6 +63,7 @@ class DepartmentSubscriber{
         CacheHelper::deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
         CacheHelper::deletePattern('swep_cache:departments:all:*');
         CacheHelper::deletePattern('swep_cache:departments:all');
+        CacheHelper::deletePattern('swep_cache:api:response_department_from_department:*');
 
     }
 
@@ -74,6 +76,7 @@ class DepartmentSubscriber{
         CacheHelper::deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
         CacheHelper::deletePattern('swep_cache:departments:all:*');
         CacheHelper::deletePattern('swep_cache:departments:all');
+        CacheHelper::deletePattern('swep_cache:api:response_department_from_department:*');
 
     }
 

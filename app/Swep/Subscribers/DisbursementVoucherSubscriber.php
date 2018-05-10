@@ -131,8 +131,8 @@ class DisbursementVoucherSubscriber{
         $disbursement_voucher->checked_at = null;
         $disbursement_voucher->created_at = $this->carbon->now();
         $disbursement_voucher->updated_at = $this->carbon->now();
-        $disbursement_voucher->machine_created = gethostname();
-        $disbursement_voucher->machine_updated = gethostname();
+        $disbursement_voucher->machine_created = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $disbursement_voucher->machine_updated = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $disbursement_voucher->ip_created = request()->ip();
         $disbursement_voucher->ip_updated = request()->ip();
         $disbursement_voucher->user_created = $this->auth->user()->user_id;
@@ -146,7 +146,7 @@ class DisbursementVoucherSubscriber{
     public function updateDefaults($disbursement_voucher){
 
         $disbursement_voucher->updated_at = $this->carbon->now();
-        $disbursement_voucher->machine_updated = gethostname();
+        $disbursement_voucher->machine_updated = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $disbursement_voucher->ip_updated = request()->ip();
         $disbursement_voucher->user_updated = $this->auth->user()->user_id;
         $disbursement_voucher->save();

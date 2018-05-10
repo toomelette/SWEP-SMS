@@ -28,7 +28,7 @@ class FormHelper{
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control" id="priceformat" name="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <input class="form-control priceformat" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 

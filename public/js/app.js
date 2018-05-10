@@ -38,7 +38,7 @@ $(function () {
 
 // Price Format
 $(document).ready(function() {
-    $("#priceformat").priceFormat({
+    $(".priceformat").priceFormat({
         prefix: "",
         thousandsSeparator: ",",
         clearOnEmpty: true,

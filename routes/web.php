@@ -53,6 +53,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** DEPARTMENT UNITS **/
 	Route::resource('department_unit', 'DepartmentUnitController');
+
+	/** ACCOUNTS **/
+	Route::resource('account', 'AccountController');
 	
 });
 
