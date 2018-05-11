@@ -40,6 +40,7 @@ class MenuSubscriber{
 
         $events->listen('menu.create', 'App\Swep\Subscribers\MenuSubscriber@onCreate');
         $events->listen('menu.update', 'App\Swep\Subscribers\MenuSubscriber@onUpdate');
+        $events->listen('menu.delete', 'App\Swep\Subscribers\MenuSubscriber@onDelete');
 
     }
 
@@ -69,6 +70,8 @@ class MenuSubscriber{
         
         CacheHelper::deletePattern('swep_cache:menu:all');
         CacheHelper::deletePattern('swep_cache:menu:all:*');
+        CacheHelper::deletePattern('swep_cache:submenus:all');
+        CacheHelper::deletePattern('swep_cache:submenus:all:*');
 
     }
 
@@ -80,32 +83,23 @@ class MenuSubscriber{
 
         $this->updateDefaults($menu);
 
-        $rows = $request->row;
-
-        $menu->submenu()->delete();
-
-        if(count($rows) > 0){
-
-            foreach ($rows as $row) {
-                
-                $submenu = new Submenu;
-                $submenu->menu_id = $menu->menu_id;
-                $submenu->name = $row['sub_name'];
-                $submenu->route = $row['sub_route'];
-                $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);
-                $this->submenuCreateDefaults($submenu);  
-                $submenu->save();
-
-            }
-
-        }
-
         CacheHelper::deletePattern('swep_cache:menu:bySlug:'. $menu->slug .'');
         CacheHelper::deletePattern('swep_cache:menu:all');
         CacheHelper::deletePattern('swep_cache:menu:all:*');
 
     }
 
+
+
+    public function onDelete($menu){
+
+        CacheHelper::deletePattern('swep_cache:menu:bySlug:'. $menu->slug .'');
+        CacheHelper::deletePattern('swep_cache:menu:all');
+        CacheHelper::deletePattern('swep_cache:menu:all:*');
+        CacheHelper::deletePattern('swep_cache:submenus:all');
+        CacheHelper::deletePattern('swep_cache:submenus:all:*');
+
+    }
 
 
 
@@ -131,6 +125,7 @@ class MenuSubscriber{
 
     public function submenuCreateDefaults($submenu){
 
+        $submenu->slug = $this->str->random(16);
         $submenu->submenu_id = $this->submenu->submenuIdIncrement;
         $submenu->created_at = $this->carbon->now();
         $submenu->updated_at = $this->carbon->now();

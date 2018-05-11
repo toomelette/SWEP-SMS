@@ -36,7 +36,7 @@
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Fund Source: <strong>{{ $disbursement_voucher->fundSource->description }}</strong></span>
+          <span style="font-size: 15px; ">Fund Source: <strong>{{ count($disbursement_voucher->fundSource) != 0 ? $disbursement_voucher->fundSource->description : '' }}</strong></span>
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">

@@ -79,7 +79,7 @@ class MenuController extends Controller{
 
     public function destroy($slug){
         
-
+        return $this->menu->destroy($slug);
 
     }
 

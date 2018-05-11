@@ -115,7 +115,25 @@ class MenuService{
         $this->session->flash('MENU_UPDATE_SUCCESS', 'The Menu has been successfully updated!');
         $this->session->flash('MENU_UPDATE_SUCCESS_SLUG', $menu->slug);
 
+        return redirect()->route('dashboard.menu.index');
 
+    }
+
+
+
+
+    public function destroy($slug){
+
+        $menu = $this->cache->remember('menu:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->menu->findSlug($slug);
+        }); 
+
+        $menu->delete();
+        $menu->submenu()->delete();
+        
+        $this->event->fire('menu.delete', $menu);
+        $this->session->flash('MENU_DELETE_SUCCESS', 'The Menu has been successfully deleted!');
+        $this->session->flash('MENU_DELETE_SUCCESS_SLUG', $menu->slug);
         return redirect()->route('dashboard.menu.index');
 
     }
