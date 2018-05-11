@@ -56,6 +56,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** ACCOUNTS **/
 	Route::resource('account', 'AccountController');
+
+	/** FUND SOURCE **/
+	Route::resource('fund_source', 'FundSourceController');
 	
 });
 
