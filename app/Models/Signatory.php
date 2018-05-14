@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Signatories extends Model{
+class Signatory extends Model{
 
     use Sortable;
 

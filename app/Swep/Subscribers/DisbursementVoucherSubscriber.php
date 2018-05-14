@@ -6,7 +6,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\CacheHelper;
-use App\Models\Signatories;
+use App\Models\Signatory;
 use App\Models\DisbursementVouchers;
 use Illuminate\Cache\Repository as Cache;
 
@@ -24,7 +24,7 @@ class DisbursementVoucherSubscriber{
 
 
 
-	public function __construct(DisbursementVouchers $disbursement_voucher, Signatories $signatory, Carbon $carbon, Cache $cache, Str $str){
+	public function __construct(DisbursementVouchers $disbursement_voucher, Signatory $signatory, Carbon $carbon, Cache $cache, Str $str){
 
 		$this->disbursement_voucher = $disbursement_voucher;
 		$this->signatory = $signatory;

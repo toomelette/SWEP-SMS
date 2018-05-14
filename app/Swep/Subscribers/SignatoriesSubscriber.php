@@ -4,7 +4,7 @@ namespace App\Swep\Subscribers;
 
 use Auth;
 use Carbon\Carbon;
-use App\Models\Signatories;
+use App\Models\Signatory;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\CacheHelper;
 use App\Swep\Helpers\DataTypeHelper;
@@ -21,7 +21,7 @@ class SignatoriesSubscriber{
 
 
 
-    public function __construct(Signatories $signatory, Carbon $carbon, Str $str){
+    public function __construct(Signatory $signatory, Carbon $carbon, Str $str){
 
         $this->signatory = $signatory;
         $this->carbon = $carbon;

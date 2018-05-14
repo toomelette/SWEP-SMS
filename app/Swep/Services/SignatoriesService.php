@@ -4,7 +4,7 @@ namespace App\Swep\Services;
 
 use Auth;
 use Session;
-use App\Models\Signatories;
+use App\Models\Signatory;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Cache\Repository as Cache;
@@ -20,7 +20,7 @@ class SignatoriesService{
 
 
 
-    public function __construct(Signatories $signatory, Dispatcher $event, Cache $cache){
+    public function __construct(Signatory $signatory, Dispatcher $event, Cache $cache){
 
         $this->signatory = $signatory;
         $this->event = $event;

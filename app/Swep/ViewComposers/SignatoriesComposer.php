@@ -4,7 +4,7 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\Signatories;
+use App\Models\Signatory;
 use Illuminate\Cache\Repository as Cache;
 
 
@@ -15,7 +15,7 @@ class SignatoriesComposer{
 	protected $cache;
 
 
-	public function __construct(Signatories $signatory, Cache $cache){
+	public function __construct(Signatory $signatory, Cache $cache){
 		$this->signatory = $signatory;
 		$this->cache = $cache;
 	}
