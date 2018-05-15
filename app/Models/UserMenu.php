@@ -12,7 +12,7 @@ class UserMenu extends Model{
 
 
 
-	protected $table = 'user_menu';
+	protected $table = 'user_menus';
   public $timestamps = false;
     
 

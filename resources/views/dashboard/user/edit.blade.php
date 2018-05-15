@@ -223,7 +223,7 @@
           if(id) {
               $.ajax({
                   headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-                  url: "/api/dropdown_response_submenu_from_menu/" + id,
+                  url: "/api/select_response_submenu_from_menu/" + id,
                   type: "GET",
                   dataType: "json",
                   success:function(data) {   

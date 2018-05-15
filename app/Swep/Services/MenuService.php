@@ -39,7 +39,7 @@ class MenuService{
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $menus = $this->cache->remember('menu:all:' . $key, 240, function() use ($request){
+        $menus = $this->cache->remember('menus:all:' . $key, 240, function() use ($request){
 
             $menu = $this->menu->newQuery();
             
@@ -85,7 +85,7 @@ class MenuService{
 
     public function edit($slug){
 
-        $menu = $this->cache->remember('menu:bySlug:' . $slug, 240, function() use ($slug){
+        $menu = $this->cache->remember('menus:bySlug:' . $slug, 240, function() use ($slug){
             return $this->menu->findSlug($slug);
         }); 
 
@@ -99,7 +99,7 @@ class MenuService{
 
     public function update(Request $request, $slug){
 
-        $menu = $this->cache->remember('menu:bySlug:' . $slug, 240, function() use ($slug){
+        $menu = $this->cache->remember('menus:bySlug:' . $slug, 240, function() use ($slug){
             return $this->menu->findSlug($slug);
         }); 
 
@@ -124,7 +124,7 @@ class MenuService{
 
     public function destroy($slug){
 
-        $menu = $this->cache->remember('menu:bySlug:' . $slug, 240, function() use ($slug){
+        $menu = $this->cache->remember('menus:bySlug:' . $slug, 240, function() use ($slug){
             return $this->menu->findSlug($slug);
         }); 
 

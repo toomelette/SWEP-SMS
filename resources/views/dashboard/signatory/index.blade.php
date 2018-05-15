@@ -9,13 +9,13 @@
       <section class="content">
 
         {{-- Form Start --}}
-        <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.signatories.index') }}">
+        <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.signatory.index') }}">
 
         <div class="box" id="pjax-container">
 
           {{-- Table Search --}}        
           <div class="box-header with-border">
-            {!! HtmlHelper::table_search(route('dashboard.signatories.index')) !!}
+            {!! HtmlHelper::table_search(route('dashboard.signatory.index')) !!}
           </div>
 
         {{-- Form End --}}  
@@ -42,8 +42,8 @@
                   <td> 
                     <select id="action" class="form-control input-sm">
                       <option value="">Select</option>
-                      <option data-type="1" data-url="{{ route('dashboard.signatories.edit', $data->slug) }}">Edit</option>
-                      <option data-type="0" data-action="delete" data-url="{{ route('dashboard.signatories.destroy', $data->slug) }}">Delete</option>
+                      <option data-type="1" data-url="{{ route('dashboard.signatory.edit', $data->slug) }}">Edit</option>
+                      <option data-type="0" data-action="delete" data-url="{{ route('dashboard.signatory.destroy', $data->slug) }}">Delete</option>
                     </select>
                   </td>
                 </tr>

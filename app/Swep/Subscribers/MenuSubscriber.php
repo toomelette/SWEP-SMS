@@ -68,9 +68,10 @@ class MenuSubscriber{
             }
         }
         
-        CacheHelper::deletePattern('swep_cache:menu:all');
-        CacheHelper::deletePattern('swep_cache:menu:all:*');
-        CacheHelper::deletePattern('swep_cache:submenus:all');
+        CacheHelper::deletePattern('swep_cache:menus:global:all');
+        CacheHelper::deletePattern('swep_cache:menus:all:*');
+        
+        CacheHelper::deletePattern('swep_cache:submenus:global:all');
         CacheHelper::deletePattern('swep_cache:submenus:all:*');
 
     }
@@ -82,10 +83,9 @@ class MenuSubscriber{
     public function onUpdate($menu, $request){
 
         $this->updateDefaults($menu);
-
-        CacheHelper::deletePattern('swep_cache:menu:bySlug:'. $menu->slug .'');
-        CacheHelper::deletePattern('swep_cache:menu:all');
-        CacheHelper::deletePattern('swep_cache:menu:all:*');
+        CacheHelper::deletePattern('swep_cache:menus:global:all');
+        CacheHelper::deletePattern('swep_cache:menus:all:*');
+        CacheHelper::deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');
 
     }
 
@@ -93,10 +93,11 @@ class MenuSubscriber{
 
     public function onDelete($menu){
 
-        CacheHelper::deletePattern('swep_cache:menu:bySlug:'. $menu->slug .'');
-        CacheHelper::deletePattern('swep_cache:menu:all');
-        CacheHelper::deletePattern('swep_cache:menu:all:*');
-        CacheHelper::deletePattern('swep_cache:submenus:all');
+        CacheHelper::deletePattern('swep_cache:menus:global:all');
+        CacheHelper::deletePattern('swep_cache:menus:all:*');
+        CacheHelper::deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');
+
+        CacheHelper::deletePattern('swep_cache:submenus:global:all');
         CacheHelper::deletePattern('swep_cache:submenus:all:*');
 
     }
@@ -109,14 +110,13 @@ class MenuSubscriber{
 
         $menu->menu_id = $this->menu->menuIdIncrement;
         $menu->slug = $this->str->random(16);
+
         $menu->created_at = $this->carbon->now();
         $menu->updated_at = $this->carbon->now();
-        $menu->machine_created = gethostname();
-        $menu->machine_updated = gethostname();
         $menu->ip_created = request()->ip();
         $menu->ip_updated = request()->ip();
-        $menu->user_created = $this->auth->user()->user_id;
-        $menu->user_updated = $this->auth->user()->user_id;
+        $menu->user_created = $this->auth->user()->username;
+        $menu->user_updated = $this->auth->user()->username;
         $menu->save();
 
     }
@@ -127,14 +127,13 @@ class MenuSubscriber{
 
         $submenu->slug = $this->str->random(16);
         $submenu->submenu_id = $this->submenu->submenuIdIncrement;
+
         $submenu->created_at = $this->carbon->now();
         $submenu->updated_at = $this->carbon->now();
-        $submenu->machine_created = gethostname();
-        $submenu->machine_updated = gethostname();
         $submenu->ip_created = request()->ip();
         $submenu->ip_updated = request()->ip();
-        $submenu->user_created = $this->auth->user()->user_id;
-        $submenu->user_updated = $this->auth->user()->user_id;
+        $submenu->user_created = $this->auth->user()->username;
+        $submenu->user_updated = $this->auth->user()->username;
         $submenu->save();
 
     }
@@ -144,9 +143,8 @@ class MenuSubscriber{
     public function updateDefaults($menu){
 
         $menu->updated_at = $this->carbon->now();
-        $menu->machine_updated = gethostname();
         $menu->ip_updated = request()->ip();
-        $menu->user_updated = $this->auth->user()->user_id;
+        $menu->user_updated = $this->auth->user()->username;
         $menu->save();
 
     }

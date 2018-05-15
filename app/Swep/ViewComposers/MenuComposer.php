@@ -24,7 +24,7 @@ class MenuComposer{
 
     public function compose($view){
 
-        $menus = $this->cache->remember('menu:all', 240, function(){
+        $menus = $this->cache->remember('menus:global:all', 240, function(){
         	return $this->menu->select('menu_id', 'name')->get();
         });
         

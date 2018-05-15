@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class DepartmentUnits extends Model{
+class DepartmentUnit extends Model{
 
     use Sortable;
 
@@ -22,19 +22,10 @@ class DepartmentUnits extends Model{
 
 	protected $fillable = [
 
-        'slug',
         'department_id',
         'department_name',
         'name',
         'description',
-        'created_at', 
-        'updated_at',
-        'machine_created',
-        'machine_updated', 
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -50,8 +41,6 @@ class DepartmentUnits extends Model{
         'description' => '',
         'created_at' => null, 
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '', 
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -61,9 +50,9 @@ class DepartmentUnits extends Model{
 
 
 
-	public function departments() {
+	public function department() {
       
-      return $this->belongsTo('App\Models\Departments','department_id','department_id');
+      return $this->belongsTo('App\Models\Department','department_id','department_id');
 
     }
     
@@ -120,9 +109,9 @@ class DepartmentUnits extends Model{
 
     public function getDepartmentUnitIdIncrementAttribute(){
 
-        $id = '1001';
+        $id = 'DU1001';
 
-        if($id != null){
+        if($this->lastDepartmentUnit != null){
 
             $num =  $this->lastDepartmentUnit + 1;
             

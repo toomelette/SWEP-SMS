@@ -10,7 +10,7 @@ class Submenu extends Model{
 	
 	use Sortable;
 
-    protected $table = 'submenu';
+    protected $table = 'submenus';
 
     protected $dates = ['created_at', 'updated_at'];
 
@@ -23,19 +23,9 @@ class Submenu extends Model{
 
     protected $fillable = [
         
-        'slug',
         'is_nav',
         'name',
         'route',
-
-        'created_at',
-        'updated_at',
-        'machine_created',
-        'machine_updated',
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -51,8 +41,6 @@ class Submenu extends Model{
 
         'created_at' => null,
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '',
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -123,9 +111,9 @@ class Submenu extends Model{
 
     public function getSubmenuIdIncrementAttribute(){
 
-        $id = '100001';
+        $id = 'SM100001';
 
-        if($id != null){
+        if($this->lastSubmenu != null){
 
             $num =  $this->lastSubmenu + 1;
             

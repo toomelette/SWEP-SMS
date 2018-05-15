@@ -23,8 +23,6 @@ class User extends Authenticatable{
 
     protected $fillable = [
 
-        'slug',
-        'user_id', 
         'email', 
         'username', 
         'password', 
@@ -34,15 +32,7 @@ class User extends Authenticatable{
         'position', 
         'is_online', 
         'is_active',
-        'color', 
-        'created_at', 
-        'updated_at',
-        'machine_created',
-        'machine_updated', 
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
+        'color',
         'last_login_time',
         'last_login_machine',
         'last_login_ip',
@@ -75,8 +65,6 @@ class User extends Authenticatable{
         'color' => '', 
         'created_at' => null, 
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '', 
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -92,9 +80,9 @@ class User extends Authenticatable{
     /** RELATIONSHIPS **/   
 
 
-    public function disbursementVouchers() {
+    public function disbursementVoucher() {
       
-      return $this->belongsTo('App\Models\DisbursementVouchers','user_id','user_id');
+      return $this->belongsTo('App\Models\DisbursementVoucher','user_id','user_id');
 
     }
 
@@ -150,9 +138,9 @@ class User extends Authenticatable{
 
     public function getUserIdIncrementAttribute(){
 
-        $id = '10001';
+        $id = 'U10001';
 
-        if($id != null){
+        if($this->lastUser != null){
 
             $num =  $this->lastUser + 1;
             

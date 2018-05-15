@@ -14,7 +14,7 @@
         <h3 class="box-title">Form</h3>
       </div>
       
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.signatories.store') }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.signatory.store') }}">
 
         <div class="box-body">
      

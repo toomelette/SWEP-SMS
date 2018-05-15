@@ -10,7 +10,7 @@ class FundSource extends Model{
 
 	use Sortable;
 
-    protected $table = 'fund_source';
+    protected $table = 'fund_sources';
 
     protected $dates = ['created_at', 'updated_at'];
 
@@ -22,16 +22,7 @@ class FundSource extends Model{
 
 	protected $fillable = [
 
-        'slug',
         'description',
-        'created_at', 
-        'updated_at',
-        'machine_created',
-        'machine_updated', 
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -44,8 +35,6 @@ class FundSource extends Model{
         'description' => '',
         'created_at' => null, 
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '', 
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',

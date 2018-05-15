@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Departments extends Model{
+class Department extends Model{
 
     use Sortable;
 
@@ -22,16 +22,7 @@ class Departments extends Model{
 
 	protected $fillable = [
 
-        'slug',
         'name',
-        'created_at', 
-        'updated_at',
-        'machine_created',
-        'machine_updated', 
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -44,8 +35,6 @@ class Departments extends Model{
         'name' => '',
         'created_at' => null, 
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '', 
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -56,17 +45,17 @@ class Departments extends Model{
 
 
 
-	public function accounts() {
+	public function account() {
 
-        return $this->hasMany('App\Models\Accounts','department_id','department_id');
+        return $this->hasMany('App\Models\Account','department_id','department_id');
 
     }
 
 
 
-    public function departmentUnits() {
+    public function departmentUnit() {
 
-        return $this->hasMany('App\Models\DepartmentUnits','department_id','department_id');
+        return $this->hasMany('App\Models\DepartmentUnit','department_id','department_id');
 
     }
 
@@ -101,6 +90,7 @@ class Departments extends Model{
 
 
 
+
     // GETTERS
 
     public function getLastDepartmentAttribute(){
@@ -122,9 +112,9 @@ class Departments extends Model{
 
     public function getDepartmentIdIncrementAttribute(){
 
-        $id = '1001';
+        $id = 'D1001';
 
-        if($id != null){
+        if($this->lastDepartment != null){
 
             $num =  $this->lastDepartment + 1;
             
@@ -135,6 +125,8 @@ class Departments extends Model{
         return $id;
 
     }
+
+
 
 
 }

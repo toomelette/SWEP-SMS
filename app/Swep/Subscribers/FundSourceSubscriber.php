@@ -48,7 +48,7 @@ class FundSourceSubscriber{
 
         $this->createDefaults($fund_source);
         CacheHelper::deletePattern('swep_cache:fund_sources:all:*');
-        CacheHelper::deletePattern('swep_cache:fund_sources:all');
+        CacheHelper::deletePattern('swep_cache:fund_sources:global:all');
 
     }
 
@@ -59,9 +59,9 @@ class FundSourceSubscriber{
     public function onUpdate($fund_source, $request){
 
         $this->updateDefaults($fund_source);
-        CacheHelper::deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
         CacheHelper::deletePattern('swep_cache:fund_sources:all:*');
-        CacheHelper::deletePattern('swep_cache:fund_sources:all');
+        CacheHelper::deletePattern('swep_cache:fund_sources:global:all');
+        CacheHelper::deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
 
     }
 
@@ -71,9 +71,9 @@ class FundSourceSubscriber{
 
     public function onDelete($fund_source){
 
-        CacheHelper::deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
         CacheHelper::deletePattern('swep_cache:fund_sources:all:*');
-        CacheHelper::deletePattern('swep_cache:fund_sources:all');
+        CacheHelper::deletePattern('swep_cache:fund_sources:global:all');
+        CacheHelper::deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
 
     }
 
@@ -86,14 +86,13 @@ class FundSourceSubscriber{
 
         $fund_source->slug = $this->str->random(16);
         $fund_source->fund_source_id = $this->fund_source->fundSourceIdIncrement;
+        
         $fund_source->created_at = $this->carbon->now();
         $fund_source->updated_at = $this->carbon->now();
-        $fund_source->machine_created = gethostname();
-        $fund_source->machine_updated = gethostname();
         $fund_source->ip_created = request()->ip();
         $fund_source->ip_updated = request()->ip();
-        $fund_source->user_created = $this->auth->user()->user_id;
-        $fund_source->user_updated = $this->auth->user()->user_id;
+        $fund_source->user_created = $this->auth->user()->username;
+        $fund_source->user_updated = $this->auth->user()->username;
         $fund_source->save();
 
     }
@@ -103,9 +102,9 @@ class FundSourceSubscriber{
     public function updateDefaults($fund_source){
 
         $fund_source->updated_at = $this->carbon->now();
-        $fund_source->machine_updated = gethostname();
         $fund_source->ip_updated = request()->ip();
-        $fund_source->user_updated = $this->auth->user()->user_id;
+        $fund_source->user_updated = $this->auth->user()->username;
+        $fund_source->save();
 
     }
 

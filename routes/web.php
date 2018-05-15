@@ -45,23 +45,30 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** MENU **/
 	Route::resource('menu', 'MenuController');
 
+
 	/** SUBMENU **/
 	Route::resource('submenu', 'SubmenuController');
 
+
 	/** SIGNATORIES **/
-	Route::resource('signatories', 'SignatoriesController');
+	Route::resource('signatory', 'SignatoryController');
+
 
 	/** DEPARTMENTS **/
 	Route::resource('department', 'DepartmentController');
 
+
 	/** DEPARTMENT UNITS **/
 	Route::resource('department_unit', 'DepartmentUnitController');
+
 
 	/** ACCOUNTS **/
 	Route::resource('account', 'AccountController');
 
+
 	/** FUND SOURCE **/
 	Route::resource('fund_source', 'FundSourceController');
+	
 	
 });
 

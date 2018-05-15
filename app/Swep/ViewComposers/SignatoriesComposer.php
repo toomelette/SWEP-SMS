@@ -24,7 +24,7 @@ class SignatoriesComposer{
 
     public function compose($view){
 
-        $signatory = $this->cache->remember('signatories:all', 240, function(){
+        $signatory = $this->cache->remember('signatories:global:all', 240, function(){
         	return $this->signatory->select('employee_name', 'employee_position', 'type')->get();
         });
         

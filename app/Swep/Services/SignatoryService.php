@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Cache\Repository as Cache;
 
-class SignatoriesService{
+class SignatoryService{
 
 
 	protected $signatory;
@@ -51,7 +51,7 @@ class SignatoriesService{
 
         $request->flash();
         
-        return view('dashboard.signatories.index')->with('signatories', $signatories);
+        return view('dashboard.signatory.index')->with('signatories', $signatories);
 
     }
 
@@ -61,7 +61,7 @@ class SignatoriesService{
     public function store(Request $request){
 
         $signatory = $this->signatory->create($request->all());
-        $this->event->fire('signatories.create', [ $signatory, $request ]);
+        $this->event->fire('signatory.create', [ $signatory, $request ]);
         $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
         return redirect()->back();
         
@@ -76,7 +76,7 @@ class SignatoriesService{
             return $this->signatory->findSlug($slug);
         }); 
 
-        return view('dashboard.signatories.edit')->with('signatory', $signatory);
+        return view('dashboard.signatory.edit')->with('signatory', $signatory);
 
     }
 
@@ -90,10 +90,10 @@ class SignatoriesService{
         });
 
         $signatory->update($request->all());
-        $this->event->fire('signatories.update', [ $signatory, $request ]);
+        $this->event->fire('signatory.update', [ $signatory, $request ]);
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS_SLUG', $signatory->slug);
-        return redirect()->route('dashboard.signatories.index');
+        return redirect()->route('dashboard.signatory.index');
 
     }
 
@@ -107,10 +107,10 @@ class SignatoriesService{
         });
         
         $signatory->delete();
-        $this->event->fire('signatories.delete', [ $slug ]);
+        $this->event->fire('signatory.delete', [ $slug ]);
         $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');
         $this->session->flash('SIGNATORY_DELETE_SUCCESS_SLUG', $signatory->slug);
-        return redirect()->route('dashboard.signatories.index');
+        return redirect()->route('dashboard.signatory.index');
 
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 
-class DisbursementVouchers extends Model{
+class DisbursementVoucher extends Model{
 
     use Sortable;
 
@@ -24,7 +24,6 @@ class DisbursementVouchers extends Model{
 
 	protected $fillable = [
 		
-        'slug',
         'user_id', 
         'doc_no', 
         'dv_no', 
@@ -49,14 +48,6 @@ class DisbursementVouchers extends Model{
         'approved_by_sig_date',
         'processed_at',
         'checked_at',
-        'created_at',
-        'updated_at',
-        'machine_created',
-        'machine_updated',
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -91,8 +82,6 @@ class DisbursementVouchers extends Model{
         'checked_at' => null,
         'created_at' => null,
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '',
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -109,7 +98,7 @@ class DisbursementVouchers extends Model{
 
 
     public function project(){
-        return $this->hasOne('App\Models\Projects', 'project_id', 'project_id');
+        return $this->hasOne('App\Models\Project', 'project_id', 'project_id');
     }
 
 

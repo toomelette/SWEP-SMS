@@ -27,7 +27,7 @@ class SubmenuComposer{
 
     public function compose($view){
 
-        $submenus = $this->cache->remember('submenu:all', 240, function(){
+        $submenus = $this->cache->remember('submenus:global:all', 240, function(){
         	return $this->submenu->select('menu_id','submenu_id', 'name', 'is_nav')->get();
         });
         

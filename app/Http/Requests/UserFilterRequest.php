@@ -17,8 +17,8 @@ class UserFilterRequest extends FormRequest{
 
         return [
 
-            'ol' => 'nullable|string',
-            'a' => 'nullable|string',
+            'ol' => 'nullable|string|max:5',
+            'a' => 'nullable|string|max:5',
 
         ];
 
@@ -30,7 +30,10 @@ class UserFilterRequest extends FormRequest{
         return [
 
             'ol.string'  => 'Invalid input, must be a string!',
+            'ol.max'  => 'The Login Status field may not be greater than 5 characters.',
+
             'a.string'  => 'Invalid input, must be a string!',
+            'a.max'  => 'The User Status field may not be greater than 5 characters.',
 
         ];
 

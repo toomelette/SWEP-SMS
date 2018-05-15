@@ -21,9 +21,9 @@ class DisbursementVoucherFormRequest extends FormRequest{
 
         return [
 
-            'project_id'=>'required|string|min:4|max:4',
-            'fund_source'=>'required|string|min:4|max:4',
-            'mode_of_payment'=>'nullable|string|min:4|max:4',
+            'project_id'=>'required|string|min:5|max:5',
+            'fund_source'=>'required|string|min:6|max:6',
+            'mode_of_payment'=>'nullable|string|min:7|max:7',
             'payee'=>'required|string|max:90',
             'tin'=>'required|string|max:45',
             'bur_no'=>'nullable|string|max:45',
@@ -48,17 +48,17 @@ class DisbursementVoucherFormRequest extends FormRequest{
 
             'project_id.required'  => 'Station field is required.',
             'project_id.string'  => 'Invalid Input! You must enter a string value.',
-            'project_id.min'  => 'The Station field may not be lesser than 4 characters.',
-            'project_id.max'  => 'The Station field may not be greater than 4 characters.',
+            'project_id.min'  => 'The Station field may not be lesser than 5 characters.',
+            'project_id.max'  => 'The Station field may not be greater than 5 characters.',
 
             'fund_source.required'  => 'Fund Source field is required.',
             'fund_source.string'  => 'Invalid Input! You must enter a string value.',
-            'fund_source.min'  => 'The Fund Source field may not be lesser than 4 characters.',
-            'fund_source.max'  => 'The Fund Source field may not be greater than 4 characters.',
+            'fund_source.min'  => 'The Fund Source field may not be lesser than 6 characters.',
+            'fund_source.max'  => 'The Fund Source field may not be greater than 6 characters.',
 
             'mode_of_payment.string'  => 'Invalid Input! You must enter a string value.',
-            'mode_of_payment.min'  => 'The Mode Of Payment field may not be lesser than 4 characters.',
-            'mode_of_payment.max'  => 'The Mode Of Payment field may not be greater than 4 characters.',
+            'mode_of_payment.min'  => 'The Mode Of Payment field may not be lesser than 7 characters.',
+            'mode_of_payment.max'  => 'The Mode Of Payment field may not be greater than 7 characters.',
 
             'payee.required'  => 'Payee field is required.',
             'payee.string'  => 'Invalid Input! You must enter a string value.',
@@ -66,10 +66,10 @@ class DisbursementVoucherFormRequest extends FormRequest{
 
             'tin.required'  => 'TIN/Employee No. field is required.',
             'tin.string'  => 'Invalid Input! You must enter a string value.',
-            'tin.max'  => 'The TIN/Employee No. field may not be greater than 20 characters.',
+            'tin.max'  => 'The TIN/Employee No. field may not be greater than 45 characters.',
 
             'bur_no.string'  => 'Invalid Input! You must enter a string value.',
-            'bur_no.max'  => 'The BUR No. field may not be greater than 20 characters.',
+            'bur_no.max'  => 'The BUR No. field may not be greater than 45 characters.',
 
             'address.required'  => 'Address field is required.',
             'address.string'  => 'Invalid Input! You must enter a string value.',
@@ -90,7 +90,7 @@ class DisbursementVoucherFormRequest extends FormRequest{
 
             'amount.required'  => 'Amount field is required.',
             'amount.string'  => 'Invalid Input! You must enter a string value.',
-            'amount.max'  => 'The Amount field may not be greater than 20 characters.',
+            'amount.max'  => 'The Amount field may not be greater than 13 characters.',
 
 
         ];

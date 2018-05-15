@@ -29,7 +29,7 @@ class DisbursementVoucherSetNoRequest extends FormRequest{
         return [
 
             'dv_no.string'  => 'Invalid Input! You must enter a string value.',
-            'dv_no.max'  => 'The Field may not be greater than 50 characters.',
+            'dv_no.max'  => 'The Field may not be greater than 45 characters.',
 
         ];
 

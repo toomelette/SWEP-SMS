@@ -128,7 +128,7 @@ class UserSubscriber{
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        CacheHelper::deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
     }
 
@@ -142,7 +142,7 @@ class UserSubscriber{
         
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        CacheHelper::deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
     }
 
@@ -153,7 +153,7 @@ class UserSubscriber{
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        CacheHelper::deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
     }
 
@@ -164,7 +164,7 @@ class UserSubscriber{
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        CacheHelper::deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
     }
 
@@ -175,7 +175,7 @@ class UserSubscriber{
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        CacheHelper::deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
     }
 
@@ -186,7 +186,7 @@ class UserSubscriber{
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        CacheHelper::deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
     }
 
@@ -201,10 +201,9 @@ class UserSubscriber{
         $user->is_online = false;
         $user->is_active = false;
         $user->color = 'skin-green sidebar-mini';
+
         $user->created_at = $this->carbon->now();
         $user->updated_at = $this->carbon->now();
-        $user->machine_created = gethostname();
-        $user->machine_updated = gethostname();
         $user->ip_created = request()->ip();
         $user->ip_updated = request()->ip();
         $user->user_created = $this->auth->user()->user_id;
@@ -221,9 +220,8 @@ class UserSubscriber{
     public function updateDefaults($user){
 
         $user->updated_at = $this->carbon->now();
-        $user->machine_updated = gethostname();
         $user->ip_updated = request()->ip();
-        $user->user_updated = $this->auth->user()->user_id;
+        $user->user_updated = $this->auth->user()->username;
         $user->save();
 
     }

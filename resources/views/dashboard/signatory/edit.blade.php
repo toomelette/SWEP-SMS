@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Edit Signatory</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.signatories.index']) !!}
+        {!! HtmlHelper::back_button(['dashboard.signatory.index']) !!}
       </div>
   </section>
 
@@ -17,7 +17,7 @@
         <h3 class="box-title">Form</h3>
       </div>
       
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.signatories.update', $signatory->slug) }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.signatory.update', $signatory->slug) }}">
 
         <div class="box-body">
           

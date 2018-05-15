@@ -10,7 +10,7 @@ class Menu extends Model{
 
     use Sortable;
 
-    protected $table = 'menu';
+    protected $table = 'menus';
 
     protected $dates = ['created_at', 'updated_at'];
     
@@ -20,22 +20,12 @@ class Menu extends Model{
 
     protected $fillable = [
 		
-        'slug',
         'menu_id',
         'name',
         'route',
         'icon',
         'is_menu',
         'is_dropdown',
-
-        'created_at',
-        'updated_at',
-        'machine_created',
-        'machine_updated',
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -54,8 +44,6 @@ class Menu extends Model{
 
         'created_at' => null,
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '',
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -137,9 +125,9 @@ class Menu extends Model{
 
     public function getMenuIdIncrementAttribute(){
 
-        $id = '10001';
+        $id = 'M10001';
 
-        if($id != null){
+        if($this->lastMenu != null){
 
             $num =  $this->lastMenu + 1;
             

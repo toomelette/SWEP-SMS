@@ -20,12 +20,12 @@ class DisbursementVoucherFilterRequest extends FormRequest{
 
         return [
             
-            'q' => 'nullable|max:45|string',
-            'fs' => 'nullable|max:4|min:4|string',
-            'pi' => 'nullable|max:4|min:4|string',
-            'dn' => 'nullable|max:45|string',
-            'dun' => 'nullable|max:45|string',
-            'ac' => 'nullable|max:45|string',
+            'q' => 'nullable|max:90|string',
+            'fs' => 'nullable|max:6|min:6|string',
+            'pi' => 'nullable|max:5|min:5|string',
+            'dn' => 'nullable|max:20|string',
+            'dun' => 'nullable|max:20|string',
+            'ac' => 'nullable|max:20|string',
             'df' => 'date_format:"m/d/Y"|nullable',
             'dt' => 'date_format:"m/d/Y"|nullable',
 
@@ -39,15 +39,15 @@ class DisbursementVoucherFilterRequest extends FormRequest{
         return [
 
             'q.string'  => 'Invalid Input! You must enter a string value.',
-            'q.max'  => 'The Field may not be greater than 50 characters.',
+            'q.max'  => 'The Field may not be greater than 90 characters.',
 
             'fs.string'  => 'Invalid Input! You must enter a string value.',
-            'fs.max'  => 'The Field may not be greater than 4 characters.',
-            'fs.min'  => 'The Field may not be lesser than 4 characters.',
+            'fs.max'  => 'The Field may not be greater than 6 characters.',
+            'fs.min'  => 'The Field may not be lesser than 6 characters.',
 
             'pi.string'  => 'Invalid Input! You must enter a string value.',
-            'pi.max'  => 'The Field may not be greater than 4 characters.',
-            'pi.min'  => 'The Field may not be lesser than 4 characters.',
+            'pi.max'  => 'The Field may not be greater than 5 characters.',
+            'pi.min'  => 'The Field may not be lesser than 5 characters.',
 
             'dn.string'  => 'Invalid Input! You must enter a string value.',
             'dn.max'  => 'The Field may not be greater than 20 characters.',

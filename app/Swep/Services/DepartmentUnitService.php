@@ -5,7 +5,7 @@ namespace App\Swep\Services;
 use Auth;
 use Session;
 use Illuminate\Http\Request;
-use App\Models\DepartmentUnits;
+use App\Models\DepartmentUnit;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Cache\Repository as Cache;
 
@@ -20,7 +20,7 @@ class DepartmentUnitService{
 
 
 
-    public function __construct(DepartmentUnits $department_unit, Dispatcher $event, Cache $cache){
+    public function __construct(DepartmentUnit $department_unit, Dispatcher $event, Cache $cache){
 
         $this->department_unit = $department_unit;
         $this->event = $event;

@@ -4,7 +4,7 @@ namespace App\Swep\Services;
 
 use Auth;
 use Session;
-use App\Models\Accounts;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Cache\Repository as Cache;
@@ -20,7 +20,7 @@ class AccountService{
 
 
 
-    public function __construct(Accounts $account, Dispatcher $event, Cache $cache){
+    public function __construct(Account $account, Dispatcher $event, Cache $cache){
 
         $this->account = $account;
         $this->event = $event;

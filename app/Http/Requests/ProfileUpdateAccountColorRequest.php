@@ -34,9 +34,9 @@ class ProfileUpdateAccountColorRequest extends FormRequest{
 
         return [
 
-            'color.required'  => 'Username field is required.',
+            'color.required'  => 'Color field is required.',
             'color.string'  => 'Invalid Input! You must enter a string value.',
-            'color.max'  => 'The Username field may not be greater than 45 characters.',
+            'color.max'  => 'The Color field may not be greater than 45 characters.',
 
         ];
 

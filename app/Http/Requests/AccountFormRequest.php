@@ -24,7 +24,7 @@ class AccountFormRequest extends FormRequest{
 
         return [
 
-            'department_id' => 'required|max:5|string',
+            'department_id' => 'required|max:5|min:5|string',
             'department_name' => 'required|max:45|string',
             'account_code' => 'required|max:45|string',
             'description' => 'required|max:90|string',
@@ -46,30 +46,31 @@ class AccountFormRequest extends FormRequest{
         return [
 
             'department_id.required'  => 'Department field is required.',
-            'department_id.max'  => 'The Department field exceeded the maximum characters required.',
+            'department_id.max'  => 'The Department field may not be greater than 5 characters.',
+            'department_id.min'  => 'The Department field may not be lesser than 5 characters.',
             'department_id.string'  => 'Invalid Input! You must enter a string value.',
 
             'account_code.required'  => 'Account Code field is required.',
-            'account_code.max'  => 'The Account Code field exceeded the maximum characters required.',
+            'account_code.max'  => 'The Account Code field may not be greater than 45 characters.',
             'account_code.string'  => 'Invalid Input! You must enter a string value.',
 
             'description.required'  => 'Description field is required.',
-            'description.max'  => 'The Description field exceeded the maximum characters required.',
+            'description.max'  => 'The Description field may not be greater than 90 characters.',
             'description.string'  => 'Invalid Input! You must enter a string value.',
 
             'mooe.required'  => 'MOOE field is required.',
             'mooe.string'  => 'Invalid Input! You must enter a string value.',
-            'mooe.max'  => 'The MOOE field exceeded the maximum characters required.',
+            'mooe.max'  => 'The MOOE field may not be greater than 13 characters.',
 
             'co.required'  => 'CO field is required.',
             'co.string'  => 'Invalid Input! You must enter a string value.',
-            'co.max'  => 'The CO field exceeded the maximum characters required.',
+            'co.max'  => 'The CO field may not be greater than 13 characters.',
 
             'date_started.date_format'  => 'Invalid Format! The Date does not match the format mm/dd/yy',
 
             'projected_date_end.date_format'  => 'Invalid Format! The Date does not match the format mm/dd/yy',
 
-            'project_in_charge.max'  => 'The Project Incharge field exceeded the maximum characters required.',
+            'project_in_charge.max'  => 'The Project Incharge field may not be greater than 90 characters.',
             'project_in_charge.string'  => 'Invalid Input! You must enter a string value.',
 
 

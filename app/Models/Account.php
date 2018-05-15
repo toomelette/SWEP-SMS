@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Accounts extends Model{
+class Account extends Model{
 
 	use Sortable;
 
@@ -22,7 +22,6 @@ class Accounts extends Model{
 
 	protected $fillable = [
 
-        'slug',
         'department_id',
         'department_name',
         'account_code',
@@ -32,14 +31,6 @@ class Accounts extends Model{
         'date_started',
         'projected_date_end',
         'project_in_charge',
-        'created_at', 
-        'updated_at',
-        'machine_created',
-        'machine_updated', 
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -60,8 +51,6 @@ class Accounts extends Model{
         'project_in_charge' => '',
         'created_at' => null, 
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '', 
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -71,9 +60,9 @@ class Accounts extends Model{
 
 
 
-	public function departments() {
+	public function department() {
       
-      return $this->belongsTo('App\Models\Departments','department_id','department_id');
+      return $this->belongsTo('App\Models\Department','department_id','department_id');
 
     }
 

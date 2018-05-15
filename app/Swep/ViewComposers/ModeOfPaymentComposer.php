@@ -24,7 +24,7 @@ class ModeOfPaymentComposer{
 
     public function compose($view){
 
-        $mode_of_payment = $this->cache->remember('mode_of_payment:all', 240, function(){
+        $mode_of_payment = $this->cache->remember('modes_of_payment:global:all', 240, function(){
         	return $this->mode_of_payment->select('*')->get();
         });
         

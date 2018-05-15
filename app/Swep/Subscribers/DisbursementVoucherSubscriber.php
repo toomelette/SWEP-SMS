@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\CacheHelper;
 use App\Models\Signatory;
-use App\Models\DisbursementVouchers;
+use App\Models\DisbursementVoucher;
 use Illuminate\Cache\Repository as Cache;
 
 
@@ -24,7 +24,7 @@ class DisbursementVoucherSubscriber{
 
 
 
-	public function __construct(DisbursementVouchers $disbursement_voucher, Signatory $signatory, Carbon $carbon, Cache $cache, Str $str){
+	public function __construct(DisbursementVoucher $disbursement_voucher, Signatory $signatory, Carbon $carbon, Cache $cache, Str $str){
 
 		$this->disbursement_voucher = $disbursement_voucher;
 		$this->signatory = $signatory;
@@ -120,6 +120,7 @@ class DisbursementVoucherSubscriber{
     }
 
 
+
 	// Defaults
 	public function createDefaults($disbursement_voucher){
 
@@ -129,14 +130,13 @@ class DisbursementVoucherSubscriber{
         $disbursement_voucher->date = $this->carbon->format('Y-m-d');
         $disbursement_voucher->processed_at = null;
         $disbursement_voucher->checked_at = null;
+
         $disbursement_voucher->created_at = $this->carbon->now();
         $disbursement_voucher->updated_at = $this->carbon->now();
-        $disbursement_voucher->machine_created = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        $disbursement_voucher->machine_updated = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $disbursement_voucher->ip_created = request()->ip();
         $disbursement_voucher->ip_updated = request()->ip();
-        $disbursement_voucher->user_created = $this->auth->user()->user_id;
-        $disbursement_voucher->user_updated = $this->auth->user()->user_id;
+        $disbursement_voucher->user_created = $this->auth->user()->username;
+        $disbursement_voucher->user_updated = $this->auth->user()->username;
         $disbursement_voucher->save();
 
 	}
@@ -146,12 +146,12 @@ class DisbursementVoucherSubscriber{
     public function updateDefaults($disbursement_voucher){
 
         $disbursement_voucher->updated_at = $this->carbon->now();
-        $disbursement_voucher->machine_updated = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         $disbursement_voucher->ip_updated = request()->ip();
-        $disbursement_voucher->user_updated = $this->auth->user()->user_id;
+        $disbursement_voucher->user_updated = $this->auth->user()->username;
         $disbursement_voucher->save();
 
     }
+
 
 
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserSubmenu extends Model{
 
 
-    protected $table = 'user_submenu';
+    protected $table = 'user_submenus';
     public $timestamps = false;
 
 

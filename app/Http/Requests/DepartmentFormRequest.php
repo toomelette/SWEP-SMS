@@ -33,7 +33,7 @@ class DepartmentFormRequest extends FormRequest{
         return [
 
             'name.required'  => 'Name field is required.',
-            'name.max'  => 'The Name field exceeded the maximum characters.',
+            'name.max'  => 'The Name field may not be greater than 45 characters.',
             'name.string'  => 'Invalid Input! You must enter a string value.',
 
         ];

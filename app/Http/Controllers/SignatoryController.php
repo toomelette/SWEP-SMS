@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Swep\Services\SignatoriesService;
-use App\Http\Requests\SignatoriesFormRequest;
+use App\Swep\Services\SignatoryService;
+use App\Http\Requests\SignatoryFormRequest;
 
 
-class SignatoriesController extends Controller{
+class SignatoryController extends Controller{
 
 
 
@@ -15,7 +15,7 @@ class SignatoriesController extends Controller{
 
 
 
-    public function __construct(SignatoriesService $signatory){
+    public function __construct(SignatoryService $signatory){
 
         $this->signatory = $signatory;
 
@@ -35,14 +35,14 @@ class SignatoriesController extends Controller{
 
     public function create(){
 
-        return view('dashboard.signatories.create');
+        return view('dashboard.signatory.create');
         
     }
 
     
 
 
-    public function store(SignatoriesFormRequest $request){
+    public function store(SignatoryFormRequest $request){
 
         return $this->signatory->store($request);
         
@@ -72,7 +72,7 @@ class SignatoriesController extends Controller{
 
 
 
-    public function update(SignatoriesFormRequest $request, $slug){
+    public function update(SignatoryFormRequest $request, $slug){
 
         return $this->signatory->update($request, $slug);
         

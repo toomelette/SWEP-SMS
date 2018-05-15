@@ -40,7 +40,7 @@ class MenuFormRequest extends FormRequest{
                     
                 $rules['row.'.$key.'.sub_name'] = 'required|string|max:45';
                 $rules['row.'.$key.'.sub_route'] = 'required|string|max:45';
-                $rules['row.'.$key.'.sub_is_nav'] = 'required|string|max:6';
+                $rules['row.'.$key.'.sub_is_nav'] = 'required|string|max:5';
 
             } 
 
@@ -74,11 +74,11 @@ class MenuFormRequest extends FormRequest{
 
             'is_menu.required'  => 'Is Menu field is required.',
             'is_menu.string'  => 'Invalid Input! You must enter a string value.',
-            'is_menu.max'  => 'The Is Menu field may not be greater than 6 characters.',
+            'is_menu.max'  => 'The Is Menu field may not be greater than 5 characters.',
 
             'is_dropdown.required'  => 'Is Dropdown field is required.',
             'is_dropdown.string'  => 'Invalid Input! You must enter a string value.',
-            'is_dropdown.max'  => 'The Is Dropdown field may not be greater than 6 characters.',
+            'is_dropdown.max'  => 'The Is Dropdown field may not be greater than 5 characters.',
 
         ];
 
@@ -96,7 +96,7 @@ class MenuFormRequest extends FormRequest{
 
                 $messages['row.'. $key .'.sub_is_nav.required'] = 'Is Nav Field is Required.';
                 $messages['row.'. $key .'.sub_is_nav.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.sub_is_nav.max'] = 'The Is Nav field may not be greater than 45 characters.';
+                $messages['row.'. $key .'.sub_is_nav.max'] = 'The Is Nav field may not be greater than 5 characters.';
 
             }
             

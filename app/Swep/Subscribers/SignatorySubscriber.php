@@ -11,7 +11,7 @@ use App\Swep\Helpers\DataTypeHelper;
 
 
 
-class SignatoriesSubscriber{
+class SignatorySubscriber{
 
 
     protected $signatory;
@@ -35,9 +35,9 @@ class SignatoriesSubscriber{
 
     public function subscribe($events){
 
-        $events->listen('signatories.create', 'App\Swep\Subscribers\SignatoriesSubscriber@onCreate');
-        $events->listen('signatories.update', 'App\Swep\Subscribers\SignatoriesSubscriber@onUpdate');
-        $events->listen('signatories.delete', 'App\Swep\Subscribers\SignatoriesSubscriber@onDelete');
+        $events->listen('signatory.create', 'App\Swep\Subscribers\SignatorySubscriber@onCreate');
+        $events->listen('signatory.update', 'App\Swep\Subscribers\SignatorySubscriber@onUpdate');
+        $events->listen('signatory.delete', 'App\Swep\Subscribers\SignatorySubscriber@onDelete');
 
     }
 
@@ -48,6 +48,7 @@ class SignatoriesSubscriber{
 
         $this->createDefaults($signatory);
         CacheHelper::deletePattern('swep_cache:signatories:all:*');
+        CacheHelper::deletePattern('swep_cache:signatories:global:all');
 
     }
 
@@ -59,6 +60,7 @@ class SignatoriesSubscriber{
 
         $this->updateDefaults($signatory);
         CacheHelper::deletePattern('swep_cache:signatories:all:*');
+        CacheHelper::deletePattern('swep_cache:signatories:global:all');
         CacheHelper::deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
 
     }
@@ -70,6 +72,7 @@ class SignatoriesSubscriber{
     public function onDelete($slug){
 
         CacheHelper::deletePattern('swep_cache:signatories:all:*');
+        CacheHelper::deletePattern('swep_cache:signatories:global:all');
         CacheHelper::deletePattern('swep_cache:signatories:bySlug:'. $slug .'');
 
     }
@@ -82,14 +85,14 @@ class SignatoriesSubscriber{
     public function createDefaults($signatory){
 
         $signatory->slug = $this->str->random(16);
+        $signatory->signatory_id = $this->signatory->signatoryIdIncrement;
+
         $signatory->created_at = $this->carbon->now();
         $signatory->updated_at = $this->carbon->now();
-        $signatory->machine_created = gethostname();
-        $signatory->machine_updated = gethostname();
         $signatory->ip_created = request()->ip();
         $signatory->ip_updated = request()->ip();
-        $signatory->user_created = $this->auth->user()->user_id;
-        $signatory->user_updated = $this->auth->user()->user_id;
+        $signatory->user_created = $this->auth->user()->username;
+        $signatory->user_updated = $this->auth->user()->username;
         $signatory->save();
 
     }
@@ -99,10 +102,10 @@ class SignatoriesSubscriber{
     public function updateDefaults($signatory){
 
         $signatory->updated_at = $this->carbon->now();
-        $signatory->machine_updated = gethostname();
         $signatory->ip_updated = request()->ip();
-        $signatory->user_updated = $this->auth->user()->user_id;
-
+        $signatory->user_updated = $this->auth->user()->username;
+        $signatory->save();
+        
     }
 
 

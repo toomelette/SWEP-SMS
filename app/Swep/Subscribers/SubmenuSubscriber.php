@@ -52,7 +52,9 @@ class SubmenuSubscriber{
 
         CacheHelper::deletePattern('swep_cache:submenus:bySlug:'. $submenu->slug .'');
         CacheHelper::deletePattern('swep_cache:submenus:all:*');
-        CacheHelper::deletePattern('swep_cache:submenus:all');
+        CacheHelper::deletePattern('swep_cache:submenus:global:all');
+
+        CacheHelper::deletePattern('swep_cache:api:response_submenus_from_menu:*');
 
     }
 
@@ -64,7 +66,9 @@ class SubmenuSubscriber{
 
         CacheHelper::deletePattern('swep_cache:submenus:bySlug:'. $submenu->slug .'');
         CacheHelper::deletePattern('swep_cache:submenus:all:*');
-        CacheHelper::deletePattern('swep_cache:submenus:all');
+        CacheHelper::deletePattern('swep_cache:submenus:global:all');
+        
+        CacheHelper::deletePattern('swep_cache:api:response_submenus_from_menu:*');
 
     }
 
@@ -76,7 +80,6 @@ class SubmenuSubscriber{
     public function updateDefaults($submenu){
 
         $submenu->updated_at = $this->carbon->now();
-        $submenu->machine_updated = gethostname();
         $submenu->ip_updated = request()->ip();
         $submenu->user_updated = $this->auth->user()->user_id;
 

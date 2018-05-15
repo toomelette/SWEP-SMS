@@ -22,18 +22,9 @@ class Signatory extends Model{
 
 	protected $fillable = [
 
-        'slug',
         'employee_name', 
         'employee_position', 
         'type',
-        'created_at', 
-        'updated_at',
-        'machine_created',
-        'machine_updated', 
-        'ip_created',
-        'ip_updated',
-        'user_created',
-        'user_updated',
 
     ];
 
@@ -47,8 +38,6 @@ class Signatory extends Model{
         'type' => '',
         'created_at' => null, 
         'updated_at' => null,
-        'machine_created' => '',
-        'machine_updated' => '', 
         'ip_created' => '',
         'ip_updated' => '',
         'user_created' => '',
@@ -85,6 +74,44 @@ class Signatory extends Model{
         return $query->where('slug', $slug)->firstOrFail();
 
     }
+
+
+
+    // GETTERS
+
+    public function getLastSignatoryAttribute(){
+
+        $signatory = $this->select('signatory_id')->orderBy('signatory_id', 'desc')->first();
+
+        if($signatory != null){
+
+          return str_replace('S', '', $signatory->signatory_id);
+
+        }
+
+        return null;
+        
+    }
+
+
+
+
+    public function getSignatoryIdIncrementAttribute(){
+
+        $id = 'S1001';
+
+        if($this->lastSignatory != null){
+
+            $num =  $this->lastSignatory + 1;
+            
+            $id = 'S' . $num;
+        
+        }
+
+        return $id;
+
+    }
+
 
 
 

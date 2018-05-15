@@ -7,7 +7,7 @@ use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Events\Dispatcher;
-use App\Models\DisbursementVouchers;
+use App\Models\DisbursementVoucher;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Cache\Repository as Cache;
 
@@ -25,7 +25,7 @@ class DisbursementVoucherService{
 
 
 
-    public function __construct(DisbursementVouchers $disbursement_voucher, Dispatcher $event, Cache $cache, Carbon $carbon){
+    public function __construct(DisbursementVoucher $disbursement_voucher, Dispatcher $event, Cache $cache, Carbon $carbon){
 
         $this->disbursement_voucher = $disbursement_voucher;
         $this->event = $event;

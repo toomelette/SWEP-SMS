@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SignatoriesFormRequest extends FormRequest{
+class SignatoryFormRequest extends FormRequest{
 
 
     
@@ -44,7 +44,7 @@ class SignatoriesFormRequest extends FormRequest{
 
             'type.required'  => 'Type field is required.',
             'type.max'  => 'The Type field may not be greater than 20.',
-            'type.string'  => 'Invalid Input! You must enter a string value.',
+            'type.int'  => 'Invalid Input! You must enter an integer.',
 
         ];
 

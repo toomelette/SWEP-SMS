@@ -4,7 +4,7 @@ namespace App\Swep\Subscribers;
 
 use Auth;
 use Carbon\Carbon;
-use App\Models\Accounts;
+use App\Models\Account;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\CacheHelper;
 use App\Swep\Helpers\DataTypeHelper;
@@ -21,7 +21,7 @@ class AccountSubscriber{
 
 
 
-    public function __construct(Accounts $account, Carbon $carbon, Str $str){
+    public function __construct(Account $account, Carbon $carbon, Str $str){
 
         $this->account = $account;
         $this->carbon = $carbon;
@@ -55,7 +55,7 @@ class AccountSubscriber{
         $account->save();
 
         CacheHelper::deletePattern('swep_cache:accounts:all:*');
-        CacheHelper::deletePattern('swep_cache:accounts:all');
+        CacheHelper::deletePattern('swep_cache:accounts:global:all');
         CacheHelper::deletePattern('swep_cache:api:response_accounts_from_department:*');
 
     }
@@ -75,7 +75,7 @@ class AccountSubscriber{
         $account->save();
 
         CacheHelper::deletePattern('swep_cache:accounts:all:*');
-        CacheHelper::deletePattern('swep_cache:accounts:all');
+        CacheHelper::deletePattern('swep_cache:accounts:global:all');
         CacheHelper::deletePattern('swep_cache:api:response_accounts_from_department:*');
         CacheHelper::deletePattern('swep_cache:accounts:bySlug:'. $account->slug .'');
 
@@ -88,9 +88,9 @@ class AccountSubscriber{
     public function onDelete($account){
 
         CacheHelper::deletePattern('swep_cache:accounts:all:*');
-        CacheHelper::deletePattern('swep_cache:accounts:all');
+        CacheHelper::deletePattern('swep_cache:accounts:global:all');
         CacheHelper::deletePattern('swep_cache:api:response_accounts_from_department:*');
-        CacheHelper::deletePattern('swep_cache:accounts:bySlug.'. $account->slug .'');
+        CacheHelper::deletePattern('swep_cache:accounts:bySlug:'. $account->slug .'');
 
     }
 
@@ -105,12 +105,10 @@ class AccountSubscriber{
         $account->account_id = $this->account->accountIdIncrement;
         $account->created_at = $this->carbon->now();
         $account->updated_at = $this->carbon->now();
-        $account->machine_created = gethostname();
-        $account->machine_updated = gethostname();
         $account->ip_created = request()->ip();
         $account->ip_updated = request()->ip();
-        $account->user_created = $this->auth->user()->user_id;
-        $account->user_updated = $this->auth->user()->user_id;
+        $account->user_created = $this->auth->user()->username;
+        $account->user_updated = $this->auth->user()->username;
         $account->save();
 
     }
@@ -120,9 +118,9 @@ class AccountSubscriber{
     public function updateDefaults($account){
 
         $account->updated_at = $this->carbon->now();
-        $account->machine_updated = gethostname();
         $account->ip_updated = request()->ip();
-        $account->user_updated = $this->auth->user()->user_id;
+        $account->user_updated = $this->auth->user()->username;
+        $account->save();
 
     }
 

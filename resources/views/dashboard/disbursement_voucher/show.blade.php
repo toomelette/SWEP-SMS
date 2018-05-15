@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Station: <strong>{{ $disbursement_voucher->project->project_address }}</strong></span>
+          <span style="font-size: 15px; ">Station: <strong>{{ count($disbursement_voucher->project) != 0 ? $disbursement_voucher->project->project_address : '' }}</strong></span>
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">

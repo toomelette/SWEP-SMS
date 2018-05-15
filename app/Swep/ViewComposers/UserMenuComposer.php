@@ -33,7 +33,7 @@ class UserMenuComposer{
         $user_menus = [];
 
         if($this->auth->check()){
-            $user_menus = $this->cache->remember('user_menu:byUserId:'. $this->auth->user()->user_id .'', 240, function(){
+            $user_menus = $this->cache->remember('user_menus:byUserId:'. $this->auth->user()->user_id .'', 240, function(){
             	return $this->user_menu->where('user_id', $this->auth->user()->user_id )->get();
             });
         }
