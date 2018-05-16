@@ -34,5 +34,23 @@ class BaseService{
 
 
 
+    // Utils
+
+    public function parseDate($date){
+
+        return $date != null ? $this->carbon->parse($date)->format('Y-m-d') : null;
+
+    }
+
+
+
+    public function parseAmount($amount){
+
+        return  $amount == null ? null : str_replace(',', '', $amount);
+
+    }
+
+
+
 
 }

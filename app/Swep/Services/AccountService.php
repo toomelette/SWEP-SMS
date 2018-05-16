@@ -6,10 +6,9 @@ namespace App\Swep\Services;
 use App\Models\Account;
 use App\Swep\BaseClasses\BaseService;
 
-
+use DB;
 
 class AccountService extends BaseService{
-
 
 
 	protected $account;
@@ -54,9 +53,18 @@ class AccountService extends BaseService{
 
     public function store($request){
 
-        $account = $this->account->create($request->except(['mooe', 'co', 'date_started', 'projected_date_end']));
-        $this->event->fire('account.create', [ $account, $request ]);
-        $this->session->flash('ACCOUNT_CREATE_SUCCESS', 'The Account has been successfully created!');
+        $account = new Account;
+        $account->department_id = $request->department_id;
+        $account->department_name = $request->department_name;
+        $account->account_code = $request->account_code;
+        $account->description = $request->description;
+        $account->mooe = $this->parseAmount($request->mooe);
+        $account->co = $this->parseAmount($request->co);
+        $account->date_started = $this->parseDate($request->date_started);
+        $account->projected_date_end = $this->parseDate($request->projected_date_end);
+        $account->save();
+
+        $this->event->fire('account.store', $account);
         return redirect()->back();
 
     }
@@ -81,8 +89,6 @@ class AccountService extends BaseService{
         $account = $this->accountsBySlug($slug);
         $account->update($request->except(['mooe', 'co', 'date_started', 'projected_date_end']));
         $this->event->fire('account.update', [ $account, $request ]);
-        $this->session->flash('ACCOUNT_UPDATE_SUCCESS', 'The Account has been successfully updated!');
-        $this->session->flash('ACCOUNT_UPDATE_SUCCESS_SLUG', $account->slug);
         return redirect()->route('dashboard.account.index');
 
     }

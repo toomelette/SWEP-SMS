@@ -2,31 +2,24 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Carbon\Carbon;
+use Session;
 use App\Models\Account;
-use Illuminate\Support\Str;
-use App\Swep\Helpers\CacheHelper;
 use App\Swep\Helpers\DataTypeHelper;
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class AccountSubscriber{
+class AccountSubscriber extends BaseSubscriber{
 
 
     protected $account;
-    protected $carbon;
-    protected $str;
-    protected $auth;
 
 
 
-    public function __construct(Account $account, Carbon $carbon, Str $str){
+    public function __construct(Account $account){
 
         $this->account = $account;
-        $this->carbon = $carbon;
-        $this->str = $str;
-        $this->auth = auth();
+        parent::__construct();
 
     }
 
@@ -35,7 +28,7 @@ class AccountSubscriber{
 
     public function subscribe($events){
 
-        $events->listen('account.create', 'App\Swep\Subscribers\AccountSubscriber@onCreate');
+        $events->listen('account.store', 'App\Swep\Subscribers\AccountSubscriber@onStore');
         $events->listen('account.update', 'App\Swep\Subscribers\AccountSubscriber@onUpdate');
         $events->listen('account.delete', 'App\Swep\Subscribers\AccountSubscriber@onDelete');
 
@@ -44,19 +37,15 @@ class AccountSubscriber{
 
 
 
-    public function onCreate($account, $request){
+    public function onStore($account){
 
-        $this->createDefaults($account);
+        $this->accountCreateDefaults($account);
+        
+        $this->cacheHelper->deletePattern('swep_cache:accounts:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:accounts:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_accounts_from_department:*');
 
-        $account->mooe = $request->mooe == null ? null : str_replace(',', '', $request->mooe);
-        $account->co = $request->co == null ? null : str_replace(',', '', $request->co);
-        $account->date_started = $request->date_started == null ? null : $this->carbon->parse($request->date_started)->format('Y-m-d');
-        $account->projected_date_end = $request->date_started == null ? null : $this->carbon->parse($request->projected_date_end)->format('Y-m-d');
-        $account->save();
-
-        CacheHelper::deletePattern('swep_cache:accounts:all:*');
-        CacheHelper::deletePattern('swep_cache:accounts:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_accounts_from_department:*');
+        $this->session->flash('ACCOUNT_CREATE_SUCCESS', 'The Account has been successfully created!');
 
     }
 
@@ -68,16 +57,13 @@ class AccountSubscriber{
 
         $this->updateDefaults($account);
 
-        $account->mooe = $request->mooe == null ? null : str_replace(',', '', $request->mooe);
-        $account->co = $request->co == null ? null : str_replace(',', '', $request->co);
-        $account->date_started = $request->date_started == null ? null : $this->carbon->parse($request->date_started)->format('Y-m-d');
-        $account->projected_date_end = $request->date_started == null ? null : $this->carbon->parse($request->projected_date_end)->format('Y-m-d');
-        $account->save();
+        $this->cacheHelper->deletePattern('swep_cache:accounts:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:accounts:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_accounts_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:accounts:bySlug:'. $account->slug .'');
 
-        CacheHelper::deletePattern('swep_cache:accounts:all:*');
-        CacheHelper::deletePattern('swep_cache:accounts:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_accounts_from_department:*');
-        CacheHelper::deletePattern('swep_cache:accounts:bySlug:'. $account->slug .'');
+        $this->session->flash('ACCOUNT_UPDATE_SUCCESS', 'The Account has been successfully updated!');
+        $this->session->flash('ACCOUNT_UPDATE_SUCCESS_SLUG', $account->slug);
 
     }
 
@@ -87,19 +73,19 @@ class AccountSubscriber{
 
     public function onDelete($account){
 
-        CacheHelper::deletePattern('swep_cache:accounts:all:*');
-        CacheHelper::deletePattern('swep_cache:accounts:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_accounts_from_department:*');
-        CacheHelper::deletePattern('swep_cache:accounts:bySlug:'. $account->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:accounts:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:accounts:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_accounts_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:accounts:bySlug:'. $account->slug .'');
 
     }
 
 
 
+
     /** DEFAULTS **/
 
-
-    public function createDefaults($account){
+    public function accountCreateDefaults($account){
 
         $account->slug = $this->str->random(16);
         $account->account_id = $this->account->accountIdIncrement;
@@ -115,12 +101,13 @@ class AccountSubscriber{
 
 
 
+
+
     public function updateDefaults($account){
 
         $account->updated_at = $this->carbon->now();
         $account->ip_updated = request()->ip();
         $account->user_updated = $this->auth->user()->username;
-        $account->save();
 
     }
 
