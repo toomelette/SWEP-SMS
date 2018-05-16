@@ -2,44 +2,34 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use App\Models\DisbursementVoucher;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Cache\Repository as Cache;
 
-class DisbursementVoucherService{
+use App\Models\DisbursementVoucher;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class DisbursementVoucherService extends BaseService{
 
 
 
 	protected $disbursement_voucher;
-    protected $event;
-    protected $cache;
-    protected $carbon;
-    protected $auth;
-    protected $session;
 
 
 
 
-    public function __construct(DisbursementVoucher $disbursement_voucher, Dispatcher $event, Cache $cache, Carbon $carbon){
+    public function __construct(DisbursementVoucher $disbursement_voucher){
 
         $this->disbursement_voucher = $disbursement_voucher;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->carbon = $carbon;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+
+
+    public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
@@ -57,7 +47,9 @@ class DisbursementVoucherService{
 
 
 
-    public function fetchByUser(Request $request){
+
+
+    public function fetchByUser($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
@@ -75,7 +67,9 @@ class DisbursementVoucherService{
 
 
 
-    public function store(Request $request){
+
+
+    public function store($request){
         
         $disbursement_voucher = $this->disbursement_voucher->create($request->except(['amount', 'payee', 'address']));
         $this->event->fire('dv.create', [ $disbursement_voucher, $request ]);
@@ -88,11 +82,11 @@ class DisbursementVoucherService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });
+
+    public function update($request, $slug){
+
+        $disbursement_voucher = $this->dvBySlug($slug);
 
         $disbursement_voucher->update($request->except(['amount', 'payee', 'address']));
         $this->event->fire('dv.update', [ $disbursement_voucher, $request ]);
@@ -106,12 +100,11 @@ class DisbursementVoucherService{
 
 
 
+
+
     public function show($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });     
-
+        $disbursement_voucher = $this->dvBySlug($slug);     
         return view('dashboard.disbursement_voucher.show')->with('disbursement_voucher', $disbursement_voucher);
 
     }
@@ -119,12 +112,11 @@ class DisbursementVoucherService{
 
 
 
+
+
     public function edit($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });     
-
+        $disbursement_voucher = $this->dvBySlug($slug);     
         return view('dashboard.disbursement_voucher.edit')->with('disbursement_voucher', $disbursement_voucher);
 
     }
@@ -132,12 +124,11 @@ class DisbursementVoucherService{
 
 
 
+
+
     public function destroy($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });
-
+        $disbursement_voucher = $this->dvBySlug($slug);
         $disbursement_voucher->delete();
         $this->event->fire('dv.destroy', $disbursement_voucher);
         $this->session->flash('SESSION_DV_DELETE_SUCCESS', 'Your Voucher has been successfully Deleted!');
@@ -148,11 +139,11 @@ class DisbursementVoucherService{
 
 
 
+
+
     public function print($slug, $type){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });    
+       $disbursement_voucher = $this->dvBySlug($slug);
 
         if($type == 'front'){
             return view('printables.disbursement_voucher')->with('disbursement_voucher', $disbursement_voucher);
@@ -166,12 +157,11 @@ class DisbursementVoucherService{
 
 
 
-    public function setNo(Request $request, $slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });    
 
+    public function setNo($request, $slug){
+
+        $disbursement_voucher = $this->dvBySlug($slug);
         $disbursement_voucher->update(['dv_no' => $request->dv_no]);
         $this->event->fire('dv.set_no', $disbursement_voucher);
         $this->session->flash('SESSION_DV_SET_NO_SUCCESS_SLUG', $disbursement_voucher->slug);
@@ -183,11 +173,11 @@ class DisbursementVoucherService{
 
 
 
+
+
     public function confirmCheck($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->findSlug($slug);
-        });
+        $disbursement_voucher = $this->dvBySlug($slug);
 
         if($disbursement_voucher->processed_at != null){
 
@@ -208,9 +198,24 @@ class DisbursementVoucherService{
 
 
 
+
     // Utility Methods
     
-    public function fetchRequest(Request $request){
+    public function dvBySlug($slug){
+
+        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->disbursement_voucher->findSlug($slug);
+        });
+        
+        return $disbursement_voucher;
+
+    }
+
+
+
+
+
+    public function fetchRequest($request){
 
         $df = $this->carbon->parse($request->df)->format('Y-m-d');
         $dt = $this->carbon->parse($request->dt)->format('Y-m-d');
@@ -248,6 +253,8 @@ class DisbursementVoucherService{
         return $disbursement_voucher;
 
     }
+
+
 
 
 

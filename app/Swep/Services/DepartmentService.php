@@ -2,38 +2,32 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use App\Models\Department;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Cache\Repository as Cache;
 
-class DepartmentService{
+use App\Models\Department;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class DepartmentService extends BaseService{
+
 
 
 	protected $department;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(Department $department, Dispatcher $event, Cache $cache){
+    public function __construct(Department $department){
 
         $this->department = $department;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+
+    public function fetchAll($request){
 
        $key = str_slug($request->fullUrl(), '_');
 
@@ -58,7 +52,8 @@ class DepartmentService{
 
 
 
-    public function store(Request $request){
+
+    public function store($request){
 
         $department = $this->department->create($request->all());
         $this->event->fire('department.create', [ $department, $request ]);
@@ -70,12 +65,10 @@ class DepartmentService{
 
 
 
+
     public function edit($slug){
 
-        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department->findSlug($slug);
-        }); 
-
+        $department = $this->departmentsBySlug($slug);
         return view('dashboard.department.edit')->with('department', $department);
 
     }
@@ -83,12 +76,10 @@ class DepartmentService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department->findSlug($slug);
-        });
+    public function update($request, $slug){
 
+        $department = $this->departmentsBySlug($slug);
         $department->update($request->all());
         $this->event->fire('department.update', [ $department, $request ]);
         $this->session->flash('DEPARTMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
@@ -100,12 +91,10 @@ class DepartmentService{
 
 
 
+
     public function destroy($slug){
 
-        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department->findSlug($slug);
-        });
-        
+        $department = $this->departmentsBySlug($slug);
         $department->delete();
         $this->event->fire('department.delete', [ $department ]);
         $this->session->flash('DEPARTMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');
@@ -113,6 +102,22 @@ class DepartmentService{
         return redirect()->route('dashboard.department.index');
 
     }
+
+
+
+
+    // Utility Methods
+
+    public function departmentsBySlug($slug){
+
+        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->department->findSlug($slug);
+        });
+        
+        return $department;
+
+    }
+
 
 
 

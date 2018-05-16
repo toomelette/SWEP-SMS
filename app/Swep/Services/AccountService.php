@@ -2,40 +2,33 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use App\Models\Account;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Cache\Repository as Cache;
 
-class AccountService{
+use App\Models\Account;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class AccountService extends BaseService{
+
 
 
 	protected $account;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(Account $account, Dispatcher $event, Cache $cache){
+    public function __construct(Account $account){
 
         $this->account = $account;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+    public function fetchAll($request){
 
-       $key = str_slug($request->fullUrl(), '_');
+        $key = str_slug($request->fullUrl(), '_');
 
         $accounts = $this->cache->remember('accounts:all:' . $key, 240, function() use ($request){
 
@@ -58,7 +51,8 @@ class AccountService{
 
 
 
-    public function store(Request $request){
+
+    public function store($request){
 
         $account = $this->account->create($request->except(['mooe', 'co', 'date_started', 'projected_date_end']));
         $this->event->fire('account.create', [ $account, $request ]);
@@ -70,12 +64,10 @@ class AccountService{
 
 
 
+
     public function edit($slug){
 
-        $account = $this->cache->remember('accounts:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->account->findSlug($slug);
-        }); 
-
+        $account = $this->accountsBySlug($slug);
         return view('dashboard.account.edit')->with('account', $account);
 
     }
@@ -83,12 +75,10 @@ class AccountService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $account = $this->cache->remember('accounts:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->account->findSlug($slug);
-        });
+    public function update($request, $slug){
 
+        $account = $this->accountsBySlug($slug);
         $account->update($request->except(['mooe', 'co', 'date_started', 'projected_date_end']));
         $this->event->fire('account.update', [ $account, $request ]);
         $this->session->flash('ACCOUNT_UPDATE_SUCCESS', 'The Account has been successfully updated!');
@@ -100,12 +90,10 @@ class AccountService{
 
 
 
+
     public function destroy($slug){
 
-        $account = $this->cache->remember('accounts:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->account->findSlug($slug);
-        });
-        
+        $account = $this->accountsBySlug($slug);
         $account->delete();
         $this->event->fire('account.delete', [ $account ]);
         $this->session->flash('ACCOUNT_DELETE_SUCCESS', 'The Account has been successfully deleted!');
@@ -113,6 +101,24 @@ class AccountService{
         return redirect()->route('dashboard.account.index');
 
     }
+
+
+
+
+
+    // Utility Methods
+
+    public function accountsBySlug($slug){
+
+        $account = $this->cache->remember('accounts:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->account->findSlug($slug);
+        });
+        
+        return $account;
+
+    }
+
+
 
 
 

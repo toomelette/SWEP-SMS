@@ -48,10 +48,14 @@ class MenuSubscriber{
 
 
     public function onCreate($menu, $request){
-
-        $this->menuCreateDefaults($menu);
-
+ 
         $rows = $request->row;
+
+        $menu->is_menu = DataTypeHelper::boolean($request->is_menu);
+        $menu->is_dropdown = DataTypeHelper::boolean($request->is_dropdown);
+        $menu->save();
+        
+        $this->menuCreateDefaults($menu);
 
         if(count($rows) > 0){
 
@@ -61,9 +65,10 @@ class MenuSubscriber{
                 $submenu->menu_id = $menu->menu_id;
                 $submenu->name = $row['sub_name'];
                 $submenu->route = $row['sub_route'];
-                $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);
-                $this->submenuCreateDefaults($submenu);    
+                $submenu->is_nav = DataTypeHelper::boolean($row['sub_is_nav']);  
                 $submenu->save();
+
+                $this->submenuCreateDefaults($submenu);  
 
             }
         }
@@ -82,7 +87,12 @@ class MenuSubscriber{
 
     public function onUpdate($menu, $request){
 
+        $menu->is_menu = DataTypeHelper::boolean($request->is_menu);
+        $menu->is_dropdown = DataTypeHelper::boolean($request->is_dropdown);
+        $menu->save();
+
         $this->updateDefaults($menu);
+
         CacheHelper::deletePattern('swep_cache:menus:global:all');
         CacheHelper::deletePattern('swep_cache:menus:all:*');
         CacheHelper::deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');

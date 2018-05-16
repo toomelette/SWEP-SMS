@@ -2,38 +2,32 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use Illuminate\Http\Request;
-use App\Models\DepartmentUnit;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Cache\Repository as Cache;
 
-class DepartmentUnitService{
+use App\Models\DepartmentUnit;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class DepartmentUnitService extends BaseService{
+
 
 
 	protected $department_unit;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(DepartmentUnit $department_unit, Dispatcher $event, Cache $cache){
+    public function __construct(DepartmentUnit $department_unit){
 
         $this->department_unit = $department_unit;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+
+    public function fetchAll($request){
 
        $key = str_slug($request->fullUrl(), '_');
 
@@ -58,7 +52,9 @@ class DepartmentUnitService{
 
 
 
-    public function store(Request $request){
+
+
+    public function store($request){
 
         $department_unit = $this->department_unit->create($request->all());
         $this->event->fire('department_unit.create', [ $department_unit, $request ]);
@@ -70,12 +66,11 @@ class DepartmentUnitService{
 
 
 
+
+
     public function edit($slug){
 
-        $department_unit = $this->cache->remember('department_units:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department_unit->findSlug($slug);
-        }); 
-
+        $department_unit = $this->departmentUnitsBySlug($slug);
         return view('dashboard.department_unit.edit')->with('department_unit', $department_unit);
 
     }
@@ -83,12 +78,11 @@ class DepartmentUnitService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $department_unit = $this->cache->remember('department_units:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department_unit->findSlug($slug);
-        });
 
+    public function update($request, $slug){
+
+        $department_unit = $this->departmentUnitsBySlug($slug);
         $department_unit->update($request->all());
         $this->event->fire('department_unit.update', [ $department_unit, $request ]);
         $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS', 'The Department Unit has been successfully updated!');
@@ -100,12 +94,11 @@ class DepartmentUnitService{
 
 
 
+
+
     public function destroy($slug){
 
-        $department_unit = $this->cache->remember('department_units:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department_unit->findSlug($slug);
-        });
-        
+        $department_unit = $this->departmentUnitsBySlug($slug);
         $department_unit->delete();
         $this->event->fire('department_unit.delete', [ $department_unit ]);
         $this->session->flash('DEPARTMENT_UNIT_DELETE_SUCCESS', 'The Department Unit has been successfully deleted!');
@@ -113,6 +106,24 @@ class DepartmentUnitService{
         return redirect()->route('dashboard.department_unit.index');
 
     }
+
+
+
+
+
+    // Utility Methods
+
+    public function departmentUnitsBySlug($slug){
+
+        $department_unit = $this->cache->remember('department_units:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->department_unit->findSlug($slug);
+        });
+        
+        return $department_unit;
+
+    }
+
+
 
 
 

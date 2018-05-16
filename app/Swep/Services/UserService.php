@@ -2,40 +2,33 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Hash;
-use Session;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Cache\Repository as Cache;
 
-class UserService{
+use Hash;
+use App\Models\User;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class UserService extends BaseService{
+
 
 
 	protected $user;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(User $user, Dispatcher $event, Cache $cache){
+    public function __construct(User $user){
 
         $this->user = $user;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+
+    public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
@@ -68,22 +61,13 @@ class UserService{
 
 
 
-    public function store(Request $request){
+
+
+    public function store($request){
 
         if(!$this->user->usernameExist($request->username) == 1){
 
-            $user = new User;
-            $user->firstname = strtoupper($request->firstname);
-            $user->middlename = strtoupper($request->middlename);
-            $user->lastname = strtoupper($request->lastname);
-            $user->email = $request->email;
-            $user->position = strtoupper($request->position);
-            $user->username = $request->username;
-            $user->password = Hash::make($request->password);
-            $user->save();
-
-            $this->event->fire('user.create', [$user, $request]);
-
+            $this->event->fire('user.create', $request);
             $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
             return redirect()->back();
 
@@ -97,12 +81,11 @@ class UserService{
 
 
 
+
+
     public function show($slug){
         
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        });     
-
+        $user = $this->userBySlug($slug);  
         return view('dashboard.user.show')->with('user', $user);
 
     }
@@ -110,12 +93,11 @@ class UserService{
 
 
 
+
+
     public function edit($slug){
 
-    	$user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
-
+    	$user = $this->userBySlug($slug);  
         return view('dashboard.user.edit')->with('user', $user);
 
     }
@@ -123,25 +105,14 @@ class UserService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
-        
-        $user->firstname = strtoupper($request->firstname);
-        $user->middlename = strtoupper($request->middlename);
-        $user->lastname = strtoupper($request->lastname);
-        $user->email = $request->email;
-        $user->position = strtoupper($request->position);
-        $user->username = $request->username;
-        $user->save();
 
+    public function update($request, $slug){
+
+        $user = $this->userBySlug($slug);  
         $this->event->fire('user.update', [$user, $request]);
-
         $this->session->flash('USER_UPDATE_SUCCESS', 'The User has been successfully updated!');
         $this->session->flash('USER_UPDATE_SUCCESS_SLUG', $user->slug);
-
         return redirect()->route('dashboard.user.index');
 
     }
@@ -149,12 +120,11 @@ class UserService{
 
 
 
+
+
     public function delete($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
-
+        $user = $this->userBySlug($slug);  
         $user->delete();
         $this->event->fire('user.delete', $user);
         $this->session->flash('USER_DELETE_SUCCESS', 'User successfully removed!');
@@ -165,11 +135,11 @@ class UserService{
 
 
 
+
+
     public function activate($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
+        $user = $this->userBySlug($slug);  
 
         if($user->is_active == 0){
 
@@ -188,11 +158,11 @@ class UserService{
 
 
 
+
+
     public function deactivate($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
+        $user = $this->userBySlug($slug);  
 
         if($user->is_active == 1){
 
@@ -211,11 +181,11 @@ class UserService{
 
 
 
+
+
     public function logout($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
+        $user = $this->userBySlug($slug);  
 
         if($user->is_active == 1 && $user->is_online == 1){
 
@@ -234,12 +204,11 @@ class UserService{
 
 
 
+
+
     public function resetPassword($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
-
+        $user = $this->userBySlug($slug);  
         return view('dashboard.user.reset_password')->with('user', $user);
 
     }
@@ -247,12 +216,11 @@ class UserService{
 
 
 
-    public function resetPasswordPost(Request $request, $slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
 
+    public function resetPasswordPost($request, $slug){
+
+        $user = $this->userBySlug($slug);  
 
         if ($request->username == $this->auth->user()->username && Hash::check($request->user_password, $this->auth->user()->password)) {
             
@@ -263,10 +231,7 @@ class UserService{
 
             }else{
 
-                $user->password = Hash::make($request->password);
-                $user->is_online = 0;
-                $user->save();
-                $this->event->fire('user.reset_password', $user);
+                $this->event->fire('user.reset_password', [$request, $user]);
                 $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
                 $this->session->flash('USER_RESET_PASSWORD_SLUG', $user->slug);
                 return redirect()->route('dashboard.user.index');
@@ -277,6 +242,22 @@ class UserService{
 
         $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
         return redirect()->back();
+
+    }
+
+
+
+
+
+    // Utility Methods
+
+    public function userBySlug($slug){
+
+        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->user->findSlug($slug);
+        }); 
+        
+        return $user;
 
     }
 

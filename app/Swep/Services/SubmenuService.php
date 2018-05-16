@@ -2,38 +2,32 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use App\Models\Submenu;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Cache\Repository as Cache;
 
-class SubmenuService{
+use App\Models\Submenu;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class SubmenuService extends BaseService{
+
 
 
 	protected $submenu;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(Submenu $submenu, Dispatcher $event, Cache $cache){
+    public function __construct(Submenu $submenu){
 
         $this->submenu = $submenu;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+
+    public function fetchAll($request){
 
        $key = str_slug($request->fullUrl(), '_');
 
@@ -62,10 +56,7 @@ class SubmenuService{
 
     public function edit($slug){
 
-        $submenu = $this->cache->remember('submenus:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->submenu->findSlug($slug);
-        }); 
-
+        $submenu = $this->submenuBySlug($slug);
         return view('dashboard.submenu.edit')->with('submenu', $submenu);
 
     }
@@ -73,12 +64,11 @@ class SubmenuService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $submenu = $this->cache->remember('submenus:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->submenu->findSlug($slug);
-        });
 
+    public function update($request, $slug){
+
+        $submenu = $this->submenuBySlug($slug);
         $submenu->update($request->except(['is_nav']));
         $this->event->fire('submenu.update', [ $submenu, $request ]);
         $this->session->flash('SUBMENU_UPDATE_SUCCESS', 'The Submenu has been successfully updated!');
@@ -90,12 +80,11 @@ class SubmenuService{
 
 
 
+
+
     public function destroy($slug){
 
-        $submenu = $this->cache->remember('submenus:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->submenu->findSlug($slug);
-        });
-        
+        $submenu = $this->submenuBySlug($slug);
         $submenu->delete();
         $this->event->fire('submenu.delete', [ $submenu ]);
         $this->session->flash('SUBMENU_DELETE_SUCCESS', 'The Submenu has been successfully deleted!');
@@ -103,6 +92,23 @@ class SubmenuService{
         return redirect()->route('dashboard.submenu.index');
 
     }
+
+
+
+
+
+    // Utility Methods
+
+    public function submenuBySlug($slug){
+
+        $submenu = $this->cache->remember('submenus:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->submenu->findSlug($slug);
+        });
+        
+        return $submenu;
+
+    }
+
 
 
 

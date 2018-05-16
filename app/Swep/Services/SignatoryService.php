@@ -2,38 +2,32 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use App\Models\Signatory;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Cache\Repository as Cache;
 
-class SignatoryService{
+use App\Models\Signatory;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class SignatoryService extends BaseService{
+
 
 
 	protected $signatory;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(Signatory $signatory, Dispatcher $event, Cache $cache){
+    public function __construct(Signatory $signatory){
 
         $this->signatory = $signatory;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
+
+    public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
@@ -58,7 +52,9 @@ class SignatoryService{
 
 
 
-    public function store(Request $request){
+
+
+    public function store($request){
 
         $signatory = $this->signatory->create($request->all());
         $this->event->fire('signatory.create', [ $signatory, $request ]);
@@ -70,12 +66,11 @@ class SignatoryService{
 
 
 
+
+
     public function edit($slug){
 
-        $signatory = $this->cache->remember('signatories:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->signatory->findSlug($slug);
-        }); 
-
+        $signatory = $this->signatoryBySlug($slug);
         return view('dashboard.signatory.edit')->with('signatory', $signatory);
 
     }
@@ -83,12 +78,11 @@ class SignatoryService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $signatory = $this->cache->remember('signatories:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->signatory->findSlug($slug);
-        });
 
+    public function update($request, $slug){
+
+        $signatory = $this->signatoryBySlug($slug);
         $signatory->update($request->all());
         $this->event->fire('signatory.update', [ $signatory, $request ]);
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
@@ -100,12 +94,11 @@ class SignatoryService{
 
 
 
+
+
     public function destroy($slug){
 
-        $signatory = $this->cache->remember('signatories:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->signatory->findSlug($slug);
-        });
-        
+        $signatory = $this->signatoryBySlug($slug);
         $signatory->delete();
         $this->event->fire('signatory.delete', [ $slug ]);
         $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');
@@ -113,6 +106,25 @@ class SignatoryService{
         return redirect()->route('dashboard.signatory.index');
 
     }
+
+
+
+
+
+    // Utility Methods
+
+    public function signatoryBySlug($slug){
+
+        $signatory = $this->cache->remember('signatories:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->signatory->findSlug($slug);
+        });
+        
+        return $signatory;
+
+    }
+
+
+
 
 
 }

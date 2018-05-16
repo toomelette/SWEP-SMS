@@ -2,40 +2,34 @@
  
 namespace App\Swep\Services;
 
-use Auth;
-use Session;
-use App\Models\FundSource;
-use Illuminate\Http\Request;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Cache\Repository as Cache;
 
-class FundSourceService{
+use App\Models\FundSource;
+use App\Swep\BaseClasses\BaseService;
+
+
+
+class FundSourceService extends BaseService{
+
 
 
 	protected $fund_source;
-    protected $event;
-    protected $cache;
-    protected $auth;
-    protected $session;
 
 
 
-    public function __construct(FundSource $fund_source, Dispatcher $event, Cache $cache){
+    public function __construct(FundSource $fund_source){
 
         $this->fund_source = $fund_source;
-        $this->event = $event;
-        $this->cache = $cache;
-        $this->auth = auth();
-        $this->session = session();
+        parent::__construct();
 
     }
 
 
 
 
-    public function fetchAll(Request $request){
 
-       $key = str_slug($request->fullUrl(), '_');
+    public function fetchAll($request){
+
+        $key = str_slug($request->fullUrl(), '_');
 
         $fund_sources = $this->cache->remember('fund_sources:all:' . $key, 240, function() use ($request){
 
@@ -58,7 +52,9 @@ class FundSourceService{
 
 
 
-    public function store(Request $request){
+
+
+    public function store($request){
 
         $fund_source = $this->fund_source->create($request->all());
         $this->event->fire('fund_source.create', [ $fund_source, $request ]);
@@ -70,12 +66,11 @@ class FundSourceService{
 
 
 
+
+
     public function edit($slug){
 
-        $fund_source = $this->cache->remember('fund_sources:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->fund_source->findSlug($slug);
-        }); 
-
+        $fund_source = $this->fundSourceBySlug($slug); 
         return view('dashboard.fund_source.edit')->with('fund_source', $fund_source);
 
     }
@@ -83,12 +78,11 @@ class FundSourceService{
 
 
 
-    public function update(Request $request, $slug){
 
-        $fund_source = $this->cache->remember('fund_sources:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->fund_source->findSlug($slug);
-        });
 
+    public function update($request, $slug){
+
+        $fund_source = $this->fundSourceBySlug($slug); 
         $fund_source->update($request->all());
         $this->event->fire('fund_source.update', [ $fund_source, $request ]);
         $this->session->flash('FUND_SOURCE_UPDATE_SUCCESS', 'The Fund Source has been successfully updated!');
@@ -100,12 +94,11 @@ class FundSourceService{
 
 
 
+
+
     public function destroy($slug){
 
-        $fund_source = $this->cache->remember('fund_sources:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->fund_source->findSlug($slug);
-        });
-        
+        $fund_source = $this->fundSourceBySlug($slug); 
         $fund_source->delete();
         $this->event->fire('fund_source.delete', [ $fund_source ]);
         $this->session->flash('FUND_SOURCE_DELETE_SUCCESS', 'The Fund Source has been successfully deleted!');
@@ -116,4 +109,22 @@ class FundSourceService{
 
 
 
-}
+
+
+    // Utility Methods
+
+    public function fundSourceBySlug($slug){
+
+        $fund_source = $this->cache->remember('fund_sources:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->fund_source->findSlug($slug);
+        });
+        
+        return $fund_source;
+
+    }
+
+
+
+
+
+}   

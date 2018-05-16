@@ -2,6 +2,7 @@
 
 namespace App\Swep\Subscribers;
 
+use Hash;
 use Auth;
 use Carbon\Carbon;
 use App\Models\User;
@@ -57,7 +58,17 @@ class UserSubscriber{
 
 
 
-	public function onCreate($user, $request){
+	public function onCreate($request){
+
+        $user = new User;
+        $user->firstname = strtoupper($request->firstname);
+        $user->middlename = strtoupper($request->middlename);
+        $user->lastname = strtoupper($request->lastname);
+        $user->email = $request->email;
+        $user->position = strtoupper($request->position);
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
 		$this->createDefaults($user);
 
@@ -95,6 +106,14 @@ class UserSubscriber{
 
 
     public function onUpdate($user, $request){
+
+        $user->firstname = strtoupper($request->firstname);
+        $user->middlename = strtoupper($request->middlename);
+        $user->lastname = strtoupper($request->lastname);
+        $user->email = $request->email;
+        $user->position = strtoupper($request->position);
+        $user->username = $request->username;
+        $user->save();
 
         $this->updateDefaults($user);
         $user->userMenu()->delete();
@@ -182,7 +201,11 @@ class UserSubscriber{
 
 
 
-    public function onResetPassword($user){
+    public function onResetPassword($request, $user){
+
+        $user->password = Hash::make($request->password);
+        $user->is_online = 0;
+        $user->save();
 
         CacheHelper::deletePattern('swep_cache:user:all:*');
         CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
@@ -206,8 +229,8 @@ class UserSubscriber{
         $user->updated_at = $this->carbon->now();
         $user->ip_created = request()->ip();
         $user->ip_updated = request()->ip();
-        $user->user_created = $this->auth->user()->user_id;
-        $user->user_updated = $this->auth->user()->user_id;
+        $user->user_created = $this->auth->user()->username;
+        $user->user_updated = $this->auth->user()->username;
         $user->last_login_time = null;
         $user->last_login_machine = null;
         $user->last_login_ip = null;
