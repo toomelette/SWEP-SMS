@@ -8,7 +8,7 @@ use App\Models\Project;
 use Illuminate\Cache\Repository as Cache;
 
 
-class ProjectsComposer{
+class ProjectComposer{
    
 
 	protected $projects;

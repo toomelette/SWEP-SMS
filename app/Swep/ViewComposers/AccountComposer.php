@@ -8,7 +8,7 @@ use App\Models\Account;
 use Illuminate\Cache\Repository as Cache;
 
 
-class AccountsComposer{
+class AccountComposer{
    
 
 	protected $accounts;
@@ -16,8 +16,10 @@ class AccountsComposer{
 
 
 	public function __construct(Account $accounts, Cache $cache){
+
 		$this->accounts = $accounts;
 		$this->cache = $cache;
+	
 	}
 
 

@@ -8,7 +8,7 @@ use App\Models\Signatory;
 use Illuminate\Cache\Repository as Cache;
 
 
-class SignatoriesComposer{
+class SignatoryComposer{
    
 
 	protected $signatory;

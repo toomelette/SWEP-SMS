@@ -30,7 +30,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
-                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\ProjectsComposer');
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\ProjectComposer');
 
 
         // FUND SOURCE
@@ -54,35 +54,37 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.department_unit.create',
                         'dashboard.department_unit.edit',
                         'dashboard.account.create',
-                        'dashboard.account.edit',], 'App\Swep\ViewComposers\DepartmentsComposer');
+                        'dashboard.account.edit',], 'App\Swep\ViewComposers\DepartmentComposer');
 
 
         // DEPARTMENT UNITS
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
-                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\DepartmentUnitsComposer');
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         //ACCOUNTS
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
-                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\AccountsComposer');
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\AccountComposer');
         
 
-        //SIGNATORIES
-        View::composer(['printables.disbursement_voucher'], 'App\Swep\ViewComposers\SignatoriesComposer');
+        //SIGNATORY
+        View::composer(['printables.disbursement_voucher'], 'App\Swep\ViewComposers\SignatoryComposer');
 
         
     }
 
+    
     
     public function register(){
 
       
     
     }
+
 
 
 

@@ -8,7 +8,7 @@ use App\Models\Department;
 use Illuminate\Cache\Repository as Cache;
 
 
-class DepartmentsComposer{
+class DepartmentComposer{
    
 
 	protected $departments;
