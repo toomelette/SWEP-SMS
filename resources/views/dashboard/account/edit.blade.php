@@ -47,9 +47,9 @@
             '3', 'co', 'text', 'CO:', 'CO', old('co') ? old('co') : $account->co, $errors->has('co'), $errors->first('co'), ''
           ) !!}
 
-          {!! FormHelper::datepicker('3', 'date_started',  'Date Started', old('date_started') ? old('date_started') : Carbon::parse($account->date_started)->format('Y-m-d'), '', '') !!}
+          {!! FormHelper::datepicker('3', 'date_started',  'Date Started', old('date_started') ? old('date_started') : Carbon::parse($account->date_started)->format('m/d/Y'), '', '') !!}
 
-          {!! FormHelper::datepicker('3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : Carbon::parse($account->projected_date_end)->format('Y-m-d'), '', '') !!}
+          {!! FormHelper::datepicker('3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : Carbon::parse($account->projected_date_end)->format('m/d/Y'), '', '') !!}
 
           {!! FormHelper::textbox(
              '6', 'project_in_charge', 'text', 'Project Incharge:', 'Project Incharge', old('project_in_charge') ? old('project_in_charge') : $account->project_in_charge, $errors->has('project_in_charge'), $errors->first('project_in_charge'), 'data-transform="uppercase"'

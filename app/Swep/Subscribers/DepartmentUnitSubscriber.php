@@ -2,31 +2,18 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Carbon\Carbon;
-use App\Models\DepartmentUnit;
-use Illuminate\Support\Str;
-use App\Swep\Helpers\CacheHelper;
-use App\Swep\Helpers\DataTypeHelper;
+
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class DepartmentUnitSubscriber{
-
-
-    protected $department_unit;
-    protected $carbon;
-    protected $str;
-    protected $auth;
+class DepartmentUnitSubscriber extends BaseSubscriber{
 
 
 
-    public function __construct(DepartmentUnit $department_unit, Carbon $carbon, Str $str){
+    public function __construct(){
 
-        $this->department_unit = $department_unit;
-        $this->carbon = $carbon;
-        $this->str = $str;
-        $this->auth = auth();
+        parent::__construct();
 
     }
 
@@ -35,35 +22,22 @@ class DepartmentUnitSubscriber{
 
     public function subscribe($events){
 
-        $events->listen('department_unit.create', 'App\Swep\Subscribers\DepartmentUnitSubscriber@onCreate');
+        $events->listen('department_unit.store', 'App\Swep\Subscribers\DepartmentUnitSubscriber@onStore');
         $events->listen('department_unit.update', 'App\Swep\Subscribers\DepartmentUnitSubscriber@onUpdate');
-        $events->listen('department_unit.delete', 'App\Swep\Subscribers\DepartmentUnitSubscriber@onDelete');
+        $events->listen('department_unit.destroy', 'App\Swep\Subscribers\DepartmentUnitSubscriber@onDestroy');
 
     }
 
 
 
 
-    public function onCreate($department_unit, $request){
+    public function onStore(){
 
-        $this->createDefaults($department_unit);
-        CacheHelper::deletePattern('swep_cache:department_units:all:*');
-        CacheHelper::deletePattern('swep_cache:department_units:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_department_units_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_department_units_from_department:*');
 
-    }
-
-
-
-
-
-    public function onUpdate($department_unit, $request){
-
-        $this->updateDefaults($department_unit);
-        CacheHelper::deletePattern('swep_cache:department_units:all:*');
-        CacheHelper::deletePattern('swep_cache:department_units:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_department_units_from_department:*');
-        CacheHelper::deletePattern('swep_cache:department_units:bySlug:'. $department_unit->slug .'');
+        $this->session->flash('DEPARTMENT_UNIT_CREATE_SUCCESS', 'The Department Unit has been successfully created!');
 
     }
 
@@ -71,45 +45,32 @@ class DepartmentUnitSubscriber{
 
 
 
-    public function onDelete($department_unit){
+    public function onUpdate($department_unit){
 
-        CacheHelper::deletePattern('swep_cache:department_units:all:*');
-        CacheHelper::deletePattern('swep_cache:department_units:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_department_units_from_department:*');
-        CacheHelper::deletePattern('swep_cache:department_units:bySlug:'. $department_unit->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_department_units_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:bySlug:'. $department_unit->slug .'');
 
+        $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS', 'The Department Unit has been successfully updated!');
+        $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS_SLUG', $department_unit->slug);
     }
 
 
 
-    /** DEFAULTS **/
 
 
-    public function createDefaults($department_unit){
+    public function onDestroy($department_unit){
 
-        $department_unit->slug = $this->str->random(16);
-        $department_unit->department_Unit_id = $this->department_unit->departmentUnitIdIncrement;
+        $this->cacheHelper->deletePattern('swep_cache:department_units:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_department_units_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:department_units:bySlug:'. $department_unit->slug .'');
 
-        $department_unit->created_at = $this->carbon->now();
-        $department_unit->updated_at = $this->carbon->now();
-        $department_unit->ip_created = request()->ip();
-        $department_unit->ip_updated = request()->ip();
-        $department_unit->user_created = $this->auth->user()->username;
-        $department_unit->user_updated = $this->auth->user()->username;
-        $department_unit->save();
+        $this->session->flash('DEPARTMENT_UNIT_DELETE_SUCCESS', 'The Department Unit has been successfully deleted!');
 
     }
 
-
-
-    public function updateDefaults($department_unit){
-
-        $department_unit->updated_at = $this->carbon->now();
-        $department_unit->ip_updated = request()->ip();
-        $department_unit->user_updated = $this->auth->user()->username;
-        $department_unit->save();
-
-    }
 
 
 

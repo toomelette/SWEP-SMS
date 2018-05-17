@@ -2,31 +2,19 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Carbon\Carbon;
-use App\Models\Signatory;
-use Illuminate\Support\Str;
-use App\Swep\Helpers\CacheHelper;
-use App\Swep\Helpers\DataTypeHelper;
+
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class SignatorySubscriber{
+class SignatorySubscriber extends BaseSubscriber{
 
 
-    protected $signatory;
-    protected $carbon;
-    protected $str;
-    protected $auth;
+    
 
+    public function __construct(){
 
-
-    public function __construct(Signatory $signatory, Carbon $carbon, Str $str){
-
-        $this->signatory = $signatory;
-        $this->carbon = $carbon;
-        $this->str = $str;
-        $this->auth = auth();
+        parent::__construct();
 
     }
 
@@ -35,20 +23,9 @@ class SignatorySubscriber{
 
     public function subscribe($events){
 
-        $events->listen('signatory.create', 'App\Swep\Subscribers\SignatorySubscriber@onCreate');
+        $events->listen('signatory.store', 'App\Swep\Subscribers\SignatorySubscriber@onStore');
         $events->listen('signatory.update', 'App\Swep\Subscribers\SignatorySubscriber@onUpdate');
-        $events->listen('signatory.delete', 'App\Swep\Subscribers\SignatorySubscriber@onDelete');
-
-    }
-
-
-
-
-    public function onCreate($signatory, $request){
-
-        $this->createDefaults($signatory);
-        CacheHelper::deletePattern('swep_cache:signatories:all:*');
-        CacheHelper::deletePattern('swep_cache:signatories:global:all');
+        $events->listen('signatory.destroy', 'App\Swep\Subscribers\SignatorySubscriber@onDestroy');
 
     }
 
@@ -56,12 +33,27 @@ class SignatorySubscriber{
 
 
 
-    public function onUpdate($signatory, $request){
+    public function onStore(){
 
-        $this->updateDefaults($signatory);
-        CacheHelper::deletePattern('swep_cache:signatories:all:*');
-        CacheHelper::deletePattern('swep_cache:signatories:global:all');
-        CacheHelper::deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:global:all');
+
+        $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
+
+    }
+
+
+
+
+
+    public function onUpdate($signatory){
+
+        $this->cacheHelper->deletePattern('swep_cache:signatories:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
+
+        $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
+        $this->session->flash('SIGNATORY_UPDATE_SUCCESS_SLUG', $signatory->slug);
 
     }
 
@@ -69,44 +61,16 @@ class SignatorySubscriber{
 
 
 
-    public function onDelete($slug){
+    public function onDestroy($signatory){
 
-        CacheHelper::deletePattern('swep_cache:signatories:all:*');
-        CacheHelper::deletePattern('swep_cache:signatories:global:all');
-        CacheHelper::deletePattern('swep_cache:signatories:bySlug:'. $slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
 
-    }
-
-
-
-    /** DEFAULTS **/
-
-
-    public function createDefaults($signatory){
-
-        $signatory->slug = $this->str->random(16);
-        $signatory->signatory_id = $this->signatory->signatoryIdIncrement;
-
-        $signatory->created_at = $this->carbon->now();
-        $signatory->updated_at = $this->carbon->now();
-        $signatory->ip_created = request()->ip();
-        $signatory->ip_updated = request()->ip();
-        $signatory->user_created = $this->auth->user()->username;
-        $signatory->user_updated = $this->auth->user()->username;
-        $signatory->save();
+        $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');
 
     }
 
-
-
-    public function updateDefaults($signatory){
-
-        $signatory->updated_at = $this->carbon->now();
-        $signatory->ip_updated = request()->ip();
-        $signatory->user_updated = $this->auth->user()->username;
-        $signatory->save();
-        
-    }
 
 
 

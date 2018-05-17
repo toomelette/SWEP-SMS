@@ -7,47 +7,36 @@ use App;
 use Auth;
 use Session;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Events\Dispatcher;
+use App\Swep\Helpers\DataTypeHelper;
 use Illuminate\Cache\Repository as Cache;
 
 
 class BaseService{
 
 
-    protected $event;
-    protected $cache;
-    protected $carbon;
+
+    protected $auth;
     protected $session;
-    protected $auth;   
+    protected $carbon;
+    protected $str;
+    protected $event;
+    protected $dataTypeHelper;
+    protected $cache;
 
 
 
     public function __construct(){
         
-        $this->event = App::make(Dispatcher::class);
-        $this->cache = App::make(Cache::class);
-        $this->carbon = App::make(Carbon::class);
-        $this->session = session();
         $this->auth = auth();
-
-    }
-
-
-
-    // Utils
-
-    public function parseDate($date){
-
-        return $date != null ? $this->carbon->parse($date)->format('Y-m-d') : null;
-
-    }
-
-
-
-    public function parseAmount($amount){
-
-        return  $amount == null ? null : str_replace(',', '', $amount);
-
+        $this->session = session();
+        $this->carbon = App::make(Carbon::class);
+        $this->str = App::make(Str::class);
+        $this->event = App::make(Dispatcher::class);
+        $this->dataTypeHelper = App::make(DataTypeHelper::class);
+        $this->cache = App::make(Cache::class);
+        
     }
 
 

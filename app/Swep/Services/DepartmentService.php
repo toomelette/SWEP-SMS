@@ -53,11 +53,22 @@ class DepartmentService extends BaseService{
 
 
 
+
     public function store($request){
 
-        $department = $this->department->create($request->all());
-        $this->event->fire('department.create', [ $department, $request ]);
-        $this->session->flash('DEPARTMENT_CREATE_SUCCESS', 'The Department has been successfully created!');
+        $department = new Department;
+        $department->slug = $this->str->random(16);
+        $department->department_id = $this->department->departmentIdIncrement;
+        $department->name = $request->name;
+        $department->created_at = $this->carbon->now();
+        $department->updated_at = $this->carbon->now();
+        $department->ip_created = request()->ip();
+        $department->ip_updated = request()->ip();
+        $department->user_created = $this->auth->user()->username;
+        $department->user_updated = $this->auth->user()->username;
+        $department->save();
+
+        $this->event->fire('department.store');
         return redirect()->back();
 
     }
@@ -80,10 +91,13 @@ class DepartmentService extends BaseService{
     public function update($request, $slug){
 
         $department = $this->departmentsBySlug($slug);
-        $department->update($request->all());
-        $this->event->fire('department.update', [ $department, $request ]);
-        $this->session->flash('DEPARTMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
-        $this->session->flash('DEPARTMENT_UPDATE_SUCCESS_SLUG', $department->slug);
+        $department->name = $request->name;
+        $department->updated_at = $this->carbon->now();
+        $department->ip_updated = request()->ip();
+        $department->user_updated = $this->auth->user()->username;
+        $department->save();
+
+        $this->event->fire('department.update', $department);
         return redirect()->route('dashboard.department.index');
 
     }
@@ -96,12 +110,12 @@ class DepartmentService extends BaseService{
 
         $department = $this->departmentsBySlug($slug);
         $department->delete();
-        $this->event->fire('department.delete', [ $department ]);
-        $this->session->flash('DEPARTMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');
-        $this->session->flash('DEPARTMENT_DELETE_SUCCESS_SLUG', $department->slug);
+
+        $this->event->fire('department.destroy', $department );
         return redirect()->route('dashboard.department.index');
 
     }
+
 
 
 

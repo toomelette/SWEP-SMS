@@ -2,54 +2,31 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Carbon\Carbon;
-use App\Models\Department;
-use Illuminate\Support\Str;
-use App\Swep\Helpers\CacheHelper;
-use App\Swep\Helpers\DataTypeHelper;
+
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class DepartmentSubscriber{
-
-
-    protected $department;
-    protected $carbon;
-    protected $str;
-    protected $auth;
+class DepartmentSubscriber extends BaseSubscriber{
 
 
 
-    public function __construct(Department $department, Carbon $carbon, Str $str){
 
-        $this->department = $department;
-        $this->carbon = $carbon;
-        $this->str = $str;
-        $this->auth = auth();
+    public function __construct(){
+
+        parent::__construct();
 
     }
+
 
 
 
 
     public function subscribe($events){
 
-        $events->listen('department.create', 'App\Swep\Subscribers\DepartmentSubscriber@onCreate');
+        $events->listen('department.store', 'App\Swep\Subscribers\DepartmentSubscriber@onStore');
         $events->listen('department.update', 'App\Swep\Subscribers\DepartmentSubscriber@onUpdate');
-        $events->listen('department.delete', 'App\Swep\Subscribers\DepartmentSubscriber@onDelete');
-
-    }
-
-
-
-
-    public function onCreate($department, $request){
-
-        $this->createDefaults($department);
-        CacheHelper::deletePattern('swep_cache:departments:all:*');
-        CacheHelper::deletePattern('swep_cache:departments:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_departments_from_department:*');
+        $events->listen('department.destroy', 'App\Swep\Subscribers\DepartmentSubscriber@onDestroy');
 
     }
 
@@ -57,13 +34,29 @@ class DepartmentSubscriber{
 
 
 
-    public function onUpdate($department, $request){
+    public function onStore(){
 
-        $this->updateDefaults($department);
-        CacheHelper::deletePattern('swep_cache:departments:all:*');
-        CacheHelper::deletePattern('swep_cache:departments:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_departments_from_department:*');
-        CacheHelper::deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:departments:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:departments:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_departments_from_department:*');
+
+        $this->session->flash('DEPARTMENT_CREATE_SUCCESS', 'The Department has been successfully created!');
+
+    }
+
+
+
+
+
+    public function onUpdate($department){
+
+        $this->cacheHelper->deletePattern('swep_cache:departments:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:departments:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_departments_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
+
+        $this->session->flash('DEPARTMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
+        $this->session->flash('DEPARTMENT_UPDATE_SUCCESS_SLUG', $department->slug);
 
     }
 
@@ -71,45 +64,17 @@ class DepartmentSubscriber{
 
 
 
-    public function onDelete($department){
+    public function onDestroy($department){
 
-        CacheHelper::deletePattern('swep_cache:departments:all:*');
-        CacheHelper::deletePattern('swep_cache:departments:global:all');
-        CacheHelper::deletePattern('swep_cache:api:response_departments_from_department:*');
-        CacheHelper::deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:departments:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:departments:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_departments_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
 
-    }
-
-
-
-    /** DEFAULTS **/
-
-
-    public function createDefaults($department){
-
-        $department->slug = $this->str->random(16);
-        $department->department_id = $this->department->departmentIdIncrement;
+        $this->session->flash('DEPARTMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');
         
-        $department->created_at = $this->carbon->now();
-        $department->updated_at = $this->carbon->now();
-        $department->ip_created = request()->ip();
-        $department->ip_updated = request()->ip();
-        $department->user_created = $this->auth->user()->username;
-        $department->user_updated = $this->auth->user()->username;
-        $department->save();
-
     }
 
-
-
-    public function updateDefaults($department){
-
-        $department->updated_at = $this->carbon->now();
-        $department->ip_updated = request()->ip();
-        $department->user_updated = $this->auth->user()->username;
-        $department->save();
-
-    }
 
 
 

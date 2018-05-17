@@ -56,9 +56,19 @@ class FundSourceService extends BaseService{
 
     public function store($request){
 
-        $fund_source = $this->fund_source->create($request->all());
-        $this->event->fire('fund_source.create', [ $fund_source, $request ]);
-        $this->session->flash('FUND_SOURCE_CREATE_SUCCESS', 'The Fund Source has been successfully created!');
+        $fund_source = new FundSource;
+        $fund_source->slug = $this->str->random(16);
+        $fund_source->fund_source_id = $this->fund_source->fundSourceIdIncrement;
+        $fund_source->description = $request->description;
+        $fund_source->created_at = $this->carbon->now();
+        $fund_source->updated_at = $this->carbon->now();
+        $fund_source->ip_created = request()->ip();
+        $fund_source->ip_updated = request()->ip();
+        $fund_source->user_created = $this->auth->user()->username;
+        $fund_source->user_updated = $this->auth->user()->username;
+        $fund_source->save();
+
+        $this->event->fire('fund_source.store');
         return redirect()->back();
 
     }
@@ -82,11 +92,14 @@ class FundSourceService extends BaseService{
 
     public function update($request, $slug){
 
-        $fund_source = $this->fundSourceBySlug($slug); 
-        $fund_source->update($request->all());
-        $this->event->fire('fund_source.update', [ $fund_source, $request ]);
-        $this->session->flash('FUND_SOURCE_UPDATE_SUCCESS', 'The Fund Source has been successfully updated!');
-        $this->session->flash('FUND_SOURCE_UPDATE_SUCCESS_SLUG', $fund_source->slug);
+        $fund_source = $this->fundSourceBySlug($slug);
+        $fund_source->description = $request->description;
+        $fund_source->updated_at = $this->carbon->now();
+        $fund_source->ip_updated = request()->ip();
+        $fund_source->user_updated = $this->auth->user()->username;
+        $fund_source->save();
+
+        $this->event->fire('fund_source.update', $fund_source);
         return redirect()->route('dashboard.fund_source.index');
 
     }
@@ -100,9 +113,8 @@ class FundSourceService extends BaseService{
 
         $fund_source = $this->fundSourceBySlug($slug); 
         $fund_source->delete();
-        $this->event->fire('fund_source.delete', [ $fund_source ]);
-        $this->session->flash('FUND_SOURCE_DELETE_SUCCESS', 'The Fund Source has been successfully deleted!');
-        $this->session->flash('FUND_SOURCE_DELETE_SUCCESS_SLUG', $fund_source->slug);
+
+        $this->event->fire('fund_source.destroy', $fund_source);
         return redirect()->route('dashboard.fund_source.index');
 
     }

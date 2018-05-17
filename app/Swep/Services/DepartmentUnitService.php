@@ -56,9 +56,22 @@ class DepartmentUnitService extends BaseService{
 
     public function store($request){
 
-        $department_unit = $this->department_unit->create($request->all());
-        $this->event->fire('department_unit.create', [ $department_unit, $request ]);
-        $this->session->flash('DEPARTMENT_UNIT_CREATE_SUCCESS', 'The Department Unit has been successfully created!');
+        $department_unit = new DepartmentUnit;
+        $department_unit->slug = $this->str->random(16);
+        $department_unit->department_Unit_id = $this->department_unit->departmentUnitIdIncrement;
+        $department_unit->department_id = $request->department_id;
+        $department_unit->department_name = $request->department_name;
+        $department_unit->name = $request->name;
+        $department_unit->description = $request->description;
+        $department_unit->created_at = $this->carbon->now();
+        $department_unit->updated_at = $this->carbon->now();
+        $department_unit->ip_created = request()->ip();
+        $department_unit->ip_updated = request()->ip();
+        $department_unit->user_created = $this->auth->user()->username;
+        $department_unit->user_updated = $this->auth->user()->username;
+        $department_unit->save();
+
+        $this->event->fire('department_unit.store');        
         return redirect()->back();
 
     }
@@ -83,10 +96,16 @@ class DepartmentUnitService extends BaseService{
     public function update($request, $slug){
 
         $department_unit = $this->departmentUnitsBySlug($slug);
-        $department_unit->update($request->all());
-        $this->event->fire('department_unit.update', [ $department_unit, $request ]);
-        $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS', 'The Department Unit has been successfully updated!');
-        $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS_SLUG', $department_unit->slug);
+        $department_unit->department_id = $request->department_id;
+        $department_unit->department_name = $request->department_name;
+        $department_unit->name = $request->name;
+        $department_unit->description = $request->description;
+        $department_unit->updated_at = $this->carbon->now();
+        $department_unit->ip_updated = request()->ip();
+        $department_unit->user_updated = $this->auth->user()->username;
+        $department_unit->save();
+        
+        $this->event->fire('department_unit.update', $department_unit);
         return redirect()->route('dashboard.department_unit.index');
 
     }
@@ -100,9 +119,8 @@ class DepartmentUnitService extends BaseService{
 
         $department_unit = $this->departmentUnitsBySlug($slug);
         $department_unit->delete();
-        $this->event->fire('department_unit.delete', [ $department_unit ]);
-        $this->session->flash('DEPARTMENT_UNIT_DELETE_SUCCESS', 'The Department Unit has been successfully deleted!');
-        $this->session->flash('DEPARTMENT_UNIT_DELETE_SUCCESS_SLUG', $department_unit->slug);
+        
+        $this->event->fire('department_unit.destroy', $department_unit);
         return redirect()->route('dashboard.department_unit.index');
 
     }

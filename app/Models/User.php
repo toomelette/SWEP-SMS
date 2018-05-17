@@ -62,7 +62,7 @@ class User extends Authenticatable{
         'position' => '', 
         'is_online' => false, 
         'is_active' => false,
-        'color' => '', 
+        'color' => 'skin-green sidebar-mini', 
         'created_at' => null, 
         'updated_at' => null,
         'ip_created' => '',

@@ -2,31 +2,19 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Carbon\Carbon;
-use App\Models\Submenu;
-use Illuminate\Support\Str;
-use App\Swep\Helpers\CacheHelper;
-use App\Swep\Helpers\DataTypeHelper;
+
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class SubmenuSubscriber{
+class SubmenuSubscriber  extends BaseSubscriber{
 
 
-    protected $submenu;
-    protected $carbon;
-    protected $str;
-    protected $auth;
+    
 
+    public function __construct(){
 
-
-    public function __construct(Submenu $submenu, Carbon $carbon, Str $str){
-
-        $this->submenu = $submenu;
-        $this->carbon = $carbon;
-        $this->str = $str;
-        $this->auth = auth();
+        parent::__construct();
 
     }
 
@@ -36,25 +24,22 @@ class SubmenuSubscriber{
     public function subscribe($events){
 
         $events->listen('submenu.update', 'App\Swep\Subscribers\SubmenuSubscriber@onUpdate');
-        $events->listen('submenu.delete', 'App\Swep\Subscribers\SubmenuSubscriber@onDelete');
+        $events->listen('submenu.destroy', 'App\Swep\Subscribers\SubmenuSubscriber@onDestroy');
 
     }
 
 
 
 
-    public function onUpdate($submenu, $request){
+    public function onUpdate($submenu){
 
-        $this->updateDefaults($submenu);
+        $this->cacheHelper->deletePattern('swep_cache:submenus:bySlug:'. $submenu->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:submenus:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:submenus:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_submenus_from_menu:*');
 
-        $submenu->is_nav = DataTypeHelper::boolean($request->is_nav);
-        $submenu->save();
-
-        CacheHelper::deletePattern('swep_cache:submenus:bySlug:'. $submenu->slug .'');
-        CacheHelper::deletePattern('swep_cache:submenus:all:*');
-        CacheHelper::deletePattern('swep_cache:submenus:global:all');
-
-        CacheHelper::deletePattern('swep_cache:api:response_submenus_from_menu:*');
+        $this->session->flash('SUBMENU_UPDATE_SUCCESS', 'The Submenu has been successfully updated!');
+        $this->session->flash('SUBMENU_UPDATE_SUCCESS_SLUG', $submenu->slug);
 
     }
 
@@ -62,28 +47,19 @@ class SubmenuSubscriber{
 
 
 
-    public function onDelete($submenu){
+    public function onDestroy($submenu){
 
-        CacheHelper::deletePattern('swep_cache:submenus:bySlug:'. $submenu->slug .'');
-        CacheHelper::deletePattern('swep_cache:submenus:all:*');
-        CacheHelper::deletePattern('swep_cache:submenus:global:all');
-        
-        CacheHelper::deletePattern('swep_cache:api:response_submenus_from_menu:*');
+        $this->cacheHelper->deletePattern('swep_cache:submenus:bySlug:'. $submenu->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:submenus:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:submenus:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:api:response_submenus_from_menu:*');
 
-    }
-
-
-
-    /** DEFAULTS **/
-
-
-    public function updateDefaults($submenu){
-
-        $submenu->updated_at = $this->carbon->now();
-        $submenu->ip_updated = request()->ip();
-        $submenu->user_updated = $this->auth->user()->user_id;
+        $this->session->flash('SUBMENU_DELETE_SUCCESS', 'The Submenu has been successfully deleted!');
+        $this->session->flash('SUBMENU_DELETE_SUCCESS_SLUG', $submenu->slug);
 
     }
+
+
 
 
 

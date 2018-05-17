@@ -5,6 +5,10 @@ namespace App\Swep\Services;
 
 use Hash;
 use App\Models\User;
+use App\Models\Menu;
+use App\Models\SubMenu;
+use App\Models\UserMenu;
+use App\Models\UserSubmenu;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -14,12 +18,20 @@ class UserService extends BaseService{
 
 
 	protected $user;
+    protected $menu;
+    protected $submenu;
+    protected $user_menu;
+    protected $user_submenu;
 
 
 
-    public function __construct(User $user){
+    public function __construct(User $user, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubmenu $user_submenu){
 
         $this->user = $user;
+        $this->menu = $menu;
+        $this->submenu = $submenu;
+        $this->user_menu = $user_menu;
+        $this->user_submenu = $user_submenu;
         parent::__construct();
 
     }
@@ -67,8 +79,51 @@ class UserService extends BaseService{
 
         if(!$this->user->usernameExist($request->username) == 1){
 
-            $this->event->fire('user.create', $request);
-            $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
+            $user = new User;
+            $user->slug = $this->str->random(16);
+            $user->user_id = $this->user->userIdIncrement;
+            $user->firstname = $request->firstname;
+            $user->middlename = $request->middlename;
+            $user->lastname = $request->lastname;
+            $user->email = $request->email;
+            $user->position = $request->position;
+            $user->username = $request->username;
+            $user->password = Hash::make($request->password);
+            $user->created_at = $this->carbon->now();
+            $user->updated_at = $this->carbon->now();
+            $user->ip_created = request()->ip();
+            $user->ip_updated = request()->ip();
+            $user->user_created = $this->auth->user()->username;
+            $user->user_updated = $this->auth->user()->username;
+            $user->save();
+
+            for($i = 0; $i < count($request->menu); $i++){
+
+                $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+
+                $user_menu = new UserMenu;
+                $this->storeUserMenu($user_menu, $user, $menu);
+
+                if($request->submenu > 0){
+
+                    foreach($request->submenu as $data_submenu){
+
+                        $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+
+                        if($menu->menu_id === $submenu->menu_id){
+
+                            $user_submenu = new UserSubMenu;
+                            $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            $this->event->fire('user.store', $request);
             return redirect()->back();
 
         }
@@ -109,10 +164,48 @@ class UserService extends BaseService{
 
     public function update($request, $slug){
 
-        $user = $this->userBySlug($slug);  
-        $this->event->fire('user.update', [$user, $request]);
-        $this->session->flash('USER_UPDATE_SUCCESS', 'The User has been successfully updated!');
-        $this->session->flash('USER_UPDATE_SUCCESS_SLUG', $user->slug);
+        $user = $this->userBySlug($slug);
+        $user->firstname = $request->firstname;
+        $user->middlename = $request->middlename;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->position = $request->position;
+        $user->username = $request->username;
+        $user->updated_at = $this->carbon->now();
+        $user->ip_updated = request()->ip();
+        $user->user_updated = $this->auth->user()->username;
+        $user->save();
+
+        $user->userMenu()->delete();
+        $user->userSubmenu()->delete();
+
+        for($i = 0; $i < count($request->menu); $i++){
+
+            $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+
+            $user_menu = new UserMenu;
+            $this->storeUserMenu($user_menu, $user, $menu);
+
+            if($request->submenu > 0){
+
+                foreach($request->submenu as $data_submenu){
+
+                    $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+
+                    if($menu->menu_id === $submenu->menu_id){
+
+                        $user_submenu = new UserSubMenu;
+                        $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        $this->event->fire('user.update', $user);
         return redirect()->route('dashboard.user.index');
 
     }
@@ -126,8 +219,10 @@ class UserService extends BaseService{
 
         $user = $this->userBySlug($slug);  
         $user->delete();
-        $this->event->fire('user.delete', $user);
-        $this->session->flash('USER_DELETE_SUCCESS', 'User successfully removed!');
+        $user->userMenu()->delete();
+        $user->userSubmenu()->delete();
+
+        $this->event->fire('user.destroy', $user);
         return redirect()->back();
 
     }
@@ -145,8 +240,6 @@ class UserService extends BaseService{
 
             $user->update(['is_active' => 1]);
             $this->event->fire('user.activate', $user);
-            $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
-            $this->session->flash('USER_ACTIVATE_SUCCESS_SLUG', $user->slug);
             return redirect()->back();
 
         }
@@ -168,8 +261,6 @@ class UserService extends BaseService{
 
             $user->update(['is_active' => 0, 'is_online' => 0]);
             $this->event->fire('user.deactivate', $user);
-            $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
-            $this->session->flash('USER_DEACTIVATE_SUCCESS_SLUG', $user->slug);
             return redirect()->back();
 
         }
@@ -191,8 +282,6 @@ class UserService extends BaseService{
 
             $user->update(['is_online' => 0]);
             $this->event->fire('user.logout', $user);
-            $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
-            $this->session->flash('USER_LOGOUT_SUCCESS_SLUG', $user->slug);
             return redirect()->back();
 
         }
@@ -208,7 +297,7 @@ class UserService extends BaseService{
 
     public function resetPassword($slug){
 
-        $user = $this->userBySlug($slug);  
+        $user = $this->userBySlug($slug); 
         return view('dashboard.user.reset_password')->with('user', $user);
 
     }
@@ -231,9 +320,11 @@ class UserService extends BaseService{
 
             }else{
 
-                $this->event->fire('user.reset_password', [$request, $user]);
-                $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
-                $this->session->flash('USER_RESET_PASSWORD_SLUG', $user->slug);
+                $user->password = Hash::make($request->password);
+                $user->is_online = 0;
+                $user->save();
+
+                $this->event->fire('user.reset_password_post', $user);
                 return redirect()->route('dashboard.user.index');
 
             }
@@ -258,6 +349,40 @@ class UserService extends BaseService{
         }); 
         
         return $user;
+
+    }
+
+
+
+
+
+    public function storeUserMenu($user_menu, $user, $menu){
+
+        $user_menu->user_menu_id = $this->user_menu->userMenuIdIncrement;
+        $user_menu->user_id = $user->user_id;
+        $user_menu->menu_id = $menu->menu_id;
+        $user_menu->name = $menu->name;
+        $user_menu->route = $menu->route;
+        $user_menu->icon = $menu->icon;
+        $user_menu->is_menu = $menu->is_menu;
+        $user_menu->is_dropdown = $menu->is_dropdown; 
+        $user_menu->save();
+
+    }
+
+
+
+
+
+    public function storeUserSubmenu($user_submenu, $submenu, $user_menu){
+
+        $user_submenu->submenu_id = $submenu->submenu_id;
+        $user_submenu->user_menu_id = $user_menu->user_menu_id;
+        $user_submenu->user_id = $user_menu->user_id;
+        $user_submenu->is_nav = $submenu->is_nav;
+        $user_submenu->name = $submenu->name;
+        $user_submenu->route = $submenu->route;
+        $user_submenu->save();
 
     }
 

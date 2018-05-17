@@ -2,53 +2,31 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Carbon\Carbon;
-use App\Models\FundSource;
-use Illuminate\Support\Str;
-use App\Swep\Helpers\CacheHelper;
-use App\Swep\Helpers\DataTypeHelper;
+
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class FundSourceSubscriber{
-
-
-    protected $fund_source;
-    protected $carbon;
-    protected $str;
-    protected $auth;
+class FundSourceSubscriber extends BaseSubscriber{
 
 
 
-    public function __construct(FundSource $fund_source, Carbon $carbon, Str $str){
 
-        $this->fund_source = $fund_source;
-        $this->carbon = $carbon;
-        $this->str = $str;
-        $this->auth = auth();
+    public function __construct(){
+
+        parent::__construct();
 
     }
+
 
 
 
 
     public function subscribe($events){
 
-        $events->listen('fund_source.create', 'App\Swep\Subscribers\FundSourceSubscriber@onCreate');
+        $events->listen('fund_source.store', 'App\Swep\Subscribers\FundSourceSubscriber@onStore');
         $events->listen('fund_source.update', 'App\Swep\Subscribers\FundSourceSubscriber@onUpdate');
-        $events->listen('fund_source.delete', 'App\Swep\Subscribers\FundSourceSubscriber@onDelete');
-
-    }
-
-
-
-
-    public function onCreate($fund_source, $request){
-
-        $this->createDefaults($fund_source);
-        CacheHelper::deletePattern('swep_cache:fund_sources:all:*');
-        CacheHelper::deletePattern('swep_cache:fund_sources:global:all');
+        $events->listen('fund_source.destroy', 'App\Swep\Subscribers\FundSourceSubscriber@onDestroy');
 
     }
 
@@ -56,12 +34,28 @@ class FundSourceSubscriber{
 
 
 
-    public function onUpdate($fund_source, $request){
+    public function onStore(){
 
-        $this->updateDefaults($fund_source);
-        CacheHelper::deletePattern('swep_cache:fund_sources:all:*');
-        CacheHelper::deletePattern('swep_cache:fund_sources:global:all');
-        CacheHelper::deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:global:all');
+
+        $this->session->flash('FUND_SOURCE_CREATE_SUCCESS', 'The Fund Source has been successfully created!');
+
+    }
+
+
+
+
+
+
+    public function onUpdate($fund_source){
+
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
+
+        $this->session->flash('FUND_SOURCE_UPDATE_SUCCESS', 'The Fund Source has been successfully updated!');
+        $this->session->flash('FUND_SOURCE_UPDATE_SUCCESS_SLUG', $fund_source->slug);
 
     }
 
@@ -69,44 +63,19 @@ class FundSourceSubscriber{
 
 
 
-    public function onDelete($fund_source){
 
-        CacheHelper::deletePattern('swep_cache:fund_sources:all:*');
-        CacheHelper::deletePattern('swep_cache:fund_sources:global:all');
-        CacheHelper::deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
+    public function onDestroy($fund_source){
 
-    }
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:fund_sources:bySlug:'. $fund_source->slug .'');
 
-
-
-    /** DEFAULTS **/
-
-
-    public function createDefaults($fund_source){
-
-        $fund_source->slug = $this->str->random(16);
-        $fund_source->fund_source_id = $this->fund_source->fundSourceIdIncrement;
-        
-        $fund_source->created_at = $this->carbon->now();
-        $fund_source->updated_at = $this->carbon->now();
-        $fund_source->ip_created = request()->ip();
-        $fund_source->ip_updated = request()->ip();
-        $fund_source->user_created = $this->auth->user()->username;
-        $fund_source->user_updated = $this->auth->user()->username;
-        $fund_source->save();
+        $this->session->flash('FUND_SOURCE_DELETE_SUCCESS', 'The Fund Source has been successfully deleted!');
+        $this->session->flash('FUND_SOURCE_DELETE_SUCCESS_SLUG', $fund_source->slug);
 
     }
 
 
-
-    public function updateDefaults($fund_source){
-
-        $fund_source->updated_at = $this->carbon->now();
-        $fund_source->ip_updated = request()->ip();
-        $fund_source->user_updated = $this->auth->user()->username;
-        $fund_source->save();
-
-    }
 
 
 

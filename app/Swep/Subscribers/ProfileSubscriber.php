@@ -2,25 +2,21 @@
 
 namespace App\Swep\Subscribers;
 
-use Auth;
-use Hash;
-use Session;
-use App\Swep\Helpers\CacheHelper;
+
+use App\Swep\BaseClasses\BaseSubscriber;
 
 
 
-class ProfileSubscriber{
+class ProfileSubscriber extends BaseSubscriber{
 
-
-	protected $auth;
 
 
 
 	public function __construct(){
 
-		$this->auth = auth();
+        parent::__construct();
 
-	}
+    }
 
 
 
@@ -36,52 +32,46 @@ class ProfileSubscriber{
 
 
 
-    public function onUpdateAccountUsername($user, $request){
 
-        $user->username = $request->username;
-        $user->is_online = 0;
-        $user->save();
+    public function onUpdateAccountUsername($user){
 
-		Session::flush();
-        $this->auth->logout();
 
-        CacheHelper::deletePattern('swep_cache:user:all:*');
-        CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+         $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+         $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+         $this->cacheHelper->deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+
+        $this->session->flash('PROFILE_UPDATE_ACCOUNT_SUCCESS', 'Your account has been successfully updated! Please sign in again.');
 
     }
 
 
 
 
-    public function onUpdateAccountPassword($user, $request){
 
-        $user->password = Hash::make($request->password);
-        $user->is_online = 0;
-        $user->save();
+    public function onUpdateAccountPassword($user){
 
-		Session::flush();
-        $this->auth->logout();
+         $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+         $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+         $this->cacheHelper->deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
 
-        CacheHelper::deletePattern('swep_cache:user:all:*');
-        CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+        $this->session->flash('PROFILE_UPDATE_ACCOUNT_SUCCESS', 'Your account has been successfully updated! Please sign in again.');
 
     }
 
 
 
 
-    public function onUpdateAccountColor($user, $request){
 
-        $user->color = $request->color;
-        $user->save();
+    public function onUpdateAccountColor($user){
 
-        CacheHelper::deletePattern('swep_cache:user:all:*');
-        CacheHelper::deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
-        CacheHelper::deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+         $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+         $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+         $this->cacheHelper->deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
+
+        $this->session->flash('PROFILE_UPDATE_ACCOUNT_COLOR_SUCCESS', 'Color Scheme successfully set!');
 
     }
+
 
 
 

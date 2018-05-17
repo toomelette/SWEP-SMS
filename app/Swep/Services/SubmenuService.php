@@ -69,10 +69,15 @@ class SubmenuService extends BaseService{
     public function update($request, $slug){
 
         $submenu = $this->submenuBySlug($slug);
-        $submenu->update($request->except(['is_nav']));
-        $this->event->fire('submenu.update', [ $submenu, $request ]);
-        $this->session->flash('SUBMENU_UPDATE_SUCCESS', 'The Submenu has been successfully updated!');
-        $this->session->flash('SUBMENU_UPDATE_SUCCESS_SLUG', $submenu->slug);
+        $submenu->name = $request->name;
+        $submenu->route = $request->route;
+        $submenu->is_nav = $this->dataTypeHelper->string_to_boolean($request->is_nav);
+        $submenu->updated_at = $this->carbon->now();
+        $submenu->ip_updated = request()->ip();
+        $submenu->user_updated = $this->auth->user()->user_id;
+        $submenu->save();
+
+        $this->event->fire('submenu.update', $submenu);
         return redirect()->route('dashboard.submenu.index');
 
     }
@@ -86,9 +91,8 @@ class SubmenuService extends BaseService{
 
         $submenu = $this->submenuBySlug($slug);
         $submenu->delete();
-        $this->event->fire('submenu.delete', [ $submenu ]);
-        $this->session->flash('SUBMENU_DELETE_SUCCESS', 'The Submenu has been successfully deleted!');
-        $this->session->flash('SUBMENU_DELETE_SUCCESS_SLUG', $submenu->slug);
+
+        $this->event->fire('submenu.destroy',$submenu);
         return redirect()->route('dashboard.submenu.index');
 
     }

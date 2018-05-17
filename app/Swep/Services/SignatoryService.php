@@ -56,11 +56,23 @@ class SignatoryService extends BaseService{
 
     public function store($request){
 
-        $signatory = $this->signatory->create($request->all());
-        $this->event->fire('signatory.create', [ $signatory, $request ]);
-        $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
+        $signatory = new Signatory;
+        $signatory->slug = $this->str->random(16);
+        $signatory->signatory_id = $this->signatory->signatoryIdIncrement;
+        $signatory->employee_name = $request->employee_name;
+        $signatory->employee_position = $request->employee_position;
+        $signatory->type = $request->type;
+        $signatory->created_at = $this->carbon->now();
+        $signatory->updated_at = $this->carbon->now();
+        $signatory->ip_created = request()->ip();
+        $signatory->ip_updated = request()->ip();
+        $signatory->user_created = $this->auth->user()->username;
+        $signatory->user_updated = $this->auth->user()->username;
+        $signatory->save();
+
+        $this->event->fire('signatory.store');
         return redirect()->back();
-        
+
     }
 
 
@@ -83,10 +95,15 @@ class SignatoryService extends BaseService{
     public function update($request, $slug){
 
         $signatory = $this->signatoryBySlug($slug);
-        $signatory->update($request->all());
-        $this->event->fire('signatory.update', [ $signatory, $request ]);
-        $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
-        $this->session->flash('SIGNATORY_UPDATE_SUCCESS_SLUG', $signatory->slug);
+        $signatory->employee_name = $request->employee_name;
+        $signatory->employee_position = $request->employee_position;
+        $signatory->type = $request->type;
+        $signatory->updated_at = $this->carbon->now();
+        $signatory->ip_updated = request()->ip();
+        $signatory->user_updated = $this->auth->user()->username;
+        $signatory->save();
+
+        $this->event->fire('signatory.update', $signatory);
         return redirect()->route('dashboard.signatory.index');
 
     }
@@ -100,9 +117,8 @@ class SignatoryService extends BaseService{
 
         $signatory = $this->signatoryBySlug($slug);
         $signatory->delete();
-        $this->event->fire('signatory.delete', [ $slug ]);
-        $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');
-        $this->session->flash('SIGNATORY_DELETE_SUCCESS_SLUG', $signatory->slug);
+
+        $this->event->fire('signatory.destroy', $signatory);
         return redirect()->route('dashboard.signatory.index');
 
     }

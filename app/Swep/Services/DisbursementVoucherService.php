@@ -3,8 +3,10 @@
 namespace App\Swep\Services;
 
 
+use App\Models\Signatory;
 use App\Models\DisbursementVoucher;
 use App\Swep\BaseClasses\BaseService;
+
 
 
 
@@ -12,13 +14,15 @@ class DisbursementVoucherService extends BaseService{
 
 
 
+    protected $signatory;
 	protected $disbursement_voucher;
 
 
 
 
-    public function __construct(DisbursementVoucher $disbursement_voucher){
+    public function __construct(Signatory $signatory, DisbursementVoucher $disbursement_voucher){
 
+        $this->signatory = $signatory;
         $this->disbursement_voucher = $disbursement_voucher;
         parent::__construct();
 
@@ -34,8 +38,11 @@ class DisbursementVoucherService extends BaseService{
         $key = str_slug($request->fullUrl(), '_');
 
         $disbursement_vouchers = $this->cache->remember('disbursement_voucher:all:'. $key, 240, function() use ($request){
+
             $disbursement_voucher = $this->fetchRequest($request);
+
             return $disbursement_voucher->populate();
+
         });
 
         $request->flash();
@@ -54,8 +61,11 @@ class DisbursementVoucherService extends BaseService{
         $key = str_slug($request->fullUrl(), '_');
 
         $disbursement_vouchers = $this->cache->remember('disbursement_voucher:byUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
+
             $disbursement_voucher = $this->fetchRequest($request);
+
             return $disbursement_voucher->populateByUser($this->auth->user()->user_id);
+            
         });
 
         $request->flash();
@@ -70,11 +80,37 @@ class DisbursementVoucherService extends BaseService{
 
 
     public function store($request){
-        
-        $disbursement_voucher = $this->disbursement_voucher->create($request->except(['amount', 'payee', 'address']));
-        $this->event->fire('dv.create', [ $disbursement_voucher, $request ]);
-        $this->session->flash('SESSION_DV_CREATE_SUCCESS_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_CREATE_SUCCESS', 'Your Voucher has been successfully Created!');
+
+        $disbursement_voucher = new DisbursementVoucher;
+        $disbursement_voucher->slug = $this->str->random(32);
+        $disbursement_voucher->user_id = $this->auth->user()->user_id;
+        $disbursement_voucher->doc_no = 'DV' . rand(10000000, 99999999);
+        $disbursement_voucher->date = $this->carbon->format('Y-m-d');
+        $disbursement_voucher->project_id = $request->project_id;
+        $disbursement_voucher->fund_source = $request->fund_source;
+        $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
+        $disbursement_voucher->payee = $request->payee;
+        $disbursement_voucher->address =  $request->address;
+        $disbursement_voucher->tin = $request->tin;
+        $disbursement_voucher->bur_no = $request->bur_no;
+        $disbursement_voucher->department_name = $request->department_name;
+        $disbursement_voucher->department_unit_name = $request->department_unit_name;
+        $disbursement_voucher->account_code = $request->account_code;
+        $disbursement_voucher->explanation = $request->explanation;
+        $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
+        $disbursement_voucher->certified_by = $this->signatoryByType('2')->employee_name;
+        $disbursement_voucher->certified_by_position = $this->signatoryByType('2')->employee_position;
+        $disbursement_voucher->approved_by = $this->signatoryByType('1')->employee_name;
+        $disbursement_voucher->approved_by_position = $this->signatoryByType('1')->employee_position;
+        $disbursement_voucher->created_at = $this->carbon->now();
+        $disbursement_voucher->updated_at = $this->carbon->now();
+        $disbursement_voucher->ip_created = request()->ip();
+        $disbursement_voucher->ip_updated = request()->ip();
+        $disbursement_voucher->user_created = $this->auth->user()->username;
+        $disbursement_voucher->user_updated = $this->auth->user()->username;
+        $disbursement_voucher->save();
+
+        $this->event->fire('dv.store', $disbursement_voucher);
         return redirect()->back();
 
     }
@@ -87,12 +123,24 @@ class DisbursementVoucherService extends BaseService{
     public function update($request, $slug){
 
         $disbursement_voucher = $this->dvBySlug($slug);
+        $disbursement_voucher->project_id = $request->project_id;
+        $disbursement_voucher->fund_source = $request->fund_source;
+        $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
+        $disbursement_voucher->payee = $request->payee;
+        $disbursement_voucher->address =  $request->address;
+        $disbursement_voucher->tin = $request->tin;
+        $disbursement_voucher->bur_no = $request->bur_no;
+        $disbursement_voucher->department_name = $request->department_name;
+        $disbursement_voucher->department_unit_name = $request->department_unit_name;
+        $disbursement_voucher->account_code = $request->account_code;
+        $disbursement_voucher->explanation = $request->explanation;
+        $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
+        $disbursement_voucher->updated_at = $this->carbon->now();
+        $disbursement_voucher->ip_updated = request()->ip();
+        $disbursement_voucher->user_updated = $this->auth->user()->username;
+        $disbursement_voucher->save();
 
-        $disbursement_voucher->update($request->except(['amount', 'payee', 'address']));
-        $this->event->fire('dv.update', [ $disbursement_voucher, $request ]);
-        $this->session->flash('SESSION_DV_UPDATE_SUCCESS_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_UPDATE_SUCCESS', 'Your Voucher has been successfully Updated!');
-
+        $this->event->fire('dv.update', $disbursement_voucher);
         return redirect()->back();
 
     }
@@ -130,8 +178,8 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = $this->dvBySlug($slug);
         $disbursement_voucher->delete();
+
         $this->event->fire('dv.destroy', $disbursement_voucher);
-        $this->session->flash('SESSION_DV_DELETE_SUCCESS', 'Your Voucher has been successfully Deleted!');
         return redirect()->back();
 
     }
@@ -162,10 +210,11 @@ class DisbursementVoucherService extends BaseService{
     public function setNo($request, $slug){
 
         $disbursement_voucher = $this->dvBySlug($slug);
-        $disbursement_voucher->update(['dv_no' => $request->dv_no]);
+        $disbursement_voucher->dv_no = $request->dv_no;
+        $disbursement_voucher->processed_at = $this->carbon->now();
+        $disbursement_voucher->save();
+
         $this->event->fire('dv.set_no', $disbursement_voucher);
-        $this->session->flash('SESSION_DV_SET_NO_SUCCESS_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_SET_NO_SUCCESS', 'DV No. successfully set!');
         return redirect()->back();
 
     }
@@ -181,16 +230,16 @@ class DisbursementVoucherService extends BaseService{
 
         if($disbursement_voucher->processed_at != null){
 
-            $disbursement_voucher->update(['checked_at' => $this->carbon->now()]);
+            $disbursement_voucher->checked_at = $this->carbon->now();
+            $disbursement_voucher->save();
+
             $this->event->fire('dv.confirm_check', $disbursement_voucher);
-            $this->session->flash('SESSION_DV_CONFIRM_CHECK_SUCCESS_SLUG', $disbursement_voucher->slug);
-            $this->session->flash('SESSION_DV_CONFIRM_CHECK_SUCCESS', 'Voucher Status successfully updated!');
             return redirect()->back();
 
         }
 
         $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED', 'Voucher Status failed to  updated! Please check the DV No. if it is set.');
+        $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED', 'Voucher Status failed to update! Please check the DV No. if it is set.');
         return redirect()->back();
 
     }
@@ -210,6 +259,22 @@ class DisbursementVoucherService extends BaseService{
         return $disbursement_voucher;
 
     }
+
+
+
+
+
+
+    public function signatoryByType($type){
+
+        $signatory = $this->cache->remember('signatories:byType:' . $type, 240, function() use ($type){
+            return $this->signatory->whereType($type)->first();
+        }); 
+
+        return $signatory;
+
+    }
+
 
 
 

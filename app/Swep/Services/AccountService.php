@@ -6,9 +6,9 @@ namespace App\Swep\Services;
 use App\Models\Account;
 use App\Swep\BaseClasses\BaseService;
 
-use DB;
 
 class AccountService extends BaseService{
+
 
 
 	protected $account;
@@ -21,6 +21,7 @@ class AccountService extends BaseService{
         parent::__construct();
 
     }
+
 
 
 
@@ -51,23 +52,34 @@ class AccountService extends BaseService{
 
 
 
+
     public function store($request){
 
         $account = new Account;
+        $account->slug = $this->str->random(16);
+        $account->account_id = $this->account->accountIdIncrement;
         $account->department_id = $request->department_id;
         $account->department_name = $request->department_name;
         $account->account_code = $request->account_code;
         $account->description = $request->description;
-        $account->mooe = $this->parseAmount($request->mooe);
-        $account->co = $this->parseAmount($request->co);
-        $account->date_started = $this->parseDate($request->date_started);
-        $account->projected_date_end = $this->parseDate($request->projected_date_end);
+        $account->mooe = $this->dataTypeHelper->string_to_num($request->mooe);
+        $account->co = $this->dataTypeHelper->string_to_num($request->co);
+        $account->date_started = $this->dataTypeHelper->date_in($request->date_started);
+        $account->projected_date_end = $this->dataTypeHelper->date_in($request->projected_date_end);
+        $account->project_in_charge = $request->project_in_charge;
+        $account->created_at = $this->carbon->now();
+        $account->updated_at = $this->carbon->now();
+        $account->ip_created = request()->ip();
+        $account->ip_updated = request()->ip();
+        $account->user_created = $this->auth->user()->username;
+        $account->user_updated = $this->auth->user()->username;
         $account->save();
 
-        $this->event->fire('account.store', $account);
+        $this->event->fire('account.store');
         return redirect()->back();
 
     }
+
 
 
 
@@ -84,14 +96,29 @@ class AccountService extends BaseService{
 
 
 
+
     public function update($request, $slug){
 
         $account = $this->accountsBySlug($slug);
-        $account->update($request->except(['mooe', 'co', 'date_started', 'projected_date_end']));
-        $this->event->fire('account.update', [ $account, $request ]);
+        $account->department_id = $request->department_id;
+        $account->department_name = $request->department_name;
+        $account->account_code = $request->account_code;
+        $account->description = $request->description;
+        $account->mooe = $this->dataTypeHelper->string_to_num($request->mooe);
+        $account->co = $this->dataTypeHelper->string_to_num($request->co);
+        $account->date_started = $this->dataTypeHelper->date_in($request->date_started);
+        $account->projected_date_end = $this->dataTypeHelper->date_in($request->projected_date_end);
+        $account->project_in_charge = $request->project_in_charge;
+        $account->updated_at = $this->carbon->now();
+        $account->ip_updated = request()->ip();
+        $account->user_updated = $this->auth->user()->username;
+        $account->save();
+        
+        $this->event->fire('account.update', $account);
         return redirect()->route('dashboard.account.index');
 
     }
+
 
 
 
@@ -101,9 +128,8 @@ class AccountService extends BaseService{
 
         $account = $this->accountsBySlug($slug);
         $account->delete();
-        $this->event->fire('account.delete', [ $account ]);
-        $this->session->flash('ACCOUNT_DELETE_SUCCESS', 'The Account has been successfully deleted!');
-        $this->session->flash('ACCOUNT_DELETE_SUCCESS_SLUG', $account->slug);
+
+        $this->event->fire('account.destroy', $account);
         return redirect()->route('dashboard.account.index');
 
     }
@@ -123,6 +149,7 @@ class AccountService extends BaseService{
         return $account;
 
     }
+
 
 
 

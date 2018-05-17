@@ -29,9 +29,14 @@ class ProfileService extends BaseService{
     public function updateAccountUsername($request, $slug){
 
         $user = $this->userBySlug($slug);
-        $request->flash();
-        $this->event->fire('profile.update_account_username', [$user, $request]);
-        $this->session->flash('PROFILE_UPDATE_ACCOUNT_SUCCESS', 'Your account has been successfully updated! Please sign in again.');
+        $user->username = $request->username;
+        $user->is_online = 0;
+        $user->save();
+
+        $this->session->flush();
+        $this->auth->logout();
+
+        $this->event->fire('profile.update_account_username', $user);
         return redirect('/');
 
     }
@@ -44,12 +49,17 @@ class ProfileService extends BaseService{
     public function updateAccountPassword($request, $slug){
         
         $user = $this->userBySlug($slug);
-        $request->flash();
 
         if(Hash::check($request->old_password, $this->auth->user()->password)){
 
-            $this->event->fire('profile.update_account_password', [$user, $request]);
-            $this->session->flash('PROFILE_UPDATE_ACCOUNT_SUCCESS', 'Your account has been successfully updated! Please sign in again.');
+            $user->password = Hash::make($request->password);
+            $user->is_online = 0;
+            $user->save();
+
+            $this->session->flush();
+            $this->auth->logout();
+
+            $this->event->fire('profile.update_account_password', $user);
             return redirect('/');
 
         }
@@ -67,9 +77,10 @@ class ProfileService extends BaseService{
     public function updateAccountColor($request, $slug){
 
         $user = $this->userBySlug($slug);
-        $request->flash();
-        $this->event->fire('profile.update_account_color', [$user, $request]);
-        $this->session->flash('PROFILE_UPDATE_ACCOUNT_COLOR_SUCCESS', 'Color Scheme successfully set!');
+        $user->color = $request->color;
+        $user->save();
+
+        $this->event->fire('profile.update_account_color', $user);
         return redirect()->back();
 
     }
