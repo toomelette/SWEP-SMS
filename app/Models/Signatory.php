@@ -79,37 +79,22 @@ class Signatory extends Model{
 
     // GETTERS
 
-    public function getLastSignatoryAttribute(){
+    public function getSignatoryIdIncAttribute(){
+
+        $id = 'S1001';
 
         $signatory = $this->select('signatory_id')->orderBy('signatory_id', 'desc')->first();
 
         if($signatory != null){
 
-          return str_replace('S', '', $signatory->signatory_id);
-
-        }
-
-        return null;
-        
-    }
-
-
-
-
-    public function getSignatoryIdIncrementAttribute(){
-
-        $id = 'S1001';
-
-        if($this->lastSignatory != null){
-
-            $num =  $this->lastSignatory + 1;
+            $num = str_replace('S', '', $signatory->signatory_id) + 1;
             
             $id = 'S' . $num;
         
         }
-
+        
         return $id;
-
+          
     }
 
 

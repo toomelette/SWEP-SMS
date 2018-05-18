@@ -21,6 +21,7 @@ class User extends Authenticatable{
     public $timestamps = false;
 
 
+
     protected $fillable = [
 
         'email', 
@@ -41,11 +42,15 @@ class User extends Authenticatable{
 
 
 
+
+
     protected $hidden = [
 
         'password', 'remember_token',
 
     ];
+
+
 
 
 
@@ -77,14 +82,17 @@ class User extends Authenticatable{
 
 
 
-    /** RELATIONSHIPS **/   
 
+
+    /** RELATIONSHIPS **/   
 
     public function disbursementVoucher() {
       
       return $this->belongsTo('App\Models\DisbursementVoucher','user_id','user_id');
 
     }
+
+
 
 
 
@@ -96,6 +104,8 @@ class User extends Authenticatable{
 
 
 
+
+
     public function userSubmenu() {
 
         return $this->hasMany('App\Models\UserSubmenu','user_id','user_id');
@@ -104,13 +114,40 @@ class User extends Authenticatable{
     
 
 
+
+
     /** GETTERS **/
     
+    public function getUserIdIncAttribute(){
+
+        $id = 'U10001';
+
+        $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
+
+        if($user != null){
+
+            $num = str_replace('U', '', $user->user_id) + 1;
+            
+            $id = 'U' . $num;
+        
+        }
+        
+        return $id;
+        
+    }
+
+
+
+
+
     public function getFullnameShortAttribute(){
 
         return strtoupper(substr($this->firstname , 0, 1) . ". " . $this->lastname);
 
     }
+
+
+
 
 
     public function getFullnameAttribute(){
@@ -120,37 +157,7 @@ class User extends Authenticatable{
     }
     
 
-    public function getLastUserAttribute(){
-
-        $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
-
-        if($user != null){
-
-          return str_replace('U', '', $user->user_id);
-
-        }
-
-        return null;
-
-    }
-
-
-
-    public function getUserIdIncrementAttribute(){
-
-        $id = 'U10001';
-
-        if($this->lastUser != null){
-
-            $num =  $this->lastUser + 1;
-            
-            $id = 'U' . $num;
-        
-        }
-
-        return $id;
-
-    }
+    
 
 
 
@@ -161,6 +168,8 @@ class User extends Authenticatable{
         return $query->where('username', $value)->count();
 
     }
+
+
 
 
 
@@ -177,11 +186,15 @@ class User extends Authenticatable{
 
 
 
+
+
     public function scopeFilterIsOnline($query, $value){
 
         return $query->where('is_online', $this->getBoolean($value));
 
     }
+
+
 
 
 
@@ -193,6 +206,8 @@ class User extends Authenticatable{
 
 
 
+
+
     public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)->firstOrFail();
@@ -201,11 +216,15 @@ class User extends Authenticatable{
     
 
 
+
+
     public function scopePopulate($query){
 
         return $query->sortable()->paginate(10);
 
     }
+
+
 
 
 

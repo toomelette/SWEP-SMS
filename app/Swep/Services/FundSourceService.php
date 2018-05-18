@@ -58,7 +58,7 @@ class FundSourceService extends BaseService{
 
         $fund_source = new FundSource;
         $fund_source->slug = $this->str->random(16);
-        $fund_source->fund_source_id = $this->fund_source->fundSourceIdIncrement;
+        $fund_source->fund_source_id = $this->fund_source->fundSourceIdInc;
         $fund_source->description = $request->description;
         $fund_source->created_at = $this->carbon->now();
         $fund_source->updated_at = $this->carbon->now();

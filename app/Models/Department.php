@@ -93,38 +93,24 @@ class Department extends Model{
 
     // GETTERS
 
-    public function getLastDepartmentAttribute(){
+    public function getDepartmentIdIncAttribute(){
+
+        $id = 'D1001';
 
         $department = $this->select('department_id')->orderBy('department_id', 'desc')->first();
 
         if($department != null){
 
-          return str_replace('D', '', $department->department_id);
-
-        }
-
-        return null;
-        
-    }
-
-
-
-
-    public function getDepartmentIdIncrementAttribute(){
-
-        $id = 'D1001';
-
-        if($this->lastDepartment != null){
-
-            $num =  $this->lastDepartment + 1;
+            $num = str_replace('D', '', $department->department_id) + 1;
             
             $id = 'D' . $num;
         
         }
-
+        
         return $id;
-
+        
     }
+
 
 
 

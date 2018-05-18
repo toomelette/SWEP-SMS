@@ -58,7 +58,7 @@ class DepartmentService extends BaseService{
 
         $department = new Department;
         $department->slug = $this->str->random(16);
-        $department->department_id = $this->department->departmentIdIncrement;
+        $department->department_id = $this->department->departmentIdInc;
         $department->name = $request->name;
         $department->created_at = $this->carbon->now();
         $department->updated_at = $this->carbon->now();

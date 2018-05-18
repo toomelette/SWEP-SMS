@@ -90,38 +90,24 @@ class DepartmentUnit extends Model{
 
     // GETTERS
 
-    public function getLastDepartmentUnitAttribute(){
+    public function getDepartmentUnitIdIncAttribute(){
+
+        $id = 'DU1001';
 
         $department_unit = $this->select('department_unit_id')->orderBy('department_unit_id', 'desc')->first();
 
         if($department_unit != null){
 
-          return str_replace('DU', '', $department_unit->department_unit_id);
-
-        }
-
-        return null;
-        
-    }
-
-
-
-
-    public function getDepartmentUnitIdIncrementAttribute(){
-
-        $id = 'DU1001';
-
-        if($this->lastDepartmentUnit != null){
-
-            $num =  $this->lastDepartmentUnit + 1;
+            $num = str_replace('DU', '', $department_unit->department_unit_id) + 1;
             
             $id = 'DU' . $num;
         
         }
-
+        
         return $id;
-
+        
     }
+
 
 
 

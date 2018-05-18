@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 class UserMenu extends Model{
 
 
-
-	protected $table = 'user_menus';
-  public $timestamps = false;
+    protected $table = 'user_menus';
     
+    public $timestamps = false;
+    
+
 
 	/** RELATIONSHIPS **/
 
@@ -26,6 +27,8 @@ class UserMenu extends Model{
 
 
 
+
+
     public function userSubMenu() {
 
     	return $this->hasMany('App\Models\UserSubmenu','user_menu_id','user_menu_id');
@@ -34,13 +37,39 @@ class UserMenu extends Model{
 
 
 
+
+
     /** GETTERS **/
+
+    public function getUserMenuIdIncAttribute(){
+
+        $id = 'UM10000001';
+
+        $usermenu = $this->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();
+
+        if($usermenu != null){
+
+            $num = str_replace('UM', '', $usermenu->user_menu_id) + 1;
+            
+            $id = 'UM' . $num;
+        
+        }
+        
+        return $id;
+        
+    }
+
+
+
+
 
     public function getUserNav() {
 
     	return $this->userSubmenu->where('is_nav', true);
 
     }
+
+
 
 
 
@@ -54,6 +83,8 @@ class UserMenu extends Model{
 
 
 
+
+
     public function getCountUserMenu() {
 
       return count($this->where('route', Route::currentRouteName())
@@ -62,41 +93,6 @@ class UserMenu extends Model{
 
     }
 
-
-
-
-    public function getLastUserMenuAttribute(){
-
-        $usermenu = $this->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();
-        
-        if($usermenu != null){
-
-          return str_replace('UM', '', $usermenu->user_menu_id);
-
-        }
-
-        return null; 
-
-    }
-
-
-
-
-    public function getUserMenuIdIncrementAttribute(){
-
-        $id = '10000001';
-
-        if($this->lastUserMenu != null){
-
-            $num =  $this->lastUserMenu + 1;
-            
-            $id = 'UM' . $num;
-
-        }
-
-        return $id;
-
-    }
 
 
 

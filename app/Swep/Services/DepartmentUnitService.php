@@ -58,7 +58,7 @@ class DepartmentUnitService extends BaseService{
 
         $department_unit = new DepartmentUnit;
         $department_unit->slug = $this->str->random(16);
-        $department_unit->department_Unit_id = $this->department_unit->departmentUnitIdIncrement;
+        $department_unit->department_Unit_id = $this->department_unit->departmentUnitIdInc;
         $department_unit->department_id = $request->department_id;
         $department_unit->department_name = $request->department_name;
         $department_unit->name = $request->name;

@@ -81,7 +81,7 @@ class UserService extends BaseService{
 
             $user = new User;
             $user->slug = $this->str->random(16);
-            $user->user_id = $this->user->userIdIncrement;
+            $user->user_id = $this->user->userIdInc;
             $user->firstname = $request->firstname;
             $user->middlename = $request->middlename;
             $user->lastname = $request->lastname;
@@ -358,7 +358,7 @@ class UserService extends BaseService{
 
     public function storeUserMenu($user_menu, $user, $menu){
 
-        $user_menu->user_menu_id = $this->user_menu->userMenuIdIncrement;
+        $user_menu->user_menu_id = $this->user_menu->userMenuIdInc;
         $user_menu->user_id = $user->user_id;
         $user_menu->menu_id = $menu->menu_id;
         $user_menu->name = $menu->name;

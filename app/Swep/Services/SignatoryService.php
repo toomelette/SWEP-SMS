@@ -58,7 +58,7 @@ class SignatoryService extends BaseService{
 
         $signatory = new Signatory;
         $signatory->slug = $this->str->random(16);
-        $signatory->signatory_id = $this->signatory->signatoryIdIncrement;
+        $signatory->signatory_id = $this->signatory->signatoryIdInc;
         $signatory->employee_name = $request->employee_name;
         $signatory->employee_position = $request->employee_position;
         $signatory->type = $request->type;

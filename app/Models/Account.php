@@ -103,20 +103,21 @@ class Account extends Model{
 
     // GETTERS
 
-    public function getAccountIdIncrementAttribute(){
+    public function getAccountIdIncAttribute(){
+
+        $id = 'A1001';
 
         $account = $this->select('account_id')->orderBy('account_id', 'desc')->first();
 
-        if($account->account_id != null){
+        if($account != null){
 
-            $id = str_replace('A', '', $account->account_id);
-            $num = $id + 1;
+            $num = str_replace('A', '', $account->account_id) + 1;
             
-            return 'A' . $num;
+            $id = 'A' . $num;
         
         }
         
-        return 'A1001';
+        return $id;
         
     }
 

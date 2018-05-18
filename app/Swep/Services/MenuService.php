@@ -61,7 +61,7 @@ class MenuService extends BaseService{
         $rows = $request->row;
 
         $menu = new Menu;
-        $menu->menu_id = $this->menu->menuIdIncrement;
+        $menu->menu_id = $this->menu->menuIdInc;
         $menu->slug = $this->str->random(16);
         $menu->name = $request->name;
         $menu->route = $request->route;
@@ -82,7 +82,7 @@ class MenuService extends BaseService{
                 
                 $submenu = new Submenu;
                 $submenu->slug = $this->str->random(16);
-                $submenu->submenu_id = $this->submenu->submenuIdIncrement;
+                $submenu->submenu_id = $this->submenu->submenuIdInc;
                 $submenu->menu_id = $menu->menu_id;
                 $submenu->name = $row['sub_name'];
                 $submenu->route = $row['sub_route'];

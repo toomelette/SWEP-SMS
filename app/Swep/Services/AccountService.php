@@ -57,7 +57,7 @@ class AccountService extends BaseService{
 
         $account = new Account;
         $account->slug = $this->str->random(16);
-        $account->account_id = $this->account->accountIdIncrement;
+        $account->account_id = $this->account->accountIdInc;
         $account->department_id = $request->department_id;
         $account->department_name = $request->department_name;
         $account->account_code = $request->account_code;

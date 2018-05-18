@@ -74,38 +74,24 @@ class FundSource extends Model{
 
     // GETTERS
 
-    public function getLastFundSourceAttribute(){
+    public function getFundSourceIdIncAttribute(){
+
+        $id = 'FS1001';
 
         $fund_source = $this->select('fund_source_id')->orderBy('fund_source_id', 'desc')->first();
 
         if($fund_source != null){
 
-          return str_replace('FS', '', $fund_source->fund_source_id);
-
-        }
-
-        return null;
-        
-    }
-
-
-
-
-    public function getFundSourceIdIncrementAttribute(){
-
-        $id = 'FS1001';
-
-        if($this->lastFundSource != null){
-
-            $num =  $this->lastFundSource + 1;
+            $num = str_replace('FS', '', $fund_source->fund_source_id) + 1;
             
             $id = 'FS' . $num;
         
         }
-
+        
         return $id;
-
+        
     }
+
 
 
 
