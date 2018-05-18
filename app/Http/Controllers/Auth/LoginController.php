@@ -8,6 +8,7 @@ use Session;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Swep\Helpers\CacheHelper;
 use Illuminate\Events\Dispatcher;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -17,31 +18,33 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class LoginController extends Controller{
    
 
-
     use AuthenticatesUsers;
-
 
     protected $auth;
     protected $session;
     protected $carbon;
     protected $user;
+    protected $cacheHelper;
     protected $event;
     protected $redirectTo = 'dashboard/home';
 
 
 
 
-    public function __construct(Carbon $carbon, User $user, Dispatcher $event){
+
+    public function __construct(Carbon $carbon, User $user, CacheHelper $cacheHelper, Dispatcher $event){
 
         $this->auth = auth();
         $this->session = session();
         $this->carbon = $carbon;
         $this->user = $user;
+        $this->cacheHelper = $cacheHelper;
         $this->event = $event;
 
         $this->middleware('guest')->except('logout');
 
     }
+
 
 
 
@@ -57,11 +60,12 @@ class LoginController extends Controller{
 
 
 
+
     protected function login(Request $request){
 
         $this->validateLogin($request);
 
-        if ($this->auth->guard()->attempt($this->credentials($request))){
+        if($this->auth->guard()->attempt($this->credentials($request))){
 
             if($this->auth->user()->is_active == false){
 
@@ -80,7 +84,8 @@ class LoginController extends Controller{
                 $user = $this->user->find($this->auth->user()->id);
                 $user->update($this->loginDefaults());
 
-                $this->event->fire('auth.login', $user);
+                $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+                $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
 
                 return redirect()->intended('dashboard/home');
 
@@ -96,21 +101,23 @@ class LoginController extends Controller{
 
 
 
+
     public function logout(Request $request){
 
-        $this->session->flush();
         $user = $this->user->find($this->auth->user()->id);
         $user->update(['is_online' => 0]);
 
-        $this->event->fire('auth.logout', $user);
-
-        $request->session()->invalidate();
-        
+        $this->session->flush();
         $this->guard()->logout();
-        
+        $request->session()->invalidate();
+
+        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+
         return redirect('/');
 
     }
+
 
 
 
@@ -130,6 +137,8 @@ class LoginController extends Controller{
         ];
 
     }
+
+
 
 
 

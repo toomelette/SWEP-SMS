@@ -30,7 +30,6 @@ class EventServiceProvider extends ServiceProvider{
     protected $subscribe = [
 
         'App\Swep\Subscribers\DisbursementVoucherSubscriber',
-        'App\Swep\Subscribers\AuthSubscriber',
         'App\Swep\Subscribers\UserSubscriber',
         'App\Swep\Subscribers\ProfileSubscriber',
         'App\Swep\Subscribers\MenuSubscriber',
