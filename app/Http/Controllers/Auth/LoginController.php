@@ -103,18 +103,24 @@ class LoginController extends Controller{
 
 
     public function logout(Request $request){
+        
+        if($request->isMethod('post')){
 
-        $user = $this->user->find($this->auth->user()->id);
-        $user->update(['is_online' => 0]);
+            $user = $this->user->find($this->auth->user()->id);
+            $user->update(['is_online' => 0]);
 
-        $this->session->flush();
-        $this->guard()->logout();
-        $request->session()->invalidate();
+            $this->session->flush();
+            $this->guard()->logout();
+            $request->session()->invalidate();
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+            $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+            $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
 
-        return redirect('/');
+            return redirect('/');
+
+        }
+        
+        return abort(404);
 
     }
 
