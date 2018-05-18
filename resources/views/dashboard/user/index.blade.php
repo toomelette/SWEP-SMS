@@ -48,10 +48,10 @@
               @foreach($users as $data) 
                 <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
                         Session::get('USER_UPDATE_SUCCESS_SLUG'), 
-                        Session::get('USER_RESET_PASSWORD_SLUG'),  
                         Session::get('USER_ACTIVATE_SUCCESS_SLUG'),
                         Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
                         Session::get('USER_LOGOUT_SUCCESS_SLUG'),
+                        Session::get('USER_RESET_PASSWORD_SUCCESS_SLUG'), 
                       ]) 
                     !!}
                 >

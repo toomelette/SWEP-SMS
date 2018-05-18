@@ -61,6 +61,8 @@
             <strong>Displaying {{ $menus->firstItem() > 0 ? $menus->firstItem() : 0 }} - {{ $menus->lastItem() > 0 ? $menus->lastItem() : 0 }} out of {{ $menus->total()}} Records</strong>
             {!! $menus->appends([
                   'q'=> Request::get('q'),
+                  'sort' => Request::get('sort'),
+                  'order' => Request::get('order'),
                 ])->render('vendor.pagination.bootstrap-4')
             !!}
           </div>

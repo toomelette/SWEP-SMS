@@ -87,7 +87,7 @@ class Menu extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->paginate(10);
+        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
 
     }
 

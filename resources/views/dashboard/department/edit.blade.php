@@ -42,25 +42,3 @@
   </section>
 
 @endsection
-
-
-@section('modals')
-
-  @if(Session::has('DEPARTMENT_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('department_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('DEPARTMENT_CREATE_SUCCESS')) !!}
-  @endif
-
-@endsection 
-
-
-@section('scripts')
-
-  <script type="text/javascript">
-
-    @if(Session::has('DEPARTMENT_CREATE_SUCCESS'))
-      $('#department_create').modal('show');
-    @endif
-
-  </script> 
-    
-@endsection

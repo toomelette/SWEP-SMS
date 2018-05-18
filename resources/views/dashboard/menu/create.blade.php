@@ -191,55 +191,55 @@
   <script type="text/javascript">
 
 
-  @if(Session::has('MENU_CREATE_SUCCESS'))
-    $('#menu_create').modal('show');
-  @endif
+    @if(Session::has('MENU_CREATE_SUCCESS'))
+      $('#menu_create').modal('show');
+    @endif
 
 
-  {{-- ADD ROW --}}
+    {{-- ADD ROW --}}
 
-  $(document).ready(function() {
-    $("#add_row").on("click", function() {
-      var i = $("#table_body").children().length;
-      var content ='<tr>' +
-                      '<td>' +
-                        '<div class="form-group">' +
-                          '<input type="text" name="row[' + i + '][sub_name]" class="form-control" placeholder="Name">' +
-                        '</div>' +
-                      '</td>' +
+    $(document).ready(function() {
+      $("#add_row").on("click", function() {
+        var i = $("#table_body").children().length;
+        var content ='<tr>' +
+                        '<td>' +
+                          '<div class="form-group">' +
+                            '<input type="text" name="row[' + i + '][sub_name]" class="form-control" placeholder="Name">' +
+                          '</div>' +
+                        '</td>' +
 
-                      '<td>' +
-                        '<div class="form-group">' +
-                          '<input type="text" name="row[' + i + '][sub_route]" class="form-control" placeholder="Route">' +
-                        '</div>' +
-                      '</td>' +
+                        '<td>' +
+                          '<div class="form-group">' +
+                            '<input type="text" name="row[' + i + '][sub_route]" class="form-control" placeholder="Route">' +
+                          '</div>' +
+                        '</td>' +
 
-                      '<td>' +
-                        '<div class="form-group">' +
-                          '<select name="row[' + i + '][sub_is_nav]" class="form-control">' +
-                            '<option value="">Select</option>' +
-                            '<option value="true">1</option>' +
-                            '<option value="false">0</option>' +
-                          '</select>' +
-                        '</div>' +
-                      '</td>' +
+                        '<td>' +
+                          '<div class="form-group">' +
+                            '<select name="row[' + i + '][sub_is_nav]" class="form-control">' +
+                              '<option value="">Select</option>' +
+                              '<option value="true">1</option>' +
+                              '<option value="false">0</option>' +
+                            '</select>' +
+                          '</div>' +
+                        '</td>' +
 
-                      '<td>' +
-                          '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
-                      '</td>' +
+                        '<td>' +
+                            '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                        '</td>' +
 
-                    '</tr>';
-      $("#table_body").append($(content));
+                      '</tr>';
+        $("#table_body").append($(content));
+      });
     });
-  });
 
 
 
-  {{-- DELETE ROW --}}
+    {{-- DELETE ROW --}}
 
-  $(document).on("click","#delete_row" ,function(e) {
-      $(this).closest('tr').remove();
-  });
+    $(document).on("click","#delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
 
 
   </script>

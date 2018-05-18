@@ -70,22 +70,9 @@
 @endsection
 
 
-@section('modals')
-
-  @if(Session::has('ACCOUNT_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('account_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('ACCOUNT_CREATE_SUCCESS')) !!}
-  @endif
-
-@endsection 
-
-
 @section('scripts')
 
   <script type="text/javascript">
-
-    @if(Session::has('ACCOUNT_CREATE_SUCCESS'))
-      $('#account_create').modal('show');
-    @endif
 
     {!! JSHelper::ajax_select_to_input('department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name') !!}
 

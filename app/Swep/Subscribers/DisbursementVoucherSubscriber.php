@@ -41,8 +41,8 @@ class DisbursementVoucherSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:all:*');
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
 
-        $this->session->flash('SESSION_DV_CREATE_SUCCESS', 'Your Voucher has been successfully Created!');
-        $this->session->flash('SESSION_DV_CREATE_SUCCESS_SLUG', $disbursement_voucher->slug);
+        $this->session->flash('DV_CREATE_SUCCESS', 'Your Voucher has been successfully Created!');
+        $this->session->flash('DV_CREATE_SUCCESS_SLUG', $disbursement_voucher->slug);
         
 	}
 
@@ -56,8 +56,8 @@ class DisbursementVoucherSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
         
-        $this->session->flash('SESSION_DV_UPDATE_SUCCESS', 'Your Voucher has been successfully Updated!');
-        $this->session->flash('SESSION_DV_UPDATE_SUCCESS_SLUG', $disbursement_voucher->slug);
+        $this->session->flash('DV_UPDATE_SUCCESS', 'Your Voucher has been successfully Updated!');
+        $this->session->flash('DV_UPDATE_SUCCESS_SLUG', $disbursement_voucher->slug);
 
     }
 
@@ -72,7 +72,7 @@ class DisbursementVoucherSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
 
-        $this->session->flash('SESSION_DV_DELETE_SUCCESS', 'Your Voucher has been successfully Deleted!');
+        $this->session->flash('DV_DELETE_SUCCESS', 'Your Voucher has been successfully Deleted!');
         
     }
 
@@ -87,8 +87,8 @@ class DisbursementVoucherSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
 
-        $this->session->flash('SESSION_DV_SET_NO_SUCCESS_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_SET_NO_SUCCESS', 'DV No. successfully set!');
+        $this->session->flash('DV_SET_NO_SUCCESS', 'DV No. successfully set!');
+        $this->session->flash('DV_SET_NO_SUCCESS_SLUG', $disbursement_voucher->slug);
         
     }
 
@@ -103,8 +103,8 @@ class DisbursementVoucherSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:byUser:'. $disbursement_voucher->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:disbursement_voucher:bySlug:'. $disbursement_voucher->slug .'');
         
-        $this->session->flash('SESSION_DV_CONFIRM_CHECK_SUCCESS_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_CONFIRM_CHECK_SUCCESS', 'Voucher Status successfully updated!');
+        $this->session->flash('DV_CONFIRM_CHECK_SUCCESS', 'Voucher Status successfully updated!');
+        $this->session->flash('DV_CONFIRM_CHECK_SUCCESS_SLUG', $disbursement_voucher->slug);
 
     }
 

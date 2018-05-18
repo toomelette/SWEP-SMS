@@ -25,8 +25,12 @@
 			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
 		@endif
 
-		@if(Session::has('PROFILE_UPDATE_ACCOUNT_SUCCESS'))
-			{!! HtmlHelper::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_ACCOUNT_SUCCESS')) !!}
+		@if(Session::has('PROFILE_UPDATE_USERNAME_SUCCESS'))
+			{!! HtmlHelper::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_USERNAME_SUCCESS')) !!}
+		@endif
+
+		@if(Session::has('PROFILE_UPDATE_PASSWORD_SUCCESS'))
+			{!! HtmlHelper::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_PASSWORD_SUCCESS')) !!}
 		@endif
 
 		<div class="box box-default">

@@ -129,7 +129,7 @@ class UserSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
-        $this->session->flash('USER_RESET_PASSWORD_SLUG', $user->slug);
+        $this->session->flash('USER_RESET_PASSWORD_SUCCESS_SLUG', $user->slug);
 
     }
 

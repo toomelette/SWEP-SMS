@@ -40,7 +40,7 @@ class ProfileSubscriber extends BaseSubscriber{
          $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
          $this->cacheHelper->deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
 
-        $this->session->flash('PROFILE_UPDATE_ACCOUNT_SUCCESS', 'Your account has been successfully updated! Please sign in again.');
+        $this->session->flash('PROFILE_UPDATE_USERNAME_SUCCESS', 'Your username has been successfully updated! Please sign in again.');
 
     }
 
@@ -54,7 +54,7 @@ class ProfileSubscriber extends BaseSubscriber{
          $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
          $this->cacheHelper->deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
 
-        $this->session->flash('PROFILE_UPDATE_ACCOUNT_SUCCESS', 'Your account has been successfully updated! Please sign in again.');
+        $this->session->flash('PROFILE_UPDATE_PASSWORD_SUCCESS', 'Your password has been successfully updated! Please sign in again.');
 
     }
 
@@ -68,7 +68,7 @@ class ProfileSubscriber extends BaseSubscriber{
          $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
          $this->cacheHelper->deletePattern('swep_cache:user_menu:byUserId:'. $user->user_id .'');
 
-        $this->session->flash('PROFILE_UPDATE_ACCOUNT_COLOR_SUCCESS', 'Color Scheme successfully set!');
+        $this->session->flash('PROFILE_UPDATE_COLOR_SUCCESS', 'Color Scheme successfully set!');
 
     }
 

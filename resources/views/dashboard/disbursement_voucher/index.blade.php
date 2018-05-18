@@ -75,8 +75,8 @@
               @foreach($disbursement_vouchers as $data) 
                 <tr
                   {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                      Session::get('SESSION_DV_SET_NO_SUCCESS_SLUG'),
-                      Session::get('SESSION_DV_CONFIRM_CHECK_SUCCESS_SLUG'),
+                      Session::get('DV_SET_NO_SUCCESS_SLUG'),
+                      Session::get('DV_CONFIRM_CHECK_SUCCESS_SLUG'),
                     ])
                   !!}
                 >
@@ -163,6 +163,7 @@
 
   {!! HtmlHelper::modal('dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')) !!}
 
+  {{-- SET DV NO Modal --}}
   <div class="modal fade" id="dv_set_no" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -204,20 +205,20 @@
 
 
     {{-- DV DELETE TOAST --}}
-    @if(Session::has('SESSION_DV_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('SESSION_DV_DELETE_SUCCESS')) !!}
+    @if(Session::has('DV_DELETE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('DV_DELETE_SUCCESS')) !!}
     @endif
 
 
     {{-- DV SET NO TOAST --}}
-    @if(Session::has('SESSION_DV_SET_NO_SUCCESS'))
-      {!! JSHelper::toast(Session::get('SESSION_DV_SET_NO_SUCCESS')) !!}
+    @if(Session::has('DV_SET_NO_SUCCESS'))
+      {!! JSHelper::toast(Session::get('DV_SET_NO_SUCCESS')) !!}
     @endif
     
 
     {{-- DV CONFIRM CHECK SUCCESS TOAST --}}
-    @if(Session::has('SESSION_DV_CONFIRM_CHECK_SUCCESS'))
-      {!! JSHelper::toast(Session::get('SESSION_DV_CONFIRM_CHECK_SUCCESS')) !!}
+    @if(Session::has('DV_CONFIRM_CHECK_SUCCESS'))
+      {!! JSHelper::toast(Session::get('DV_CONFIRM_CHECK_SUCCESS')) !!}
     @endif
 
     
@@ -226,7 +227,7 @@
 
 
     {{-- CALL CONFIRM CHECK FAILED MODAL --}}
-    @if(Session::has('SESSION_DV_CONFIRM_CHECK_FAILED'))
+    @if(Session::has('DV_CONFIRM_CHECK_FAILED'))
       $('#dv_confirm_check_failed').modal('show');
     @endif
 
@@ -246,9 +247,7 @@
 
     {{-- Date Picker --}}
     {!! JSHelper::datepicker_caller('df', 'mm/dd/yy', 'bottom') !!}
-
     {!! JSHelper::datepicker_caller('dt', 'mm/dd/yy', 'bottom') !!}
-
 
   </script>
     
