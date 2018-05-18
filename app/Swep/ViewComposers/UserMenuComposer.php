@@ -8,7 +8,6 @@ use Auth;
 use App\Models\UserMenu;
 use Illuminate\Cache\Repository as Cache;
 
-
 class UserMenuComposer{
    
 
@@ -34,12 +33,12 @@ class UserMenuComposer{
 
         if($this->auth->check()){
             $user_menus = $this->cache->remember('user_menus:byUserId:'. $this->auth->user()->user_id .'', 240, function(){
-            	return $this->user_menu->where('user_id', $this->auth->user()->user_id )->get();
+            	return $this->user_menu->where('user_id', $this->auth->user()->user_id )->with('userSubMenu')->get();
             });
-        }
-        
+        }  
+
     	$view->with('global_user_menus', $user_menus);
-    	
+
     }
 
 

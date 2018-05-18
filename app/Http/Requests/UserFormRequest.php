@@ -28,9 +28,9 @@ class UserFormRequest extends FormRequest{
             'username'=>'required|string|max:45',
 
         ];
+        
 
-
-        if($this->request->get('password')){
+        if($this->request->get('password') != null){
 
             $rules['password'] = 'required|min:6|max:45|string|confirmed';
 

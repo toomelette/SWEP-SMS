@@ -12,6 +12,9 @@
     
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
       </div>
       
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.department_unit.store') }}">
@@ -21,17 +24,17 @@
           @csrf    
 
           {!! FormHelper::select_dynamic(
-          '4', 'department_id', 'Department:', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
+          '4', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
           ) !!}
 
           <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') }}">
 
           {!! FormHelper::textbox(
-             '4', 'name', 'text', 'Name:', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
+             '4', 'name', 'text', 'Name *', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
           ) !!}
 
           {!! FormHelper::textbox(
-             '4', 'description', 'text', 'Description:', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
+             '4', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
         </div>

@@ -15,6 +15,9 @@
     
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
       </div>
       
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.submenu.update', $submenu->slug) }}">
@@ -26,15 +29,15 @@
           @csrf    
 
           {!! FormHelper::textbox(
-             '4', 'name', 'text', 'Name:', 'Name', old('name') ? old('name') : $submenu->name , $errors->has('name'), $errors->first('name'), ''
+             '4', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $submenu->name , $errors->has('name'), $errors->first('name'), ''
           ) !!}
 
           {!! FormHelper::textbox(
-             '4', 'route', 'text', 'Route:', 'Route', old('route') ? old('route') : $submenu->route , $errors->has('route'), $errors->first('route'), ''
+             '4', 'route', 'text', 'Route *', 'Route', old('route') ? old('route') : $submenu->route , $errors->has('route'), $errors->first('route'), ''
           ) !!}
 
           {!! FormHelper::select_static(
-            '4', 'is_nav', 'Is nav', old('is_nav') ? old('is_nav') : DataTypeHelper::boolean_to_string($submenu->is_nav), ['1' => 'true', '0' => 'false'], $errors->has('is_nav'), $errors->first('is_nav'), '', ''
+            '4', 'is_nav', 'Is nav *', old('is_nav') ? old('is_nav') : DataTypeHelper::boolean_to_string($submenu->is_nav), ['1' => 'true', '0' => 'false'], $errors->has('is_nav'), $errors->first('is_nav'), '', ''
           ) !!}
 
         </div>

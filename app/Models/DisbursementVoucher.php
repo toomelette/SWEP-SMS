@@ -144,14 +144,14 @@ class DisbursementVoucher extends Model{
     
     public function scopePopulate($query){
 
-        return $query->sortable()->paginate(10);
+        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
 
     }
 
 
     public function scopePopulateByUser($query, $id){
 
-        return $query->where('user_id', $id)->sortable()->paginate(10);
+        return $query->where('user_id', $id)->sortable()->orderBy('updated_at', 'desc')->paginate(10);
 
     }
 

@@ -15,6 +15,9 @@
     
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
       </div>
       
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.fund_source.update', $fund_source->slug) }}">
@@ -26,7 +29,7 @@
           @csrf    
 
           {!! FormHelper::textbox(
-             '4', 'description', 'text', 'Description:', 'Description', old('description') ? old('description') : $fund_source->description, $errors->has('description'), $errors->first('description'), ''
+             '4', 'description', 'text', 'Description *', 'Description', old('description') ? old('description') : $fund_source->description, $errors->has('description'), $errors->first('description'), ''
           ) !!} 
 
         </div>

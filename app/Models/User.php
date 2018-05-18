@@ -210,7 +210,7 @@ class User extends Authenticatable{
 
     public function scopeFindSlug($query, $slug){
 
-        return $query->where('slug', $slug)->firstOrFail();
+        return $query->where('slug', $slug)->with('userMenu')->firstOrFail();
 
     }
     
@@ -220,7 +220,7 @@ class User extends Authenticatable{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->paginate(10);
+        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
 
     }
 

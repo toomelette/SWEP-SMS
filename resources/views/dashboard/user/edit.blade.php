@@ -15,6 +15,9 @@
         
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div>
       </div>
       
       <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.update', $user->slug) }}">
@@ -28,27 +31,27 @@
               @csrf    
 
               {!! FormHelper::textbox_inline(
-                  'firstname', 'text', 'Firstname', 'Firstname', old('firstname') ? old('firstname') : $user->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
+                  'firstname', 'text', 'Firstname *', 'Firstname', old('firstname') ? old('firstname') : $user->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'middlename', 'text', 'Middlename', 'Middlename', old('middlename') ? old('middlename') : $user->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
+                  'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : $user->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'lastname', 'text', 'Lastname', 'Lastname', old('lastname') ? old('lastname') : $user->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
+                  'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : $user->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'email', 'email', 'Email', 'Email', old('email') ? old('email') : $user->email, $errors->has('email'), $errors->first('email'), ''
+                  'email', 'email', 'Email *', 'Email', old('email') ? old('email') : $user->email, $errors->has('email'), $errors->first('email'), ''
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'position', 'text', 'Position', 'Position / Plantilla', old('position') ? old('position') : $user->position, $errors->has('position'), $errors->first('position'), ''
+                  'position', 'text', 'Position *', 'Position / Plantilla', old('position') ? old('position') : $user->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'username', 'text', 'Username', 'Username', old('username') ? old('username') : $user->username, $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
+                  'username', 'text', 'Username *', 'Username', old('username') ? old('username') : $user->username, $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
               ) !!}
 
           </div>
@@ -67,7 +70,7 @@
                 <table class="table table-bordered">
 
                   <tr>
-                    <th>Menus</th>
+                    <th>Menus *</th>
                     <th>Menu Modules</th>
                     <th style="width: 40px"></th>
                   </tr>

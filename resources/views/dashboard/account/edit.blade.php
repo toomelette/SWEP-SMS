@@ -15,6 +15,9 @@
     
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
       </div>
       
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.account.update', $account->slug) }}">
@@ -26,17 +29,17 @@
           @csrf    
 
           {!! FormHelper::select_dynamic(
-              '3', 'department_id', 'Department:', old('department_id') ? old('department_id') : $account->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
+              '3', 'department_id', 'Department *', old('department_id') ? old('department_id') : $account->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
           ) !!}
 
           <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') ? old('department_name') : $account->department_name }}">
 
           {!! FormHelper::textbox(
-             '3', 'account_code', 'text', 'Account Code:', 'Account Code', old('account_code') ? old('account_code') : $account->account_code , $errors->has('account_code'), $errors->first('account_code'), ''
+             '3', 'account_code', 'text', 'Account Code *', 'Account Code', old('account_code') ? old('account_code') : $account->account_code , $errors->has('account_code'), $errors->first('account_code'), ''
           ) !!}
 
           {!! FormHelper::textbox(
-             '6', 'description', 'text', 'Description:', 'Description', old('description') ? old('description') : $account->description, $errors->has('description'), $errors->first('description'), ''
+             '6', 'description', 'text', 'Description *', 'Description', old('description') ? old('description') : $account->description, $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
           {!! FormHelper::textbox_numeric(
@@ -52,7 +55,7 @@
           {!! FormHelper::datepicker('3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : DataTypeHelper::date_out($account->projected_date_end), '', '') !!}
 
           {!! FormHelper::textbox(
-             '6', 'project_in_charge', 'text', 'Project Incharge:', 'Project Incharge', old('project_in_charge') ? old('project_in_charge') : $account->project_in_charge, $errors->has('project_in_charge'), $errors->first('project_in_charge'), 'data-transform="uppercase"'
+             '6', 'project_in_charge', 'text', 'Project Incharge', 'Project Incharge', old('project_in_charge') ? old('project_in_charge') : $account->project_in_charge, $errors->has('project_in_charge'), $errors->first('project_in_charge'), 'data-transform="uppercase"'
           ) !!}
 
         </div>

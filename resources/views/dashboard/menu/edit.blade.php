@@ -15,6 +15,9 @@
         
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
       </div>
       
       <form method="POST" autocomplete="off" action="{{ route('dashboard.menu.update', $menu->slug) }}">
@@ -32,23 +35,23 @@
             @csrf    
 
             {!! FormHelper::textbox(
-              '4', 'name', 'text', 'Name:', 'Name', old('name') ? old('name') : $menu->name, $errors->has('name'), $errors->first('name'), ''
+              '4', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $menu->name, $errors->has('name'), $errors->first('name'), ''
             ) !!}
 
             {!! FormHelper::textbox(
-              '4', 'route', 'text', 'Route:', 'Route', old('route') ? old('route') : $menu->route, $errors->has('route'), $errors->first('route'), ''
+              '4', 'route', 'text', 'Route *', 'Route', old('route') ? old('route') : $menu->route, $errors->has('route'), $errors->first('route'), ''
             ) !!}
 
             {!! FormHelper::textbox(
-              '4', 'icon', 'text', 'Icon:', 'Icon', old('icon') ? old('icon') : $menu->icon, $errors->has('icon'), $errors->first('icon'), ''
+              '4', 'icon', 'text', 'Icon *', 'Icon', old('icon') ? old('icon') : $menu->icon, $errors->has('icon'), $errors->first('icon'), ''
             ) !!}
 
             {!! FormHelper::select_static(
-              '4', 'is_menu', 'Is Menu', old('is_menu') ? old('is_menu') : DataTypeHelper::boolean_to_string($menu->is_menu), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
+              '4', 'is_menu', 'Is Menu *', old('is_menu') ? old('is_menu') : DataTypeHelper::boolean_to_string($menu->is_menu), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}
             
             {!! FormHelper::select_static(
-              '4', 'is_dropdown', 'Is Dropdown', old('is_dropdown') ? old('is_dropdown') : DataTypeHelper::boolean_to_string($menu->is_dropdown), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
+              '4', 'is_dropdown', 'Is Dropdown *', old('is_dropdown') ? old('is_dropdown') : DataTypeHelper::boolean_to_string($menu->is_dropdown), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
             ) !!}
 
           </div>
