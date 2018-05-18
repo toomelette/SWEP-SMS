@@ -38,7 +38,7 @@
 
 
           {!! FormHelper::textbox(
-            '6', 'payee', 'text', 'Payee:', 'Payee', old('payee') ? old('payee') : $disbursement_voucher->payee, $errors->has('payee'), $errors->first('payee'), ''
+            '6', 'payee', 'text', 'Payee:', 'Payee', old('payee') ? old('payee') : $disbursement_voucher->payee, $errors->has('payee'), $errors->first('payee'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::textbox(
@@ -51,7 +51,7 @@
 
 
           {!! FormHelper::textbox(
-            '6', 'address', 'text', 'Address:', 'Address', old('address') ? old('address') : $disbursement_voucher->address, $errors->has('address'), $errors->first('address'), ''
+            '6', 'address', 'text', 'Address:', 'Address', old('address') ? old('address') : $disbursement_voucher->address, $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::select_dynamic(

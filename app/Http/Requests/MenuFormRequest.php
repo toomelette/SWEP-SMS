@@ -33,7 +33,6 @@ class MenuFormRequest extends FormRequest{
         ];
 
 
-
         if(count($rows) > 0){
 
             foreach($rows as $key => $value){

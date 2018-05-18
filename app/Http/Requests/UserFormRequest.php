@@ -16,6 +16,8 @@ class UserFormRequest extends FormRequest{
     
     public function rules(){
         
+        $menus = $this->request->get('menu');
+
         $rules = [
             
             'firstname'=>'required|string|max:90',
@@ -35,25 +37,31 @@ class UserFormRequest extends FormRequest{
         }
 
 
-        if(count($this->request->get('menu')) > 0){
-
-            foreach($this->request->get('menu') as $key => $value){
-
-                $rules['menu.'.$key] = 'required|string';
-
-            } 
-
-        }
+        if(count($menus) > 0){
 
 
+            if(count($this->request->get('menu')) > 0){
 
-        if(count($this->request->get('submenu')) > 0){
+                foreach($this->request->get('menu') as $key => $value){
 
-            foreach($this->request->get('submenu') as $key => $value){
+                    $rules['menu.'.$key] = 'required|string';
 
-                $rules['submenu.'.$key] = '';
+                } 
 
             }
+
+
+
+            if(count($this->request->get('submenu')) > 0){
+
+                foreach($this->request->get('submenu') as $key => $value){
+
+                    $rules['submenu.'.$key] = '';
+
+                }
+            }
+
+
         }
 
 
@@ -64,6 +72,8 @@ class UserFormRequest extends FormRequest{
 
 
      public function messages(){
+
+        $menus = $this->request->get('menu');
 
         $messages = [
 
@@ -101,14 +111,20 @@ class UserFormRequest extends FormRequest{
         ];
 
 
-        foreach($this->request->get('menu') as $key => $value) {
+        if(count($menus) > 0){
 
-            $messages['menu.'.$key.'.required'] = 'Menu Field is Required.';
-            $messages['menu.'.$key.'.string'] = ' Invalid Input! You must enter a string value.';
+            foreach($this->request->get('menu') as $key => $value) {
+
+                $messages['menu.'.$key.'.required'] = 'Menu Field is Required.';
+                $messages['menu.'.$key.'.string'] = ' Invalid Input! You must enter a string value.';
+
+            }
 
         }
 
+
         return $messages;
+
 
     }
 

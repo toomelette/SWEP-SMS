@@ -72,7 +72,7 @@
                 </span>
               </h4>
             </div>
-            <div id="username_bar" class="panel-collapse collapse {{ $errors->any() ? 'in' : '' }}">
+            <div id="username_bar" class="panel-collapse collapse {{ $errors->has('username') ? 'in' : '' }}">
               <div class="box-body">
 
                 <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_username', Auth::user()->slug) }}">
@@ -104,7 +104,7 @@
                 </span>
               </h4>
             </div>
-            <div id="password_bar" class="panel-collapse collapse {{ Session::has('PROFILE_OLD_PASSWORD_FAIL') || $errors->any() ? 'in' : '' }}">
+            <div id="password_bar" class="panel-collapse collapse {{ Session::has('PROFILE_OLD_PASSWORD_FAIL') || $errors->has('password') ? 'in' : '' }}">
               <div class="box-body">
 
                 @if(Session::has('PROFILE_OLD_PASSWORD_FAIL'))
@@ -148,7 +148,7 @@
                 </span>
               </h4>
             </div>
-            <div id="color_scheme_bar" class="panel-collapse collapse">
+            <div id="color_scheme_bar" class="panel-collapse collapse {{ $errors->has('color') ? 'in' : '' }}">
               <div class="box-body">
 
                 <form id="profile_update_account_color" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_color', Auth::user()->slug) }}">

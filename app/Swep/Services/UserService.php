@@ -97,23 +97,27 @@ class UserService extends BaseService{
             $user->user_updated = $this->auth->user()->username;
             $user->save();
 
-            for($i = 0; $i < count($request->menu); $i++){
+            if(count($request->menu) > 0){
 
-                $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+                for($i = 0; $i < count($request->menu); $i++){
 
-                $user_menu = new UserMenu;
-                $this->storeUserMenu($user_menu, $user, $menu);
+                    $menu = $this->menu->whereMenuId($request->menu[$i])->first();
 
-                if($request->submenu > 0){
+                    $user_menu = new UserMenu;
+                    $this->storeUserMenu($user_menu, $user, $menu);
 
-                    foreach($request->submenu as $data_submenu){
+                    if($request->submenu > 0){
 
-                        $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+                        foreach($request->submenu as $data_submenu){
 
-                        if($menu->menu_id === $submenu->menu_id){
+                            $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
 
-                            $user_submenu = new UserSubMenu;
-                            $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+                            if($menu->menu_id === $submenu->menu_id){
+
+                                $user_submenu = new UserSubMenu;
+                                $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                            }
 
                         }
 
@@ -179,30 +183,34 @@ class UserService extends BaseService{
         $user->userMenu()->delete();
         $user->userSubmenu()->delete();
 
-        for($i = 0; $i < count($request->menu); $i++){
+        if(count($request->menu) > 0){
 
-            $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+            for($i = 0; $i < count($request->menu); $i++){
 
-            $user_menu = new UserMenu;
-            $this->storeUserMenu($user_menu, $user, $menu);
+                $menu = $this->menu->whereMenuId($request->menu[$i])->first();
 
-            if($request->submenu > 0){
+                $user_menu = new UserMenu;
+                $this->storeUserMenu($user_menu, $user, $menu);
 
-                foreach($request->submenu as $data_submenu){
+                if($request->submenu > 0){
 
-                    $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+                    foreach($request->submenu as $data_submenu){
 
-                    if($menu->menu_id === $submenu->menu_id){
+                        $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
 
-                        $user_submenu = new UserSubMenu;
-                        $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+                        if($menu->menu_id === $submenu->menu_id){
+
+                            $user_submenu = new UserSubMenu;
+                            $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                        }
 
                     }
 
                 }
 
             }
-
+            
         }
 
         $this->event->fire('user.update', $user);

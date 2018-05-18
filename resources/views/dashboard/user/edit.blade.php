@@ -28,15 +28,15 @@
               @csrf    
 
               {!! FormHelper::textbox_inline(
-                  'firstname', 'text', 'Firstname', 'Firstname', old('firstname') ? old('firstname') : $user->firstname, $errors->has('firstname'), $errors->first('firstname'), ''
+                  'firstname', 'text', 'Firstname', 'Firstname', old('firstname') ? old('firstname') : $user->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'middlename', 'text', 'Middlename', 'Middlename', old('middlename') ? old('middlename') : $user->middlename, $errors->has('middlename'), $errors->first('middlename'), ''
+                  'middlename', 'text', 'Middlename', 'Middlename', old('middlename') ? old('middlename') : $user->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
-                  'lastname', 'text', 'Lastname', 'Lastname', old('lastname') ? old('lastname') : $user->lastname, $errors->has('lastname'), $errors->first('lastname'), ''
+                  'lastname', 'text', 'Lastname', 'Lastname', old('lastname') ? old('lastname') : $user->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox_inline(
