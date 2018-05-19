@@ -32,6 +32,7 @@ class Department extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'department_id' => '',
         'name' => '',
         'created_at' => null, 
         'updated_at' => null,

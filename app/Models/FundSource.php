@@ -32,6 +32,7 @@ class FundSource extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'fund_source_id' => '',
         'description' => '',
         'created_at' => null, 
         'updated_at' => null,
@@ -41,6 +42,16 @@ class FundSource extends Model{
         'user_updated' => '',
 
     ];
+
+
+
+    // RELATIONSHIPS
+
+    public function disbursementVoucher() {
+      
+      return $this->belongsTo('App\Models\DisbursementVoucher','fund_source_id','fund_source_id');
+
+    }
 
 
 

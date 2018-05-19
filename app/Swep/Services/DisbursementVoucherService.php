@@ -87,8 +87,8 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_voucher->doc_no = 'DV' . rand(10000000, 99999999);
         $disbursement_voucher->date = $this->carbon->format('Y-m-d');
         $disbursement_voucher->project_id = $request->project_id;
-        $disbursement_voucher->fund_source = $request->fund_source;
-        $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
+        $disbursement_voucher->fund_source_id = $request->fund_source_id;
+        $disbursement_voucher->mode_of_payment_id = $request->mode_of_payment_id;
         $disbursement_voucher->payee = $request->payee;
         $disbursement_voucher->address =  $request->address;
         $disbursement_voucher->tin = $request->tin;
@@ -124,8 +124,8 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = $this->dvBySlug($slug);
         $disbursement_voucher->project_id = $request->project_id;
-        $disbursement_voucher->fund_source = $request->fund_source;
-        $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
+        $disbursement_voucher->fund_source_id = $request->fund_source_id;
+        $disbursement_voucher->mode_of_payment_id = $request->mode_of_payment_id;
         $disbursement_voucher->payee = $request->payee;
         $disbursement_voucher->address =  $request->address;
         $disbursement_voucher->tin = $request->tin;

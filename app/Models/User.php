@@ -34,9 +34,6 @@ class User extends Authenticatable{
         'is_online', 
         'is_active',
         'color',
-        'last_login_time',
-        'last_login_machine',
-        'last_login_ip',
 
     ];
 
@@ -84,7 +81,7 @@ class User extends Authenticatable{
 
 
 
-    /** RELATIONSHIPS **/   
+    // RELATIONSHIPS 
 
     public function disbursementVoucher() {
       
@@ -95,13 +92,11 @@ class User extends Authenticatable{
 
 
 
-
     public function userMenu() {
 
         return $this->hasMany('App\Models\UserMenu','user_id','user_id');
 
     }
-
 
 
 
@@ -225,24 +220,6 @@ class User extends Authenticatable{
     }
 
 
-
-
-
-    /** UTILS **/
-
-    public function getBoolean($value){
-
-        if($value == 'true'){
-
-            return true;
-
-        }elseif($value == 'false'){
-
-            return false;
-
-        }
-        
-    }
 
 
 

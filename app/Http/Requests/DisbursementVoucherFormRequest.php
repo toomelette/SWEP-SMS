@@ -22,8 +22,8 @@ class DisbursementVoucherFormRequest extends FormRequest{
         return [
 
             'project_id'=>'required|string|min:5|max:5',
-            'fund_source'=>'required|string|min:6|max:6',
-            'mode_of_payment'=>'nullable|string|min:7|max:7',
+            'fund_source_id'=>'required|string|min:6|max:6',
+            'mode_of_payment_id'=>'nullable|string|min:7|max:7',
             'payee'=>'required|string|max:90',
             'tin'=>'required|string|max:45',
             'bur_no'=>'nullable|string|max:45',
@@ -51,14 +51,14 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'project_id.min'  => 'The Station field may not be lesser than 5 characters.',
             'project_id.max'  => 'The Station field may not be greater than 5 characters.',
 
-            'fund_source.required'  => 'Fund Source field is required.',
-            'fund_source.string'  => 'Invalid Input! You must enter a string value.',
-            'fund_source.min'  => 'The Fund Source field may not be lesser than 6 characters.',
-            'fund_source.max'  => 'The Fund Source field may not be greater than 6 characters.',
+            'fund_source_id.required'  => 'Fund Source field is required.',
+            'fund_source_id.string'  => 'Invalid Input! You must enter a string value.',
+            'fund_source_id.min'  => 'The Fund Source field may not be lesser than 6 characters.',
+            'fund_source_id.max'  => 'The Fund Source field may not be greater than 6 characters.',
 
-            'mode_of_payment.string'  => 'Invalid Input! You must enter a string value.',
-            'mode_of_payment.min'  => 'The Mode Of Payment field may not be lesser than 7 characters.',
-            'mode_of_payment.max'  => 'The Mode Of Payment field may not be greater than 7 characters.',
+            'mode_of_payment_id.string'  => 'Invalid Input! You must enter a string value.',
+            'mode_of_payment_id.min'  => 'The Mode Of Payment field may not be lesser than 7 characters.',
+            'mode_of_payment_id.max'  => 'The Mode Of Payment field may not be greater than 7 characters.',
 
             'payee.required'  => 'Payee field is required.',
             'payee.string'  => 'Invalid Input! You must enter a string value.',

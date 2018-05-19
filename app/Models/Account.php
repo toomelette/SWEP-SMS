@@ -40,6 +40,7 @@ class Account extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'account_id' => '',
         'department_id' => '',
         'department_name' => '',
         'account_code' => '',
@@ -120,6 +121,7 @@ class Account extends Model{
         return $id;
         
     }
+
 
 
 

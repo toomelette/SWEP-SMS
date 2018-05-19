@@ -23,14 +23,11 @@ class DisbursementVoucher extends Model{
 
 
 	protected $fillable = [
-		
-        'user_id', 
-        'doc_no', 
+		 
         'dv_no', 
-        'date', 
         'project_id', 
-        'fund_source', 
-        'mode_of_payment', 
+        'fund_source_id', 
+        'mode_of_payment_id', 
         'payee', 
         'address', 
         'tin',
@@ -40,15 +37,7 @@ class DisbursementVoucher extends Model{
         'account_code',
         'explanation', 
         'amount',
-        'certified_by',
-        'certified_by_position',
-        'certified_by_sig_date',
-        'approved_by',
-        'approved_by_position',
-        'approved_by_sig_date',
-        'processed_at',
-        'checked_at',
-
+        
     ];
 
 
@@ -61,8 +50,8 @@ class DisbursementVoucher extends Model{
         'dv_no' => '', 
         'date' => null, 
         'project_id' => '', 
-        'fund_source' => '', 
-        'mode_of_payment' => '', 
+        'fund_source_id' => '', 
+        'mode_of_payment_id' => '', 
         'payee' => '', 
         'address' => '', 
         'tin' => '',
@@ -103,12 +92,12 @@ class DisbursementVoucher extends Model{
 
 
     public function fundSource(){
-        return $this->hasOne('App\Models\FundSource', 'fund_source_id', 'fund_source');
+        return $this->hasOne('App\Models\FundSource', 'fund_source_id', 'fund_source_id');
     }
 
 
     public function modeOfPayment(){
-        return $this->hasOne('App\Models\ModeOfPayment', 'mode_of_payment_id', 'mode_of_payment');
+        return $this->hasOne('App\Models\ModeOfPayment', 'mode_of_payment_id', 'mode_of_payment_id');
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Route;
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -83,13 +84,17 @@ class UserMenu extends Model{
 
 
 
-
+    /** GETTERS **/
 
     public function getCountUserMenu() {
 
-      return count($this->where('route', Route::currentRouteName())
-                            ->where('user_id', Auth::user()->user_id)
-                            ->first());
+        $userMenu = Cache::remember('nav:user_menus:byUserId:' . Auth::user()->user_id .':byRoute:'. Route::currentRouteName(), 240, function(){
+            return $this->where('route', Route::currentRouteName())
+                        ->where('user_id', Auth::user()->user_id)
+                        ->first();
+        });
+
+        return count($userMenu);
 
     }
 

@@ -33,6 +33,7 @@ class Signatory extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'signatory_id' => '',
         'employee_name' => '', 
         'employee_position' => '', 
         'type' => '',

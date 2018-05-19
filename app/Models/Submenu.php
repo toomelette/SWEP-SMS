@@ -23,9 +23,9 @@ class Submenu extends Model{
 
     protected $fillable = [
         
-        'is_nav',
         'name',
         'route',
+        'is_nav',
 
     ];
 
@@ -35,10 +35,11 @@ class Submenu extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'submenu_id' => '',
+        'menu_id' => '',
         'is_nav' => false,
         'name' => '',
         'route' => '',
-
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -51,7 +52,7 @@ class Submenu extends Model{
 
 
 
-
+    // RELATIONSHIPS
     public function menu() {
 
     	return $this->belongsTo('App\Models\Menu','menu_id','menu_id');

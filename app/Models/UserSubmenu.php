@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Route;
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 
 class UserSubmenu extends Model{
@@ -36,9 +37,13 @@ class UserSubmenu extends Model{
 
    	public function getCountUserSubmenu() {
 
-      return count($this->where('route', Route::currentRouteName())
-                            ->where('user_id', Auth::user()->user_id)
-                            ->first());
+      $userSubMenu = Cache::remember('nav:user_submenus:byUserId:' . Auth::user()->user_id .':byRoute:'. Route::currentRouteName(), 240, function(){
+            return $this->where('route', Route::currentRouteName())
+                        ->where('user_id', Auth::user()->user_id)
+                        ->first();
+        });
+
+      return count($userSubMenu);
 
     }
 

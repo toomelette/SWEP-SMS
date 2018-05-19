@@ -28,11 +28,11 @@
         ) !!}
 
         {!! FormHelper::select_dynamic(
-          '4', 'fund_source', 'Fund Source *', old('fund_source'), $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source'), $errors->first('fund_source'), '', ''
+          '4', 'fund_source_id', 'Fund Source *', old('fund_source_id'), $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
         ) !!}
 
         {!! FormHelper::select_dynamic(
-          '4', 'mode_of_payment', 'Mode Of Payment', old('mode_of_payment'), $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
+          '4', 'mode_of_payment_id', 'Mode Of Payment', old('mode_of_payment_id'), $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment_id'), $errors->first('mode_of_payment_id'), '', ''
         ) !!}
 
 

@@ -20,7 +20,6 @@ class Menu extends Model{
 
     protected $fillable = [
 		
-        'menu_id',
         'name',
         'route',
         'icon',
@@ -41,7 +40,6 @@ class Menu extends Model{
         'icon' => '',
         'is_menu' => false,
         'is_dropdown' => false,
-
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -53,6 +51,7 @@ class Menu extends Model{
 
 
 
+    // RELATIONSHIPS
 
     public function user() {
 

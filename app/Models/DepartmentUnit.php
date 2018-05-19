@@ -35,6 +35,7 @@ class DepartmentUnit extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'department_unit_id' => '',
         'department_id' => '',
         'department_name' => '',
         'name' => '',
