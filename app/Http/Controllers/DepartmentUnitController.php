@@ -52,16 +52,6 @@ class DepartmentUnitController extends Controller{
     
 
 
-
-    public function show($slug){
-
-
-        
-    }
-
-    
-
-
     public function edit($slug){
 
         return $this->department_unit->edit($slug);

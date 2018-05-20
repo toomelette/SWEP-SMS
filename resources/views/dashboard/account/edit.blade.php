@@ -25,7 +25,7 @@
         <div class="box-body">
           
           <input name="_method" value="PUT" type="hidden">
-          
+      
           @csrf    
 
           {!! FormHelper::select_dynamic(

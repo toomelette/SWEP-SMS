@@ -52,15 +52,6 @@ class AccountController extends Controller{
 
 
 
-    public function show($id){
-
-
-        
-    }
-
-
-
-
     public function edit($slug){
 
     	return $this->account->edit($slug);

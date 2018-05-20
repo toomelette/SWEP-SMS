@@ -44,7 +44,6 @@ class DepartmentUnitService extends BaseService{
         });
 
         $request->flash();
-        
         return view('dashboard.department_unit.index')->with('department_units', $department_units);
 
     }

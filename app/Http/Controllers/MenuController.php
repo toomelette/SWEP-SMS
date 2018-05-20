@@ -44,18 +44,7 @@ class MenuController extends Controller{
         return $this->menu->store($request);
 
     }
-
-   
-
-
-
-    public function show($slug){
-        
-
-
-    }
-
-    
+ 
 
 
 

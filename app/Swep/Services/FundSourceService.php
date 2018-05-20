@@ -44,7 +44,6 @@ class FundSourceService extends BaseService{
         });
 
         $request->flash();
-        
         return view('dashboard.fund_source.index')->with('fund_sources', $fund_sources);
 
     }

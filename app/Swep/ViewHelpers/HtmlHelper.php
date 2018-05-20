@@ -142,6 +142,7 @@ class HtmlHelper{
 
 
 
+
     public static function filter_open(){
 
        return '<div class="box '. self::collapsed_filter() .'">
@@ -171,7 +172,7 @@ class HtmlHelper{
 
     	foreach($route as $data){
 	    	if(self::previous_route() == $data){
-	        	return '<a href="#" onclick="window.history.back()" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>';
+	        	return '<a href="'. route($data) .'" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>';
 	    	}
     	}
 

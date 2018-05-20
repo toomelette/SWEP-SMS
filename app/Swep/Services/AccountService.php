@@ -43,7 +43,6 @@ class AccountService extends BaseService{
         });
 
         $request->flash();
-        
         return view('dashboard.account.index')->with('accounts', $accounts);
 
     }
@@ -113,7 +112,7 @@ class AccountService extends BaseService{
         $account->ip_updated = request()->ip();
         $account->user_updated = $this->auth->user()->username;
         $account->save();
-        
+
         $this->event->fire('account.update', $account);
         return redirect()->route('dashboard.account.index');
 
@@ -128,7 +127,7 @@ class AccountService extends BaseService{
 
         $account = $this->accountsBySlug($slug);
         $account->delete();
-
+        
         $this->event->fire('account.destroy', $account);
         return redirect()->route('dashboard.account.index');
 

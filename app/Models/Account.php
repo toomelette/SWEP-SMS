@@ -14,7 +14,7 @@ class Account extends Model{
 
     protected $dates = ['date_started', 'projected_date_end', 'created_at', 'updated_at'];
 
-    public $sortable = ['department_name', 'account_code', 'description', 'project_in_charge'];
+    public $sortable = ['account_code', 'department_name', 'description', 'project_in_charge'];
 
 	public $timestamps = false;
 
@@ -38,7 +38,7 @@ class Account extends Model{
 
 
     protected $attributes = [
-
+        
         'slug' => '',
         'account_id' => '',
         'department_id' => '',

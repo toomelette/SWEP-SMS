@@ -64,6 +64,9 @@
 
           {!! HtmlHelper::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'You will be logout from the system after you save changes.') !!}   
 
+
+          {{-- USERNAME SETTINGS --}}
+
           <div class="panel box box-default">
             <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#username_bar">
               <h4 class="box-title">
@@ -95,6 +98,8 @@
             </div>
           </div>
 
+
+          {{-- PASSWORD SETTINGS --}}
 
           <div class="panel box box-default">
             <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#password_bar">
@@ -140,6 +145,8 @@
           </div>
 
 
+          {{-- COLOR SETTINGS --}}
+
           <div class="panel box box-default">
             <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#color_scheme_bar">
               <h4 class="box-title">
@@ -182,9 +189,9 @@
             </div>
           </div>
 
+
           {{-- Activity --}}
           <hr>
-
           <h4>Activity</h4>
           <hr>
 

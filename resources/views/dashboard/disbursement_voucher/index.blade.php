@@ -103,15 +103,10 @@
                   </td>
                   <td> 
                     <select id="action" class="form-control input-sm">
-
                       <option value="">Select</option>
-
                       <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
-
                       <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>
-
                       <option data-type="0" data-action="delete" data-url="{{ route('dashboard.disbursement_voucher.destroy', $data->slug) }}">Delete</option>
-
                     </select>
                   </td>
                 </tr>
@@ -243,7 +238,6 @@
         $("#dv_set_no_form").attr("action", $(this).data("url"));
         $("#dv_set_no_form").submit();
     });
-
 
     {{-- Date Picker --}}
     {!! JSHelper::datepicker_caller('df', 'mm/dd/yy', 'bottom') !!}

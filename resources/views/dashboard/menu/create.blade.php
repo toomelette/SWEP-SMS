@@ -193,7 +193,6 @@
 
   <script type="text/javascript">
 
-
     @if(Session::has('MENU_CREATE_SUCCESS'))
       $('#menu_create').modal('show');
     @endif

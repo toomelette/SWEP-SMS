@@ -91,7 +91,9 @@
                     <select id="action" class="form-control input-sm">
                       <option value="">Select</option>
                       <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
-                      <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>
+                      @if(Carbon::parse($data->date)->diffInDays(Carbon::now()->format('Y-m-d')) < 15)
+                        <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>
+                      @endif
                     </select>
                   </td>
                 </tr>

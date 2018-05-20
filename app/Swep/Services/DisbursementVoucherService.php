@@ -32,7 +32,6 @@ class DisbursementVoucherService extends BaseService{
 
 
 
-
     public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -292,7 +291,7 @@ class DisbursementVoucherService extends BaseService{
         }
 
         if($request->fs != null){
-           $disbursement_voucher->whereFundSource($request->fs); 
+           $disbursement_voucher->whereFundSourceId($request->fs); 
         }
         
         if($request->pi != null){
