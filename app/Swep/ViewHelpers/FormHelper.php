@@ -29,7 +29,7 @@ class FormHelper{
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
                 <input class="form-control priceformat" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
-                '. self::error_message($error_has, $error_first) .'
+                  '. self::error_message($error_has, $error_first) .'
               </div>';
 
     }
@@ -80,15 +80,14 @@ class FormHelper{
 
     public static function datepicker($class, $key, $label, $old_value, $error_has, $error_first){
 
-       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'" style="overflow:hidden;">
                 <label for="'. $key .'">'. $label .'</label>
-                <div class="input-group date">
+                <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input id="'. $key .'" name="'. $key .'"  value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control">
+                  <input id="'. $key .'" name="'. $key .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control">
                 </div>
-
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
