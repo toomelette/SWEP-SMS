@@ -53,11 +53,11 @@ class UserService extends BaseService{
             }
             
             if($request->ol != null){
-                $user->filterIsOnline($request->ol);
+                $user->filterIsOnline($this->dataTypeHelper->string_to_boolean($request->ol));
             }
 
             if($request->a != null){
-                 $user->filterIsActive($request->a);
+                 $user->filterIsActive($this->dataTypeHelper->string_to_boolean($request->a));
             }
 
             return $user->populate();

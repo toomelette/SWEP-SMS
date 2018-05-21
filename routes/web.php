@@ -61,6 +61,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** FUND SOURCE **/
 	Route::resource('fund_source', 'FundSourceController');
+
+	/** LEAVE APPLICATION **/
+	Route::resource('leave_application', 'LeaveApplicationController');
 	
 });
 

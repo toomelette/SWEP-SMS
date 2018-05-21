@@ -76,7 +76,7 @@ class Submenu extends Model{
 
         return $query->where(function ($query) use ($key) {
                 $query->where('name', 'LIKE', '%'. $key .'%')
-                      ->where('route', 'LIKE', '%'. $key .'%');
+                      ->orwhere('route', 'LIKE', '%'. $key .'%');
         });
 
     }

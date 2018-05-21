@@ -11,15 +11,17 @@
 
 <script type="text/javascript" src="{{ asset('template/bower_components/ckeditor/ckeditor.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('template/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('template/plugins/pjax/jquery.pjax.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('template/plugins/toast/jquery.toast.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('template/plugins/price-format/jquery.priceformat.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/iCheck/icheck.min.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('template/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 

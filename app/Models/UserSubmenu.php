@@ -38,12 +38,11 @@ class UserSubmenu extends Model{
    	public function getCountUserSubmenu() {
 
       $userSubMenu = Cache::remember('nav:user_submenus:byUserId:' . Auth::user()->user_id .':byRoute:'. Route::currentRouteName(), 240, function(){
-            return $this->where('route', Route::currentRouteName())
-                        ->where('user_id', Auth::user()->user_id)
-                        ->first();
+            $num = $this->where('route', Route::currentRouteName())->where('user_id', Auth::user()->user_id)->first();
+            return count($num);
         });
 
-      return count($userSubMenu);
+      return $userSubMenu;
 
     }
 

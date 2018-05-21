@@ -15,8 +15,10 @@
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/toast/jquery.toast.min.css')}}">
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/iCheck/all.css')}}">
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/font.css') }}">
+<link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+<link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
 
 

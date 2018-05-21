@@ -185,7 +185,7 @@ class User extends Authenticatable{
 
     public function scopeFilterIsOnline($query, $value){
 
-        return $query->where('is_online', $this->getBoolean($value));
+        return $query->where('is_online', $value);
 
     }
 
@@ -195,7 +195,7 @@ class User extends Authenticatable{
 
     public function scopeFilterIsActive($query, $value){
 
-        return $query->where('is_active', $this->getBoolean($value));
+        return $query->where('is_active', $value);
 
     }
 
@@ -205,7 +205,7 @@ class User extends Authenticatable{
 
     public function scopeFindSlug($query, $slug){
 
-        return $query->where('slug', $slug)->with('userMenu')->firstOrFail();
+        return $query->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->firstOrFail();
 
     }
     
