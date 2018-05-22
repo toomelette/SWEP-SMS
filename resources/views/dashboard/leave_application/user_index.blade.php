@@ -10,7 +10,7 @@
         
 
         {{-- Form Start --}}
-        <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.leave_application.index') }}">
+        <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.leave_application.user_index') }}">
 
 
         {{-- Advance Filters --}}
@@ -48,7 +48,7 @@
 
           {{-- Table Search --}}        
           <div class="box-header with-border">
-            {!! HtmlHelper::table_search(route('dashboard.leave_application.index')) !!}
+            {!! HtmlHelper::table_search(route('dashboard.leave_application.user_index')) !!}
           </div>
 
         {{-- Form End --}}  
@@ -85,7 +85,6 @@
                       <option value="">Select</option>
                       <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Details</option>
                       <option data-type="1" data-url="{{ route('dashboard.leave_application.edit', $data->slug) }}">Edit</option>
-                      <option data-type="0" data-action="delete" data-url="{{ route('dashboard.leave_application.destroy', $data->slug) }}">Delete</option>
                     </select>
                   </td>
                 </tr>
@@ -121,31 +120,13 @@
 
 
 
-@section('modals')
-
-  {!! HtmlHelper::modal_delete('la_delete') !!}
-
-@endsection 
-
-
-
 
 @section('scripts')
 
   <script type="text/javascript">
 
-    {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('la_delete') !!}
-
-
     {{-- FORM VARIABLES RULE --}}
     {!! JSHelper::table_action_rule() !!}
-
-
-    {{-- DV DELETE TOAST --}}
-    @if(Session::has('LA_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('LA_DELETE_SUCCESS')) !!}
-    @endif
 
 
     {{-- Date Picker --}}

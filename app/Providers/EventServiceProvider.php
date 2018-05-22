@@ -39,6 +39,7 @@ class EventServiceProvider extends ServiceProvider{
         'App\Swep\Subscribers\AccountSubscriber',
         'App\Swep\Subscribers\FundSourceSubscriber',
         'App\Swep\Subscribers\SubmenuSubscriber',
+        'App\Swep\Subscribers\LeaveApplicationSubscriber',
 
     ];
 

@@ -110,6 +110,14 @@ class User extends Authenticatable{
 
 
 
+    public function leaveApplication() {
+      
+      return $this->belongsTo('App\Models\LeaveApplication','user_id','user_id');
+
+    }
+
+
+
 
     /** GETTERS **/
     

@@ -3,22 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Swep\Services\LeaveApplicationService;
+use App\Http\Requests\LeaveApplicationFormRequest;
 
 
 class LeaveApplicationController extends Controller{
 
     
 
+    protected $leave_application;
 
 
-    public function index(){
 
-        
+    public function __construct(LeaveApplicationService $leave_application){
+
+        $this->leave_application = $leave_application;
+
+    }
+
+
+
+    public function index(Request $request){
+
+        return $this->leave_application->fetchAll($request);
     
     }
 
     
+
+
+    public function userIndex(Request $request){
+
+        return $this->leave_application->fetchByUser($request);
+    
+    }
+
 
 
 
@@ -32,9 +51,9 @@ class LeaveApplicationController extends Controller{
 
 
 
-    public function store(Request $request){
+    public function store(LeaveApplicationFormRequest $request){
 
-
+        return $this->leave_application->store($request);
         
     }
 
@@ -44,7 +63,7 @@ class LeaveApplicationController extends Controller{
 
     public function show($slug){
 
-
+        return $this->leave_application->show($slug);
         
     }
 
@@ -54,7 +73,7 @@ class LeaveApplicationController extends Controller{
     
     public function edit($slug){
 
-
+        return $this->leave_application->edit($slug);
         
     }
 
@@ -62,10 +81,9 @@ class LeaveApplicationController extends Controller{
 
 
     
-    public function update(Request $request, $slug){
+    public function update(LeaveApplicationFormRequest $request, $slug){
 
-
-
+        return $this->leave_application->update($request, $slug);
         
     }
 
@@ -75,7 +93,7 @@ class LeaveApplicationController extends Controller{
 
     public function destroy($slug){
         
-
+        return $this->leave_application->destroy($slug);
 
     }
 
