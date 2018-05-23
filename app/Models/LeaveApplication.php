@@ -33,6 +33,7 @@ class LeaveApplication extends Model{
         
         'slug' => '',
         'leave_application_id' => '',
+        'doc_no' => '',
         'agency' => 'Sugar Regulatory Administration',
         'lastname' => '',
         'firstname' => '',

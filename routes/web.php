@@ -64,7 +64,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** LEAVE APPLICATION **/
 	Route::get('/leave_application/user_index', 'LeaveApplicationController@userIndex')->name('leave_application.user_index');
-	Route::get('/leave_application/print/{slug}', 'LeaveApplicationController@print')->name('leave_application.print');
+	Route::get('/leave_application/print/{slug}/{type}', 'LeaveApplicationController@print')->name('leave_application.print');
 	Route::resource('leave_application', 'LeaveApplicationController');
 	
 });

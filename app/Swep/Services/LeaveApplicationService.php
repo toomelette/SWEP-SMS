@@ -79,6 +79,7 @@ class LeaveApplicationService extends BaseService{
         $leave_application->slug = $this->str->random(32);
         $leave_application->user_id = $this->auth->user()->user_id;
         $leave_application->leave_application_id = $this->leave_application->leaveApplicationIdInc;
+        $leave_application->doc_no = 'LA' . rand(10000000, 99999999);
         $leave_application->lastname = $request->lastname;
         $leave_application->firstname = $request->firstname;
         $leave_application->middlename = $request->middlename;
@@ -189,6 +190,21 @@ class LeaveApplicationService extends BaseService{
 
     }
 
+
+
+
+    public function print($slug, $type){
+
+       $leave_application = $this->leaveApplicationBySlug($slug);
+
+        if($type == 'front'){
+            return view('printables.leave_application')->with('leave_application', $leave_application);
+        }elseif($type == 'back'){
+            return view('printables.leave_application_back');
+        }
+        return abort(404);
+
+    }
 
 
 

@@ -100,4 +100,14 @@ class LeaveApplicationController extends Controller{
 
 
 
+
+    public function print($slug, $type){
+        
+        return $this->leave_application->print($slug, $type);
+
+    }
+
+
+
+
 }
