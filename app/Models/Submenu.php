@@ -20,38 +20,6 @@ class Submenu extends Model{
 
 
 
-
-    protected $fillable = [
-        
-        'name',
-        'route',
-        'is_nav',
-
-    ];
-
-
-
-
-    protected $attributes = [
-
-        'slug' => '',
-        'submenu_id' => '',
-        'menu_id' => '',
-        'is_nav' => false,
-        'name' => '',
-        'route' => '',
-        'created_at' => null,
-        'updated_at' => null,
-        'ip_created' => '',
-        'ip_updated' => '',
-        'user_created' => '',
-        'user_updated' => '',
-
-    ];
-
-
-
-
     // RELATIONSHIPS
     public function menu() {
 

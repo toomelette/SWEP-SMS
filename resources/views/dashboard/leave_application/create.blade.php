@@ -116,7 +116,7 @@
               <div class="col-md-9" id="spent_sick_inHospital_div">
                   
                 {!! FormHelper::textbox(
-                   '12', 'spent_sick_inhospital_specific', 'text', 'If (In Hospital) specify', 'Specify', old('spent_sick_inhospital_specific'), $errors->has('spent_sick_inhospital_specific'), $errors->first('spent_sick_inhospital_specific'), ''
+                   '12', 'spent_sick_inhospital_specific', 'text', 'If (In Hospital) specify *', 'Specify', old('spent_sick_inhospital_specific'), $errors->has('spent_sick_inhospital_specific'), $errors->first('spent_sick_inhospital_specific'), ''
                 ) !!}
 
               </div>
@@ -124,7 +124,7 @@
               <div class="col-md-9" id="spent_sick_outPatient_div">
                   
                 {!! FormHelper::textbox(
-                   '12', 'spent_sick_outpatient_specific', 'text', 'If (Out Patient) specify', 'Specify', old('spent_sick_outpatient_specific'), $errors->has('spent_sick_outpatient_specific'), $errors->first('spent_sick_outpatient_specific'), ''
+                   '12', 'spent_sick_outpatient_specific', 'text', 'If (Out Patient) specify *', 'Specify', old('spent_sick_outpatient_specific'), $errors->has('spent_sick_outpatient_specific'), $errors->first('spent_sick_outpatient_specific'), ''
                 ) !!}
 
               </div>
@@ -157,7 +157,7 @@
               
             <h4>COMMUTATION:</h4>  
 
-            {!! FormHelper::select_static('3', 'commutation', 'Commutation', old('commutation'), [
+            {!! FormHelper::select_static('3', 'commutation', 'Commutation *', old('commutation'), [
               'Requested' => 'true',
               'Not Requested' => 'false',
             ], $errors->has('commutation'), $errors->first('commutation'), '', '') !!}
@@ -222,16 +222,16 @@
 
 
     $(document).on("change", "#type", function () {
+      $('#type_vacation').val('');
+      $('#type_vacation_others_specific').val('');
+      $('#type_others_specific').val('');
       var val = $(this).val();
         if(val == "T1001"){ 
           $('#type_vacation_div').show();
           $('#type_others_div').hide();
-          $('#type_vacation').val('');
-          $('#type_vacation_others_specific').val('');
         }else if(val == "T1004"){
           $('#type_others_div').show();
           $('#type_vacation_div').hide();
-          $('#type_others_specific').val('');
         }else{
           $('#type_vacation_div').hide();
           $('#type_others_div').hide();
@@ -252,14 +252,14 @@
 
 
   $(document).on("change", "#spent_sick", function () {
+    $('#spent_sick_inhospital_specific').val('');
+    $('#spent_sick_outpatient_specific').val('');
     var val = $(this).val();
       if(val == "SS1001"){ 
         $('#spent_sick_inHospital_div').show();
-        $('#spent_sick_inhospital_specific').val('');
         $('#spent_sick_outPatient_div').hide();
       }else if(val == "SS1002"){
         $('#spent_sick_outPatient_div').show();
-        $('#spent_sick_outpatient_specific').val('');
         $('#spent_sick_inHospital_div').hide();
       }else{
         $('#spent_sick_outPatient_div').hide();

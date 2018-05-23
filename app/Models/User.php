@@ -22,24 +22,6 @@ class User extends Authenticatable{
 
 
 
-    protected $fillable = [
-
-        'email', 
-        'username', 
-        'password', 
-        'lastname', 
-        'middlename', 
-        'firstname', 
-        'position', 
-        'is_online', 
-        'is_active',
-        'color',
-
-    ];
-
-
-
-
 
     protected $hidden = [
 

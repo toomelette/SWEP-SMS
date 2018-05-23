@@ -20,16 +20,6 @@ class Signatory extends Model{
 
 
 
-	protected $fillable = [
-
-        'employee_name', 
-        'employee_position', 
-        'type',
-
-    ];
-
-
-
     protected $attributes = [
 
         'slug' => '',

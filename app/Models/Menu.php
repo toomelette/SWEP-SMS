@@ -18,19 +18,6 @@ class Menu extends Model{
 
 
 
-    protected $fillable = [
-		
-        'name',
-        'route',
-        'icon',
-        'is_menu',
-        'is_dropdown',
-
-    ];
-
-
-
-
     protected $attributes = [
 
         'slug' => '',

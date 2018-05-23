@@ -39,7 +39,7 @@ class UserSubscriber extends BaseSubscriber{
 
 	public function onStore($request){
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
         
 	}
@@ -50,8 +50,8 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onUpdate($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
@@ -67,8 +67,8 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onDestroy($user){
         
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
@@ -83,8 +83,8 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onActivate($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
@@ -98,8 +98,8 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onDeactivate($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
@@ -113,8 +113,8 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onLogout($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
@@ -128,8 +128,8 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onResetPasswordPost($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');

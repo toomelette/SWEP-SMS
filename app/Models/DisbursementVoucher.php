@@ -21,27 +21,6 @@ class DisbursementVoucher extends Model{
 	public $timestamps = false;
 
 
-
-	protected $fillable = [
-		 
-        'dv_no', 
-        'project_id', 
-        'fund_source_id', 
-        'mode_of_payment_id', 
-        'payee', 
-        'address', 
-        'tin',
-        'bur_no', 
-        'department_name', 
-        'department_unit_name',
-        'account_code',
-        'explanation', 
-        'amount',
-        
-    ];
-
-
-
     protected $attributes = [
 
         'slug' => '',
@@ -142,6 +121,28 @@ class DisbursementVoucher extends Model{
 
         return $query->where('user_id', $id)->sortable()->orderBy('updated_at', 'desc')->paginate(10);
 
+    }
+
+
+
+
+    // GETTERS
+    public function getDvIdIncAttribute(){
+
+        $id = 'DV1000001';
+
+        $dv = $this->select('dv_id')->orderBy('dv_id', 'desc')->first();
+
+        if($dv != null){
+
+            $num = str_replace('DV', '', $dv->dv_id) + 1;
+            
+            $id = 'DV' . $num;
+        
+        }
+        
+        return $id;
+        
     }
 
 

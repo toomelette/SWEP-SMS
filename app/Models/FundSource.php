@@ -20,15 +20,6 @@ class FundSource extends Model{
 
 
 
-	protected $fillable = [
-
-        'description',
-
-    ];
-
-
-
-
     protected $attributes = [
 
         'slug' => '',

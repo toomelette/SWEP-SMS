@@ -20,18 +20,6 @@ class DepartmentUnit extends Model{
 
 
 
-	protected $fillable = [
-
-        'department_id',
-        'department_name',
-        'name',
-        'description',
-
-    ];
-
-
-
-
     protected $attributes = [
 
         'slug' => '',

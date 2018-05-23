@@ -36,7 +36,7 @@ class DisbursementVoucherService extends BaseService{
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_voucher:all:'. $key, 240, function() use ($request){
+        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:all:'. $key, 240, function() use ($request){
 
             $disbursement_voucher = $this->fetchRequest($request);
 
@@ -59,7 +59,7 @@ class DisbursementVoucherService extends BaseService{
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_voucher:byUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
+        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:byUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
 
             $disbursement_voucher = $this->fetchRequest($request);
 
@@ -82,6 +82,7 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = new DisbursementVoucher;
         $disbursement_voucher->slug = $this->str->random(32);
+        $disbursement_voucher->dv_id = $this->disbursement_voucher->dvIdInc;
         $disbursement_voucher->user_id = $this->auth->user()->user_id;
         $disbursement_voucher->doc_no = 'DV' . rand(10000000, 99999999);
         $disbursement_voucher->date = $this->carbon->format('Y-m-d');
@@ -251,7 +252,7 @@ class DisbursementVoucherService extends BaseService{
     
     public function dvBySlug($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_voucher:bySlug:' . $slug, 240, function() use ($slug){
+        $disbursement_voucher = $this->cache->remember('disbursement_vouchers:bySlug:' . $slug, 240, function() use ($slug){
             return $this->disbursement_voucher->findSlug($slug);
         });
         

@@ -138,7 +138,7 @@
 
 
       {{-- TYPE OF LEAVE --}}
-      <div class="row" style="padding-bottom:5px;">
+      <div class="row" style="padding-bottom:10px;">
 
         <div class="col-sm-6"">
           <span style="font-size:14px;">6. a) TYPE OF LEAVE</span>
@@ -220,9 +220,9 @@
         </div>
 
         <div class="col-sm-5" style="word-wrap: break-word;">
-          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">Others (Specify)</span>
+          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">Others (Specify) &nbsp;&nbsp;</span>
           @if($leave_application->type_vacation == 'TV1002')
-            <span style="text-decoration: underline;">{{ $leave_application->type_vacation_others_specific }}</span>
+            <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->type_vacation_others_specific }}</span>
           @else
             _____________________ ____________________________________
           @endif
@@ -237,11 +237,11 @@
         </div>
 
         <div class="col-sm-5">
-          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">Abroad (Specify)</span>
+          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">Abroad (Specify) &nbsp;&nbsp;</span>
           @if($leave_application->spent_vacation == 'SV1002')
-            <span style="text-decoration: underline;">{{ $leave_application->spent_vacation_abroad_specific }}</span>
+            <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->spent_vacation_abroad_specific }}</span>
           @else
-            _____________________ ____________________________________
+            ___________________ ____________________________________
           @endif
         </div>
 
@@ -298,11 +298,11 @@
         </div>
 
         <div class="col-sm-5">
-          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">In Hospital (Specify)</span>
+          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">In Hospital (Specify) &nbsp;&nbsp;</span>
           @if($leave_application->spent_sick == 'SS1001')
-            <span style="text-decoration: underline;">{{ $leave_application->spent_sick_inhospital_specific }}</span>
+            <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->spent_sick_inhospital_specific }}</span>
           @else
-            ___________________ ____________________________________
+            ________________ ____________________________________
           @endif
         </div>
 
@@ -323,11 +323,11 @@
         </div>
 
         <div class="col-sm-5">
-          <span style="font-size:14px; margin-left:-30px;">Others (Specify)</span>
+          <span style="font-size:14px; margin-left:-30px;">Others (Specify) &nbsp;&nbsp;</span>
           @if($leave_application->type == 'T1004')
-            <span style="text-decoration: underline;">{{ $leave_application->type_others_specific }}</span>
+            <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->type_others_specific }}</span>
           @else
-            __________________________ ____________________________________
+            _________________________ ____________________________________
           @endif
         </div>
 
@@ -340,11 +340,11 @@
         </div>
 
         <div class="col-sm-5">
-          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">Out Patient (Specify)</span>
+          <span style="font-size:14px; margin-left:-30px; margin-left: 10px;">Out Patient (Specify) &nbsp;&nbsp;</span>
           @if($leave_application->spent_sick == 'SS1002')
-            <span style="text-decoration: underline;">{{ $leave_application->spent_sick_outpatient_specific }}</span>
+            <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->spent_sick_outpatient_specific }}</span>
           @else
-            _________________ ____________________________________
+            ________________ ____________________________________
           @endif
         </div>
 
@@ -368,14 +368,14 @@
 
 
       {{-- WORKING DAYS FOR --}}
-      <div class="row" style="padding-bottom: 10px;">
+      <div class="row">
 
         <div class="col-sm-6">
-          <div class="col-sm-12">
-            <div class="col-sm-3">
-              <span style="font-size:14px;">FOR</span>
+          <div class="row">
+            <div class="col-sm-2" style="padding:0;"">
+              <span style="font-size:14px; margin-left: 20px;">FOR &nbsp;&nbsp;</span>
             </div>
-            <div class="col-sm-9" style="border-bottom:solid 1.4px;">
+            <div class="col-sm-10" style="border-bottom:solid 1.4px;">
               <span style="font-weight: bold;">{{ $leave_application->working_days }}</span>
             </div>
           </div>
@@ -409,21 +409,20 @@
 
 
 
-      {{-- WORKING DAYS --}}
-      <div class="row">
+      {{-- WORKING DAYS2 --}}
+      <div class="row" style="padding-top: -80px;">
 
         <div class="col-sm-6">
-          <div class="col-sm-12">
-            <div class="col-sm-7">
-              <span style="font-size:14px;">INCLUSIVE DATES</span>
+          <div class="row">
+            <div class="col-sm-5" style="padding:0;">
+              <span style="font-size:14px; margin-left: 20px;">INCLUSIVE DATES</span>
             </div>
-            <div class="col-sm-5"></div>
-            <div class="col-sm-12" style="border-bottom: solid 1.4px;">
+            <div class="col-sm-7" style="border-bottom: solid 1.4px;">
               @if($mf == $mt)
                 @if($mdf == $mdt)
                   <span style="font-weight: bold;">{{ $mf .' '. $df .', '. $yf }}</span>
                 @else 
-                  <span style="font-weight: bold;">{{ $mf .' '. $df .' - '. $dt .' '. $yf }}</span>
+                  <span style="font-weight: bold;">{{ $mf .' '. $df .' - '. $dt .', '. $yf }}</span>
                 @endif
               @else
                 <span style="font-weight: bold;">{{ $f .' - '. $t }}</span>
@@ -555,7 +554,7 @@
 
 
       {{-- Line  --}}
-      <div class="row" style="padding-bottom:15px;">
+      <div class="row" style="padding-bottom:25px;">
 
         <div class="col-sm-6">_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </div>
 
@@ -674,7 +673,7 @@
 
 
       {{-- Signature --}}
-      <div class="row" style="padding-bottom:15px;">
+      <div class="row" style="padding-bottom:25px;">
 
         <div class="col-sm-4"></div>
 

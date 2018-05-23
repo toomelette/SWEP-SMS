@@ -82,10 +82,10 @@ class LoginController extends Controller{
             }else{
 
                 $user = $this->user->find($this->auth->user()->id);
-                $user->update($this->loginDefaults());
+                $this->loginDefaults($user);
 
-                $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-                $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+                $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+                $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
 
                 return redirect()->intended('dashboard/home');
 
@@ -107,14 +107,16 @@ class LoginController extends Controller{
         if($request->isMethod('post')){
 
             $user = $this->user->find($this->auth->user()->id);
-            $user->update(['is_online' => 0]);
-
+            
+            $user->is_online = 0;
+            $user->save();
+            
             $this->session->flush();
             $this->guard()->logout();
             $request->session()->invalidate();
 
-            $this->cacheHelper->deletePattern('swep_cache:user:all:*');
-            $this->cacheHelper->deletePattern('swep_cache:user:bySlug:'. $user->slug .'');
+            $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+            $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
 
             return redirect('/');
 
@@ -131,16 +133,13 @@ class LoginController extends Controller{
 
     // Defaults
 
-    public function loginDefaults(){
+    public function loginDefaults($user){
 
-        return [
-
-            'is_online' => 1,
-            'last_login_time' => $this->carbon->now(),
-            'last_login_machine' => gethostbyaddr($_SERVER['REMOTE_ADDR']),
-            'last_login_ip' => request()->ip()
-
-        ];
+        $user->is_online = 1;
+        $user->last_login_time = $this->carbon->now();
+        $user->last_login_machine = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $user->last_login_ip = request()->ip();
+        $user->save();
 
     }
 

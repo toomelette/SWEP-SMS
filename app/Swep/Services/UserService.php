@@ -44,7 +44,7 @@ class UserService extends BaseService{
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $users = $this->cache->remember('user:all:' . $key, 240, function() use ($request){
+        $users = $this->cache->remember('users:all:' . $key, 240, function() use ($request){
 
             $user = $this->user->newQuery();
             
@@ -246,7 +246,9 @@ class UserService extends BaseService{
 
         if($user->is_active == 0){
 
-            $user->update(['is_active' => 1]);
+            $user->is_active = 1;
+            $user->save();
+
             $this->event->fire('user.activate', $user);
             return redirect()->back();
 
@@ -266,8 +268,11 @@ class UserService extends BaseService{
         $user = $this->userBySlug($slug);  
 
         if($user->is_active == 1){
-
-            $user->update(['is_active' => 0, 'is_online' => 0]);
+            
+            $user->is_active = 0;
+            $user->is_online = 0;
+            $user->save();
+            
             $this->event->fire('user.deactivate', $user);
             return redirect()->back();
 
@@ -288,7 +293,9 @@ class UserService extends BaseService{
 
         if($user->is_active == 1 && $user->is_online == 1){
 
-            $user->update(['is_online' => 0]);
+            $user->is_online= 0;
+            $user->save();
+
             $this->event->fire('user.logout', $user);
             return redirect()->back();
 
@@ -352,7 +359,7 @@ class UserService extends BaseService{
 
     public function userBySlug($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('users:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         }); 
         

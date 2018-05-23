@@ -58,7 +58,6 @@
           <div class="box-body no-padding">
             <table class="table table-bordered">
               <tr>
-                <th>@sortablelink('user.firstname', 'User')</th>
                 <th>@sortablelink('firstname', 'Name')</th>
                 <th>@sortablelink('type', 'Type of Leave')</th>
                 <th>@sortablelink('date_of_filing', 'Date of Filing')</th>
@@ -66,7 +65,6 @@
               </tr>
               @foreach($leave_applications as $data) 
                 <tr>
-                  <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
                   <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
                   <td>
 

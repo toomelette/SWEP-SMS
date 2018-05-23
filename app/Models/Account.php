@@ -19,24 +19,6 @@ class Account extends Model{
 	public $timestamps = false;
 
 
-
-	protected $fillable = [
-
-        'department_id',
-        'department_name',
-        'account_code',
-        'description',
-        'mooe',
-        'co',
-        'date_started',
-        'projected_date_end',
-        'project_in_charge',
-
-    ];
-
-
-
-
     protected $attributes = [
         
         'slug' => '',

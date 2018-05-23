@@ -93,7 +93,7 @@ class ProfileService extends BaseService{
 
     public function userBySlug($slug){
 
-        $user = $this->cache->remember('user:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('users:bySlug:' . $slug, 240, function() use ($slug){
             return $this->user->findSlug($slug);
         });
         
