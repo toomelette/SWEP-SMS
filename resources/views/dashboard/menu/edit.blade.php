@@ -1,4 +1,10 @@
-  @extends('layouts.admin-master')
+@php
+  
+  $boolean_array = ['1' => 'true', '0' => 'false'];
+
+@endphp
+
+@extends('layouts.admin-master')
 
 @section('content')
 
@@ -47,11 +53,11 @@
             ) !!}
 
             {!! FormHelper::select_static(
-              '4', 'is_menu', 'Is Menu *', old('is_menu') ? old('is_menu') : DataTypeHelper::boolean_to_string($menu->is_menu), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
+              '4', 'is_menu', 'Is Menu *', old('is_menu') ? old('is_menu') : DataTypeHelper::boolean_to_string($menu->is_menu), $boolean_array, $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}
             
             {!! FormHelper::select_static(
-              '4', 'is_dropdown', 'Is Dropdown *', old('is_dropdown') ? old('is_dropdown') : DataTypeHelper::boolean_to_string($menu->is_dropdown), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
+              '4', 'is_dropdown', 'Is Dropdown *', old('is_dropdown') ? old('is_dropdown') : DataTypeHelper::boolean_to_string($menu->is_dropdown), $boolean_array, $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
             ) !!}
 
           </div>

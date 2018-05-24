@@ -36,20 +36,7 @@
             '4', 'employee_position', 'text', 'Position *', 'Position', old('employee_position') ? old('employee_position') : $signatory->employee_position, $errors->has('employee_position'), $errors->first('employee_position'), ''
           ) !!}
 
-          {!! FormHelper::select_static('4', 'type', 'Type *', old('type') ? old('type') : $signatory->type, [
-            '1 - ASSISTANT ADMINISTRATOR' => '1',
-            '2 - ACCOUNTING VIS' => '2',
-            '3 - HRU VIS' => '3',
-            '4 - PROPERTY VIS' => '4',
-            '5 - RECORDS VIS' => '5',
-            '6 - TBM VIS' => '6',
-            '7 - LMD VIS' => '7',
-            '8 - SRED VIS' => '8',
-            '9 - LEGAL VIS' => '9',
-            '10 - RDE VIS' => '10',
-            '11 - SOILS VIS' => '11',
-            '12 - SUGAR VIS' => '12',
-          ], $errors->has('type'), $errors->first('type'), '', '') !!} 
+          {!! FormHelper::select_static('4', 'type', 'Type *', old('type') ? old('type') : $signatory->type, $global_static_signatory_types, $errors->has('type'), $errors->first('type'), '', '') !!} 
 
         </div>
 

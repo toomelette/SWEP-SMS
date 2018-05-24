@@ -1,3 +1,26 @@
+@php
+
+  $table_sessions = [ 
+                      Session::get('USER_UPDATE_SUCCESS_SLUG'), 
+                      Session::get('USER_ACTIVATE_SUCCESS_SLUG'),
+                      Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
+                      Session::get('USER_LOGOUT_SUCCESS_SLUG'),
+                      Session::get('USER_RESET_PASSWORD_SUCCESS_SLUG'), 
+                    ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'), 
+                        'online' => Request::get('online'), 
+                        'active' => Request::get('active'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+  $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';
+  $span_times = '<span class="badge bg-red"><i class="fa fa-times "></i></span>';
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -46,19 +69,11 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($users as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('USER_UPDATE_SUCCESS_SLUG'), 
-                        Session::get('USER_ACTIVATE_SUCCESS_SLUG'),
-                        Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
-                        Session::get('USER_LOGOUT_SUCCESS_SLUG'),
-                        Session::get('USER_RESET_PASSWORD_SUCCESS_SLUG'), 
-                      ]) 
-                    !!}
-                >
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions)!!}>
                   <td>{{ $data->username }}</td>
                   <td>{{ $data->fullname }}</td>
-                  <td>{!! $data->is_online == 1 ? '<span class="badge bg-green"><i class="fa fa-check "></i></span>' : '<span class="badge bg-red"><i class="fa fa-times "></i></span>' !!}</td>
-                  <td>{!! $data->is_active == 1 ? '<span class="badge bg-green"><i class="fa fa-check "></i></span>' : '<span class="badge bg-red"><i class="fa fa-times "></i></span>' !!}</td>
+                  <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
+                  <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
                   <td> 
                     <select id="action" class="form-control input-sm">
                       <option value="">Select</option>
@@ -92,15 +107,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $users->firstItem() > 0 ? $users->firstItem() : 0 }} - {{ $users->lastItem() > 0 ? $users->lastItem() : 0 }} out of {{ $users->total()}} Records</strong>
-            {!! $users->appends([
-                  'q'=> Request::get('q'), 
-                  'online' => Request::get('online'), 
-                  'active' => Request::get('active'),
-                  'sort' => Request::get('sort'),
-                  'order' => Request::get('order'),
-                ])->render('vendor.pagination.bootstrap-4')
-            !!}
+            {!! HtmlHelper::table_counter($users) !!}
+            {!! $users->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
           </div>
 
         </div>

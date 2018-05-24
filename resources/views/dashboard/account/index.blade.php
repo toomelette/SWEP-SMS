@@ -1,3 +1,15 @@
+@php
+
+  $table_sessions = [ Session::get('ACCOUNT_UPDATE_SUCCESS_SLUG') ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -32,11 +44,7 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($accounts as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('ACCOUNT_UPDATE_SUCCESS_SLUG')
-                      ]) 
-                    !!}
-                >
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
                   <td>{{ $data->account_code }}</td>
                   <td>{{ $data->department_name }}</td>
                   <td>{{ $data->description }}</td>
@@ -60,12 +68,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $accounts->firstItem() > 0 ? $accounts->firstItem() : 0 }} - {{ $accounts->lastItem() > 0 ? $accounts->lastItem() : 0 }} out of {{ $accounts->total()}} Records</strong>
-            {!! $accounts->appends([
-              'q'=> Request::get('q'),
-              'sort' => Request::get('sort'),
-              'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4') !!}
+            {!! HtmlHelper::table_counter($accounts) !!}
+            {!! $accounts->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

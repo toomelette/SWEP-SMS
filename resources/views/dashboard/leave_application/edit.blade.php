@@ -1,3 +1,17 @@
+@php
+  
+  $leave_types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
+  $vac_types = ['To seek employment' => 'TV1001', 'others' => 'TV1002'];
+  $spent_vacation = ['Within the Philippines' => 'SV1001', 'Abroad' => 'SV1002'];
+  $spent_sick = ['In Hospital' => 'SS1001', 'Out Patient' => 'SS1002'];
+  $commutation_types = [ 'Requested' => 'true', 'Not Requested' => 'false'];
+
+  $date_of_filing =  DataTypeHelper::date_out($leave_application->date_of_filing);
+  $working_days_date_from =  DataTypeHelper::date_out($leave_application->working_days_date_from);
+  $working_days_date_to =  DataTypeHelper::date_out($leave_application->working_days_date_to);
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -40,7 +54,7 @@
              '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : $leave_application->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
           ) !!} 
 
-          {!! FormHelper::datepicker('4', 'date_of_filing',  'Date of Filing *', old('date_of_filing') ? old('date_of_filing') : DataTypeHelper::date_out($leave_application->date_of_filing), $errors->has('date_of_filing'), $errors->first('date_of_filing')) !!}
+          {!! FormHelper::datepicker('4', 'date_of_filing',  'Date of Filing *', old('date_of_filing') ? old('date_of_filing') :$date_of_filing, $errors->has('date_of_filing'), $errors->first('date_of_filing')) !!}
           
           {!! FormHelper::textbox(
              '4', 'position', 'text', 'Position *', 'Position', old('position') ? old('position') : $leave_application->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
@@ -50,6 +64,11 @@
             '4', 'salary', 'text', 'Salary (Monthly) *', 'Salary', old('salary') ? old('salary') : $leave_application->salary, $errors->has('salary'), $errors->first('salary'), ''
           ) !!}
           
+          <div class="col-md-12"></div>
+          
+          {!! FormHelper::select_dynamic(
+            '4', 'immediate_superior_type', 'Immediate Superior *', old('immediate_superior_type') ? old('immediate_superior_type') : $leave_application->immediate_superior_type, $global_signatories_all, 'type', 'employee_name', $errors->has('immediate_superior_type'), $errors->first('immediate_superior_type'), 'select2', ''
+          ) !!}
 
 
           {{-- TYPE OF LEAVE --}} 
@@ -57,19 +76,11 @@
               
             <h4>TYPE OF LEAVE:</h4>
 
-            {!! FormHelper::select_static('3', 'type', 'Leave Type *', old('type') ? old('type') : $leave_application->type, [
-              'Vacation' => 'T1001',
-              'Sick' => 'T1002',
-              'Maternity' => 'T1003',
-              'Others' => 'T1004',
-            ], $errors->has('type'), $errors->first('type'), '', '') !!}
+            {!! FormHelper::select_static('3', 'type', 'Leave Type *', old('type') ? old('type') : $leave_application->type, $leave_types, $errors->has('type'), $errors->first('type'), '', '') !!}
           
             <div class="col-md-9" id="type_vacation_div">
                 
-              {!! FormHelper::select_static('3', 'type_vacation', 'Vacation Type *', old('type_vacation') ? old('type_vacation') : $leave_application->type_vacation, [
-                'To seek employment' => 'TV1001',
-                'others' => 'TV1002',
-              ], $errors->has('type_vacation'), $errors->first('type_vacation'), '', '') !!}
+              {!! FormHelper::select_static('3', 'type_vacation', 'Vacation Type *', old('type_vacation') ? old('type_vacation') : $leave_application->type_vacation, $vac_types, $errors->has('type_vacation'), $errors->first('type_vacation'), '', '') !!}
                 
               {!! FormHelper::textbox(
                  '9', 'type_vacation_others_specific', 'text', 'If (others) specify', 'Specify', old('type_vacation_others_specific') ? old('type_vacation_others_specific') : $leave_application->type_vacation_others_specific, $errors->has('type_vacation_others_specific'), $errors->first('type_vacation_others_specific'), ''
@@ -96,10 +107,7 @@
 
             <div class="col-md-12">
               
-              {!! FormHelper::select_static('3', 'spent_vacation', 'In case of Vacation Leave', old('spent_vacation') ? old('spent_vacation') : $leave_application->spent_vacation, [
-                'Within the Philippines' => 'SV1001',
-                'Abroad' => 'SV1002',
-              ], $errors->has('spent_vacation'), $errors->first('spent_vacation'), '', '') !!}
+              {!! FormHelper::select_static('3', 'spent_vacation', 'In case of Vacation Leave', old('spent_vacation') ? old('spent_vacation') : $leave_application->spent_vacation, $spent_vacation, $errors->has('spent_vacation'), $errors->first('spent_vacation'), '', '') !!}
 
               <div class="col-md-9" id="spent_vacation_abroad_div">
                   
@@ -113,10 +121,7 @@
 
             <div class="col-md-12">
               
-              {!! FormHelper::select_static('3', 'spent_sick', 'In case of Sick Leave', old('spent_sick') ? old('spent_sick') : $leave_application->spent_sick, [
-                'In Hospital' => 'SS1001',
-                'Out Patient' => 'SS1002',
-              ], $errors->has('spent_sick'), $errors->first('spent_sick'), '', '') !!}
+              {!! FormHelper::select_static('3', 'spent_sick', 'In case of Sick Leave', old('spent_sick') ? old('spent_sick') : $leave_application->spent_sick, $spent_sick, $errors->has('spent_sick'), $errors->first('spent_sick'), '', '') !!}
 
               <div class="col-md-9" id="spent_sick_inHospital_div">
                   
@@ -149,9 +154,9 @@
                '4', 'working_days', 'text', 'Number of Days *', 'Number of Days', old('working_days') ? old('working_days') : $leave_application->working_days, $errors->has('working_days'), $errors->first('working_days'), ''
             ) !!}
 
-            {!! FormHelper::datepicker('4', 'working_days_date_from',  'Date From *', old('working_days_date_from') ? old('working_days_date_from') : DataTypeHelper::date_out($leave_application->working_days_date_from), $errors->has('working_days_date_from'), $errors->first('working_days_date_from')) !!}
+            {!! FormHelper::datepicker('4', 'working_days_date_from',  'Date From *', old('working_days_date_from') ? old('working_days_date_from') : $working_days_date_from, $errors->has('working_days_date_from'), $errors->first('working_days_date_from')) !!}
 
-            {!! FormHelper::datepicker('4', 'working_days_date_to',  'Date To *', old('working_days_date_to') ? old('working_days_date_to') : DataTypeHelper::date_out($leave_application->working_days_date_to), $errors->has('working_days_date_to'), $errors->first('working_days_date_to')) !!}
+            {!! FormHelper::datepicker('4', 'working_days_date_to',  'Date To *', old('working_days_date_to') ? old('working_days_date_to') : $working_days_date_to, $errors->has('working_days_date_to'), $errors->first('working_days_date_to')) !!}
 
           </div>
 
@@ -162,10 +167,7 @@
               
             <h4>COMMUTATION:</h4>  
 
-            {!! FormHelper::select_static('3', 'commutation', 'Commutation *', old('commutation') ? old('commutation') : $leave_application->commutation, [
-              'Requested' => 'true',
-              'Not Requested' => 'false',
-            ], $errors->has('commutation'), $errors->first('commutation'), '', '') !!}
+            {!! FormHelper::select_static('3', 'commutation', 'Commutation *', old('commutation') ? old('commutation') : $leave_application->commutation, $commutation_types, $errors->has('commutation'), $errors->first('commutation'), '', '') !!}
 
           </div>
 
@@ -230,6 +232,11 @@
       $('#type_vacation').val('');
       $('#type_vacation_others_specific').val('');
       $('#type_others_specific').val('');
+      $('#spent_vacation').val('');
+      $('#spent_vacation_abroad_specific').val('');
+      $('#spent_sick').val('');
+      $('#spent_sick_inhospital_specific').val('');
+      $('#spent_sick_outpatient_specific').val('');
       var val = $(this).val();
         if(val == "T1001"){ 
           $('#type_vacation_div').show();

@@ -1,3 +1,15 @@
+@php
+
+  $table_sessions = [  Session::get('FUND_SOURCE_UPDATE_SUCCESS_SLUG') ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -29,11 +41,7 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($fund_sources as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('FUND_SOURCE_UPDATE_SUCCESS_SLUG')
-                      ]) 
-                    !!}
-                >
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
                   <td>{{ $data->description }}</td>
                   <td> 
                     <select id="action" class="form-control input-sm">
@@ -54,12 +62,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $fund_sources->firstItem() > 0 ? $fund_sources->firstItem() : 0 }} - {{ $fund_sources->lastItem() > 0 ? $fund_sources->lastItem() : 0 }} out of {{ $fund_sources->total()}} Records</strong>
-            {!! $fund_sources->appends([
-              'q'=> Request::get('q'),
-              'sort' => Request::get('sort'),
-              'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4') !!}
+            {!! HtmlHelper::table_counter($fund_sources) !!}
+            {!! $fund_sources->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

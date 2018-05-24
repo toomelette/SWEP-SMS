@@ -1,3 +1,15 @@
+@php
+
+  $table_sessions = [ Session::get('DEPARTMENT_UPDATE_SUCCESS_SLUG') ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -29,11 +41,7 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($departments as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('DEPARTMENT_UPDATE_SUCCESS_SLUG')
-                      ]) 
-                    !!}
-                >
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
                   <td>{{ $data->name }}</td>
                   <td> 
                     <select id="action" class="form-control input-sm">
@@ -54,12 +62,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $departments->firstItem() > 0 ? $departments->firstItem() : 0 }} - {{ $departments->lastItem() > 0 ? $departments->lastItem() : 0 }} out of {{ $departments->total()}} Records</strong>
-            {!! $departments->appends([
-              'q'=> Request::get('q'),
-              'sort' => Request::get('sort'),
-              'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4') !!}
+            {!! HtmlHelper::table_counter($departments) !!}
+            {!! $departments->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

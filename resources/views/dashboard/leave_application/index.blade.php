@@ -1,3 +1,20 @@
+@php
+
+  $appended_requests = [
+                        'q'=> Request::get('q'), 
+                        't'=> Request::get('t'), 
+                        'df' => Request::get('df'),
+                        'dt' => Request::get('dt'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
+
+  $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -18,12 +35,7 @@
 
           <div class="col-md-12">
               
-            {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), [
-              'Vacation' => 'T1001',
-              'Sick' => 'T1002',
-              'Maternity' => 'T1003',
-              'Others' => 'T1004',
-              ], 'submit_la_filter', '') !!}
+            {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), $types, 'submit_la_filter', '') !!}
 
           </div>
 
@@ -66,18 +78,14 @@
               </tr>
               @foreach($leave_applications as $data) 
                 <tr>
-                  <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
+                  <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : $span_user_not_exist !!}</td>
                   <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
                   <td>
-
-                    <?php  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004',] ?>
-                    
                     @foreach($types as $name => $key)
                       @if($key == $data->type)
                         {{ $name }}
                       @endif
                     @endforeach
-                  
                   </td>
                   <td>{{ Carbon::parse($data->date_of_filing)->format('M d, Y') }}</td>
                   <td> 
@@ -100,16 +108,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $leave_applications->firstItem() > 0 ? $leave_applications->firstItem() : 0 }} - {{ $leave_applications->lastItem() > 0 ? $leave_applications->lastItem() : 0 }} out of {{ $leave_applications->total()}} Records</strong>
-            {!! $leave_applications->appends([
-                'q'=> Request::get('q'), 
-                't'=> Request::get('t'), 
-                'df' => Request::get('df'),
-                'dt' => Request::get('dt'),
-                'sort' => Request::get('sort'),
-                'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4')
-            !!}
+            {!! HtmlHelper::table_counter($leave_applications) !!}
+            {!! $leave_applications->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

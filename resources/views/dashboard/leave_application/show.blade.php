@@ -1,3 +1,10 @@
+@php
+
+  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
+  $inclusive_dates = Carbon::parse($leave_application->working_days_from)->format('M d, Y') .' - '. Carbon::parse($leave_application->working_days_to)->format('M d, Y');
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -51,21 +58,19 @@
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Salary: <strong>{{ $leave_application->salary }}</strong></span>
+          <span style="font-size: 15px; ">Salary: <strong>{{ number_format($leave_application->salary, 2) }}</strong></span>
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
           <span style="font-size: 15px; ">Type of Leave: 
             <strong>
-              
-              <?php  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004',] ?>
                     
-                @foreach($types as $name => $key)
-                  @if($key ==  $leave_application->type)
-                    {{ $name }}
-                  @endif
-                @endforeach
-            
+              @foreach($types as $name => $key)
+                @if($key ==  $leave_application->type)
+                  {{ $name }}
+                @endif
+              @endforeach
+          
             </strong>
           </span>
         </div>
@@ -75,7 +80,7 @@
         </div>
 
         <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Inclusive Dates: <strong>{{ Carbon::parse($leave_application->working_days_from)->format('M d, Y') .' to '. Carbon::parse($leave_application->working_days_to)->format('M d, Y')}}</strong></span>
+          <span style="font-size: 15px; ">Inclusive Dates: <strong>{{ $inclusive_dates }}</strong></span>
         </div>
 
       </div>

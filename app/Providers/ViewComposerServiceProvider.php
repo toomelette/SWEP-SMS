@@ -72,7 +72,14 @@ class ViewComposerServiceProvider extends ServiceProvider{
         
 
         //SIGNATORY
-        View::composer(['printables.disbursement_voucher'], 'App\Swep\ViewComposers\SignatoryComposer');
+        View::composer(['printables.disbursement_voucher',
+                        'dashboard.leave_application.create',
+                        'dashboard.leave_application.edit'], 'App\Swep\ViewComposers\SignatoryComposer');
+
+
+        //SIGNATORY TYPE
+        View::composer(['dashboard.signatory.create',
+                        'dashboard.signatory.edit'], 'App\Swep\ViewComposers\SignatoryTypeComposer');
 
         
     }

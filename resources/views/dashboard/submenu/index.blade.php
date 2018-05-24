@@ -1,3 +1,15 @@
+@php
+
+  $table_sessions = [ Session::get('SUBMENU_UPDATE_SUCCESS_SLUG') ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -31,11 +43,7 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($submenus as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('SUBMENU_UPDATE_SUCCESS_SLUG')
-                      ]) 
-                    !!}
-                >
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
                   <td>{{ $data->name }}</td>
                   <td>{{ $data->route }}</td>
                   <td>{{ $data->is_nav }}</td>
@@ -58,12 +66,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $submenus->firstItem() > 0 ? $submenus->firstItem() : 0 }} - {{ $submenus->lastItem() > 0 ? $submenus->lastItem() : 0 }} out of {{ $submenus->total()}} Records</strong>
-            {!! $submenus->appends([
-              'q'=> Request::get('q'),
-              'sort' => Request::get('sort'),
-              'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4') !!}
+            {!! HtmlHelper::table_counter($submenus) !!}
+            {!! $submenus->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

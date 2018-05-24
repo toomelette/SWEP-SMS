@@ -143,6 +143,19 @@ class HtmlHelper{
 
 
 
+    public static function table_counter($obj){
+
+    	$first_item = $obj->firstItem() > 0 ? $obj->firstItem() : 0;
+    	$last_item = $obj->lastItem() > 0 ? $obj->lastItem() : 0;
+
+        return '<strong>Displaying '. $first_item .' - '.  $last_item .' out of '. $obj->total() .' Records</strong>';
+
+    }
+
+
+
+
+
     public static function filter_open(){
 
        return '<div class="box '. self::collapsed_filter() .'">

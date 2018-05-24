@@ -1,3 +1,15 @@
+@php
+
+  $table_sessions = [ Session::get('SIGNATORY_UPDATE_SUCCESS_SLUG') ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -31,11 +43,7 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($signatories as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                        Session::get('SIGNATORY_UPDATE_SUCCESS_SLUG')
-                      ]) 
-                    !!}
-                >
+                <tr {!! HtmlHelper::table_highlighter($table_sessions) !!} >
                   <td>{{ $data->employee_name }}</td>
                   <td>{{ $data->employee_position }}</td>
                   <td>{{ $data->type }}</td>
@@ -58,12 +66,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $signatories->firstItem() > 0 ? $signatories->firstItem() : 0 }} - {{ $signatories->lastItem() > 0 ? $signatories->lastItem() : 0 }} out of {{ $signatories->total()}} Records</strong>
-            {!! $signatories->appends([
-              'q'=> Request::get('q'),
-              'sort' => Request::get('sort'),
-              'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4') !!}
+            {!! HtmlHelper::table_counter($signatories) !!}
+            {!! $signatories->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

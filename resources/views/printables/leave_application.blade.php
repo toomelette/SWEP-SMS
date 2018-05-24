@@ -1,5 +1,6 @@
 
 <?php
+
   $f = Carbon::parse($leave_application->working_days_date_from)->format('M d, Y');
   $mf = Carbon::parse($leave_application->working_days_date_from)->format('M');
   $df = Carbon::parse($leave_application->working_days_date_from)->format('d');
@@ -9,6 +10,7 @@
   $mt = Carbon::parse($leave_application->working_days_date_to)->format('M');
   $dt = Carbon::parse($leave_application->working_days_date_to)->format('d');
   $mdt = Carbon::parse($leave_application->working_days_date_to)->format('M d');
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +49,7 @@
 
 <div>
 
-  <div class="wrapper">
+  <div class="wrapper" style="padding-top:50px;">
 
 
       {{-- HEADER --}}
@@ -224,7 +226,7 @@
           @if($leave_application->type_vacation == 'TV1002')
             <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->type_vacation_others_specific }}</span>
           @else
-            _____________________ ____________________________________
+            ____________________ ____________________________________
           @endif
         </div>
 
@@ -566,15 +568,19 @@
 
       {{-- SIGNATORY --}}
       <div class="row">
+
         <div class="col-sm-6">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-8" style="text-align: center; line-height: 12px;">
-            <span style="font-size:12px; font-weight: bold;">{{ $leave_application->personnel_officer }}</span><br>
-            <span style="font-size:12px; font-weight: bold;">({{ $leave_application->personnel_officer_position }})</span>
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10" style="text-align: center; line-height: 12px;">
+            <span style="font-size:14px; font-weight: bold;">{{ $leave_application->personnel_officer }}</span>
           </div>
-          <div class="col-sm-2"></div>
+          <div class="col-sm-1"></div>
         </div>
-        <div class="col-sm-6"></div>
+
+        <div class="col-sm-6" style="text-align: center; line-height: 12px;">
+          <span style="font-size:14px; font-weight: bold;">{{ $leave_application->immediate_superior }}</span>
+        </div>
+
       </div>
 
 
@@ -584,19 +590,19 @@
       <div class="row">
 
         <div class="col-sm-6">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-8" style="border-top:solid 1.4px; text-align: center;">
-            <span style="font-size:14px;">(Personnel Officer)</span>
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10" style="border-top:solid 1.4px; text-align: center;">
+            <span style="font-size:14px; font-weight: bold;">{{ $leave_application->personnel_officer_position }}</span>
           </div>
-          <div class="col-sm-2"></div>
+          <div class="col-sm-1"></div>
         </div>
 
-        <div class="col-sm-6" style="text-align: center;">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-8" style="border-top:solid 1.4px; border-top-height: 20px; text-align: center;">
-            <span style="font-size:14px;">(Authorized Official)</span>
+        <div class="col-sm-6">
+          <div class="col-sm-1"></div>
+          <div class="col-sm-10" style="border-top:solid 1.4px; border-top-height: 20px; text-align: center;">
+            <span style="font-size:14px; font-weight: bold;">{{ $leave_application->immediate_superior_position }}</span>
           </div>
-          <div class="col-sm-2"></div>
+          <div class="col-sm-1"></div>
         </div>
 
       </div>
@@ -678,7 +684,7 @@
         <div class="col-sm-4"></div>
 
         <div class="col-sm-4" style="border-top:solid 1.4px; border-top-height: 20px; text-align: center;">
-          <span style="font-size:14px;">(Signature)</span>
+          <span style="font-size:14px; font-weight: bold;">(Signature)</span>
         </div>
 
         <div class="col-sm-4"></div>
@@ -690,12 +696,11 @@
 
       {{-- SIGNATORY --}}
       <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8" style="text-align: center; line-height: 12px;">
-          <span style="font-size:12px; font-weight: bold;">{{ $leave_application->authorized_official }}</span><br>
-          <span style="font-size:12px; font-weight: bold;">({{ $leave_application->authorized_official_position }})</span>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10" style="text-align: center; line-height: 12px;">
+          <span style="font-size:14px; font-weight: bold;">{{ $leave_application->authorized_official }}</span>
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-1"></div>
       </div>
 
 
@@ -705,11 +710,9 @@
       <div class="row">
 
         <div class="col-sm-4"></div>
-
         <div class="col-sm-4" style="border-top:solid 1.4px; border-top-height: 20px; text-align: center;">
-              <span style="font-size:14px;">(Authorized Official)</span>
+          <span style="font-size:12px; font-weight: bold;">{{ $leave_application->authorized_official_position }}</span>
         </div>
-
         <div class="col-sm-4"></div>
 
       </div>

@@ -99,6 +99,9 @@ class LeaveApplicationService extends BaseService{
         $leave_application->working_days_date_from = $this->dataTypeHelper->date_in($request->working_days_date_from);
         $leave_application->working_days_date_to = $this->dataTypeHelper->date_in($request->working_days_date_to);
         $leave_application->commutation = $this->dataTypeHelper->string_to_boolean($request->commutation);
+        $leave_application->immediate_superior = $this->signatoryByType($request->immediate_superior_type)->employee_name;
+        $leave_application->immediate_superior_position = $this->signatoryByType($request->immediate_superior_type)->employee_position;
+        $leave_application->immediate_superior_type = $request->immediate_superior_type;
         $leave_application->personnel_officer = $this->signatoryByType('3')->employee_name;
         $leave_application->personnel_officer_position = $this->signatoryByType('3')->employee_position;
         $leave_application->authorized_official = $this->signatoryByType('1')->employee_name;
@@ -155,9 +158,12 @@ class LeaveApplicationService extends BaseService{
         $leave_application->working_days_date_from = $this->dataTypeHelper->date_in($request->working_days_date_from);
         $leave_application->working_days_date_to = $this->dataTypeHelper->date_in($request->working_days_date_to);
         $leave_application->commutation = $this->dataTypeHelper->string_to_boolean($request->commutation);
-        $leave_application->created_at = $this->carbon->now();
-        $leave_application->ip_created = request()->ip();
-        $leave_application->user_created = $this->auth->user()->username;
+        $leave_application->immediate_superior = $this->signatoryByType($request->immediate_superior_type)->employee_name;
+        $leave_application->immediate_superior_position = $this->signatoryByType($request->immediate_superior_type)->employee_position;
+        $leave_application->immediate_superior_type = $request->immediate_superior_type;
+        $leave_application->updated_at = $this->carbon->now();
+        $leave_application->ip_updated = request()->ip();
+        $leave_application->user_updated = $this->auth->user()->username;
         $leave_application->save();
 
         $this->event->fire('la.update', $leave_application);

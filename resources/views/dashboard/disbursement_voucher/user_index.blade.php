@@ -1,3 +1,22 @@
+@php
+
+  $appended_requests = [
+                        'q'=> Request::get('q'), 
+                        'fs' => Request::get('fs'), 
+                        'pi' => Request::get('pi'),
+                        'dn' => Request::get('dn'),
+                        'dun' => Request::get('dun'),
+                        'ac' => Request::get('ac'),
+                        'df' => Request::get('df'),
+                        'dt' => Request::get('dt'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+  $span_not_set = '<span class="text-red"><b>Not Set!</b></span>';
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -74,7 +93,7 @@
               @foreach($disbursement_vouchers as $data) 
                 <tr>
                   <td>{{ $data->doc_no }}</td>
-                  <td>{!! $data->dv_no == null ? '<span class="text-red"><b>Not Set!</b></span>' : SanitizeHelper::html_encode($data->dv_no) !!}</td>
+                  <td>{!! $data->dv_no == null ? $span_not_set : SanitizeHelper::html_encode($data->dv_no) !!}</td>
                   <td>{{ $data->payee  }}</td>
                   <td>{{ $data->account_code }}</td>
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
@@ -108,20 +127,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $disbursement_vouchers->firstItem() > 0 ? $disbursement_vouchers->firstItem() : 0 }} - {{ $disbursement_vouchers->lastItem() > 0 ? $disbursement_vouchers->lastItem() : 0 }} out of {{ $disbursement_vouchers->total()}} Records</strong>
-            {!! $disbursement_vouchers->appends([
-                'q'=> Request::get('q'), 
-                'fs' => Request::get('fs'), 
-                'pi' => Request::get('pi'),
-                'dn' => Request::get('dn'),
-                'dun' => Request::get('dun'),
-                'ac' => Request::get('ac'),
-                'df' => Request::get('df'),
-                'dt' => Request::get('dt'),
-                'sort' => Request::get('sort'),
-                'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4')
-            !!}
+            {!! HtmlHelper::table_counter($disbursement_vouchers) !!}
+            {!! $disbursement_vouchers->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>

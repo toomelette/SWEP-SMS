@@ -1,3 +1,27 @@
+@php
+
+  $table_sessions = [ 
+                      Session::get('DV_SET_NO_SUCCESS_SLUG'),
+                      Session::get('DV_CONFIRM_CHECK_SUCCESS_SLUG'),
+                    ];
+
+  $appended_requests = [
+                        'q'=> Request::get('q'), 
+                        'fs' => Request::get('fs'), 
+                        'pi' => Request::get('pi'),
+                        'dn' => Request::get('dn'),
+                        'dun' => Request::get('dun'),
+                        'ac' => Request::get('ac'),
+                        'df' => Request::get('df'),
+                        'dt' => Request::get('dt'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
+                      ];
+
+  $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
+
+@endphp
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -73,20 +97,18 @@
                 <th style="width: 150px">Action</th>
               </tr>
               @foreach($disbursement_vouchers as $data) 
-                <tr
-                  {!! HtmlHelper::table_highlighter( $data->slug, [ 
-                      Session::get('DV_SET_NO_SUCCESS_SLUG'),
-                      Session::get('DV_CONFIRM_CHECK_SUCCESS_SLUG'),
-                    ])
-                  !!}
-                >
-                  <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : '<span class="text-red"><b>User does not exist!</b></span>' !!}</td>
+                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+                  <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : $span_user_not_exist; !!}</td>
                   <td>{{ $data->doc_no }}</td>
                   <td>
                     @if($data->dv_no == null)
-                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;"><b>Not Set!</b></a> 
+                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;">
+                        <b>Not Set!</b>
+                      </a> 
                     @else
-                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" style="text-decoration:underline;"><b>{{ $data->dv_no }}</b></a>
+                      <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" style="text-decoration:underline;">
+                        <b>{{ $data->dv_no }}</b>
+                      </a>
                     @endif
                   </td>
                   <td>{{ $data->payee  }}</td>
@@ -94,13 +116,21 @@
                   <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
                   <td>
                     @if($data->processed_at == null && $data->checked_at == null)
+
                       <span class="label label-warning">Filed..</span>
+
                     @elseif($data->processed_at != null && $data->checked_at == null)
-                      <span class="label label-primary">Processing..</span> | <a href="#" id="dv_confirm_check_link" data-url="{{ route('dashboard.disbursement_voucher.confirm_check', $data->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-check"></i></a>
+
+                      <span class="label label-primary">Processing..</span> | 
+                      <a href="#" id="dv_confirm_check_link" data-url="{{ route('dashboard.disbursement_voucher.confirm_check', $data->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-check"></i></a>
+
                     @elseif($data->processed_at != null && $data->checked_at != null)
+
                       <span class="label label-success">Completed!</span>
+
                     @endif
                   </td>
+
                   <td> 
                     <select id="action" class="form-control input-sm">
                       <option value="">Select</option>
@@ -109,6 +139,7 @@
                       <option data-type="0" data-action="delete" data-url="{{ route('dashboard.disbursement_voucher.destroy', $data->slug) }}">Delete</option>
                     </select>
                   </td>
+
                 </tr>
                 @endforeach
             </table>
@@ -121,20 +152,8 @@
           @endif
 
           <div class="box-footer">
-            <strong>Displaying {{ $disbursement_vouchers->firstItem() > 0 ? $disbursement_vouchers->firstItem() : 0 }} - {{ $disbursement_vouchers->lastItem() > 0 ? $disbursement_vouchers->lastItem() : 0 }} out of {{ $disbursement_vouchers->total()}} Records</strong>
-            {!! $disbursement_vouchers->appends([
-                'q'=> Request::get('q'), 
-                'fs' => Request::get('fs'), 
-                'pi' => Request::get('pi'),
-                'dn' => Request::get('dn'),
-                'dun' => Request::get('dun'),
-                'ac' => Request::get('ac'),
-                'df' => Request::get('df'),
-                'dt' => Request::get('dt'),
-                'sort' => Request::get('sort'),
-                'order' => Request::get('order'),
-              ])->render('vendor.pagination.bootstrap-4')
-            !!}
+            {!! HtmlHelper::table_counter($disbursement_vouchers) !!}
+            {!! $disbursement_vouchers->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
           </div>
 
         </div>
@@ -154,6 +173,7 @@
 
 @section('modals')
 
+
   {!! HtmlHelper::modal_delete('dv_delete') !!}
 
   {!! HtmlHelper::modal('dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')) !!}
@@ -166,23 +186,19 @@
           <form id="dv_set_no_form" class="form-horizontal" method="POST" autocomplete="off">
             @csrf
             <p style="font-size: 17px;">Set DV No.</p><br>
-
             {!! FormHelper::textbox_inline(
                 'dv_no', 'text', 'DV No.', 'DV No.', old('dv_no'), $errors->has('dv_no'), $errors->first('dv_no'), ''
             ) !!}
-
         </div>
-
         <div class="modal-footer">
           <button class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-
         </form>
-
       </div>
     </div>
   </div>
+
 
 @endsection 
 
