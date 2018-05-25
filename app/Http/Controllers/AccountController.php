@@ -61,7 +61,7 @@ class AccountController extends Controller{
 
 
 
-    public function update(Request $request, $slug){
+    public function update(AccountFormRequest $request, $slug){
 
     	return $this->account->update($request, $slug);
 

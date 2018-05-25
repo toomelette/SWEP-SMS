@@ -17,10 +17,10 @@ Route::group(['as' => 'auth.'], function () {
 /** Dashboard **/
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['check.user_status', 'check.user_route']], function () {
 
-	/** HOME ROUTE **/	
+	/** HOME **/	
 	Route::get('/home', 'HomeController@index')->name('home');
 
-	/** USER ROUTES **/
+	/** USER **/
 	Route::post('/dashboard/user/activate/{slug}', 'UserController@activate')->name('user.activate');
 	Route::post('/dashboard/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
 	Route::post('/dashboard/user/logout/{slug}', 'UserController@logout')->name('user.logout');
@@ -28,7 +28,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/dashboard/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
 	Route::resource('user', 'UserController');
 
-	/** DISBURSEMENT VOUCHERS ROUTES **/
+	/** DISBURSEMENT VOUCHERS **/
 	Route::get('/disbursement_voucher/user_index', 'DisbursementVoucherController@userIndex')->name('disbursement_voucher.user_index');
 	Route::get('/disbursement_voucher/print/{slug}/{type}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
 	Route::post('/disbursement_voucher/set_no/{slug}', 'DisbursementVoucherController@setNo')->name('disbursement_voucher.set_no_post');
@@ -66,6 +66,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/leave_application/user_index', 'LeaveApplicationController@userIndex')->name('leave_application.user_index');
 	Route::get('/leave_application/print/{slug}/{type}', 'LeaveApplicationController@print')->name('leave_application.print');
 	Route::resource('leave_application', 'LeaveApplicationController');
+
+	/** EMPLOYEE **/
+	Route::resource('employee', 'EmployeeController');
 	
 });
 
@@ -75,7 +78,17 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 // Route::get('/dashboard/test', function(){
 
-// 	$slug = \Str::random(16);
-// 	dd($slug);
+// 	$emp = Illuminate\Support\Str::random(16);
+
+// 	dd($emp);
+	
+// 	foreach($emp as $data){
+
+// 		$ne = App\Models\Employee::find($data->id);
+// 		$ne->slug = Illuminate\Support\Str::random(16);
+// 		$ne->save();
+
+// 	}
+
 	    
-// } )->name('showLogin');
+// });
