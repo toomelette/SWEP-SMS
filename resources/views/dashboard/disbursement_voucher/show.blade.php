@@ -29,89 +29,78 @@
       
       <div class="box-body">
 
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">DV No.: <strong>{{ $disbursement_voucher->dv_no }}</strong></span>
-        </div>
 
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Station: <strong>{{ count($disbursement_voucher->project) != 0 ? $disbursement_voucher->project->project_address : '' }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Fund Source: <strong>{{ count($disbursement_voucher->fundSource) != 0 ? $disbursement_voucher->fundSource->description : '' }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Mode of Payment: <strong>{{ count($disbursement_voucher->modeOfPayment) != 0 ? $disbursement_voucher->modeOfPayment->description : ''  }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Payee: <strong>{{ $disbursement_voucher->payee }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">TIN: <strong>{{ $disbursement_voucher->tin }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">BUR No.: <strong>{{ $disbursement_voucher->tin }}</strong></span>
-        </div>
-
-        <div class="col-md-6" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Address: <strong>{{ $disbursement_voucher->address }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Department: <strong>{{ $disbursement_voucher->department_name }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Unit: <strong>{{ $disbursement_voucher->department_unit_name }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Account Code: <strong>{{ $disbursement_voucher->account_code }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Explanation:</span><br>
-          <div style="border:solid 1px; padding:10px;">
-            {!! $disbursement_voucher->explanation !!}
+        {{-- DV Info --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Voucher Info</h3>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>DV No:</dt>
+                <dd>{{ $disbursement_voucher->dv_no }}</dd>
+                <dt>Station:</dt>
+                <dd>{{ count($disbursement_voucher->project) != 0 ? $disbursement_voucher->project->project_address : '' }}</dd>
+                <dt>Fund Source:</dt>
+                <dd>{{ count($disbursement_voucher->fundSource) != 0 ? $disbursement_voucher->fundSource->description : '' }}</dd>
+                <dt>Mode of Payment:</dt>
+                <dd>{{ count($disbursement_voucher->modeOfPayment) != 0 ? $disbursement_voucher->modeOfPayment->description : ''  }}</dd>
+                <dt>Payee:</dt>
+                <dd>{{ $disbursement_voucher->payee }}</dd>
+                <dt>TIN:</dt>
+                <dd>{{ $disbursement_voucher->tin }}</dd>
+                <dt>BUR No.:</dt>
+                <dd>{{ $disbursement_voucher->tin }}</dd>
+                <dt>Address:</dt>
+                <dd>{{ $disbursement_voucher->address }}</dd>
+                <dt>Department:</dt>
+                <dd>{{ $disbursement_voucher->department_name }}</dd>
+                <dt>Unit:</dt>
+                <dd>{{ $disbursement_voucher->department_unit_name }}</dd>
+                <dt>Account Code:</dt>
+                <dd>{{ $disbursement_voucher->account_code }}</dd>
+                <dt>Explanation:</dt>
+                <dd>
+                  <div style="border:solid 1px; padding:10px;">
+                    {!! $disbursement_voucher->explanation !!}
+                  </div>
+                </dd>
+                <dt>Amount:</dt>
+                <dd>{{ number_format($disbursement_voucher->amount, 2) }}</dd>
+              </dl>
+            </div>
           </div>
         </div>
 
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Amount: <strong>{{ $disbursement_voucher->amount }}</strong></p>
+
+
+
+
+        {{-- Progress --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Progress</h3>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal" style="padding-bottom:230px;">
+                <dt>Filed:</dt>
+                <dd>{{ $disbursement_voucher->created_at != null ? Carbon::parse($disbursement_voucher->created_at)->format('M d, Y h:i A') : '' }}</dd>
+                <dt>Processed:</dt>
+                <dd>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->processed_at)->format('M d, Y h:i A') : '' }}</dd>
+                <dt>Completed:</dt>
+                <dd>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->checked_at)->format('M d, Y h:i A') : '' }}</dd>
+              </dl>
+            </div>
+          </div>
         </div>
 
-      </div>
+
+
 
     </div>
-
-
-    <div class="box">
-        
-      <div class="box-header with-border">
-        <h3 class="box-title">Progress</h3>
-      </div>
-      
-      <div class="box-body">
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Filed: <strong>{{ $disbursement_voucher->created_at != null ? Carbon::parse($disbursement_voucher->created_at)->format('M d, Y h:i A') : '' }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Processed: <strong>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->processed_at)->format('M d, Y h:i A') : '' }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Completed: <strong>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->checked_at)->format('M d, Y h:i A') : '' }}</strong></span>
-        </div>
-
-      </div>
-
-    </div>
+  </div>
 
 </section>
 

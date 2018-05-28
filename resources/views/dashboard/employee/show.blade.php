@@ -22,85 +22,144 @@
 
       
       <div class="box-body">
-        <div class="nav-tabs-custom">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#p_info" data-toggle="tab">Personal Info</a></li>
-            <li><a href="#eb" data-toggle="tab">Educational Background</a></li>
-            <li><a href="#train" data-toggle="tab">Trainings</a></li>
-            <li><a href="#emp_details" data-toggle="tab">Employee Details</a></li>
-            <li><a href="#p_id" data-toggle="tab">Personal ID's</a></li>
-          </ul>
-          <div class="tab-content">
 
 
-            {{-- PERSONAL INFO --}}
-            <div class="tab-pane active" id="p_info">
-              
-              <div class="row">
-                 
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Fullname:<strong> {{ $employee->empname }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Address:<strong> {{ $employee->address }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Date of Birth:<strong> {{ Carbon::parse($employee->dob)->format('M d, Y') }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Place of Birth:<strong> {{ $employee->pob }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Gender:<strong> {{ $employee->gender }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Civil Status:<strong> {{ $employee->civilstat }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Blood Type:<strong> {{ $employee->bloodtype }}</strong></span>
-                </div>
-
-              </div>
-                
-
+        {{-- Personal Info --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Personal Info</h3>
             </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Fullname:</dt>
+                <dd>{{ $employee->empname }}</dd>
+                <dt>Address:</dt>
+                <dd>{{ $employee->address }}</dd>
+                <dt>Date of Birth:</dt>
+                <dd>{{ Carbon::parse($employee->dob)->format('M d, Y') }}</dd>
+                <dt>Place of Birth:</dt>
+                <dd>{{ $employee->pob }}</dd>
+                <dt>Gender:</dt>
+                <dd>{{ $employee->gender }}</dd>
+                <dt>Civil Status:</dt>
+                <dd>{{ $employee->civilstat }}</dd>
+                <dt>Blood Type:</dt>
+                <dd>{{ $employee->bloodtype }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
 
 
-            {{-- EDUCATIONAL BACKGROUND --}}
-            <div class="tab-pane" id="eb">
-                
-              <div class="row">
 
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">UnderGrad: <strong> {{ $employee->undergrad }}</strong></span>
-                </div> 
+        {{-- Edc Background --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Educational Background</h3>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal" style="padding-bottom:60px;">
+                <dt>UnderGrad:</dt>
+                <dd>{{ $employee->undergrad }}</dd>
+                <dt>College:</dt>
+                <dd>{{ $employee->graduate1 }}</dd>
+                <dt>Masteral:</dt>
+                <dd>{{ $employee->graduate2 }}</dd>
+                <dt>PHD:</dt>
+                <dd>{{ $employee->postgrad1 }}</dd>
+                <dt>Eligibility:</dt>
+                <dd>{{ $employee->eligibility }}</dd>
+                <dt>Eligibility Level:</dt>
+                <dd>{{ $employee->eligibilitylevel }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
 
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">College: <strong> {{ $employee->graduate1 }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Masteral: <strong> {{ $employee->graduate2 }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">PHD: <strong> {{ $employee->postgrad1 }}</strong></span>
-                </div>
-
-              </div>
-
-            </div>  
 
 
-            {{-- TRAININGS --}}
-            <div class="tab-pane" id="train">
-                
+        {{-- Emp Details --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Employee Details</h3>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Position:</dt>
+                <dd>{{ $employee->position }}</dd>
+                <dt>Salary Grade:</dt>
+                <dd>{{ $employee->salgrade }}</dd>
+                <dt>Step Increment:</dt>
+                <dd>{{ $employee->stepinc }}</dd>
+                <dt>Appointment Status:</dt>
+                <dd>{{ $employee->apptstat }}</dd>
+                <dt>Item No:</dt>
+                <dd>{{ $employee->itemno }}</dd>
+                <dt>Monthly Basic:</dt>
+                <dd>{{ number_format($employee->monthlybasic, 2) }}</dd>
+                <dt>ACA:</dt>
+                <dd>{{ number_format($employee->aca, 2) }}</dd>
+                <dt>PERA:</dt>
+                <dd>{{ number_format($employee->pera, 2) }}</dd>
+                <dt>Food Subsidy:</dt>
+                <dd>{{ number_format($employee->foodsubsi, 2) }}</dd>
+                <dt>RA:</dt>
+                <dd>{{ number_format($employee->allow1, 2) }}</dd>
+                <dt>TA:</dt>
+                <dd>{{ number_format($employee->allow2, 2) }}</dd>
+                <dt>Government Service:</dt>
+                <dd>{!! $employee->govserv == '' ? '' : Carbon::parse($employee->govserv)->format('M d, Y') !!}</dd>
+                <dt>First Day:</dt>
+                <dd>{{ Carbon::parse($employee->firstday)->format('M d, Y') }}</dd>
+                <dt>Appointment Date:</dt>
+                <dd>{{ Carbon::parse($employee->apptdate)->format('M d, Y') }}</dd>
+                <dt>Adjustment Date:</dt>
+                <dd>{{ Carbon::parse($employee->adjdate)->format('M d, Y') }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        {{-- ID's --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Personal ID's</h3>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal" style="padding-bottom:200px;">
+                <dt>PHIC:</dt>
+                <dd>{{ $employee->phic }}</dd>
+                <dt>TIN:</dt>
+                <dd>{{ $employee->tin }}</dd>
+                <dt>HDMF:</dt>
+                <dd>{{ $employee->hdmf }}</dd>
+                <dt>GSIS:</dt>
+                <dd>{{ $employee->gsis }}</dd>
+                <dt>HDMF Premium:</dt>
+                <dd>{{ number_format($employee->hdmfpremiums, 2) }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        {{-- Trainings --}}
+         <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Trainings</h3>
+            </div>
+            <div class="box-body" style="overflow-x:auto;">
+
               <table class="table table-bordered">
 
                 <tr>
@@ -108,8 +167,6 @@
                   <th>Conducted by</th>
                   <th>Date</th>
                   <th>Venue</th>
-                  <th>Hours</th>
-                  <th>Remarks</th>
                 </tr>
                 @foreach($employee->employeeTraining()->populate() as $data) 
                   <tr>
@@ -127,8 +184,6 @@
                       @endif
                     </td>
                     <td>{{ $data->venue }}</td>
-                    <td>{{ $data->hours }}</td>
-                    <td>{{ $data->remarks }}</td>
                   </tr>
                 @endforeach
 
@@ -142,111 +197,13 @@
 
             </div>
 
-
-            {{-- TRAININGS --}}
-            <div class="tab-pane" id="emp_details">
-              
-              <div class="row">
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Position: <strong> {{ $employee->position }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Salary Grade: <strong> {{ $employee->salgrade }}</strong></span>
-                </div> 
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Step Increment: <strong> {{ $employee->stepinc }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Appointment Status: <strong> {{ $employee->apptstat }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Item No: <strong> {{ $employee->itemno }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Monthly Basic: <strong> {{ number_format($employee->monthlybasic, 2) }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">ACA: <strong> {{ number_format($employee->aca, 2) }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">PERA:<strong> {{ number_format($employee->pera, 2) }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Food Subsidy: <strong> {{ number_format($employee->foodsubsi, 2) }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">RA: <strong> {{ number_format($employee->allow1, 2) }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">TA: <strong> {{ number_format($employee->allow2, 2) }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Government Service: <strong> {!! $employee->govserv == '' ? '' : Carbon::parse($employee->govserv)->format('M d, Y') !!} </strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">First Day:<strong> {{ Carbon::parse($employee->firstday)->format('M d, Y') }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Appointment Date: <strong> {{ Carbon::parse($employee->apptdate)->format('M d, Y') }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">Adjustment Date: <strong> {{ Carbon::parse($employee->adjdate)->format('M d, Y') }}</strong></span>
-                </div>
-
-              </div>
-
-            </div>
-
-
-            {{-- TRAININGS --}}
-            <div class="tab-pane" id="p_id">
-              
-              <div class="row">
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">PHIC: <strong> {{ $employee->phic }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">TIN: <strong> {{ $employee->tin }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">HDMF: <strong> {{ $employee->hdmf }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">GSIS: <strong> {{ $employee->gsis }}</strong></span>
-                </div>
-
-                <div class="col-md-12" style="padding-bottom:10px;">
-                  <span style="font-size: 15px; ">HDMF Premium: <strong>{{ number_format($employee->hdmfpremiums, 2) }}</strong></span>
-                </div>
-
-              </div>
-
-            </div>
-
-
           </div>
         </div>
-      </div>
 
+
+
+
+      </div>
 
     </div>
 

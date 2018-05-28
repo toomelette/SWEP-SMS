@@ -33,58 +33,46 @@
       
       <div class="box-body">
 
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Agency: <strong>{{ $leave_application->agency }}</strong></span>
+
+        {{-- Personal Info --}}
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Application Info</h3>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Agency:</dt>
+                <dd>{{ $leave_application->agency }}</dd>
+                <dt>Lastname:</dt>
+                <dd>{{ $leave_application->lastname }}</dd>
+                <dt>Firstname:</dt>
+                <dd>{{ $leave_application->firstname }}</dd>
+                <dt>Middlename:</dt>
+                <dd>{{ $leave_application->middlename }}</dd>
+                <dt>Date of Filing:</dt>
+                <dd>{{ DataTypeHelper::date_out($leave_application->date_of_filing) }}</dd>
+                <dt>Salary:</dt>
+                <dd>{{ number_format($leave_application->salary, 2) }}</dd>
+                <dt>Type of Leave:</dt>
+                <dd>
+                  @foreach($types as $name => $key)
+                    @if($key ==  $leave_application->type)
+                      {{ $name }}
+                    @endif
+                  @endforeach
+                </dd>
+                <dt>Number of Days:</dt>
+                <dd>{{ $leave_application->working_days }}</dd>
+                <dt>Inclusive Dates:</dt>
+                <dd>{{ $inclusive_dates }}</dd>
+              </dl>
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Lastname: <strong>{{ $leave_application->lastname }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">firstname: <strong>{{ $leave_application->firstname }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">middlename: <strong>{{ $leave_application->middlename  }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Date of Filing: <strong>{{ DataTypeHelper::date_out($leave_application->date_of_filing) }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Position: <strong>{{ $leave_application->position }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Salary: <strong>{{ number_format($leave_application->salary, 2) }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Type of Leave: 
-            <strong>
-                    
-              @foreach($types as $name => $key)
-                @if($key ==  $leave_application->type)
-                  {{ $name }}
-                @endif
-              @endforeach
-          
-            </strong>
-          </span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Number of Days: <strong>{{ $leave_application->working_days }}</strong></span>
-        </div>
-
-        <div class="col-md-12" style="padding-bottom:10px;">
-          <span style="font-size: 15px; ">Inclusive Dates: <strong>{{ $inclusive_dates }}</strong></span>
-        </div>
 
       </div>
-
     </div>
 
 </section>

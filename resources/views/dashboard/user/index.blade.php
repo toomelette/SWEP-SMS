@@ -25,107 +25,107 @@
 
 @section('content')
     
-      <section class="content-header">
-          <h1>User List</h1>
-      </section>
+  <section class="content-header">
+      <h1>User List</h1>
+  </section>
 
-      <section class="content">
-        
-        {{-- Form Start --}}
-        <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.user.index') }}">
+  <section class="content">
+    
+    {{-- Form Start --}}
+    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.user.index') }}">
 
-        {{-- Advance Filters --}}
-        {!! HtmlHelper::filter_open() !!}
+    {{-- Advance Filters --}}
+    {!! HtmlHelper::filter_open() !!}
 
-          {!! FormHelper::select_static_for_filter(
-            '2', 'ol', 'Login Status', old('ol'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', ''
-          ) !!}
+      {!! FormHelper::select_static_for_filter(
+        '2', 'ol', 'Login Status', old('ol'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', ''
+      ) !!}
 
-          {!! FormHelper::select_static_for_filter(
-            '2', 'a', 'User Status', old('a'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', ''
-          ) !!}
+      {!! FormHelper::select_static_for_filter(
+        '2', 'a', 'User Status', old('a'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', ''
+      ) !!}
 
-        {!! HtmlHelper::filter_close('submit_user_filter') !!}
+    {!! HtmlHelper::filter_close('submit_user_filter') !!}
 
 
-        <div class="box" id="pjax-container">
+    <div class="box" id="pjax-container" style="overflow-x:auto;">
 
-          {{-- Table Search --}}        
-          <div class="box-header with-border">
-            {!! HtmlHelper::table_search(route('dashboard.user.index')) !!}
-          </div>
+      {{-- Table Search --}}        
+      <div class="box-header with-border">
+        {!! HtmlHelper::table_search(route('dashboard.user.index')) !!}
+      </div>
 
-        {{-- Form End --}}  
-        </form>
+    {{-- Form End --}}  
+    </form>
 
-          {{-- Table Grid --}}        
-          <div class="box-body no-padding">
-            <table class="table table-bordered">
-              <tr>
-                <th>@sortablelink('username', 'Username')</th>
-                <th>@sortablelink('firstname', 'Name')</th>
-                <th>@sortablelink('is_online', 'Online')</th>
-                <th>@sortablelink('is_active', 'Active')</th>
-                <th style="width: 150px">Action</th>
-              </tr>
-              @foreach($users as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions)!!}>
-                  <td>{{ $data->username }}</td>
-                  <td>{{ $data->fullname }}</td>
-                  <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
-                  <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
-                  <td> 
-                    <select id="action" class="form-control input-sm">
-                      <option value="">Select</option>
-                      <option data-type="1" data-url="{{ route('dashboard.user.show', $data->slug) }}">Details</option>
-                      <option data-type="1" data-url="{{ route('dashboard.user.edit', $data->slug) }}">Edit</option>
-                      <option data-type="0" data-action="delete" data-url="{{ route('dashboard.user.destroy', $data->slug) }}">Delete</option>
-                      
-                      @if($data->is_active == 1 && $data->is_online == 1)
-                        <option data-type="0" data-action="logout" data-url="{{ route('dashboard.user.logout', $data->slug) }}">Logout</option>
-                      @endif 
-                      
-                      @if($data->is_active == 0)
-                        <option data-type="0" data-action="activate" data-url="{{ route('dashboard.user.activate', $data->slug) }}">Activate</option>
-                      @else
-                        <option data-type="0" data-action="deactivate" data-url="{{ route('dashboard.user.deactivate', $data->slug) }}">Deactivate</option>
-                      @endif
+      {{-- Table Grid --}}        
+      <div class="box-body no-padding">
+        <table class="table table-bordered">
+          <tr>
+            <th>@sortablelink('username', 'Username')</th>
+            <th>@sortablelink('firstname', 'Name')</th>
+            <th>@sortablelink('is_online', 'Online')</th>
+            <th>@sortablelink('is_active', 'Active')</th>
+            <th style="width: 150px">Action</th>
+          </tr>
+          @foreach($users as $data) 
+            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions)!!}>
+              <td>{{ $data->username }}</td>
+              <td>{{ $data->fullname }}</td>
+              <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
+              <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
+              <td> 
+                <select id="action" class="form-control input-sm">
+                  <option value="">Select</option>
+                  <option data-type="1" data-url="{{ route('dashboard.user.show', $data->slug) }}">Details</option>
+                  <option data-type="1" data-url="{{ route('dashboard.user.edit', $data->slug) }}">Edit</option>
+                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.user.destroy', $data->slug) }}">Delete</option>
+                  
+                  @if($data->is_active == 1 && $data->is_online == 1)
+                    <option data-type="0" data-action="logout" data-url="{{ route('dashboard.user.logout', $data->slug) }}">Logout</option>
+                  @endif 
+                  
+                  @if($data->is_active == 0)
+                    <option data-type="0" data-action="activate" data-url="{{ route('dashboard.user.activate', $data->slug) }}">Activate</option>
+                  @else
+                    <option data-type="0" data-action="deactivate" data-url="{{ route('dashboard.user.deactivate', $data->slug) }}">Deactivate</option>
+                  @endif
 
-                      <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
+                  <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
 
-                    </select>
-                  </td>
-                </tr>
-                @endforeach
-              </table>
-          </div>
+                </select>
+              </td>
+            </tr>
+            @endforeach
+          </table>
+      </div>
 
-          @if($users->isEmpty())
-            <div style="padding :5px;">
-              <center><h4>No Records found!</h4></center>
-            </div>
-          @endif
-
-          <div class="box-footer">
-            {!! HtmlHelper::table_counter($users) !!}
-            {!! $users->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
-          </div>
-
+      @if($users->isEmpty())
+        <div style="padding :5px;">
+          <center><h4>No Records found!</h4></center>
         </div>
+      @endif
 
-    </section>
+      <div class="box-footer">
+        {!! HtmlHelper::table_counter($users) !!}
+        {!! $users->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
+      </div>
 
-    <form id="from_user_logout" method="POST" style="display: none;">
-      @csrf
-    </form>
+    </div>
 
-    <form id="from_user_activate" method="POST" style="display: none;">
-      @csrf
-    </form>
+  </section>
 
-    <form id="from_user_deactivate" method="POST" style="display: none;">
-      @csrf
-    </form>
+  <form id="from_user_logout" method="POST" style="display: none;">
+    @csrf
+  </form>
+
+  <form id="from_user_activate" method="POST" style="display: none;">
+    @csrf
+  </form>
+
+  <form id="from_user_deactivate" method="POST" style="display: none;">
+    @csrf
+  </form>
 
 @endsection
 

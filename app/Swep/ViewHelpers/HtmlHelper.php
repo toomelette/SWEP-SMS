@@ -185,7 +185,7 @@ class HtmlHelper{
 
     	foreach($route as $data){
 	    	if(self::previous_route() == $data){
-	        	return '<a href="'. route($data) .'" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>';
+	        	return '<a href="'. URL::previous() .'" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i> Back</a>';
 	    	}
     	}
 

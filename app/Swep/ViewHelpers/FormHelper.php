@@ -86,7 +86,7 @@ class FormHelper{
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input id="'. $key .'" name="'. $key .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control">
+                  <input id="'. $key .'" name="'. $key .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control" placeholder="mm/dd/yy">
                 </div>
                 '. self::error_message($error_has, $error_first) .'
               </div>';

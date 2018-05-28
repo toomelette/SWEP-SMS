@@ -10,71 +10,73 @@
 
 @endphp
 
+
 @extends('layouts.admin-master')
+
 
 @section('content')
     
-      <section class="content-header">
-          <h1>Account List</h1>
-      </section>
+  <section class="content-header">
+      <h1>Account List</h1>
+  </section>
 
-      <section class="content">
+  <section class="content">
 
-        {{-- Form Start --}}
-        <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.account.index') }}">
+    {{-- Form Start --}}
+    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.account.index') }}">
 
-        <div class="box" id="pjax-container">
+    <div class="box" id="pjax-container" style="overflow-x:auto;">
 
-          {{-- Table Search --}}        
-          <div class="box-header with-border">
-            {!! HtmlHelper::table_search(route('dashboard.account.index')) !!}
-          </div>
+      {{-- Table Search --}}        
+      <div class="box-header with-border">
+        {!! HtmlHelper::table_search(route('dashboard.account.index')) !!}
+      </div>
 
-        {{-- Form End --}}  
-        </form>
+    {{-- Form End --}}  
+    </form>
 
-          {{-- Table Grid --}}        
-          <div class="box-body no-padding">
-            <table class="table table-bordered">
-              <tr>
-                <th>@sortablelink('account_code', 'Account Code')</th>
-                <th>@sortablelink('department_name', 'Department')</th>
-                <th>@sortablelink('description', 'Description')</th>
-                <th>@sortablelink('project_in_charge', 'Project in Charge')</th>
-                <th style="width: 150px">Action</th>
-              </tr>
-              @foreach($accounts as $data) 
-                <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
-                  <td>{{ $data->account_code }}</td>
-                  <td>{{ $data->department_name }}</td>
-                  <td>{{ $data->description }}</td>
-                  <td>{{ $data->project_in_charge }}</td>
-                  <td> 
-                    <select id="action" class="form-control input-sm">
-                      <option value="">Select</option>
-                      <option data-type="1" data-url="{{ route('dashboard.account.edit', $data->slug) }}">Edit</option>
-                      <option data-type="0" data-action="delete" data-url="{{ route('dashboard.account.destroy', $data->slug) }}">Delete</option>
-                    </select>
-                  </td>
-                </tr>
-                @endforeach
-              </table>
-          </div>
+      {{-- Table Grid --}}        
+      <div class="box-body no-padding">
+        <table class="table table-bordered">
+          <tr>
+            <th>@sortablelink('account_code', 'Account Code')</th>
+            <th>@sortablelink('department_name', 'Department')</th>
+            <th>@sortablelink('description', 'Description')</th>
+            <th>@sortablelink('project_in_charge', 'Project in Charge')</th>
+            <th style="width: 150px">Action</th>
+          </tr>
+          @foreach($accounts as $data) 
+            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+              <td>{{ $data->account_code }}</td>
+              <td>{{ $data->department_name }}</td>
+              <td>{{ $data->description }}</td>
+              <td>{{ $data->project_in_charge }}</td>
+              <td> 
+                <select id="action" class="form-control input-sm">
+                  <option value="">Select</option>
+                  <option data-type="1" data-url="{{ route('dashboard.account.edit', $data->slug) }}">Edit</option>
+                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.account.destroy', $data->slug) }}">Delete</option>
+                </select>
+              </td>
+            </tr>
+            @endforeach
+          </table>
+      </div>
 
-          @if($accounts->isEmpty())
-            <div style="padding :5px;">
-              <center><h4>No Records found!</h4></center>
-            </div>
-          @endif
-
-          <div class="box-footer">
-            {!! HtmlHelper::table_counter($accounts) !!}
-            {!! $accounts->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
-          </div>
-
+      @if($accounts->isEmpty())
+        <div style="padding :5px;">
+          <center><h4>No Records found!</h4></center>
         </div>
+      @endif
 
-    </section>
+      <div class="box-footer">
+        {!! HtmlHelper::table_counter($accounts) !!}
+        {!! $accounts->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
+      </div>
+
+    </div>
+
+</section>
 
 @endsection
 
