@@ -54,14 +54,16 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.department_unit.create',
                         'dashboard.department_unit.edit',
                         'dashboard.account.create',
-                        'dashboard.account.edit',], 'App\Swep\ViewComposers\DepartmentComposer');
+                        'dashboard.account.edit',
+                        'dashboard.employee.create'], 'App\Swep\ViewComposers\DepartmentComposer');
 
 
         // DEPARTMENT UNITS
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
-                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
+                        'dashboard.disbursement_voucher.user_index',
+                        'dashboard.employee.create'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         //ACCOUNTS

@@ -211,11 +211,6 @@
     @endif
 
 
-    {!! JSHelper::datepicker_caller('date_of_filing', 'mm/dd/yy', 'bottom') !!}
-    {!! JSHelper::datepicker_caller('working_days_date_from', 'mm/dd/yy', 'top') !!}
-    {!! JSHelper::datepicker_caller('working_days_date_to', 'mm/dd/yy', 'top') !!}
-
-
     @if($errors->has('type_vacation') || $errors->has('type_vacation_others_specific') || old('type_vacation') || old('type_vacation_others_specific') || $leave_application->type == 'T1001')
       $('#type_vacation_div').show();
       $('#type_others_div').hide();

@@ -255,10 +255,6 @@
         $("#dv_set_no_form").submit();
     });
 
-    {{-- Date Picker --}}
-    {!! JSHelper::datepicker_caller('df', 'mm/dd/yy', 'bottom') !!}
-    {!! JSHelper::datepicker_caller('dt', 'mm/dd/yy', 'bottom') !!}
-
   </script>
     
 @endsection

@@ -60,7 +60,7 @@
               <h3 class="box-title">Educational Background</h3>
             </div>
             <div class="box-body">
-              <dl class="dl-horizontal" style="padding-bottom:60px;">
+              <dl class="dl-horizontal" style="padding-bottom:22px;">
                 <dt>UnderGrad:</dt>
                 <dd>{{ $employee->undergrad }}</dd>
                 <dt>College:</dt>
