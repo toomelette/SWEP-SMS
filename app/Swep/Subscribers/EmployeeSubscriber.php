@@ -34,6 +34,8 @@ class EmployeeSubscriber extends BaseSubscriber{
 
     public function onStore(){
 
+        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
+        $this->session->flash('EMPLOYEE_CREATE_SUCCESS', 'The Employee has been successfully created!');
 
     }
 

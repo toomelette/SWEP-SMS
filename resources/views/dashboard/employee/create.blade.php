@@ -50,19 +50,19 @@
                 <div class="row">
                     
                   {!! FormHelper::textbox(
-                     '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), ''
+                     '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '4', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), ''
+                     '4', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), ''
+                     '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '8', 'address', 'text', 'Address *', 'Address', old('address'), $errors->has('address'), $errors->first('address'), ''
+                     '8', 'address', 'text', 'Address *', 'Address', old('address'), $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
                   ) !!}
 
                   {!! FormHelper::datepicker('4', 'dob',  'Date of Birth *', old('dob'), $errors->has('dob'), $errors->first('dob')) !!}
@@ -76,7 +76,7 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '2', 'bloodtype', 'text', 'Blood Type', 'Blood Type', old('bloodtype'), $errors->has('bloodtype'), $errors->first('bloodtype'), ''
+                     '2', 'bloodtype', 'text', 'Blood Type', 'Blood Type', old('bloodtype'), $errors->has('bloodtype'), $errors->first('bloodtype'), 'data-transform="uppercase"'
                   ) !!}
 
                   {!! FormHelper::select_static(
@@ -176,8 +176,8 @@
                                       <i class="fa fa-calendar"></i>
                                     </div>
                                     <input name="row[0][datefrom]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['datefrom']) }}">
-                                    <small class="text-danger">{{ $errors->first('row.'. $key .'.datefrom') }}</small>
                                   </div>
+                                  <small class="text-danger">{{ $errors->first('row.'. $key .'.datefrom') }}</small>
                                 </div>
                               </td>
 
@@ -189,8 +189,8 @@
                                       <i class="fa fa-calendar"></i>
                                     </div>
                                     <input name="row[0][dateto]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['dateto']) }}">
-                                    <small class="text-danger">{{ $errors->first('row.'. $key .'.dateto') }}</small>
                                   </div>
+                                  <small class="text-danger">{{ $errors->first('row.'. $key .'.dateto') }}</small>
                                 </div>
                               </td>
 
@@ -316,12 +316,20 @@
               <div class="tab-pane" id="ed">
                 <div class="row">
 
-                  {!! FormHelper::select_dynamic(
-                    '3', 'dept', 'Department *', old('dept'), $global_departments_all, 'name', 'name', $errors->has('dept'), $errors->first('dept'), '', ''
+                  {!! FormHelper::textbox(
+                    '3', 'empno', 'text', 'Employee No. *', 'Employee No.', old('empno'), $errors->has('empno'), $errors->first('empno'), ''
+                  ) !!}
+
+                  {!! FormHelper::select_static(
+                    '3', 'active', 'Status', old('active'), ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'INACTIVE'], $errors->has('active'), $errors->first('active'), '', ''
                   ) !!}
 
                   {!! FormHelper::select_dynamic(
-                    '3', 'division', 'Division *', old('division'), $global_department_units_all, 'name', 'name', $errors->has('division'), $errors->first('division'), '', ''
+                    '3', 'dept', 'Department *', old('dept'), $global_departments_all, 'department_id', 'name', $errors->has('dept'), $errors->first('dept'), '', ''
+                  ) !!}
+
+                  {!! FormHelper::select_dynamic(
+                    '3', 'division', 'Division *', old('division'), $global_department_units_all, 'department_unit_id', 'name', $errors->has('division'), $errors->first('division'), '', ''
                   ) !!}
 
                   {!! FormHelper::select_static(
@@ -329,7 +337,7 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                    '3', 'itemno', 'text', 'Item No.', 'Item No.', old('itemno'), $errors->has('itemno'), $errors->first('itemno'), ''
+                    '3', 'itemno', 'text', 'Item No. *', 'Item No.', old('itemno'), $errors->has('itemno'), $errors->first('itemno'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
@@ -339,6 +347,8 @@
                   {!! FormHelper::textbox(
                     '3', 'salgrade', 'text', 'Salary Grade *', 'Salary Grade', old('salgrade'), $errors->has('salgrade'), $errors->first('salgrade'), ''
                   ) !!}
+
+                  <div class="col-md-12"></div>
 
                   {!! FormHelper::textbox(
                     '3', 'stepinc', 'text', 'Step Increment', 'Step Increment', old('stepinc'), $errors->has('stepinc'), $errors->first('stepinc'), ''
@@ -356,10 +366,12 @@
                     '3', 'pera', 'text', 'PERA', 'PERA', old('pera'), $errors->has('pera'), $errors->first('pera'), ''
                   ) !!}
 
+                  <div class="col-md-12"></div>
+
                   {!! FormHelper::textbox_numeric(
                     '3', 'foodsubsi', 'text', 'Food Subsidy', 'Food Subsidy', old('foodsubsi'), $errors->has('foodsubsi'), $errors->first('foodsubsi'), ''
                   ) !!}
-
+                  
                   {!! FormHelper::textbox_numeric(
                     '3', 'allow1', 'text', 'RA', 'RA', old('allow1'), $errors->has('allow1'), $errors->first('allow1'), ''
                   ) !!}
@@ -368,9 +380,11 @@
                     '3', 'allow2', 'text', 'TA', 'TA', old('allow2'), $errors->has('allow2'), $errors->first('allow2'), ''
                   ) !!}
 
-                  {!! FormHelper::datepicker('3', 'govserv',  'First Day to serve Government', old('govserv'), $errors->has('govserv'), $errors->first('govserv')) !!}
+                  {!! FormHelper::datepicker('3', 'govserv',  'First Day to serve Government *', old('govserv'), $errors->has('govserv'), $errors->first('govserv')) !!}
 
-                  {!! FormHelper::datepicker('3', 'firstday',  'First Day in SRA', old('firstday'), $errors->has('firstday'), $errors->first('firstday')) !!}
+                  <div class="col-md-12"></div>
+
+                  {!! FormHelper::datepicker('3', 'firstday',  'First Day in SRA *', old('firstday'), $errors->has('firstday'), $errors->first('firstday')) !!}
 
                   {!! FormHelper::datepicker('3', 'apptdate',  'Appointment Date', old('apptdate'), $errors->has('apptdate'), $errors->first('apptdate')) !!}
 
@@ -449,7 +463,7 @@
     @endif
 
 
-    {!! JSHelper::ajax_select_to_select('dept', 'division', '/api/select_response_department_units_from_department/', 'name', 'name') !!}
+    {!! JSHelper::ajax_select_to_select('dept', 'division', '/api/select_response_department_units_from_department/', 'department_unit_id', 'name') !!}
 
 
     {{-- ADD ROW --}}

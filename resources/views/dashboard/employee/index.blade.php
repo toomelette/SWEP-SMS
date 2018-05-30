@@ -19,7 +19,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Disbursement Voucher List</h1>
+      <h1>Employee List</h1>
   </section>
 
   <section class="content">

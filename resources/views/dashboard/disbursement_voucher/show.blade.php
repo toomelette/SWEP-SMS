@@ -31,7 +31,7 @@
 
 
         {{-- DV Info --}}
-        <div class="col-md-6">
+        <div class="col-md-8">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Voucher Info</h3>
@@ -78,7 +78,7 @@
 
 
         {{-- Progress --}}
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Progress</h3>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\EmployeeService;
+use App\Http\Requests\EmployeeFormRequest;
 
 
 
@@ -44,9 +45,9 @@ class EmployeeController extends Controller{
     
 
 
-    public function store(Request $request){
+    public function store(EmployeeFormRequest $request){
 
-    	
+    	return $this->employee->store($request);
         
     }
 

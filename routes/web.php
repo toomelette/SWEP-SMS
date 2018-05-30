@@ -78,17 +78,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 // Route::get('/dashboard/test', function(){
 
-// 	$emp = Illuminate\Support\Str::random(16);
+// 	DB::table('employee_trainings')->update(['employee_training_id' => null, 'employee_id' => null,]);
 
-// 	dd($emp);
-	
-// 	foreach($emp as $data){
-
-// 		$ne = App\Models\Employee::find($data->id);
-// 		$ne->slug = Illuminate\Support\Str::random(16);
-// 		$ne->save();
-
-// 	}
-
-	    
 // });
