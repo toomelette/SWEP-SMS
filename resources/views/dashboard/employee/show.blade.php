@@ -115,13 +115,13 @@
                 <dt>TA:</dt>
                 <dd>{{ number_format($employee->allow2, 2) }}</dd>
                 <dt>Government Service:</dt>
-                <dd>{!! $employee->govserv == '' ? '' : Carbon::parse($employee->govserv)->format('M d, Y') !!}</dd>
+                <dd>{{ $employee->govserv == '' ? '' : Carbon::parse($employee->govserv)->format('M d, Y') }}</dd>
                 <dt>First Day:</dt>
-                <dd>{{ Carbon::parse($employee->firstday)->format('M d, Y') }}</dd>
+                <dd>{{ $employee->firstday == '' ? '' : Carbon::parse($employee->firstday)->format('M d, Y') }}</dd>
                 <dt>Appointment Date:</dt>
-                <dd>{{ Carbon::parse($employee->apptdate)->format('M d, Y') }}</dd>
+                <dd>{{ $employee->apptdate != null ? Carbon::parse($employee->apptdate)->format('M d, Y') : ''}}</dd>
                 <dt>Adjustment Date:</dt>
-                <dd>{{ Carbon::parse($employee->adjdate)->format('M d, Y') }}</dd>
+                <dd>{{ $employee->adjdate != null ? Carbon::parse($employee->adjdate)->format('M d, Y') : ''}}</dd>
               </dl>
             </div>
           </div>

@@ -40,6 +40,10 @@
         
         <div class="box-body">
 
+          @if($errors->all())
+            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', 'Please check if there are errors on other fields.') !!}
+          @endif
+          
           {{-- Navigation --}}
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -51,6 +55,7 @@
             </ul>
 
             <div class="tab-content">
+
 
 
               {{-- Personal Info --}}
@@ -93,6 +98,7 @@
 
                 </div>
               </div>
+
 
 
 
@@ -163,7 +169,7 @@
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row[0][topics]" class="form-control" placeholder="Topics" value="{{ $value['topics'] }}">
+                                  <input type="text" name="row[{{ $key }}][topics]" class="form-control" placeholder="Topics" value="{{ $value['topics'] }}">
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.topics') }}</small>
                                 </div>
                               </td>
@@ -171,7 +177,7 @@
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row[0][conductedby]" class="form-control" placeholder="Conducted by" value="{{ $value['conductedby'] }}">
+                                  <input type="text" name="row[{{ $key }}][conductedby]" class="form-control" placeholder="Conducted by" value="{{ $value['conductedby'] }}">
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.conductedby') }}</small>
                                 </div>
                               </td>
@@ -183,7 +189,7 @@
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="row[0][datefrom]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['datefrom']) }}">
+                                    <input name="row[{{ $key }}][datefrom]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['datefrom']) }}">
                                   </div>
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.datefrom') }}</small>
                                 </div>
@@ -196,7 +202,7 @@
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="row[0][dateto]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['dateto']) }}">
+                                    <input name="row[{{ $key }}][dateto]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['dateto']) }}">
                                   </div>
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.dateto') }}</small>
                                 </div>
@@ -205,7 +211,7 @@
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row[0][hours]" class="form-control" placeholder="Hours" value="{{ $value['hours'] }}">
+                                  <input type="text" name="row[{{ $key }}][hours]" class="form-control" placeholder="Hours" value="{{ $value['hours'] }}">
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.hours') }}</small>
                                 </div>
                               </td>
@@ -213,7 +219,7 @@
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row[0][venue]" class="form-control" placeholder="Venue" value="{{ $value['venue'] }}">
+                                  <input type="text" name="row[{{ $key }}][venue]" class="form-control" placeholder="Venue" value="{{ $value['venue'] }}">
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.venue') }}</small>
                                 </div>
                               </td>
@@ -221,7 +227,7 @@
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row[0][remarks]" class="form-control" placeholder="Remarks" value="{{ $value['remarks'] }}">
+                                  <input type="text" name="row[{{ $key }}][remarks]" class="form-control" placeholder="Remarks" value="{{ $value['remarks'] }}">
                                   <small class="text-danger">{{ $errors->first('row.'. $key .'.remarks') }}</small>
                                 </div>
                               </td>

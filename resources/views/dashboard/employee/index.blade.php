@@ -1,6 +1,8 @@
 @php
 
-  $table_sessions = [Session::get('EMPLOYEE_UPDATE_SUCCESS_SLUG')];
+  $table_sessions = [
+                      Session::get('EMPLOYEE_UPDATE_SUCCESS_SLUG')
+                    ];
 
   $appended_requests = [
                         'q'=> Request::get('q'),
@@ -114,7 +116,6 @@
   <script type="text/javascript">
 
     {!! JSHelper::modal_confirm_delete_caller('emp_delete') !!}
-
 
     {!! JSHelper::table_action_rule() !!}
 
