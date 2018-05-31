@@ -55,7 +55,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.department_unit.edit',
                         'dashboard.account.create',
                         'dashboard.account.edit',
-                        'dashboard.employee.create'], 'App\Swep\ViewComposers\DepartmentComposer');
+                        'dashboard.employee.create',
+                        'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentComposer');
 
 
         // DEPARTMENT UNITS
@@ -63,7 +64,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
                         'dashboard.disbursement_voucher.user_index',
-                        'dashboard.employee.create'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
+                        'dashboard.employee.create',
+                        'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         //ACCOUNTS

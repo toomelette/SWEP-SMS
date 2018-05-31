@@ -65,16 +65,16 @@ class EmployeeController extends Controller{
 
     public function edit($slug){
 
-    	
+    	return $this->employee->edit($slug);
         
     }
 
 
 
 
-    public function update(Request $request, $slug){
+    public function update(EmployeeFormRequest $request, $slug){
 
-    	
+    	return $this->employee->update($request, $slug);
 
     }
 
@@ -83,7 +83,7 @@ class EmployeeController extends Controller{
 
     public function destroy($slug){
 
-    	
+    	return $this->employee->destroy($slug);
 
     }
 

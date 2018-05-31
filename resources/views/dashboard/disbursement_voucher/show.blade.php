@@ -84,7 +84,7 @@
               <h3 class="box-title">Progress</h3>
             </div>
             <div class="box-body">
-              <dl class="dl-horizontal" style="padding-bottom:230px;">
+              <dl class="dl-horizontal">
                 <dt>Filed:</dt>
                 <dd>{{ $disbursement_voucher->created_at != null ? Carbon::parse($disbursement_voucher->created_at)->format('M d, Y h:i A') : '' }}</dd>
                 <dt>Processed:</dt>

@@ -1,6 +1,6 @@
 @php
 
-  $table_sessions = [];
+  $table_sessions = [Session::get('EMPLOYEE_UPDATE_SUCCESS_SLUG')];
 
   $appended_requests = [
                         'q'=> Request::get('q'),
@@ -113,19 +113,18 @@
 
   <script type="text/javascript">
 
-    {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('emp_delete') !!}
 
 
-    {{-- FORM VARIABLES RULE --}}
     {!! JSHelper::table_action_rule() !!}
 
+    @if(Session::has('EMPLOYEE_UPDATE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('EMPLOYEE_UPDATE_SUCCESS')) !!}
+    @endif
 
-    {{-- DV DELETE TOAST --}}
     @if(Session::has('EMPLOYEE_DELETE_SUCCESS'))
       {!! JSHelper::toast(Session::get('EMPLOYEE_DELETE_SUCCESS')) !!}
     @endif
-
 
   </script>
     

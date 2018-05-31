@@ -88,6 +88,10 @@
             </div>
             <div class="box-body">
               <dl class="dl-horizontal">
+                <dt>Employee No:</dt>
+                <dd>{{ $employee->empno }}</dd>
+                <dt>Status:</dt>
+                <dd>{{ $employee->active }}</dd>
                 <dt>Position:</dt>
                 <dd>{{ $employee->position }}</dd>
                 <dt>Salary Grade:</dt>
@@ -133,7 +137,7 @@
               <h3 class="box-title">Personal ID's</h3>
             </div>
             <div class="box-body">
-              <dl class="dl-horizontal" style="padding-bottom:200px;">
+              <dl class="dl-horizontal" style="padding-bottom:240px;">
                 <dt>PHIC:</dt>
                 <dd>{{ $employee->phic }}</dd>
                 <dt>TIN:</dt>

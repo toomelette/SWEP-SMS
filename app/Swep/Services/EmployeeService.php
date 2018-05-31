@@ -114,17 +114,8 @@ class EmployeeService extends BaseService{
 
             foreach ($rows as $row) {
                 
-                $et = new EmployeeTraining;
-                $et->employee_id = $employee->employee_id;
-                $et->empno = $employee->empno;
-                $et->topics = $row['topics'];
-                $et->conductedby = $row['conductedby'];
-                $et->datefrom =  $this->dataTypeHelper->date_in($row['datefrom']);
-                $et->dateto =  $this->dataTypeHelper->date_in($row['dateto']);
-                $et->venue = $row['venue'];
-                $et->hours = $row['hours'];
-                $et->remarks = $row['remarks'];
-                $et->save();
+                $employee_training = new EmployeeTraining;
+                $this->storeEmployeeTraining($employee_training, $row, $employee);
 
             }
         }
@@ -151,7 +142,8 @@ class EmployeeService extends BaseService{
 
     public function edit($slug){
 
-
+        $employee = $this->employeeBySlug($slug);
+        return view('dashboard.employee.edit')->with('employee', $employee);
 
     }
 
@@ -162,7 +154,71 @@ class EmployeeService extends BaseService{
 
     public function update($request, $slug){
 
+        $rows = $request->row;
 
+        $employee = $this->employeeBySlug($slug);
+
+        $employee->department_id = $request->dept;
+        $employee->department_unit_id = $request->division;
+        $employee->empno = $request->empno;
+        $employee->empname = strtoupper($request->lastname .', '. $request->firstname .' '. substr($request->middlename , 0, 1) .'.');
+        $employee->lastname = $request->lastname;
+        $employee->firstname = $request->firstname;
+        $employee->middlename = $request->middlename;
+        $employee->address = $request->address;
+        $employee->dob = $this->dataTypeHelper->date_in($request->dob);
+        $employee->pob = $request->pob;
+        $employee->gender = $request->gender;
+        $employee->bloodtype = $request->bloodtype;
+        $employee->civilstat = $request->civilstat;
+        $employee->undergrad = $request->undergrad;
+        $employee->graduate1 = $request->graduate1;
+        $employee->graduate2 = $request->graduate2;
+        $employee->postgrad1 = $request->postgrad1;
+        $employee->eligibility = $request->eligibility;
+        $employee->eligibilitylevel = $request->eligibilitylevel;
+        $employee->dept = $request->dept;
+        $employee->division = $request->division;
+        $employee->position = $request->position;
+        $employee->salgrade = $request->salgrade;
+        $employee->stepinc = $request->stepinc;
+        $employee->apptstat = $request->apptstat;
+        $employee->itemno = $request->itemno;
+        $employee->monthlybasic = $this->dataTypeHelper->string_to_num($request->monthlybasic);
+        $employee->aca = $this->dataTypeHelper->string_to_num($request->aca);
+        $employee->pera = $this->dataTypeHelper->string_to_num($request->pera);
+        $employee->foodsubsi = $this->dataTypeHelper->string_to_num($request->foodsubsi);
+        $employee->allow1 = $this->dataTypeHelper->string_to_num($request->allow1);
+        $employee->allow2 = $this->dataTypeHelper->string_to_num($request->allow2);
+        $employee->govserv = $this->dataTypeHelper->date_in($request->govserv);
+        $employee->firstday = $this->dataTypeHelper->date_in($request->firstday);
+        $employee->apptdate = $this->dataTypeHelper->date_in($request->apptdate);
+        $employee->adjdate = $this->dataTypeHelper->date_in($request->adjdate);
+        $employee->phic = $request->phic;
+        $employee->tin = $request->tin;
+        $employee->hdmf = $request->hdmf;
+        $employee->gsis = $request->gsis;
+        $employee->active = $request->active;
+        $employee->hdmfpremiums = $this->dataTypeHelper->string_to_num($request->hdmfpremiums);
+        $employee->updated_at = $this->carbon->now();
+        $employee->ip_updated = request()->ip();
+        $employee->user_updated = $this->auth->user()->username;
+        $employee->save();
+
+        $employee->employeeTraining()->delete();
+
+        if(count($rows) > 0){
+
+            foreach ($rows as $row) {
+                
+                $employee_training = new EmployeeTraining;
+                $this->storeEmployeeTraining($employee_training, $row, $employee);
+
+            }
+        }
+
+        $this->event->fire('employee.update', $employee);
+        return redirect()->route('dashboard.employee.index');
 
     }
 
@@ -173,6 +229,12 @@ class EmployeeService extends BaseService{
 
     public function destroy($slug){
 
+        $employee = $this->employeeBySlug($slug);
+        $employee->delete();
+        $employee->employeeTraining()->delete();
+        
+        $this->event->fire('employee.destroy', $employee);
+        return redirect()->route('dashboard.employee.index');
 
     }
 
@@ -192,6 +254,23 @@ class EmployeeService extends BaseService{
 
     }
 
+
+
+
+    public function storeEmployeeTraining($employee_training, $row, $employee){
+
+        $employee_training->employee_id = $employee->employee_id;
+        $employee_training->empno = $employee->empno;
+        $employee_training->topics = $row['topics'];
+        $employee_training->conductedby = $row['conductedby'];
+        $employee_training->datefrom =  $this->dataTypeHelper->date_in($row['datefrom']);
+        $employee_training->dateto =  $this->dataTypeHelper->date_in($row['dateto']);
+        $employee_training->venue = $row['venue'];
+        $employee_training->hours = $row['hours'];
+        $employee_training->remarks = $row['remarks'];
+        $employee_training->save();
+
+    }
 
 
 

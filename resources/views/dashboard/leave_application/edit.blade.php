@@ -54,7 +54,7 @@
              '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : $leave_application->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
           ) !!} 
 
-          {!! FormHelper::datepicker('4', 'date_of_filing',  'Date of Filing *', old('date_of_filing') ? old('date_of_filing') :$date_of_filing, $errors->has('date_of_filing'), $errors->first('date_of_filing')) !!}
+          {!! FormHelper::datepicker('4', 'date_of_filing',  'Date of Filing *', old('date_of_filing') ? old('date_of_filing') : $date_of_filing, $errors->has('date_of_filing'), $errors->first('date_of_filing')) !!}
           
           {!! FormHelper::textbox(
              '4', 'position', 'text', 'Position *', 'Position', old('position') ? old('position') : $leave_application->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
