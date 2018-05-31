@@ -50,9 +50,13 @@ class UserMenu extends Model{
 
         if($usermenu != null){
 
-            $num = str_replace('UM', '', $usermenu->user_menu_id) + 1;
+            if($usermenu->user_menu_id != null){
+
+                $num = str_replace('UM', '', $usermenu->user_menu_id) + 1;
+                
+                $id = 'UM' . $num;
             
-            $id = 'UM' . $num;
+            }
         
         }
         

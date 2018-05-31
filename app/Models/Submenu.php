@@ -34,7 +34,10 @@ class Submenu extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('name', 'route', 'is_nav', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 

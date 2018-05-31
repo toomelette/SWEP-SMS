@@ -16,7 +16,7 @@ class DisbursementVoucher extends Model{
 
 	protected $dates = ['processed_at', 'checked_at', 'created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
-    public $sortable = ['doc_no', 'dv_no', 'payee', 'account_code', 'date'];
+    public $sortable = ['doc_no', 'dv_no', 'payee', 'date'];
     
 	public $timestamps = false;
 
@@ -103,6 +103,8 @@ class DisbursementVoucher extends Model{
     }
 
 
+
+
     public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)->firstOrFail();
@@ -110,16 +112,27 @@ class DisbursementVoucher extends Model{
     }
 
     
+
+
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('user_id', 'doc_no', 'dv_no', 'payee', 'date', 'processed_at', 'checked_at', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
 
+
+
     public function scopePopulateByUser($query, $id){
 
-        return $query->where('user_id', $id)->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('doc_no', 'payee', 'date', 'processed_at', 'checked_at', 'slug')
+                     ->where('user_id', $id)
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -135,15 +148,21 @@ class DisbursementVoucher extends Model{
 
         if($dv != null){
 
-            $num = str_replace('DV', '', $dv->dv_id) + 1;
+            if($dv->dv_id != null){
+
+                $num = str_replace('DV', '', $dv->dv_id) + 1;
+                
+                $id = 'DV' . $num;
             
-            $id = 'DV' . $num;
+            }
         
         }
         
         return $id;
         
     }
+
+
 
 
 

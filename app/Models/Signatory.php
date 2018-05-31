@@ -42,7 +42,10 @@ class Signatory extends Model{
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('employee_name', 'employee_position', 'type', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -77,10 +80,14 @@ class Signatory extends Model{
         $signatory = $this->select('signatory_id')->orderBy('signatory_id', 'desc')->first();
 
         if($signatory != null){
-
-            $num = str_replace('S', '', $signatory->signatory_id) + 1;
             
-            $id = 'S' . $num;
+            if($signatory->signatory_id != null){
+
+                $num = str_replace('S', '', $signatory->signatory_id) + 1;
+                
+                $id = 'S' . $num;
+            
+            }
         
         }
         

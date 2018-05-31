@@ -18,7 +18,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Leave Application List</h1>
+      <h1>My Leave Applications</h1>
   </section>
 
   <section class="content">
@@ -68,14 +68,12 @@
       <div class="box-body no-padding">
         <table class="table table-bordered">
           <tr>
-            <th>@sortablelink('firstname', 'Name')</th>
             <th>@sortablelink('type', 'Type of Leave')</th>
             <th>@sortablelink('date_of_filing', 'Date of Filing')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($leave_applications as $data) 
             <tr>
-              <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
               <td>
                 @foreach($types as $name => $key)
                   @if($key == $data->type)

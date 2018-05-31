@@ -73,7 +73,10 @@ class Menu extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('name', 'route', 'icon', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -100,9 +103,13 @@ class Menu extends Model{
 
         if($menu != null){
 
-            $num = str_replace('M', '', $menu->menu_id) + 1;
+            if($menu->menu_id != null){
+
+                $num = str_replace('M', '', $menu->menu_id) + 1;
+                
+                $id = 'M' . $num;
             
-            $id = 'M' . $num;
+            }
         
         }
         

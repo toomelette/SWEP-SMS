@@ -111,9 +111,13 @@ class User extends Authenticatable{
 
         if($user != null){
 
-            $num = str_replace('U', '', $user->user_id) + 1;
+            if($user->user_id != null){
+
+                $num = str_replace('U', '', $user->user_id) + 1;
+                
+                $id = 'U' . $num;
             
-            $id = 'U' . $num;
+            }
         
         }
         
@@ -205,7 +209,10 @@ class User extends Authenticatable{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('username', 'firstname', 'middlename', 'lastname', 'is_online', 'is_active', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 

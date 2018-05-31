@@ -50,7 +50,10 @@ class FundSource extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('description', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -84,9 +87,13 @@ class FundSource extends Model{
 
         if($fund_source != null){
 
-            $num = str_replace('FS', '', $fund_source->fund_source_id) + 1;
+            if($fund_source->fund_source_id != null){
+                
+                $num = str_replace('FS', '', $fund_source->fund_source_id) + 1;
+                
+                $id = 'FS' . $num;
             
-            $id = 'FS' . $num;
+            }
         
         }
         

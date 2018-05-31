@@ -78,7 +78,10 @@ class LeaveApplication extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('user_id', 'firstname', 'middlename', 'lastname', 'type', 'date_of_filing', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -86,7 +89,11 @@ class LeaveApplication extends Model{
 
     public function scopePopulateByUser($query, $id){
 
-        return $query->where('user_id', $id)->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('type', 'date_of_filing', 'slug')
+                     ->where('user_id', $id)
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
     
@@ -126,10 +133,14 @@ class LeaveApplication extends Model{
 
         if($la != null){
 
-            $num = str_replace('LA', '', $la->leave_application_id) + 1;
+            if($la->leave_application_id != null){
+
+                $num = str_replace('LA', '', $la->leave_application_id) + 1;
+                
+                $id = 'LA' . $num;
             
-            $id = 'LA' . $num;
-        
+            }
+            
         }
         
         return $id;

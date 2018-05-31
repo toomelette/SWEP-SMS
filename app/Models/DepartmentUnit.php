@@ -51,7 +51,10 @@ class DepartmentUnit extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('name', 'department_name', 'description', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -87,9 +90,13 @@ class DepartmentUnit extends Model{
 
         if($department_unit != null){
 
-            $num = str_replace('DU', '', $department_unit->department_unit_id) + 1;
+            if($department_unit->department_unit_id != null){
+
+                $num = str_replace('DU', '', $department_unit->department_unit_id) + 1;
+                
+                $id = 'DU' . $num;
             
-            $id = 'DU' . $num;
+            }
         
         }
         

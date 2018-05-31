@@ -51,7 +51,7 @@
                 <dt>TIN:</dt>
                 <dd>{{ $disbursement_voucher->tin }}</dd>
                 <dt>BUR No.:</dt>
-                <dd>{{ $disbursement_voucher->tin }}</dd>
+                <dd>{{ $disbursement_voucher->bur_no }}</dd>
                 <dt>Address:</dt>
                 <dd>{{ $disbursement_voucher->address }}</dd>
                 <dt>Department:</dt>
@@ -90,7 +90,7 @@
                 <dt>Processed:</dt>
                 <dd>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->processed_at)->format('M d, Y h:i A') : '' }}</dd>
                 <dt>Completed:</dt>
-                <dd>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->checked_at)->format('M d, Y h:i A') : '' }}</dd>
+                <dd>{{ $disbursement_voucher->checked_at != null ? Carbon::parse($disbursement_voucher->checked_at)->format('M d, Y h:i A') : '' }}</dd>
               </dl>
             </div>
           </div>

@@ -56,35 +56,12 @@ class EmployeeTraining extends Model{
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->orderBy('seqno', 'asc')->get();
+        return $query->select('topics', 'conductedby', 'datefrom', 'dateto', 'venue')
+                     ->orderBy('seqno', 'asc')
+                     ->get();
 
     }
     
-
-
-
-
-    // GETTERS
-    public function getEmployeeTrainingIdIncAttribute(){
-
-        $id = 'ET1001';
-
-        $employee_training = $this->select('employee_training_id')->orderBy('employee_training_id', 'desc')->first();
-
-        if($employee_training != null){
-
-            $num = str_replace('ET', '', $employee_training->employee_training_id) + 1;
-            
-            $id = 'ET' . $num;
-        
-        }
-        
-        return $id;
-        
-    }
-
-
-
 
 
 }

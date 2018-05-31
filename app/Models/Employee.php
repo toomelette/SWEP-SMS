@@ -21,7 +21,6 @@ class Employee extends Model{
 
 
 
-
     protected $attributes = [
         
         'slug' => '',
@@ -119,7 +118,10 @@ class Employee extends Model{
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('empno', 'empname', 'position', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 

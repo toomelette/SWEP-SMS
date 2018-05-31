@@ -83,9 +83,7 @@
         <table class="table table-bordered">
           <tr>
             <th>@sortablelink('doc_no', 'Doc No.')</th>
-            <th>@sortablelink('dv_no', 'DV No.')</th>
             <th>@sortablelink('payee', 'Payee')</th>
-            <th>@sortablelink('account_code', 'Account Code')</th>
             <th>@sortablelink('date', 'Date')</th>
             <th>Status</th>
             <th style="width: 150px">Action</th>
@@ -93,9 +91,7 @@
           @foreach($disbursement_vouchers as $data) 
             <tr>
               <td>{{ $data->doc_no }}</td>
-              <td>{!! $data->dv_no == null ? $span_not_set : SanitizeHelper::html_encode($data->dv_no) !!}</td>
               <td>{{ $data->payee  }}</td>
-              <td>{{ $data->account_code }}</td>
               <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)

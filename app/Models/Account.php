@@ -56,7 +56,10 @@ class Account extends Model{
 
     public function scopePopulate($query){
 
-        return $query->sortable()->orderBy('updated_at', 'desc')->paginate(10);
+        return $query->select('account_code', 'department_name', 'description', 'project_in_charge', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
 
@@ -94,10 +97,14 @@ class Account extends Model{
 
         if($account != null){
 
-            $num = str_replace('A', '', $account->account_id) + 1;
+            if($account->account_id != null){
+
+                $num = str_replace('A', '', $account->account_id) + 1;
+                
+                $id = 'A' . $num;
+
+            }
             
-            $id = 'A' . $num;
-        
         }
         
         return $id;

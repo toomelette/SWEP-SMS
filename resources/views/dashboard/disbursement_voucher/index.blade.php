@@ -91,7 +91,6 @@
             <th>@sortablelink('doc_no', 'Doc No.')</th>
             <th>@sortablelink('dv_no', 'DV No.')</th>
             <th>@sortablelink('payee', 'Payee')</th>
-            <th>@sortablelink('account_code', 'Account Code')</th>
             <th>@sortablelink('date', 'Date')</th>
             <th>Status</th>
             <th style="width: 150px">Action</th>
@@ -112,7 +111,6 @@
                 @endif
               </td>
               <td>{{ $data->payee  }}</td>
-              <td>{{ $data->account_code }}</td>
               <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)
