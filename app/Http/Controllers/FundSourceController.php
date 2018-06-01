@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Swep\Services\FundSourceService;
 use App\Http\Requests\FundSourceFormRequest;
+use App\Http\Requests\FundSourceFilterRequest;
 
 
 class FundSourceController extends Controller{
@@ -22,7 +22,7 @@ class FundSourceController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(FundSourceFilterRequest $request){
 
         return $this->fund_source->fetchAll($request);
     

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\Request;
 use App\Swep\Services\DepartmentService;
 use App\Http\Requests\DepartmentFormRequest;
+use App\Http\Requests\DepartmentFilterRequest;
 
 
 
@@ -26,7 +26,7 @@ class DepartmentController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(DepartmentFilterRequest $request){
 
         return $this->department->fetchAll($request);
     

@@ -39,19 +39,21 @@
             '4', 'mode_of_payment_id', 'Mode Of Payment', old('mode_of_payment_id') ? old('mode_of_payment_id') : $disbursement_voucher->mode_of_payment_id, $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment_id'), $errors->first('mode_of_payment_id'), '', ''
           ) !!}
 
+          <div class="col-md-12"></div>
 
           {!! FormHelper::textbox(
             '6', 'payee', 'text', 'Payee *', 'Payee', old('payee') ? old('payee') : $disbursement_voucher->payee, $errors->has('payee'), $errors->first('payee'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::textbox(
-            '3', 'tin', 'text', 'TIN/Employee No *', 'TIN / Employee No', old('tin') ? old('tin') : $disbursement_voucher->tin, $errors->has('tin'), $errors->first('tin'), ''
+            '3', 'tin', 'text', 'TIN/Employee No', 'TIN / Employee No', old('tin') ? old('tin') : $disbursement_voucher->tin, $errors->has('tin'), $errors->first('tin'), ''
           ) !!}
 
           {!! FormHelper::textbox(
             '3', 'bur_no', 'text', 'BUR No', 'BUR No', old('bur_no') ? old('bur_no') : $disbursement_voucher->bur_no, $errors->has('bur_no'), $errors->first('bur_no'), ''
           ) !!}
 
+          <div class="col-md-12"></div>
 
           {!! FormHelper::textbox(
             '6', 'address', 'text', 'Address *', 'Address', old('address') ? old('address') : $disbursement_voucher->address, $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'

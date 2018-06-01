@@ -47,6 +47,8 @@
               '4', 'icon', 'text', 'Icon *', 'Icon', old('icon'), $errors->has('icon'), $errors->first('icon'), ''
             ) !!}
 
+            <div class="col-md-12"></div>
+            
             {!! FormHelper::select_static(
               '4', 'is_menu', 'Is Menu *', old('is_menu'), $boolean_array, $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}

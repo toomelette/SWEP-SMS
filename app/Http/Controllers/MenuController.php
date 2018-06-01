@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Swep\Services\MenuService;
 use App\Http\Requests\MenuFormRequest;
+use App\Http\Requests\MenuFilterRequest;
 
 
 
@@ -23,7 +24,7 @@ class MenuController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(MenuFilterRequest $request){
         
         return $this->menu->fetchAll($request);
 
@@ -71,6 +72,8 @@ class MenuController extends Controller{
         return $this->menu->destroy($slug);
 
     }
+
+
 
     
 }

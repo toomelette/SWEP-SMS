@@ -45,7 +45,11 @@
              '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
           ) !!} 
 
-          {!! FormHelper::datepicker('4', 'date_of_filing',  'Date of Filing *', old('date_of_filing'), $errors->has('date_of_filing'), $errors->first('date_of_filing')) !!}
+          <div class="col-md-12"></div>
+
+          {!! FormHelper::datepicker(
+            '4', 'date_of_filing',  'Date of Filing *', old('date_of_filing'), $errors->has('date_of_filing'), $errors->first('date_of_filing')
+          ) !!}
           
           {!! FormHelper::textbox(
              '4', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
@@ -56,9 +60,13 @@
           ) !!}
           
           <div class="col-md-12"></div>
-          
-          {!! FormHelper::select_dynamic(
-            '4', 'immediate_superior_type', 'Immediate Superior *', old('immediate_superior_type'), $global_signatories_all, 'type', 'employee_name', $errors->has('immediate_superior_type'), $errors->first('immediate_superior_type'), 'select2', ''
+
+          {!! FormHelper::textbox(
+             '4', 'immediate_superior', 'text', 'Recommended by (Immediate Superior)', 'Immediate Superior', old('immediate_superior'), $errors->has('immediate_superior'), $errors->first('immediate_superior'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! FormHelper::textbox(
+             '4', 'immediate_superior_position', 'text', 'Immediate Superior Position', 'Immediate Superior Position', old('immediate_superior_position'), $errors->has('immediate_superior_position'), $errors->first('immediate_superior_position'), 'data-transform="uppercase"'
           ) !!}
 
           {{-- TYPE OF LEAVE --}} 
@@ -66,11 +74,15 @@
               
             <h4>TYPE OF LEAVE:</h4>
 
-            {!! FormHelper::select_static('3', 'type', 'Leave Type *', old('type'), $leave_types, $errors->has('type'), $errors->first('type'), '', '') !!}
+            {!! FormHelper::select_static(
+              '3', 'type', 'Leave Type *', old('type'), $leave_types, $errors->has('type'), $errors->first('type'), '', ''
+            ) !!}
           
             <div class="col-md-9" id="type_vacation_div">
                 
-              {!! FormHelper::select_static('3', 'type_vacation', 'Vacation Type *', old('type_vacation'), $vac_types, $errors->has('type_vacation'), $errors->first('type_vacation'), '', '') !!}
+              {!! FormHelper::select_static(
+                '3', 'type_vacation', 'Vacation Type *', old('type_vacation'), $vac_types, $errors->has('type_vacation'), $errors->first('type_vacation'), '', ''
+              ) !!}
                 
               {!! FormHelper::textbox(
                  '9', 'type_vacation_others_specific', 'text', 'If (others) specify', 'Specify', old('type_vacation_others_specific'), $errors->has('type_vacation_others_specific'), $errors->first('type_vacation_others_specific'), ''
@@ -98,7 +110,9 @@
 
             <div class="col-md-12">
               
-              {!! FormHelper::select_static('3', 'spent_vacation', 'In case of Vacation Leave', old('spent_vacation'), $spent_vacation, $errors->has('spent_vacation'), $errors->first('spent_vacation'), '', '') !!}
+              {!! FormHelper::select_static(
+                '3', 'spent_vacation', 'In case of Vacation Leave', old('spent_vacation'), $spent_vacation, $errors->has('spent_vacation'), $errors->first('spent_vacation'), '', ''
+              ) !!}
 
               <div class="col-md-9" id="spent_vacation_abroad_div">
                   
@@ -113,7 +127,9 @@
 
             <div class="col-md-12">
               
-              {!! FormHelper::select_static('3', 'spent_sick', 'In case of Sick Leave', old('spent_sick'), $spent_sick, $errors->has('spent_sick'), $errors->first('spent_sick'), '', '') !!}
+              {!! FormHelper::select_static(
+                '3', 'spent_sick', 'In case of Sick Leave', old('spent_sick'), $spent_sick, $errors->has('spent_sick'), $errors->first('spent_sick'), '', ''
+              ) !!}
 
               <div class="col-md-9" id="spent_sick_inHospital_div">
                   
@@ -147,9 +163,13 @@
                '4', 'working_days', 'text', 'Number of Days *', 'Number of Days', old('working_days'), $errors->has('working_days'), $errors->first('working_days'), ''
             ) !!}
 
-            {!! FormHelper::datepicker('4', 'working_days_date_from',  'Date From *', old('working_days_date_from'), $errors->has('working_days_date_from'), $errors->first('working_days_date_from')) !!}
+            {!! FormHelper::datepicker(
+              '4', 'working_days_date_from',  'Date From *', old('working_days_date_from'), $errors->has('working_days_date_from'), $errors->first('working_days_date_from')
+            ) !!}
 
-            {!! FormHelper::datepicker('4', 'working_days_date_to',  'Date To *', old('working_days_date_to'), $errors->has('working_days_date_to'), $errors->first('working_days_date_to')) !!}
+            {!! FormHelper::datepicker(
+              '4', 'working_days_date_to',  'Date To *', old('working_days_date_to'), $errors->has('working_days_date_to'), $errors->first('working_days_date_to')
+            ) !!}
 
           </div>
 
@@ -160,7 +180,9 @@
               
             <h4>COMMUTATION:</h4>  
 
-            {!! FormHelper::select_static('3', 'commutation', 'Commutation *', old('commutation'), $commutation_types, $errors->has('commutation'), $errors->first('commutation'), '', '') !!}
+            {!! FormHelper::select_static(
+              '3', 'commutation', 'Commutation *', old('commutation'), $commutation_types, $errors->has('commutation'), $errors->first('commutation'), '', ''
+            ) !!}
 
           </div>
 

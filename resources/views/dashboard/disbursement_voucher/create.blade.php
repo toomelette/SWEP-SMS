@@ -35,19 +35,21 @@
           '4', 'mode_of_payment_id', 'Mode Of Payment', old('mode_of_payment_id'), $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment_id'), $errors->first('mode_of_payment_id'), '', ''
         ) !!}
 
+        <div class="col-md-12"></div>
 
         {!! FormHelper::textbox(
           '6', 'payee', 'text', 'Payee *', 'Payee', old('payee'), $errors->has('payee'), $errors->first('payee'), 'data-transform="uppercase"'
         ) !!}
 
         {!! FormHelper::textbox(
-          '3', 'tin', 'text', 'TIN/Employee No *', 'TIN / Employee No', old('tin'), $errors->has('tin'), $errors->first('tin'), ''
+          '3', 'tin', 'text', 'TIN/Employee No', 'TIN / Employee No', old('tin'), $errors->has('tin'), $errors->first('tin'), ''
         ) !!}
 
         {!! FormHelper::textbox(
           '3', 'bur_no', 'text', 'BUR No', 'BUR No', old('bur_no'), $errors->has('bur_no'), $errors->first('bur_no'), ''
         ) !!}
 
+        <div class="col-md-12"></div>
 
         {!! FormHelper::textbox(
           '6', 'address', 'text', 'Address *', 'Address', old('address'), $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
@@ -64,7 +66,7 @@
         {!! FormHelper::select_dynamic(
           '2', 'account_code', 'Account Code *', old('account_code'), $global_accounts_all, 'account_code', 'account_code', $errors->has('account_code'), $errors->first('account_code'), 'select2', ''
         ) !!}
-
+        
         <div class="col-md-12">
           <div class="alert alert-warning">
             Note: Please put your computations in the <strong>Explanation Field</strong>, and the Total/Net of your computation in the <strong>Amount Field.</strong>

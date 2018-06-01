@@ -1,13 +1,13 @@
 
 <?php
 
-  $f = Carbon::parse($leave_application->working_days_date_from)->format('M d, Y');
-  $mf = Carbon::parse($leave_application->working_days_date_from)->format('M');
+  $f = Carbon::parse($leave_application->working_days_date_from)->format('F d, Y');
+  $mf = Carbon::parse($leave_application->working_days_date_from)->format('F');
   $df = Carbon::parse($leave_application->working_days_date_from)->format('d');
   $yf = Carbon::parse($leave_application->working_days_date_from)->format('Y');
-  $mdf = Carbon::parse($leave_application->working_days_date_from)->format('M d');
-  $t = Carbon::parse($leave_application->working_days_date_to)->format('M d, Y');
-  $mt = Carbon::parse($leave_application->working_days_date_to)->format('M');
+  $mdf = Carbon::parse($leave_application->working_days_date_from)->format('F d');
+  $t = Carbon::parse($leave_application->working_days_date_to)->format('F d, Y');
+  $mt = Carbon::parse($leave_application->working_days_date_to)->format('F');
   $dt = Carbon::parse($leave_application->working_days_date_to)->format('d');
   $mdt = Carbon::parse($leave_application->working_days_date_to)->format('M d');
 
@@ -111,7 +111,7 @@
 
         <div class="col-sm-4">
           <span style="font-size:14px;">3.  DATE OF FILING</span><br>
-          <span style="font-weight: bold; font-size:13px;">{{ Carbon::parse($leave_application->date_of_filing)->format('M d,Y') }}</span>
+          <span style="font-weight: bold; font-size:13px;">{{ Carbon::parse($leave_application->date_of_filing)->format('F d,Y') }}</span>
         </div>
 
         <div class="col-sm-4">

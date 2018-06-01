@@ -49,6 +49,8 @@
              '6', 'description', 'text', 'Description *', 'Description', old('description') ? old('description') : $account->description, $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
+          <div class="col-md-12"></div>
+          
           {!! FormHelper::textbox_numeric(
             '3', 'mooe', 'text', 'MOOE:', 'MOOE', old('mooe') ? old('mooe') : $account->mooe, $errors->has('mooe'), $errors->first('mooe'), ''
           ) !!}

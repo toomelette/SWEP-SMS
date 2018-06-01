@@ -25,7 +25,7 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'fund_source_id'=>'required|string|min:6|max:6',
             'mode_of_payment_id'=>'nullable|string|min:7|max:7',
             'payee'=>'required|string|max:90',
-            'tin'=>'required|string|max:45',
+            'tin'=>'nullable|string|max:45',
             'bur_no'=>'nullable|string|max:45',
             'address'=>'required|string|max:200',
             'department_name'=>'required|string|max:45',
@@ -60,7 +60,6 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'mode_of_payment_id.min'  => 'The Mode Of Payment field may not be lesser than 7 characters.',
             'mode_of_payment_id.max'  => 'The Mode Of Payment field may not be greater than 7 characters.',
 
-            'payee.required'  => 'Payee field is required.',
             'payee.string'  => 'Invalid Input! You must enter a string value.',
             'payee.max'  => 'The Payee field may not be greater than 90 characters.',
 

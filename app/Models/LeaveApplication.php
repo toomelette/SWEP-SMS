@@ -56,7 +56,6 @@ class LeaveApplication extends Model{
         'commutation' => '',
         'immediate_superior' => '',
         'immediate_superior_position' => '',
-        'immediate_superior_type' => null,
         'personnel_officer' => '',
         'personnel_officer_position' => '',
         'authorized_official' => '',

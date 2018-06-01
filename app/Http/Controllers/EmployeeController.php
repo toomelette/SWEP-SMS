@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\Request;
 use App\Swep\Services\EmployeeService;
 use App\Http\Requests\EmployeeFormRequest;
+use App\Http\Requests\EmployeeFilterRequest;
 
 
 
@@ -27,7 +27,7 @@ class EmployeeController extends Controller{
 
 
 
-	public function index(Request $request){
+	public function index(EmployeeFilterRequest $request){
 
     	return $this->employee->fetchAll($request);
     

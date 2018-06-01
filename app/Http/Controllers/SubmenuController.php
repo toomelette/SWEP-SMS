@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\Request;
 use App\Swep\Services\SubmenuService;
+use App\Http\Requests\SubmenuFormRequest;
+use App\Http\Requests\SubmenuFilterRequest;
 
 
 class SubmenuController extends Controller{
@@ -23,7 +24,7 @@ class SubmenuController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(SubmenuFilterRequest $request){
 
         return $this->submenu->fetchAll($request);
     
@@ -42,7 +43,7 @@ class SubmenuController extends Controller{
 
 
 
-    public function update(Request $request, $slug){
+    public function update(SubmenuFormRequest $request, $slug){
 
         return $this->submenu->update($request, $slug);
 

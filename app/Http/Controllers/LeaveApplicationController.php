@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Swep\Services\LeaveApplicationService;
 use App\Http\Requests\LeaveApplicationFormRequest;
+use App\Http\Requests\LeaveApplicationFilterRequest;
 
 
 class LeaveApplicationController extends Controller{
@@ -23,7 +23,7 @@ class LeaveApplicationController extends Controller{
 
 
 
-    public function index(Request $request){
+    public function index(LeaveApplicationFilterRequest $request){
 
         return $this->leave_application->fetchAll($request);
     
@@ -32,7 +32,7 @@ class LeaveApplicationController extends Controller{
     
 
 
-    public function userIndex(Request $request){
+    public function userIndex(LeaveApplicationFilterRequest $request){
 
         return $this->leave_application->fetchByUser($request);
     

@@ -65,11 +65,14 @@
           ) !!}
           
           <div class="col-md-12"></div>
-          
-          {!! FormHelper::select_dynamic(
-            '4', 'immediate_superior_type', 'Immediate Superior *', old('immediate_superior_type') ? old('immediate_superior_type') : $leave_application->immediate_superior_type, $global_signatories_all, 'type', 'employee_name', $errors->has('immediate_superior_type'), $errors->first('immediate_superior_type'), 'select2', ''
+    
+          {!! FormHelper::textbox(
+             '4', 'immediate_superior', 'text', 'Recommended by (Immediate Superior)', 'Recommended by (Immediate Superior)', old('immediate_superior') ? old('immediate_superior') : $leave_application->immediate_superior, $errors->has('immediate_superior'), $errors->first('immediate_superior'), 'data-transform="uppercase"'
           ) !!}
 
+          {!! FormHelper::textbox(
+             '4', 'immediate_superior_position', 'text', 'Immediate Superior Position', 'Immediate Superior Position', old('immediate_superior_position') ? old('immediate_superior_position') : $leave_application->immediate_superior_position, $errors->has('immediate_superior_position'), $errors->first('immediate_superior_position'), 'data-transform="uppercase"'
+          ) !!}
 
           {{-- TYPE OF LEAVE --}} 
           <div class="col-md-12" style="margin-bottom:20px;">

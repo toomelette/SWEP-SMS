@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Swep\Services\DepartmentUnitService;
 use App\Http\Requests\DepartmentUnitFormRequest;
+use App\Http\Requests\DepartmentUnitFilterRequest;
 
 
 class DepartmentUnitController extends Controller{
@@ -23,7 +23,7 @@ class DepartmentUnitController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(DepartmentUnitFilterRequest $request){
         
         return $this->department_unit->fetchAll($request);
 

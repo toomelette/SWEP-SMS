@@ -185,7 +185,7 @@ class FormHelper{
 
       if($error_has){
 
-        return '<span class="help-block"> '. $error_first .' </span>';
+        return '<p class="help-block"> '. $error_first .' </p>';
 
       }
 

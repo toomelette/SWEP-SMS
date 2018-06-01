@@ -37,6 +37,8 @@
              '6', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
+          <div class="col-md-12"></div>
+
           {!! FormHelper::textbox_numeric(
             '3', 'mooe', 'text', 'MOOE', 'MOOE', old('mooe'), $errors->has('mooe'), $errors->first('mooe'), ''
           ) !!}
@@ -45,9 +47,15 @@
             '3', 'co', 'text', 'CO', 'CO', old('co'), $errors->has('co'), $errors->first('co'), ''
           ) !!}
 
-          {!! FormHelper::datepicker('3', 'date_started',  'Date Started', old('date_started'), $errors->has('date_started'), $errors->first('date_started')) !!}
+          {!! FormHelper::datepicker(
+            '3', 'date_started',  'Date Started', old('date_started'), $errors->has('date_started'), $errors->first('date_started')
+          ) !!}
 
-          {!! FormHelper::datepicker('3', 'projected_date_end',  'Projected Date End', old('projected_date_end'), $errors->has('projected_date_end'), $errors->first('projected_date_end')) !!}
+          {!! FormHelper::datepicker(
+            '3', 'projected_date_end',  'Projected Date End', old('projected_date_end'), $errors->has('projected_date_end'), $errors->first('projected_date_end')
+          ) !!}
+
+          <div class="col-md-12"></div>
 
           {!! FormHelper::textbox(
              '6', 'project_in_charge', 'text', 'Project Incharge', 'Project Incharge', old('project_in_charge'), $errors->has('project_in_charge'), $errors->first('project_in_charge'), 'data-transform="uppercase"'

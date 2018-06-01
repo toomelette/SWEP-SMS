@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Swep\Services\AccountService;
 use App\Http\Requests\AccountFormRequest;
-
+use App\Http\Requests\AccountFilterRequest;
 
 
 class AccountController extends Controller{
@@ -25,7 +24,7 @@ class AccountController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(AccountFilterRequest $request){
 
     	return $this->account->fetchAll($request);
     

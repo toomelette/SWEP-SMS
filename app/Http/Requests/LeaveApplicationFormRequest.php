@@ -30,7 +30,8 @@ class LeaveApplicationFormRequest extends FormRequest{
             'date_of_filing'=>'required|date_format:"m/d/Y"',
             'position'=>'required|string|max:90',
             'salary'=>'required|string|max:13',
-            'immediate_superior_type'=>'required|int|max:30',
+            'immediate_superior'=>'required|string|max:90',
+            'immediate_superior_position'=>'required|string|max:45',
             'type'=>'required|string|max:5|min:5',
             'working_days'=>'required|string|max:45',
             'working_days_date_from'=>'required|date_format:"m/d/Y"',
@@ -132,9 +133,13 @@ class LeaveApplicationFormRequest extends FormRequest{
             'salary.string'  => 'Invalid Input! You must enter a string value.',
             'salary.max'  => 'The Salary field may not be greater than 13 characters.',
 
-            'immediate_superior_type.required'  => 'Immediate Superior field is required.',
-            'immediate_superior_type.string'  => 'Invalid Input! You must enter a int value.',
-            'immediate_superior_type.max'  => 'The Immediate Superior field may not be greater than 30 characters.',
+            'immediate_superior.required'  => 'Immediate Superior field is required.',
+            'immediate_superior.string'  => 'Invalid Input! You must enter a string value.',
+            'immediate_superior.max'  => 'The Immediate Superior field may not be greater than 90 characters.',
+
+            'immediate_superior_position.required'  => 'Immediate Superior Position field is required.',
+            'immediate_superior_position.string'  => 'Invalid Input! You must enter a string value.',
+            'immediate_superior_position.max'  => 'The Immediate Superior Position field may not be greater than 40 characters.',
 
             'type.required'  => 'Type of Leave field is required.',
             'type.string'  => 'Invalid Input! You must enter a string value.',

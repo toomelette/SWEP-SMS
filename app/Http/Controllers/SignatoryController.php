@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Swep\Services\SignatoryService;
 use App\Http\Requests\SignatoryFormRequest;
+use App\Http\Requests\SignatoryFilterRequest;
 
 
 class SignatoryController extends Controller{
@@ -24,7 +25,7 @@ class SignatoryController extends Controller{
 
 
     
-    public function index(Request $request){
+    public function index(SignatoryFilterRequest $request){
 
         return $this->signatory->fetchAll($request);
         
