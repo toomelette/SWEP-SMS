@@ -76,19 +76,6 @@ class JSHelper{
 
 
 
-    public static function table_action_rule(){
-
-       return '$(document).on("change", "#action", function () {
-       			  var element = $(this).children("option:selected");
-	           	  if(element.data("type") == "1" ){ 
-	           	  	location = element.data("url");
-	           	  }
-		       });';
-
-    }
-
-
-
     public static function ajax_select_to_select($id_from, $id_to, $route, $key, $value){
 
       $string = "'";
@@ -124,6 +111,7 @@ class JSHelper{
 
 
 
+
     public static function ajax_select_to_input($id_from, $id_to, $route, $value){
 
       $string = "'";
@@ -152,17 +140,6 @@ class JSHelper{
 
     }
 
-
-
-    public static function datepicker_caller($id, $format, $position){
-
-       return '$("#'. $id .'").datepicker({
-			      autoclose: true,
-			      dateFormat: "'. $format .'",
-			      orientation: "'. $position .'"
-			    });';
-				
-    }
 
 
 

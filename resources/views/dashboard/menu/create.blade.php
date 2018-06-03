@@ -1,8 +1,9 @@
 @php
-
   $boolean_array = ['1' => 'true', '0' => 'false'];
-
 @endphp
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -191,10 +192,18 @@
 @section('modals')
 
   @if(Session::has('MENU_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('menu_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('MENU_CREATE_SUCCESS')) !!}
+
+    {!! HtmlHelper::modal(
+      'menu_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('MENU_CREATE_SUCCESS')
+    ) !!}
+  
   @endif
 
 @endsection 
+
+
+
+
 
 
 @section('scripts')
@@ -207,7 +216,6 @@
 
 
     {{-- ADD ROW --}}
-
     $(document).ready(function() {
       $("#add_row").on("click", function() {
         var i = $("#table_body").children().length;
@@ -244,9 +252,7 @@
     });
 
 
-
     {{-- DELETE ROW --}}
-
     $(document).on("click","#delete_row" ,function(e) {
         $(this).closest('tr').remove();
     });

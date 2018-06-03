@@ -1,9 +1,10 @@
 @php
-
   $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
   $inclusive_dates = Carbon::parse($leave_application->working_days_from)->format('M d, Y') .' - '. Carbon::parse($leave_application->working_days_to)->format('M d, Y');
-
 @endphp
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -25,8 +26,13 @@
         <h3 class="box-title">Details</h3>
 
         <div class="box-tools">
-          <a href="{{ route('dashboard.leave_application.print', [$leave_application->slug, 'front']) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
-          <a href="{{ route('dashboard.leave_application.edit', $leave_application->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
+          <a href="{{ route('dashboard.leave_application.print', [$leave_application->slug, 'front']) }}" target="_blank" class="btn btn-sm btn-default">
+            <i class="fa fa-print"></i> Print
+          </a>
+
+          @if(Carbon::parse($leave_application->date_of_filing)->diffInDays(Carbon::now()->format('Y-m-d')) < 15)
+            <a href="{{ route('dashboard.leave_application.edit', $leave_application->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
+          @endif
         </div>
 
       </div>

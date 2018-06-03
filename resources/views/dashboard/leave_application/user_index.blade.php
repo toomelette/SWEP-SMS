@@ -1,5 +1,4 @@
 @php
-  
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         't'=> Request::get('t'), 
@@ -10,8 +9,11 @@
                       ];
 
   $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004',]
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -84,9 +86,14 @@
               <td>{{ Carbon::parse($data->date_of_filing)->format('M d, Y') }}</td>
               <td> 
                 <select id="action" class="form-control input-sm">
+
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Details</option>
-                  <option data-type="1" data-url="{{ route('dashboard.leave_application.edit', $data->slug) }}">Edit</option>
+
+                  @if(Carbon::parse($data->date_of_filing)->diffInDays(Carbon::now()->format('Y-m-d')) < 15)
+                    <option data-type="1" data-url="{{ route('dashboard.leave_application.edit', $data->slug) }}">Edit</option>
+                  @endif
+
                 </select>
               </td>
             </tr>
@@ -109,19 +116,4 @@
 
   </section>
 
-@endsection
-
-
-
-
-
-@section('scripts')
-
-  <script type="text/javascript">
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
-
-  </script>
-    
 @endsection

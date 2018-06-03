@@ -1,5 +1,4 @@
 @php
-
   $table_sessions = [
                       Session::get('EMPLOYEE_UPDATE_SUCCESS_SLUG')
                     ];
@@ -11,12 +10,13 @@
                       ];
 
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
-
 @endphp
 
 
-@extends('layouts.admin-master')
 
+
+
+@extends('layouts.admin-master')
 
 @section('content')
     
@@ -102,6 +102,7 @@
 
 
 
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('emp_delete') !!}
@@ -111,13 +112,12 @@
 
 
 
+
 @section('scripts')
 
   <script type="text/javascript">
 
     {!! JSHelper::modal_confirm_delete_caller('emp_delete') !!}
-
-    {!! JSHelper::table_action_rule() !!}
 
     @if(Session::has('EMPLOYEE_UPDATE_SUCCESS'))
       {!! JSHelper::toast(Session::get('EMPLOYEE_UPDATE_SUCCESS')) !!}

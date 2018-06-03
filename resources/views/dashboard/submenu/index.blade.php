@@ -1,5 +1,4 @@
 @php
-
   $table_sessions = [ Session::get('SUBMENU_UPDATE_SUCCESS_SLUG') ];
 
   $appended_requests = [
@@ -7,8 +6,11 @@
                         'sort' => Request::get('sort'),
                         'order' => Request::get('order'),
                       ];
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -77,11 +79,17 @@
 @endsection
 
 
+
+
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('submenu_delete') !!}
 
 @endsection 
+
+
+
 
 
 @section('scripts')
@@ -90,9 +98,6 @@
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('submenu_delete') !!}
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('SUBMENU_UPDATE_SUCCESS'))

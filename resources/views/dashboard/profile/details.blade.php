@@ -1,5 +1,4 @@
 @php
-
   $user_colors = [
                   'Blue/Dark' => 'sidebar-mini skin-blue',
                   'White/Dark' => 'sidebar-mini skin-black',
@@ -14,8 +13,11 @@
                   'Red/Light' => 'sidebar-mini skin-red-light',
                   'Yellow/Light' => 'sidebar-mini skin-yellow-light',
                 ];
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -221,6 +223,10 @@
 </section>
 
 @endsection
+
+
+
+
 
 
 @section('scripts')

@@ -102,9 +102,9 @@ class LeaveApplication extends Model{
 
         $query->where(function ($query) use ($key) {
             $query->where('lastname', 'LIKE', '%'. $key .'%')
-                 ->orwhere('firstname', 'LIKE', '%'. $key .'%')
-                 ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                 ->orwhereHas('user', function ($query) use ($key) {
+                  ->orwhere('firstname', 'LIKE', '%'. $key .'%')
+                  ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                  ->orwhereHas('user', function ($query) use ($key) {
                     $query->where('username', 'LIKE', '%'. $key .'%');
                 });
         });

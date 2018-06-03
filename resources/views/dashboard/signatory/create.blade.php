@@ -48,6 +48,9 @@
 @endsection
 
 
+
+
+
 @section('modals')
 
   @if(Session::has('SIGNATORY_CREATE_SUCCESS'))
@@ -55,6 +58,9 @@
   @endif
 
 @endsection 
+
+
+
 
 
 @section('scripts')

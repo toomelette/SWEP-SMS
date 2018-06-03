@@ -1,12 +1,13 @@
 @php
-    
-    $civil_status = ['MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'DIVORSED' => 'DIVORSED', 'SINGLE' => 'SINGLE', ];
-
+    $civil_status = [
+      'MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'DIVORSED' => 'DIVORSED', 'SINGLE' => 'SINGLE',
+    ];
 @endphp
 
 
-@extends('layouts.admin-master')
 
+
+@extends('layouts.admin-master')
 
 @section('content')
     
@@ -453,6 +454,9 @@
 @endsection
 
 
+
+
+
 @section('modals')
 
   @if(Session::has('EMPLOYEE_CREATE_SUCCESS'))
@@ -460,6 +464,9 @@
   @endif
 
 @endsection 
+
+
+
 
 
 @section('scripts')
@@ -471,7 +478,9 @@
     @endif
 
 
-    {!! JSHelper::ajax_select_to_select('dept', 'division', '/api/select_response_department_units_from_department/', 'department_unit_id', 'name') !!}
+    {!! JSHelper::ajax_select_to_select(
+      'dept', 'division', '/api/select_response_department_units_from_department/', 'department_unit_id', 'name'
+    ) !!}
 
 
     {{-- ADD ROW --}}
@@ -554,12 +563,12 @@
             orientation: "bottom"
         });
       });
+      
       $(this).removeClass('datepicker');
 
       });
 
     });
-
 
 
     {{-- DELETE ROW --}}

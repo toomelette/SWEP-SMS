@@ -1,5 +1,4 @@
 @php
-
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         'fs' => Request::get('fs'), 
@@ -14,8 +13,10 @@
                       ];
 
   $span_not_set = '<span class="text-red"><b>Not Set!</b></span>';
-
 @endphp
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -131,19 +132,5 @@
 
   </section>
 
-
 @endsection
 
-
-
-
-@section('scripts')
-
-  <script type="text/javascript">
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
-
-  </script>
-    
-@endsection

@@ -1,5 +1,4 @@
 @php
-
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         't'=> Request::get('t'), 
@@ -12,8 +11,11 @@
   $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
 
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -121,11 +123,13 @@
 
 
 
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('la_delete') !!}
 
 @endsection 
+
 
 
 
@@ -137,16 +141,10 @@
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('la_delete') !!}
 
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
-
-
     {{-- DV DELETE TOAST --}}
     @if(Session::has('LA_DELETE_SUCCESS'))
       {!! JSHelper::toast(Session::get('LA_DELETE_SUCCESS')) !!}
     @endif
-
 
   </script>
     

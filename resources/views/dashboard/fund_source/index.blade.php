@@ -1,5 +1,4 @@
 @php
-
   $table_sessions = [  Session::get('FUND_SOURCE_UPDATE_SUCCESS_SLUG') ];
 
   $appended_requests = [
@@ -7,8 +6,11 @@
                         'sort' => Request::get('sort'),
                         'order' => Request::get('order'),
                       ];
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -73,11 +75,17 @@
 @endsection
 
 
+
+
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('fund_source_delete') !!}
 
 @endsection 
+
+
+
 
 
 @section('scripts')
@@ -86,9 +94,6 @@
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('fund_source_delete') !!}
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('FUND_SOURCE_UPDATE_SUCCESS'))

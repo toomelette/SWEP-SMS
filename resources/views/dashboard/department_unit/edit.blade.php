@@ -57,11 +57,15 @@
 @endsection
 
 
+
+
 @section('scripts')
 
   <script type="text/javascript">
 
-    {!! JSHelper::ajax_select_to_input('department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name') !!}
+    {!! JSHelper::ajax_select_to_input(
+      'department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name'
+    ) !!}
 
   </script> 
     

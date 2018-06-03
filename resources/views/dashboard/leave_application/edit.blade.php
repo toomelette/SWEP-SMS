@@ -1,5 +1,4 @@
 @php
-  
   $leave_types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
   $vac_types = ['To seek employment' => 'TV1001', 'others' => 'TV1002'];
   $spent_vacation = ['Within the Philippines' => 'SV1001', 'Abroad' => 'SV1002'];
@@ -9,8 +8,11 @@
   $date_of_filing =  DataTypeHelper::date_out($leave_application->date_of_filing);
   $working_days_date_from =  DataTypeHelper::date_out($leave_application->working_days_date_from);
   $working_days_date_to =  DataTypeHelper::date_out($leave_application->working_days_date_to);
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -192,15 +194,21 @@
 
 
 
+
+
 @section('modals')
 
   @if(Session::has('LA_UPDATE_SUCCESS'))
+
    {!! HtmlHelper::modal_print(
       'la_update', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('LA_UPDATE_SUCCESS'), route('dashboard.leave_application.show', Session::get('LA_UPDATE_SUCCESS_SLUG'))
     ) !!}
+    
   @endif
 
 @endsection 
+
+
 
 
 
@@ -276,7 +284,6 @@
         $('#spent_sick_inHospital_div').hide();
       }
   }); 
-
 
   </script> 
 

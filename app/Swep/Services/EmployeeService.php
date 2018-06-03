@@ -157,7 +157,6 @@ class EmployeeService extends BaseService{
         $rows = $request->row;
 
         $employee = $this->employeeBySlug($slug);
-
         $employee->department_id = $request->dept;
         $employee->department_unit_id = $request->division;
         $employee->empno = $request->empno;

@@ -1,5 +1,4 @@
 @php
-
   $table_sessions = [ Session::get('MENU_UPDATE_SUCCESS_SLUG') ];
 
   $appended_requests = [
@@ -7,8 +6,11 @@
                         'sort' => Request::get('sort'),
                         'order' => Request::get('order'),
                       ];
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -77,11 +79,17 @@
 @endsection
 
 
+
+
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('menu_delete') !!}
 
 @endsection 
+
+
+
 
 
 @section('scripts')
@@ -91,22 +99,15 @@
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('menu_delete') !!}
 
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
-
-
     {{-- UPDATE TOAST --}}
     @if(Session::has('MENU_UPDATE_SUCCESS'))
       {!! JSHelper::toast(Session::get('MENU_UPDATE_SUCCESS')) !!}
     @endif
 
-
     {{-- DELETE TOAST --}}
     @if(Session::has('MENU_DELETE_SUCCESS'))
       {!! JSHelper::toast(Session::get('MENU_DELETE_SUCCESS')) !!}
     @endif
-
 
   </script>
     

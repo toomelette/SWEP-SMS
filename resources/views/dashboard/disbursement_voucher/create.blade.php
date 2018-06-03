@@ -113,6 +113,9 @@
 @endsection 
 
 
+
+
+
 @section('scripts')
 
   <script type="text/javascript">
@@ -121,8 +124,13 @@
       $('#dv_create').modal('show');
     @endif
 
-    {!! JSHelper::ajax_select_to_select('department_name', 'department_unit_name', '/api/select_response_department_units_from_department/', 'name', 'name') !!}
-    {!! JSHelper::ajax_select_to_select('department_name', 'account_code', '/api/select_response_accounts_from_department/', 'account_code', 'account_code') !!}
+    {!! JSHelper::ajax_select_to_select(
+      'department_name', 'department_unit_name', '/api/select_response_department_units_from_department/', 'name', 'name'
+    ) !!}
+
+    {!! JSHelper::ajax_select_to_select(
+      'department_name', 'account_code', '/api/select_response_accounts_from_department/', 'account_code', 'account_code'
+    ) !!}
 
   </script>
     

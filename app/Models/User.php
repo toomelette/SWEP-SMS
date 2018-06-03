@@ -66,37 +66,31 @@ class User extends Authenticatable{
     // RELATIONSHIPS 
 
     public function disbursementVoucher() {
-      
       return $this->belongsTo('App\Models\DisbursementVoucher','user_id','user_id');
-
     }
-
-
-
-
-    public function userMenu() {
-
-        return $this->hasMany('App\Models\UserMenu','user_id','user_id');
-
-    }
-
-
-
-
-    public function userSubmenu() {
-
-        return $this->hasMany('App\Models\UserSubmenu','user_id','user_id');
-
-    }
-    
-
 
 
     public function leaveApplication() {
-      
       return $this->belongsTo('App\Models\LeaveApplication','user_id','user_id');
-
     }
+
+
+    public function userMenu() {
+        return $this->hasMany('App\Models\UserMenu','user_id','user_id');
+    }
+
+
+    public function userSubmenu() {
+        return $this->hasMany('App\Models\UserSubmenu','user_id','user_id');
+    }
+
+
+    public function employee() {
+      return $this->hasOne('App\Models\Employee','user_id','user_id');
+    }
+    
+
+    
 
 
 

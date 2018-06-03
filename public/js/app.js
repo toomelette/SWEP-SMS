@@ -105,3 +105,12 @@ $('.datepicker').each(function(){
         orientation: "bottom"
     });
 });
+
+
+// Table Rule
+$(document).on('change', 'select[id="action"]', function () {
+  var element = $(this).children('option:selected');
+  if(element.data('type') == '1' ){ 
+    location = element.data('url');
+  }
+});

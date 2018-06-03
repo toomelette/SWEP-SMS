@@ -1,14 +1,16 @@
 @php
-
-  $table_sessions = [ Session::get('ACCOUNT_UPDATE_SUCCESS_SLUG') ];
+  $table_sessions = [ 
+                      Session::get('ACCOUNT_UPDATE_SUCCESS_SLUG') 
+                    ];
 
   $appended_requests = [
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'order' => Request::get('order'),
                       ];
-
 @endphp
+
+
 
 
 @extends('layouts.admin-master')
@@ -81,11 +83,15 @@
 @endsection
 
 
+
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('account_delete') !!}
 
 @endsection 
+
+
 
 
 @section('scripts')
@@ -95,13 +101,12 @@
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('account_delete') !!}
 
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('ACCOUNT_UPDATE_SUCCESS'))
       {!! JSHelper::toast(Session::get('ACCOUNT_UPDATE_SUCCESS')) !!}
     @endif
+
 
     {{-- DELETE TOAST --}}
     @if(Session::has('ACCOUNT_DELETE_SUCCESS'))

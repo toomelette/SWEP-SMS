@@ -1,9 +1,9 @@
 @php
-
   $date_started = DataTypeHelper::date_out($account->date_started);
   $projected_date_end = DataTypeHelper::date_out($account->projected_date_end);
-
 @endphp
+
+
 
 @extends('layouts.admin-master')
 
@@ -59,9 +59,13 @@
             '3', 'co', 'text', 'CO:', 'CO', old('co') ? old('co') : $account->co, $errors->has('co'), $errors->first('co'), ''
           ) !!}
 
-          {!! FormHelper::datepicker('3', 'date_started',  'Date Started', old('date_started') ? old('date_started') : $date_started, '', '') !!}
+          {!! FormHelper::datepicker(
+            '3', 'date_started',  'Date Started', old('date_started') ? old('date_started') : $date_started, '', ''
+          ) !!}
 
-          {!! FormHelper::datepicker('3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : $projected_date_end, '', '') !!}
+          {!! FormHelper::datepicker(
+            '3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : $projected_date_end, '', ''
+          ) !!}
 
           {!! FormHelper::textbox(
              '6', 'project_in_charge', 'text', 'Project Incharge', 'Project Incharge', old('project_in_charge') ? old('project_in_charge') : $account->project_in_charge, $errors->has('project_in_charge'), $errors->first('project_in_charge'), 'data-transform="uppercase"'
@@ -82,11 +86,15 @@
 @endsection
 
 
+
+
 @section('scripts')
 
   <script type="text/javascript">
 
-    {!! JSHelper::ajax_select_to_input('department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name') !!}
+    {!! JSHelper::ajax_select_to_input(
+      'department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name'
+    ) !!}
 
   </script> 
     

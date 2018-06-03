@@ -1,5 +1,4 @@
 @php
-
   $table_sessions = [ 
                       Session::get('DV_SET_NO_SUCCESS_SLUG'),
                       Session::get('DV_CONFIRM_CHECK_SUCCESS_SLUG'),
@@ -19,8 +18,11 @@
                       ];
 
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
-
 @endphp
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -171,10 +173,11 @@
 
 @section('modals')
 
-
   {!! HtmlHelper::modal_delete('dv_delete') !!}
 
-  {!! HtmlHelper::modal('dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')) !!}
+  {!! HtmlHelper::modal(
+    'dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')
+  ) !!}
 
   {{-- SET DV NO Modal --}}
   <div class="modal fade" id="dv_set_no" data-backdrop="static">
@@ -197,8 +200,10 @@
     </div>
   </div>
 
-
 @endsection 
+
+
+
 
 
 @section('scripts')
@@ -208,32 +213,23 @@
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('dv_delete') !!}
 
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
-
-
     {{-- DV DELETE TOAST --}}
     @if(Session::has('DV_DELETE_SUCCESS'))
       {!! JSHelper::toast(Session::get('DV_DELETE_SUCCESS')) !!}
     @endif
 
-
     {{-- DV SET NO TOAST --}}
     @if(Session::has('DV_SET_NO_SUCCESS'))
       {!! JSHelper::toast(Session::get('DV_SET_NO_SUCCESS')) !!}
     @endif
-    
 
     {{-- DV CONFIRM CHECK SUCCESS TOAST --}}
     @if(Session::has('DV_CONFIRM_CHECK_SUCCESS'))
       {!! JSHelper::toast(Session::get('DV_CONFIRM_CHECK_SUCCESS')) !!}
     @endif
 
-    
     {{-- CALL CONFIRM CHECK --}}
     {!! JSHelper::form_submitter_via_action('confirm_check', 'from_confirm_check') !!}
-
 
     {{-- CALL CONFIRM CHECK FAILED MODAL --}}
     @if(Session::has('DV_CONFIRM_CHECK_FAILED'))

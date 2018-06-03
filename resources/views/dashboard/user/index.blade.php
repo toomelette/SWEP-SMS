@@ -1,5 +1,4 @@
 @php
-
   $table_sessions = [ 
                       Session::get('USER_UPDATE_SUCCESS_SLUG'), 
                       Session::get('USER_ACTIVATE_SUCCESS_SLUG'),
@@ -18,8 +17,12 @@
 
   $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';
   $span_times = '<span class="badge bg-red"><i class="fa fa-times "></i></span>';
-
 @endphp
+
+
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -130,11 +133,19 @@
 @endsection
 
 
+
+
+
+
 @section('modals')
 
   {!! HtmlHelper::modal_delete('user_delete') !!}
 
 @endsection 
+
+
+
+
 
 
 @section('scripts')
@@ -155,10 +166,6 @@
 
     {{-- CALL DEACTIVATE FORM --}}
     {!! JSHelper::form_submitter_via_action('deactivate', 'from_user_deactivate') !!}
-
-
-    {{-- FORM VARIABLES RULE --}}
-    {!! JSHelper::table_action_rule() !!}
 
 
     {{-- UPDATE TOAST --}}

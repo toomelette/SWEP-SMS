@@ -42,13 +42,23 @@
 @endsection
 
 
+
+
+
 @section('modals')
 
   @if(Session::has('FUND_SOURCE_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('fund_source_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('FUND_SOURCE_CREATE_SUCCESS')) !!}
+
+    {!! HtmlHelper::modal(
+      'fund_source_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('FUND_SOURCE_CREATE_SUCCESS')
+    ) !!}
+    
   @endif
 
 @endsection 
+
+
+
 
 
 @section('scripts')

@@ -1,12 +1,13 @@
 @php
-  
   $leave_types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
   $vac_types = ['To seek employment' => 'TV1001', 'others' => 'TV1002'];
   $spent_vacation = ['Within the Philippines' => 'SV1001', 'Abroad' => 'SV1002'];
   $spent_sick = ['In Hospital' => 'SS1001', 'Out Patient' => 'SS1002'];
   $commutation_types = [ 'Requested' => 'true', 'Not Requested' => 'false'];
-
 @endphp
+
+
+
 
 @extends('layouts.admin-master')
 
@@ -204,6 +205,8 @@
 
 
 
+
+
 @section('modals')
 
   @if(Session::has('LA_CREATE_SUCCESS'))
@@ -216,10 +219,11 @@
 
 
 
+
+
 @section('scripts')
 
   <script type="text/javascript">
-
 
     @if(Session::has('LA_CREATE_SUCCESS'))
       $('#la_create').modal('show');
@@ -288,7 +292,6 @@
         $('#spent_sick_inHospital_div').hide();
       }
   });
-
 
   </script> 
 
