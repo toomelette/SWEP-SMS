@@ -66,8 +66,8 @@ class DepartmentUnitService extends BaseService{
         $department_unit->updated_at = $this->carbon->now();
         $department_unit->ip_created = request()->ip();
         $department_unit->ip_updated = request()->ip();
-        $department_unit->user_created = $this->auth->user()->username;
-        $department_unit->user_updated = $this->auth->user()->username;
+        $department_unit->user_created = $this->auth->user()->user_id;
+        $department_unit->user_updated = $this->auth->user()->user_id;
         $department_unit->save();
 
         $this->event->fire('department_unit.store');        
@@ -101,7 +101,7 @@ class DepartmentUnitService extends BaseService{
         $department_unit->description = $request->description;
         $department_unit->updated_at = $this->carbon->now();
         $department_unit->ip_updated = request()->ip();
-        $department_unit->user_updated = $this->auth->user()->username;
+        $department_unit->user_updated = $this->auth->user()->user_id;
         $department_unit->save();
         
         $this->event->fire('department_unit.update', $department_unit);

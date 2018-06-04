@@ -66,8 +66,8 @@ class SignatoryService extends BaseService{
         $signatory->updated_at = $this->carbon->now();
         $signatory->ip_created = request()->ip();
         $signatory->ip_updated = request()->ip();
-        $signatory->user_created = $this->auth->user()->username;
-        $signatory->user_updated = $this->auth->user()->username;
+        $signatory->user_created = $this->auth->user()->user_id;
+        $signatory->user_updated = $this->auth->user()->user_id;
         $signatory->save();
 
         $this->event->fire('signatory.store');
@@ -100,7 +100,7 @@ class SignatoryService extends BaseService{
         $signatory->type = $request->type;
         $signatory->updated_at = $this->carbon->now();
         $signatory->ip_updated = request()->ip();
-        $signatory->user_updated = $this->auth->user()->username;
+        $signatory->user_updated = $this->auth->user()->user_id;
         $signatory->save();
 
         $this->event->fire('signatory.update', $signatory);

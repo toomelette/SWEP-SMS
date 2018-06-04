@@ -29,12 +29,6 @@ $(document).ready(function($){
 
 
 
-// WYSIHTML5
-$(function () {
-    CKEDITOR.replace('editor');
-})
-
-
 
 // Price Format
 $(document).ready(function() {

@@ -32,25 +32,5 @@ class ProfileUpdateAccountPasswordRequest extends FormRequest{
 
 
 
-    public function messages(){
-
-        return [
-        	
-        	'old_password.required'  => 'Old Password field is required.',
-            'old_password.string'  => 'Invalid Input! You must enter a string value.',
-            'password.max'  => 'The Old Password field may not be greater than 45 characters.',
-
-            'password.required'  => 'Password field is required.',
-            'password.confirmed'  => 'The Password Confirmation does not match.',
-            'password.string'  => 'Invalid Input! You must enter a string value.',
-            'password.min'  => 'The Password field may not be lesser than 6 characters.',
-            'password.max'  => 'The Password field may not be greater than 45 characters.',
-
-        ];
-
-    }
-
-
-
 
 }

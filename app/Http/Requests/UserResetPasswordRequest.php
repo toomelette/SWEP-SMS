@@ -30,20 +30,5 @@ class UserResetPasswordRequest extends FormRequest{
 
 
 
-    public function messages(){
-
-        return [
-
-            'password.required'  => 'Password field is required.',
-            'password.confirmed'  => 'The Password Confirmation does not match.',
-            'password.string'  => 'Invalid Input! You must enter a string value.',
-            'password.min'  => 'The Password field may not be lesser than 6 characters.',
-            'password.max'  => 'The Password field may not be greater than 45 characters.',
-
-        ];
-
-    }
-    
-
 
 }

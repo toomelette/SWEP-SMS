@@ -106,8 +106,8 @@ class EmployeeService extends BaseService{
         $employee->updated_at = $this->carbon->now();
         $employee->ip_created = request()->ip();
         $employee->ip_updated = request()->ip();
-        $employee->user_created = $this->auth->user()->username;
-        $employee->user_updated = $this->auth->user()->username;
+        $employee->user_created = $this->auth->user()->user_id;
+        $employee->user_updated = $this->auth->user()->user_id;
         $employee->save();
 
         if(count($rows) > 0){
@@ -201,7 +201,7 @@ class EmployeeService extends BaseService{
         $employee->hdmfpremiums = $this->dataTypeHelper->string_to_num($request->hdmfpremiums);
         $employee->updated_at = $this->carbon->now();
         $employee->ip_updated = request()->ip();
-        $employee->user_updated = $this->auth->user()->username;
+        $employee->user_updated = $this->auth->user()->user_id;
         $employee->save();
 
         $employee->employeeTraining()->delete();

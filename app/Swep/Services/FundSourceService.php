@@ -63,8 +63,8 @@ class FundSourceService extends BaseService{
         $fund_source->updated_at = $this->carbon->now();
         $fund_source->ip_created = request()->ip();
         $fund_source->ip_updated = request()->ip();
-        $fund_source->user_created = $this->auth->user()->username;
-        $fund_source->user_updated = $this->auth->user()->username;
+        $fund_source->user_created = $this->auth->user()->user_id;
+        $fund_source->user_updated = $this->auth->user()->user_id;
         $fund_source->save();
 
         $this->event->fire('fund_source.store');
@@ -95,7 +95,7 @@ class FundSourceService extends BaseService{
         $fund_source->description = $request->description;
         $fund_source->updated_at = $this->carbon->now();
         $fund_source->ip_updated = request()->ip();
-        $fund_source->user_updated = $this->auth->user()->username;
+        $fund_source->user_updated = $this->auth->user()->user_id;
         $fund_source->save();
 
         $this->event->fire('fund_source.update', $fund_source);

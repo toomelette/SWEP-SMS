@@ -109,8 +109,8 @@ class LeaveApplicationService extends BaseService{
         $leave_application->updated_at = $this->carbon->now();
         $leave_application->ip_created = request()->ip();
         $leave_application->ip_updated = request()->ip();
-        $leave_application->user_created = $this->auth->user()->username;
-        $leave_application->user_updated = $this->auth->user()->username;
+        $leave_application->user_created = $this->auth->user()->user_id;
+        $leave_application->user_updated = $this->auth->user()->user_id;
         $leave_application->save();
 
         $this->event->fire('la.store', $leave_application);
@@ -161,7 +161,7 @@ class LeaveApplicationService extends BaseService{
         $leave_application->immediate_superior_position = $request->immediate_superior_position;
         $leave_application->updated_at = $this->carbon->now();
         $leave_application->ip_updated = request()->ip();
-        $leave_application->user_updated = $this->auth->user()->username;
+        $leave_application->user_updated = $this->auth->user()->user_id;
         $leave_application->save();
 
         $this->event->fire('la.update', $leave_application);

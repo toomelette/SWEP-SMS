@@ -20,7 +20,7 @@ class SignatoryFormRequest extends FormRequest{
 
         return [
 
-            'employee_name' => 'required|max:90|string',
+            'employee_name' => 'required|max:255|string',
             'employee_position' => 'required|max:90|string',
             'type' => 'required|max:20|int',
             
@@ -28,27 +28,6 @@ class SignatoryFormRequest extends FormRequest{
     
     }
 
-
-
-    public function messages(){
-
-        return [
-
-            'employee_name.required'  => 'Name field is required.',
-            'employee_name.max'  => 'The Name field may not be greater than 90 characters.',
-            'employee_name.string'  => 'Invalid Input! You must enter a string value.',
-
-            'employee_position.required'  => 'Position field is required.',
-            'employee_position.max'  => 'The Position field may not be greater than 90 characters.',
-            'employee_position.string'  => 'Invalid Input! You must enter a string value.',
-
-            'type.required'  => 'Type field is required.',
-            'type.max'  => 'The Type field may not be greater than 20.',
-            'type.int'  => 'Invalid Input! You must enter an integer.',
-
-        ];
-
-    }
 
 
 

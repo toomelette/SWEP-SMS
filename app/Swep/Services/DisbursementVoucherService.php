@@ -106,8 +106,8 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->ip_created = request()->ip();
         $disbursement_voucher->ip_updated = request()->ip();
-        $disbursement_voucher->user_created = $this->auth->user()->username;
-        $disbursement_voucher->user_updated = $this->auth->user()->username;
+        $disbursement_voucher->user_created = $this->auth->user()->user_id;
+        $disbursement_voucher->user_updated = $this->auth->user()->user_id;
         $disbursement_voucher->save();
 
         $this->event->fire('dv.store', $disbursement_voucher);
@@ -137,7 +137,7 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
         $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->ip_updated = request()->ip();
-        $disbursement_voucher->user_updated = $this->auth->user()->username;
+        $disbursement_voucher->user_updated = $this->auth->user()->user_id;
         $disbursement_voucher->save();
 
         $this->event->fire('dv.update', $disbursement_voucher);

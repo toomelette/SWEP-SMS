@@ -93,8 +93,8 @@ class UserService extends BaseService{
             $user->updated_at = $this->carbon->now();
             $user->ip_created = request()->ip();
             $user->ip_updated = request()->ip();
-            $user->user_created = $this->auth->user()->username;
-            $user->user_updated = $this->auth->user()->username;
+            $user->user_created = $this->auth->user()->user_id;
+            $user->user_updated = $this->auth->user()->user_id;
             $user->save();
 
             if(count($request->menu) > 0){
@@ -177,7 +177,7 @@ class UserService extends BaseService{
         $user->username = $request->username;
         $user->updated_at = $this->carbon->now();
         $user->ip_updated = request()->ip();
-        $user->user_updated = $this->auth->user()->username;
+        $user->user_updated = $this->auth->user()->user_id;
         $user->save();
 
         $user->userMenu()->delete();

@@ -32,25 +32,5 @@ class LeaveApplicationFilterRequest extends FormRequest{
 
 
 
-    public function messages(){
-
-        return [
-            
-            'q.string'  => 'Invalid input, must be a string!',
-            'q.max'  => 'The User Status field may not be greater than 90 characters.',
-
-            't.string'  => 'Invalid input, must be a string!',
-            't.max'  => 'The User Status field may not be greater than 5 characters.',
-            't.max'  => 'The User Status field may not be greater than 5 characters.',
-
-            'df.date_format'  => 'Invalid Format! The Date does not match the format mm/dd/yy',
-            
-            'dt.date_format'  => 'Invalid Format! The Date does not match the format mm/dd/yy',
-
-        ];
-
-    }
-
-
 
 }

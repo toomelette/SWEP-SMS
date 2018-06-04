@@ -34,38 +34,5 @@ class DisbursementVoucherFilterRequest extends FormRequest{
 
 
 
-    public function messages(){
-
-        return [
-
-            'q.string'  => 'Invalid Input! You must enter a string value.',
-            'q.max'  => 'The Field may not be greater than 90 characters.',
-
-            'fs.string'  => 'Invalid Input! You must enter a string value.',
-            'fs.max'  => 'The Field may not be greater than 6 characters.',
-            'fs.min'  => 'The Field may not be lesser than 6 characters.',
-
-            'pi.string'  => 'Invalid Input! You must enter a string value.',
-            'pi.max'  => 'The Field may not be greater than 5 characters.',
-            'pi.min'  => 'The Field may not be lesser than 5 characters.',
-
-            'dn.string'  => 'Invalid Input! You must enter a string value.',
-            'dn.max'  => 'The Field may not be greater than 20 characters.',
-
-            'dun.string'  => 'Invalid Input! You must enter a string value.',
-            'dun.max'  => 'The Field may not be greater than 20 characters.',
-
-            'ac.string'  => 'Invalid Input! You must enter a string value.',
-            'ac.max'  => 'The Field may not be greater than 20 characters.',
-
-            'df.date_format'  => 'Invalid Format! The Date does not match the format mm/dd/yy',
-            'dt.date_format'  => 'Invalid Format! The Date does not match the format mm/dd/yy',
-
-        ];
-
-    }
-
-
-
 
 }

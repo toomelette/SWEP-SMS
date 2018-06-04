@@ -70,8 +70,8 @@ class AccountService extends BaseService{
         $account->updated_at = $this->carbon->now();
         $account->ip_created = request()->ip();
         $account->ip_updated = request()->ip();
-        $account->user_created = $this->auth->user()->username;
-        $account->user_updated = $this->auth->user()->username;
+        $account->user_created = $this->auth->user()->user_id;
+        $account->user_updated = $this->auth->user()->user_id;
         $account->save();
 
         $this->event->fire('account.store');
@@ -110,7 +110,7 @@ class AccountService extends BaseService{
         $account->project_in_charge = $request->project_in_charge;
         $account->updated_at = $this->carbon->now();
         $account->ip_updated = request()->ip();
-        $account->user_updated = $this->auth->user()->username;
+        $account->user_updated = $this->auth->user()->user_id;
         $account->save();
 
         $this->event->fire('account.update', $account);

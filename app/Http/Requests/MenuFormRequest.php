@@ -57,29 +57,7 @@ class MenuFormRequest extends FormRequest{
 
         $rows = $this->request->get('row');
 
-        $messages = [
-
-            'name.required'  => 'Name field is required.',
-            'name.string'  => 'Invalid Input! You must enter a string value.',
-            'name.max'  => 'The Name field may not be greater than 45 characters.',
-
-            'route.required'  => 'Route field is required.',
-            'route.string'  => 'Invalid Input! You must enter a string value.',
-            'route.max'  => 'The Route field may not be greater than 45 characters.',
-
-            'icon.required'  => 'Icon field is required.',
-            'icon.string'  => 'Invalid Input! You must enter a string value.',
-            'icon.max'  => 'The Icon field may not be greater than 45 characters.',
-
-            'is_menu.required'  => 'Is Menu field is required.',
-            'is_menu.string'  => 'Invalid Input! You must enter a string value.',
-            'is_menu.max'  => 'The Is Menu field may not be greater than 5 characters.',
-
-            'is_dropdown.required'  => 'Is Dropdown field is required.',
-            'is_dropdown.string'  => 'Invalid Input! You must enter a string value.',
-            'is_dropdown.max'  => 'The Is Dropdown field may not be greater than 5 characters.',
-
-        ];
+        $messages = [];
 
         if(count($rows) > 0){
 

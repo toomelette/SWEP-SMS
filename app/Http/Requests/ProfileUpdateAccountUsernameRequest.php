@@ -31,18 +31,5 @@ class ProfileUpdateAccountUsernameRequest extends FormRequest{
 
 
 
-    public function messages(){
-
-        return [
-
-        	'username.required'  => 'Username field is required.',
-            'username.string'  => 'Invalid Input! You must enter a string value.',
-            'username.max'  => 'The Username field may not be greater than 45 characters.',
-
-        ];
-
-    }
-
-
 
 }

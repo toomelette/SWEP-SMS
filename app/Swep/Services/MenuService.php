@@ -72,8 +72,8 @@ class MenuService extends BaseService{
         $menu->updated_at = $this->carbon->now();
         $menu->ip_created = request()->ip();
         $menu->ip_updated = request()->ip();
-        $menu->user_created = $this->auth->user()->username;
-        $menu->user_updated = $this->auth->user()->username;
+        $menu->user_created = $this->auth->user()->user_id;
+        $menu->user_updated = $this->auth->user()->user_id;
         $menu->save();
 
         if(count($rows) > 0){
@@ -91,8 +91,8 @@ class MenuService extends BaseService{
                 $submenu->updated_at = $this->carbon->now();
                 $submenu->ip_created = request()->ip();
                 $submenu->ip_updated = request()->ip();
-                $submenu->user_created = $this->auth->user()->username;
-                $submenu->user_updated = $this->auth->user()->username;
+                $submenu->user_created = $this->auth->user()->user_id;
+                $submenu->user_updated = $this->auth->user()->user_id;
                 $submenu->save();
 
             }
@@ -130,7 +130,7 @@ class MenuService extends BaseService{
         $menu->is_dropdown = $this->dataTypeHelper->string_to_boolean($request->is_dropdown);
         $menu->updated_at = $this->carbon->now();
         $menu->ip_updated = request()->ip();
-        $menu->user_updated = $this->auth->user()->username;
+        $menu->user_updated = $this->auth->user()->user_id;
         $menu->save();
 
         $this->event->fire('menu.update', $menu);

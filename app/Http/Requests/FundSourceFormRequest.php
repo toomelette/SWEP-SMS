@@ -14,6 +14,7 @@ class FundSourceFormRequest extends FormRequest{
     
     }
 
+
     
     public function rules(){
 
@@ -23,20 +24,6 @@ class FundSourceFormRequest extends FormRequest{
 
     }
 
-
-
-
-    public function messages(){
-
-        return [
-
-            'description.required'  => 'Description field is required.',
-            'description.max'  => 'The Description field may not be greater than 90 characters.',
-            'description.string'  => 'Invalid Input! You must enter a string value.',
-
-        ];
-
-    }
 
 
 

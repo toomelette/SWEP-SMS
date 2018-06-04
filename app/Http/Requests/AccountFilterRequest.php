@@ -29,18 +29,4 @@ class AccountFilterRequest extends FormRequest{
 
 
 
-    public function messages(){
-
-        return [
-            
-            'q.string'  => 'Invalid input, must be a string!',
-            'q.max'  => 'The User Status field may not be greater than 5 characters.',
-
-        ];
-
-    }
-
-
-
-
 }

@@ -132,6 +132,10 @@
       'department_name', 'account_code', '/api/select_response_accounts_from_department/', 'account_code', 'account_code'
     ) !!}
 
+    $(function () {
+      CKEDITOR.replace('editor');
+    });
+
   </script>
     
 @endsection
