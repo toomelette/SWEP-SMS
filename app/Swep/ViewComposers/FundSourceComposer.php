@@ -25,7 +25,7 @@ class FundSourceComposer{
     public function compose($view){
 
         $fund_source = $this->cache->remember('fund_sources:global:all', 240, function(){
-        	return $this->fund_source->select('*')->get();
+        	return $this->fund_source->select('fund_source_id', 'description')->get();
         });
         
     	$view->with('global_fund_source_all', $fund_source);
