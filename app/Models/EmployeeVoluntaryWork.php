@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-
-class EmployeeTraining extends Model{
+class EmployeeVoluntaryWork extends Model{
 
 
 
 
-    protected $table = 'employee_trainings';
+	protected $table = 'employee_voluntary_works';
 
     protected $dates = ['date_from', 'date_to'];
 
@@ -21,17 +19,14 @@ class EmployeeTraining extends Model{
     protected $attributes = [
         
         'employee_no' => '',
-        'title' => '',
-        'type' => '',
+        'name' => '',
+        'address' => '',
         'date_from' => null,
         'date_to' => null,
         'hours' => null,
-        'conductedby' => '',
-        'venue' => '',
-        'remarks' => '',
+        'position' => '',
 
     ];
-
 
 
 
@@ -44,17 +39,14 @@ class EmployeeTraining extends Model{
     
 
 
-
-
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->orderBy('date_to', 'desc')->get();
+        return $query->orderBy('name', 'desc')->get();
 
     }
+
+
+
     
-
-
-
-
 }

@@ -14,7 +14,7 @@ class Employee extends Model{
 
     protected $table = 'employees';
 
-    protected $dates = ['dob', 'apptdate', 'adjdate', 'created_at', 'updated_at'];
+    protected $dates = ['date_of_birth', 'firstday_gov', 'firstday_sra', 'appointment_date', 'adjustment_date', 'created_at', 'updated_at'];
 
     public $timestamps = false;
 
@@ -24,53 +24,58 @@ class Employee extends Model{
     protected $attributes = [
         
         'slug' => '',
-        'employee_id' => '',
         'user_id' => '',
         'project_id' => '',
         'department_id' => '',
         'department_unit_id' => '',
-        'empno' => '',
-        'stationid' => '',
-        'empname' => '',
+        'employee_no' => '',
+
         'lastname' => '',
         'firstname' => '',
         'middlename' => '',
-        'address' => '',
-        'dob' => null,
-        'pob' => '',
-        'gender' => '',
+        'name_ext' => '',
+        'fullname' => '',
+        'date_of_birth' => null,
+        'place_of_birth' => '',
+        'sex' => '',
+        'civil_status' => '',
+        'height' => '',
+        'weight' => '',
         'bloodtype' => '',
-        'civilstat' => '',
-        'undergrad' => '',
-        'graduate1' => '',
-        'graduate2' => '',
-        'postgrad1' => '',
-        'eligibility' => '',
-        'eligibilitylevel' => '',
-        'dept' => '',
-        'division' => '',
+        'citizenship' => '',
+        'citizenship_type' => '',
+        'dual_citizenship_country' => '',
+        'tel_no' => '',
+        'cell_no' => '',
+        'email' => '',
+        'agency_no' => '',
+        'gov_id' => '',
+        'gov_passport_no' => '',
+        'gov_id_date_issue' => '',
+
+        'gsis' => '',
+        'pagibig' => '',
+        'philhealth' => '',
+        'sss' => '',
+        'tin' => '',
+        'hdmfpremiums' => 0.00,
+
+        'appointment_status' => '',
         'position' => '',
-        'salgrade' => null,
-        'stepinc' => null,
-        'apptstat' => '',
-        'itemno' => null,
-        'monthlybasic' => 0.00,
+        'item_no' => 0,
+        'salary_grade' => 0,
+        'step_inc' => 0,
+        'monthly_basic' => 0.00,
         'aca' => 0.00,
         'pera' => 0.00,
-        'foodsubsi' => 0.00,
-        'allow1' => 0.00,
-        'allow2' => 0.00,
-        'govserv' => null,
-        'firstday' => null,
-        'apptdate' => null,
-        'adjdate' => null,
-        'phic' => '',
-        'tin' => '',
-        'hdmf' => '',
-        'gsis' => '',
-        'active' => '',
-        'groups' => '',
-        'hdmfpremiums' => 0.00,
+        'food_subsidy' => 0.00,
+        'ra' => 0.00,
+        'ta' => 0.00,
+        'firstday_gov' => null,
+        'firstday_sra' => null,
+        'appointment_date' => null,
+        'adjustment_date' => null,
+        'is_active' => false,
 
         'created_at' => null, 
         'updated_at' => null,
@@ -86,40 +91,86 @@ class Employee extends Model{
 
 
     //RELATIONSHIPS
+    public function user() {
+        return $this->belongsTo('App\Models\User','user_id','user_id');
+    }
+
     public function department(){
         return $this->hasOne('App\Models\Department', 'department_id', 'department_id');
     }
 
-
     public function departmentUnit(){
         return $this->hasOne('App\Models\Project', 'department_unit_id', 'department_unit_id');
     }
-
 
     public function project(){
         return $this->hasOne('App\Models\Project', 'project_id', 'project_id');
     }
 
 
+
+
+    public function employeeAddress(){
+        return $this->hasOne('App\Models\EmployeeAddress', 'employee_no', 'employee_no');
+    } 
+
+    public function employeeFamilyDetail(){
+        return $this->hasOne('App\Models\EmployeeFamilyDetail', 'employee_no', 'employee_no');
+    }
+
+    public function employeeOtherQuestion(){
+        return $this->hasOne('App\Models\EmployeeOtherQuestion', 'employee_no', 'employee_no');
+    }
+
+
+
+
     public function employeeTraining(){
-        return $this->hasMany('App\Models\EmployeeTraining', 'empno', 'empno');
+        return $this->hasMany('App\Models\EmployeeTraining', 'employee_no', 'employee_no');
     }
 
+    public function employeeChildren(){
+        return $this->hasMany('App\Models\EmployeeChildren', 'employee_no', 'employee_no');
+    } 
 
-    public function user() {
-      	return $this->belongsTo('App\Models\User','user_id','user_id');
+    public function employeeEducationalBackground(){
+        return $this->hasMany('App\Models\EmployeeEducationalBackground', 'employee_no', 'employee_no');
     }
 
+    public function employeeEligibility(){
+        return $this->hasMany('App\Models\EmployeeEligibility', 'employee_no', 'employee_no');
+    }   
 
-    
+    public function employeeExperience(){
+        return $this->hasMany('App\Models\EmployeeExperience', 'employee_no', 'employee_no');
+    }
 
+    public function employeeOrganization(){
+        return $this->hasMany('App\Models\EmployeeOrganization', 'employee_no', 'employee_no');
+    }
+
+    public function employeeRecognition(){
+        return $this->hasMany('App\Models\EmployeeRecognition', 'employee_no', 'employee_no');
+    }
+
+    public function employeeReference(){
+        return $this->hasMany('App\Models\EmployeeReference', 'employee_no', 'employee_no');
+    }
+
+    public function employeeSpecialSkill(){
+        return $this->hasMany('App\Models\EmployeeSpecialSkill', 'employee_no', 'employee_no');
+    }
+
+    public function employeeVoluntaryWork(){
+        return $this->hasMany('App\Models\EmployeeVoluntaryWork', 'employee_no', 'employee_no');
+    }
 
 
 
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->select('empno', 'empname', 'position', 'slug')
+        return $query->select('employee_no', 'fullname', 'position', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
@@ -128,16 +179,18 @@ class Employee extends Model{
 
 
 
+
     public function scopeSearch($query, $key){
 
         return $query->where(function ($query) use ($key) {
-                $query->where('empno', 'LIKE', '%'. $key .'%')
+                $query->where('employee_no', 'LIKE', '%'. $key .'%')
                       ->orwhere('lastname', 'LIKE', '%'. $key .'%')
                       ->orwhere('firstname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('empname', 'LIKE', '%'. $key .'%');
+                      ->orwhere('fullname', 'LIKE', '%'. $key .'%');
         });
 
     }
+
 
 
 
@@ -145,33 +198,6 @@ class Employee extends Model{
 
         return $query->where('slug', $slug)->with('employeeTraining')->firstOrFail();
 
-    }
-
-
-
-
-
-    // GETTERS
-    public function getEmployeeIdIncAttribute(){
-
-        $id = 'E1001';
-
-        $employee = $this->select('employee_id')->orderBy('employee_id', 'desc')->first();
-
-        if($employee != null){
-
-            if($employee->employee_id != null){
-
-                $num = str_replace('E', '', $employee->employee_id) + 1;
-            
-                $id = 'E' . $num;
-                
-            }
-        
-        }
-        
-        return $id;
-        
     }
 
 

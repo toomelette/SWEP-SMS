@@ -51,8 +51,8 @@
       <div class="box-body no-padding">
         <table class="table table-bordered">
           <tr>
-            <th>@sortablelink('empno', 'Employee No.')</th>
-            <th>@sortablelink('empname', 'Fullname')</th>
+            <th>@sortablelink('employee_no', 'Employee No.')</th>
+            <th>@sortablelink('fullname', 'Fullname')</th>
             <th>@sortablelink('position', 'Position')</th>
             <th style="width: 150px">Action</th>
           </tr>
@@ -60,8 +60,8 @@
 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
               
-              <td>{{ $data->empno }}</td>
-              <td>{{ $data->empname }}</td>
+              <td>{{ $data->employee_no }}</td>
+              <td>{{ $data->fullname }}</td>
               <td>{{ $data->position }}</td>
               <td> 
                 <select id="action" class="form-control input-sm">

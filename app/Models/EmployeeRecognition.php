@@ -4,16 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-
-class EmployeeTraining extends Model{
-
+class EmployeeRecognition extends Model{
 
 
 
-    protected $table = 'employee_trainings';
-
-    protected $dates = ['date_from', 'date_to'];
+	protected $table = 'employee_recognitions';
 
 
 
@@ -22,16 +17,8 @@ class EmployeeTraining extends Model{
         
         'employee_no' => '',
         'title' => '',
-        'type' => '',
-        'date_from' => null,
-        'date_to' => null,
-        'hours' => null,
-        'conductedby' => '',
-        'venue' => '',
-        'remarks' => '',
 
     ];
-
 
 
 
@@ -42,19 +29,17 @@ class EmployeeTraining extends Model{
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
     
-
-
+    
 
 
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->orderBy('date_to', 'desc')->get();
+        return $query->orderBy('title', 'desc')->get();
 
     }
+
+
+
     
-
-
-
-
 }
