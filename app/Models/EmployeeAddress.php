@@ -17,7 +17,7 @@ class EmployeeAddress extends Model{
         'employee_no' => '',
         'res_address_block' => '',
         'res_address_street' => '',
-        'res_addess_village' => '',
+        'res_address_village' => '',
         'res_address_barangay' => '',
         'res_address_city' => '',
         'res_address_province' => '',

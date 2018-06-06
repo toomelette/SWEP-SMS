@@ -50,14 +50,14 @@ class Employee extends Model{
         'email' => '',
         'agency_no' => '',
         'gov_id' => '',
-        'gov_passport_no' => '',
-        'gov_id_date_issue' => '',
+        'license_passport_no' => '',
+        'id_date_issue' => '',
 
         'gsis' => '',
-        'pagibig' => '',
         'philhealth' => '',
         'sss' => '',
         'tin' => '',
+        'hdmf' => '',
         'hdmfpremiums' => 0.00,
 
         'appointment_status' => '',

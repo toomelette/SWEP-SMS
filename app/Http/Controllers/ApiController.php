@@ -69,7 +69,7 @@ class ApiController extends Controller{
 
     		$response_department_units = $this->cache->remember('api:response_department_units_from_department:byDepartment:'. $key .'', 240, function() use ($key){
 
-        		return $this->department_unit->select('name', 'department_unit_id')
+        		return $this->department_unit->select('name', 'department_unit_id', 'description')
         									 ->where('department_name', $key)
         									 ->orwhere('department_id', $key)
         									 ->get();

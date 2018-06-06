@@ -25,7 +25,7 @@ class DepartmentUnitComposer{
     public function compose($view){
 
         $department_units = $this->cache->remember('department_units:global:all', 240, function(){
-        	return $this->department_units->select('name', 'department_unit_id')->get();
+        	return $this->department_units->select('name', 'department_unit_id', 'description')->get();
         });
         
     	$view->with('global_department_units_all', $department_units);
