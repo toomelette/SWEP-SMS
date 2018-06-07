@@ -60,10 +60,10 @@
               <li><a href="#org" data-toggle="tab">Organizations</a></li>
               <li><a href="#ss" data-toggle="tab">Special Skills</a></li>
               <li><a href="#ref" data-toggle="tab">Reference</a></li>
+              <li><a href="#oq" data-toggle="tab">Other Questions</a></li>
             </ul>
 
             <div class="tab-content">
-
 
 
               {{-- Personal Info --}}
@@ -1972,6 +1972,217 @@
 
               </div>
 
+
+
+
+              {{-- References --}}
+              <div class="tab-pane" id="oq">
+                <div class="row">
+                  
+                  <div class="col-md-12" style="padding-bottom: 10px;">
+                    <h3>Please answer the following questions:</h3>
+                  </div>
+                  
+
+                  <div class="col-md-12">
+                      
+                    <div class="col-md-12">
+                      <p class="text-muted well well-sm no-shadow">
+                        Are you related by consanguinity or affinity to the appointing or recommending authority, or to the
+                        chief of bureau or office or to the person who has immediate supervision over you in the Office, 
+                        Bureau or Department where you will be apppointed,
+                      </p>
+                    </div>
+
+                    <div class="col-md-12">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. within the third degree?</p>
+                      {!! FormHelper::select_static(
+                      '3', 'q_34_a', '', old('q_34_a'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_34_a'), $errors->first('q_34_a'), '', ''
+                      ) !!}
+
+                    </div>
+
+                    <div class="col-md-12"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">b. within the fourth degree (for Local Government Unit - Career Employees)?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_34_b', '', old('q_34_b'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_34_b'), $errors->first('q_34_b'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details: </p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_34_b_yes_details', 'text', '', '', old('q_34_b_yes_details'), $errors->has('q_34_b_yes_details'), $errors->first('q_34_b_yes_details'), ''
+                    ) !!}
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been found guilty of any administrative offense?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_35_a', '', old('q_35_a'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_35_a'), $errors->first('q_35_a'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details: </p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_35_a_yes_details', 'text', '', '', old('q_35_a_yes_details'), $errors->has('q_35_a_yes_details'), $errors->first('q_35_a_yes_details'), ''
+                    ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">b. Have you been criminally charged before any court?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_35_b', '', old('q_35_b'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_35_b'), $errors->first('q_35_b'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details (Date Filled / Status of Cases):</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_35_b_yes_details', 'text', '', '', old('q_35_b_yes_details'), $errors->has('q_35_b_yes_details'), $errors->first('q_35_b_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_36', '', old('q_36'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_36'), $errors->first('q_36'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details:</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_36_yes_details', 'text', '', '', old('q_36_yes_details'), $errors->has('q_36_yes_details'), $errors->first('q_36_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_37', '', old('q_37'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_37'), $errors->first('q_37'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details:</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_37_yes_details', 'text', '', '', old('q_37_yes_details'), $errors->has('q_37_yes_details'), $errors->first('q_37_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_38_a', '', old('q_38_a'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_38_a'), $errors->first('q_38_a'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details:</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_38_a_yes_details', 'text', '', '', old('q_38_a_yes_details'), $errors->has('q_38_a_yes_details'), $errors->first('q_38_a_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-12"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_38_b', '', old('q_38_b'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_38_b'), $errors->first('q_38_b'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details:</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_38_b_yes_details', 'text', '', '', old('q_38_b_yes_details'), $errors->has('q_38_b_yes_details'), $errors->first('q_38_b_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;"></div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. Have you acquired the status of an immigrant or permanent resident of another country?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_39', '', old('q_39'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_39'), $errors->first('q_39'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details (Country):</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_39_yes_details', 'text', '', '', old('q_39_yes_details'), $errors->has('q_39_yes_details'), $errors->first('q_39_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;"></div>
+
+                    <div class="col-md-12">
+                      <p class="text-muted well well-sm no-shadow">
+                        Pursuant to: (a) Indigenous People's Act (RA 8371); (b) Magna Carta for Disabled Persons (RA 7277); and (c) Solo Parents Welfare Act of 2000 (RA 8972), please answer the following items:
+                      </p>
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">a. Are you a member of any indigenous group?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_40_a', '', old('q_40_a'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_a'), $errors->first('q_40_a'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details:</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_40_a_yes_details', 'text', '', '', old('q_40_a_yes_details'), $errors->has('q_40_a_yes_details'), $errors->first('q_40_a_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">b. Are you a person with disability?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_40_b', '', old('q_40_b'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_b'), $errors->first('q_40_b'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details (ID No.):</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_40_b_yes_details', 'text', '', '', old('q_40_b_yes_details'), $errors->has('q_40_b_yes_details'), $errors->first('q_40_b_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px; font-weight: bold;">c. Are you a solo parent?</p>
+                      {!! FormHelper::select_static(
+                        '6', 'q_40_c', '', old('q_40_c'), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_c'), $errors->first('q_40_c'), '', ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-6">
+                      <p style="margin-bottom:-10px;">If YES, give details (ID No.):</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_40_c_yes_details', 'text', '', '', old('q_40_c_yes_details'), $errors->has('q_40_c_yes_details'), $errors->first('q_40_c_yes_details'), ''
+                      ) !!}
+                    </div>
+
+                  </div>
+                  
+
+                </div>
+              </div>
 
 
 
