@@ -24,7 +24,6 @@ class EmployeeExperience extends Model{
         'company' => '',
         'salary' => 0.00,
         'salary_grade' => 0,
-        'step_inc' => 0,
         'appointment_status' => '',
         'is_gov_service' => false,
 

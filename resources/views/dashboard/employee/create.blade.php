@@ -53,6 +53,13 @@
               <li><a href="#ad" data-toggle="tab">Appointment Details</a></li>
               <li><a href="#eb" data-toggle="tab">Educational background</a></li>
               <li><a href="#t" data-toggle="tab">Trainings</a></li>
+              <li><a href="#e" data-toggle="tab">Eligibilities</a></li>
+              <li><a href="#we" data-toggle="tab">Work Experiences</a></li>
+              <li><a href="#vw" data-toggle="tab">Voluntary Works</a></li>
+              <li><a href="#r" data-toggle="tab">Recognitions</a></li>
+              <li><a href="#org" data-toggle="tab">Organizations</a></li>
+              <li><a href="#ss" data-toggle="tab">Special Skills</a></li>
+              <li><a href="#ref" data-toggle="tab">Reference</a></li>
             </ul>
 
             <div class="tab-content">
@@ -215,7 +222,6 @@
                   </div>
                   
 
-
                   <div class="col-md-6">
                     <div class="box">
                       <div class="box-header with-border">
@@ -302,7 +308,7 @@
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'father_name_ext', 'text', 'Name Extension *', 'Name Extension', old('father_name_ext'), $errors->has('father_name_ext'), $errors->first('father_name_ext'), 'data-transform="uppercase"'
+                           '6', 'father_name_ext', 'text', 'Name Extension', 'Name Extension', old('father_name_ext'), $errors->has('father_name_ext'), $errors->first('father_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -378,7 +384,7 @@
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_tel_no', 'text', 'Telephone No. *', 'Telephone No.', old('spouse_tel_no'), $errors->has('spouse_tel_no'), $errors->first('spouse_tel_no'), 'data-transform="uppercase"'
+                           '3', 'spouse_tel_no', 'text', 'Telephone No.', 'Telephone No.', old('spouse_tel_no'), $errors->has('spouse_tel_no'), $errors->first('spouse_tel_no'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -615,6 +621,40 @@
 
 
 
+              {{-- Personal ID's --}}
+              <div class="tab-pane" id="id">
+                <div class="row">
+
+                  {!! FormHelper::textbox(
+                     '3', 'gsis', 'text', 'GSIS', 'GSIS', old('gsis'), $errors->has('gsis'), $errors->first('gsis'), ''
+                  ) !!}
+
+                  {!! FormHelper::textbox(
+                     '3', 'philhealth', 'text', 'PHILHEALTH', 'PHILHEALTH', old('philhealth'), $errors->has('philhealth'), $errors->first('philhealth'), ''
+                  ) !!}
+
+                  {!! FormHelper::textbox(
+                     '3', 'tin', 'text', 'TIN', 'TIN', old('tin'), $errors->has('tin'), $errors->first('tin'), ''
+                  ) !!}
+
+                  {!! FormHelper::textbox(
+                     '3', 'sss', 'text', 'SSS', 'SSS', old('sss'), $errors->has('sss'), $errors->first('sss'), ''
+                  ) !!}
+
+                  {!! FormHelper::textbox(
+                     '3', 'hdmf', 'text', 'HDMF', 'HDMF', old('hdmf'), $errors->has('hdmf'), $errors->first('hdmf'), ''
+                  ) !!}
+
+                  {!! FormHelper::textbox_numeric(
+                    '3', 'hdmfpremiums', 'text', 'HDMF Premiums', 'HDMF Premiums', old('hdmfpremiums'), $errors->has('hdmfpremiums'), $errors->first('hdmfpremiums'), ''
+                  ) !!}
+
+                </div>
+              </div>
+
+
+
+
 
               {{-- Educ Background --}}
               <div class="tab-pane" id="eb">
@@ -630,13 +670,13 @@
 
                       <tr>
                         <th>Level *</th>
-                        <th style="width:25em;">Name of School *</th>
-                        <th>Course</th>
+                        <th style="width:20em;">Name of School *</th>
+                        <th style="width:15em;">Course</th>
                         <th>Date From</th>
                         <th>Date To</th>
                         <th>Units</th>
                         <th>Graduate Year</th>
-                        <th>Scholarship</th>
+                        <th style="width:15em;">Scholarship</th>
                         <th style="width: 40px"></th>
                       </tr>
 
@@ -652,11 +692,25 @@
                                 <div class="form-group">
                                   <select name="row_eb[{{ $key }}][level]" class="form-control">
                                     <option value="">Select</option>
-                                    @foreach($level as $value => $name)
-                                      <option value="{{ $value }}">{{ $name }}</option>
+                                    @foreach($level as $value2 => $name)
+                                      <option value="{{ $value2 }}" {{ $value2 == $value['level'] ? 'selected' : '' }}>{{ $name }}</option>
                                     @endforeach
                                   </select>
                                   <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.level') }}</small>
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eb[{{ $key }}][school_name]" class="form-control" placeholder="Name of School" value="{{ $value['school_name'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.school_name') }}</small>
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eb[{{ $key }}][course]" class="form-control" placeholder="Course" value="{{ $value['course'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.course') }}</small>
                                 </div>
                               </td>
 
@@ -666,14 +720,47 @@
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="row_eb[{{ $key }}][date_of_birth]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_of_birth']) }}">
+                                    <input name="row_eb[{{ $key }}][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_from']) }}">
                                   </div>
-                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.date_of_birth') }}</small>
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.date_from') }}</small>
                                 </div>
                               </td>
 
                               <td>
-                                  <button id="eb_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_eb[{{ $key }}][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_to']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.date_to') }}</small>
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eb[{{ $key }}][units]" class="form-control" placeholder="Units" value="{{ $value['units'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.units') }}</small>
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eb[{{ $key }}][year]" class="form-control" placeholder="Year" value="{{ $value['year'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.year') }}</small>
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eb[{{ $key }}][scholarship]" class="form-control" placeholder="Scholarship" value="{{ $value['scholarship'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eb.'. $key .'.scholarship') }}</small>
+                                </div>
+                              </td>
+
+                              <td>
+                                <button id="eb_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
                               </td>
 
                             </tr>
@@ -731,19 +818,19 @@
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="row_eb[0][units]" class="form-control" placeholder="Course">
+                                <input type="text" name="row_eb[0][units]" class="form-control" placeholder="Units">
                               </div>
                             </td>
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="row_eb[0][year]" class="form-control" placeholder="Course">
+                                <input type="text" name="row_eb[0][year]" class="form-control" placeholder="Year">
                               </div>
                             </td>
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="row_eb[0][scholarship]" class="form-control" placeholder="Course">
+                                <input type="text" name="row_eb[0][scholarship]" class="form-control" placeholder="Scholarship">
                               </div>
                             </td>
 
@@ -768,6 +855,7 @@
 
 
 
+
               {{-- Trainings --}}
               <div class="tab-pane" id="t">
                 
@@ -781,12 +869,13 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Topics *</th>
-                        <th>Conducted by *</th>
+                        <th style="width:15em;">Title *</th>
+                        <th>Type of L & D</th>
+                        <th style="width:15em;">Conducted by *</th>
                         <th>Date From *</th>
                         <th>Date To *</th>
                         <th>Hours *</th>
-                        <th>Venue *</th>
+                        <th style="width:15em;">Venue *</th>
                         <th>Remarks</th>
                         <th style="width: 40px"></th>
                       </tr>
@@ -801,16 +890,24 @@
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row_training[{{ $key }}][topics]" class="form-control" placeholder="Topics" value="{{ $value['topics'] }}">
-                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.topics') }}</small>
+                                  <input type="text" name="row_training[{{ $key }}][title]" class="form-control" placeholder="Title" value="{{ $value['title'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.title') }}</small>
                                 </div>
                               </td>
 
 
                               <td>
                                 <div class="form-group">
-                                  <input type="text" name="row_training[{{ $key }}][conductedby]" class="form-control" placeholder="Conducted by" value="{{ $value['conductedby'] }}">
-                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.conductedby') }}</small>
+                                  <input type="text" name="row_training[{{ $key }}][type]" class="form-control" placeholder="Type of L & D" value="{{ $value['type'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.type') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_training[{{ $key }}][conducted_by]" class="form-control" placeholder="Conducted by" value="{{ $value['conducted_by'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.conducted_by') }}</small>
                                 </div>
                               </td>
 
@@ -821,9 +918,9 @@
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="row_training[{{ $key }}][datefrom]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['datefrom']) }}">
+                                    <input name="row_training[{{ $key }}][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_from']) }}">
                                   </div>
-                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.datefrom') }}</small>
+                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.date_from') }}</small>
                                 </div>
                               </td>
 
@@ -834,9 +931,9 @@
                                     <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input name="row_training[{{ $key }}][dateto]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['dateto']) }}">
+                                    <input name="row_training[{{ $key }}][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_to']) }}">
                                   </div>
-                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.dateto') }}</small>
+                                  <small class="text-danger">{{ $errors->first('row_training.'. $key .'.date_to') }}</small>
                                 </div>
                               </td>
 
@@ -879,14 +976,21 @@
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="training_row[0][topics]" class="form-control" placeholder="Topics">
+                                <input type="text" name="row_training[0][title]" class="form-control" placeholder="Title">
                               </div>
                             </td>
 
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="training_row[0][conductedby]" class="form-control" placeholder="Conducted by">
+                                <input type="text" name="row_training[0][type]" class="form-control" placeholder="Type of L & D">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_training[0][conducted_by]" class="form-control" placeholder="Conducted by">
                               </div>
                             </td>
 
@@ -897,7 +1001,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                   </div>
-                                  <input name="training_row[0][datefrom]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                  <input name="row_training[0][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
                                 </div>
                               </div>
                             </td>
@@ -909,7 +1013,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                   </div>
-                                  <input name="training_row[0][dateto]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                  <input name="row_training[0][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
                                 </div>
                               </div>
                             </td>
@@ -917,21 +1021,21 @@
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="training_row[0][hours]" class="form-control" placeholder="Hours">
+                                <input type="text" name="row_training[0][hours]" class="form-control" placeholder="Hours">
                               </div>
                             </td>
 
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="training_row[0][venue]" class="form-control" placeholder="Venue">
+                                <input type="text" name="row_training[0][venue]" class="form-control" placeholder="Venue">
                               </div>
                             </td>
 
 
                             <td>
                               <div class="form-group">
-                                <input type="text" name="training_row[0][remarks]" class="form-control" placeholder="Remarks">
+                                <input type="text" name="row_training[0][remarks]" class="form-control" placeholder="Remarks">
                               </div>
                             </td>
 
@@ -958,132 +1062,916 @@
 
 
 
-              {{-- Appointment Details --}}
-              <div class="tab-pane" id="ad">
-                <div class="row">
+              {{-- Eligibilities --}}
+              <div class="tab-pane" id="e">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
 
-                  {!! FormHelper::textbox(
-                    '3', 'employee_no', 'text', 'Employee No. *', 'Employee No.', old('employee_no'), $errors->has('employee_no'), $errors->first('employee_no'), ''
-                  ) !!}
+                      <tr>
+                        <th>Eligibility *</th>
+                        <th>Level *</th>
+                        <th>Rating</th>
+                        <th>Place of Examination</th>
+                        <th>Date of Examination</th>
+                        <th>License No.</th>
+                        <th>License Validity</th>
+                        <th style="width: 40px"></th>
+                      </tr>
 
-                  {!! FormHelper::textbox(
-                    '3', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
-                  ) !!}
+                      <tbody id="eligibility_table_body">
 
-                  {!! FormHelper::textbox(
-                    '3', 'item_no', 'text', 'Item No.', 'Item No.', old('item_no'), $errors->has('item_no'), $errors->first('item_no'), ''
-                  ) !!}
+                        @if(old('row_eligibility'))
 
-                  {!! FormHelper::select_static(
-                    '3', 'appointment_status', 'Appointment Status *', old('appointment_status'), ['Permanent' => 'PERM', 'Job Order / Contract of Service' => 'COS'], $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
-                  ) !!}
+                          @foreach(old('row_eligibility') as $key => $value)
 
-                  <div class="col-md-12"></div>
+                            <tr>
 
-                  {!! FormHelper::textbox(
-                    '3', 'salary_grade', 'text', 'Salary Grade *', 'Salary Grade', old('salary_grade'), $errors->has('salary_grade'), $errors->first('salary_grade'), ''
-                  ) !!}
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eligibility[{{ $key }}][eligibility]" class="form-control" placeholder="Title" value="{{ $value['eligibility'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.eligibility') }}</small>
+                                </div>
+                              </td>
 
-                  {!! FormHelper::textbox(
-                    '3', 'step_inc', 'text', 'Step Increment', 'Step Increment', old('step_inc'), $errors->has('step_inc'), $errors->first('step_inc'), ''
-                  ) !!}
 
-                  {!! FormHelper::select_dynamic(
-                    '3', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), '', ''
-                  ) !!}
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eligibility[{{ $key }}][level]" class="form-control" placeholder="Type of L & D" value="{{ $value['level'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.level') }}</small>
+                                </div>
+                              </td>
 
-                  {!! FormHelper::select_dynamic(
-                    '3', 'department_unit_id', 'Unit *', old('department_unit_id'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), '', ''
-                  ) !!}
 
-                  <div class="col-md-12"></div>
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eligibility[{{ $key }}][rating]" class="form-control" placeholder="Rating" value="{{ $value['rating'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.rating') }}</small>
+                                </div>
+                              </td>
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'monthlybasic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthlybasic'), $errors->has('monthlybasic'), $errors->first('monthlybasic'), ''
-                  ) !!}
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'aca', 'text', 'ACA', 'ACA', old('aca'), $errors->has('aca'), $errors->first('aca'), ''
-                  ) !!}
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eligibility[{{ $key }}][exam_place]" class="form-control" placeholder="Place of Examination" value="{{ $value['exam_place'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.exam_place') }}</small>
+                                </div>
+                              </td>
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'pera', 'text', 'PERA', 'PERA', old('pera'), $errors->has('pera'), $errors->first('pera'), ''
-                  ) !!}
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'food_subsidy', 'text', 'Food Subsidy', 'Food Subsidy', old('food_subsidy'), $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
-                  ) !!}
+                              <td>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_eligibility[{{ $key }}][exam_date]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['exam_date']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.exam_date') }}</small>
+                                </div>
+                              </td>
 
-                  <div class="col-md-12"></div>
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'ra', 'text', 'RA', 'RA', old('ra'), $errors->has('ra'), $errors->first('ra'), ''
-                  ) !!}
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_eligibility[{{ $key }}][license_no]" class="form-control" placeholder="License No" value="{{ $value['license_no'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.license_no') }}</small>
+                                </div>
+                              </td>
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'ta', 'text', 'TA', 'TA', old('ta'), $errors->has('ta'), $errors->first('ta'), ''
-                  ) !!}
 
-                  <div class="col-md-12"></div>
+                              <td>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_eligibility[{{ $key }}][license_validity]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['license_validity']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_eligibility.'. $key .'.license_validity') }}</small>
+                                </div>
+                              </td>
 
-                  {!! FormHelper::datepicker(
-                    '3', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov'), $errors->has('firstday_gov'), $errors->first('firstday_gov')
-                  ) !!}
 
-                  {!! FormHelper::datepicker(
-                    '3', 'firstday_sra',  'First Day in SRA *', old('firstday_sra'), $errors->has('firstday_sra'), $errors->first('firstday_sra')
-                  ) !!}
 
-                  {!! FormHelper::datepicker(
-                    '3', 'appointment_date',  'Appointment Date', old('appointment_date'), $errors->has('appointment_date'), $errors->first('appointment_date')
-                  ) !!}
+                              <td>
+                                  <button id="eligibility_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
 
-                  {!! FormHelper::datepicker(
-                    '3', 'adjustment_date',  'Adjustment Date', old('adjustment_date'), $errors->has('adjustment_date'), $errors->first('adjustment_date')
-                  ) !!}
+                            </tr>
 
-                  <div class="col-md-12"></div>
+                          @endforeach
 
-                  {!! FormHelper::select_static(
-                    '3', 'is_active', 'Status *', old('is_active'), ['ACTIVE' => 'true', 'INACTIVE' => 'false'], $errors->has('is_active'), $errors->first('is_active'), '', ''
-                  ) !!}
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_eligibility[0][eligibility]" class="form-control" placeholder="Eligibility">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_eligibility[0][level]" class="form-control" placeholder="Level">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_eligibility[0][rating]" class="form-control" placeholder="Rating">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_eligibility[0][exam_place]" class="form-control" placeholder="Place of Examination">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input name="row_eligibility[0][exam_date]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                </div>
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_eligibility[0][license_no]" class="form-control" placeholder="License No">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input name="row_eligibility[0][license_validity]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                </div>
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="eligibility_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
 
                 </div>
+
               </div>
 
 
 
 
-              {{-- Personal ID's --}}
-              <div class="tab-pane" id="id">
-                <div class="row">
+              {{-- Work Experiences --}}
+              <div class="tab-pane" id="we">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
 
-                  {!! FormHelper::textbox(
-                     '3', 'gsis', 'text', 'GSIS', 'GSIS', old('gsis'), $errors->has('gsis'), $errors->first('gsis'), ''
-                  ) !!}
+                      <tr>
+                        <th>Date From</th>
+                        <th>Date to</th>
+                        <th style="width:20em;">Company</th>
+                        <th>Position</th>
+                        <th>Salary</th>
+                        <th>Salary Grade</th>
+                        <th>Appointment Status</th>
+                        <th>Gov Service (Y/N)</th>
+                        <th style="width: 40px"></th>
+                      </tr>
 
-                  {!! FormHelper::textbox(
-                     '3', 'philhealth', 'text', 'PHILHEALTH', 'PHILHEALTH', old('philhealth'), $errors->has('philhealth'), $errors->first('philhealth'), ''
-                  ) !!}
+                      <tbody id="we_table_body">
 
-                  {!! FormHelper::textbox(
-                     '3', 'tin', 'text', 'TIN', 'TIN', old('tin'), $errors->has('tin'), $errors->first('tin'), ''
-                  ) !!}
+                        @if(old('row_we'))
 
-                  {!! FormHelper::textbox(
-                     '3', 'sss', 'text', 'SSS', 'SSS', old('sss'), $errors->has('sss'), $errors->first('sss'), ''
-                  ) !!}
+                          @foreach(old('row_we') as $key => $value)
 
-                  {!! FormHelper::textbox(
-                     '3', 'hdmf', 'text', 'HDMF', 'HDMF', old('hdmf'), $errors->has('hdmf'), $errors->first('hdmf'), ''
-                  ) !!}
+                            <tr>
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'hdmfpremiums', 'text', 'HDMF Premiums', 'HDMF Premiums', old('hdmfpremiums'), $errors->has('hdmfpremiums'), $errors->first('hdmfpremiums'), ''
-                  ) !!}
+
+                              <td>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_we[{{ $key }}][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_from']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.date_from') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_we[{{ $key }}][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_to']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.date_to') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_we[{{ $key }}][company]" class="form-control" placeholder="Company" value="{{ $value['company'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.company') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_we[{{ $key }}][position]" class="form-control" placeholder="Position" value="{{ $value['position'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.position') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_we[{{ $key }}][salary]" class="form-control" placeholder="Rating" value="{{ $value['salary'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.salary') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_we[{{ $key }}][salary_grade]" class="form-control" placeholder="Place of Examination" value="{{ $value['salary_grade'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.salary_grade') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_we[{{ $key }}][appointment_status]" class="form-control" placeholder="License No" value="{{ $value['appointment_status'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.appointment_status') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <select name="row_we[{{ $key }}][is_gov_service]" class="form-control">
+                                    <option value="">Select</option>
+                                      <option value="true" {{ $value['is_gov_service'] == 'true' ? 'selected' : '' }}>YES</option>
+                                      <option value="false" {{ $value['is_gov_service'] == 'false' ? 'selected' : '' }}>NO</option>
+                                  </select>
+                                  <small class="text-danger">{{ $errors->first('row_we.'. $key .'.is_gov_service') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                  <button id="we_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
+
+                            </tr>
+
+                          @endforeach
+
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input name="row_we[0][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                </div>
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input name="row_we[0][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                </div>
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_we[0][company]" class="form-control" placeholder="Company">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_we[0][position]" class="form-control" placeholder="Position">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_we[0][salary]" class="form-control" placeholder="Salary">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_we[0][salary_grade]" class="form-control" placeholder="Salary Grade">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_we[0][appointment_status]" class="form-control" placeholder="Appointment Status">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <select name="row_we[0][is_gov_service]" class="form-control">
+                                  <option value="">Select</option>
+                                    <option value="true">YES</option>
+                                    <option value="false">NO</option>
+                                </select>
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="we_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
 
                 </div>
+
               </div>
+
+
+
+
+              {{-- Voluntary Works --}}
+              <div class="tab-pane" id="vw">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
+
+                      <tr>
+                        <th>Name of Organization</th>
+                        <th>Address</th>
+                        <th>Date from</th>
+                        <th>Date to</th>
+                        <th>Hours</th>
+                        <th>Position</th>
+                        <th style="width: 40px"></th>
+                      </tr>
+
+                      <tbody id="vw_table_body">
+
+                        @if(old('row_vw'))
+
+                          @foreach(old('row_vw') as $key => $value)
+
+                            <tr>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_vw[{{ $key }}][name]" class="form-control" placeholder="Name" value="{{ $value['name'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_vw.'. $key .'.name') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_vw[{{ $key }}][address]" class="form-control" placeholder="Position" value="{{ $value['address'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_vw.'. $key .'.address') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_vw[{{ $key }}][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_from']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_vw.'. $key .'.date_from') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input name="row_vw[{{ $key }}][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="{{ DataTypeHelper::date_out($value['date_to']) }}">
+                                  </div>
+                                  <small class="text-danger">{{ $errors->first('row_vw.'. $key .'.date_to') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_vw[{{ $key }}][hours]" class="form-control" placeholder="Hours" value="{{ $value['hours'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_vw.'. $key .'.hours') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_vw[{{ $key }}][position]" class="form-control" placeholder="Position" value="{{ $value['position'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_vw.'. $key .'.position') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                  <button id="vw_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
+
+                            </tr>
+
+                          @endforeach
+
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_vw[0][name]" class="form-control" placeholder="Name">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_vw[0][address]" class="form-control" placeholder="Address">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input name="row_vw[0][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                </div>
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </div>
+                                  <input name="row_vw[0][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                                </div>
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_vw[0][hours]" class="form-control" placeholder="Hours">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_vw[0][position]" class="form-control" placeholder="Position">
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="vw_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+
+
+              {{-- Recognitions --}}
+              <div class="tab-pane" id="r">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
+
+                      <tr>
+                        <th>Title</th>
+                        <th style="width: 40px"></th>
+                      </tr>
+
+                      <tbody id="recognition_table_body">
+
+                        @if(old('row_recognition'))
+
+                          @foreach(old('row_recognition') as $key => $value)
+
+                            <tr>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_recognition[{{ $key }}][title]" class="form-control" placeholder="Title" value="{{ $value['title'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_recognition.'. $key .'.title') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                  <button id="recognition_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
+
+                            </tr>
+
+                          @endforeach
+
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_recognition[0][title]" class="form-control" placeholder="Title">
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="recognition_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+
+              {{-- Organizations --}}
+              <div class="tab-pane" id="org">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
+
+                      <tr>
+                        <th>Name of Organization</th>
+                        <th style="width: 40px"></th>
+                      </tr>
+
+                      <tbody id="org_table_body">
+
+                        @if(old('row_org'))
+
+                          @foreach(old('row_org') as $key => $value)
+
+                            <tr>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_org[{{ $key }}][name]" class="form-control" placeholder="Name" value="{{ $value['name'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_org.'. $key .'.name') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                  <button id="org_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
+
+                            </tr>
+
+                          @endforeach
+
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_org[0][name]" class="form-control" placeholder="Name">
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="org_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+
+              {{-- Special Skills --}}
+              <div class="tab-pane" id="ss">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
+
+                      <tr>
+                        <th>Special Skills or Hobies</th>
+                        <th style="width: 40px"></th>
+                      </tr>
+
+                      <tbody id="ss_table_body">
+
+                        @if(old('row_ss'))
+
+                          @foreach(old('row_ss') as $key => $value)
+
+                            <tr>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_ss[{{ $key }}][description]" class="form-control" placeholder="Special Skills or Hobies" value="{{ $value['description'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_ss.'. $key .'.description') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                  <button id="ss_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
+
+                            </tr>
+
+                          @endforeach
+
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_ss[0][description]" class="form-control" placeholder="Special Skills or Hobies">
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="ss_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+
+              {{-- References --}}
+              <div class="tab-pane" id="ref">
+                
+                <div class="box box-solid">
+                  <div class="box-header with-border">
+                    <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                  </div>
+                  
+                  <div class="box-body no-padding">
+                    
+                    <table class="table table-bordered">
+
+                      <tr>
+                        <th>Fullname</th>
+                        <th>Address</th>
+                        <th>Tel No.</th>
+                        <th style="width: 40px"></th>
+                      </tr>
+
+                      <tbody id="reference_table_body">
+
+                        @if(old('row_reference'))
+
+                          @foreach(old('row_reference') as $key => $value)
+
+                            <tr>
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_reference[{{ $key }}][fullname]" class="form-control" placeholder="Fullname" value="{{ $value['fullname'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_reference.'. $key .'.fullname') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_reference[{{ $key }}][address]" class="form-control" placeholder="Address" value="{{ $value['address'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_reference.'. $key .'.address') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                <div class="form-group">
+                                  <input type="text" name="row_reference[{{ $key }}][tel_no]" class="form-control" placeholder="Telephone No." value="{{ $value['tel_no'] }}">
+                                  <small class="text-danger">{{ $errors->first('row_reference.'. $key .'.tel_no') }}</small>
+                                </div>
+                              </td>
+
+
+                              <td>
+                                  <button id="reference_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              </td>
+
+                            </tr>
+
+                          @endforeach
+
+                        @else
+
+                          <tr>
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_reference[0][fullname]" class="form-control" placeholder="Fullname">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_reference[0][address]" class="form-control" placeholder="Address">
+                              </div>
+                            </td>
+
+
+                            <td>
+                              <div class="form-group">
+                                <input type="text" name="row_reference[0][tel_no]" class="form-control" placeholder="Telephone No.">
+                              </div>
+                            </td>
+
+
+                            <td>
+                                <button id="reference_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                            </td>
+
+                          </tr>
+
+
+                        @endif
+
+                        </tbody>
+
+                    </table>
+                   
+                  </div>
+
+                </div>
+
+              </div>
+
 
 
 
@@ -1184,9 +2072,108 @@
 
     });
 
-
     {{-- DELETE Children ROW --}}
     $(document).on("click","#children_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    {{-- EB ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#eb_add_row").on("click", function() {
+      var i = $("#eb_table_body").children().length;
+      var content ='<tr>' +
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<select name="row_eb[' + i + '][level]" class="form-control">' +
+                          '<option value="">Select</option>' +
+                          '@foreach($level as $value => $name)' +
+                            '<option value="{{ $value }}">{{ $name }}</option>' +
+                          '@endforeach' +
+                        '</select>' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<input type="text" name="row_eb[' + i + '][school_name]" class="form-control" placeholder="Name of School">' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<input type="text" name="row_eb[' + i + '][course]" class="form-control" placeholder="Course">' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<div class="input-group">' +
+                          '<div class="input-group-addon">' +
+                            '<i class="fa fa-calendar"></i>' +
+                          '</div>' +
+                          '<input name="row_eb[' + i + '][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                        '</div>' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<div class="input-group">' +
+                          '<div class="input-group-addon">' +
+                            '<i class="fa fa-calendar"></i>' +
+                          '</div>' +
+                          '<input name="row_eb[' + i + '][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                        '</div>' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<input type="text" name="row_eb[' + i + '][units]" class="form-control" placeholder="Units">' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<input type="text" name="row_eb[' + i + '][year]" class="form-control" placeholder="Year">' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<div class="form-group">' +
+                        '<input type="text" name="row_eb[' + i + '][scholarship]" class="form-control" placeholder="Scholarship">' +
+                      '</div>' +
+                    '</td>' +
+
+                    '<td>' +
+                      '<button id="eb_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                    '</td>' +
+
+                  '</tr>';
+
+      $("#eb_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+
+    });
+
+    {{-- DELETE Children ROW --}}
+    $(document).on("click","#eb_delete_row" ,function(e) {
         $(this).closest('tr').remove();
     });
 
@@ -1202,14 +2189,21 @@
       var content ='<tr>' +
                       '<td>' +
                         '<div class="form-group">' +
-                          '<input type="text" name="training_row[' + i + '][topics]" class="form-control" placeholder="Topics">' +
+                          '<input type="text" name="row_training[' + i + '][title]" class="form-control" placeholder="Title">' +
                         '</div>' +
                       '</td>' +
 
 
                       '<td>' +
                         '<div class="form-group">' +
-                          '<input type="text" name="training_row[' + i + '][conductedby]" class="form-control" placeholder="Conducted by">' +
+                          '<input type="text" name="row_training[' + i + '][type]" class="form-control" placeholder="Type of L & D">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_training[' + i + '][conducted_by]" class="form-control" placeholder="Conducted by">' +
                         '</div>' +
                       '</td>' +
 
@@ -1220,7 +2214,7 @@
                             '<div class="input-group-addon">' +
                               '<i class="fa fa-calendar"></i>' +
                             '</div>' +
-                            '<input name="training_row[' + i + '][datefrom]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                            '<input name="row_training[' + i + '][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
                           '</div>' +
                         '</div>' +
                       '</td>' +
@@ -1232,7 +2226,7 @@
                             '<div class="input-group-addon">' +
                               '<i class="fa fa-calendar"></i>' +
                             '</div>' +
-                            '<input name="training_row[' + i + '][dateto]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                            '<input name="row_training[' + i + '][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
                           '</div>' +
                         '</div>' +
                       '</td>' +
@@ -1240,21 +2234,21 @@
 
                       '<td>' +
                         '<div class="form-group">' +
-                          '<input type="text" name="training_row[' + i + '][hours]" class="form-control" placeholder="Hours">' +
+                          '<input type="text" name="row_training[' + i + '][hours]" class="form-control" placeholder="Hours">' +
                         '</div>' +
                       '</td>' +
 
 
                       '<td>' +
                         '<div class="form-group">' +
-                          '<input type="text" name="training_row[' + i + '][venue]" class="form-control" placeholder="Venue">' +
+                          '<input type="text" name="row_training[' + i + '][venue]" class="form-control" placeholder="Venue">' +
                         '</div>' +
                       '</td>' +
 
 
                       '<td>' +
                         '<div class="form-group">' +
-                          '<input type="text" name="training_row[' + i + '][remarks]" class="form-control" placeholder="Remarks">' +
+                          '<input type="text" name="row_training[' + i + '][remarks]" class="form-control" placeholder="Remarks">' +
                         '</div>' +
                       '</td>' +
 
@@ -1278,12 +2272,489 @@
       $(this).removeClass('datepicker');
 
       });
+    });
 
+    $(document).on("click","#training_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
     });
 
 
-    {{-- DELETE Training ROW --}}
-    $(document).on("click","#training_delete_row" ,function(e) {
+
+
+
+    {{-- Eligibility ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#eligibility_add_row").on("click", function() {
+      var i = $("#eligibility_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                         ' <input type="text" name="row_eligibility[' + i + '][eligibility]" class="form-control" placeholder="Eligibility">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_eligibility[' + i + '][level]" class="form-control" placeholder="Level">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_eligibility[' + i + '][rating]" class="form-control" placeholder="Rating">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_eligibility[' + i + '][exam_place]" class="form-control" placeholder="Place of Examination">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_eligibility[' + i + '][exam_date]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_eligibility[' + i + '][license_no]" class="form-control" placeholder="License No">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                       '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_eligibility[' + i + '][license_validity]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<button id="eligibility_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#eligibility_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Eligibility ROW --}}
+    $(document).on("click","#eligibility_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    {{-- Experience ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#we_add_row").on("click", function() {
+      var i = $("#we_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_we[' + i + '][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_we[' + i + '][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_we[' + i + '][company]" class="form-control" placeholder="Company">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_we[' + i + '][position]" class="form-control" placeholder="Position">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_we[' + i + '][salary]" class="form-control" placeholder="Salary">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_we[' + i + '][salary_grade]" class="form-control" placeholder="Salary Grade">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_we[' + i + '][appointment_status]" class="form-control" placeholder="Appointment Status">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<select name="row_we[' + i + '][is_gov_service]" class="form-control">' +
+                            '<option value="">Select</option>' +
+                              '<option value="true">YES</option>' +
+                              '<option value="false">NO</option>' +
+                          '</select>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                          '<button id="we_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#we_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Experience ROW --}}
+    $(document).on("click","#we_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+
+    {{-- Voluntary Works ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#vw_add_row").on("click", function() {
+      var i = $("#vw_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_vw[' + i + '][name]" class="form-control" placeholder="Name">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_vw[' + i + '][address]" class="form-control" placeholder="Address">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_vw[' + i + '][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_vw[' + i + '][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_vw[' + i + '][hours]" class="form-control" placeholder="Hours">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_vw[' + i + '][position]" class="form-control" placeholder="Position">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<button id="vw_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#vw_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Voluntary Works ROW --}}
+    $(document).on("click","#vw_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    {{-- Recognitions ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#recognition_add_row").on("click", function() {
+      var i = $("#recognition_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_recognition[' + i + '][title]" class="form-control" placeholder="Title">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<button id="recognition_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#recognition_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Voluntary Works ROW --}}
+    $(document).on("click","#recognition_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    {{-- Organizations ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#org_add_row").on("click", function() {
+      var i = $("#org_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_org[' + i + '][name]" class="form-control" placeholder="Name">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<button id="org_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#org_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Voluntary Works ROW --}}
+    $(document).on("click","#org_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    {{-- Special Skills ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#ss_add_row").on("click", function() {
+      var i = $("#ss_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_ss[' + i + '][description]" class="form-control" placeholder="Special Skills or Hobies">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<button id="ss_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#ss_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Organizations Works ROW --}}
+    $(document).on("click","#ss_delete_row" ,function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    {{-- Special Skills ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#reference_add_row").on("click", function() {
+      var i = $("#reference_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_reference[' + i + '][fullname]" class="form-control" placeholder="Fullname">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_reference[' + i + '][address]" class="form-control" placeholder="Address">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_reference[' + i + '][tel_no]" class="form-control" placeholder="Telephone No.">' +
+                        '</div>' +
+                      '</td>' +
+
+
+                      '<td>' +
+                        '<button id="reference_delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#reference_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+    });
+
+    {{-- DELETE Voluntary Works ROW --}}
+    $(document).on("click","#reference_delete_row" ,function(e) {
         $(this).closest('tr').remove();
     });
 
