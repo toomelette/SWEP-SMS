@@ -31,14 +31,14 @@ $(document).ready(function($){
 
 
 // Price Format
-$(document).ready(function() {
-    $(".priceformat").priceFormat({
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: true
-    });
+
+$(".priceformat").priceFormat({
+    prefix: "",
+    thousandsSeparator: ",",
+    clearOnEmpty: true,
+    allowNegative: true
 });
+
 
 
 
@@ -107,4 +107,10 @@ $(document).on('change', 'select[id="action"]', function () {
   if(element.data('type') == '1' ){ 
     location = element.data('url');
   }
+});
+
+
+// Delete row in Dynamic Table
+$(document).on("click","#delete_row" ,function(e) {
+    $(this).closest('tr').remove();
 });

@@ -252,11 +252,6 @@
     });
 
 
-    {{-- DELETE ROW --}}
-    $(document).on("click","#delete_row" ,function(e) {
-        $(this).closest('tr').remove();
-    });
-
 
   </script>
     

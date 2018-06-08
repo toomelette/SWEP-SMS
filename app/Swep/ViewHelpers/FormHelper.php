@@ -3,6 +3,7 @@
 namespace App\Swep\ViewHelpers;
 
 use App\Swep\Helpers\SanitizeHelper;
+use App\Swep\Helpers\DataTypeHelper;
 
 
 
@@ -95,6 +96,8 @@ class FormHelper{
 
 
 
+
+
     /** Inlines **/
 
     public static function textbox_inline($key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
@@ -133,8 +136,8 @@ class FormHelper{
 
 
 
-    /** For Filters **/
 
+    /** For Filters **/
 
     public static function select_static_for_filter($class, $key, $label, $old_value, $array, $form, $select2){
       
@@ -167,6 +170,64 @@ class FormHelper{
                 
     }
     
+
+
+
+
+    /** For Dynamic Tables **/
+
+    public static function textbox_for_dt($name, $placeholder, $value, $error_first){
+
+       return '<div class="form-group">
+                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. $value .'">
+                  <small class="text-danger">'. $error_first .'</small>
+                </div>';
+
+    }
+
+
+
+
+    public static function textbox_numeric_for_dt($name, $placeholder, $value, $error_first){
+
+       return '<div class="form-group">
+                  <input type="text" name="'. $name .'" class="form-control priceformat" placeholder="'. $placeholder .'" value="'. $value .'">
+                  <small class="text-danger">'. $error_first .'</small>
+                </div>';
+
+    }
+
+
+
+
+    public static function datepicker_for_dt($name, $value, $error_first){
+
+       return '<div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. DataTypeHelper::date_out($value) .'">
+                  </div>
+                  <small class="text-danger">'. $error_first .'</small>
+                </div>';
+
+    }
+
+
+
+
+    public static function select_static_for_dt($name, $array, $value, $error_first){
+
+       return '<div class="form-group">
+                  <select name="'. $name .'" class="form-control">
+                    <option value="">Select</option>
+                    '. self::static_options($array, $value) .'
+                  </select>
+                  <small class="text-danger">'. $error_first .'</small>
+                </div>';
+
+    }
 
 
 
