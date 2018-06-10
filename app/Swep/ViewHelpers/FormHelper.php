@@ -179,7 +179,7 @@ class FormHelper{
     public static function textbox_for_dt($name, $placeholder, $value, $error_first){
 
        return '<div class="form-group">
-                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. $value .'">
+                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. SanitizeHelper::html_attribute_encode($value) .'">
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';
 
@@ -191,7 +191,7 @@ class FormHelper{
     public static function textbox_numeric_for_dt($name, $placeholder, $value, $error_first){
 
        return '<div class="form-group">
-                  <input type="text" name="'. $name .'" class="form-control priceformat" placeholder="'. $placeholder .'" value="'. $value .'">
+                  <input type="text" name="'. $name .'" class="form-control priceformat" placeholder="'. $placeholder .'" value="'. SanitizeHelper::html_attribute_encode($value) .'">
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';
 
@@ -207,7 +207,7 @@ class FormHelper{
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. DataTypeHelper::date_out($value) .'">
+                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. SanitizeHelper::html_attribute_encode(DataTypeHelper::date_out($value)) .'">
                   </div>
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';

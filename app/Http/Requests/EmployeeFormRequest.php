@@ -8,14 +8,12 @@ class EmployeeFormRequest extends FormRequest{
 
 
 
-
     
     public function authorize(){
 
         return true;
     
     }
-
     
 
 
@@ -39,117 +37,117 @@ class EmployeeFormRequest extends FormRequest{
             'lastname'=>'required|string|max:90',
             'firstname'=>'required|string|max:90',
             'middlename'=>'required|string|max:90',
-            'name_ext'=>'required|string|max:11',
+            'name_ext'=>'nullable|string|max:11',
             'date_of_birth' => 'required|date_format:"m/d/Y"',
             'place_of_birth'=>'required|string|max:255',
             'sex'=>'required|string|max:20',
             'civil_status'=>'required|string|max:45',
-            'height'=>'nullable|string|max:45',
-            'weight'=>'nullable|string|max:45',
-            'blood_type'=>'nullable|string|max:45',
-            'tel_no'=>'nullable|string|max:45',
-            'cell_no'=>'nullable|string|max:45',
-            'email'=>'nullable|string|max:45',
-            'citizenship'=>'nullable|string|max:45',
-            'citizenship_type'=>'nullable|string|max:45',
-            'dual_citizenship_country'=>'nullable|string|max:45',
-            'agency_no'=>'nullable|string|max:45',
-            'gov_id'=>'nullable|string|max:45',
-            'license_passport_no'=>'nullable|string|max:45',
+            'height'=>'nullable|string|max:20',
+            'weight'=>'nullable|string|max:20',
+            'blood_type'=>'required|string|max:11',
+            'tel_no'=>'nullable|string|max:20',
+            'cell_no'=>'required|string|max:20',
+            'email'=>'nullable|email|max:90',
+            'citizenship'=>'required|string|max:20',
+            'citizenship_type'=>'required|string|max:20',
+            'dual_citizenship_country'=>'nullable|string|max:90',
+            'agency_no'=>'nullable|string|max:20',
+            'gov_id'=>'nullable|string|max:20',
+            'license_passport_no'=>'nullable|string|max:20',
             'id_date_issue'=>'nullable|string|max:45',
 
 
             // Address
-            'res_address_block'=>'required|string|max:90',
-            'res_address_street'=>'required|string|max:90',
-            'res_address_village'=>'required|string|max:90',
-            'res_address_barangay'=>'required|string|max:90',
+            'res_address_block'=>'nullable|string|max:90',
+            'res_address_street'=>'nullable|string|max:90',
+            'res_address_village'=>'nullable|string|max:90',
+            'res_address_barangay'=>'nullable|string|max:90',
             'res_address_city'=>'required|string|max:90',
             'res_address_province'=>'required|string|max:90',
-            'res_address_zipcode'=>'required|string|max:90',
-            'perm_address_block'=>'required|string|max:90',
-            'perm_address_street'=>'required|string|max:90',
-            'perm_address_village'=>'required|string|max:90',
-            'perm_address_barangay'=>'required|string|max:90',
+            'res_address_zipcode'=>'required|string|max:20',
+            'perm_address_block'=>'nullable|string|max:90',
+            'perm_address_street'=>'nullable|string|max:90',
+            'perm_address_village'=>'nullable|string|max:90',
+            'perm_address_barangay'=>'nullable|string|max:90',
             'perm_address_city'=>'required|string|max:90',
             'perm_address_province'=>'required|string|max:90',
-            'perm_address_zipcode'=>'required|string|max:90',
+            'perm_address_zipcode'=>'required|string|max:20',
 
 
             // Family Info
             'father_lastname'=>'required|string|max:90',
             'father_firstname'=>'required|string|max:90',
             'father_middlename'=>'required|string|max:90',
-            'father_name_ext'=>'required|string|max:90',
+            'father_name_ext'=>'nullable|string|max:11',
             'mother_lastname'=>'required|string|max:90',
             'mother_firstname'=>'required|string|max:90',
             'mother_middlename'=>'required|string|max:90',
-            'mother_name_ext'=>'required|string|max:90',
+            'mother_name_ext'=>'nullable|string|max:11',
             'spouse_lastname'=>'required|string|max:90',
             'spouse_firstname'=>'required|string|max:90',
             'spouse_middlename'=>'required|string|max:90',
-            'spouse_name_ext'=>'required|string|max:90',
+            'spouse_name_ext'=>'nullable|string|max:11',
             'spouse_occupation'=>'required|string|max:90',
-            'spouse_employer'=>'required|string|max:90',
-            'spouse_business_address'=>'required|string|max:90',
-            'spouse_tel_no'=>'required|string|max:90',
+            'spouse_employer'=>'nullable|string|max:255',
+            'spouse_business_address'=>'nullable|string|max:255',
+            'spouse_tel_no'=>'nullable|string|max:20',
 
 
             // Personal ID's
-            'gsis'=>'required|string|max:90',
-            'philhealth'=>'required|string|max:90',
-            'tin'=>'required|string|max:90',
-            'sss'=>'required|string|max:90',
-            'hdmf'=>'required|string|max:90',
-            'hdmfpremiums'=>'required|string|max:90',
+            'gsis'=>'nullable|string|max:20',
+            'philhealth'=>'nullable|string|max:20',
+            'tin'=>'nullable|string|max:20',
+            'sss'=>'nullable|string|max:20',
+            'hdmf'=>'nullable|string|max:20',
+            'hdmfpremiums'=>'nullable|string|max:13',
 
 
             // Appointment Status
-            'employee_no'=>'required|string|max:11',
-            'position'=>'required|string|max:45',
-            'item_no'=>'required|string|max:45',
+            'employee_no'=>'required|string|max:20',
+            'position'=>'required|string|max:90',
+            'item_no'=>'nullable|string|max:11',
             'appointment_status'=>'required|string|max:45',
-            'salary_grade'=>'required|string|max:45',
-            'step_inc'=>'required|int',
-            'department_id'=>'required|int',
-            'department_unit_id'=>'required|int',
-            'monthlybasic'=>'required|int',
-            'aca'=>'required|int',
-            'pera'=>'required|int',
-            'food_subsidy'=>'required|int',
-            'ra'=>'required|int',
-            'ta'=>'required|int',
+            'salary_grade'=>'nullable|int',
+            'step_inc'=>'nullable|int',
+            'department_id'=>'required|string|max:11',
+            'department_unit_id'=>'required|string|max:11',
+            'monthlybasic'=>'required|string|max:13',
+            'aca'=>'nullable|string|max:13',
+            'pera'=>'nullable|string|max:13',
+            'food_subsidy'=>'nullable|string|max:13',
+            'ra'=>'nullable|string|max:13',
+            'ta'=>'nullable|string|max:13',
             'firstday_gov' => 'required|date_format:"m/d/Y"',
             'firstday_sra' => 'required|date_format:"m/d/Y"',
             'appointment_date' => 'nullable|date_format:"m/d/Y"',
             'adjustment_date' => 'nullable|date_format:"m/d/Y"',
-            'is_active' => 'nullable|date_format:"m/d/Y"',
+            'is_active' => 'required|string|min:4|max:5',
 
 
             // Questions
-            'q_34_a'=>'required|string|max:11',
-            'q_34_b'=>'required|string|max:45',
-            'q_34_b_yes_details'=>'required|string|max:45',
-            'q_35_a'=>'required|string|max:45',
-            'q_35_a_yes_details'=>'required|string|max:45',
-            'q_35_b'=>'required|int',
-            'q_35_b_yes_details'=>'required|int',
-            'q_36'=>'required|int',
-            'q_36_yes_details'=>'required|int',
-            'q_37'=>'required|int',
-            'q_37_yes_details'=>'required|int',
-            'q_38_a'=>'required|int',
-            'q_38_a_yes_details'=>'required|int',
-            'q_38_b'=>'required|int',
-            'q_38_b_yes_details' => 'required|date_format:"m/d/Y"',
-            'q_39' => 'required|date_format:"m/d/Y"',
-            'q_39_yes_details' => 'nullable|date_format:"m/d/Y"',
-            'q_40_a' => 'nullable|date_format:"m/d/Y"',
-            'q_40_a_yes_details' => 'nullable|date_format:"m/d/Y"',
-            'q_40_b' => 'nullable|date_format:"m/d/Y"',
-            'q_40_b_yes_details' => 'nullable|date_format:"m/d/Y"',
-            'q_40_c' => 'nullable|date_format:"m/d/Y"',
-            'q_40_c_yes_details' => 'nullable|date_format:"m/d/Y"',
+            'q_34_a'=>'required|string|max:5|min:4',
+            'q_34_b'=>'required|string|max:5|min:4',
+            'q_34_b_yes_details'=>'nullable|string|max:255',
+            'q_35_a'=>'required|string|max:5|min:4',
+            'q_35_a_yes_details'=>'nullable|string|max:255',
+            'q_35_b'=>'required|string|max:5|min:4',
+            'q_35_b_yes_details'=>'nullable|string|max:255',
+            'q_36'=>'required|string|max:5|min:4',
+            'q_36_yes_details'=>'nullable|string|max:255',
+            'q_37'=>'required|string|max:5|min:4',
+            'q_37_yes_details'=>'nullable|string|max:255',
+            'q_38_a'=>'required|string|max:5|min:4',
+            'q_38_a_yes_details'=>'nullable|string|max:255',
+            'q_38_b'=>'required|string|max:5|min:4',
+            'q_38_b_yes_details' => 'nullable|string|max:255',
+            'q_39' => 'required|string|max:5|min:4',
+            'q_39_yes_details' => 'nullable|string|max:255',
+            'q_40_a' => 'required|string|max:5|min:4',
+            'q_40_a_yes_details' => 'nullable|string|max:255',
+            'q_40_b' => 'required|string|max:5|min:4',
+            'q_40_b_yes_details' => 'nullable|string|max:255',
+            'q_40_c' => 'required|string|max:5|min:4',
+            'q_40_c_yes_details' => 'nullable|string|max:255',
 
         ];
 
@@ -158,7 +156,7 @@ class EmployeeFormRequest extends FormRequest{
         if(count($rows_children) > 0){
             foreach($rows_children as $key => $value){   
                 $rules['row_children.'.$key.'.fullname'] = 'required|string|max:255';
-                $rules['row_children.'.$key.'.date_of_birth'] = 'required|string|max:255';
+                $rules['row_children.'.$key.'.date_of_birth'] = 'required|date_format:"m/d/Y"';
             } 
         }
 
@@ -166,29 +164,29 @@ class EmployeeFormRequest extends FormRequest{
         // Educational background
         if(count($rows_eb) > 0){
             foreach($rows_eb as $key => $value){   
-                $rules['row_eb.'.$key.'.level'] = 'required|string|max:255';
+                $rules['row_eb.'.$key.'.level'] = 'required|string|max:90';
                 $rules['row_eb.'.$key.'.school_name'] = 'required|string|max:255';
-                $rules['row_eb.'.$key.'.course'] = 'required|string|max:255';
-                $rules['row_eb.'.$key.'.date_from'] = 'required|string|max:255';
-                $rules['row_eb.'.$key.'.date_to'] = 'required|string|max:255';
-                $rules['row_eb.'.$key.'.units'] = 'required|string|max:255';
-                $rules['row_eb.'.$key.'.year'] = 'required|string|max:255';
-                $rules['row_eb.'.$key.'.scholarship'] = 'required|string|max:255';
+                $rules['row_eb.'.$key.'.course'] = 'nullable|string|max:90';
+                $rules['row_eb.'.$key.'.date_from'] = 'nullable|date_format:"m/d/Y"';
+                $rules['row_eb.'.$key.'.date_to'] = 'nullable|date_format:"m/d/Y"';
+                $rules['row_eb.'.$key.'.units'] = 'nullable|numeric';
+                $rules['row_eb.'.$key.'.graduate_year'] = 'required|int';
+                $rules['row_eb.'.$key.'.scholarship'] = 'nullable|string|max:90';
             } 
         }
 
 
         // Trainings
         if(count($rows_training) > 0){
-            foreach($rows_eb as $key => $value){   
+            foreach($rows_training as $key => $value){   
                 $rules['row_training.'.$key.'.title'] = 'required|string|max:255';
-                $rules['row_training.'.$key.'.type'] = 'required|string|max:255';
+                $rules['row_training.'.$key.'.type'] = 'nullable|string|max:90';
                 $rules['row_training.'.$key.'.conducted_by'] = 'required|string|max:255';
-                $rules['row_training.'.$key.'.date_from'] = 'required|string|max:255';
-                $rules['row_training.'.$key.'.date_to'] = 'required|string|max:255';
-                $rules['row_training.'.$key.'.hours'] = 'required|string|max:255';
+                $rules['row_training.'.$key.'.date_from'] = 'required|date_format:"m/d/Y"';
+                $rules['row_training.'.$key.'.date_to'] = 'required|date_format:"m/d/Y"';
+                $rules['row_training.'.$key.'.hours'] = 'required|int';
                 $rules['row_training.'.$key.'.venue'] = 'required|string|max:255';
-                $rules['row_training.'.$key.'.remarks'] = 'required|string|max:255';
+                $rules['row_training.'.$key.'.remarks'] = 'nullable|string|max:255';
             } 
         }
 
@@ -196,14 +194,13 @@ class EmployeeFormRequest extends FormRequest{
         // Eligibility
         if(count($rows_eligibility) > 0){
             foreach($rows_eligibility as $key => $value){   
-                $rules['row_eligibility.'.$key.'.eligibility'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.level'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.rating'] = 'required|string|max:255';
+                $rules['row_eligibility.'.$key.'.eligibility'] = 'required|string|max:90';
+                $rules['row_eligibility.'.$key.'.level'] = 'required|string|max:20';
+                $rules['row_eligibility.'.$key.'.rating'] = 'nullable|numeric';
                 $rules['row_eligibility.'.$key.'.exam_place'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.exam_date'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.license_no'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.venue'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.license_validity'] = 'required|string|max:255';
+                $rules['row_eligibility.'.$key.'.exam_date'] = 'required|date_format:"m/d/Y"';
+                $rules['row_eligibility.'.$key.'.license_no'] = 'nullable|string|max:20';
+                $rules['row_eligibility.'.$key.'.license_validity'] = 'nullable|string|max:255';
             } 
         }
 
@@ -211,14 +208,14 @@ class EmployeeFormRequest extends FormRequest{
         // Work Experience
         if(count($rows_we) > 0){
             foreach($rows_we as $key => $value){   
-                $rules['row_we.'.$key.'.date_from'] = 'required|string|max:255';
-                $rules['row_we.'.$key.'.date_to'] = 'required|string|max:255';
+                $rules['row_we.'.$key.'.date_from'] = 'required|date_format:"m/d/Y"';
+                $rules['row_we.'.$key.'.date_to'] = 'required|date_format:"m/d/Y"';
                 $rules['row_we.'.$key.'.company'] = 'required|string|max:255';
-                $rules['row_we.'.$key.'.position'] = 'required|string|max:255';
-                $rules['row_we.'.$key.'.salary'] = 'required|string|max:255';
-                $rules['row_we.'.$key.'.salary_grade'] = 'required|string|max:255';
-                $rules['row_we.'.$key.'.appointment_status'] = 'required|string|max:255';
-                $rules['row_we.'.$key.'.is_gov_service'] = 'required|string|max:255';
+                $rules['row_we.'.$key.'.position'] = 'required|string|max:90';
+                $rules['row_we.'.$key.'.salary'] = 'required|string|max:13';
+                $rules['row_we.'.$key.'.salary_grade'] = 'nullable|int';
+                $rules['row_we.'.$key.'.appointment_status'] = 'required|string|max:45';
+                $rules['row_we.'.$key.'.is_gov_service'] = 'required|string|min:4|max:5';
             } 
         }
 
@@ -227,11 +224,11 @@ class EmployeeFormRequest extends FormRequest{
         if(count($rows_vw) > 0){
             foreach($rows_vw as $key => $value){   
                 $rules['row_vw.'.$key.'.name'] = 'required|string|max:255';
-                $rules['row_vw.'.$key.'.address'] = 'required|string|max:255';
-                $rules['row_vw.'.$key.'.date_from'] = 'required|string|max:255';
-                $rules['row_vw.'.$key.'.date_to'] = 'required|string|max:255';
-                $rules['row_vw.'.$key.'.hours'] = 'required|string|max:255';
-                $rules['row_vw.'.$key.'.position'] = 'required|string|max:255';
+                $rules['row_vw.'.$key.'.address'] = 'nullable|string|max:255';
+                $rules['row_vw.'.$key.'.date_from'] = 'required|date_format:"m/d/Y"';
+                $rules['row_vw.'.$key.'.date_to'] = 'required|date_format:"m/d/Y"';
+                $rules['row_vw.'.$key.'.hours'] = 'nullable|numeric';
+                $rules['row_vw.'.$key.'.position'] = 'nullable|string|max:90';
             } 
         }
 
@@ -265,60 +262,13 @@ class EmployeeFormRequest extends FormRequest{
             foreach($rows_reference as $key => $value){   
                 $rules['row_reference.'.$key.'.fullname'] = 'required|string|max:255';
                 $rules['row_reference.'.$key.'.address'] = 'required|string|max:255';
-                $rules['row_reference.'.$key.'.tel_no'] = 'required|string|max:255';
+                $rules['row_reference.'.$key.'.tel_no'] = 'required|string|max:20';
             } 
         }
 
 
         return $rules;
     
-    }
-
-
-
-
-
-    public function messages(){
-
-        $rows = $this->request->get('row');
-
-        $messages = [];
-
-        if(count($rows) > 0){
-
-            foreach($rows as $key => $value) {
-
-                $messages['row.'. $key .'.topics.required'] = 'Topic Field is Required.';
-                $messages['row.'. $key .'.topics.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.topics.max'] = 'The Topic field may not be greater than 255 characters.';
-
-                $messages['row.'. $key .'.conductedby.required'] = 'Conducted by Field is Required.';
-                $messages['row.'. $key .'.conductedby.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.conductedby.max'] = 'The Conducted by field may not be greater than 255 characters.';
-
-                $messages['row.'. $key .'.datefrom.required'] = 'Date From Field is Required.';
-                $messages['row.'. $key .'.datefrom.string'] = 'Invalid Format! The Date does not match the format mm/dd/yy';
-
-                $messages['row.'. $key .'.dateto.required'] = 'Date To Field is Required.';
-                $messages['row.'. $key .'.dateto.string'] = 'Invalid Format! The Date does not match the format mm/dd/yy';
-
-                $messages['row.'. $key .'.hours.required'] = 'Hours Field is Required.';
-                $messages['row.'. $key .'.hours.integer'] = 'Invalid Input! You must enter a integer value.';
-
-                $messages['row.'. $key .'.venue.required'] = 'Venue Field is Required.';
-                $messages['row.'. $key .'.venue.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.venue.max'] = 'The Venue field may not be greater than 255 characters.';
-
-                $messages['row.'. $key .'.remarks.required'] = 'Remarks Field is Required.';
-                $messages['row.'. $key .'.remarks.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.remarks.max'] = 'The Remarks field may not be greater than 255 characters.';
-
-            }
-            
-        }
-
-        return $messages;
-
     }
 
 

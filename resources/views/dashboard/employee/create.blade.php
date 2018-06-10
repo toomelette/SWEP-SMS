@@ -111,11 +111,11 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'height', 'text', 'Height *', 'Height', old('height'), $errors->has('height'), $errors->first('height'), ''
+                     '3', 'height', 'text', 'Height', 'Height', old('height'), $errors->has('height'), $errors->first('height'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'weight', 'text', 'Weight *', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
+                     '3', 'weight', 'text', 'Weight', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
                   ) !!}
 
                   <div class="col-md-12"></div>
@@ -129,7 +129,7 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'cell_no', 'text', 'Cellphone No.', 'Cellphone No.', old('cell_no'), $errors->has('cell_no'), $errors->first('cell_no'), ''
+                     '3', 'cell_no', 'text', 'Cellphone No. *', 'Cellphone No.', old('cell_no'), $errors->has('cell_no'), $errors->first('cell_no'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
@@ -537,7 +537,7 @@
                   <div class="col-md-12"></div>
 
                   {!! FormHelper::textbox(
-                    '3', 'salary_grade', 'text', 'Salary Grade *', 'Salary Grade', old('salary_grade'), $errors->has('salary_grade'), $errors->first('salary_grade'), ''
+                    '3', 'salary_grade', 'text', 'Salary Grade', 'Salary Grade', old('salary_grade'), $errors->has('salary_grade'), $errors->first('salary_grade'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
@@ -629,7 +629,7 @@
                         <th>Date From</th>
                         <th>Date To</th>
                         <th>Units</th>
-                        <th>Graduate Year</th>
+                        <th>Graduate Year *</th>
                         <th style="width:15em;">Scholarship</th>
                         <th style="width: 40px"></th>
                       </tr>
@@ -680,7 +680,7 @@
 
                               <td>
                                 {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][year]', 'Year', $value['year'], $errors->first('row_eb.'. $key .'.year')
+                                  'row_eb['. $key .'][graduate_year]', 'Year', $value['graduate_year'], $errors->first('row_eb.'. $key .'.graduate_year')
                                 ) !!}
                               </td>
 
@@ -727,7 +727,7 @@
                             </td>
 
                             <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][year]', 'Year', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[0][graduate_year]', 'Year', '', '') !!}
                             </td>
 
                             <td>
@@ -933,8 +933,8 @@
                         <th>Eligibility *</th>
                         <th>Level *</th>
                         <th>Rating</th>
-                        <th>Place of Examination</th>
-                        <th>Date of Examination</th>
+                        <th>Place of Examination *</th>
+                        <th>Date of Examination *</th>
                         <th>License No.</th>
                         <th>License Validity</th>
                         <th style="width: 40px"></th>
@@ -1079,14 +1079,14 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Date From</th>
-                        <th>Date to</th>
-                        <th style="width:20em;">Company</th>
-                        <th>Position</th>
-                        <th>Salary</th>
+                        <th>Date From *</th>
+                        <th>Date to *</th>
+                        <th style="width:20em;">Company *</th>
+                        <th>Position *</th>
+                        <th>Salary *</th>
                         <th>Salary Grade</th>
-                        <th>Appointment Status</th>
-                        <th>Gov Service (Y/N)</th>
+                        <th>Appointment Status *</th>
+                        <th>Gov Service (Y/N) *</th>
                         <th style="width: 40px"></th>
                       </tr>
 
@@ -1241,10 +1241,10 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Name of Organization</th>
+                        <th>Name of Organization *</th>
                         <th>Address</th>
-                        <th>Date from</th>
-                        <th>Date to</th>
+                        <th>Date from *</th>
+                        <th>Date to *</th>
                         <th>Hours</th>
                         <th>Position</th>
                         <th style="width: 40px"></th>
@@ -1379,7 +1379,7 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Title</th>
+                        <th>Title *</th>
                         <th style="width: 40px"></th>
                       </tr>
 
@@ -1455,7 +1455,7 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Name of Organization</th>
+                        <th>Name of Organization *</th>
                         <th style="width: 40px"></th>
                       </tr>
 
@@ -1529,7 +1529,7 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Special Skills or Hobies</th>
+                        <th>Special Skills or Hobies *</th>
                         <th style="width: 40px"></th>
                       </tr>
 
@@ -1601,9 +1601,9 @@
                     <table class="table table-bordered">
 
                       <tr>
-                        <th>Fullname</th>
-                        <th>Address</th>
-                        <th>Tel No.</th>
+                        <th>Fullname *</th>
+                        <th>Address *</th>
+                        <th>Tel No. *</th>
                         <th style="width: 40px"></th>
                       </tr>
 
@@ -1744,6 +1744,8 @@
                     ) !!}
                     </div>
 
+                    <div class="col-md-12"></div>
+
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">b. Have you been criminally charged before any court?</p>
                       {!! FormHelper::select_static(
@@ -1860,6 +1862,8 @@
                       ) !!}
                     </div>
 
+                    <div class="col-md-12"></div>
+
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">b. Are you a person with disability?</p>
                       {!! FormHelper::select_static(
@@ -1874,6 +1878,8 @@
                       ) !!}
                     </div>
 
+                    <div class="col-md-12"></div>
+                    
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">c. Are you a solo parent?</p>
                       {!! FormHelper::select_static(
@@ -2059,7 +2065,7 @@
 
                     '<td>' +
                       '<div class="form-group">' +
-                        '<input type="text" name="row_eb[' + i + '][year]" class="form-control" placeholder="Year">' +
+                        '<input type="text" name="row_eb[' + i + '][graduate_year]" class="form-control" placeholder="Year">' +
                       '</div>' +
                     '</td>' +
 
