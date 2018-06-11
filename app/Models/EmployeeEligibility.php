@@ -12,7 +12,8 @@ class EmployeeEligibility extends Model{
 
     protected $dates = ['exam_date'];
 
-
+    public $timestamps = false;
+    
 
 
     protected $attributes = [

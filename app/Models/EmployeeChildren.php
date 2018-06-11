@@ -12,7 +12,8 @@ class EmployeeChildren extends Model{
 
     protected $dates = ['date_of_birth'];
 
-
+    public $timestamps = false;
+    
 
 
     protected $attributes = [

@@ -555,7 +555,7 @@
                   <div class="col-md-12"></div>
 
                   {!! FormHelper::textbox_numeric(
-                    '3', 'monthlybasic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthlybasic'), $errors->has('monthlybasic'), $errors->first('monthlybasic'), ''
+                    '3', 'monthly_basic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthly_basic'), $errors->has('monthly_basic'), $errors->first('monthly_basic'), ''
                   ) !!}
 
                   {!! FormHelper::textbox_numeric(
@@ -599,6 +599,10 @@
                   ) !!}
 
                   <div class="col-md-12"></div>
+
+                  {!! FormHelper::select_dynamic(
+                    '3', 'project_id', 'Station *', old('project_id'), $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
+                  ) !!}
 
                   {!! FormHelper::select_static(
                     '3', 'is_active', 'Status *', old('is_active'), ['ACTIVE' => 'true', 'INACTIVE' => 'false'], $errors->has('is_active'), $errors->first('is_active'), '', ''
@@ -2016,7 +2020,7 @@
                       '<div class="form-group">' +
                         '<select name="row_eb[' + i + '][level]" class="form-control">' +
                           '<option value="">Select</option>' +
-                          '@foreach($level as $value => $name)' +
+                          '@foreach($level as $name => $value)' +
                             '<option value="{{ $value }}">{{ $name }}</option>' +
                           '@endforeach' +
                         '</select>' +

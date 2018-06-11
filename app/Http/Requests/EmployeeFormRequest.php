@@ -111,7 +111,7 @@ class EmployeeFormRequest extends FormRequest{
             'step_inc'=>'nullable|int',
             'department_id'=>'required|string|max:11',
             'department_unit_id'=>'required|string|max:11',
-            'monthlybasic'=>'required|string|max:13',
+            'monthly_basic'=>'required|string|max:13',
             'aca'=>'nullable|string|max:13',
             'pera'=>'nullable|string|max:13',
             'food_subsidy'=>'nullable|string|max:13',
@@ -121,6 +121,7 @@ class EmployeeFormRequest extends FormRequest{
             'firstday_sra' => 'required|date_format:"m/d/Y"',
             'appointment_date' => 'nullable|date_format:"m/d/Y"',
             'adjustment_date' => 'nullable|date_format:"m/d/Y"',
+            'project_id' => 'required|string|min:5|max:5',
             'is_active' => 'required|string|min:4|max:5',
 
 

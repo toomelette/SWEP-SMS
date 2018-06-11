@@ -41,7 +41,7 @@ class Employee extends Model{
         'civil_status' => '',
         'height' => '',
         'weight' => '',
-        'bloodtype' => '',
+        'blood_type' => '',
         'citizenship' => '',
         'citizenship_type' => '',
         'dual_citizenship_country' => '',

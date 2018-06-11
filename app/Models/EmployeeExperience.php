@@ -12,7 +12,8 @@ class EmployeeExperience extends Model{
 
     protected $dates = ['date_from', 'date_to'];
 
-
+    public $timestamps = false;
+    
 
 
     protected $attributes = [

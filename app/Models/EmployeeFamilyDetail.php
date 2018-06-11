@@ -10,6 +10,7 @@ class EmployeeFamilyDetail extends Model{
 
 	protected $table = 'employee_family_details';
 
+    public $timestamps = false;
 
 
 	protected $attributes = [

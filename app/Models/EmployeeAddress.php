@@ -10,7 +10,8 @@ class EmployeeAddress extends Model{
 
 	protected $table = 'employee_address';
 
-
+    public $timestamps = false;
+    
 
 	protected $attributes = [
         

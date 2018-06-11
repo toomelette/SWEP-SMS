@@ -30,7 +30,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
-                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\ProjectComposer');
+                        'dashboard.disbursement_voucher.user_index',
+                        'dashboard.employee.create'], 'App\Swep\ViewComposers\ProjectComposer');
 
 
         // FUND SOURCE

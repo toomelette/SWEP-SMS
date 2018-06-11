@@ -10,7 +10,9 @@ class EmployeeOtherQuestion extends Model{
 
 	protected $table = 'employee_other_questions';
 
+    public $timestamps = false;
 
+    
 
 	protected $attributes = [
         

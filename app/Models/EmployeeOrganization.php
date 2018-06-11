@@ -10,7 +10,9 @@ class EmployeeOrganization extends Model{
 
 	protected $table = 'employee_organizations';
 
+    public $timestamps = false;
 
+    
 
     protected $attributes = [
         

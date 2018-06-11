@@ -4,11 +4,14 @@ namespace App\Swep\Services;
 
 
 use App\Models\Employee;
+use App\Models\EmployeeFamilyDetail;
+use App\Models\EmployeeAddress;
+use App\Models\EmployeeOtherQuestion;
 use App\Models\EmployeeChildren;
 use App\Models\EmployeeEducationalBackground;
 use App\Models\EmployeeTraining;
 use App\Models\EmployeeEligibility;
-use App\Models\EmployeeWorkExperience;
+use App\Models\EmployeeExperience;
 use App\Models\EmployeeVoluntaryWork;
 use App\Models\EmployeeRecognition;
 use App\Models\EmployeeOrganization;
@@ -64,21 +67,72 @@ class EmployeeService extends BaseService{
 
     public function store($request){
 
-        $rows_children = $request->row_children;
-        $rows_eb = $request->row_eb;
-        $rows_training = $request->row_training;
-        $rows_eligibility = $request->row_eligibility;
-        $rows_we = $request->row_we;
-        $rows_vw = $request->row_vw;
-        $row_recognition = $request->row_recognition;
-        $row_org = $request->row_org;
-        $row_ss = $request->row_ss;
-        $row_reference = $request->row_reference;
+        $employee = new Employee;
+        $employee->slug = $this->str->random(16);
+        $employee->user_id = $this->auth->user()->user_id;
+        $employee->project_id = $request->project_id;
+        $employee->department_id = $request->department_id;
+        $employee->department_unit_id = $request->department_unit_id;
+        $employee->employee_no = $request->employee_no;
+        $employee->lastname = $request->lastname;
+        $employee->firstname = $request->firstname;
+        $employee->middlename = $request->middlename;
+        $employee->name_ext = $request->name_ext;
+        $employee->fullname = $this->getFullname($request);
+        $employee->date_of_birth = $this->dataTypeHelper->date_in($request->date_of_birth);
+        $employee->place_of_birth = $request->place_of_birth;
+        $employee->sex = $request->sex;
+        $employee->civil_status = $request->civil_status;
+        $employee->height = $request->height;
+        $employee->weight = $request->weight;
+        $employee->blood_type = $request->blood_type;
+        $employee->citizenship = $request->citizenship;
+        $employee->citizenship_type = $request->citizenship_type;
+        $employee->dual_citizenship_country = $request->dual_citizenship_country;
+        $employee->tel_no = $request->tel_no;
+        $employee->cell_no = $request->cell_no;
+        $employee->email = $request->email;
+        $employee->agency_no = $request->agency_no;
+        $employee->gov_id = $request->gov_id;
+        $employee->license_passport_no = $request->license_passport_no;
+        $employee->id_date_issue = $request->id_date_issue;
+        $employee->gsis = $request->gsis;
+        $employee->philhealth = $request->philhealth;
+        $employee->sss = $request->sss;
+        $employee->tin = $request->tin;
+        $employee->hdmf = $request->hdmf;
+        $employee->hdmfpremiums = $this->dataTypeHelper->string_to_num($request->hdmfpremiums);
+        $employee->appointment_status = $request->appointment_status;
+        $employee->position = $request->position;
+        $employee->item_no = $request->item_no;
+        $employee->salary_grade = $request->salary_grade;
+        $employee->step_inc = $request->step_inc;
+        $employee->monthly_basic = $this->dataTypeHelper->string_to_num($request->monthly_basic);
+        $employee->aca = $this->dataTypeHelper->string_to_num($request->aca);
+        $employee->pera = $this->dataTypeHelper->string_to_num($request->pera);
+        $employee->food_subsidy = $this->dataTypeHelper->string_to_num($request->food_subsidy);
+        $employee->ra = $this->dataTypeHelper->string_to_num($request->ra);
+        $employee->ta = $this->dataTypeHelper->string_to_num($request->ta);
+        $employee->firstday_gov = $this->dataTypeHelper->date_in($request->firstday_gov);
+        $employee->firstday_sra = $this->dataTypeHelper->date_in($request->firstday_sra);
+        $employee->appointment_date = $this->dataTypeHelper->date_in($request->appointment_date);
+        $employee->adjustment_date = $this->dataTypeHelper->date_in($request->adjustment_date);
+        $employee->is_active = $this->dataTypeHelper->string_to_boolean($request->is_active);
+        $employee->created_at = $this->carbon->now();
+        $employee->updated_at = $this->carbon->now();
+        $employee->ip_created = request()->ip();
+        $employee->ip_updated = request()->ip();
+        $employee->user_created = $this->auth->user()->user_id;
+        $employee->user_updated = $this->auth->user()->user_id;
+        $employee->save();
+
+        $this->fillDependencies($request, $employee);
 
         $this->event->fire('employee.store');
         return redirect()->back();
 
     }
+
 
 
 
@@ -90,6 +144,7 @@ class EmployeeService extends BaseService{
         return view('dashboard.employee.show')->with('employee', $employee);
 
     }
+
 
 
 
@@ -108,17 +163,6 @@ class EmployeeService extends BaseService{
 
 
     public function update($request, $slug){
-
-        $rows_children = $request->row_children;
-        $rows_eb = $request->row_eb;
-        $rows_training = $request->row_training;
-        $rows_eligibility = $request->row_eligibility;
-        $rows_we = $request->row_we;
-        $rows_vw = $request->row_vw;
-        $row_recognition = $request->row_recognition;
-        $row_org = $request->row_org;
-        $row_ss = $request->row_ss;
-        $row_reference = $request->row_reference;
 
         $this->event->fire('employee.update', $employee);
         return redirect()->route('dashboard.employee.index');
@@ -158,6 +202,196 @@ class EmployeeService extends BaseService{
 
 
 
+
+
+    public function getFullname($request){
+
+       return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
+
+    }
+
+
+
+
+
+
+    public function fillDependencies($request, $employee){
+
+        // Employee Family Details, Address, Other Questions
+        $this->storeEmployeeFamilyDetails($request, $employee);
+        $this->storeEmployeeAddress($request, $employee);
+        $this->storeEmployeeOtherQuestions($request, $employee);
+
+        // Employee Children
+        if(count($request->row_children) > 0){
+            foreach ($request->row_children as $row) {
+                $this->storeEmployeeChildren($row, $employee);
+            }
+        }
+
+        // Employee Educational Background
+        if(count($request->row_eb) > 0){
+            foreach ($request->row_eb as $row) {
+                $this->storeEmployeeEducationalBackground($row, $employee);
+            }
+        }
+
+        // Employee Training
+        if(count($request->row_training) > 0){
+            foreach ($request->row_training as $row) {
+                $this->storeEmployeeTraining($row, $employee);
+            }
+        }
+
+        // Employee Eligibility
+        if(count($request->row_eligibility) > 0){
+            foreach ($request->row_eligibility as $row) {
+                $this->storeEmployeeEligibility($row, $employee);
+            }
+        }
+
+        // Employee Work Experience
+        if(count($request->row_we) > 0){
+            foreach ($request->row_we as $row) {
+                $this->storeEmployeeWorkExperience($row, $employee);
+            }
+        }
+
+        // Employee Voluntary Works
+        if(count($request->row_vw) > 0){
+            foreach ($request->row_vw as $row) {
+                $this->storeEmployeeVoluntaryWork($row, $employee);
+            }
+        }
+
+        // Employee Recognition
+        if(count($request->row_recognition) > 0){
+            foreach ($request->row_recognition as $row) {
+                $this->storeEmployeeRecognition($row, $employee);
+            }
+        }
+
+        // Employee Organization
+        if(count($request->row_org) > 0){
+            foreach ($request->row_org as $row) {
+                $this->storeEmployeeOrganization($row, $employee);
+            }
+        }
+
+        // Employee Special Skills
+        if(count($request->row_ss) > 0){
+            foreach ($request->row_ss as $row) {
+                $this->storeEmployeeSpecialSkill($row, $employee);
+            }
+        }
+
+        // Employee Reference
+        if(count($request->row_reference) > 0){
+            foreach ($request->row_reference as $row) {
+                $this->storeEmployeeReference($row, $employee);
+            }
+        }
+
+
+    }
+
+
+
+
+
+
+    public function storeEmployeeFamilyDetails($request, $employee){
+
+        $employee_family_details = new EmployeeFamilyDetail;
+        $employee_family_details->employee_no = $employee->employee_no;
+        $employee_family_details->spouse_lastname = $request->spouse_lastname;
+        $employee_family_details->spouse_firstname = $request->spouse_firstname;
+        $employee_family_details->spouse_middlename = $request->spouse_middlename;
+        $employee_family_details->spouse_name_ext = $request->spouse_name_ext;
+        $employee_family_details->spouse_occupation = $request->spouse_occupation;
+        $employee_family_details->spouse_employer = $request->spouse_employer;
+        $employee_family_details->spouse_business_address = $request->spouse_business_address;
+        $employee_family_details->spouse_tel_no = $request->spouse_tel_no;
+        $employee_family_details->father_lastname = $request->father_lastname;
+        $employee_family_details->father_firstname = $request->father_firstname;
+        $employee_family_details->father_middlename = $request->father_middlename;
+        $employee_family_details->father_name_ext = $request->father_name_ext;
+        $employee_family_details->mother_lastname = $request->mother_lastname;
+        $employee_family_details->mother_firstname = $request->mother_firstname;
+        $employee_family_details->mother_middlename = $request->mother_middlename;
+        $employee_family_details->mother_name_ext = $request->mother_name_ext;
+        $employee_family_details->save();
+        
+    }
+
+
+
+
+
+
+    public function storeEmployeeAddress($request, $employee){
+
+        $employee_address = new EmployeeAddress;
+        $employee_address->employee_no = $employee->employee_no;
+        $employee_address->res_address_block = $request->res_address_block;
+        $employee_address->res_address_street = $request->res_address_street;
+        $employee_address->res_address_village = $request->res_address_village;
+        $employee_address->res_address_barangay = $request->res_address_barangay;
+        $employee_address->res_address_city = $request->res_address_city;
+        $employee_address->res_address_province = $request->res_address_province;
+        $employee_address->res_address_zipcode = $request->res_address_zipcode;
+        $employee_address->perm_address_block = $request->perm_address_block;
+        $employee_address->perm_address_street = $request->perm_address_street;
+        $employee_address->perm_address_village = $request->perm_address_village;
+        $employee_address->perm_address_barangay = $request->perm_address_barangay;
+        $employee_address->perm_address_city = $request->perm_address_city;
+        $employee_address->perm_address_province = $request->perm_address_province;
+        $employee_address->perm_address_zipcode = $request->perm_address_zipcode;
+        $employee_address->save();
+        
+    }
+
+
+
+
+
+
+    public function storeEmployeeOtherQuestions($request, $employee){
+
+        $employee_oq = new EmployeeOtherQuestion;
+        $employee_oq->employee_no = $employee->employee_no;
+        $employee_oq->q_34_a = $this->dataTypeHelper->string_to_boolean($request->q_34_a);
+        $employee_oq->q_34_b = $this->dataTypeHelper->string_to_boolean($request->q_34_b);
+        $employee_oq->q_34_b_yes_details = $request->q_34_b_yes_details;
+        $employee_oq->q_35_a = $this->dataTypeHelper->string_to_boolean($request->q_35_a);
+        $employee_oq->q_35_a_yes_details = $request->q_35_a_yes_details;
+        $employee_oq->q_35_b = $this->dataTypeHelper->string_to_boolean($request->q_35_b);
+        $employee_oq->q_35_b_yes_details = $request->q_35_b_yes_details;
+        $employee_oq->q_36 = $this->dataTypeHelper->string_to_boolean($request->q_36);
+        $employee_oq->q_36_yes_details = $request->q_36_yes_details;
+        $employee_oq->q_37 = $this->dataTypeHelper->string_to_boolean($request->q_37);
+        $employee_oq->q_37_yes_details = $request->q_37_yes_details;
+        $employee_oq->q_38_a = $this->dataTypeHelper->string_to_boolean($request->q_38_a);
+        $employee_oq->q_38_a_yes_details = $request->q_38_a_yes_details;
+        $employee_oq->q_38_b = $this->dataTypeHelper->string_to_boolean($request->q_38_b);
+        $employee_oq->q_38_b_yes_details = $request->q_38_b_yes_details;
+        $employee_oq->q_39 = $this->dataTypeHelper->string_to_boolean($request->q_39);
+        $employee_oq->q_39_yes_details = $request->q_39_yes_details;
+        $employee_oq->q_40_a = $this->dataTypeHelper->string_to_boolean($request->q_40_a);
+        $employee_oq->q_40_a_yes_details = $request->q_40_a_yes_details;
+        $employee_oq->q_40_b = $this->dataTypeHelper->string_to_boolean($request->q_40_b);
+        $employee_oq->q_40_b_yes_details = $request->q_40_b_yes_details;
+        $employee_oq->q_40_c = $this->dataTypeHelper->string_to_boolean($request->q_40_c);
+        $employee_oq->q_40_c_yes_details = $request->q_40_c_yes_details;
+        $employee_oq->save();
+        
+    }
+
+
+
+
+
+
     public function storeEmployeeChildren($row, $employee){
 
         $employee_children = new EmployeeChildren;
@@ -167,6 +401,8 @@ class EmployeeService extends BaseService{
         $employee_children->save();
         
     }
+
+
 
 
 
@@ -190,6 +426,8 @@ class EmployeeService extends BaseService{
 
 
 
+
+
     public function storeEmployeeTraining($row, $employee){
 
         $employee_training = new EmployeeTraining;
@@ -205,6 +443,8 @@ class EmployeeService extends BaseService{
         $employee_training->save();
 
     }
+
+
 
 
 
@@ -227,9 +467,11 @@ class EmployeeService extends BaseService{
 
 
 
+
+
     public function storeEmployeeWorkExperience($row, $employee){
 
-        $employee_we = new EmployeeWorkExperience;
+        $employee_we = new EmployeeExperience;
         $employee_we->employee_no = $employee->employee_no;
         $employee_we->date_from = $this->dataTypeHelper->date_in($row['date_from']);
         $employee_we->date_to = $this->dataTypeHelper->date_in($row['date_to']);
@@ -242,6 +484,8 @@ class EmployeeService extends BaseService{
         $employee_we->save();
 
     }
+
+
 
 
 
@@ -263,6 +507,8 @@ class EmployeeService extends BaseService{
 
 
 
+
+
     public function storeEmployeeRecognition($row, $employee){
 
         $employee_recognition = new EmployeeRecognition;
@@ -271,6 +517,8 @@ class EmployeeService extends BaseService{
         $employee_recognition->save();
 
     }
+
+
 
 
 
@@ -287,6 +535,8 @@ class EmployeeService extends BaseService{
 
 
 
+
+
     public function storeEmployeeSpecialSkill($row, $employee){
 
         $employee_ss = new EmployeeSpecialSkill;
@@ -295,6 +545,8 @@ class EmployeeService extends BaseService{
         $employee_ss->save();
 
     }
+
+
 
 
 

@@ -15,7 +15,8 @@ class EmployeeTraining extends Model{
 
     protected $dates = ['date_from', 'date_to'];
 
-
+    public $timestamps = false;
+    
 
 
     protected $attributes = [
@@ -26,7 +27,7 @@ class EmployeeTraining extends Model{
         'date_from' => null,
         'date_to' => null,
         'hours' => null,
-        'conductedby' => '',
+        'conducted_by' => '',
         'venue' => '',
         'remarks' => '',
 
