@@ -81,6 +81,8 @@ class FormHelper{
 
     public static function datepicker($class, $key, $label, $old_value, $error_has, $error_first){
 
+       $old_value = DataTypeHelper::date_out($old_value);
+
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'" style="overflow:hidden;">
                 <label for="'. $key .'">'. $label .'</label>
                 <div class="input-group">
@@ -202,12 +204,14 @@ class FormHelper{
 
     public static function datepicker_for_dt($name, $value, $error_first){
 
+       $value = DataTypeHelper::date_out($value);
+
        return '<div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. SanitizeHelper::html_attribute_encode(DataTypeHelper::date_out($value)) .'">
+                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. SanitizeHelper::html_attribute_encode($value) .'">
                   </div>
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';

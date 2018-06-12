@@ -2,7 +2,6 @@
  
 namespace App\Swep\Services;
 
-
 use App\Models\Employee;
 use App\Models\EmployeeFamilyDetail;
 use App\Models\EmployeeAddress;
@@ -18,6 +17,7 @@ use App\Models\EmployeeOrganization;
 use App\Models\EmployeeSpecialSkill;
 use App\Models\EmployeeReference;
 use App\Swep\BaseClasses\BaseService;
+
 
 
 class EmployeeService extends BaseService{
@@ -161,8 +161,65 @@ class EmployeeService extends BaseService{
 
 
 
-
     public function update($request, $slug){
+
+        $employee = $this->employeeBySlug($slug);
+        $employee->project_id = $request->project_id;
+        $employee->department_id = $request->department_id;
+        $employee->department_unit_id = $request->department_unit_id;
+        $employee->employee_no = $request->employee_no;
+        $employee->lastname = $request->lastname;
+        $employee->firstname = $request->firstname;
+        $employee->middlename = $request->middlename;
+        $employee->name_ext = $request->name_ext;
+        $employee->fullname = $this->getFullname($request);
+        $employee->date_of_birth = $this->dataTypeHelper->date_in($request->date_of_birth);
+        $employee->place_of_birth = $request->place_of_birth;
+        $employee->sex = $request->sex;
+        $employee->civil_status = $request->civil_status;
+        $employee->height = $request->height;
+        $employee->weight = $request->weight;
+        $employee->blood_type = $request->blood_type;
+        $employee->citizenship = $request->citizenship;
+        $employee->citizenship_type = $request->citizenship_type;
+        $employee->dual_citizenship_country = $request->dual_citizenship_country;
+        $employee->tel_no = $request->tel_no;
+        $employee->cell_no = $request->cell_no;
+        $employee->email = $request->email;
+        $employee->agency_no = $request->agency_no;
+        $employee->gov_id = $request->gov_id;
+        $employee->license_passport_no = $request->license_passport_no;
+        $employee->id_date_issue = $request->id_date_issue;
+        $employee->gsis = $request->gsis;
+        $employee->philhealth = $request->philhealth;
+        $employee->sss = $request->sss;
+        $employee->tin = $request->tin;
+        $employee->hdmf = $request->hdmf;
+        $employee->hdmfpremiums = $this->dataTypeHelper->string_to_num($request->hdmfpremiums);
+        $employee->appointment_status = $request->appointment_status;
+        $employee->position = $request->position;
+        $employee->item_no = $request->item_no;
+        $employee->salary_grade = $request->salary_grade;
+        $employee->step_inc = $request->step_inc;
+        $employee->monthly_basic = $this->dataTypeHelper->string_to_num($request->monthly_basic);
+        $employee->aca = $this->dataTypeHelper->string_to_num($request->aca);
+        $employee->pera = $this->dataTypeHelper->string_to_num($request->pera);
+        $employee->food_subsidy = $this->dataTypeHelper->string_to_num($request->food_subsidy);
+        $employee->ra = $this->dataTypeHelper->string_to_num($request->ra);
+        $employee->ta = $this->dataTypeHelper->string_to_num($request->ta);
+        $employee->firstday_gov = $this->dataTypeHelper->date_in($request->firstday_gov);
+        $employee->firstday_sra = $this->dataTypeHelper->date_in($request->firstday_sra);
+        $employee->appointment_date = $this->dataTypeHelper->date_in($request->appointment_date);
+        $employee->adjustment_date = $this->dataTypeHelper->date_in($request->adjustment_date);
+        $employee->is_active = $this->dataTypeHelper->string_to_boolean($request->is_active);
+        $employee->updated_at = $this->carbon->now();
+        $employee->ip_updated = request()->ip();
+        $employee->user_updated = $this->auth->user()->user_id;
+        $employee->save();
+
+        $this->removeDependencies($employee);
+
+        $this->fillDependencies($request, $employee);
 
         $this->event->fire('employee.update', $employee);
         return redirect()->route('dashboard.employee.index');
@@ -177,7 +234,9 @@ class EmployeeService extends BaseService{
     public function destroy($slug){
 
         $employee = $this->employeeBySlug($slug);
-        
+        $employee->delete();
+        $this->removeDependencies($employee);
+
         $this->event->fire('employee.destroy', $employee);
         return redirect()->route('dashboard.employee.index');
 
@@ -187,7 +246,7 @@ class EmployeeService extends BaseService{
 
 
 
-    // Utility Methods
+    // UTILITY METHODS
 
     public function employeeBySlug($slug){
 
@@ -203,7 +262,6 @@ class EmployeeService extends BaseService{
 
 
 
-
     public function getFullname($request){
 
        return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
@@ -211,6 +269,25 @@ class EmployeeService extends BaseService{
     }
 
 
+
+
+     public function removeDependencies($employee){
+
+        $employee->employeeAddress()->delete();
+        $employee->employeeFamilyDetail()->delete();
+        $employee->employeeOtherQuestion()->delete();
+        $employee->employeeTraining()->delete();
+        $employee->employeeChildren()->delete();
+        $employee->employeeEducationalBackground()->delete();
+        $employee->employeeEligibility()->delete();
+        $employee->employeeExperience()->delete();
+        $employee->employeeOrganization()->delete();
+        $employee->employeeRecognition()->delete();
+        $employee->employeeReference()->delete();
+        $employee->employeeSpecialSkill()->delete();
+        $employee->employeeVoluntaryWork()->delete();
+
+     }
 
 
 
