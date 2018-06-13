@@ -52,7 +52,7 @@
         <div class="col-md-12"></div>
 
         {!! FormHelper::textbox(
-          '6', 'address', 'text', 'Address *', 'Address', old('address'), $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
+          '6', 'address', 'text', 'Address', 'Address', old('address'), $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
         ) !!}
 
         {!! FormHelper::select_dynamic(

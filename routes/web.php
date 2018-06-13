@@ -20,7 +20,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** HOME **/	
 	Route::get('/home', 'HomeController@index')->name('home');
 
-	/** USER **/
+	/** USER **/   
 	Route::post('/dashboard/user/activate/{slug}', 'UserController@activate')->name('user.activate');
 	Route::post('/dashboard/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
 	Route::post('/dashboard/user/logout/{slug}', 'UserController@logout')->name('user.logout');
@@ -68,6 +68,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('leave_application', 'LeaveApplicationController');
 
 	/** EMPLOYEE **/
+	Route::get('/employee/print_pds/{slug}/{page}', 'EmployeeController@printPds')->name('employee.print_pds');
 	Route::resource('employee', 'EmployeeController');
 	
 });
@@ -76,8 +77,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 /** Testing **/
 
-// Route::get('/dashboard/test', function(){
+Route::get('/dashboard/test', function(){
 
-// 	DB::table('employee_trainings')->update(['employee_training_id' => null, 'employee_id' => null,]);
+	return dd(Illuminate\Support\Str::random(16));
 
-// });
+});

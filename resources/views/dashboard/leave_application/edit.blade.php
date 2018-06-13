@@ -159,9 +159,9 @@
                '4', 'working_days', 'text', 'Number of Days *', 'Number of Days', old('working_days') ? old('working_days') : $leave_application->working_days, $errors->has('working_days'), $errors->first('working_days'), ''
             ) !!}
 
-            {!! FormHelper::datepicker('4', 'working_days_date_from',  'Date From *', old('working_days_date_from') ? old('working_days_date_from') : $working_days_date_from, $errors->has('working_days_date_from'), $errors->first('working_days_date_from')) !!}
+            {!! FormHelper::datepicker('4', 'working_days_date_from',  'Date From', old('working_days_date_from') ? old('working_days_date_from') : $working_days_date_from, $errors->has('working_days_date_from'), $errors->first('working_days_date_from')) !!}
 
-            {!! FormHelper::datepicker('4', 'working_days_date_to',  'Date To *', old('working_days_date_to') ? old('working_days_date_to') : $working_days_date_to, $errors->has('working_days_date_to'), $errors->first('working_days_date_to')) !!}
+            {!! FormHelper::datepicker('4', 'working_days_date_to',  'Date To', old('working_days_date_to') ? old('working_days_date_to') : $working_days_date_to, $errors->has('working_days_date_to'), $errors->first('working_days_date_to')) !!}
 
           </div>
 

@@ -30,12 +30,12 @@ class LeaveApplicationFormRequest extends FormRequest{
             'date_of_filing'=>'required|date_format:"m/d/Y"',
             'position'=>'required|string|max:90',
             'salary'=>'required|string|max:13',
-            'immediate_superior'=>'required|string|max:90',
-            'immediate_superior_position'=>'required|string|max:90',
+            'immediate_superior'=>'nullable|string|max:90',
+            'immediate_superior_position'=>'nullable|string|max:90',
             'type'=>'required|string|max:5|min:5',
             'working_days'=>'required|string|max:45',
-            'working_days_date_from'=>'required|date_format:"m/d/Y"',
-            'working_days_date_to'=>'required|date_format:"m/d/Y"',
+            'working_days_date_from'=>'nullable|date_format:"m/d/Y"',
+            'working_days_date_to'=>'nullable|date_format:"m/d/Y"',
             'commutation'=>'required|string|max:5|min:4',
 
         ];

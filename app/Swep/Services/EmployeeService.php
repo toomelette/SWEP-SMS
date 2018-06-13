@@ -57,7 +57,7 @@ class EmployeeService extends BaseService{
 
         $request->flash();
         return view('dashboard.employee.index')->with('employees', $employees);
-
+        
     }
 
 
@@ -241,6 +241,30 @@ class EmployeeService extends BaseService{
         return redirect()->route('dashboard.employee.index');
 
     }
+
+
+
+
+
+
+    public function printPDS($slug, $page){
+
+        $employee = $this->employeeBySlug($slug);
+
+        if($page == 'p1'){
+            return view('printables.employee_pds_p1')->with('employee', $employee);
+        }elseif($page == 'p2'){
+            return view('printables.employee_pds_p2')->with('employee', $employee);
+        }elseif($page == 'p3'){
+            return view('printables.employee_pds_p3')->with('employee', $employee);
+        }elseif($page == 'p4'){
+            return view('printables.employee_pds_p4')->with('employee', $employee);
+        }
+
+        return abort(404);
+
+    }
+
 
 
 

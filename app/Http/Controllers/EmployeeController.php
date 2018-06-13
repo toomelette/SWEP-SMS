@@ -90,5 +90,13 @@ class EmployeeController extends Controller{
 
 
 
+    public function printPDS($slug, $page){
+
+        return $this->employee->printPDS($slug, $page);
+
+    }
+
+
+
     
 }

@@ -165,11 +165,11 @@
             ) !!}
 
             {!! FormHelper::datepicker(
-              '4', 'working_days_date_from',  'Date From *', old('working_days_date_from'), $errors->has('working_days_date_from'), $errors->first('working_days_date_from')
+              '4', 'working_days_date_from',  'Date From', old('working_days_date_from'), $errors->has('working_days_date_from'), $errors->first('working_days_date_from')
             ) !!}
 
             {!! FormHelper::datepicker(
-              '4', 'working_days_date_to',  'Date To *', old('working_days_date_to'), $errors->has('working_days_date_to'), $errors->first('working_days_date_to')
+              '4', 'working_days_date_to',  'Date To', old('working_days_date_to'), $errors->has('working_days_date_to'), $errors->first('working_days_date_to')
             ) !!}
 
           </div>

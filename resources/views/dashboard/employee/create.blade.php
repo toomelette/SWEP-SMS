@@ -4,7 +4,7 @@
     ];
 
     $level = [
-      'Elementary' => 'elem', 'Secondary' => 'sec', 'Vocational / Trade Course' => 'voc', 'College' => 'col', 'Graduate Studies' => 'grad',
+      'Elementary' => 'Elementary', 'Secondary' => 'Secondary', 'Vocational / Trade Course' => 'Vocational / Trade Course', 'College' => 'College', 'Graduate Studies' => 'Graduate Studies',
     ];
 
     $is_gov_service = [
@@ -139,7 +139,7 @@
                   <div class="col-md-12"></div>
 
                   {!! FormHelper::select_static(
-                    '3', 'citizenship', 'Citizenship *', old('citizenship'), ['Filipino' => 'FIL', 'Dual Citizenship' => 'DC'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
+                    '3', 'citizenship', 'Citizenship *', old('citizenship'), ['Filipino' => 'Filipino', 'Dual Citizenship' => 'Dual Citizenship'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
                   ) !!}
 
                   {!! FormHelper::select_static(
