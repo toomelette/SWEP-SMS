@@ -18,17 +18,31 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
 
   <style type="text/css">
-    .box-grey{
+
+    .box-d-grey{
       -webkit-print-color-adjust: exact; 
-      background-color: #b6b6b6 !important;
+      background-color: #a7aaab !important;
     }
+
+    .box-l-grey{
+      -webkit-print-color-adjust: exact; 
+      background-color: #e8e8e8 !important;
+    }
+
+    .title-l{
+      -webkit-print-color-adjust: exact; 
+      color: #ffffff !important;
+      font-style:italic; 
+      font-size: 13px;
+      font-weight: bold;
+    }
+
   </style>
 
 </head>
 <body onload="window.print();" onafterprint="window.close()">
 
 <div style="border:solid;">
-
   <div class="wrapper" style="overflow:hidden !important;">
 
 
@@ -60,16 +74,305 @@
       <div class="col-sm-8" style="margin-bottom: -10px;">
         <p style="font-size:8px;">Print legibly. Tick appropriate boxes (&#x25FB;) and use separate sheet if necessary. Indicate N/A if not applicable.  <b>DO NOT ABBREVIATE.</b></p>
       </div>
-      <div class="col-sm-1 box-grey" style="padding:0; margin-bottom:-10px; border:solid 1px;">
-        <p style="font-size:7px;">1. CS ID No.</p>
+      <div class="col-sm-1 no-padding" style="padding:0; margin-bottom:-10px;">
+        <p style="font-size:7px; border:solid 1px;" class="box-d-grey">1. CS ID No.</p>
       </div>
-      <div class="col-sm-3" style="margin-bottom: -10px; border:solid 1px;">
-        <p style="font-size:7px;" class="pull-right">(Do not fill up. For CSC use only)</p>
+      <div class="col-sm-3 no-padding" style="margin-bottom: -10px;">
+        <p style="font-size:7px; border:solid 1px; padding-left:75px;">(Do not fill up. For CSC use only)</p>
+      </div>
+    </div>
+
+    {{-- PERSONAL INFO --}}
+    <div class="row box-d-grey" style="border-top:solid 2px; border-bottom:solid 2px;">
+      <div class="col-sm-12">
+        <span class="title-l">I. PERSONAL INFORMATION</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
+        <span style="font-size:10px;">&nbsp;&nbsp;2. &nbsp;SURNAME</span>
+      </div>
+      <div class="col-sm-10" style="border-bottom:solid 1px;">&nbsp;</div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
+        <span style="font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIRSTNAME</span>
+      </div>
+      <div class="col-sm-7" style="border-bottom:solid 1px;">&nbsp;</div>
+      <div class="col-sm-3 box-l-grey" style="border-bottom:solid 1px; border-left:solid 1px;">
+        <p style="font-size:7px;">NAME EXTENSION (JR., SR)</p>
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIDDLENAME</span>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;3. DATE OF BIRTH</span>
+        <span style="font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mm/dd/yyyy)</span>
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px;">&nbsp;</div>
+      <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
+        <span style="font-size:10px;">16. CITIZENSHIP</span>
+        <br>&nbsp;
+      </div>
+      <div class="col-sm-4">
+        <span style="font-size:10px;">&#9745; Filipino</span> &nbsp;&nbsp;<span style="font-size:10px;">&#9745; Dual Citizenship</span> <br>
+        <span style="font-size:10px; margin-left:55px;">&#9745; by birth</span> &nbsp;&nbsp;<span style="font-size:10px;">&#9745; by naturalization</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;4. PLACE OF BIRTH</span>
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px;">&nbsp;</div>
+      <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
+        <span style="font-size:10px;">If holder of dual citizenship, </span>
+      </div>
+      <div class="col-sm-4" style="border-bottom:solid 1px;">
+        <span style="font-size:10px;">Pls. indicate country:</span>
+      </div>
+    </div>
+
+     <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;5. SEX</span>
+      </div>
+      <div class="col-sm-3">
+        <span style="font-size:10px;">&#9745; Male</span> &nbsp;&nbsp;&nbsp;<span style="font-size:10px;">&#9745; Female</span>
+      </div>
+      <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
+        <span style="font-size:10px;">please indicate the details.</span>
+      </div>
+      <div class="col-sm-4">
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; padding-bottom:10px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;6. CIVIL STATUS</span>
+        <br>&nbsp;
+        <br>&nbsp;
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:10.2px;">
+        <span style="font-size:10px;">&#9745; SINGLE</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10px;">&#9745; MARRIED</span><br>
+        <span style="font-size:10px;">&#9745; WIDOWED</span> &nbsp;&nbsp;&nbsp;<span style="font-size:10px;">&#9745; SEPERATED</span><br>
+        <span style="font-size:10px;">&#9745; OTHER/S</span>
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8; padding-bottom:32px;">
+        <p style="font-size:10px;">17. RESIDENTIAL ADDRESS</p>
+      </div>
+      <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-12" style="border-bottom:solid 1px; margin-top:-7px;"> 
+            <span style="font-size:9px; font-style:italic; margin-left: 20px;">House/Block/Lot No.</span>
+            <span style="font-size:9px; font-style:italic; margin-left: 100px;">Street</span>
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-12" style="margin-top:-7px;"> 
+            <span style="font-size:9px; font-style:italic; margin-left: 20px;">Subdivision/Village</span>
+            <span style="font-size:9px; font-style:italic; margin-left: 100px;">Barangay</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:14px; border-bottom:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;7. HEIGHT (m)</span>
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:13px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:15px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-12" style="margin-top:-7px;"> 
+            <span style="font-size:9px; font-style:italic; margin-left: 20px;">City/Municipality</span>
+            <span style="font-size:9px; font-style:italic; margin-left: 100px;">Province</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;8. WEIGHT (kg)</span>
+      </div>
+      <div class="col-sm-3">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
+      </div>
+      <div class="col-sm-5">
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:17px; border-bottom:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;9. BLOOD TYPE</span>
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:17px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab;">
+        <p style="font-size:10px;">18. PERMANENT ADDRESS</p>
+      </div>
+      <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-12" style="margin-top:-7px; padding-bottom:3px;"> 
+            <span style="font-size:9px; font-style:italic; margin-left: 20px;">House/Block/Lot No.</span>
+            <span style="font-size:9px; font-style:italic; margin-left: 100px;">Street</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:14px; border-bottom:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;10. GSIS ID NO.</span>
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:14px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-12" style="margin-top:-7px;"> 
+            <span style="font-size:9px; font-style:italic; margin-left: 20px;">Subdivision/Village</span>
+            <span style="font-size:9px; font-style:italic; margin-left: 100px;">Barangay</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:14px; border-bottom:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;11. PAG-IBIG ID NO.</span>
+      </div>
+      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:14px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
+        &nbsp;
+      </div>
+      <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
+            &nbsp;
+        </div>
+        <div class="col-sm-12" style="margin-top:-7px;"> 
+            <span style="font-size:9px; font-style:italic; margin-left: 20px;">City/Municipality</span>
+            <span style="font-size:9px; font-style:italic; margin-left: 100px;">Province</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:9px;">&nbsp;&nbsp;12. PHILHEALTH NO.</span>
+      </div>
+      <div class="col-sm-3">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
+      </div>
+      <div class="col-sm-5">
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;13. SSS NO.</span>
+      </div>
+      <div class="col-sm-3">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
+        <span style="font-size:10px;">19.  TELEPHONE NO.</span>
+      </div>
+      <div class="col-sm-5">
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;14. TIN NO.</span>
+      </div>
+      <div class="col-sm-3">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
+        <span style="font-size:10px;">20. MOBILE NO.</span>
+      </div>
+      <div class="col-sm-5">
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:solid 1px;">
+      <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
+        <span style="font-size:10px;">&nbsp;&nbsp;15. AGENCY EMPLOYEE NO.</span>
+      </div>
+      <div class="col-sm-3">
+        &nbsp;
+      </div>
+      <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
+        <span style="font-size:10px;">21. E-MAIL ADDRESS (if any)</span>
+      </div>
+      <div class="col-sm-5">
+        &nbsp;
+      </div>
+    </div>
+
+    <div class="row box-d-grey" style="border-top:solid 2px; border-bottom:solid 2px;">
+      <div class="col-sm-12">
+        <span class="title-l">II. FAMILY BACKGROUND</span>
       </div>
     </div>
 
   </div>
-
 </div>
 
 
