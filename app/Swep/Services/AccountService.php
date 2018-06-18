@@ -41,7 +41,7 @@ class AccountService extends BaseService{
             return $account->populate();
 
         });
-
+        
         $request->flash();
         return view('dashboard.account.index')->with('accounts', $accounts);
 

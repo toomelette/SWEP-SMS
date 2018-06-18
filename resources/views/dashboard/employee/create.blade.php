@@ -323,7 +323,7 @@
                   <div class="col-md-6">
                     <div class="box">
                       <div class="box-header with-border">
-                        <h3 class="box-title">Mother's Info</h3>
+                        <h3 class="box-title">Mother's Info (Maiden Name)</h3>
                       </div>
                       <div class="box-body">
 
