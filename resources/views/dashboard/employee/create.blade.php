@@ -1,10 +1,10 @@
 @php
     $civil_status = [
-      'MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'DIVORSED' => 'DIVORSED', 'SINGLE' => 'SINGLE',
+      'SINGLE' => 'SINGLE', 'MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'OTHERS' => 'OTHERS', 
     ];
 
     $level = [
-      'Elementary' => 'Elementary', 'Secondary' => 'Secondary', 'Vocational / Trade Course' => 'Vocational / Trade Course', 'College' => 'College', 'Graduate Studies' => 'Graduate Studies',
+      'ELEMENTARY' => 'ELEMENTARY', 'SECONDARY' => 'SECONDARY', 'VOCATIONAL/TRADE COURSE' => 'VOCATIONAL/TRADE COURSE', 'COLLEGE' => 'COLLEGE', 'GRADUATE STUDIES' => 'GRADUATE STUDIES',
     ];
 
     $is_gov_service = [

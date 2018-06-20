@@ -317,7 +317,7 @@
                   <th>Level</th>
                   <th>Rating</th>
                 </tr>
-                @foreach($employee->employeeEligibility as $data) 
+                @foreach($employee->employeeEligibility as $data)
                   <tr>
                     <td>{{ $data->eligibility }}</td>
                     <td>{{ $data->level }}</td>

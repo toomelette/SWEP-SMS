@@ -117,22 +117,36 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
         <span style="font-size:8px;">&nbsp;&nbsp;2. &nbsp;SURNAME</span>
       </div>
-      <div class="col-sm-10" style="border-bottom:solid 1px;">&nbsp;</div>
+      <div class="col-sm-10" style="border-bottom:solid 1px;">
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->lastname }}</span>
+      </div>
     </div>
 
     <div class="row">
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIRSTNAME</span>
       </div>
-      <div class="col-sm-7" style="border-bottom:solid 1px;">&nbsp;</div>
+      <div class="col-sm-7" style="border-bottom:solid 1px;">
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->firstname }}</span>
+      </div>
       <div class="col-sm-3 box-l-grey no-padding" style="border-bottom:solid 1px; border-left:solid 1px;">
-        <p style="font-size:7px;">NAME EXTENSION (JR., SR)</p>
+        <div class="col-sm-12 no-padding">
+          <div class="col-sm-8 no-padding">
+            <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
+          </div>
+          <div class="col-sm-4 no-padding">
+            <span style="font-size:10px; font-weight:bold;">{{ $employee->name_ext }}</span>
+          </div>
+        </div>  
       </div>
     </div>
 
     <div class="row" style="border-bottom:solid 1px;">
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIDDLENAME</span>
+      </div>
+      <div class="col-sm-10" style="border-right:solid 1px;">
+         <span style="font-size:10px; font-weight:bold;">{{ $employee->middlename }}</span>
       </div>
     </div>
 
@@ -141,14 +155,26 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; padding-bottom: 10px;">
         <p style="font-size:8px;">&nbsp;&nbsp;3. DATE OF BIRTH<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mm/dd/yyyy)</p>
       </div>
-      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom: 22px;">&nbsp;</div>
+      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom: 22px;">
+       <span style="font-size:10px; font-weight:bold;">{{ Carbon::parse($employee->date_of_birth)->format('m/d/Y') }}</span>
+      </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8; padding-bottom: 2px;">
         <span style="font-size:8px;">16. CITIZENSHIP</span>
         <br>&nbsp;
       </div>
       <div class="col-sm-4">
-        <span style="font-size:8px;">&#9745; Filipino</span> &nbsp;&nbsp;<span style="font-size:8px;">&#9745; Dual Citizenship</span> <br>
-        <span style="font-size:8px; margin-left:55px;">&#9745; by birth</span> &nbsp;&nbsp;<span style="font-size:8px;">&#9745; by naturalization</span>
+        <span style="font-size:9px;">
+          {!! $employee->citizenship == 'Filipino' ? '&#9745;' : '&#9723;' !!} Filipino
+        </span> &nbsp;&nbsp;
+        <span style="font-size:9px;">
+          {!! $employee->citizenship == 'Dual Citizenship' ? '&#9745;' : '&#9723;' !!} Filipino Dual Citizenship
+        </span> <br>
+        <span style="font-size:9px; margin-left:55px;">
+          {!! $employee->citizenship_type == 'BB' ? '&#9745;' : '&#9723;' !!} by birth
+        </span> &nbsp;&nbsp;
+        <span style="font-size:9px;">
+          {!! $employee->citizenship_type == 'BN' ? '&#9745;' : '&#9723;' !!} by naturalization
+        </span>
       </div>
     </div>
 
@@ -156,7 +182,9 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;4. PLACE OF BIRTH</span>
       </div>
-      <div class="col-sm-3" style="border-bottom:solid 1px;">&nbsp;</div>
+      <div class="col-sm-3" style="border-bottom:solid 1px;">
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->place_of_birth }}</span>
+      </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
         <span style="font-size:8px;">If holder of dual citizenship, </span>
       </div>
@@ -170,13 +198,17 @@
         <span style="font-size:8px;">&nbsp;&nbsp;5. SEX</span>
       </div>
       <div class="col-sm-3">
-        <span style="font-size:8px;">&#9745; Male</span> &nbsp;&nbsp;&nbsp;<span style="font-size:8px;">&#9745; Female</span>
+        <span style="font-size:9px;">
+          {!! $employee->sex == 'MALE' ? '&#9745;' : '&#9723;' !!} Male</span> &nbsp;&nbsp;&nbsp;
+        <span style="font-size:9px;">
+          {!! $employee->sex == 'FEMALE' ? '&#9745;' : '&#9723;' !!} Female
+        </span>
       </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">please indicate the details.</span>
       </div>
       <div class="col-sm-4">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->dual_citizenship_country != null ? $employee->dual_citizenship_country : 'N/A' }}</span>
       </div>
     </div>
 
@@ -185,33 +217,47 @@
         <span style="font-size:8px;">&nbsp;&nbsp;6. CIVIL STATUS</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:9px;">
-        <span style="font-size:8px;">&#9745; SINGLE</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:8px;">&#9745; MARRIED</span><br>
-        <span style="font-size:8px;">&#9745; WIDOWED</span> &nbsp;&nbsp;&nbsp;<span style="font-size:8px;">&#9745; SEPERATED</span><br>
-        <span style="font-size:8px;">&#9745; OTHER/S</span>
+        <span style="font-size:9px;">
+          {!! $employee->civil_status == 'SINGLE' ? '&#9745;' : '&#9723;' !!} SINGLE
+        </span> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="font-size:9px;">
+          {!! $employee->civil_status == 'MARRIED' ? '&#9745;' : '&#9723;' !!} MARRIED
+        </span><br>
+        <span style="font-size:9px;">
+          {!! $employee->civil_status == 'WIDOWED' ? '&#9745;' : '&#9723;' !!} WIDOWED
+        </span> 
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="font-size:9px;">
+          {!! $employee->civil_status == 'SEPERATED' ? '&#9745;' : '&#9723;' !!} SEPERATED
+        </span><br>
+        <span style="font-size:9px;">
+          {!! $employee->civil_status == 'OTHERS' ? '&#9745;' : '&#9723;' !!} OTHER/S
+        </span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8; padding-bottom:39px;">
         <p style="font-size:8px;">17. RESIDENTIAL ADDRESS</p>
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+          <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_block }}</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_street }}</span>
         </div>
         <div class="col-sm-12" style="border-bottom:solid 1px; margin-top:-7px;"> 
-            <span style="font-size:8px; font-style:italic; margin-left: 20px;">House/Block/Lot No.</span>
-            <span style="font-size:8px; font-style:italic; margin-left: 100px;">Street</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 25px;">House/Block/Lot No.</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 110px;">Street</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_village }}</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_barangay }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
-            <span style="font-size:8px; font-style:italic; margin-left: 20px;">Subdivision/Village</span>
-            <span style="font-size:8px; font-style:italic; margin-left: 100px;">Barangay</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 25px;">Subdivision/Village</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 110px;">Barangay</span>
         </div>
       </div>
     </div>
@@ -221,21 +267,21 @@
         <span style="font-size:8px;">&nbsp;&nbsp;7. HEIGHT (m)</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:13px;">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->height }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:15px;">
         &nbsp;
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_city }}</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_province }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
-            <span style="font-size:8px; font-style:italic; margin-left: 20px;">City/Municipality</span>
-            <span style="font-size:8px; font-style:italic; margin-left: 100px;">Province</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 30px;">City/Municipality</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 110px;">Province</span>
         </div>
       </div>
     </div>
@@ -245,13 +291,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;8. WEIGHT (kg)</span>
       </div>
       <div class="col-sm-3">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->weight }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
       </div>
       <div class="col-sm-5">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->employeeAddress->res_address_zipcode }}</span>
       </div>
     </div>
 
@@ -260,21 +306,21 @@
         <span style="font-size:8px;">&nbsp;&nbsp;9. BLOOD TYPE</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:17px;">
-        &nbsp;
+         <span style="font-size:10px; font-weight:bold;">{{ $employee->blood_type }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:6px;">
         <p style="font-size:8px;">18. PERMANENT ADDRESS</p>
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_block }}</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_street }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px; padding-bottom:3px;"> 
-            <span style="font-size:8px; font-style:italic; margin-left: 20px;">House/Block/Lot No.</span>
-            <span style="font-size:8px; font-style:italic; margin-left: 100px;">Street</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 25px;">House/Block/Lot No.</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 110px;">Street</span>
         </div>
       </div>
     </div>
@@ -284,21 +330,21 @@
         <span style="font-size:8px;">&nbsp;&nbsp;10. GSIS ID NO.</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:14px;">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->gsis }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
         &nbsp;
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_village }}</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_barangay }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
-            <span style="font-size:8px; font-style:italic; margin-left: 20px;">Subdivision/Village</span>
-            <span style="font-size:8px; font-style:italic; margin-left: 100px;">Barangay</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 25px;">Subdivision/Village</span>
+            <span style="font-size:8px; font-style:italic; margin-left: 110px;">Barangay</span>
         </div>
       </div>
     </div>
@@ -308,17 +354,17 @@
         <span style="font-size:8px;">&nbsp;&nbsp;11. PAG-IBIG ID NO.</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:14px;">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->hdmf }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
         &nbsp;
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_city }}</span>
         </div>
-        <div class="col-sm-6" style="border-bottom:solid 1px; border-bottom-color:#a7aaab;"> 
-            &nbsp;
+        <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
+            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_province }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 20px;">City/Municipality</span>
@@ -332,13 +378,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;12. PHILHEALTH NO.</span>
       </div>
       <div class="col-sm-3">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->philhealth }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
       </div>
       <div class="col-sm-5">
-        &nbsp;
+       <span style="font-size:10px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_zipcode }}</span>
       </div>
     </div>
 
@@ -347,13 +393,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;13. SSS NO.</span>
       </div>
       <div class="col-sm-3">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->sss }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">19.  TELEPHONE NO.</span>
       </div>
       <div class="col-sm-5">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->tel_no }}</span>
       </div>
     </div>
 
@@ -362,28 +408,28 @@
         <span style="font-size:8px;">&nbsp;&nbsp;14. TIN NO.</span>
       </div>
       <div class="col-sm-3">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->tin }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">20. MOBILE NO.</span>
       </div>
       <div class="col-sm-5">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->cell_no }}</span>
       </div>
     </div>
 
     <div class="row" style="border-bottom:solid 1px;">
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px;">
-        <span style="font-size:8px;">&nbsp;&nbsp;15. AGENCY EMPLOYEE NO.</span>
+        <p style="font-size:7px; margin-top: 5px; margin-left: 2px;">15. AGENCY EMPLOYEE NO.</p>
       </div>
       <div class="col-sm-3">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->agency_no }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
-        <span style="font-size:8px;">21. E-MAIL ADDRESS (if any)</span>
+        <p style="font-size:7px; margin-top: 5px;">21. E-MAIL ADDRESS (if any)</p>
       </div>
       <div class="col-sm-5">
-        &nbsp;
+        <span style="font-size:10px; font-weight:bold;">{{ $employee->email }}</span>
       </div>
     </div>
 
@@ -402,77 +448,84 @@
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:13px;">&nbsp;&nbsp;22. SPOUSE'S SURNAME</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_lastname }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
-      	<div class="col-pds-8" style="border-bottom:solid 1px;"">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-8" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_firstname }}</span>
       	</div>
       	<div class="col-pds-2 box-l-grey no-padding" style="border-left:solid 1px; border-bottom:solid 1px;">
-      		<p style="font-size:7px;">NAME EXTENSION (JR., SR)</p>
+      		<div class="col-sm-12 no-padding">
+            <div class="col-sm-10 no-padding">
+              <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
+            </div>
+            <div class="col-sm-2 no-padding">
+              <span style="font-size:8px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_name_ext }}</span>
+            </div>
+          </div>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;MIDDLENAME</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_middlename }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;OCCUPATION</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_occupation }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:7px; margin-left:15px;">&nbsp;&nbsp;EMPLOYER/BUSINESS NAME</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_employer }}</span>
       	</div>
 
-      	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
+      	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; ">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;BUSINESS ADDRESS</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
-      	</div>
-
-      	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
-      		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;OCCUPATION</span>
-      	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_business_address }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:13px;">&nbsp;&nbsp;24. FATHER'S SURNAME</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_lastname }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
-      	<div class="col-pds-8" style="border-bottom:solid 1px;"">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-8" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_firstname }}</span>
       	</div>
       	<div class="col-pds-2 box-l-grey no-padding" style="border-left:solid 1px; border-bottom:solid 1px;">
-      		<p style="font-size:7px;">NAME EXTENSION (JR., SR)</p>
+      		<div class="col-sm-12 no-padding">
+            <div class="col-sm-10 no-padding">
+              <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
+            </div>
+            <div class="col-sm-2 no-padding">
+              <span style="font-size:8px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_name_ext }}</span>
+            </div>
+          </div>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;MIDDLENAME</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_middlename }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
@@ -485,27 +538,50 @@
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;SURNAME</span>
       	</div>
-      	<div class="col-pds-10" style="border-bottom:solid 1px;"">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->mother_lastname }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
-      	<div class="col-pds-10">
-      		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+      	<div class="col-pds-10" style="padding-left: 10px;">
+      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->mother_firstname }}</span>
       	</div>
 
       </div>
 
 
       <div class="col-sm-5 no-padding">
+
         <div class="col-sm-7 box-l-grey no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:7px;">&nbsp;23. NAME of CHILDREN (Write full name and list all)</span>
       	</div>
       	<div class="col-sm-5 box-l-grey no-padding" style="border-bottom:solid 1px;">
       		<span style="font-size:7px;">&nbsp; DATE OF BIRTH (mm/dd/yyyy)</span>
       	</div>
+        
+        @foreach ($employee->employeeChildren as $data)
+          <div class="col-sm-7 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
+            <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ $data->fullname }}</span>
+          </div>
+          <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+            <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ Carbon::parse($data->date_of_birth)->format('m/d/Y') }}</span>
+          </div>
+        @endforeach
+
+        @if(count($employee->employeeChildren) < 11)
+          <?php $diff = 11 - count($employee->employeeChildren); ?>
+          @for ($i = 0; $i < $; $i++)
+            <div class="col-sm-7 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
+              <span style="font-size:8px; font-weight:bold; padding-left: 2px;">&nbsp;</span>
+            </div>
+            <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+              <span style="font-size:8px; font-weight:bold; padding-left: 2px;">&nbsp;</span>
+            </div>
+          @endfor
+        @endif
+
       </div>
 
     </div>
@@ -515,8 +591,8 @@
       	<div class="col-sm-2 box-l-grey no-padding" style="border-right:solid 1px; margin-left: -1px;">
 	  		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;&nbsp;MIDDLENAME</span>
 	  	</div>
-	  	<div class="col-sm-5" style="border-right:solid 1px; border-top:solid 1px; margin-left:1px;">
-	  		<span style="font-size:8px;">&nbsp;&nbsp;</span>
+	  	<div class="col-sm-5" style="border-right:solid 1px; border-top:solid 1px; margin-left:1px; padding-left: 10px;">
+	  		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->mother_middlename }}</span>
 	  	</div>
 	  	<div class="col-sm-5 box-l-grey" style="border-right:solid 1px; border-top:solid 1px; ">
 	  		<p style="font-size: 7px; text-align: center; color:red !important; font-style: italic; -webkit-print-color-adjust: exact; margin-top: 5px; margin-bottom: 5px;">
@@ -569,160 +645,43 @@
     </div>
 
     {{-- EB Content --}}
-    <div class="row" style="border-bottom:solid 1px;">
-      <div class="col-sm-2 box-l-grey no-padding" style="border-right:solid 1px;">
-      	<span style="font-size:8px; padding-left:20px;">ELEMENTARY</span>
-      </div>
-      <div class="col-sm-2" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-3" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12 no-padding">
-        	<div class="col-sm-6" style="border-right:solid 1px;">
-        		<span>&nbsp;</span>
-        	</div>
-        	<div class="col-sm-6">
-        		<span>&nbsp;</span>
-        	</div>
-        </div>
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1" style="border-right:solid 1px; padding:0; margin-bottom: -20px;">
-        &nbsp;
-      </div>
-    </div>
 
-    <div class="row" style="border-bottom:solid 1px;">
-      <div class="col-sm-2 box-l-grey no-padding" style="border-right:solid 1px;">
-      	<span style="font-size:8px; padding-left:20px;">SECONDARY</span>
-      </div>
-      <div class="col-sm-2" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-3" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12 no-padding">
-        	<div class="col-sm-6" style="border-right:solid 1px;">
-        		<span>&nbsp;</span>
-        	</div>
-        	<div class="col-sm-6">
-        		<span>&nbsp;</span>
-        	</div>
-        </div>
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1" style="border-right:solid 1px; padding:0; margin-bottom: -20px;">
-        &nbsp;
-      </div>
-    </div>
+    @foreach ($employee->employeeEducationalBackground as $data)
 
-    <div class="row" style="border-bottom:solid 1px;">
-      <div class="col-sm-2 box-l-grey no-padding" style="border-right:solid 1px;">
-      	<span style="font-size:7px; padding-left:20px;">VOCATIONAL/TRADE COURSE</span>
-      </div>
-      <div class="col-sm-2" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-3" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12 no-padding">
-        	<div class="col-sm-6" style="border-right:solid 1px;">
-        		<span>&nbsp;</span>
-        	</div>
-        	<div class="col-sm-6">
-        		<span>&nbsp;</span>
-        	</div>
+      <div class="row" style="border-bottom:solid 1px;">
+        <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding:0; padding-bottom: 6px;">
+          <span style="{!! $data->level == 'VOCATIONAL/TRADE COURSE' ? 'font-size:7px;' : 'font-size:8px;' !!} padding-left:18px;">
+            {{ $data->level }}
+          </span>
+        </div>
+        <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 1.9em;">
+          <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->school_name }}</p>
+        </div>
+        <div class="col-sm-3 no-padding" style="border-right:solid 1px; height: 1.9em;">
+          <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->course }}</p>
+        </div>
+        <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 1.9em;">
+          <div class="col-sm-12 no-padding">
+            <div class="col-sm-6 no-padding" style="border-right:solid 1px; height: 1.9em; text-align: center;">
+              <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : '' }}</p>
+            </div>
+            <div class="col-sm-6" style="height: 1.9em; text-align: center;">
+              <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : '' }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1 no-padding" style="border-right:solid 1px; height: 1.9em; text-align: center;">
+          <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->units }}</p>
+        </div>
+        <div class="col-sm-1 no-padding" style="border-right:solid 1px; height: 1.9em; text-align: center;">
+          <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->graduate_year }}</p>
+        </div>
+        <div class="col-sm-1 no-padding" style="border-right:solid 1px; height: 1.9em;">
+          <p style="font-size:6px; font-weight:bold; padding-top: 4px; padding-left: 1px; padding-right: 5px;">{{ $data->scholarship }}</p>
         </div>
       </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1" style="border-right:solid 1px; padding:0; margin-bottom: -20px;">
-        &nbsp;
-      </div>
-    </div>
 
-    <div class="row" style="border-bottom:solid 1px;">
-      <div class="col-sm-2 box-l-grey no-padding" style="border-right:solid 1px;">
-      	<span style="font-size:8px; padding-left:20px;">COLLEGE</span>
-      </div>
-      <div class="col-sm-2" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-3" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12 no-padding">
-        	<div class="col-sm-6" style="border-right:solid 1px;">
-        		<span>&nbsp;</span>
-        	</div>
-        	<div class="col-sm-6">
-        		<span>&nbsp;</span>
-        	</div>
-        </div>
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1" style="border-right:solid 1px; padding:0; margin-bottom: -20px;">
-        &nbsp;
-      </div>
-    </div>
-
-    <div class="row" style="border-bottom:solid 1px;">
-      <div class="col-sm-2 box-l-grey no-padding" style="border-right:solid 1px;">
-      	<span style="font-size:8px; padding-left:20px;">GRADUATE STUDIES</span>
-      </div>
-      <div class="col-sm-2" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-3" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12 no-padding">
-        	<div class="col-sm-6" style="border-right:solid 1px;">
-        		<span>&nbsp;</span>
-        	</div>
-        	<div class="col-sm-6">
-        		<span>&nbsp;</span>
-        	</div>
-        </div>
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-      <div class="col-sm-1" style="border-right:solid 1px; padding:0; margin-bottom: -20px;">
-        &nbsp;
-      </div>
-    </div>
+    @endforeach
 
     <div class="row box-l-grey no-padding" style="border-bottom:solid 2px;">
       <div class="col-sm-12 no-padding">
