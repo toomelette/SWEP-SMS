@@ -572,7 +572,7 @@
 
         @if(count($employee->employeeChildren) < 11)
           <?php $diff = 11 - count($employee->employeeChildren); ?>
-          @for ($i = 0; $i < $; $i++)
+          @for ($i = 0; $i < $diff; $i++)
             <div class="col-sm-7 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
               <span style="font-size:8px; font-weight:bold; padding-left: 2px;">&nbsp;</span>
             </div>
