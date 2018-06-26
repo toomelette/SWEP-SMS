@@ -153,10 +153,10 @@
 
     @endforeach
 
-    @if(count($employee->employeeEligibility) < 7)
+    @if(count($employee->employeeEligibility) < 10)
 
       <?php 
-        $diff = 7 - count($employee->employeeEligibility); 
+        $diff = 10 - count($employee->employeeEligibility); 
       ?>
 
       @for ($i = 0; $i < $diff; $i++)
@@ -315,10 +315,10 @@
 
     @endforeach
 
-    @if(count($employee->employeeExperience) < 28)
+    @if(count($employee->employeeExperience) < 34)
 
       <?php 
-        $diff = 28 - count($employee->employeeExperience); 
+        $diff = 34 - count($employee->employeeExperience); 
       ?>
 
       @for ($i = 0; $i < $diff; $i++)

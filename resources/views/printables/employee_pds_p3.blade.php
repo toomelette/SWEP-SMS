@@ -282,10 +282,10 @@
 
     @endforeach
 
-    @if(count($employee->employeeTraining) < 21)
+    @if(count($employee->employeeTraining) < 27)
 
       <?php 
-        $diff = 21 - count($employee->employeeTraining); 
+        $diff = 27 - count($employee->employeeTraining); 
       ?>
 
       @for ($i = 0; $i < $diff; $i++)
