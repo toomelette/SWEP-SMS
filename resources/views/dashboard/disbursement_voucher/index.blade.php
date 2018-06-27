@@ -57,7 +57,7 @@
       ) !!}
 
       {!! FormHelper::select_dynamic_for_filter(
-        '2', 'ac', 'Account Code', old('ac'), $global_accounts_all, 'account_code', 'account_code', 'submit_dv_filter', ''
+        '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', ''
       ) !!}
 
       <section>

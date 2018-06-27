@@ -132,7 +132,8 @@ class EmployeeFormRequest extends FormRequest{
             'q_35_a'=>'required|string|max:5|min:4',
             'q_35_a_yes_details'=>'nullable|string|max:255',
             'q_35_b'=>'required|string|max:5|min:4',
-            'q_35_b_yes_details'=>'nullable|string|max:255',
+            'q_35_b_yes_details_1'=>'nullable|string|max:255',
+            'q_35_b_yes_details_2'=>'nullable|string|max:255',
             'q_36'=>'required|string|max:5|min:4',
             'q_36_yes_details'=>'nullable|string|max:255',
             'q_37'=>'required|string|max:5|min:4',
@@ -166,12 +167,12 @@ class EmployeeFormRequest extends FormRequest{
         if(count($rows_eb) > 0){
             foreach($rows_eb as $key => $value){   
                 $rules['row_eb.'.$key.'.level'] = 'required|string|max:90';
-                $rules['row_eb.'.$key.'.school_name'] = 'required|string|max:255';
+                $rules['row_eb.'.$key.'.school_name'] = 'nullable|string|max:255';
                 $rules['row_eb.'.$key.'.course'] = 'nullable|string|max:90';
                 $rules['row_eb.'.$key.'.date_from'] = 'nullable|date_format:"m/d/Y"';
                 $rules['row_eb.'.$key.'.date_to'] = 'nullable|date_format:"m/d/Y"';
                 $rules['row_eb.'.$key.'.units'] = 'nullable|numeric';
-                $rules['row_eb.'.$key.'.graduate_year'] = 'required|int';
+                $rules['row_eb.'.$key.'.graduate_year'] = 'nullable|int';
                 $rules['row_eb.'.$key.'.scholarship'] = 'nullable|string|max:90';
             } 
         }

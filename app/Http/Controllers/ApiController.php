@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SubMenu;
-use App\Models\Account;
+use App\Models\ProjectCode;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\DepartmentUnit;
@@ -17,19 +17,19 @@ class ApiController extends Controller{
 	protected $submenu;
 	protected $department;
 	protected $department_unit;
-	protected $accounts;
+	protected $project_code;
 
 
 
 
 
-	public function __construct(Cache $cache, SubMenu $submenu, Department $department, DepartmentUnit $department_unit, Account $account){
+	public function __construct(Cache $cache, SubMenu $submenu, Department $department, DepartmentUnit $department_unit, ProjectCode $project_code){
 
 		$this->cache = $cache;
 		$this->submenu = $submenu;
 		$this->department = $department;
 		$this->department_unit = $department_unit;
-		$this->account = $account;
+		$this->project_code = $project_code;
 		
 
 	}
@@ -89,20 +89,20 @@ class ApiController extends Controller{
 
 
 
-    public function selectResponseAccountsFromDepartments(Request $request, $key){
+    public function selectResponseProjectCodesFromDepartments(Request $request, $key){
 
     	if($request->Ajax()){
 
-    		$response_accounts = $this->cache->remember('api:response_accounts_from_department:byDepartment:'. $key .'', 240, function() use ($key){
+    		$response_project_codes = $this->cache->remember('api:response_project_codes_from_department:byDepartment:'. $key .'', 240, function() use ($key){
         		
-        		return $this->account->select('account_code')
+        		return $this->project_code->select('project_code')
         		                     ->where('department_name', $key)
         		                     ->orwhere('department_id', $key)
         		                     ->get();
 
        		});
 
-	    	return json_encode($response_accounts);
+	    	return json_encode($response_project_codes);
 	    }
 
 	    return abort(404);

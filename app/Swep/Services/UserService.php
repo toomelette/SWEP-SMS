@@ -376,6 +376,7 @@ class UserService extends BaseService{
         $user_menu->user_menu_id = $this->user_menu->userMenuIdInc;
         $user_menu->user_id = $user->user_id;
         $user_menu->menu_id = $menu->menu_id;
+        $user_menu->category = $menu->category;
         $user_menu->name = $menu->name;
         $user_menu->route = $menu->route;
         $user_menu->icon = $menu->icon;

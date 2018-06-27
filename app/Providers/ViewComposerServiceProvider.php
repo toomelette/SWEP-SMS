@@ -55,8 +55,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.user_index',
                         'dashboard.department_unit.create',
                         'dashboard.department_unit.edit',
-                        'dashboard.account.create',
-                        'dashboard.account.edit',
+                        'dashboard.project_code.create',
+                        'dashboard.project_code.edit',
                         'dashboard.employee.create',
                         'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentComposer');
 
@@ -70,11 +70,11 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
-        //ACCOUNTS
+        // PROJECT CODES
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
-                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\AccountComposer');
+                        'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\ProjectCodeComposer');
         
 
         //SIGNATORY

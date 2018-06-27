@@ -37,7 +37,7 @@ class DisbursementVoucher extends Model{
         'bur_no' => '', 
         'department_name' => '', 
         'department_unit_name' => '',
-        'account_code' => '',
+        'project_code' => '',
         'explanation' => '', 
         'amount' => 0.00,
         'certified_by' => '',
@@ -88,7 +88,7 @@ class DisbursementVoucher extends Model{
                  ->orwhere('doc_no', 'LIKE', '%'. $key .'%')
                  ->orwhere('department_name', 'LIKE', '%'. $key .'%')
                  ->orwhere('department_unit_name', 'LIKE', '%'. $key .'%')
-                 ->orwhere('account_code', 'LIKE', '%'. $key .'%')
+                 ->orwhere('project_code', 'LIKE', '%'. $key .'%')
                  ->orwhere('fund_source_id', 'LIKE', '%'. $key .'%')
                  ->orwhereHas('user', function ($query) use ($key) {
                     $query->where('firstname', 'LIKE', '%'. $key .'%')

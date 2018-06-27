@@ -2,12 +2,24 @@
 
 namespace App\Http\Requests;
 
+
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 
 class UserFormRequest extends FormRequest{
 
-    
+
+    protected $user;
+
+
+    public function __construct(User $user){
+
+        $this->user = $user;
+
+    }
+
+
     public function authorize(){
 
         return true;
@@ -15,7 +27,7 @@ class UserFormRequest extends FormRequest{
 
     
     public function rules(){
-        
+
         $menus = $this->request->get('menu');
 
         $rules = [

@@ -157,11 +157,11 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'gov_id', 'text', 'Any Issued Government ID', 'Any Issued Government ID', old('gov_id'), $errors->has('gov_id'), $errors->first('gov_id'), ''
+                     '3', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id'), $errors->has('gov_id'), $errors->first('gov_id'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'license_passport_no', 'text', 'Drivers License / Passport No.', 'Drivers License / Passport No.', old('license_passport_no'), $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
+                     '3', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no'), $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
@@ -707,7 +707,7 @@
                           <tr>
 
                             <td>
-                              {!! FormHelper::select_static_for_dt('row_eb[0][level]', $level, '', '') !!}
+                              {!! FormHelper::select_static_for_dt('row_eb[0][level]', $level, 'ELEMENTARY', '') !!}
                             </td>
 
                             <td>
@@ -738,12 +738,155 @@
                               {!! FormHelper::textbox_for_dt('row_eb[0][scholarship]', 'Scholarship', '', '') !!}
                             </td>
 
+                          </tr>
+
+
+                          <tr>
+
                             <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                              {!! FormHelper::select_static_for_dt('row_eb[1][level]', $level, 'SECONDARY', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[1][school_name]', 'Name of School', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[1][course]', 'Course', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[1][date_from]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[1][date_to]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[1][units]', 'Units', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[1][graduate_year]', 'Year', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[1][scholarship]', 'Scholarship', '', '') !!}
                             </td>
 
                           </tr>
 
+
+                          <tr>
+
+                            <td>
+                              {!! FormHelper::select_static_for_dt('row_eb[2][level]', $level, 'VOCATIONAL/TRADE COURSE', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[2][school_name]', 'Name of School', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[2][course]', 'Course', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[2][date_from]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[2][date_to]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[2][units]', 'Units', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[2][graduate_year]', 'Year', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[2][scholarship]', 'Scholarship', '', '') !!}
+                            </td>
+
+                          </tr>
+
+
+                          <tr>
+
+                            <td>
+                              {!! FormHelper::select_static_for_dt('row_eb[3][level]', $level, 'COLLEGE', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[3][school_name]', 'Name of School', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[3][course]', 'Course', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[3][date_from]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[3][date_to]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[3][units]', 'Units', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[3][graduate_year]', 'Year', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[3][scholarship]', 'Scholarship', '', '') !!}
+                            </td>
+
+                          </tr>
+
+
+                          <tr>
+
+                            <td>
+                              {!! FormHelper::select_static_for_dt('row_eb[4][level]', $level, 'GRADUATE STUDIES', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[4][school_name]', 'Name of School', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[4][course]', 'Course', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[4][date_from]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::datepicker_for_dt('row_eb[4][date_to]', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[4][units]', 'Units', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[4][graduate_year]', 'Year', '', '') !!}
+                            </td>
+
+                            <td>
+                              {!! FormHelper::textbox_for_dt('row_eb[4][scholarship]', 'Scholarship', '', '') !!}
+                            </td>
+
+                          </tr>
 
                         @endif
 
@@ -1757,10 +1900,17 @@
                       ) !!}
                     </div>
 
-                    <div class="col-md-6">
-                      <p style="margin-bottom:-10px;">If YES, give details (Date Filled / Status of Cases):</p>
+                    <div class="col-md-3">
+                      <p style="margin-bottom:-10px;">If YES, give details (Date Filled):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_35_b_yes_details', 'text', '', '', old('q_35_b_yes_details'), $errors->has('q_35_b_yes_details'), $errors->first('q_35_b_yes_details'), ''
+                       '12', 'q_35_b_yes_details_1', 'text', '', '', old('q_35_b_yes_details_1'), $errors->has('q_35_b_yes_details_1'), $errors->first('q_35_b_yes_details_1'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-3">
+                      <p style="margin-bottom:-10px;">(Status of Case/s):</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_35_b_yes_details_2', 'text', '', '', old('q_35_b_yes_details_2'), $errors->has('q_35_b_yes_details_2'), $errors->first('q_35_b_yes_details_2'), ''
                       ) !!}
                     </div>
 
@@ -2623,8 +2773,9 @@
                       '</td>' +
 
                     '</tr>';
-
-      $("#reference_table_body").append($(content));
+      if(i < 3){
+        $("#reference_table_body").append($(content));
+      }
 
       });
 

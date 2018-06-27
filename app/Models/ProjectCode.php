@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Account extends Model{
+class ProjectCode extends Model{
 
 	use Sortable;
 
-    protected $table = 'accounts';
+    protected $table = 'project_codes';
 
     protected $dates = ['date_started', 'projected_date_end', 'created_at', 'updated_at'];
 
-    public $sortable = ['account_code', 'department_name', 'description', 'project_in_charge'];
+    public $sortable = ['project_code', 'department_name', 'description', 'project_in_charge'];
 
 	public $timestamps = false;
 
@@ -22,10 +22,10 @@ class Account extends Model{
     protected $attributes = [
         
         'slug' => '',
-        'account_id' => '',
+        'project_code_id' => '',
         'department_id' => '',
         'department_name' => '',
-        'account_code' => '',
+        'project_code' => '',
         'description' => '',
         'mooe' => 0.00,
         'co' => 0.00,
@@ -56,7 +56,7 @@ class Account extends Model{
 
     public function scopePopulate($query){
 
-        return $query->select('account_code', 'department_name', 'description', 'project_in_charge', 'slug')
+        return $query->select('project_code', 'department_name', 'description', 'project_in_charge', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
@@ -69,7 +69,7 @@ class Account extends Model{
 
         return $query->where(function ($query) use ($key) {
                 $query->where('department_name', 'LIKE', '%'. $key .'%')
-                	  ->orwhere('account_code', 'LIKE', '%'. $key .'%')
+                	  ->orwhere('project_code', 'LIKE', '%'. $key .'%')
                 	  ->orwhere('description', 'LIKE', '%'. $key .'%')
                 	  ->orwhere('project_in_charge', 'LIKE', '%'. $key .'%');
         });
@@ -89,17 +89,17 @@ class Account extends Model{
 
 
     // GETTERS
-    public function getAccountIdIncAttribute(){
+    public function getProjectCodeIdIncAttribute(){
 
         $id = 'A1001';
 
-        $account = $this->select('account_id')->orderBy('account_id', 'desc')->first();
+        $project_code = $this->select('project_code_id')->orderBy('project_code_id', 'desc')->first();
 
-        if($account != null){
+        if($project_code != null){
 
-            if($account->account_id != null){
+            if($project_code->project_code_id != null){
 
-                $num = str_replace('A', '', $account->account_id) + 1;
+                $num = str_replace('A', '', $project_code->project_code_id) + 1;
                 
                 $id = 'A' . $num;
 

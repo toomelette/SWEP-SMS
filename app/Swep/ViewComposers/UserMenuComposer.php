@@ -29,15 +29,49 @@ class UserMenuComposer{
 
     public function compose($view){
 
-        $user_menus = [];
+        $user_menus_u = [];
+        $user_menus_su = [];
+        $user_menus_acctg = [];
+        $user_menus_hr = [];
 
         if($this->auth->check()){
-            $user_menus = $this->cache->remember('user_menus:byUserId:'. $this->auth->user()->user_id .'', 240, function(){
-            	return $this->user_menu->where('user_id', $this->auth->user()->user_id )->with('userSubMenu')->get();
+
+            $user_menus_u = $this->cache->remember('user_menus:byUserId:u:'. $this->auth->user()->user_id .'', 240, function(){
+                return $this->user_menu->where('user_id', $this->auth->user()->user_id)
+                                       ->where('category', 'U')
+                                       ->with('userSubMenu')
+                                       ->get();
             });
+
+            $user_menus_acctg = $this->cache->remember('user_menus:byUserId:acctg:'. $this->auth->user()->user_id .'', 240, function(){
+            	return $this->user_menu->where('user_id', $this->auth->user()->user_id)
+                                       ->where('category', 'ACCTG')
+                                       ->with('userSubMenu')
+                                       ->get();
+            });
+
+            $user_menus_hr = $this->cache->remember('user_menus:byUserId:hr:'. $this->auth->user()->user_id .'', 240, function(){
+                return $this->user_menu->where('user_id', $this->auth->user()->user_id)
+                                       ->where('category', 'HR')
+                                       ->with('userSubMenu')
+                                       ->get();
+            });
+
+            $user_menus_su = $this->cache->remember('user_menus:byUserId:su:'. $this->auth->user()->user_id .'', 240, function(){
+                return $this->user_menu->where('user_id', $this->auth->user()->user_id)
+                                       ->where('category', 'SU')
+                                       ->with('userSubMenu')
+                                       ->get();
+            });
+
         }  
 
-    	$view->with('global_user_menus', $user_menus);
+    	$view->with([
+            'global_user_menus_u' => $user_menus_u,
+            'global_user_menus_acctg' => $user_menus_acctg, 
+            'global_user_menus_hr' => $user_menus_hr, 
+            'global_user_menus_su' => $user_menus_su,
+        ]);
 
     }
 

@@ -36,7 +36,7 @@ class EventServiceProvider extends ServiceProvider{
         'App\Swep\Subscribers\SignatorySubscriber',
         'App\Swep\Subscribers\DepartmentSubscriber',
         'App\Swep\Subscribers\DepartmentUnitSubscriber',
-        'App\Swep\Subscribers\AccountSubscriber',
+        'App\Swep\Subscribers\ProjectCodeSubscriber',
         'App\Swep\Subscribers\FundSourceSubscriber',
         'App\Swep\Subscribers\SubmenuSubscriber',
         'App\Swep\Subscribers\LeaveApplicationSubscriber',

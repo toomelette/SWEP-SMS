@@ -36,9 +36,9 @@ class Department extends Model{
 
 
 
-	public function account() {
+	public function projectCode() {
 
-        return $this->hasMany('App\Models\Account','department_id','department_id');
+        return $this->hasMany('App\Models\ProjectCode','department_id','department_id');
 
     }
 

@@ -68,7 +68,7 @@
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '2', 'account_code', 'Account Code *', old('account_code') ? old('account_code') : $disbursement_voucher->account_code, $global_accounts_all, 'account_code', 'account_code', $errors->has('account_code'), $errors->first('account_code'), 'select2', ''
+            '2', 'project_code', 'Project Code *', old('project_code') ? old('project_code') : $disbursement_voucher->project_code, $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2', ''
           ) !!}
 
           <div class="col-md-12">
@@ -133,7 +133,7 @@
     ) !!}
 
     {!! JSHelper::ajax_select_to_select(
-      'department_name', 'account_code', '/api/select_response_accounts_from_department/', 'account_code', 'account_code'
+      'department_name', 'project_code', '/api/select_response_project_codes_from_department/', 'project_code', 'project_code'
     ) !!}
 
     $(function () {

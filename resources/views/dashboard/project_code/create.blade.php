@@ -3,7 +3,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Create Account</h1>
+      <h1>Create Project Code</h1>
   </section>
 
   <section class="content">
@@ -17,7 +17,7 @@
         </div> 
       </div>
       
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.account.store') }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.project_code.store') }}">
 
         <div class="box-body">
      
@@ -30,7 +30,7 @@
           <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') }}">
 
           {!! FormHelper::textbox(
-             '3', 'account_code', 'text', 'Account Code *', 'Account Code', old('account_code'), $errors->has('account_code'), $errors->first('account_code'), ''
+             '3', 'project_code', 'text', 'Project Code *', 'Project Code', old('project_code'), $errors->has('project_code'), $errors->first('project_code'), ''
           ) !!}
 
           {!! FormHelper::textbox(
@@ -80,10 +80,10 @@
 
 @section('modals')
 
-  @if(Session::has('ACCOUNT_CREATE_SUCCESS'))
+  @if(Session::has('PROJECT_CODE_CREATE_SUCCESS'))
 
     {!! HtmlHelper::modal(
-      'account_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('ACCOUNT_CREATE_SUCCESS')
+      'project_code_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('PROJECT_CODE_CREATE_SUCCESS')
     ) !!}
 
   @endif
@@ -97,8 +97,8 @@
 
   <script type="text/javascript">
 
-    @if(Session::has('ACCOUNT_CREATE_SUCCESS'))
-      $('#account_create').modal('show');
+    @if(Session::has('PROJECT_CODE_CREATE_SUCCESS'))
+      $('#project_code_create').modal('show');
     @endif
 
     {!! JSHelper::ajax_select_to_input(

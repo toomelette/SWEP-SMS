@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AccountFormRequest extends FormRequest{
+class ProjectCodeFormRequest extends FormRequest{
     
     
 
@@ -26,7 +26,7 @@ class AccountFormRequest extends FormRequest{
 
             'department_id' => 'required|max:5|min:5|string',
             'department_name' => 'required|max:45|string',
-            'account_code' => 'required|max:45|string',
+            'project_code' => 'required|max:45|string',
             'description' => 'required|max:255|string',
             'mooe'=>'nullable|string|max:13',
             'co' => 'nullable|string|max:13',

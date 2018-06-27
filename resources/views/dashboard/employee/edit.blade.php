@@ -161,11 +161,11 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'gov_id', 'text', 'Any Issued Government ID', 'Any Issued Government ID', old('gov_id') ? old('gov_id') : $employee->gov_id, $errors->has('gov_id'), $errors->first('gov_id'), ''
+                     '3', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id') ? old('gov_id') : $employee->gov_id, $errors->has('gov_id'), $errors->first('gov_id'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '3', 'license_passport_no', 'text', 'Drivers License / Passport No.', 'Drivers License / Passport No.', old('license_passport_no') ? old('license_passport_no') : $employee->license_passport_no, $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
+                     '3', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no') ? old('license_passport_no') : $employee->license_passport_no, $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
@@ -1767,10 +1767,17 @@
                       ) !!}
                     </div>
 
-                    <div class="col-md-6">
-                      <p style="margin-bottom:-10px;">If YES, give details (Date Filled / Status of Cases):</p>
+                    <div class="col-md-3">
+                      <p style="margin-bottom:-10px;">If YES, give details (Date Filed):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_35_b_yes_details', 'text', '', '', old('q_35_b_yes_details') ? old('q_35_b_yes_details') : $employee->employeeOtherQuestion->q_35_b_yes_details, $errors->has('q_35_b_yes_details'), $errors->first('q_35_b_yes_details'), ''
+                       '12', 'q_35_b_yes_details_1', 'text', '', '', old('q_35_b_yes_details_1') ? old('q_35_b_yes_details_1') : $employee->employeeOtherQuestion->q_35_b_yes_details_1, $errors->has('q_35_b_yes_details_1'), $errors->first('q_35_b_yes_details_1'), ''
+                      ) !!}
+                    </div>
+
+                    <div class="col-md-3">
+                      <p style="margin-bottom:-10px;">(Status of Case/s):</p>
+                      {!! FormHelper::textbox(
+                       '12', 'q_35_b_yes_details_2', 'text', '', '', old('q_35_b_yes_details_2') ? old('q_35_b_yes_details_2') : $employee->employeeOtherQuestion->q_35_b_yes_details_2, $errors->has('q_35_b_yes_details_2'), $errors->first('q_35_b_yes_details_2'), ''
                       ) !!}
                     </div>
 
@@ -2634,8 +2641,10 @@
 
                     '</tr>';
 
-      $("#reference_table_body").append($(content));
-
+      if(i < 3){
+        $("#reference_table_body").append($(content));
+      }
+      
       });
 
     });

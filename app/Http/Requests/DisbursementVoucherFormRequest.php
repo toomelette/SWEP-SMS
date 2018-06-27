@@ -30,7 +30,7 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'address'=>'string|max:255',
             'department_name'=>'required|string|max:45',
             'department_unit_name'=>'nullable|string|max:45',
-            'account_code'=>'required|string|max:45',
+            'project_code'=>'required|string|max:45',
             'explanation'=>'required',
             'amount'=>'required|string|max:13'
 

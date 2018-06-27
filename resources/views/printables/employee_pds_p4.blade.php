@@ -137,8 +137,22 @@
           {!! $employee->employeeOtherQuestion->q_35_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          Date Filed:  _______________________ <br>
-          Status of Case/s:  _______________________
+
+          Date Filed:  
+          @if($employee->employeeOtherQuestion->q_35_b_yes_details_1 != null)
+            <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_35_b_yes_details_1 }}</small>
+          @else
+            _______________________
+          @endif 
+
+          <br>
+
+          Status of Case/s:
+          @if($employee->employeeOtherQuestion->q_35_b_yes_details_2 != null)
+            <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_35_b_yes_details_2 }}</small>
+          @else
+            _______________________
+          @endif
 
         </p>
       </div>

@@ -95,7 +95,7 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_voucher->bur_no = $request->bur_no;
         $disbursement_voucher->department_name = $request->department_name;
         $disbursement_voucher->department_unit_name = $request->department_unit_name;
-        $disbursement_voucher->account_code = $request->account_code;
+        $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
         $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
         $disbursement_voucher->certified_by = $this->signatoryByType('2')->employee_name;
@@ -132,7 +132,7 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_voucher->bur_no = $request->bur_no;
         $disbursement_voucher->department_name = $request->department_name;
         $disbursement_voucher->department_unit_name = $request->department_unit_name;
-        $disbursement_voucher->account_code = $request->account_code;
+        $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
         $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
         $disbursement_voucher->updated_at = $this->carbon->now();
@@ -307,8 +307,8 @@ class DisbursementVoucherService extends BaseService{
             $disbursement_voucher->whereDepartmentUnitName($request->dun);
         }
 
-        if($request->ac != null){
-            $disbursement_voucher->whereAccountCode($request->ac);
+        if($request->pc != null){
+            $disbursement_voucher->whereProjectCode($request->pc);
         }
 
         if($request->df != null || $request->dt != null){

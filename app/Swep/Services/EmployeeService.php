@@ -467,7 +467,8 @@ class EmployeeService extends BaseService{
         $employee_oq->q_35_a = $this->dataTypeHelper->string_to_boolean($request->q_35_a);
         $employee_oq->q_35_a_yes_details = $request->q_35_a_yes_details;
         $employee_oq->q_35_b = $this->dataTypeHelper->string_to_boolean($request->q_35_b);
-        $employee_oq->q_35_b_yes_details = $request->q_35_b_yes_details;
+        $employee_oq->q_35_b_yes_details_1 = $request->q_35_b_yes_details_1;
+        $employee_oq->q_35_b_yes_details_2 = $request->q_35_b_yes_details_2;
         $employee_oq->q_36 = $this->dataTypeHelper->string_to_boolean($request->q_36);
         $employee_oq->q_36_yes_details = $request->q_36_yes_details;
         $employee_oq->q_37 = $this->dataTypeHelper->string_to_boolean($request->q_37);
