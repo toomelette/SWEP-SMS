@@ -248,6 +248,18 @@ class DisbursementVoucherService extends BaseService{
 
 
 
+
+    public function saveAs($slug){
+
+        $disbursement_voucher = $this->dvBySlug($slug);     
+        return view('dashboard.disbursement_voucher.save_as')->with('disbursement_voucher', $disbursement_voucher);
+
+    }
+
+
+
+
+
     // Utility Methods
     
     public function dvBySlug($slug){

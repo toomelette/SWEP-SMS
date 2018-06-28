@@ -98,5 +98,12 @@ class EmployeeController extends Controller{
 
 
 
+
+    public function printInfo($slug){
+
+        return $this->employee->printInfo($slug);
+
+    }
+
     
 }

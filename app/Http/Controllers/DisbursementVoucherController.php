@@ -109,6 +109,15 @@ class DisbursementVoucherController extends Controller{
         
     }
 
+
+
+
+    public function saveAs($slug){
+
+        return $this->disbursement_voucher->saveAs($slug);
+        
+    }
+
     
 
     

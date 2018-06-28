@@ -27,6 +27,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">Details</h3>
         <div class="box-tools">
+          <a href="#" id="print_info_form" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Information</a>&nbsp;
           <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p1' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print PDS Page 1</a>&nbsp;
           <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p2' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print PDS Page 2</a>&nbsp;
           <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p3' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print PDS Page 3</a>&nbsp;
@@ -561,7 +562,6 @@
 
 
 
-
       </div>
 
     </div>
@@ -570,3 +570,145 @@
 
 @endsection
 
+
+
+
+@section('modals')
+
+  {{-- Employee Info Form --}}
+  <div class="modal fade" id="print_info_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <i class="fa fa-hand-pointer-o"></i>&nbsp;
+            Please select Modules that you want to Print.
+          </h4>
+        </div>
+        <div class="modal-body" id="delete_body">
+          <form method="GET" action="{{ route('dashboard.employee.print_info', $employee->slug) }}" target="_blank">
+            
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="p_info">
+                Personal Information
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="appt_dtl">
+                Appointment Details
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="p_id">
+                Personal ID's
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="f_info">
+                Family Information
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="edc_bg">
+                Educational Background 
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="trn_sem">
+                Trainings / Seminars
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="elig">
+                Eligibilities
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="wrk_exp">
+                Work Experience
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="vol_wrk">
+                Voluntary Works
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="recog">
+                Recognitions
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="org">
+                Organizations
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="ss">
+                Special Skills
+              </label>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="ref">
+                References
+              </label>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Print</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection
+
+
+
+
+
+@section('scripts')
+
+  <script type="text/javascript">
+    
+    {{-- CALL Employee Info Form --}}
+    $(document).on("click", "#print_info_form", function () {
+        $("#print_info_modal").modal("show");
+    });
+
+
+  </script>
+
+@endsection

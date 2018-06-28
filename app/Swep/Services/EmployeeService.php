@@ -270,6 +270,17 @@ class EmployeeService extends BaseService{
 
 
 
+    public function printInfo($slug){
+
+        $employee = $this->employeeBySlug($slug);
+        return view('printables.employee_info')->with('employee', $employee);
+
+    }
+
+
+
+
+
     // UTILITY METHODS
 
     public function employeeBySlug($slug){

@@ -52,7 +52,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
 
@@ -69,7 +69,7 @@ class UserSubscriber extends BaseSubscriber{
         
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->cacheHelper->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
 
@@ -85,7 +85,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
         $this->session->flash('USER_ACTIVATE_SUCCESS_SLUG', $user->slug);
@@ -100,7 +100,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
         $this->session->flash('USER_DEACTIVATE_SUCCESS_SLUG', $user->slug);
@@ -115,7 +115,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
         $this->session->flash('USER_LOGOUT_SUCCESS_SLUG', $user->slug);
@@ -130,7 +130,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
         $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS_SLUG', $user->slug);

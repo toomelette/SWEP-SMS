@@ -31,20 +31,23 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
                         'dashboard.disbursement_voucher.user_index',
+                        'dashboard.disbursement_voucher.save_as',
                         'dashboard.employee.create',
-                        'dashboard.employee.edit'], 'App\Swep\ViewComposers\ProjectComposer');
+                        'dashboard.employee.edit',], 'App\Swep\ViewComposers\ProjectComposer');
 
 
         // FUND SOURCE
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.save_as',
                         'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\FundSourceComposer');
 
 
         // MODE OF PAYMENT
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit', 
+                        'dashboard.disbursement_voucher.save_as',
                         'printables.disbursement_voucher'], 'App\Swep\ViewComposers\ModeOfPaymentComposer');
 
 
@@ -53,6 +56,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
                         'dashboard.disbursement_voucher.user_index',
+                        'dashboard.disbursement_voucher.save_as',
                         'dashboard.department_unit.create',
                         'dashboard.department_unit.edit',
                         'dashboard.project_code.create',
@@ -66,6 +70,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
                         'dashboard.disbursement_voucher.user_index',
+                        'dashboard.disbursement_voucher.save_as',
                         'dashboard.employee.create',
                         'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
@@ -74,6 +79,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit',
                         'dashboard.disbursement_voucher.index',
+                        'dashboard.disbursement_voucher.save_as',
                         'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\ProjectCodeComposer');
         
 
