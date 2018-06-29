@@ -16,6 +16,7 @@ use App\Models\EmployeeRecognition;
 use App\Models\EmployeeOrganization;
 use App\Models\EmployeeSpecialSkill;
 use App\Models\EmployeeReference;
+use App\Models\EmployeeServiceRecord;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -25,12 +26,14 @@ class EmployeeService extends BaseService{
 
 
 	protected $employee;
+    protected $employee_sr;
 
 
 
-    public function __construct(Employee $employee){
+    public function __construct(Employee $employee, EmployeeServiceRecord $employee_sr){
 
         $this->employee = $employee;
+        $this->employee_sr = $employee_sr;
         parent::__construct();
 
     }
@@ -281,6 +284,52 @@ class EmployeeService extends BaseService{
 
 
 
+    public function serviceRecord($slug){
+
+        $employee = $this->employeeBySlug($slug);
+        return view('dashboard.employee.service_record')->with('employee', $employee);
+
+    }
+
+
+
+
+    public function serviceRecordStore($request, $slug){
+
+        $employee = $this->employeeBySlug($slug);
+        $this->storeEmployeeServiceRecord($request, $employee);
+
+        $this->event->fire('employee.service_record_store', $employee);
+        return redirect()->route('dashboard.employee.service_record', $employee->slug);
+
+    }
+
+
+
+
+    public function serviceRecordUpdate($request, $slug){
+
+        $employee = $this->employeeBySlug($slug);
+        return view('dashboard.employee.service_record')->with('employee', $employee);
+
+    }
+
+
+
+
+    public function serviceRecordDestroy($slug){
+
+        $employee_sr = $this->employeeSrBySlug($slug);
+        $employee_sr->delete();
+
+        $this->event->fire('employee.service_record_destroy', $employee_sr);
+        return redirect()->back();;
+
+    }
+
+
+
+
     // UTILITY METHODS
 
     public function employeeBySlug($slug){
@@ -290,6 +339,19 @@ class EmployeeService extends BaseService{
         });
         
         return $employee;
+
+    }
+
+
+
+
+    public function employeeSrBySlug($slug){
+
+        $employee_sr = $this->cache->remember('employees:service_records:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->employee_sr->findSlug($slug);
+        });
+
+        return $employee_sr;
 
     }
 
@@ -674,6 +736,35 @@ class EmployeeService extends BaseService{
         $employee_reference->save();
 
     }
+
+
+
+
+
+
+    public function storeEmployeeServiceRecord($request, $employee){
+
+        $employee_sr = new EmployeeServiceRecord;
+        $employee_sr->slug = $this->str->random(32);
+        $employee_sr->employee_no = $employee->employee_no;
+        $employee_sr->sequence_no = $request->sequence_no;
+        $employee_sr->date_from = $request->date_from;
+        $employee_sr->date_to = $request->date_to;
+        $employee_sr->position = $request->position;
+        $employee_sr->appointment_status = $request->appointment_status;
+        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
+        $employee_sr->mode_of_payment = $request->mode_of_payment;
+        $employee_sr->station = $request->station;
+        $employee_sr->gov_serve = $request->gov_serve;
+        $employee_sr->psc_serve = $request->psc_serve;
+        $employee_sr->lwp = $request->lwp;
+        $employee_sr->spdate = $request->spdate;
+        $employee_sr->status = $request->status;
+        $employee_sr->remarks = $request->remarks;
+        $employee_sr->save();
+
+    }
+
 
 
 

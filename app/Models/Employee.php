@@ -165,6 +165,10 @@ class Employee extends Model{
         return $this->hasMany('App\Models\EmployeeVoluntaryWork', 'employee_no', 'employee_no');
     }
 
+    public function employeeServiceRecord(){
+        return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no');
+    }
+
 
 
     // SCOPES

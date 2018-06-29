@@ -63,10 +63,11 @@
               <td>{{ $data->employee_no }}</td>
               <td>{{ $data->fullname }}</td>
               <td>{{ $data->position }}</td>
-              <td> 
+              <td>
                 <select id="action" class="form-control input-sm">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.employee.show', $data->slug) }}">Details</option>
+                  <option data-type="1" data-url="{{ route('dashboard.employee.service_record', $data->slug) }}">Service Record</option>
                   <option data-type="1" data-url="{{ route('dashboard.employee.edit', $data->slug) }}">Edit</option>
                   <option data-type="0" data-action="delete" data-url="{{ route('dashboard.employee.destroy', $data->slug) }}">Delete</option>
                 </select>

@@ -26,6 +26,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $events->listen('employee.store', 'App\Swep\Subscribers\EmployeeSubscriber@onStore');
         $events->listen('employee.update', 'App\Swep\Subscribers\EmployeeSubscriber@onUpdate');
         $events->listen('employee.destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onDestroy');
+        $events->listen('employee.service_record_store', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordStore');
+        $events->listen('employee.service_record_destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordDestroy');
 
     }
 
@@ -63,6 +65,26 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
 
         $this->session->flash('EMPLOYEE_DELETE_SUCCESS', 'The Employee has been successfully deleted!');
+
+    }
+
+
+
+
+
+    public function onServiceRecordStore(){
+
+        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
+
+    }
+
+
+
+
+    public function onServiceRecordDestroy($employee_sr){
+
+        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:employees:service_records:bySlug:'. $employee_sr->slug .'');
 
     }
 
