@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\SubMenu;
 use App\Models\ProjectCode;
@@ -9,8 +11,9 @@ use Illuminate\Http\Request;
 use App\Models\DepartmentUnit;
 use Illuminate\Cache\Repository as Cache;
 
-class ApiController extends Controller{
 
+
+class ApiUniversalController extends Controller{
 
 
 	protected $cache;
@@ -30,7 +33,6 @@ class ApiController extends Controller{
 		$this->department = $department;
 		$this->department_unit = $department_unit;
 		$this->project_code = $project_code;
-		
 
 	}
 

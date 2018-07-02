@@ -29,9 +29,7 @@ $(document).ready(function($){
 
 
 
-
 // Price Format
-
 $(".priceformat").priceFormat({
     prefix: "",
     thousandsSeparator: ",",
@@ -41,45 +39,12 @@ $(".priceformat").priceFormat({
 
 
 
-
-
-// PJAX Form Caller
-$(document).on('submit', 'form[data-pjax]', function(event) {
- 	$.pjax.submit(event, '#pjax-container');
-});
-
-
-
-// PJAX Link Caller
-$(document).pjax('a[data-pjax]', '#pjax-container');
-
-
-
-
-// PJAX INITIALIZATIONS
-$(document).on('ready pjax:success', function() {
-    
-    //Filter Form Submit Rule
-	$(document).ready(function($){
-       $("#filter_form").submit(function() {
-            $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
-            return true;
-        });
-        $("form").find( ":input" ).prop( "disabled", false );
-    });
-
-});
-
-
-
-
 // Input to Uppercase
 $(document).on('blur', "input[data-transform=uppercase]", function () {
     $(this).val(function (_, val) {
         return val.toUpperCase();
     });
 });
-
 
 
 
@@ -113,4 +78,69 @@ $(document).on('change', 'select[id="action"]', function () {
 // Delete row in Dynamic Table
 $(document).on("click","#delete_row" ,function(e) {
     $(this).closest('tr').remove();
+});
+
+
+
+
+
+
+// PJAX Form Caller
+$(document).on('submit', 'form[data-pjax]', function(event) {
+    $.pjax.submit(event, '#pjax-container');
+});
+
+
+
+// PJAX Link Caller
+$(document).pjax('a[data-pjax]', '#pjax-container');
+
+
+
+
+// PJAX INITIALIZATIONS
+$(document).on('ready pjax:success', function() {
+    
+
+    // Filter Form Submit Rule
+    $(document).ready(function($){
+       $("#filter_form").submit(function() {
+            $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
+            return true;
+        });
+        $("form").find( ":input" ).prop( "disabled", false );
+    });
+
+
+    // Price Format
+    $(".priceformat").priceFormat({
+        prefix: "",
+        thousandsSeparator: ",",
+        clearOnEmpty: true,
+        allowNegative: true
+    });
+
+
+    // Text to Upper Case
+    $(document).on('blur', "input[data-transform=uppercase]", function () {
+        $(this).val(function (_, val) {
+            return val.toUpperCase();
+        });
+    });
+
+
+    // Select2
+    $('.select2').select2();
+
+
+    // Datepicker
+    $('.datepicker').each(function(){
+        $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+    });
+
+
 });

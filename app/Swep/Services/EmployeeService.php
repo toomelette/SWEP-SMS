@@ -297,9 +297,27 @@ class EmployeeService extends BaseService{
     public function serviceRecordStore($request, $slug){
 
         $employee = $this->employeeBySlug($slug);
-        $this->storeEmployeeServiceRecord($request, $employee);
 
-        $this->event->fire('employee.service_record_store', $employee);
+        $employee_sr = new EmployeeServiceRecord;
+        $employee_sr->slug = $this->str->random(32);
+        $employee_sr->employee_no = $employee->employee_no;
+        $employee_sr->sequence_no = $request->sequence_no;
+        $employee_sr->date_from = $request->date_from;
+        $employee_sr->date_to = $request->date_to;
+        $employee_sr->position = $request->position;
+        $employee_sr->appointment_status = $request->appointment_status;
+        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
+        $employee_sr->mode_of_payment = $request->mode_of_payment;
+        $employee_sr->station = $request->station;
+        $employee_sr->gov_serve = $request->gov_serve;
+        $employee_sr->psc_serve = $request->psc_serve;
+        $employee_sr->lwp = $request->lwp;
+        $employee_sr->spdate = $request->spdate;
+        $employee_sr->status = $request->status;
+        $employee_sr->remarks = $request->remarks;
+        $employee_sr->save();
+
+        $this->event->fire('employee.service_record_store', $employee_sr);
         return redirect()->route('dashboard.employee.service_record', $employee->slug);
 
     }
@@ -307,10 +325,29 @@ class EmployeeService extends BaseService{
 
 
 
-    public function serviceRecordUpdate($request, $slug){
+    public function serviceRecordUpdate($request, $emp_slug, $emp_sr_slug){
 
-        $employee = $this->employeeBySlug($slug);
-        return view('dashboard.employee.service_record')->with('employee', $employee);
+        $employee = $this->employeeBySlug($emp_slug);
+
+        $employee_sr = $this->employeeSrBySlug($emp_sr_slug);
+        $employee_sr->sequence_no = $request->sequence_no;
+        $employee_sr->date_from = $request->date_from;
+        $employee_sr->date_to = $request->date_to;
+        $employee_sr->position = $request->position;
+        $employee_sr->appointment_status = $request->appointment_status;
+        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
+        $employee_sr->mode_of_payment = $request->mode_of_payment;
+        $employee_sr->station = $request->station;
+        $employee_sr->gov_serve = $request->gov_serve;
+        $employee_sr->psc_serve = $request->psc_serve;
+        $employee_sr->lwp = $request->lwp;
+        $employee_sr->spdate = $request->spdate;
+        $employee_sr->status = $request->status;
+        $employee_sr->remarks = $request->remarks;
+        $employee_sr->save();
+
+        $this->event->fire('employee.service_record_update', $employee_sr);
+        return redirect()->route('dashboard.employee.service_record', $employee->slug);
 
     }
 
@@ -323,9 +360,18 @@ class EmployeeService extends BaseService{
         $employee_sr->delete();
 
         $this->event->fire('employee.service_record_destroy', $employee_sr);
-        return redirect()->back();;
+        return redirect()->back();
 
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -737,33 +783,6 @@ class EmployeeService extends BaseService{
 
     }
 
-
-
-
-
-
-    public function storeEmployeeServiceRecord($request, $employee){
-
-        $employee_sr = new EmployeeServiceRecord;
-        $employee_sr->slug = $this->str->random(32);
-        $employee_sr->employee_no = $employee->employee_no;
-        $employee_sr->sequence_no = $request->sequence_no;
-        $employee_sr->date_from = $request->date_from;
-        $employee_sr->date_to = $request->date_to;
-        $employee_sr->position = $request->position;
-        $employee_sr->appointment_status = $request->appointment_status;
-        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
-        $employee_sr->mode_of_payment = $request->mode_of_payment;
-        $employee_sr->station = $request->station;
-        $employee_sr->gov_serve = $request->gov_serve;
-        $employee_sr->psc_serve = $request->psc_serve;
-        $employee_sr->lwp = $request->lwp;
-        $employee_sr->spdate = $request->spdate;
-        $employee_sr->status = $request->status;
-        $employee_sr->remarks = $request->remarks;
-        $employee_sr->save();
-
-    }
 
 
 

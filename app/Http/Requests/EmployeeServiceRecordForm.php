@@ -20,7 +20,7 @@ class EmployeeServiceRecordForm extends FormRequest{
 
         return [
             
-            'sequence_no'=>'required|int|max:11',
+            'sequence_no'=>'required|int|max:100',
             'date_from'=>'required|string|max:45',
             'date_to'=>'required|string|max:45',
             'position'=>'required|string|max:45',

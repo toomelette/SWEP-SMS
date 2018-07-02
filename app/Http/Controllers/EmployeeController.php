@@ -126,9 +126,9 @@ class EmployeeController extends Controller{
 
 
 
-    public function serviceRecordUpdate(EmployeeServiceRecordForm $request, $slug){
-
-        return $this->employee->serviceRecordUpdate($request, $slug);
+    public function serviceRecordUpdate(EmployeeServiceRecordForm $request, $emp_slug, $emp_sr_slug){
+        
+        return $this->employee->serviceRecordUpdate($request, $emp_slug, $emp_sr_slug); 
 
     }
 

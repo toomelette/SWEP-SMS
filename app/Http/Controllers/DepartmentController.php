@@ -8,7 +8,6 @@ use App\Http\Requests\DepartmentFormRequest;
 use App\Http\Requests\DepartmentFilterRequest;
 
 
-
 class DepartmentController extends Controller{
 
 
