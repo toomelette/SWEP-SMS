@@ -88,7 +88,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->cacheHelper->deletePattern('swep_cache:employees:service_records:bySlug:'. $employee_sr->slug .'');
         $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_serviceRecord:bySlug:'. $employee_sr->slug .'');
 
-        $this->session->flash('EMPLOYEE_SR_UPDATE_SLUG', $employee_sr->slug);
+        $this->session->flash('EMPLOYEE_SR_UPDATE_SUCCESS', 'The Employee Service Record has been successfully updated!');
+        $this->session->flash('EMPLOYEE_SR_UPDATE_SUCCESS_SLUG', $employee_sr->slug);
 
     }
 

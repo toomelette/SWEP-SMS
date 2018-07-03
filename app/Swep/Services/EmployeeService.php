@@ -330,20 +330,20 @@ class EmployeeService extends BaseService{
         $employee = $this->employeeBySlug($emp_slug);
 
         $employee_sr = $this->employeeSrBySlug($emp_sr_slug);
-        $employee_sr->sequence_no = $request->sequence_no;
-        $employee_sr->date_from = $request->date_from;
-        $employee_sr->date_to = $request->date_to;
-        $employee_sr->position = $request->position;
-        $employee_sr->appointment_status = $request->appointment_status;
-        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
-        $employee_sr->mode_of_payment = $request->mode_of_payment;
-        $employee_sr->station = $request->station;
-        $employee_sr->gov_serve = $request->gov_serve;
-        $employee_sr->psc_serve = $request->psc_serve;
-        $employee_sr->lwp = $request->lwp;
-        $employee_sr->spdate = $request->spdate;
-        $employee_sr->status = $request->status;
-        $employee_sr->remarks = $request->remarks;
+        $employee_sr->sequence_no = $request->e_sequence_no;
+        $employee_sr->date_from = $request->e_date_from;
+        $employee_sr->date_to = $request->e_date_to;
+        $employee_sr->position = $request->e_position;
+        $employee_sr->appointment_status = $request->e_appointment_status;
+        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->e_salary);
+        $employee_sr->mode_of_payment = $request->e_mode_of_payment;
+        $employee_sr->station = $request->e_station;
+        $employee_sr->gov_serve = $request->e_gov_serve;
+        $employee_sr->psc_serve = $request->e_psc_serve;
+        $employee_sr->lwp = $request->e_lwp;
+        $employee_sr->spdate = $request->e_spdate;
+        $employee_sr->status = $request->e_status;
+        $employee_sr->remarks = $request->e_remarks;
         $employee_sr->save();
 
         $this->event->fire('employee.service_record_update', $employee_sr);

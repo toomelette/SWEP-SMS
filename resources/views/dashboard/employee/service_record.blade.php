@@ -1,6 +1,6 @@
 @php
   $table_sessions = [ 
-                      Session::get('EMPLOYEE_SR_UPDATE_SLUG'),
+                      Session::get('EMPLOYEE_SR_UPDATE_SUCCESS_SLUG'),
                     ];
 @endphp
 
@@ -15,7 +15,7 @@
     </div>
   </section>
 
-  <section class="content" id="pjax-container" >
+  <section class="content" id="pjax-container">
 
 
     {{-- Form --}}
@@ -24,7 +24,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">Form</h3>
           <div class="pull-right">
-              <code>Fields with asterisks(*) are required</code>
+            <code>Fields with asterisks(*) are required</code>
           </div> 
         </div>
 
@@ -63,13 +63,13 @@
             ) !!}
 
             {!! FormHelper::textbox(
-               '4', 'mode_of_payment', 'text', 'Mode of Payment', 'Mode of Payment', old('mode_of_payment'), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), ''
+               '4', 'mode_of_payment', 'text', 'Mode of Payment *', 'Mode of Payment', old('mode_of_payment'), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
             {!! FormHelper::textbox(
-               '4', 'station', 'text', 'Station', 'Station', old('station'), $errors->has('station'), $errors->first('station'), ''
+               '4', 'station', 'text', 'Station *', 'Station', old('station'), $errors->has('station'), $errors->first('station'), ''
             ) !!}
 
             {!! FormHelper::textbox(
@@ -136,7 +136,10 @@
               <th>Action</th>
             </tr>
             @foreach($employee->employeeServiceRecord as $data) 
-              <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!}>
+              <tr 
+                {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
+                {!! old('e_slug') == $data->slug ? 'style="background-color: #FE9191;"' : '' !!}
+              >
                 <td>{{ $data->sequence_no }}</td>
                 <td>{{ $data->date_from }}</td>
                 <td>{{ $data->date_to }}</td>
@@ -186,7 +189,7 @@
 
 
   {{-- Update --}}
-  <div class="modal fade bs-example-modal-lg" id="sr_update" data-backdrop="static">
+  <div class="modal fade bs-example-modal-lg" id="sr_update" data-backdrop="static" id="pjax-container">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body" id="sr_update_body">
@@ -197,70 +200,72 @@
               @csrf
               <input name="_method" value="PUT" type="hidden">
 
+              <input name="e_slug" id="e_slug"  type="hidden">
+
               {!! FormHelper::textbox(
-               '2', 'sequence_no', 'text', 'Sequence No. *', 'Sequence No.', old('sequence_no'), $errors->has('sequence_no'), $errors->first('sequence_no'), ''
+               '2', 'e_sequence_no', 'text', 'Sequence No. *', 'Sequence No.', old('e_sequence_no'), $errors->has('e_sequence_no'), $errors->first('e_sequence_no'), ''
               ) !!}
 
               {!! FormHelper::textbox(
-                 '5', 'date_from', 'text', 'Date From *', 'Date From', old('date_from'), $errors->has('date_from'), $errors->first('date_from'), ''
+                 '5', 'e_date_from', 'text', 'Date From *', 'Date From', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from'), ''
               ) !!}
 
               {!! FormHelper::textbox(
-                 '5', 'date_to', 'text', 'Date To *', 'Date To', old('date_to'), $errors->has('date_to'), $errors->first('date_to'), ''
+                 '5', 'e_date_to', 'text', 'Date To *', 'Date To', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! FormHelper::textbox(
-                 '6', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
+                 '6', 'e_position', 'text', 'Position *', 'Position', old('e_position'), $errors->has('e_position'), $errors->first('e_position'), 'data-transform="uppercase"'
               ) !!}
 
               {!! FormHelper::textbox(
-                 '6', 'appointment_status', 'text', 'Appointment Status *', 'Appointment Status', old('appointment_status'), $errors->has('appointment_status'), $errors->first('appointment_status'), 'data-transform="uppercase"'
+                 '6', 'e_appointment_status', 'text', 'Appointment Status *', 'Appointment Status', old('e_appointment_status'), $errors->has('e_appointment_status'), $errors->first('e_appointment_status'), 'data-transform="uppercase"'
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! FormHelper::textbox_numeric(
-                '8', 'salary', 'text', 'Salary *', 'Salary', old('salary'), $errors->has('salary'), $errors->first('salary'), ''
+                '8', 'e_salary', 'text', 'Salary *', 'Salary', old('e_salary'), $errors->has('e_salary'), $errors->first('e_salary'), ''
               ) !!}
 
               {!! FormHelper::textbox(
-                 '4', 'mode_of_payment', 'text', 'Mode of Payment', 'Mode of Payment', old('mode_of_payment'), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), ''
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! FormHelper::textbox(
-                 '4', 'station', 'text', 'Station', 'Station', old('station'), $errors->has('station'), $errors->first('station'), ''
-              ) !!}
-
-              {!! FormHelper::textbox(
-                 '4', 'gov_serve', 'text', 'Government Serve', 'Government Serve', old('gov_serve'), $errors->has('gov_serve'), $errors->first('gov_serve'), ''
-              ) !!}
-
-              {!! FormHelper::textbox(
-                 '4', 'psc_serve', 'text', 'PSC Serve', 'PSC Serve', old('psc_serve'), $errors->has('psc_serve'), $errors->first('psc_serve'), ''
+                 '4', 'e_mode_of_payment', 'text', 'Mode of Payment *', 'Mode of Payment', old('e_mode_of_payment'), $errors->has('e_mode_of_payment'), $errors->first('e_mode_of_payment'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! FormHelper::textbox(
-                 '4', 'lwp', 'text', 'LWP', 'LWP', old('lwp'), $errors->has('lwp'), $errors->first('lwp'), ''
+                 '4', 'e_station', 'text', 'Station *', 'Station', old('e_station'), $errors->has('e_station'), $errors->first('e_station'), ''
               ) !!}
 
               {!! FormHelper::textbox(
-                 '4', 'spdate', 'text', 'SP Date', 'SP Date', old('spdate'), $errors->has('spdate'), $errors->first('spdate'), ''
+                 '4', 'e_gov_serve', 'text', 'Government Serve', 'Government Serve', old('e_gov_serve'), $errors->has('e_gov_serve'), $errors->first('e_gov_serve'), ''
               ) !!}
 
               {!! FormHelper::textbox(
-                 '4', 'status', 'text', 'Status', 'Status', old('status'), $errors->has('status'), $errors->first('status'), ''
+                 '4', 'e_psc_serve', 'text', 'PSC Serve', 'PSC Serve', old('e_psc_serve'), $errors->has('e_psc_serve'), $errors->first('e_psc_serve'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! FormHelper::textbox(
-                 '12', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
+                 '4', 'e_lwp', 'text', 'LWP', 'LWP', old('e_lwp'), $errors->has('e_lwp'), $errors->first('e_lwp'), ''
+              ) !!}
+
+              {!! FormHelper::textbox(
+                 '4', 'e_spdate', 'text', 'SP Date', 'SP Date', old('e_spdate'), $errors->has('e_spdate'), $errors->first('e_spdate'), ''
+              ) !!}
+
+              {!! FormHelper::textbox(
+                 '4', 'e_status', 'text', 'Status', 'Status', old('e_status'), $errors->has('e_status'), $errors->first('e_status'), ''
+              ) !!}
+
+              <div class="col-md-12"></div>
+
+              {!! FormHelper::textbox(
+                 '12', 'e_remarks', 'text', 'Remarks', 'Remarks', old('e_remarks'), $errors->has('e_remarks'), $errors->first('e_remarks'), ''
               ) !!}
 
             </div>
@@ -328,20 +333,21 @@
           success:function(data) {       
             
             $.each(data, function(key, value) {
-              $("#sr_update_form #sequence_no").val(value.sequence_no);
-              $("#sr_update_form #date_from").val(value.date_from);
-              $("#sr_update_form #date_to").val(value.date_to);
-              $("#sr_update_form #position").val(value.position);
-              $("#sr_update_form #appointment_status").val(value.appointment_status);
-              $("#sr_update_form #salary").val(value.salary);
-              $("#sr_update_form #mode_of_payment").val(value.mode_of_payment);
-              $("#sr_update_form #station").val(value.station);
-              $("#sr_update_form #gov_serve").val(value.gov_serve);
-              $("#sr_update_form #psc_serve").val(value.psc_serve);
-              $("#sr_update_form #lwp").val(value.lwp);
-              $("#sr_update_form #spdate").val(value.spdate);
-              $("#sr_update_form #status").val(value.status);
-              $("#sr_update_form #remarks").val(value.remarks);
+              $("#sr_update_form #e_slug").val(value.slug);
+              $("#sr_update_form #e_sequence_no").val(value.sequence_no);
+              $("#sr_update_form #e_date_from").val(value.date_from);
+              $("#sr_update_form #e_date_to").val(value.date_to);
+              $("#sr_update_form #e_position").val(value.position);
+              $("#sr_update_form #e_appointment_status").val(value.appointment_status);
+              $("#sr_update_form #e_salary").val(value.salary);
+              $("#sr_update_form #e_mode_of_payment").val(value.mode_of_payment);
+              $("#sr_update_form #e_station").val(value.station);
+              $("#sr_update_form #e_gov_serve").val(value.gov_serve);
+              $("#sr_update_form #e_psc_serve").val(value.psc_serve);
+              $("#sr_update_form #e_lwp").val(value.lwp);
+              $("#sr_update_form #e_spdate").val(value.spdate);
+              $("#sr_update_form #e_status").val(value.status);
+              $("#sr_update_form #e_remarks").val(value.remarks);
             });
 
           }
@@ -349,12 +355,13 @@
 
     });
 
-    // Delete Form Action
+
+    // Update Form Action
     $(document).on("submit", "#sr_update_body #sr_update_form", function () {
-        $('#sr_update').delay(100).fadeOut(100);
-       setTimeout(function(){
-          $('#sr_update').modal("hide");
-       }, 200);
+      $('#sr_update').delay(100).fadeOut(100);
+      setTimeout(function(){
+        $('#sr_update').modal("hide");  
+      }, 200);
     });
 
   </script> 

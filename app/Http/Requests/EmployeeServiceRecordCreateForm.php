@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeeServiceRecordForm extends FormRequest{
+class EmployeeServiceRecordCreateForm extends FormRequest{
 
 
     public function authorize(){

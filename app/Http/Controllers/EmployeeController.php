@@ -6,7 +6,8 @@ namespace App\Http\Controllers;
 use App\Swep\Services\EmployeeService;
 use App\Http\Requests\EmployeeFormRequest;
 use App\Http\Requests\EmployeeFilterRequest;
-use App\Http\Requests\EmployeeServiceRecordForm;
+use App\Http\Requests\EmployeeServiceRecordCreateForm;
+use App\Http\Requests\EmployeeServiceRecordEditForm;
 
 
 class EmployeeController extends Controller{
@@ -117,7 +118,7 @@ class EmployeeController extends Controller{
 
 
 
-    public function serviceRecordStore(EmployeeServiceRecordForm $request, $slug){
+    public function serviceRecordStore(EmployeeServiceRecordCreateForm $request, $slug){
 
         return $this->employee->serviceRecordStore($request, $slug);
 
@@ -126,7 +127,7 @@ class EmployeeController extends Controller{
 
 
 
-    public function serviceRecordUpdate(EmployeeServiceRecordForm $request, $emp_slug, $emp_sr_slug){
+    public function serviceRecordUpdate(EmployeeServiceRecordEditForm $request, $emp_slug, $emp_sr_slug){
         
         return $this->employee->serviceRecordUpdate($request, $emp_slug, $emp_sr_slug); 
 
