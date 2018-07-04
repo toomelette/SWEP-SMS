@@ -238,6 +238,7 @@ class EmployeeService extends BaseService{
 
         $employee = $this->employeeBySlug($slug);
         $employee->delete();
+        $employee->employeeServiceRecord()->delete();
         $this->removeDependencies($employee);
 
         $this->event->fire('employee.destroy', $employee);
@@ -361,6 +362,16 @@ class EmployeeService extends BaseService{
 
         $this->event->fire('employee.service_record_destroy', $employee_sr);
         return redirect()->back();
+
+    }
+
+
+
+
+    public function serviceRecordPrint($slug){
+
+        $employee = $this->employeeBySlug($slug);
+        return view('printables.employee_service_record')->with('employee', $employee);
 
     }
 

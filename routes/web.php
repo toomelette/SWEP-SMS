@@ -75,6 +75,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/employee/service_record/store/{slug}', 'EmployeeController@serviceRecordStore')->name('employee.service_record_store');
 	Route::put('/employee/service_record/update/{slug}/{emp_sr_slug}', 'EmployeeController@serviceRecordUpdate')->name('employee.service_record_update');
 	Route::delete('/employee/service_record/destroy/{slug}', 'EmployeeController@serviceRecordDestroy')->name('employee.service_record_destroy');
+	Route::get('/employee/service_record/print/{slug}', 'EmployeeController@serviceRecordPrint')->name('employee.service_record_print');
 	Route::resource('employee', 'EmployeeController');
 	
 });

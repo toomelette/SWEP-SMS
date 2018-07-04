@@ -145,5 +145,14 @@ class EmployeeController extends Controller{
 
 
 
+    public function serviceRecordPrint($slug){
+        
+        return $this->employee->serviceRecordPrint($slug);
+
+    }
+
+
+
+
     
 }

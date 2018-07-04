@@ -121,6 +121,9 @@
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Service Records</h3> 
+          <div class="box-tools">
+            <a href="{{ route('dashboard.employee.service_record_print', $employee->slug) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
+          </div>
         </div>
 
         <div class="box-body">
