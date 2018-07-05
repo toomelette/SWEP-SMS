@@ -120,7 +120,7 @@ class EmployeeService extends BaseService{
         $employee->firstday_sra = $this->dataTypeHelper->date_in($request->firstday_sra);
         $employee->appointment_date = $this->dataTypeHelper->date_in($request->appointment_date);
         $employee->adjustment_date = $this->dataTypeHelper->date_in($request->adjustment_date);
-        $employee->is_active = $this->dataTypeHelper->string_to_boolean($request->is_active);
+        $employee->is_active = $request->is_active;
         $employee->created_at = $this->carbon->now();
         $employee->updated_at = $this->carbon->now();
         $employee->ip_created = request()->ip();
@@ -214,7 +214,7 @@ class EmployeeService extends BaseService{
         $employee->firstday_sra = $this->dataTypeHelper->date_in($request->firstday_sra);
         $employee->appointment_date = $this->dataTypeHelper->date_in($request->appointment_date);
         $employee->adjustment_date = $this->dataTypeHelper->date_in($request->adjustment_date);
-        $employee->is_active = $this->dataTypeHelper->string_to_boolean($request->is_active);
+        $employee->is_active = $request->is_active;
         $employee->updated_at = $this->carbon->now();
         $employee->ip_updated = request()->ip();
         $employee->user_updated = $this->auth->user()->user_id;

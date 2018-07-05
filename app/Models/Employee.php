@@ -75,7 +75,7 @@ class Employee extends Model{
         'firstday_sra' => null,
         'appointment_date' => null,
         'adjustment_date' => null,
-        'is_active' => false,
+        'is_active' => '',
 
         'created_at' => null, 
         'updated_at' => null,
