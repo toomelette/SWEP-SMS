@@ -1,7 +1,12 @@
 @php
 
-  $res_address = $employee->employeeAddress->res_address_barangay .' '. $employee->employeeAddress->res_address_city .', '. $employee->employeeAddress->res_address_province;
-  $perm_address = $employee->employeeAddress->perm_address_barangay .' '. $employee->employeeAddress->perm_address_city .', '. $employee->employeeAddress->perm_address_province;
+  if(isset($employee->employeeAddress)){
+    $res_address = isset($employee->employeeAddress->res_address_barangay) .' '. isset($employee->employeeAddress->res_address_city) .', '. isset($employee->employeeAddress->res_address_province);
+    $perm_address = isset($employee->employeeAddress->perm_address_barangay) .' '. isset($employee->employeeAddress->perm_address_city) .', '. isset($employee->employeeAddress->perm_address_province);
+  }else{
+    $res_address = "";
+    $perm_address = "";
+  }
 
 @endphp
 
@@ -180,11 +185,11 @@
 
               <dl class="dl-horizontal">
                 <dt>Fathers Name</dt>
-                <dd>{{ $employee->employeeFamilyDetail->father_firstname . " " . substr($employee->employeeFamilyDetail->father_middlename , 0, 1) . ". " . $employee->employeeFamilyDetail->father_lastname }}</dd>
+                <dd>{{ isset($employee->employeeFamilyDetail->father_firstname) . " " . substr(isset($employee->employeeFamilyDetail->father_middlename) , 0, 1) . ". " . isset($employee->employeeFamilyDetail->father_lastname) }}</dd>
                 <dt>Mothers Name:</dt>
-                <dd>{{ $employee->employeeFamilyDetail->mother_firstname . " " . substr($employee->employeeFamilyDetail->mother_middlename , 0, 1) . ". " . $employee->employeeFamilyDetail->mother_lastname }}</dd>
+                <dd>{{ isset($employee->employeeFamilyDetail->mother_firstname) . " " . substr(isset($employee->employeeFamilyDetail->mother_middlename) , 0, 1) . ". " . isset($employee->employeeFamilyDetail->mother_lastname) }}</dd>
                 <dt>Spouse Name:</dt>
-                <dd>{{ $employee->employeeFamilyDetail->spouse_firstname . " " . substr($employee->employeeFamilyDetail->spouse_middlename , 0, 1) . ". " . $employee->employeeFamilyDetail->spouse_lastname }}</dd>
+                <dd>{{ isset($employee->employeeFamilyDetail->spouse_firstname) . " " . substr(isset($employee->employeeFamilyDetail->spouse_middlename) , 0, 1) . ". " . isset($employee->employeeFamilyDetail->spouse_lastname) }}</dd>
               </dl>
 
               <span style="font-size:17px;">Children:</span>

@@ -1,8 +1,11 @@
 @php
-
-  $res_address = $employee->employeeAddress->res_address_barangay .' '. $employee->employeeAddress->res_address_city .', '. $employee->employeeAddress->res_address_province;
-  $perm_address = $employee->employeeAddress->perm_address_barangay .' '. $employee->employeeAddress->perm_address_city .', '. $employee->employeeAddress->perm_address_province;
-
+  if(isset($employee->employeeAddress)){
+    $res_address = $employee->employeeAddress->res_address_barangay .' '. $employee->employeeAddress->res_address_city .', '. $employee->employeeAddress->res_address_province;
+    $perm_address = $employee->employeeAddress->perm_address_barangay .' '. $employee->employeeAddress->perm_address_city .', '. $employee->employeeAddress->perm_address_province;
+  }else{
+    $res_address = "";
+    $perm_address = "";
+  }
 @endphp
 
 
@@ -102,7 +105,7 @@
                 <dt>Step Increment:</dt>
                 <dd>{{ $employee->step_inc }}</dd>
                 <dt>Appointment Status:</dt>
-                <dd>{{ $employee->appointment_status == 'PERM' ? 'PERMANENT' : 'CONTRACT OF SERVICE' }}</dd>
+                <dd>{{ $employee->appointment_status }}</dd>
                 <dt>Item No:</dt>
                 <dd>{{ $employee->item_no }}</dd>
                 <dt>Monthly Basic:</dt>
@@ -187,7 +190,7 @@
                     <th>Name</th>
                     <th>Date of Birth</th>
                   </tr>
-                  @foreach($employee->employeeChildren as $data) 
+                  @foreach($employee->employeeChildren as $data)
                     <tr>
                       <td>{{ $data->fullname }}</td>
                       <td>{{ $data->date_of_birth != null ? Carbon::parse($data->date_of_birth)->format('M d, Y') : ''}}</td>

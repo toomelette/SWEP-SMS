@@ -21,6 +21,8 @@ class EmployeeChildren extends Model{
         'employee_no' => '',
         'fullname' => '',
         'date_of_birth' => null,
+        'school_company' => '',
+        'civil_status' => '',
 
     ];
 

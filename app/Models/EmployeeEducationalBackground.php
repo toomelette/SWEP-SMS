@@ -9,7 +9,7 @@ class EmployeeEducationalBackground extends Model{
 
 	protected $table = 'employee_educational_background';
 
-    protected $dates = ['date_from', 'date_to'];
+    protected $dates = [];
 
     public $timestamps = false;
 
@@ -26,6 +26,7 @@ class EmployeeEducationalBackground extends Model{
         'units' => null,
         'graduate_year' => 0,
         'scholarship' => '',
+        'honor' => '',
 
     ];
 

@@ -665,14 +665,14 @@
                               </td>
 
                               <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_eb['. $key .'][date_from]', $value['date_from'], $errors->first('row_eb.'. $key .'.date_from')
+                                {!! FormHelper::textbox_for_dt(
+                                  'row_eb['. $key .'][date_from]', 'Date From', $value['date_from'], $errors->first('row_eb.'. $key .'.date_from')
                                 ) !!}
                               </td>
 
                               <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_eb['. $key .'][date_to]', $value['date_to'], $errors->first('row_eb.'. $key .'.date_to')
+                                {!! FormHelper::textbox_for_dt(
+                                  'row_eb['. $key .'][date_to]', 'Date To', $value['date_to'], $errors->first('row_eb.'. $key .'.date_to')
                                 ) !!}
                               </td>
 
@@ -719,11 +719,11 @@
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[0][date_from]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[0][date_from]', 'Date From', '', '') !!}
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[0][date_to]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[0][date_to]', 'Date To', '', '') !!}
                             </td>
 
                             <td>
@@ -756,11 +756,11 @@
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[1][date_from]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[1][date_from]', 'Date From', '', '') !!}
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[1][date_to]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[1][date_to]', 'Date To', '', '') !!}
                             </td>
 
                             <td>
@@ -793,11 +793,11 @@
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[2][date_from]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[2][date_from]', 'Date From', '', '') !!}
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[2][date_to]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[2][date_to]', 'Date To', '', '') !!}
                             </td>
 
                             <td>
@@ -830,11 +830,11 @@
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[3][date_from]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[3][date_from]', 'Date From', '', '') !!}
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[3][date_to]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[3][date_to]', 'Date To', '', '') !!}
                             </td>
 
                             <td>
@@ -867,11 +867,11 @@
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[4][date_from]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[4][date_from]', 'Date From', '', '') !!}
                             </td>
 
                             <td>
-                              {!! FormHelper::datepicker_for_dt('row_eb[4][date_to]', '', '') !!}
+                              {!! FormHelper::textbox_for_dt('row_eb[4][date_to]', 'Date To', '', '') !!}
                             </td>
 
                             <td>
@@ -2191,23 +2191,13 @@
 
                     '<td>' +
                       '<div class="form-group">' +
-                        '<div class="input-group">' +
-                          '<div class="input-group-addon">' +
-                            '<i class="fa fa-calendar"></i>' +
-                          '</div>' +
-                          '<input name="row_eb[' + i + '][date_from]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
-                        '</div>' +
+                        '<input type="text" name="row_eb[' + i + '][date_from]" class="form-control" placeholder="Date From">' +
                       '</div>' +
                     '</td>' +
 
                     '<td>' +
                       '<div class="form-group">' +
-                        '<div class="input-group">' +
-                          '<div class="input-group-addon">' +
-                            '<i class="fa fa-calendar"></i>' +
-                          '</div>' +
-                          '<input name="row_eb[' + i + '][date_to]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
-                        '</div>' +
+                        '<input type="text" name="row_eb[' + i + '][date_to]" class="form-control" placeholder="Date To">' +
                       '</div>' +
                     '</td>' +
 

@@ -1,3 +1,11 @@
+
+@php
+
+  $level = ['ELEMENTARY', 'SECONDARY', 'VOCATIONAL/TRADE COURSE', 'COLLEGE', 'GRADUATE STUDIES']; 
+
+@endphp
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -240,20 +248,20 @@
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-          <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_block }}</span>
+          <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_block : 'N/A'  }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_street }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_street : 'N/A' }}</span>
         </div>
         <div class="col-sm-12" style="border-bottom:solid 1px; margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">House/Block/Lot No.</span>
             <span style="font-size:8px; font-style:italic; margin-left: 110px;">Street</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_village }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_village : 'N/A' }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_barangay }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_barangay : 'N/A' }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">Subdivision/Village</span>
@@ -266,7 +274,7 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:13px; border-bottom:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;7. HEIGHT (m)</span>
       </div>
-      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:13px;">
+      <div class="col-sm-3" style="border-bottom:solid 1px; height:2.4em; padding-bottom:13px;">
         <span style="font-size:10px; font-weight:bold;">{{ $employee->height }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:15px;">
@@ -274,10 +282,10 @@
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_city }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_city : 'N/A' }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->res_address_province }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_province : 'N/A' }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 30px;">City/Municipality</span>
@@ -297,7 +305,7 @@
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
       </div>
       <div class="col-sm-5">
-        <span style="font-size:10px; font-weight:bold;">{{ $employee->employeeAddress->res_address_zipcode }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->res_address_zipcode : 'N/A' }}</span>
       </div>
     </div>
 
@@ -305,7 +313,7 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:17px; border-bottom:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;9. BLOOD TYPE</span>
       </div>
-      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:17px;">
+      <div class="col-sm-3" style="border-bottom:solid 1px; height:2.7em; padding-bottom:17px;">
          <span style="font-size:10px; font-weight:bold;">{{ $employee->blood_type }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:6px;">
@@ -313,10 +321,10 @@
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_block }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_block : 'N/A' }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_street }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_street : 'N/A' }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px; padding-bottom:3px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">House/Block/Lot No.</span>
@@ -329,7 +337,7 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:14px; border-bottom:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;10. GSIS ID NO.</span>
       </div>
-      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:14px;">
+      <div class="col-sm-3" style="border-bottom:solid 1px; height:2.5em; padding-bottom:14px;">
         <span style="font-size:10px; font-weight:bold;">{{ $employee->gsis }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
@@ -337,10 +345,10 @@
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_village }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_village : 'N/A' }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_barangay }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_barangay : 'N/A' }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">Subdivision/Village</span>
@@ -353,7 +361,7 @@
       <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding-bottom:14px; border-bottom:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;11. PAG-IBIG ID NO.</span>
       </div>
-      <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom:14px;">
+      <div class="col-sm-3" style="border-bottom:solid 1px; height:2.5em; padding-bottom:14px;">
         <span style="font-size:10px; font-weight:bold;">{{ $employee->hdmf }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
@@ -361,10 +369,10 @@
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_city }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_city : 'N/A' }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_province }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_province : 'N/A' }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 20px;">City/Municipality</span>
@@ -384,7 +392,7 @@
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
       </div>
       <div class="col-sm-5">
-       <span style="font-size:10px; font-weight:bold;">{{ $employee->employeeAddress->perm_address_zipcode }}</span>
+       <span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeAddress) ? $employee->employeeAddress->perm_address_zipcode : 'N/A' }}</span>
       </div>
     </div>
 
@@ -449,14 +457,14 @@
       		<span style="font-size:8px; margin-left:13px;">&nbsp;&nbsp;22. SPOUSE'S SURNAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_lastname }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_lastname : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
       	<div class="col-pds-8" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_firstname }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_firstname : 'N/A' }}</span>
       	</div>
       	<div class="col-pds-2 box-l-grey no-padding" style="border-left:solid 1px; border-bottom:solid 1px;">
       		<div class="col-sm-12 no-padding">
@@ -464,7 +472,7 @@
               <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
             </div>
             <div class="col-sm-2 no-padding">
-              <span style="font-size:8px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_name_ext }}</span>
+              <span style="font-size:8px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_name_ext : 'N/A' }}</span>
             </div>
           </div>
       	</div>
@@ -473,42 +481,42 @@
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;MIDDLENAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_middlename }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_middlename : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;OCCUPATION</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_occupation }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_ocupation : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:7px; margin-left:15px;">&nbsp;&nbsp;EMPLOYER/BUSINESS NAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_employer }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_employer : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; ">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;BUSINESS ADDRESS</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->spouse_business_address }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->spouse_business_address : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:13px;">&nbsp;&nbsp;24. FATHER'S SURNAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_lastname }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->father_lastname : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
       	<div class="col-pds-8" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_firstname }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->father_firstname : 'N/A' }}</span>
       	</div>
       	<div class="col-pds-2 box-l-grey no-padding" style="border-left:solid 1px; border-bottom:solid 1px;">
       		<div class="col-sm-12 no-padding">
@@ -516,7 +524,7 @@
               <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
             </div>
             <div class="col-sm-2 no-padding">
-              <span style="font-size:8px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_name_ext }}</span>
+              <span style="font-size:8px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->father_name_ext : 'N/A' }}</span>
             </div>
           </div>
       	</div>
@@ -525,7 +533,7 @@
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;MIDDLENAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->father_middlename }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->father_middlename : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
@@ -539,14 +547,14 @@
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;SURNAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->mother_lastname }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->mother_lastname : 'N/A' }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
       	<div class="col-pds-10" style="padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->mother_firstname }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->mother_firstname : 'N/A' }}</span>
       	</div>
 
       </div>
@@ -592,7 +600,7 @@
 	  		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;&nbsp;MIDDLENAME</span>
 	  	</div>
 	  	<div class="col-sm-5" style="border-right:solid 1px; border-top:solid 1px; margin-left:1px; padding-left: 10px;">
-	  		<span style="font-size:10px; font-weight:bold;">{{ $employee->employeeFamilyDetail->mother_middlename }}</span>
+	  		<span style="font-size:10px; font-weight:bold;">{{ isset($employee->employeeFamilyDetail) ? $employee->employeeFamilyDetail->mother_middlename : 'N/A' }}</span>
 	  	</div>
 	  	<div class="col-sm-5 box-l-grey" style="border-right:solid 1px; border-top:solid 1px; ">
 	  		<p style="font-size: 7px; text-align: center; color:red !important; font-style: italic; -webkit-print-color-adjust: exact; margin-top: 5px; margin-bottom: 5px;">
@@ -682,6 +690,47 @@
       </div>
 
     @endforeach
+
+    
+    @if(count($employee->employeeEducationalBackground) == 0)
+      @foreach($level as $data)
+      
+        <div class="row" style="border-bottom:solid 1px;">
+          <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; padding:0; padding-bottom: 6px;">
+            <span style="{!! $data == 'VOCATIONAL/TRADE COURSE' ? 'font-size:7px;' : 'font-size:8px;' !!}padding-left:18px;">
+              {{ $data }}
+            </span>
+          </div>
+          <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 1.9em;">
+            <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">&nbsp;</p>
+          </div>
+          <div class="col-sm-3 no-padding" style="border-right:solid 1px; height: 1.9em;">
+            <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">&nbsp;</p>
+          </div>
+          <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 1.9em;">
+            <div class="col-sm-12 no-padding">
+              <div class="col-sm-6 no-padding" style="border-right:solid 1px; height: 1.9em; text-align: center;">
+                <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">&nbsp;</p>
+              </div>
+              <div class="col-sm-6" style="height: 1.9em; text-align: center;">
+                <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">&nbsp;</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px; height: 1.9em; text-align: center;">
+            <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">&nbsp;</p>
+          </div>
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px; height: 1.9em; text-align: center;">
+            <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">&nbsp;</p>
+          </div>
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px; height: 1.9em;">
+            <p style="font-size:6px; font-weight:bold; padding-top: 4px; padding-left: 1px; padding-right: 5px;">&nbsp;</p>
+          </div>
+        </div>
+
+      @endforeach
+    @endif
+
 
     <div class="row box-l-grey no-padding" style="border-bottom:solid 2px;">
       <div class="col-sm-12 no-padding">

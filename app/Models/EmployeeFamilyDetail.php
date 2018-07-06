@@ -21,6 +21,7 @@ class EmployeeFamilyDetail extends Model{
         'spouse_middlename' => '',
         'spouse_name_ext' => '',
         'spouse_occupation' => '',
+        'spouse_birthdate' => null,
         'spouse_employer' => '',
         'spouse_business_address' => '',
         'spouse_tel_no' => '',
