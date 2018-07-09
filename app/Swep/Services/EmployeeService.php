@@ -646,8 +646,8 @@ class EmployeeService extends BaseService{
         $employee_eb->level = $row['level'];
         $employee_eb->school_name = $row['school_name'];
         $employee_eb->course = $row['course'];
-        $employee_eb->date_from = $this->dataTypeHelper->date_in($row['date_from']);
-        $employee_eb->date_to = $this->dataTypeHelper->date_in($row['date_to']);
+        $employee_eb->date_from = $row['date_from'];
+        $employee_eb->date_to = $row['date_to'];
         $employee_eb->units = $row['units'];
         $employee_eb->graduate_year = $row['graduate_year'];
         $employee_eb->scholarship = $row['scholarship'];

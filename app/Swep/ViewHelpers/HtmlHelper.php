@@ -133,7 +133,7 @@ class HtmlHelper{
 
        foreach($sessions as $data){
        		if($slug == $data){
-       			return 'style="background-color: #b3e5fc;"';
+       			return 'style="background-color: #D5F5E3;"';
        		}
     	}
 

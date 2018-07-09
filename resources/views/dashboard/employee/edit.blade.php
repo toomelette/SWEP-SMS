@@ -610,7 +610,7 @@
                   ) !!}
 
                   {!! FormHelper::select_static(
-                    '3', 'is_active', 'Status *', old('is_active') ? old('is_active') : DataTypeHelper::boolean_to_string($employee->is_active), ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'INACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
+                    '3', 'is_active', 'Status *', old('is_active') ? old('is_active') : $employee->is_active, ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'INACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
                   ) !!}
 
                 </div>

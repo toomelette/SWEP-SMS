@@ -153,7 +153,7 @@
 
           <div class="col-sm-6" style="padding-left:0; line-height:1.3;">
             <span style="font-size:9px; padding-left:2px;">Code:</span>
-            <br><span style="font-size:12px; font-weight:bold; padding-left:15px; padding-bottom:5px;">{!! $disbursement_voucher->account_code !!}</span>
+            <br><span style="font-size:12px; font-weight:bold; padding-left:15px; padding-bottom:5px;">{!! $disbursement_voucher->project_code !!}</span>
           </div>
 
         </div>

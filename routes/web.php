@@ -86,6 +86,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 Route::get('/dashboard/test', function(){
 
-	return dd(Illuminate\Support\Str::random(16));
+	//return dd(Illuminate\Support\Str::random(16));
+
+	$list = App\Models\EmployeeServiceRecord::where('slug','=','')->get();
+
+	foreach ($list as $data) {
+		$sr = App\Models\EmployeeServiceRecord::find($data->id);
+		$sr->slug = Illuminate\Support\Str::random(16);
+		$sr->save();
+	}
 
 });

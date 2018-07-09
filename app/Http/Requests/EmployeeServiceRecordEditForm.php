@@ -23,7 +23,7 @@ class EmployeeServiceRecordEditForm extends FormRequest{
         return [
 
             'e_slug'=>'required|string|max:45',
-            'e_sequence_no'=>'required|int|max:100',
+            'e_sequence_no'=>'required|int|max:1000',
             'e_date_from'=>'required|string|max:45',
             'e_date_to'=>'required|string|max:45',
             'e_position'=>'required|string|max:45',

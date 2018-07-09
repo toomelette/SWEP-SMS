@@ -11,8 +11,8 @@
   <section class="content-header">
       <h1>Edit Employee Service Record</h1>
       <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.employee.index']) !!}
-    </div>
+        {!! HtmlHelper::back_button(['dashboard.employee.index']) !!}
+      </div>
   </section>
 
   <section class="content" id="pjax-container">
@@ -141,7 +141,7 @@
             @foreach($employee->employeeServiceRecord as $data) 
               <tr 
                 {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
-                {!! old('e_slug') == $data->slug ? 'style="background-color: #FE9191;"' : '' !!}
+                {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}
               >
                 <td>{{ $data->sequence_no }}</td>
                 <td>{{ $data->date_from }}</td>

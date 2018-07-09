@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Disbursement Voucher</title>
+  <title>Employee Service Record</title>
 
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -52,10 +52,13 @@
 
     {{-- HEADER --}}
     <div class="row">
-      <div class="col-md-12" style="margin-bottom: -20px;">
-        <span style="font-size: 11px; font-weight: bold;">2001739990</span><br>
+      <div class="col-sm-6" style="margin-bottom: -20px;">
+        <span style="font-size: 11px; font-weight: bold;">{{ $employee->gsis }}</span><br>
         <div style="border-top:solid 1px; width:7em;"></div>
         <p style="font-size: 11px; font-weight: bold;">BP NUMBER</p>
+      </div>
+      <div class="col-sm-6" style="margin-bottom: -20px;">
+        <span style="font-size: 11px; float:right;">Page 1 of 2</span>
       </div>
     </div>
 
@@ -75,13 +78,13 @@
         <span style="font-size:13px;">NAME</span>
       </div>
       <div class="col-sm-3 no-padding" style="border-bottom:solid 1px; margin-right: 10px;">
-        <span style="font-weight: bold; font-size:15px;">LANGRUTO</span>
+        <span style="font-weight: bold; font-size:15px;">{{ $employee->lastname }}</span>
       </div>
       <div class="col-sm-3 no-padding" style="border-bottom:solid 1px; margin-right: 10px;">
-        <span style="font-weight: bold; font-size:15px;">BERTRAM JAY </span>
+        <span style="font-weight: bold; font-size:15px;">{{ $employee->firstname }}</span>
       </div>
       <div class="col-sm-3 no-padding" style="border-bottom:solid 1px; margin-right: 10px;">
-        <span style="font-weight: bold; font-size:15px;">SERVA</span>
+        <span style="font-weight: bold; font-size:15px;">{{ $employee->middlename }}</span>
       </div>
     </div>
 
@@ -107,13 +110,13 @@
         <span style="font-size:13px;">BIRTH</span>
       </div>
       <div class="col-sm-3 no-padding" style="border-bottom:solid 1px;">
-        <span style="font-weight: bold; font-size:15px;">APRIL 13, 1965</span>
+        <span style="font-weight: bold; font-size:15px;">{{ Carbon::parse($employee->date_of_birth)->format('F d, Y') }}</span>
       </div>
       <div class="col-sm-3 no-padding" style="text-align:center;">
         <span style="font-size:13px;">PLACE OF BIRTH</span>
       </div>
       <div class="col-sm-4 no-padding" style="border-bottom:solid 1px;">
-        <span style="font-weight: bold; font-size:15px;">BAGO CITY</span>
+        <span style="font-weight: bold; font-size:15px;">{{ $employee->place_of_birth }}</span>
       </div>
     </div>
 
@@ -183,60 +186,62 @@
     </div>
 
 
-    @foreach ($employee->employeeServiceRecord as $data)
-      <div class="row">
-        <div class="col-sm-12 no-padding">
+    @foreach ($employee->employeeServiceRecord as $key => $data)
+      @if($key < 20)
+        <div class="row">
+          <div class="col-sm-12 no-padding">
 
-          <div class="col-sm-2 no-padding">
-            <div class="col-sm-12 no-padding">
-              <div class="col-sm-6">
-                <span style="font-size:10px;">{{ $data->date_from }}</span>
-              </div>
-              <div class="col-sm-6">
-                <span style="font-size:10px;">{{ $data->date_to }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-5 no-padding">
-            <div class="col-sm-12 no-padding">
-              <div class="col-sm-6" style="margin:0;">
-                <span style="font-size:10px;">{{ $data->position }}</span>
-              </div>
-              <div class="col-sm-2" style="text-align: center;">
-                <span style="font-size:10px;">{{ $data->appointment_status }}</span>
-              </div>
-              <div class="col-sm-4">
-                <span style="font-size:10px; margin-left: -10px;">{{ number_format($data->salary, 2) .' / '. $data->mode_of_payment}}</span>
+            <div class="col-sm-2 no-padding">
+              <div class="col-sm-12 no-padding">
+                <div class="col-sm-6">
+                  <span style="font-size:10px;">{{ $data->date_from }}</span>
+                </div>
+                <div class="col-sm-6">
+                  <span style="font-size:10px;">{{ $data->date_to }}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-sm-1 no-padding">
-            <span style="font-size:10px; margin-left: 17px;">{{ $data->station }}</span>
-          </div>
-
-          <div class="col-sm-1 no-padding" style="text-align: center;">
-            <span style="font-size:10px;">{{ $data->lwp }}</span>
-          </div>
-
-          <div class="col-sm-2 no-padding" style="">
-            <div class="col-sm-12 no-padding">
-              <div class="col-sm-6">
-                <span style="font-size:10px; margin-left:15px;">{{ $data->spdate }}</span>
-              </div>
-              <div class="col-sm-6">
-                <span style="font-size:10px; margin-left:12px;">&nbsp;</span>
+            <div class="col-sm-5 no-padding">
+              <div class="col-sm-12 no-padding">
+                <div class="col-sm-6" style="margin:0;">
+                  <span style="font-size:10px;">{{ $data->position }}</span>
+                </div>
+                <div class="col-sm-2" style="text-align: center;">
+                  <span style="font-size:10px;">{{ $data->appointment_status }}</span>
+                </div>
+                <div class="col-sm-4">
+                  <span style="font-size:10px; margin-left: -10px;">{{ number_format($data->salary, 2) .' / '. $data->mode_of_payment}}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-sm-1 no-padding" style="text-align: center;">
-            <span style="font-size:10px; font-weight:bold;">{{ $data->remarks }}</span>
-          </div>
+            <div class="col-sm-1 no-padding">
+              <span style="font-size:10px; margin-left: 17px;">{{ $data->station }}</span>
+            </div>
 
+            <div class="col-sm-1 no-padding" style="text-align: center;">
+              <span style="font-size:10px;">{{ $data->lwp }}</span>
+            </div>
+
+            <div class="col-sm-2 no-padding" style="">
+              <div class="col-sm-12 no-padding">
+                <div class="col-sm-6">
+                  <span style="font-size:10px; margin-left:15px;">{{ $data->spdate }}</span>
+                </div>
+                <div class="col-sm-6">
+                  <span style="font-size:10px; margin-left:12px;">&nbsp;</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-1 no-padding" style="text-align: center;">
+              <span style="font-size:10px; font-weight:bold;">{{ $data->remarks }}</span>
+            </div>
+
+          </div>
         </div>
-      </div>
+      @endif
     @endforeach
 
     <div style="border-bottom:solid 1px;"></div>  
@@ -309,11 +314,6 @@
 
   </div>
 
-  <div class="footer" style="margin-top: -50px;">
-    <div style="border-top:solid 1px;"></div>
-    <span style="font-size: 11px;">Page 1 of 2</span>
-  </div>
-
 
 
 
@@ -332,11 +332,14 @@
 
       {{-- HEADER --}}
       <div class="row">
-        <div class="col-md-12" style="margin-bottom: -20px;">
-          <span style="font-size: 11px; font-weight: bold;">2001739990</span><br>
+        <div class="col-sm-6" style="margin-bottom: -20px;">
+          <span style="font-size: 11px; font-weight: bold;">{{ $employee->gsis }}</span><br>
           <div style="border-top:solid 1px; width:7em;"></div>
           <p style="font-size: 11px; font-weight: bold;">BP NUMBER</p>
         </div>
+        <div class="col-sm-6" style="margin-bottom: -20px;">
+        <span style="font-size: 11px; float:right;">Page 2 of 2</span>
+      </div>
       </div>
 
 
@@ -355,13 +358,13 @@
           <span style="font-size:13px;">NAME</span>
         </div>
         <div class="col-sm-3 no-padding" style="border-bottom:solid 1px; margin-right: 10px;">
-          <span style="font-weight: bold; font-size:15px;">LANGRUTO</span>
+          <span style="font-weight: bold; font-size:15px;">{{ $employee->lastname }}</span>
         </div>
         <div class="col-sm-3 no-padding" style="border-bottom:solid 1px; margin-right: 10px;">
-          <span style="font-weight: bold; font-size:15px;">BERTRAM JAY </span>
+          <span style="font-weight: bold; font-size:15px;">{{ $employee->firstname }}</span>
         </div>
         <div class="col-sm-3 no-padding" style="border-bottom:solid 1px; margin-right: 10px;">
-          <span style="font-weight: bold; font-size:15px;">SERVA</span>
+          <span style="font-weight: bold; font-size:15px;">{{ $employee->middlename }}</span>
         </div>
       </div>
 
@@ -387,13 +390,13 @@
           <span style="font-size:13px;">BIRTH</span>
         </div>
         <div class="col-sm-3 no-padding" style="border-bottom:solid 1px;">
-          <span style="font-weight: bold; font-size:15px;">APRIL 13, 1965</span>
+          <span style="font-weight: bold; font-size:15px;">{{ Carbon::parse($employee->date_of_birth)->format('F d, Y') }}</span>
         </div>
         <div class="col-sm-3 no-padding" style="text-align:center;">
           <span style="font-size:13px;">PLACE OF BIRTH</span>
         </div>
         <div class="col-sm-4 no-padding" style="border-bottom:solid 1px;">
-          <span style="font-weight: bold; font-size:15px;">BAGO CITY</span>
+          <span style="font-weight: bold; font-size:15px;">{{ $employee->place_of_birth }}</span>
         </div>
       </div>
 
@@ -464,7 +467,7 @@
 
 
       @foreach ($employee->employeeServiceRecord as $key => $data)
-        @if($key > 20)
+        @if($key >= 20)
           <div class="row">
             <div class="col-sm-12 no-padding">
 

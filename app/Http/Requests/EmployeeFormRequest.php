@@ -122,7 +122,7 @@ class EmployeeFormRequest extends FormRequest{
             'appointment_date' => 'nullable|date_format:"m/d/Y"',
             'adjustment_date' => 'nullable|date_format:"m/d/Y"',
             'project_id' => 'required|string|min:5|max:5',
-            'is_active' => 'required|string|min:4|max:5',
+            'is_active' => 'required|string|min:6|max:8',
 
 
             // Questions
@@ -183,11 +183,11 @@ class EmployeeFormRequest extends FormRequest{
             foreach($rows_training as $key => $value){   
                 $rules['row_training.'.$key.'.title'] = 'required|string|max:255';
                 $rules['row_training.'.$key.'.type'] = 'nullable|string|max:90';
-                $rules['row_training.'.$key.'.conducted_by'] = 'required|string|max:255';
+                $rules['row_training.'.$key.'.conducted_by'] = 'nullable|string|max:255';
                 $rules['row_training.'.$key.'.date_from'] = 'required|date_format:"m/d/Y"';
                 $rules['row_training.'.$key.'.date_to'] = 'required|date_format:"m/d/Y"';
                 $rules['row_training.'.$key.'.hours'] = 'required|int';
-                $rules['row_training.'.$key.'.venue'] = 'required|string|max:255';
+                $rules['row_training.'.$key.'.venue'] = 'nullable|string|max:255';
                 $rules['row_training.'.$key.'.remarks'] = 'nullable|string|max:255';
             } 
         }
@@ -197,10 +197,10 @@ class EmployeeFormRequest extends FormRequest{
         if(count($rows_eligibility) > 0){
             foreach($rows_eligibility as $key => $value){   
                 $rules['row_eligibility.'.$key.'.eligibility'] = 'required|string|max:250';
-                $rules['row_eligibility.'.$key.'.level'] = 'required|string|max:20';
+                $rules['row_eligibility.'.$key.'.level'] = 'nullable|string|max:20';
                 $rules['row_eligibility.'.$key.'.rating'] = 'nullable|numeric';
-                $rules['row_eligibility.'.$key.'.exam_place'] = 'required|string|max:255';
-                $rules['row_eligibility.'.$key.'.exam_date'] = 'required|date_format:"m/d/Y"';
+                $rules['row_eligibility.'.$key.'.exam_place'] = 'nullable|string|max:255';
+                $rules['row_eligibility.'.$key.'.exam_date'] = 'nullable|date_format:"m/d/Y"';
                 $rules['row_eligibility.'.$key.'.license_no'] = 'nullable|string|max:90';
                 $rules['row_eligibility.'.$key.'.license_validity'] = 'nullable|string|max:255';
             } 
