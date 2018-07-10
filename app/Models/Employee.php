@@ -200,7 +200,9 @@ class Employee extends Model{
 
     public function scopeFindSlug($query, $slug){
 
-        return $query->where('slug', $slug)->with('employeeTraining')->firstOrFail();
+        return $query->where('slug', $slug)
+                     ->with('employeeTraining', 'employeeAddress')
+                     ->firstorFail();
 
     }
 

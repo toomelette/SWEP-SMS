@@ -67,16 +67,16 @@
       <div class="col-sm-5" style="padding-top:55px;">
         <p style="font-size:9px;">
 
-          {!! $employee->employeeOtherQuestion->q_34_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_34_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_34_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_34_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
-          {!! $employee->employeeOtherQuestion->q_34_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_34_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_34_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_34_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_34_b_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_34_b_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_34_b_yes_details }}</small>
           @else
             _______________________
@@ -103,12 +103,12 @@
       <div class="col-sm-5" style="border-bottom:solid 1px;">
         <p style="font-size:9px; margin-top:7px;">
           
-          {!! $employee->employeeOtherQuestion->q_35_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_35_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_35_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_35_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_35_a_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_35_a_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_35_a_yes_details }}</small>
           @else
             _______________________
@@ -132,14 +132,14 @@
       <div class="col-sm-5">
         <p style="font-size:9px; margin-top:7px;">
 
-          {!! $employee->employeeOtherQuestion->q_35_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_35_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_35_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_35_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
 
           Date Filed:  
-          @if($employee->employeeOtherQuestion->q_35_b_yes_details_1 != null)
+          @if(optional($employee->employeeOtherQuestion)->q_35_b_yes_details_1 != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_35_b_yes_details_1 }}</small>
           @else
             _______________________
@@ -148,8 +148,8 @@
           <br>
 
           Status of Case/s:
-          @if($employee->employeeOtherQuestion->q_35_b_yes_details_2 != null)
-            <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_35_b_yes_details_2 }}</small>
+          @if(optional($employee->employeeOtherQuestion)->q_35_b_yes_details_2 != null)
+            <small style="text-decoration: underline;">{{ optional($employee->employeeOtherQuestion)->q_35_b_yes_details_2 }}</small>
           @else
             _______________________
           @endif
@@ -177,12 +177,12 @@
 
         <p style="font-size:9px; margin-top:7px;">
 
-          {!! $employee->employeeOtherQuestion->q_36 == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_36 == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_36 == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_36 == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_36_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_36_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_36_yes_details }}</small>
           @else
             _______________________
@@ -210,12 +210,12 @@
       <div class="col-sm-5">
         <p style="font-size:9px; margin-top:7px;">
 
-          {!! $employee->employeeOtherQuestion->q_37 == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_37 == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_37 == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_37 == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_37_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_37_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_37_yes_details }}</small>
           @else
             _______________________
@@ -244,12 +244,12 @@
       <div class="col-sm-5">
         <p style="font-size:9px; margin-top:7px;">
           
-          {!! $employee->employeeOtherQuestion->q_38_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_38_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_38_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_38_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_38_a_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_38_a_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_38_a_yes_details }}</small>
           @else
             _______________________
@@ -275,12 +275,12 @@
       <div class="col-sm-5">
         <p style="font-size:9px; margin-top:7px;">
           
-          {!! $employee->employeeOtherQuestion->q_38_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_38_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_38_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_38_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_38_b_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_38_b_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_38_b_yes_details }}</small>
           @else
             _______________________
@@ -309,12 +309,12 @@
       <div class="col-sm-5">
         <p style="font-size:9px; margin-top:7px;">
           
-          {!! $employee->employeeOtherQuestion->q_39 == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_39 == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_39 == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_39 == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: <br>
-          @if($employee->employeeOtherQuestion->q_39_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_39_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_39_yes_details }}</small>
           @else
             _______________________
@@ -344,12 +344,12 @@
       <div class="col-sm-5" style="padding-top:23px;">
         <p style="font-size:9px; margin-top:7px;">
           
-          {!! $employee->employeeOtherQuestion->q_40_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_40_a == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_40_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_40_a == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: &nbsp;
-          @if($employee->employeeOtherQuestion->q_40_a_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_40_a_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_40_a_yes_details }}</small>
           @else
             _______________________
@@ -376,12 +376,12 @@
       <div class="col-sm-5">
         <p style="font-size:9px; margin-top:7px;">
           
-          {!! $employee->employeeOtherQuestion->q_40_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_40_b == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_40_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_40_b == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: &nbsp;
-          @if($employee->employeeOtherQuestion->q_40_b_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_40_b_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_40_b_yes_details }}</small>
           @else
             _______________________
@@ -408,12 +408,12 @@
       <div class="col-sm-5">
         <p style="font-size:9px;">
           
-          {!! $employee->employeeOtherQuestion->q_40_c == 1 ? '&#9745;' : '&#9723;' !!} YES 
+          {!! optional($employee->employeeOtherQuestion)->q_40_c == 1 ? '&#9745;' : '&#9723;' !!} YES 
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          {!! $employee->employeeOtherQuestion->q_40_c == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
+          {!! optional($employee->employeeOtherQuestion)->q_40_c == 0 ? '&#9745;' : '&#9723;' !!} NO <br>
 
           If YES, give details: &nbsp;
-          @if($employee->employeeOtherQuestion->q_40_c_yes_details != null)
+          @if(optional($employee->employeeOtherQuestion)->q_40_c_yes_details != null)
             <small style="text-decoration: underline;">{{ $employee->employeeOtherQuestion->q_40_c_yes_details }}</small>
           @else
             _______________________

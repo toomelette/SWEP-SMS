@@ -97,7 +97,7 @@
                 <dt>Employee No:</dt>
                 <dd>{{ $employee->employee_no }}</dd>
                 <dt>Status:</dt>
-                <dd>{{ $employee->is_active == 1 ? 'ACTIVE' : 'INACTIVE' }}</dd>
+                <dd>{{ $employee->is_active }}</dd>
                 <dt>Position:</dt>
                 <dd>{{ $employee->position }}</dd>
                 <dt>Salary Grade:</dt>
@@ -175,11 +175,11 @@
             <div class="box-body">
               <dl class="dl-horizontal">
                 <dt>Fathers Name</dt>
-                <dd>{{ $employee->employeeFamilyDetail->father_firstname . " " . substr($employee->employeeFamilyDetail->father_middlename , 0, 1) . ". " . $employee->employeeFamilyDetail->father_lastname }}</dd>
+                <dd>{{ optional($employee->employeeFamilyDetail)->father_firstname . " " . substr(optional($employee->employeeFamilyDetail)->father_middlename , 0, 1) . ". " . optional($employee->employeeFamilyDetail)->father_lastname }}</dd>
                 <dt>Mothers Name:</dt>
-                <dd>{{ $employee->employeeFamilyDetail->mother_firstname . " " . substr($employee->employeeFamilyDetail->mother_middlename , 0, 1) . ". " . $employee->employeeFamilyDetail->mother_lastname }}</dd>
+                <dd>{{ optional($employee->employeeFamilyDetail)->mother_firstname . " " . substr(optional($employee->employeeFamilyDetail)->mother_middlename , 0, 1) . ". " . optional($employee->employeeFamilyDetail)->mother_lastname }}</dd>
                 <dt>Spouse Name:</dt>
-                <dd>{{ $employee->employeeFamilyDetail->spouse_firstname . " " . substr($employee->employeeFamilyDetail->spouse_middlename , 0, 1) . ". " . $employee->employeeFamilyDetail->spouse_lastname }}</dd>
+                <dd>{{ optional($employee->employeeFamilyDetail)->spouse_firstname . " " . substr(optional($employee->employeeFamilyDetail)->spouse_middlename , 0, 1) . ". " . optional($employee->employeeFamilyDetail)->spouse_lastname }}</dd>
               </dl>
               <span style="font-size:17px;">Children:</span>
               <div class="box-body" style="overflow-x:auto;">

@@ -251,31 +251,31 @@
 
      <div class="row" style="border-bottom:solid 1px;">
 
-      <div class="col-sm-5" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->title }}</span>
+      <div class="col-sm-5" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
+        <p style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->title }}</p>
       </div>
 
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
+      <div class="col-sm-2 no-padding">
         <div class="col-sm-12 no-padding">
-          <div class="col-sm-6" style="border-right:solid 1px;">
+          <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
             <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
             <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+      <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
         <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->hours }}</span>
       </div>
 
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+      <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
         <span style="font-size:6px; font-weight:bold; padding-left: 3px;">{{ $data->type }}</span>
       </div>
 
       <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->conducted_by }}</span>
+        <p style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->conducted_by }}</p>
       </div>
 
     </div>

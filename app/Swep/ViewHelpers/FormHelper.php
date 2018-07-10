@@ -17,7 +17,7 @@ class FormHelper{
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. isset($old_value) ? $old_value : 'N/A' .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -107,7 +107,7 @@ class FormHelper{
        return '<div class="form-group '. self::error_response($error_has) .'">
                   <label for="'. $key .'" class="col-sm-2 control-label">'. $label .'</label>
                   <div class="col-sm-10">
-                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                     '. self::error_message($error_has, $error_first) .'
                   </div>
                 </div>';
@@ -181,7 +181,7 @@ class FormHelper{
     public static function textbox_for_dt($name, $placeholder, $value, $error_first){
 
        return '<div class="form-group">
-                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. self::string_value($value) .'">
+                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. SanitizeHelper::html_attribute_encode($value) .'">
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';
 
@@ -236,16 +236,15 @@ class FormHelper{
 
 
 
-    /** UTILITY METHODS **/
+    /** UTILITY METHODS **/ 
+
 
     public static function string_value($value){
 
-      $value = DataTypeHelper::string_trap($value);
-      return SanitizeHelper::html_attribute_encode($value);
+        $value = $value ? $value : '';
+        return SanitizeHelper::html_attribute_encode($value);
 
-    }    
-
-
+    }
 
 
     public static function error_response($error_has){

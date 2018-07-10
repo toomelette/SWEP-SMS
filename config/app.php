@@ -223,6 +223,7 @@ return [
         'CacheHelper' => App\Swep\Helpers\CacheHelper::class, 
         'SanitizeHelper' => App\Swep\Helpers\SanitizeHelper::class,
         'DataTypeHelper' => App\Swep\Helpers\DataTypeHelper::class, 
+        'PrintHelper' => App\Swep\Helpers\PrintHelper::class, 
     ],
 
 ];
