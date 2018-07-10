@@ -192,37 +192,37 @@
                       <div class="box-body">
 
                         {!! FormHelper::textbox(
-                           '6', 'res_address_block', 'text', 'Block', 'Block', old('res_address_block') ? old('res_address_block') : isset($employee->employeeAddress->res_address_block) , $errors->has('res_address_block'), $errors->first('res_address_block'), 'data-transform="uppercase"'
+                           '6', 'res_address_block', 'text', 'Block', 'Block', old('res_address_block') ? old('res_address_block') : $employee->employeeAddress->res_address_block , $errors->has('res_address_block'), $errors->first('res_address_block'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'res_address_street', 'text', 'Street', 'Street', old('res_address_street') ? old('res_address_street') : isset($employee->employeeAddress->res_address_street), $errors->has('res_address_street'), $errors->first('res_address_street'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        <div class="col-md-12"></div>
-
-                        {!! FormHelper::textbox(
-                           '6', 'res_address_village', 'text', 'Village', 'Village', old('res_address_village') ? old('res_address_village') : isset($employee->employeeAddress->res_address_village), $errors->has('res_address_village'), $errors->first('res_address_village'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        {!! FormHelper::textbox(
-                           '6', 'res_address_barangay', 'text', 'Barangay *', 'Barangay', old('res_address_barangay') ? old('res_address_barangay') : isset($employee->employeeAddress->res_address_barangay), $errors->has('res_address_barangay'), $errors->first('res_address_barangay'), 'data-transform="uppercase"'
+                           '6', 'res_address_street', 'text', 'Street', 'Street', old('res_address_street') ? old('res_address_street') : $employee->employeeAddress->res_address_street, $errors->has('res_address_street'), $errors->first('res_address_street'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '6', 'res_address_city', 'text', 'City *', 'City', old('res_address_city') ? old('res_address_city') : isset($employee->employeeAddress->res_address_city), $errors->has('res_address_city'), $errors->first('res_address_city'), 'data-transform="uppercase"'
+                           '6', 'res_address_village', 'text', 'Village', 'Village', old('res_address_village') ? old('res_address_village') : $employee->employeeAddress->res_address_village, $errors->has('res_address_village'), $errors->first('res_address_village'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'res_address_province', 'text', 'Province *', 'Province', old('res_address_province') ? old('res_address_province') : isset($employee->employeeAddress->res_address_province), $errors->has('res_address_province'), $errors->first('res_address_province'), 'data-transform="uppercase"'
+                           '6', 'res_address_barangay', 'text', 'Barangay *', 'Barangay', old('res_address_barangay') ? old('res_address_barangay') : $employee->employeeAddress->res_address_barangay, $errors->has('res_address_barangay'), $errors->first('res_address_barangay'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '6', 'res_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('res_address_zipcode') ? old('res_address_zipcode') : isset($employee->employeeAddress->res_address_zipcode), $errors->has('res_address_zipcode'), $errors->first('res_address_zipcode'), 'data-transform="uppercase"'
+                           '6', 'res_address_city', 'text', 'City *', 'City', old('res_address_city') ? old('res_address_city') : $employee->employeeAddress->res_address_city, $errors->has('res_address_city'), $errors->first('res_address_city'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        {!! FormHelper::textbox(
+                           '6', 'res_address_province', 'text', 'Province *', 'Province', old('res_address_province') ? old('res_address_province') : $employee->employeeAddress->res_address_province, $errors->has('res_address_province'), $errors->first('res_address_province'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::textbox(
+                           '6', 'res_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('res_address_zipcode') ? old('res_address_zipcode') : $employee->employeeAddress->res_address_zipcode, $errors->has('res_address_zipcode'), $errors->first('res_address_zipcode'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -246,37 +246,37 @@
                       <div class="box-body">
 
                         {!! FormHelper::textbox(
-                           '6', 'perm_address_block', 'text', 'Block', 'Block', old('perm_address_block') ? old('perm_address_block') : isset($employee->employeeAddress->perm_address_block), $errors->has('perm_address_block'), $errors->first('perm_address_block'), 'data-transform="uppercase"'
+                           '6', 'perm_address_block', 'text', 'Block', 'Block', old('perm_address_block') ? old('perm_address_block') : $employee->employeeAddress->perm_address_block, $errors->has('perm_address_block'), $errors->first('perm_address_block'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'perm_address_street', 'text', 'Street', 'Street', old('perm_address_street') ? old('perm_address_street') : isset($employee->employeeAddress->perm_address_street), $errors->has('perm_address_street'), $errors->first('perm_address_street'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        <div class="col-md-12"></div>
-
-                        {!! FormHelper::textbox(
-                           '6', 'perm_address_village', 'text', 'Village', 'Village', old('perm_address_village') ? old('perm_address_village') : isset($employee->employeeAddress->perm_address_village), $errors->has('perm_address_village'), $errors->first('perm_address_village'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        {!! FormHelper::textbox(
-                           '6', 'perm_address_barangay', 'text', 'Barangay *', 'Barangay', old('perm_address_barangay') ? old('perm_address_barangay') : isset($employee->employeeAddress->perm_address_barangay), $errors->has('perm_address_barangay'), $errors->first('perm_address_barangay'), 'data-transform="uppercase"'
+                           '6', 'perm_address_street', 'text', 'Street', 'Street', old('perm_address_street') ? old('perm_address_street') : $employee->employeeAddress->perm_address_street, $errors->has('perm_address_street'), $errors->first('perm_address_street'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '6', 'perm_address_city', 'text', 'City *', 'City', old('perm_address_city') ? old('perm_address_city') : isset($employee->employeeAddress->perm_address_city), $errors->has('perm_address_city'), $errors->first('perm_address_city'), 'data-transform="uppercase"'
+                           '6', 'perm_address_village', 'text', 'Village', 'Village', old('perm_address_village') ? old('perm_address_village') : $employee->employeeAddress->perm_address_village, $errors->has('perm_address_village'), $errors->first('perm_address_village'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'perm_address_province', 'text', 'Province *', 'Province', old('perm_address_province') ? old('perm_address_province') : isset($employee->employeeAddress->perm_address_province), $errors->has('perm_address_province'), $errors->first('perm_address_province'), 'data-transform="uppercase"'
+                           '6', 'perm_address_barangay', 'text', 'Barangay *', 'Barangay', old('perm_address_barangay') ? old('perm_address_barangay') : $employee->employeeAddress->perm_address_barangay, $errors->has('perm_address_barangay'), $errors->first('perm_address_barangay'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '6', 'perm_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('perm_address_zipcode') ? old('perm_address_zipcode') : isset($employee->employeeAddress->perm_address_zipcode), $errors->has('perm_address_zipcode'), $errors->first('perm_address_zipcode'), 'data-transform="uppercase"'
+                           '6', 'perm_address_city', 'text', 'City *', 'City', old('perm_address_city') ? old('perm_address_city') : $employee->employeeAddress->perm_address_city, $errors->has('perm_address_city'), $errors->first('perm_address_city'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        {!! FormHelper::textbox(
+                           '6', 'perm_address_province', 'text', 'Province *', 'Province', old('perm_address_province') ? old('perm_address_province') : $employee->employeeAddress->perm_address_province, $errors->has('perm_address_province'), $errors->first('perm_address_province'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::textbox(
+                           '6', 'perm_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('perm_address_zipcode') ? old('perm_address_zipcode') : $employee->employeeAddress->perm_address_zipcode, $errors->has('perm_address_zipcode'), $errors->first('perm_address_zipcode'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -302,21 +302,21 @@
                       <div class="box-body">
 
                         {!! FormHelper::textbox(
-                           '6', 'father_lastname', 'text', 'Lastname *', 'Lastname', old('father_lastname') ? old('father_lastname') : isset($employee->employeeFamilyDetail->father_lastname), $errors->has('father_lastname'), $errors->first('father_lastname'), 'data-transform="uppercase"'
+                           '6', 'father_lastname', 'text', 'Lastname *', 'Lastname', old('father_lastname') ? old('father_lastname') : $employee->employeeFamilyDetail->father_lastname, $errors->has('father_lastname'), $errors->first('father_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'father_firstname', 'text', 'Firstname *', 'Firstname', old('father_firstname') ? old('father_firstname') : isset($employee->employeeFamilyDetail->father_firstname), $errors->has('father_firstname'), $errors->first('father_firstname'), 'data-transform="uppercase"'
+                           '6', 'father_firstname', 'text', 'Firstname *', 'Firstname', old('father_firstname') ? old('father_firstname') : $employee->employeeFamilyDetail->father_firstname, $errors->has('father_firstname'), $errors->first('father_firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '6', 'father_middlename', 'text', 'Middlename *', 'Middlename', old('father_middlename') ? old('father_middlename') : isset($employee->employeeFamilyDetail->father_middlename), $errors->has('father_middlename'), $errors->first('father_middlename'), 'data-transform="uppercase"'
+                           '6', 'father_middlename', 'text', 'Middlename *', 'Middlename', old('father_middlename') ? old('father_middlename') : $employee->employeeFamilyDetail->father_middlename, $errors->has('father_middlename'), $errors->first('father_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'father_name_ext', 'text', 'Name Extension', 'Name Extension', old('father_name_ext') ? old('father_name_ext') : isset($employee->employeeFamilyDetail->father_name_ext), $errors->has('father_name_ext'), $errors->first('father_name_ext'), 'data-transform="uppercase"'
+                           '6', 'father_name_ext', 'text', 'Name Extension', 'Name Extension', old('father_name_ext') ? old('father_name_ext') : $employee->employeeFamilyDetail->father_name_ext, $errors->has('father_name_ext'), $errors->first('father_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -332,21 +332,21 @@
                       <div class="box-body">
 
                         {!! FormHelper::textbox(
-                           '6', 'mother_lastname', 'text', 'Lastname *', 'Lastname', old('mother_lastname') ? old('mother_lastname') : isset($employee->employeeFamilyDetail->mother_lastname), $errors->has('mother_lastname'), $errors->first('mother_lastname'), 'data-transform="uppercase"'
+                           '6', 'mother_lastname', 'text', 'Lastname *', 'Lastname', old('mother_lastname') ? old('mother_lastname') : $employee->employeeFamilyDetail->mother_lastname, $errors->has('mother_lastname'), $errors->first('mother_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'mother_firstname', 'text', 'Firstname *', 'Firstname', old('mother_firstname') ? old('mother_firstname') : isset($employee->employeeFamilyDetail->mother_firstname), $errors->has('mother_firstname'), $errors->first('mother_firstname'), 'data-transform="uppercase"'
+                           '6', 'mother_firstname', 'text', 'Firstname *', 'Firstname', old('mother_firstname') ? old('mother_firstname') : $employee->employeeFamilyDetail->mother_firstname, $errors->has('mother_firstname'), $errors->first('mother_firstname'), 'data-transform="uppercase"'
                         ) !!} 
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '6', 'mother_middlename', 'text', 'Middlename *', 'Middlename', old('mother_middlename') ? old('mother_middlename') : isset($employee->employeeFamilyDetail->mother_middlename), $errors->has('mother_middlename'), $errors->first('mother_middlename'), 'data-transform="uppercase"'
+                           '6', 'mother_middlename', 'text', 'Middlename *', 'Middlename', old('mother_middlename') ? old('mother_middlename') : $employee->employeeFamilyDetail->mother_middlename, $errors->has('mother_middlename'), $errors->first('mother_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '6', 'mother_name_ext', 'text', 'Name Extension', 'Name Extension', old('mother_name_ext') ? old('mother_name_ext') : isset($employee->employeeFamilyDetail->mother_name_ext), $errors->has('mother_name_ext'), $errors->first('mother_name_ext'), 'data-transform="uppercase"'
+                           '6', 'mother_name_ext', 'text', 'Name Extension', 'Name Extension', old('mother_name_ext') ? old('mother_name_ext') : $employee->employeeFamilyDetail->mother_name_ext, $errors->has('mother_name_ext'), $errors->first('mother_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -362,37 +362,37 @@
                       <div class="box-body">
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_lastname', 'text', 'Lastname *', 'Lastname', old('spouse_lastname') ? old('spouse_lastname') : isset($employee->employeeFamilyDetail->spouse_lastname), $errors->has('spouse_lastname'), $errors->first('spouse_lastname'), 'data-transform="uppercase"'
+                           '3', 'spouse_lastname', 'text', 'Lastname *', 'Lastname', old('spouse_lastname') ? old('spouse_lastname') : $employee->employeeFamilyDetail->spouse_lastname, $errors->has('spouse_lastname'), $errors->first('spouse_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_firstname', 'text', 'Firstname *', 'Firstname', old('spouse_firstname') ? old('spouse_firstname') : isset($employee->employeeFamilyDetail->spouse_firstname), $errors->has('spouse_firstname'), $errors->first('spouse_firstname'), 'data-transform="uppercase"'
+                           '3', 'spouse_firstname', 'text', 'Firstname *', 'Firstname', old('spouse_firstname') ? old('spouse_firstname') : $employee->employeeFamilyDetail->spouse_firstname, $errors->has('spouse_firstname'), $errors->first('spouse_firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_middlename', 'text', 'Middlename *', 'Middlename', old('spouse_middlename') ? old('spouse_middlename') : isset($employee->employeeFamilyDetail->spouse_middlename), $errors->has('spouse_middlename'), $errors->first('spouse_middlename'), 'data-transform="uppercase"'
+                           '3', 'spouse_middlename', 'text', 'Middlename *', 'Middlename', old('spouse_middlename') ? old('spouse_middlename') : $employee->employeeFamilyDetail->spouse_middlename, $errors->has('spouse_middlename'), $errors->first('spouse_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_name_ext', 'text', 'Name Extension', 'Name Extension', old('spouse_name_ext') ? old('spouse_name_ext') : isset($employee->employeeFamilyDetail->spouse_name_ext), $errors->has('spouse_name_ext'), $errors->first('spouse_name_ext'), 'data-transform="uppercase"'
+                           '3', 'spouse_name_ext', 'text', 'Name Extension', 'Name Extension', old('spouse_name_ext') ? old('spouse_name_ext') : $employee->employeeFamilyDetail->spouse_name_ext, $errors->has('spouse_name_ext'), $errors->first('spouse_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_occupation', 'text', 'Occupation *', 'Occupation', old('spouse_occupation') ? old('spouse_occupation') : isset($employee->employeeFamilyDetail->spouse_occupation), $errors->has('spouse_occupation'), $errors->first('spouse_occupation'), 'data-transform="uppercase"'
+                           '3', 'spouse_occupation', 'text', 'Occupation *', 'Occupation', old('spouse_occupation') ? old('spouse_occupation') : $employee->employeeFamilyDetail->spouse_occupation, $errors->has('spouse_occupation'), $errors->first('spouse_occupation'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_employer', 'text', 'Employer / Business Name', 'Employer / Business Name', old('spouse_employer') ? old('spouse_employer') : isset($employee->employeeFamilyDetail->spouse_employer), $errors->has('spouse_employer'), $errors->first('spouse_employer'), 'data-transform="uppercase"'
+                           '3', 'spouse_employer', 'text', 'Employer / Business Name', 'Employer / Business Name', old('spouse_employer') ? old('spouse_employer') : $employee->employeeFamilyDetail->spouse_employer, $errors->has('spouse_employer'), $errors->first('spouse_employer'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_business_address', 'text', 'Business Address', 'Business Address', old('spouse_business_address') ? old('spouse_business_address') : isset($employee->employeeFamilyDetail->spouse_business_address), $errors->has('spouse_business_address'), $errors->first('spouse_business_address'), 'data-transform="uppercase"'
+                           '3', 'spouse_business_address', 'text', 'Business Address', 'Business Address', old('spouse_business_address') ? old('spouse_business_address') : $employee->employeeFamilyDetail->spouse_business_address, $errors->has('spouse_business_address'), $errors->first('spouse_business_address'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_tel_no', 'text', 'Telephone No.', 'Telephone No.', old('spouse_tel_no') ? old('spouse_tel_no') : isset($employee->employeeFamilyDetail->spouse_tel_no), $errors->has('spouse_tel_no'), $errors->first('spouse_tel_no'), 'data-transform="uppercase"'
+                           '3', 'spouse_tel_no', 'text', 'Telephone No.', 'Telephone No.', old('spouse_tel_no') ? old('spouse_tel_no') : $employee->employeeFamilyDetail->spouse_tel_no, $errors->has('spouse_tel_no'), $errors->first('spouse_tel_no'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -1721,7 +1721,7 @@
                     <div class="col-md-12">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. within the third degree?</p>
                       {!! FormHelper::select_static(
-                      '3', 'q_34_a', '', old('q_34_a') ? old('q_34_a') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_34_a)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_34_a'), $errors->first('q_34_a'), '', ''
+                      '3', 'q_34_a', '', old('q_34_a') ? old('q_34_a') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_34_a), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_34_a'), $errors->first('q_34_a'), '', ''
                       ) !!}
 
                     </div>
@@ -1731,14 +1731,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">b. within the fourth degree (for Local Government Unit - Career Employees)?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_34_b', '', old('q_34_b') ? old('q_34_b') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_34_b)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_34_b'), $errors->first('q_34_b'), '', ''
+                        '6', 'q_34_b', '', old('q_34_b') ? old('q_34_b') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_34_b), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_34_b'), $errors->first('q_34_b'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details: </p>
                       {!! FormHelper::textbox(
-                       '12', 'q_34_b_yes_details', 'text', '', '', old('q_34_b_yes_details') ? old('q_34_b_yes_details') : isset($employee->employeeOtherQuestion->q_34_b_yes_details), $errors->has('q_34_b_yes_details'), $errors->first('q_34_b_yes_details'), ''
+                       '12', 'q_34_b_yes_details', 'text', '', '', old('q_34_b_yes_details') ? old('q_34_b_yes_details') : $employee->employeeOtherQuestion->q_34_b_yes_details, $errors->has('q_34_b_yes_details'), $errors->first('q_34_b_yes_details'), ''
                     ) !!}
                     </div>
 
@@ -1747,14 +1747,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been found guilty of any administrative offense?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_35_a', '', old('q_35_a') ? old('q_35_a') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_35_a)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_35_a'), $errors->first('q_35_a'), '', ''
+                        '6', 'q_35_a', '', old('q_35_a') ? old('q_35_a') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_35_a), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_35_a'), $errors->first('q_35_a'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details: </p>
                       {!! FormHelper::textbox(
-                       '12', 'q_35_a_yes_details', 'text', '', '', old('q_35_a_yes_details') ? old('q_35_a_yes_details') : isset($employee->employeeOtherQuestion->q_35_a_yes_details), $errors->has('q_35_a_yes_details'), $errors->first('q_35_a_yes_details'), ''
+                       '12', 'q_35_a_yes_details', 'text', '', '', old('q_35_a_yes_details') ? old('q_35_a_yes_details') : $employee->employeeOtherQuestion->q_35_a_yes_details, $errors->has('q_35_a_yes_details'), $errors->first('q_35_a_yes_details'), ''
                     ) !!}
                     </div>
 
@@ -1763,21 +1763,21 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">b. Have you been criminally charged before any court?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_35_b', '', old('q_35_b') ? old('q_35_b') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_35_b)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_35_b'), $errors->first('q_35_b'), '', ''
+                        '6', 'q_35_b', '', old('q_35_b') ? old('q_35_b') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_35_b), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_35_b'), $errors->first('q_35_b'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-3">
                       <p style="margin-bottom:-10px;">If YES, give details (Date Filed):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_35_b_yes_details_1', 'text', '', '', old('q_35_b_yes_details_1') ? old('q_35_b_yes_details_1') : isset($employee->employeeOtherQuestion->q_35_b_yes_details_1), $errors->has('q_35_b_yes_details_1'), $errors->first('q_35_b_yes_details_1'), ''
+                       '12', 'q_35_b_yes_details_1', 'text', '', '', old('q_35_b_yes_details_1') ? old('q_35_b_yes_details_1') : $employee->employeeOtherQuestion->q_35_b_yes_details_1, $errors->has('q_35_b_yes_details_1'), $errors->first('q_35_b_yes_details_1'), ''
                       ) !!}
                     </div>
 
                     <div class="col-md-3">
                       <p style="margin-bottom:-10px;">(Status of Case/s):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_35_b_yes_details_2', 'text', '', '', old('q_35_b_yes_details_2') ? old('q_35_b_yes_details_2') : isset($employee->employeeOtherQuestion->q_35_b_yes_details_2), $errors->has('q_35_b_yes_details_2'), $errors->first('q_35_b_yes_details_2'), ''
+                       '12', 'q_35_b_yes_details_2', 'text', '', '', old('q_35_b_yes_details_2') ? old('q_35_b_yes_details_2') : $employee->employeeOtherQuestion->q_35_b_yes_details_2, $errors->has('q_35_b_yes_details_2'), $errors->first('q_35_b_yes_details_2'), ''
                       ) !!}
                     </div>
 
@@ -1786,14 +1786,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been convicted of any crime or violation of any law, decree, ordinance or regulation by any court or tribunal?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_36', '', old('q_36') ? old('q_36') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_36)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_36'), $errors->first('q_36'), '', ''
+                        '6', 'q_36', '', old('q_36') ? old('q_36') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_36), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_36'), $errors->first('q_36'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details:</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_36_yes_details', 'text', '', '', old('q_36_yes_details') ? old('q_36_yes_details') : isset($employee->employeeOtherQuestion->q_36_yes_details), $errors->has('q_36_yes_details'), $errors->first('q_36_yes_details'), ''
+                       '12', 'q_36_yes_details', 'text', '', '', old('q_36_yes_details') ? old('q_36_yes_details') : $employee->employeeOtherQuestion->q_36_yes_details, $errors->has('q_36_yes_details'), $errors->first('q_36_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1802,14 +1802,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been separated from the service in any of the following modes: resignation, retirement, dropped from the rolls, dismissal, termination, end of term, finished contract or phased out (abolition) in the public or private sector?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_37', '', old('q_37') ? old('q_37') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_37)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_37'), $errors->first('q_37'), '', ''
+                        '6', 'q_37', '', old('q_37') ? old('q_37') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_37), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_37'), $errors->first('q_37'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details:</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_37_yes_details', 'text', '', '', old('q_37_yes_details') ? old('q_37_yes_details') : isset($employee->employeeOtherQuestion->q_37_yes_details), $errors->has('q_37_yes_details'), $errors->first('q_37_yes_details'), ''
+                       '12', 'q_37_yes_details', 'text', '', '', old('q_37_yes_details') ? old('q_37_yes_details') : $employee->employeeOtherQuestion->q_37_yes_details, $errors->has('q_37_yes_details'), $errors->first('q_37_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1818,14 +1818,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. Have you ever been a candidate in a national or local election held within the last year (except Barangay election)?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_38_a', '', old('q_38_a') ? old('q_38_a') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_38_a)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_38_a'), $errors->first('q_38_a'), '', ''
+                        '6', 'q_38_a', '', old('q_38_a') ? old('q_38_a') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_38_a), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_38_a'), $errors->first('q_38_a'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details:</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_38_a_yes_details', 'text', '', '', old('q_38_a_yes_details') ? old('q_38_a_yes_details') : isset($employee->employeeOtherQuestion->q_38_a_yes_details), $errors->has('q_38_a_yes_details'), $errors->first('q_38_a_yes_details'), ''
+                       '12', 'q_38_a_yes_details', 'text', '', '', old('q_38_a_yes_details') ? old('q_38_a_yes_details') : $employee->employeeOtherQuestion->q_38_a_yes_details, $errors->has('q_38_a_yes_details'), $errors->first('q_38_a_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1834,14 +1834,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">b. Have you resigned from the government service during the three (3)-month period before the last election to promote/actively campaign for a national or local candidate?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_38_b', '', old('q_38_b') ? old('q_38_b') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_38_b)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_38_b'), $errors->first('q_38_b'), '', ''
+                        '6', 'q_38_b', '', old('q_38_b') ? old('q_38_b') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_38_b), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_38_b'), $errors->first('q_38_b'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details:</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_38_b_yes_details', 'text', '', '', old('q_38_b_yes_details') ? old('q_38_b_yes_details') : isset($employee->employeeOtherQuestion->q_38_b_yes_details), $errors->has('q_38_b_yes_details'), $errors->first('q_38_b_yes_details'), ''
+                       '12', 'q_38_b_yes_details', 'text', '', '', old('q_38_b_yes_details') ? old('q_38_b_yes_details') : $employee->employeeOtherQuestion->q_38_b_yes_details, $errors->has('q_38_b_yes_details'), $errors->first('q_38_b_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1850,14 +1850,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. Have you acquired the status of an immigrant or permanent resident of another country?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_39', '', old('q_39') ? old('q_39') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_39)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_39'), $errors->first('q_39'), '', ''
+                        '6', 'q_39', '', old('q_39') ? old('q_39') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_39), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_39'), $errors->first('q_39'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details (Country):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_39_yes_details', 'text', '', '', old('q_39_yes_details') ? old('q_39_yes_details') : isset($employee->employeeOtherQuestion->q_39_yes_details), $errors->has('q_39_yes_details'), $errors->first('q_39_yes_details'), ''
+                       '12', 'q_39_yes_details', 'text', '', '', old('q_39_yes_details') ? old('q_39_yes_details') : $employee->employeeOtherQuestion->q_39_yes_details, $errors->has('q_39_yes_details'), $errors->first('q_39_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1872,14 +1872,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">a. Are you a member of any indigenous group?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_40_a', '', old('q_40_a') ? old('q_40_a') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_40_a)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_a'), $errors->first('q_40_a'), '', ''
+                        '6', 'q_40_a', '', old('q_40_a') ? old('q_40_a') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_40_a), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_a'), $errors->first('q_40_a'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details:</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_40_a_yes_details', 'text', '', '', old('q_40_a_yes_details') ? old('q_40_a_yes_details') : isset($employee->employeeOtherQuestion->q_40_a_yes_details), $errors->has('q_40_a_yes_details'), $errors->first('q_40_a_yes_details'), ''
+                       '12', 'q_40_a_yes_details', 'text', '', '', old('q_40_a_yes_details') ? old('q_40_a_yes_details') : $employee->employeeOtherQuestion->q_40_a_yes_details, $errors->has('q_40_a_yes_details'), $errors->first('q_40_a_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1888,14 +1888,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">b. Are you a person with disability?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_40_b', '', old('q_40_b') ? old('q_40_b') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_40_b)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_b'), $errors->first('q_40_b'), '', ''
+                        '6', 'q_40_b', '', old('q_40_b') ? old('q_40_b') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_40_b), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_b'), $errors->first('q_40_b'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details (ID No.):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_40_b_yes_details', 'text', '', '', old('q_40_b_yes_details') ? old('q_40_b_yes_details') : isset($employee->employeeOtherQuestion->q_40_b_yes_details), $errors->has('q_40_b_yes_details'), $errors->first('q_40_b_yes_details'), ''
+                       '12', 'q_40_b_yes_details', 'text', '', '', old('q_40_b_yes_details') ? old('q_40_b_yes_details') : $employee->employeeOtherQuestion->q_40_b_yes_details, $errors->has('q_40_b_yes_details'), $errors->first('q_40_b_yes_details'), ''
                       ) !!}
                     </div>
 
@@ -1904,14 +1904,14 @@
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">c. Are you a solo parent?</p>
                       {!! FormHelper::select_static(
-                        '6', 'q_40_c', '', old('q_40_c') ? old('q_40_c') : DataTypeHelper::boolean_to_string(isset($employee->employeeOtherQuestion->q_40_c)), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_c'), $errors->first('q_40_c'), '', ''
+                        '6', 'q_40_c', '', old('q_40_c') ? old('q_40_c') : DataTypeHelper::boolean_to_string($employee->employeeOtherQuestion->q_40_c), ['YES' => 'true', 'NO' => 'false'], $errors->has('q_40_c'), $errors->first('q_40_c'), '', ''
                       ) !!}
                     </div>
 
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px;">If YES, give details (ID No.):</p>
                       {!! FormHelper::textbox(
-                       '12', 'q_40_c_yes_details', 'text', '', '', old('q_40_c_yes_details') ? old('q_40_c_yes_details') : isset($employee->employeeOtherQuestion->q_40_c_yes_details), $errors->has('q_40_c_yes_details'), $errors->first('q_40_c_yes_details'), ''
+                       '12', 'q_40_c_yes_details', 'text', '', '', old('q_40_c_yes_details') ? old('q_40_c_yes_details') : $employee->employeeOtherQuestion->q_40_c_yes_details, $errors->has('q_40_c_yes_details'), $errors->first('q_40_c_yes_details'), ''
                       ) !!}
                     </div>
 

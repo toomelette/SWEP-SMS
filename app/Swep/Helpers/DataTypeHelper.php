@@ -63,4 +63,15 @@ class DataTypeHelper{
 
 
 
+
+    public static function string_trap($value){
+
+      return isset($value) == true ? $value : 'N/A';
+
+    }
+
+
+
+
+
 }
