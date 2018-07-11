@@ -118,39 +118,39 @@
 
     {{-- ELIGIBILITY Content --}}
 
-    @foreach ($employee->employeeEligibility as $data)
+    @foreach ($employee->employeeEligibility as $key => $data)
+      @if($key <= 9)
+        <div class="row" style="border-bottom:solid 1px;">
 
-     <div class="row" style="border-bottom:solid 1px;">
+          <div class="col-sm-4" style="border-right:solid 1px;">
+              <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->eligibility }}</span>
+          </div>
 
-        <div class="col-sm-4" style="border-right:solid 1px;">
-            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->eligibility }}</span>
-        </div>
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->rating }}</span>
+          </div>
 
-        <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-          <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->rating }}</span>
-        </div>
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->exam_date != null ? Carbon::parse($data->exam_date)->format('m/d/Y') : 'N/A' }}</span>
+          </div>
 
-        <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-          <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->exam_date != null ? Carbon::parse($data->exam_date)->format('m/d/Y') : 'N/A' }}</span>
-        </div>
+          <div class="col-sm-4 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->exam_place }}</span>
+          </div>
 
-        <div class="col-sm-4 no-padding" style="border-right:solid 1px;">
-          <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->exam_place }}</span>
-        </div>
-
-        <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-          <div class="col-sm-12 no-padding" style="margin-bottom: -9px;">
-            <div class="col-sm-6 no-padding" style="border-right:solid 1px;">
-              <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->license_no }}</span>
-            </div>
-            <div class="col-sm-6 no-padding">
-              <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->license_validity != null ? Carbon::parse($data->license_validity)->format('m/d/Y') : 'N/A' }}</span>
+          <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
+            <div class="col-sm-12 no-padding" style="margin-bottom: -9px;">
+              <div class="col-sm-6 no-padding" style="border-right:solid 1px;">
+                <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->license_no }}</span>
+              </div>
+              <div class="col-sm-6 no-padding">
+                <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->license_validity != null ? Carbon::parse($data->license_validity)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
             </div>
           </div>
+
         </div>
-
-      </div>
-
+      @endif
     @endforeach
 
     @if(count($employee->employeeEligibility) < 10)
@@ -272,95 +272,95 @@
 
     {{-- Work Experience Content --}}
 
-    @foreach ($employee->employeeExperience as $data)
+    @foreach ($employee->employeeExperience as $key => $data)
+      @if($key <= 24)
+        <div class="row" style="border-bottom:solid 1px;">
 
-     <div class="row" style="border-bottom:solid 1px;">
+          <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
+            <div class="col-sm-12">
+              <div class="col-sm-6 no-padding" style="border-right:solid 1px; text-align: center;">
+                <span style="font-size:8px; font-weight: bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
+              <div class="col-sm-6 no-padding" style="text-align: center;">
+                <span style="font-size:8px; font-weight: bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
+            </div>
+          </div>
 
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12">
-          <div class="col-sm-6 no-padding" style="border-right:solid 1px; text-align: center;">
-            <span style="font-size:8px; font-weight: bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+          <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->position }}</span>
           </div>
-          <div class="col-sm-6 no-padding" style="text-align: center;">
-            <span style="font-size:8px; font-weight: bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+
+          <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->company }}</span>
           </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ number_format($data->salary, 2) }}</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->salary_grade }}</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->appointment_status }}</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->is_gov_service == '1' ? 'Y' : 'N' }}</span>
+          </div>
+
         </div>
-      </div>
-
-      <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->position }}</span>
-      </div>
-
-      <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->company }}</span>
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ number_format($data->salary, 2) }}</span>
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->salary_grade }}</span>
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->appointment_status }}</span>
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight: bold; padding-left: 3px;">{{ $data->is_gov_service == '1' ? 'Y' : 'N' }}</span>
-      </div>
-
-    </div>
-
+      @endif
     @endforeach
 
-    @if(count($employee->employeeExperience) < 34)
+    @if(count($employee->employeeExperience) < 25)
 
       <?php 
-        $diff = 34 - count($employee->employeeExperience); 
+        $diff = 25 - count($employee->employeeExperience); 
       ?>
 
       @for ($i = 0; $i < $diff; $i++)
 
         <div class="row" style="border-bottom:solid 1px;">
 
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12">
-          <div class="col-sm-6" style="border-right:solid 1px;  text-align: center;">
+          <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
+            <div class="col-sm-12">
+              <div class="col-sm-6" style="border-right:solid 1px;  text-align: center;">
+                &nbsp;
+              </div>
+              <div class="col-sm-6" style="text-align: center;">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
             &nbsp;
           </div>
-          <div class="col-sm-6" style="text-align: center;">
+
+          <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
             &nbsp;
           </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            &nbsp;
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            &nbsp;
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            &nbsp;
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
+            &nbsp;
+          </div>
+
         </div>
-      </div>
-
-      <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-
-      <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        &nbsp;
-      </div>
-
-    </div>
 
       @endfor
 

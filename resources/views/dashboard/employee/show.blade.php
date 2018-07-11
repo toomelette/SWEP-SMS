@@ -1,4 +1,5 @@
 @php
+
   if(isset($employee->employeeAddress)){
     $res_address = $employee->employeeAddress->res_address_barangay .' '. $employee->employeeAddress->res_address_city .', '. $employee->employeeAddress->res_address_province;
     $perm_address = $employee->employeeAddress->perm_address_barangay .' '. $employee->employeeAddress->perm_address_city .', '. $employee->employeeAddress->perm_address_province;
@@ -6,6 +7,17 @@
     $res_address = "";
     $perm_address = "";
   }
+
+  $gtChildren = count($employee->employeeChildren) > 11;
+  $gtEligibility = count($employee->employeeEligibility) > 10;
+  $gtExperience = count($employee->employeeExperience) > 25;
+  $gtVoluntaryWork = count($employee->employeeVoluntaryWork) > 7;
+  $gtTraining = count($employee->employeeTraining) > 20;
+  $gtSpecialSkill = count($employee->employeeSpecialSkill) > 7;
+  $gtRecognition = count($employee->employeeRecognition) > 7;
+  $gtOrganization = count($employee->employeeOrganization) > 7;
+  
+
 @endphp
 
 
@@ -35,6 +47,12 @@
           <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p2' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print PDS Page 2</a>&nbsp;
           <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p3' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print PDS Page 3</a>&nbsp;
           <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p4' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print PDS Page 4</a>&nbsp;
+
+          @if($gtChildren || $gtEligibility || $gtExperience || $gtVoluntaryWork || $gtTraining || $gtSpecialSkill || $gtRecognition || $gtOrganization)
+            <a href="{{ route('dashboard.employee.print_pds', [ $employee->slug, 'p5' ]) }}" target="_blank" class="btn btn-sm btn-default">
+              <i class="fa fa-print"></i> Print PDS Extra Page
+            </a>&nbsp;
+          @endif
           <a href="{{ route('dashboard.employee.edit', $employee->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
         </div>
       </div>

@@ -569,13 +569,15 @@
       		<span style="font-size:7px;">&nbsp; DATE OF BIRTH (mm/dd/yyyy)</span>
       	</div>
         
-        @foreach ($employee->employeeChildren as $data)
-          <div class="col-sm-7 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
-            <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ $data->fullname }}</span>
-          </div>
-          <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-            <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ Carbon::parse($data->date_of_birth)->format('m/d/Y') }}</span>
-          </div>
+        @foreach ($employee->employeeChildren as $key => $data)
+          @if($key <= 10)
+            <div class="col-sm-7 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
+              <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ $data->fullname }}</span>
+            </div>
+            <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
+              <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ Carbon::parse($data->date_of_birth)->format('m/d/Y') }}</span>
+            </div>
+          @endif
         @endforeach
 
         @if(count($employee->employeeChildren) < 11)

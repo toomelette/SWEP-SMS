@@ -263,6 +263,8 @@ class EmployeeService extends BaseService{
             return view('printables.employee_pds_p3')->with('employee', $employee);
         }elseif($page == 'p4'){
             return view('printables.employee_pds_p4')->with('employee', $employee);
+        }elseif($page == 'p5'){
+            return view('printables.employee_pds_p5')->with('employee', $employee);
         }
 
         return abort(404);

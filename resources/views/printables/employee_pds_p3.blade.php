@@ -114,35 +114,35 @@
 
     {{-- VOLUNTARY WORKS Content --}}
 
-    @foreach ($employee->employeeVoluntaryWork as $data)
+    @foreach ($employee->employeeVoluntaryWork as $key => $data)
+      @if($key <= 6)
+        <div class="row" style="border-bottom:solid 1px; overflow:hidden;">
 
-     <div class="row" style="border-bottom:solid 1px;">
-
-      <div class="col-sm-5" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->name }}</span>
-      </div>
-
-      <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
-        <div class="col-sm-12 no-padding">
-          <div class="col-sm-6" style="border-right:solid 1px;">
-            <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+          <div class="col-sm-5" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+            <p style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->name }}</p>
           </div>
-          <div class="col-sm-6">
-            <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+
+          <div class="col-sm-2 no-padding">
+            <div class="col-sm-12 no-padding">
+              <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+                <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
+              <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+                <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
+            </div>
           </div>
+
+          <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+            <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->hours }}</span>
+          </div>
+
+          <div class="col-sm-4" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+            <span style="font-size:8px; font-weight:bold; margin-left: -10px;">{{ $data->position }}</span>
+          </div>
+
         </div>
-      </div>
-
-      <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->hours }}</span>
-      </div>
-
-      <div class="col-sm-4 no-padding" style="border-right:solid 1px;">
-        <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->position }}</span>
-      </div>
-
-    </div>
-
+      @endif
     @endforeach
 
     @if(count($employee->employeeVoluntaryWork) < 7)
@@ -247,45 +247,45 @@
 
     {{-- TRAININGS Content --}}
 
-    @foreach ($employee->employeeTraining as $data)
+    @foreach ($employee->employeeTraining as $key => $data)
+      @if($key <= 19)
+       <div class="row" style="border-bottom:solid 1px; overflow: hidden;">
 
-     <div class="row" style="border-bottom:solid 1px;">
-
-      <div class="col-sm-5" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
-        <p style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->title }}</p>
-      </div>
-
-      <div class="col-sm-2 no-padding">
-        <div class="col-sm-12 no-padding">
-          <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
-            <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+          <div class="col-sm-5" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+            <p style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->title }}</p>
           </div>
-          <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
-            <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+
+          <div class="col-sm-2 no-padding">
+            <div class="col-sm-12 no-padding">
+              <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+                <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
+              <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+                <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+              </div>
+            </div>
           </div>
+
+          <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+            <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->hours }}</span>
+          </div>
+
+          <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
+            <span style="font-size:6px; font-weight:bold; padding-left: 3px;">{{ $data->type }}</span>
+          </div>
+
+          <div class="col-sm-3" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px; padding-bottom: 0;">
+            <p style="font-size:8px; font-weight:bold; margin-left: -10px;">{{ $data->conducted_by }}</p>
+          </div>
+
         </div>
-      </div>
-
-      <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
-        <span style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->hours }}</span>
-      </div>
-
-      <div class="col-sm-1" style="border-right:solid 1px; margin-bottom: -100px; padding-bottom: 100px; overflow: hidden;">
-        <span style="font-size:6px; font-weight:bold; padding-left: 3px;">{{ $data->type }}</span>
-      </div>
-
-      <div class="col-sm-3 no-padding" style="border-right:solid 1px;">
-        <p style="font-size:8px; font-weight:bold; padding-left: 3px;">{{ $data->conducted_by }}</p>
-      </div>
-
-    </div>
-
+      @endif
     @endforeach
 
-    @if(count($employee->employeeTraining) < 27)
+    @if(count($employee->employeeTraining) <= 20)
 
       <?php 
-        $diff = 27 - count($employee->employeeTraining); 
+        $diff = 20 - count($employee->employeeTraining); 
       ?>
 
       @for ($i = 0; $i < $diff; $i++)
@@ -359,12 +359,12 @@
         </div>
 
         {{-- SPECIAL SKILLS Content --}}
-        @foreach ($employee->employeeSpecialSkill as $data)
-
-         <div class="col-sm-12" style="border-right:solid 1px; border-bottom:solid 1px;">
-          <span style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->description }}</span>
-        </div>
-
+        @foreach ($employee->employeeSpecialSkill as $key => $data)
+          @if($key <= 6 )
+           <div class="col-sm-12" style="border-right:solid 1px; border-bottom:solid 1px;">
+            <p style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->description }}</p>
+           </div>
+          @endif
         @endforeach
 
         @if(count($employee->employeeSpecialSkill) < 7)
@@ -399,12 +399,12 @@
         </div>
 
         {{-- Recognitions Content --}}
-        @foreach ($employee->employeeRecognition as $data)
-
-         <div class="col-sm-12 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
-          <span style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->title }}</span>
-        </div>
-
+        @foreach ($employee->employeeRecognition as $key => $data)
+          @if($key <= 6 )
+            <div class="col-sm-12" style="border-right:solid 1px; border-bottom:solid 1px;">
+              <p style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->title }}</p>
+            </div>
+          @endif
         @endforeach
 
         @if(count($employee->employeeRecognition) < 7)
@@ -439,12 +439,12 @@
         </div>
 
         {{-- Recognitions Content --}}
-        @foreach ($employee->employeeOrganization as $data)
-
-         <div class="col-sm-12 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
-          <span style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->name }}</span>
-        </div>
-
+        @foreach ($employee->employeeOrganization as $key => $data)
+          @if($key <= 6)
+            <div class="col-sm-12 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
+              <p style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->name }}</p>
+            </div>
+          @endif
         @endforeach
 
         @if(count($employee->employeeOrganization) < 7)

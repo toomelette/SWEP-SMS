@@ -187,7 +187,7 @@
 
 
     @foreach ($employee->employeeServiceRecord as $key => $data)
-      @if($key < 20)
+      @if($key < 25)
         <div class="row">
           <div class="col-sm-12 no-padding">
 
@@ -467,7 +467,7 @@
 
 
       @foreach ($employee->employeeServiceRecord as $key => $data)
-        @if($key >= 20)
+        @if($key >= 25)
           <div class="row">
             <div class="col-sm-12 no-padding">
 
