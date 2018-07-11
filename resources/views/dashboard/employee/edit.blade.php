@@ -1,15 +1,15 @@
 @php
-    $civil_status = [
-      'SINGLE' => 'SINGLE', 'MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'OTHERS' => 'OTHERS', 
-    ];
+  $civil_status = [
+    'SINGLE' => 'SINGLE', 'MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'OTHERS' => 'OTHERS', 
+  ];
 
-    $level = [
-      'ELEMENTARY' => 'ELEMENTARY', 'SECONDARY' => 'SECONDARY', 'VOCATIONAL/TRADE COURSE' => 'VOCATIONAL/TRADE COURSE', 'COLLEGE' => 'COLLEGE', 'GRADUATE STUDIES' => 'GRADUATE STUDIES',
-    ];
+  $level = [
+    'ELEMENTARY' => 'ELEMENTARY', 'SECONDARY' => 'SECONDARY', 'VOCATIONAL/TRADE COURSE' => 'VOCATIONAL/TRADE COURSE', 'COLLEGE' => 'COLLEGE', 'GRADUATE STUDIES' => 'GRADUATE STUDIES',
+  ];
 
-    $is_gov_service = [
-      'YES' => 'true', 'No' => 'false',
-    ];
+  $is_gov_service = [
+    'YES' => 'true', 'No' => 'false',
+  ];
 @endphp
 
 
@@ -107,7 +107,7 @@
                   <div class="col-md-12"></div>
 
                   {!! FormHelper::select_static(
-                    '3', 'sex', 'Sex *', old('sex') ? old('sex') : $employee->sex, ['Male' => 'MALE', 'Female' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
+                    '3', 'sex', 'Sex *', old('sex') ? old('sex') : $employee->sex, ['MALE' => 'MALE', 'MALE' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
                   ) !!}
 
                   {!! FormHelper::select_static(

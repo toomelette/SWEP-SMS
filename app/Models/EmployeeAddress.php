@@ -41,5 +41,21 @@ class EmployeeAddress extends Model{
     }
 
 
+
+    // GETTERS
+    public function getFullResAddressAttribute(){
+
+        return $this->res_address_barangay .' '. $this->res_address_city .', '. $this->res_address_province;
     
+    }
+
+
+    public function getFullPermAddressAttribute(){
+
+        return $this->perm_address_barangay .' '. $this->perm_address_city .', '. $this->perm_address_province;
+    
+    }
+   
+
+
 }

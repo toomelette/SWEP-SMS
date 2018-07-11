@@ -1,13 +1,5 @@
 @php
 
-  if(isset($employee->employeeAddress)){
-    $res_address = $employee->employeeAddress->res_address_barangay .' '. $employee->employeeAddress->res_address_city .', '. $employee->employeeAddress->res_address_province;
-    $perm_address = $employee->employeeAddress->perm_address_barangay .' '. $employee->employeeAddress->perm_address_city .', '. $employee->employeeAddress->perm_address_province;
-  }else{
-    $res_address = "";
-    $perm_address = "";
-  }
-
   $gtChildren = count($employee->employeeChildren) > 11;
   $gtEligibility = count($employee->employeeEligibility) > 10;
   $gtExperience = count($employee->employeeExperience) > 25;
@@ -17,7 +9,6 @@
   $gtRecognition = count($employee->employeeRecognition) > 7;
   $gtOrganization = count($employee->employeeOrganization) > 7;
   
-
 @endphp
 
 
@@ -94,9 +85,9 @@
                 <dt>Citizenship:</dt>
                 <dd>{{ $employee->citizenship }}</dd>
                 <dt>Residential Address:</dt>
-                <dd>{{ $res_address }}</dd>
+                <dd>{{ optional($employee->employeeAddress)->fullResAddress }}</dd>
                 <dt>Permanent Address:</dt>
-                <dd>{{ $perm_address }}</dd>
+                <dd>{{  optional($employee->employeeAddress)->fullPermAddress }}</dd>
               </dl>
             </div>
           </div>
@@ -139,13 +130,13 @@
                 <dt>TA:</dt>
                 <dd>{{ number_format($employee->ta, 2) }}</dd>
                 <dt>Government Service:</dt>
-                <dd>{{ $employee->firstday_gov == '' ? '' : Carbon::parse($employee->firstday_gov)->format('M d, Y') }}</dd>
+                <dd>{{ DataTypeHelper::date_out($employee->firstday_gov, 'M d, Y') }}</dd>
                 <dt>First Day:</dt>
-                <dd>{{ $employee->firstday_sra == '' ? '' : Carbon::parse($employee->firstday_sra)->format('M d, Y') }}</dd>
+                <dd>{{ DataTypeHelper::date_out($employee->firstday_sra, 'M d, Y') }}</dd>
                 <dt>Appointment Date:</dt>
-                <dd>{{ $employee->appointment_date != null ? Carbon::parse($employee->appointment_date)->format('M d, Y') : ''}}</dd>
+                <dd>{{ DataTypeHelper::date_out($employee->appointment_date, 'M d, Y') }}</dd>
                 <dt>Adjustment Date:</dt>
-                <dd>{{ $employee->adjustment_date != null ? Carbon::parse($employee->adjustment_date)->format('M d, Y') : ''}}</dd>
+                <dd>{{ DataTypeHelper::date_out($employee->adjustment_date, 'M d, Y') }}</dd>
               </dl>
             </div>
           </div>

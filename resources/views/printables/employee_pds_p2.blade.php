@@ -127,7 +127,7 @@
           </div>
 
           <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->rating }}</span>
+            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->rating != 0 ? $data->rating : '' }}</span>
           </div>
 
           <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
