@@ -63,7 +63,7 @@
                 <dt>Fullname:</dt>
                 <dd>{{ $employee->fullname }}</dd>
                 <dt>Date of Birth:</dt>
-                <dd>{{ Carbon::parse($employee->date_of_birth)->format('M d, Y') }}</dd>
+                <dd>{{ DataTypeHelper::date_out($employee->date_of_birth, 'M d, Y') }}</dd>
                 <dt>Place of Birth:</dt>
                 <dd>{{ $employee->place_of_birth }}</dd>
                 <dt>Sex:</dt>
@@ -202,7 +202,7 @@
                   @foreach($employee->employeeChildren as $data)
                     <tr>
                       <td>{{ $data->fullname }}</td>
-                      <td>{{ $data->date_of_birth != null ? Carbon::parse($data->date_of_birth)->format('M d, Y') : ''}}</td>
+                      <td>{{ DataTypeHelper::date_out($data->date_of_birth, 'M d, Y') }}</td>
                     </tr>
                   @endforeach
 
@@ -285,13 +285,13 @@
                     <td>{{ $data->title }}</td>
                     <td>{{ $data->conducted_by }}</td>
                     <td>
-                      @if(Carbon::parse($data->date_from)->format('M') == Carbon::parse($data->date_to)->format('M'))
+                      @if(DataTypeHelper::date_out($data->date_from, 'M') == DataTypeHelper::date_out($data->date_to, 'M'))
                         
-                        {{ Carbon::parse($data->date_from)->format('M d') .' - '. Carbon::parse($data->date_to)->format('d, Y') }}  
+                        {{ DataTypeHelper::date_out($data->date_from, 'M d') .' - '. DataTypeHelper::date_out($data->date_to, 'd, Y') }}  
 
                       @else
 
-                        {{ Carbon::parse($data->date_from)->format('M d, Y') .' - '. Carbon::parse($data->date_to)->format('M d, Y') }}
+                        {{ DataTypeHelper::date_out($data->date_from, 'M d, Y') .' - '. DataTypeHelper::date_out($data->date_to, 'M d, Y') }}
 
                       @endif
                     </td>

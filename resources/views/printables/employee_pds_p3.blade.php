@@ -125,10 +125,10 @@
           <div class="col-sm-2 no-padding">
             <div class="col-sm-12 no-padding">
               <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
-                <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+                <span style="font-size:8px; font-weight:bold;">{{ DataTypeHelper::data_out($data->date_from, 'm/d/Y') }}</span>
               </div>
               <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
-                <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+                <span style="font-size:8px; font-weight:bold;">{{ DataTypeHelper::data_out($data->date_to, 'm/d/Y') }}</span>
               </div>
             </div>
           </div>
@@ -247,7 +247,7 @@
 
     {{-- TRAININGS Content --}}
 
-    @foreach ($employee->employeeTraining as $key => $data)
+    @foreach ($employee->employeeTraining()->populate() as $key => $data)
       @if($key <= 19)
        <div class="row" style="border-bottom:solid 1px; overflow: hidden;">
 
@@ -258,10 +258,10 @@
           <div class="col-sm-2 no-padding">
             <div class="col-sm-12 no-padding">
               <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
-                <span style="font-size:8px; font-weight:bold;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : 'N/A' }}</span>
+                <span style="font-size:8px; font-weight:bold;">{{  DataTypeHelper::date_out($data->date_from, 'm/d/Y') }}</span>
               </div>
               <div class="col-sm-6" style="border-right:solid 1px; margin-bottom: -50px; padding-bottom: 50px;">
-                <span style="font-size:8px; font-weight:bold;">{{ $data->date_to != null ? Carbon::parse($data->date_to)->format('m/d/Y') : 'N/A' }}</span>
+                <span style="font-size:8px; font-weight:bold;">{{  DataTypeHelper::date_out($data->date_to, 'm/d/Y') }}</span>
               </div>
             </div>
           </div>

@@ -383,6 +383,48 @@ class EmployeeService extends BaseService{
 
 
 
+    public function training($slug){
+
+        $employee = $this->employeeBySlug($slug);
+        return view('dashboard.employee.training')->with('employee', $employee);
+
+    }
+
+
+
+
+    public function trainingStore($request, $slug){
+
+
+    }
+
+
+
+
+    public function trainingUpdate($request, $emp_slug, $emp_trng_slug){
+
+
+    }
+
+
+
+
+    public function trainingDestroy($slug){
+
+
+    }
+
+
+
+
+    public function trainingPrint($slug){
+
+
+    }
+
+
+
+
 
 
 
@@ -486,7 +528,7 @@ class EmployeeService extends BaseService{
         // Employee Work Experience
         if(count($request->row_we) > 0){
             foreach ($request->row_we as $row) {
-                $this->storeEmployeeWorkExperience($row, $employee);
+                $this->storeEmployeeExperience($row, $employee);
             }
         }
 
@@ -703,7 +745,7 @@ class EmployeeService extends BaseService{
 
 
 
-    public function storeEmployeeWorkExperience($row, $employee){
+    public function storeEmployeeExperience($row, $employee){
 
         $employee_we = new EmployeeExperience;
         $employee_we->employee_no = $employee->employee_no;

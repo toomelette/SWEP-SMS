@@ -110,7 +110,7 @@
         <span style="font-size:13px;">BIRTH</span>
       </div>
       <div class="col-sm-3 no-padding" style="border-bottom:solid 1px;">
-        <span style="font-weight: bold; font-size:15px;">{{ Carbon::parse($employee->date_of_birth)->format('F d, Y') }}</span>
+        <span style="font-weight: bold; font-size:15px;">{{ DataTypeHelper::date_out($employee->date_of_birth, 'F d, Y') }}</span>
       </div>
       <div class="col-sm-3 no-padding" style="text-align:center;">
         <span style="font-size:13px;">PLACE OF BIRTH</span>
@@ -186,7 +186,7 @@
     </div>
 
 
-    @foreach ($employee->employeeServiceRecord as $key => $data)
+    @foreach ($employee->employeeServiceRecord()->populate() as $key => $data)
       @if($key < 25)
         <div class="row">
           <div class="col-sm-12 no-padding">
@@ -390,7 +390,7 @@
           <span style="font-size:13px;">BIRTH</span>
         </div>
         <div class="col-sm-3 no-padding" style="border-bottom:solid 1px;">
-          <span style="font-weight: bold; font-size:15px;">{{ Carbon::parse($employee->date_of_birth)->format('F d, Y') }}</span>
+          <span style="font-weight: bold; font-size:15px;">{{ DataTypeHelper::date_out($employee->date_of_birth, 'F d, Y') }}</span>
         </div>
         <div class="col-sm-3 no-padding" style="text-align:center;">
           <span style="font-size:13px;">PLACE OF BIRTH</span>
@@ -466,7 +466,7 @@
       </div>
 
 
-      @foreach ($employee->employeeServiceRecord as $key => $data)
+      @foreach ($employee->employeeServiceRecord()->populate() as $key => $data)
         @if($key >= 25)
           <div class="row">
             <div class="col-sm-12 no-padding">

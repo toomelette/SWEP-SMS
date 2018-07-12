@@ -4,7 +4,7 @@
 <section class="content">
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
-		
+
 		@if(Session::has('AUTH_AUTHENTICATED'))
 			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_AUTHENTICATED')) !!}
 		@endif

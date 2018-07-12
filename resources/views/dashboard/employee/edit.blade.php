@@ -107,7 +107,7 @@
                   <div class="col-md-12"></div>
 
                   {!! FormHelper::select_static(
-                    '3', 'sex', 'Sex *', old('sex') ? old('sex') : $employee->sex, ['MALE' => 'MALE', 'MALE' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
+                    '3', 'sex', 'Sex *', old('sex') ? old('sex') : $employee->sex, ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
                   ) !!}
 
                   {!! FormHelper::select_static(

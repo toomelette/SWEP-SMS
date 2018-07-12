@@ -8,6 +8,8 @@ use App\Http\Requests\EmployeeFormRequest;
 use App\Http\Requests\EmployeeFilterRequest;
 use App\Http\Requests\EmployeeServiceRecordCreateForm;
 use App\Http\Requests\EmployeeServiceRecordEditForm;
+use App\Http\Requests\EmployeeTrainingCreateForm;
+use App\Http\Requests\EmployeeTrainingEditForm;
 
 
 class EmployeeController extends Controller{
@@ -148,6 +150,51 @@ class EmployeeController extends Controller{
     public function serviceRecordPrint($slug){
         
         return $this->employee->serviceRecordPrint($slug);
+
+    }
+
+
+
+
+    public function training($slug){
+
+        return $this->employee->training($slug);
+
+    }
+
+
+
+
+    public function trainingStore(EmployeeTrainingCreateForm $request, $slug){
+
+        return $this->employee->trainingStore($request, $slug);
+
+    }
+
+
+
+
+    public function trainingUpdate(EmployeeTrainingEditForm $request, $emp_slug, $emp_trng_slug){
+        
+        return $this->employee->trainingUpdate($request, $emp_slug, $emp_trng_slug); 
+
+    }
+
+
+
+
+    public function trainingDestroy($slug){
+        
+        return $this->employee->trainingDestroy($slug);
+
+    }
+
+
+
+
+    public function trainingPrint($slug){
+        
+        return $this->employee->trainingPrint($slug);
 
     }
 

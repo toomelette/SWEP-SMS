@@ -77,6 +77,7 @@
         <div class="modal-body">
           <form id="reset_password_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.reset_password_post', $user->slug) }}">
             @csrf
+            <input name="_method" value="PATCH" type="hidden">
             <p style="font-size: 17px;">Confirm first your identity before resetting someone's password!</p><br>
             <input id="password_in_modal" type="hidden" name="password" value="">
             <input id="password_confirmation_in_modal" type="hidden" name="password_confirmation" value="">

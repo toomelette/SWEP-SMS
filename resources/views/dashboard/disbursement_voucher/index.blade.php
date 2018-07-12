@@ -187,6 +187,9 @@
           <form id="dv_set_no_form" class="form-horizontal" method="POST" autocomplete="off">
             @csrf
             <p style="font-size: 17px;">Set DV No.</p><br>
+
+            <input name="_method" value="PATCH" type="hidden">
+
             {!! FormHelper::textbox_inline(
                 'dv_no', 'text', 'DV No.', 'DV No.', old('dv_no'), $errors->has('dv_no'), $errors->first('dv_no'), ''
             ) !!}
@@ -245,8 +248,8 @@
 
     {{-- SUBMIT DV CONFIRM CHECK FORM --}}
     $(document).on("click", "#dv_confirm_check_link", function () {
-        $("#dv_set_no_form").attr("action", $(this).data("url"));
-        $("#dv_set_no_form").submit();
+        $("#dv_confirm_check_form").attr("action", $(this).data("url"));
+        $("#dv_confirm_check_form").submit();
     });
 
   </script>

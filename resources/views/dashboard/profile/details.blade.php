@@ -103,6 +103,8 @@
 
                   @csrf
 
+                  <input name="_method" value="PATCH" type="hidden">
+
                   {!! FormHelper::textbox_inline(
                       'username', 'text', 'Username', 'Username', old('username'), $errors->has('username') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('username'), ''
                   ) !!}
@@ -140,6 +142,8 @@
                 <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_password', Auth::user()->slug) }}">
 
                   @csrf
+
+                  <input name="_method" value="PATCH" type="hidden">
 
                   {!! FormHelper::password_inline(
                       'old_password', 'Old Password', 'Old Password', $errors->has('old_password') || Session::has('PROFILE_OLD_PASSWORD_FAIL'), $errors->first('old_password'), ''
@@ -183,7 +187,11 @@
 
                   @csrf
 
-                  {!! FormHelper::select_static('4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, $user_colors, $errors->has('color'), $errors->first('color'), '', '') !!}
+                  <input name="_method" value="PATCH" type="hidden">
+
+                  {!! FormHelper::select_static(
+                    '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, $user_colors, $errors->has('color'), $errors->first('color'), '', ''
+                  ) !!}
 
                   <div class="form-group">
                     <div style="margin-top:24px;" class="col-sm-8">

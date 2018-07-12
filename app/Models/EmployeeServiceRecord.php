@@ -47,7 +47,7 @@ class EmployeeServiceRecord extends Model{
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->orderBy('sequence_no	', 'asc')->get();
+        return $query->orderBy('sequence_no', 'asc')->get();
 
     }
 

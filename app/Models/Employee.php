@@ -201,7 +201,17 @@ class Employee extends Model{
     public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)
-                     ->with('employeeTraining', 'employeeAddress')
+                     ->with('employeeTraining', 
+                            'employeeChildren', 
+                            'employeeEducationalBackground', 
+                            'employeeEligibility',
+                            'employeeExperience',
+                            'employeeOrganization',
+                            'employeeRecognition',
+                            'employeeReference',
+                            'employeeSpecialSkill',
+                            'employeeVoluntaryWork',
+                            'employeeServiceRecord')
                      ->firstorFail();
 
     }

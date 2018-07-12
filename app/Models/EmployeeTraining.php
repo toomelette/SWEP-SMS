@@ -22,6 +22,7 @@ class EmployeeTraining extends Model{
     protected $attributes = [
         
         'employee_no' => '',
+        'slug' => '',
         'title' => '',
         'type' => '',
         'date_from' => null,
@@ -50,7 +51,7 @@ class EmployeeTraining extends Model{
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->orderBy('date_to', 'desc')->get();
+        return $query->orderBy('date_from', 'asc')->get();
 
     }
     

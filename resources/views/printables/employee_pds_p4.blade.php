@@ -520,7 +520,7 @@
                 </div>
                 <div class="col-sm-6 no-padding" style="text-align: center;">
                   <p style="font-size:8px; padding-top: 7px;">
-                    {!! $employee->gov_id != null ? $employee->gov_id : 'N/A' !!}
+                    {{ PrintHelper::string_trap($employee->gov_id) }}
                   </p>
                 </div>
               </div>
@@ -531,7 +531,7 @@
                 </div>
                 <div class="col-sm-6 no-padding" style="text-align: center;">
                   <p style="font-size:8px; padding-top: 7px;">
-                    {!! $employee->license_passport_no != null ? $employee->license_passport_no : 'N/A' !!}
+                    {{ PrintHelper::string_trap($employee->license_passport_no) }}
                   </p>
                 </div>
               </div>
@@ -542,7 +542,7 @@
                 </div>
                 <div class="col-sm-6 no-padding" style="text-align: center;">
                   <p style="font-size:8px; padding-top: 7px;">
-                    {!! $employee->id_date_issue != null ? $employee->id_date_issue : 'N/A' !!}
+                    {{ PrintHelper::string_trap($employee->id_date_issue) }}
                   </p>
                 </div>
               </div>

@@ -35,7 +35,7 @@
           <div class="box-body">
 
             {!! FormHelper::textbox(
-               '2', 'sequence_no', 'text', 'Sequence No. *', 'Sequence No.', old('sequence_no'), $errors->has('sequence_no'), $errors->first('sequence_no'), ''
+               '2', 'sequence_no', 'text', 'Seq No. *', 'Seq No.', old('sequence_no'), $errors->has('sequence_no'), $errors->first('sequence_no'), ''
             ) !!}
 
             {!! FormHelper::textbox(
@@ -138,7 +138,7 @@
               <th>Salary</th>
               <th>Action</th>
             </tr>
-            @foreach($employee->employeeServiceRecord as $data) 
+            @foreach($employee->employeeServiceRecord()->populate() as $data) 
               <tr 
                 {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
                 {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}
@@ -206,7 +206,7 @@
               <input name="e_slug" id="e_slug"  type="hidden">
 
               {!! FormHelper::textbox(
-               '2', 'e_sequence_no', 'text', 'Sequence No. *', 'Sequence No.', old('e_sequence_no'), $errors->has('e_sequence_no'), $errors->first('e_sequence_no'), ''
+               '2', 'e_sequence_no', 'text', 'Seq No. *', 'Seq No.', old('e_sequence_no'), $errors->has('e_sequence_no'), $errors->first('e_sequence_no'), ''
               ) !!}
 
               {!! FormHelper::textbox(
@@ -361,10 +361,10 @@
 
     // Update Form Action
     $(document).on("submit", "#sr_update_body #sr_update_form", function () {
-      $('#sr_update').delay(100).fadeOut(100);
+      $('#sr_update').delay(50).fadeOut(50);
       setTimeout(function(){
         $('#sr_update').modal("hide");  
-      }, 200);
+      }, 100);
     });
 
   </script> 

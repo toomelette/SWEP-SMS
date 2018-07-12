@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 use App\Swep\Helpers\CacheHelper;
 use Illuminate\Events\Dispatcher;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
 
 
 class LoginController extends Controller{
@@ -27,6 +27,8 @@ class LoginController extends Controller{
     protected $cacheHelper;
     protected $event;
     protected $redirectTo = 'dashboard/home';
+    protected $maxAttempts = 4;
+    protected $decayMinutes = 2;
 
 
 
@@ -65,6 +67,12 @@ class LoginController extends Controller{
 
         $this->validateLogin($request);
 
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+
+
         if($this->auth->guard()->attempt($this->credentials($request))){
 
             if($this->auth->user()->is_active == false){
@@ -87,12 +95,14 @@ class LoginController extends Controller{
                 $this->cacheHelper->deletePattern('swep_cache:users:all:*');
                 $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
 
+                $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
 
             }
         
         }
 
+        $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
 
     }

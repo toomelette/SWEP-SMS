@@ -21,7 +21,6 @@ class EmployeeServiceRecordEditForm extends FormRequest{
     public function rules(){
 
         return [
-
             'e_slug'=>'required|string|max:45',
             'e_sequence_no'=>'required|int|max:1000',
             'e_date_from'=>'required|string|max:45',

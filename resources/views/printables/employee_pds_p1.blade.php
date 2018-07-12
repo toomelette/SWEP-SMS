@@ -164,7 +164,7 @@
         <p style="font-size:8px;">&nbsp;&nbsp;3. DATE OF BIRTH<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mm/dd/yyyy)</p>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom: 22px;">
-       <span style="font-size:10px; font-weight:bold;">{{ Carbon::parse($employee->date_of_birth)->format('m/d/Y') }}</span>
+       <span style="font-size:10px; font-weight:bold;">{{ DataTypeHelper::date_out($employee->date_of_birth, 'm/d/Y') }}</span>
       </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8; padding-bottom: 2px;">
         <span style="font-size:8px;">16. CITIZENSHIP</span>
@@ -673,10 +673,10 @@
         <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 1.9em; margin-bottom: -5px; padding-bottom: 5px; overflow: hidden;">
           <div class="col-sm-12 no-padding">
             <div class="col-sm-6 no-padding" style="border-right:solid 1px; height: 1.9em; margin-bottom: -5px; padding-bottom: 5px; overflow: hidden; text-align: center;">
-              <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : '' }}</p>
+              <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->date_from }}</p>
             </div>
             <div class="col-sm-6" style="height: 1.9em; text-align: center;">
-              <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->date_from != null ? Carbon::parse($data->date_from)->format('m/d/Y') : '' }}</p>
+              <p style="font-size:7px; font-weight:bold; padding-left: 5px; padding-top: 4px;">{{ $data->date_to }}</p>
             </div>
           </div>
         </div>
