@@ -127,7 +127,13 @@
         </div>
 
         <div class="box-body">
-
+          @if($errors->all())
+            <ul style="line-height: 10px;">
+              @foreach ($errors->all() as $data)
+                <li><p class="text-danger">{{ $data }}</p></li>
+              @endforeach
+            </ul>
+          @endif
           <table class="table table-bordered">
             <tr>
               <th>Seq #</th>
@@ -192,7 +198,7 @@
 
 
   {{-- Update --}}
-  <div class="modal fade bs-example-modal-lg" id="sr_update" data-backdrop="static" id="pjax-container">
+  <div class="modal fade bs-example-modal-lg" id="sr_update" data-backdrop="static">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body" id="sr_update_body">

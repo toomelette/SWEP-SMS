@@ -9,6 +9,8 @@ class EmployeeServiceRecord extends Model{
 
 	protected $table = 'employee_service_records';
 
+    protected $dates = ['created_at', 'updated_at'];
+
     public $timestamps = false;
     
 
@@ -31,6 +33,12 @@ class EmployeeServiceRecord extends Model{
         'spdate' => '',
         'status' => '',
         'remarks' => '',
+        'created_at' => null, 
+        'updated_at' => null,
+        'ip_created' => '',
+        'ip_updated' => '',
+        'user_created' => '',
+        'user_updated' => '',
 
     ];
 

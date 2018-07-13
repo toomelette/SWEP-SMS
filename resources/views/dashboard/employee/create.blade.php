@@ -51,12 +51,10 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#pi" data-toggle="tab">Personal Info</a></li>
-              <li><a href="#a" data-toggle="tab">Address</a></li>
               <li><a href="#fi" data-toggle="tab">Family Information</a></li>
               <li><a href="#id" data-toggle="tab">Personal ID's</a></li>
               <li><a href="#ad" data-toggle="tab">Appointment Details</a></li>
               <li><a href="#eb" data-toggle="tab">Educational background</a></li>
-              <li><a href="#t" data-toggle="tab">Trainings</a></li>
               <li><a href="#e" data-toggle="tab">Eligibilities</a></li>
               <li><a href="#we" data-toggle="tab">Work Experiences</a></li>
               <li><a href="#vw" data-toggle="tab">Voluntary Works</a></li>
@@ -93,18 +91,19 @@
                   <div class="col-md-12"></div>
 
                   {!! FormHelper::datepicker(
-                    '4', 'date_of_birth',  'Date of Birth *', old('date_of_birth'), $errors->has('date_of_birth'), $errors->first('date_of_birth')
+                    '3', 'date_of_birth',  'Date of Birth *', old('date_of_birth'), $errors->has('date_of_birth'), $errors->first('date_of_birth')
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '8', 'place_of_birth', 'text', 'Place of Birth *', 'Place of Birth', old('place_of_birth'), $errors->has('place_of_birth'), $errors->first('place_of_birth'), 'data-transform="uppercase"'
+                    '6', 'place_of_birth', 'text', 'Place of Birth *', 'Place of Birth', old('place_of_birth'), $errors->has('place_of_birth'), $errors->first('place_of_birth'), 'data-transform="uppercase"'
                   ) !!}
-
-                  <div class="col-md-12"></div>
 
                   {!! FormHelper::select_static(
                     '3', 'sex', 'Sex *', old('sex'), ['Male' => 'MALE', 'Female' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
                   ) !!}
+
+                  <div class="col-md-12"></div>
+                  
 
                   {!! FormHelper::select_static(
                     '3', 'civil_status', 'Civil Status *', old('civil_status'), $civil_status, $errors->has('civil_status'), $errors->first('civil_status'), '', ''
@@ -118,11 +117,11 @@
                      '3', 'weight', 'text', 'Weight', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
                   ) !!}
 
-                  <div class="col-md-12"></div>
-
                   {!! FormHelper::textbox(
-                     '2', 'blood_type', 'text', 'Blood Type *', 'Blood Type', old('blood_type'), $errors->has('blood_type'), $errors->first('blood_type'), 'data-transform="uppercase"'
+                     '3', 'blood_type', 'text', 'Blood Type *', 'Blood Type', old('blood_type'), $errors->has('blood_type'), $errors->first('blood_type'), 'data-transform="uppercase"'
                   ) !!}
+
+                  <div class="col-md-12"></div>
 
                   {!! FormHelper::textbox(
                      '3', 'tel_no', 'text', 'Telephone No.', 'Telephone No.', old('tel_no'), $errors->has('tel_no'), $errors->first('tel_no'), ''
@@ -133,54 +132,44 @@
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '4', 'email', 'text', 'Email Address', 'Email Address', old('email'), $errors->has('email'), $errors->first('email'), ''
+                     '3', 'email', 'text', 'Email Address', 'Email Address', old('email'), $errors->has('email'), $errors->first('email'), ''
                   ) !!}
-
-                  <div class="col-md-12"></div>
 
                   {!! FormHelper::select_static(
                     '3', 'citizenship', 'Citizenship *', old('citizenship'), ['Filipino' => 'Filipino', 'Dual Citizenship' => 'Dual Citizenship'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
                   ) !!}
 
+                  <div class="col-md-12"></div>
+                
                   {!! FormHelper::select_static(
                     '3', 'citizenship_type', 'Citizenship Type *', old('citizenship_type'), ['by birth' => 'BB', 'by naturalization' => 'BN'], $errors->has('citizenship_type'), $errors->first('citizenship_type'), '', ''
                   ) !!}
                   
                   {!! FormHelper::textbox(
-                     '6', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country'), $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
+                     '3', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country'), $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
                   ) !!}
 
-                  <div class="col-md-12"></div>
-
                   {!! FormHelper::textbox(
-                     '2', 'agency_no', 'text', 'Agency Employee No.', 'Agency Employee No.', old('agency_no'), $errors->has('agency_no'), $errors->first('agency_no'), ''
+                     '3', 'agency_no', 'text', 'Agency Employee No.', 'Agency Employee No.', old('agency_no'), $errors->has('agency_no'), $errors->first('agency_no'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
                      '3', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id'), $errors->has('gov_id'), $errors->first('gov_id'), ''
                   ) !!}
 
+                  <div class="col-md-12"></div>
+
                   {!! FormHelper::textbox(
                      '3', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no'), $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
                   ) !!}
 
                   {!! FormHelper::textbox(
-                     '4', 'id_date_issue', 'text', 'Date / Place of Issuance', 'Date / Place of Issuance', old('id_date_issue'), $errors->has('id_date_issue'), $errors->first('id_date_issue'), ''
+                     '3', 'id_date_issue', 'text', 'Date / Place of Issuance', 'Date / Place of Issuance', old('id_date_issue'), $errors->has('id_date_issue'), $errors->first('id_date_issue'), ''
                   ) !!}
 
+                  <div class="col-md-12"></div>
 
-                </div>
-              </div>
-
-
-
-
-              {{-- Address --}}
-              <div class="tab-pane" id="a">
-                <div class="row">
-
-
-                  <div class="col-md-6">
+                  <div class="col-md-6" style="padding-top: 30px;">
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Residential Address</h3>
@@ -226,7 +215,7 @@
                   </div>
                   
 
-                  <div class="col-md-6">
+                  <div class="col-md-6" style="padding-top: 30px;">
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Permanent Address</h3>
@@ -279,9 +268,10 @@
                     </div>
                   </div>
 
-
                 </div>
               </div>
+
+
 
 
 
@@ -514,6 +504,8 @@
 
 
 
+
+
               {{-- Appointment Details --}}
               <div class="tab-pane" id="ad">
                 <div class="row">
@@ -580,8 +572,6 @@
                     '3', 'ta', 'text', 'TA', 'TA', old('ta'), $errors->has('ta'), $errors->first('ta'), ''
                   ) !!}
 
-                  <div class="col-md-12"></div>
-
                   {!! FormHelper::datepicker(
                     '3', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov'), $errors->has('firstday_gov'), $errors->first('firstday_gov')
                   ) !!}
@@ -590,6 +580,8 @@
                     '3', 'firstday_sra',  'First Day in SRA *', old('firstday_sra'), $errors->has('firstday_sra'), $errors->first('firstday_sra')
                   ) !!}
 
+                  <div class="col-md-12"></div>
+
                   {!! FormHelper::datepicker(
                     '3', 'appointment_date',  'Appointment Date', old('appointment_date'), $errors->has('appointment_date'), $errors->first('appointment_date')
                   ) !!}
@@ -597,8 +589,6 @@
                   {!! FormHelper::datepicker(
                     '3', 'adjustment_date',  'Adjustment Date', old('adjustment_date'), $errors->has('adjustment_date'), $errors->first('adjustment_date')
                   ) !!}
-
-                  <div class="col-md-12"></div>
 
                   {!! FormHelper::select_dynamic(
                     '3', 'project_id', 'Station *', old('project_id'), $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
@@ -900,166 +890,6 @@
               </div>
 
 
-
-
-
-              {{-- Trainings --}}
-              <div class="tab-pane" id="t">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="training_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th style="width:15em;">Title *</th>
-                        <th>Type of L & D</th>
-                        <th style="width:15em;">Conducted by *</th>
-                        <th>Date From *</th>
-                        <th>Date To *</th>
-                        <th>Hours *</th>
-                        <th style="width:15em;">Venue *</th>
-                        <th>Remarks</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="training_table_body">
-
-                        @if(old('row_training'))
-
-                          @foreach(old('row_training') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_training['. $key .'][title]', 'Title', $value['title'], $errors->first('row_training.'. $key .'.title')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_training['. $key .'][type]', 'Type of L & D', $value['type'], $errors->first('row_training.'. $key .'.type')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_training['. $key .'][conducted_by]', 'Conducted by', $value['conducted_by'], $errors->first('row_training.'. $key .'.conducted_by')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_training['. $key .'][date_from]', $value['date_from'], $errors->first('row_training.'. $key .'.date_from')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_training['. $key .'][date_to]', $value['date_to'], $errors->first('row_training.'. $key .'.date_to')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_training['. $key .'][hours]', 'Hours', $value['hours'], $errors->first('row_training.'. $key .'.hours')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_training['. $key .'][venue]', 'Venue', $value['venue'], $errors->first('row_training.'. $key .'.venue')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_training['. $key .'][remarks]', 'Remarks', $value['remarks'], $errors->first('row_training.'. $key .'.remarks')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
-
-                          <tr>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_training[0][title]', 'Title', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_training[0][type]', 'Type of L & D', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_training[0][conducted_by]', 'Conducted by', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_training[0][date_from]', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_training[0][date_to]', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_training[0][hours]', 'Hours', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_training[0][venue]', 'Venue', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_training[0][remarks]', 'Remarks', '', '') !!}
-                            </td>
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
-                          </tr>
-
-
-                        @endif
-
-                        </tbody>
-
-                    </table>
-                   
-                  </div>
-
-                </div>
-
-              </div>
 
 
 

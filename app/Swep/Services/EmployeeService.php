@@ -27,13 +27,15 @@ class EmployeeService extends BaseService{
 
 	protected $employee;
     protected $employee_sr;
+    protected $employee_trng;
 
 
 
-    public function __construct(Employee $employee, EmployeeServiceRecord $employee_sr){
+    public function __construct(Employee $employee, EmployeeServiceRecord $employee_sr, EmployeeTraining $employee_trng){
 
         $this->employee = $employee;
         $this->employee_sr = $employee_sr;
+         $this->employee_trng = $employee_trng;
         parent::__construct();
 
     }
@@ -318,6 +320,12 @@ class EmployeeService extends BaseService{
         $employee_sr->spdate = $request->spdate;
         $employee_sr->status = $request->status;
         $employee_sr->remarks = $request->remarks;
+        $employee_sr->created_at = $this->carbon->now();
+        $employee_sr->updated_at = $this->carbon->now();
+        $employee_sr->ip_created = request()->ip();
+        $employee_sr->ip_updated = request()->ip();
+        $employee_sr->user_created = $this->auth->user()->user_id;
+        $employee_sr->user_updated = $this->auth->user()->user_id;
         $employee_sr->save();
 
         $this->event->fire('employee.service_record_store', $employee_sr);
@@ -347,6 +355,9 @@ class EmployeeService extends BaseService{
         $employee_sr->spdate = $request->e_spdate;
         $employee_sr->status = $request->e_status;
         $employee_sr->remarks = $request->e_remarks;
+        $employee_sr->updated_at = $this->carbon->now();
+        $employee_sr->ip_updated = request()->ip();
+        $employee_sr->user_updated = $this->auth->user()->user_id;
         $employee_sr->save();
 
         $this->event->fire('employee.service_record_update', $employee_sr);
@@ -395,6 +406,29 @@ class EmployeeService extends BaseService{
 
     public function trainingStore($request, $slug){
 
+        $employee = $this->employeeBySlug($slug);
+
+        $employee_trng = new EmployeeTraining;
+        $employee_trng->slug = $this->str->random(32);
+        $employee_trng->employee_no = $employee->employee_no;
+        $employee_trng->title = $request->title;
+        $employee_trng->type = $request->type;
+        $employee_trng->date_from = $this->dataTypeHelper->date_in($request->date_from);
+        $employee_trng->date_to = $this->dataTypeHelper->date_in($request->date_from);
+        $employee_trng->hours = $request->hours;
+        $employee_trng->conducted_by = $request->conducted_by;
+        $employee_trng->venue = $request->venue;
+        $employee_trng->remarks = $request->remarks;
+        $employee_trng->created_at = $this->carbon->now();
+        $employee_trng->updated_at = $this->carbon->now();
+        $employee_trng->ip_created = request()->ip();
+        $employee_trng->ip_updated = request()->ip();
+        $employee_trng->user_created = $this->auth->user()->user_id;
+        $employee_trng->user_updated = $this->auth->user()->user_id;
+        $employee_trng->save();
+
+        $this->event->fire('employee.training_store', $employee_trng);
+        return redirect()->route('dashboard.employee.training', $employee->slug);
 
     }
 
@@ -403,6 +437,24 @@ class EmployeeService extends BaseService{
 
     public function trainingUpdate($request, $emp_slug, $emp_trng_slug){
 
+        $employee = $this->employeeBySlug($emp_slug);
+
+        $employee_trng = $this->employeeTrngBySlug($emp_trng_slug);
+        $employee_trng->title = $request->e_title;
+        $employee_trng->type = $request->e_type;
+        $employee_trng->date_from = $this->dataTypeHelper->date_in($request->e_date_from);
+        $employee_trng->date_to = $this->dataTypeHelper->date_in($request->e_date_from);
+        $employee_trng->hours = $request->e_hours;
+        $employee_trng->conducted_by = $request->e_conducted_by;
+        $employee_trng->venue = $request->e_venue;
+        $employee_trng->remarks = $request->e_remarks;
+        $employee_trng->updated_at = $this->carbon->now();
+        $employee_trng->ip_updated = request()->ip();
+        $employee_trng->user_updated = $this->auth->user()->user_id;
+        $employee_trng->save();
+
+        $this->event->fire('employee.training_update', $employee_trng);
+        return redirect()->route('dashboard.employee.training', $employee->slug);
 
     }
 
@@ -411,6 +463,11 @@ class EmployeeService extends BaseService{
 
     public function trainingDestroy($slug){
 
+        $employee_trng = $this->employeeTrngBySlug($slug);
+        $employee_trng->delete();
+
+        $this->event->fire('employee.training_destroy', $employee_trng);
+        return redirect()->back();
 
     }
 
@@ -460,6 +517,20 @@ class EmployeeService extends BaseService{
 
 
 
+    public function employeeTrngBySlug($slug){
+
+        $employee_trng = $this->cache->remember('employees:trainings:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->employee_trng->findSlug($slug);
+        });
+
+        return $employee_trng;
+
+    }
+
+
+
+
+
     public function getFullname($request){
 
        return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
@@ -474,7 +545,6 @@ class EmployeeService extends BaseService{
         $employee->employeeAddress()->delete();
         $employee->employeeFamilyDetail()->delete();
         $employee->employeeOtherQuestion()->delete();
-        $employee->employeeTraining()->delete();
         $employee->employeeChildren()->delete();
         $employee->employeeEducationalBackground()->delete();
         $employee->employeeEligibility()->delete();
@@ -508,13 +578,6 @@ class EmployeeService extends BaseService{
         if(count($request->row_eb) > 0){
             foreach ($request->row_eb as $row) {
                 $this->storeEmployeeEducationalBackground($row, $employee);
-            }
-        }
-
-        // Employee Training
-        if(count($request->row_training) > 0){
-            foreach ($request->row_training as $row) {
-                $this->storeEmployeeTraining($row, $employee);
             }
         }
 
@@ -698,27 +761,6 @@ class EmployeeService extends BaseService{
         $employee_eb->save();
 
     }  
-
-
-
-
-
-
-    public function storeEmployeeTraining($row, $employee){
-
-        $employee_training = new EmployeeTraining;
-        $employee_training->employee_no = $employee->employee_no;
-        $employee_training->title = $row['title'];
-        $employee_training->type = $row['type'];
-        $employee_training->date_from = $this->dataTypeHelper->date_in($row['date_from']);
-        $employee_training->date_to = $this->dataTypeHelper->date_in($row['date_to']);
-        $employee_training->hours = $row['hours'];
-        $employee_training->conducted_by = $row['conducted_by'];
-        $employee_training->venue = $row['venue'];
-        $employee_training->remarks = $row['remarks'];
-        $employee_training->save();
-
-    }
 
 
 

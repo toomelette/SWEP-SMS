@@ -13,7 +13,7 @@ class EmployeeTraining extends Model{
 
     protected $table = 'employee_trainings';
 
-    protected $dates = ['date_from', 'date_to'];
+    protected $dates = ['date_from', 'date_to', 'created_at', 'updated_at'];
 
     public $timestamps = false;
     
@@ -31,6 +31,12 @@ class EmployeeTraining extends Model{
         'conducted_by' => '',
         'venue' => '',
         'remarks' => '',
+        'created_at' => null, 
+        'updated_at' => null,
+        'ip_created' => '',
+        'ip_updated' => '',
+        'user_created' => '',
+        'user_updated' => '',
 
     ];
 
@@ -51,10 +57,17 @@ class EmployeeTraining extends Model{
     // SCOPES
     public function scopePopulate($query){
 
-        return $query->orderBy('date_from', 'asc')->get();
+        return $query->orderBy('date_from', 'desc')->get();
 
     }
     
+    
+
+    public function scopeFindSlug($query, $slug){
+
+        return $query->where('slug', $slug)->firstOrFail();
+
+    }
 
 
 

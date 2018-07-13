@@ -10,7 +10,7 @@ class EmployeeTrainingEditForm extends FormRequest{
 
     public function authorize(){
 
-        return false;
+        return true;
     
     }
 
@@ -22,6 +22,15 @@ class EmployeeTrainingEditForm extends FormRequest{
 
         return [
             
+        	'e_title'=>'required|string|max:250',
+            'e_type'=>'nullable|string|max:45',
+            'e_date_from'=>'nullable|date_format:"m/d/Y"',
+            'e_date_to'=>'nullable|date_format:"m/d/Y"',
+            'e_hours'=>'required|int|max:1000',
+            'e_conducted_by'=>'nullable|string|max:250',
+            'e_venue'=>'nullable|string|max:250',
+            'e_remarks'=>'nullable|string|max:250',
+
         ];
     
     }

@@ -21,7 +21,7 @@
 
       @include('layouts.admin-sidenav') 
 
-      <div class="content-wrapper"> 
+      <div class="content-wrapper" style="height:500em;"> 
 
         @yield('content')
 

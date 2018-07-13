@@ -96,7 +96,7 @@ Route::get('/dashboard/test', function(){
 
 	//return dd(Illuminate\Support\Str::random(16));
 
-	$list = App\Models\EmployeeTraining::where('slug', null)->get();
+	$list = App\Models\EmployeeTraining::where('slug', '')->get();
 
 	foreach ($list as $data) {
 		$tr = App\Models\EmployeeTraining::find($data->id);

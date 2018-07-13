@@ -189,7 +189,7 @@
     @foreach ($employee->employeeServiceRecord()->populate() as $key => $data)
       @if($key < 25)
         <div class="row">
-          <div class="col-sm-12 no-padding">
+          <div class="col-sm-12 no-padding" style="line-height:13.5px;">
 
             <div class="col-sm-2 no-padding">
               <div class="col-sm-12 no-padding">
@@ -226,8 +226,8 @@
 
             <div class="col-sm-2 no-padding" style="">
               <div class="col-sm-12 no-padding">
-                <div class="col-sm-6">
-                  <span style="font-size:10px; margin-left:15px;">{{ $data->spdate }}</span>
+                <div class="col-sm-6 no-padding">
+                  <span style="font-size:10px;">{{ $data->spdate }}</span>
                 </div>
                 <div class="col-sm-6">
                   <span style="font-size:10px; margin-left:12px;">&nbsp;</span>
@@ -469,7 +469,7 @@
       @foreach ($employee->employeeServiceRecord()->populate() as $key => $data)
         @if($key >= 25)
           <div class="row">
-            <div class="col-sm-12 no-padding">
+            <div class="col-sm-12 no-padding" style="line-height:13.5px;">
 
               <div class="col-sm-2 no-padding">
                 <div class="col-sm-12 no-padding">
@@ -506,8 +506,8 @@
 
               <div class="col-sm-2 no-padding" style="">
                 <div class="col-sm-12 no-padding">
-                  <div class="col-sm-6">
-                    <span style="font-size:10px; margin-left:15px;">{{ $data->spdate }}</span>
+                  <div class="col-sm-6 no-padding">
+                    <span style="font-size:10px;">{{ $data->spdate }}</span>
                   </div>
                   <div class="col-sm-6">
                     <span style="font-size:10px; margin-left:12px;">&nbsp;</span>

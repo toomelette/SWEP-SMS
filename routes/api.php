@@ -20,3 +20,6 @@ Route::get('/textbox_response_departmentName_from_departmentId/{key}', 'Api\ApiU
 // Employee
 Route::get('/employee/serviceRecord/{slug}/edit', 'Api\ApiEmployeeController@editServiceRecord')
 		->name('api.employee_serviceRecord_edit');
+
+Route::get('/employee/training/{slug}/edit', 'Api\ApiEmployeeController@editTraining')
+		->name('api.employee_training_edit');

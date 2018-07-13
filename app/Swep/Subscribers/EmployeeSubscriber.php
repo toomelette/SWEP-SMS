@@ -29,6 +29,9 @@ class EmployeeSubscriber extends BaseSubscriber{
         $events->listen('employee.service_record_store', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordStore');
         $events->listen('employee.service_record_update', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordUpdate');
         $events->listen('employee.service_record_destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordDestroy');
+        $events->listen('employee.training_store', 'App\Swep\Subscribers\EmployeeSubscriber@onTrainingStore');
+        $events->listen('employee.training_update', 'App\Swep\Subscribers\EmployeeSubscriber@onTrainingUpdate');
+        $events->listen('employee.training_destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onTrainingDestroy');
 
     }
 
@@ -73,6 +76,9 @@ class EmployeeSubscriber extends BaseSubscriber{
 
 
 
+
+
+
     public function onServiceRecordStore($employee_sr){
 
         $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
@@ -86,7 +92,7 @@ class EmployeeSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
         $this->cacheHelper->deletePattern('swep_cache:employees:service_records:bySlug:'. $employee_sr->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_serviceRecord:bySlug:'. $employee_sr->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_serviceRecords:bySlug:'. $employee_sr->slug .'');
 
         $this->session->flash('EMPLOYEE_SR_UPDATE_SUCCESS', 'The Employee Service Record has been successfully updated!');
         $this->session->flash('EMPLOYEE_SR_UPDATE_SUCCESS_SLUG', $employee_sr->slug);
@@ -100,10 +106,48 @@ class EmployeeSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
         $this->cacheHelper->deletePattern('swep_cache:employees:service_records:bySlug:'. $employee_sr->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_serviceRecord:bySlug:'. $employee_sr->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_serviceRecords:bySlug:'. $employee_sr->slug .'');
 
     }
 
+
+
+
+
+
+
+
+
+    public function onTrainingStore($employee_trng){
+
+        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
+
+    }
+
+
+
+
+    public function onTrainingUpdate($employee_trng){
+
+        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:employees:trainings:bySlug:'. $employee_trng->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_trainings:bySlug:'. $employee_trng->slug .'');
+
+        $this->session->flash('EMPLOYEE_TRNG_UPDATE_SUCCESS', 'The Employee Service Record has been successfully updated!');
+        $this->session->flash('EMPLOYEE_TRNG_UPDATE_SUCCESS_SLUG', $employee_trng->slug);
+
+    }
+
+
+
+
+    public function onTrainingDestroy($employee_trng){
+
+        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:employees:trainings:bySlug:'. $employee_trng->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:api:employees:employee_trainings:bySlug:'. $employee_trng->slug .'');
+
+    }
 
 
 

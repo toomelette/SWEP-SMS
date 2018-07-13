@@ -1,6 +1,6 @@
 @php
   $table_sessions = [ 
-                      Session::get('EMPLOYEE_SR_UPDATE_SUCCESS_SLUG'),
+                      Session::get('EMPLOYEE_TRNG_UPDATE_SUCCESS_SLUG'),
                     ];
 @endphp
 
@@ -28,7 +28,7 @@
           </div> 
         </div>
 
-        <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.employee.training_store', $employee->slug) }}">
+        <form data-pjax role="form" method="POST" autocomplete="off" action="{{ route('dashboard.employee.training_store', $employee->slug) }}">
 
           @csrf
 
@@ -45,11 +45,11 @@
             <div class="col-md-12"></div>
 
             {!! FormHelper::datepicker(
-              '6', 'date_from',  'Date From *', old('date_from'), $errors->has('date_from'), $errors->first('date_from')
+              '6', 'date_from',  'Date From', old('date_from'), $errors->has('date_from'), $errors->first('date_from')
             ) !!}
 
             {!! FormHelper::datepicker(
-              '6', 'date_to',  'Date To *', old('date_to'), $errors->has('date_to'), $errors->first('date_to')
+              '6', 'date_to',  'Date To', old('date_to'), $errors->has('date_to'), $errors->first('date_to')
             ) !!}
 
             <div class="col-md-12"></div>
@@ -59,7 +59,7 @@
             ) !!}
 
             {!! FormHelper::textbox(
-               '6', 'conducted_by', 'text', 'Conducted By *', 'Conducted By', old('conducted_by'), $errors->has('conducted_by'), $errors->first('conducted_by'), ''
+               '6', 'conducted_by', 'text', 'Conducted By', 'Conducted By', old('conducted_by'), $errors->has('conducted_by'), $errors->first('conducted_by'), ''
             ) !!}
 
             <div class="col-md-12"></div>
@@ -91,14 +91,20 @@
     <div class="col-md-6">
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Service Records</h3> 
+          <h3 class="box-title">Seminars and Training</h3> 
           <div class="box-tools">
             <a href="{{ route('dashboard.employee.training_print', $employee->slug) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
           </div>
         </div>
 
         <div class="box-body">
-
+          @if($errors->all())
+            <ul style="line-height: 10px;">
+              @foreach ($errors->all() as $data)
+                <li><p class="text-danger">{{ $data }}</p></li>
+              @endforeach
+            </ul>
+          @endif
           <table class="table table-bordered">
             <tr>
               <th>Title</th>
@@ -157,7 +163,7 @@
 
 
   {{-- Update --}}
-  <div class="modal fade bs-example-modal-lg" id="tr_update" data-backdrop="static" id="pjax-container">
+  <div class="modal fade bs-example-modal-lg" id="tr_update" data-backdrop="static">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-body" id="tr_update_body">
@@ -181,11 +187,11 @@
               <div class="col-md-12"></div>
 
               {!! FormHelper::datepicker(
-                '6', 'e_date_from',  'Date From *', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from')
+                '6', 'e_date_from',  'Date From', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from')
               ) !!}
 
               {!! FormHelper::datepicker(
-                '6', 'e_date_to',  'Date To *', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to')
+                '6', 'e_date_to',  'Date To', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to')
               ) !!}
 
               <div class="col-md-12"></div>
@@ -195,7 +201,7 @@
               ) !!}
 
               {!! FormHelper::textbox(
-                 '6', 'e_conducted_by', 'text', 'Conducted By *', 'Conducted By', old('e_conducted_by'), $errors->has('e_conducted_by'), $errors->first('e_conducted_by'), ''
+                 '6', 'e_conducted_by', 'text', 'Conducted By', 'Conducted By', old('e_conducted_by'), $errors->has('e_conducted_by'), $errors->first('e_conducted_by'), ''
               ) !!}
 
               <div class="col-md-12"></div>
@@ -257,26 +263,35 @@
       $("#tr_update").modal("show");
       $("#tr_update_body #tr_update_form").attr("action", $(this).data("url"));
 
+      // Datepicker
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+              autoclose: true,
+              dateFormat: "mm/dd/yy",
+              orientation: "bottom"
+          })
+      });
+
       $.ajax({
         headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-          url: "/api/employee/training/"+slug+"/edit",
-          type: "GET",
-          dataType: "json",
-          success:function(data) {       
+        url: "/api/employee/training/"+slug+"/edit",
+        type: "GET",
+        dataType: "json",
+        success:function(data) {       
             
-            $.each(data, function(key, value) {
-              $("#tr_update_form #e_slug").val(value.slug);
-              $("#tr_update_form #e_title").val(value.title);
-              $("#tr_update_form #e_type").val(value.type);
-              $("#tr_update_form #e_date_from").val(value.date_from);
-              $("#tr_update_form #e_date_to").val(value.date_to);
-              $("#tr_update_form #e_hours").val(value.hours);
-              $("#tr_update_form #e_conducted_by").val(value.conducted_by);
-              $("#tr_update_form #e_venue").val(value.venue);
-              $("#tr_update_form #e_remarks").val(value.remarks);
-            });
+          $.each(data, function(key, value) {
+            $("#tr_update_form #e_slug").val(value.slug);
+            $("#tr_update_form #e_title").val(value.title);
+            $("#tr_update_form #e_type").val(value.type);
+            $("#tr_update_form #e_date_from").datepicker("setDate", new Date(value.date_from));
+            $("#tr_update_form #e_date_to").datepicker("setDate", new Date(value.date_to));
+            $("#tr_update_form #e_hours").val(value.hours);
+            $("#tr_update_form #e_conducted_by").val(value.conducted_by);
+            $("#tr_update_form #e_venue").val(value.venue);
+            $("#tr_update_form #e_remarks").val(value.remarks);
+          });
 
-          }
+        }
       });
 
     });
@@ -289,6 +304,7 @@
         $('#tr_update').modal("hide");  
       }, 100);
     });
+
 
   </script> 
     

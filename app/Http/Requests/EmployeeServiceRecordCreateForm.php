@@ -20,7 +20,7 @@ class EmployeeServiceRecordCreateForm extends FormRequest{
 
         return [
             
-            'sequence_no'=>'required|int|max:100',
+            'sequence_no'=>'required|int|max:1000',
             'date_from'=>'required|string|max:45',
             'date_to'=>'required|string|max:45',
             'position'=>'required|string|max:45',

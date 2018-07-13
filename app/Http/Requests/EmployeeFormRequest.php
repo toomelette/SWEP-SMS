@@ -178,21 +178,6 @@ class EmployeeFormRequest extends FormRequest{
         }
 
 
-        // Trainings
-        if(count($rows_training) > 0){
-            foreach($rows_training as $key => $value){   
-                $rules['row_training.'.$key.'.title'] = 'required|string|max:255';
-                $rules['row_training.'.$key.'.type'] = 'nullable|string|max:90';
-                $rules['row_training.'.$key.'.conducted_by'] = 'nullable|string|max:255';
-                $rules['row_training.'.$key.'.date_from'] = 'required|date_format:"m/d/Y"';
-                $rules['row_training.'.$key.'.date_to'] = 'required|date_format:"m/d/Y"';
-                $rules['row_training.'.$key.'.hours'] = 'required|int';
-                $rules['row_training.'.$key.'.venue'] = 'nullable|string|max:255';
-                $rules['row_training.'.$key.'.remarks'] = 'nullable|string|max:255';
-            } 
-        }
-
-
         // Eligibility
         if(count($rows_eligibility) > 0){
             foreach($rows_eligibility as $key => $value){   
