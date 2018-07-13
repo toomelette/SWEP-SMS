@@ -8,7 +8,6 @@ use App\Models\EmployeeAddress;
 use App\Models\EmployeeOtherQuestion;
 use App\Models\EmployeeChildren;
 use App\Models\EmployeeEducationalBackground;
-use App\Models\EmployeeTraining;
 use App\Models\EmployeeEligibility;
 use App\Models\EmployeeExperience;
 use App\Models\EmployeeVoluntaryWork;
@@ -26,16 +25,12 @@ class EmployeeService extends BaseService{
 
 
 	protected $employee;
-    protected $employee_sr;
-    protected $employee_trng;
 
 
 
-    public function __construct(Employee $employee, EmployeeServiceRecord $employee_sr, EmployeeTraining $employee_trng){
+    public function __construct(Employee $employee){
 
         $this->employee = $employee;
-        $this->employee_sr = $employee_sr;
-         $this->employee_trng = $employee_trng;
         parent::__construct();
 
     }
@@ -289,200 +284,6 @@ class EmployeeService extends BaseService{
 
 
 
-    public function serviceRecord($slug){
-
-        $employee = $this->employeeBySlug($slug);
-        return view('dashboard.employee.service_record')->with('employee', $employee);
-
-    }
-
-
-
-
-    public function serviceRecordStore($request, $slug){
-
-        $employee = $this->employeeBySlug($slug);
-
-        $employee_sr = new EmployeeServiceRecord;
-        $employee_sr->slug = $this->str->random(32);
-        $employee_sr->employee_no = $employee->employee_no;
-        $employee_sr->sequence_no = $request->sequence_no;
-        $employee_sr->date_from = $request->date_from;
-        $employee_sr->date_to = $request->date_to;
-        $employee_sr->position = $request->position;
-        $employee_sr->appointment_status = $request->appointment_status;
-        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
-        $employee_sr->mode_of_payment = $request->mode_of_payment;
-        $employee_sr->station = $request->station;
-        $employee_sr->gov_serve = $request->gov_serve;
-        $employee_sr->psc_serve = $request->psc_serve;
-        $employee_sr->lwp = $request->lwp;
-        $employee_sr->spdate = $request->spdate;
-        $employee_sr->status = $request->status;
-        $employee_sr->remarks = $request->remarks;
-        $employee_sr->created_at = $this->carbon->now();
-        $employee_sr->updated_at = $this->carbon->now();
-        $employee_sr->ip_created = request()->ip();
-        $employee_sr->ip_updated = request()->ip();
-        $employee_sr->user_created = $this->auth->user()->user_id;
-        $employee_sr->user_updated = $this->auth->user()->user_id;
-        $employee_sr->save();
-
-        $this->event->fire('employee.service_record_store', $employee_sr);
-        return redirect()->route('dashboard.employee.service_record', $employee->slug);
-
-    }
-
-
-
-
-    public function serviceRecordUpdate($request, $emp_slug, $emp_sr_slug){
-
-        $employee = $this->employeeBySlug($emp_slug);
-
-        $employee_sr = $this->employeeSrBySlug($emp_sr_slug);
-        $employee_sr->sequence_no = $request->e_sequence_no;
-        $employee_sr->date_from = $request->e_date_from;
-        $employee_sr->date_to = $request->e_date_to;
-        $employee_sr->position = $request->e_position;
-        $employee_sr->appointment_status = $request->e_appointment_status;
-        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->e_salary);
-        $employee_sr->mode_of_payment = $request->e_mode_of_payment;
-        $employee_sr->station = $request->e_station;
-        $employee_sr->gov_serve = $request->e_gov_serve;
-        $employee_sr->psc_serve = $request->e_psc_serve;
-        $employee_sr->lwp = $request->e_lwp;
-        $employee_sr->spdate = $request->e_spdate;
-        $employee_sr->status = $request->e_status;
-        $employee_sr->remarks = $request->e_remarks;
-        $employee_sr->updated_at = $this->carbon->now();
-        $employee_sr->ip_updated = request()->ip();
-        $employee_sr->user_updated = $this->auth->user()->user_id;
-        $employee_sr->save();
-
-        $this->event->fire('employee.service_record_update', $employee_sr);
-        return redirect()->route('dashboard.employee.service_record', $employee->slug);
-
-    }
-
-
-
-
-    public function serviceRecordDestroy($slug){
-
-        $employee_sr = $this->employeeSrBySlug($slug);
-        $employee_sr->delete();
-
-        $this->event->fire('employee.service_record_destroy', $employee_sr);
-        return redirect()->back();
-
-    }
-
-
-
-
-    public function serviceRecordPrint($slug){
-
-        $employee = $this->employeeBySlug($slug);
-        return view('printables.employee_service_record')->with('employee', $employee);
-
-    }
-
-
-
-
-
-
-
-    public function training($slug){
-
-        $employee = $this->employeeBySlug($slug);
-        return view('dashboard.employee.training')->with('employee', $employee);
-
-    }
-
-
-
-
-    public function trainingStore($request, $slug){
-
-        $employee = $this->employeeBySlug($slug);
-
-        $employee_trng = new EmployeeTraining;
-        $employee_trng->slug = $this->str->random(32);
-        $employee_trng->employee_no = $employee->employee_no;
-        $employee_trng->title = $request->title;
-        $employee_trng->type = $request->type;
-        $employee_trng->date_from = $this->dataTypeHelper->date_in($request->date_from);
-        $employee_trng->date_to = $this->dataTypeHelper->date_in($request->date_from);
-        $employee_trng->hours = $request->hours;
-        $employee_trng->conducted_by = $request->conducted_by;
-        $employee_trng->venue = $request->venue;
-        $employee_trng->remarks = $request->remarks;
-        $employee_trng->created_at = $this->carbon->now();
-        $employee_trng->updated_at = $this->carbon->now();
-        $employee_trng->ip_created = request()->ip();
-        $employee_trng->ip_updated = request()->ip();
-        $employee_trng->user_created = $this->auth->user()->user_id;
-        $employee_trng->user_updated = $this->auth->user()->user_id;
-        $employee_trng->save();
-
-        $this->event->fire('employee.training_store', $employee_trng);
-        return redirect()->route('dashboard.employee.training', $employee->slug);
-
-    }
-
-
-
-
-    public function trainingUpdate($request, $emp_slug, $emp_trng_slug){
-
-        $employee = $this->employeeBySlug($emp_slug);
-
-        $employee_trng = $this->employeeTrngBySlug($emp_trng_slug);
-        $employee_trng->title = $request->e_title;
-        $employee_trng->type = $request->e_type;
-        $employee_trng->date_from = $this->dataTypeHelper->date_in($request->e_date_from);
-        $employee_trng->date_to = $this->dataTypeHelper->date_in($request->e_date_from);
-        $employee_trng->hours = $request->e_hours;
-        $employee_trng->conducted_by = $request->e_conducted_by;
-        $employee_trng->venue = $request->e_venue;
-        $employee_trng->remarks = $request->e_remarks;
-        $employee_trng->updated_at = $this->carbon->now();
-        $employee_trng->ip_updated = request()->ip();
-        $employee_trng->user_updated = $this->auth->user()->user_id;
-        $employee_trng->save();
-
-        $this->event->fire('employee.training_update', $employee_trng);
-        return redirect()->route('dashboard.employee.training', $employee->slug);
-
-    }
-
-
-
-
-    public function trainingDestroy($slug){
-
-        $employee_trng = $this->employeeTrngBySlug($slug);
-        $employee_trng->delete();
-
-        $this->event->fire('employee.training_destroy', $employee_trng);
-        return redirect()->back();
-
-    }
-
-
-
-
-    public function trainingPrint($slug){
-
-
-    }
-
-
-
-
-
 
 
 
@@ -497,33 +298,6 @@ class EmployeeService extends BaseService{
         });
         
         return $employee;
-
-    }
-
-
-
-
-    public function employeeSrBySlug($slug){
-
-        $employee_sr = $this->cache->remember('employees:service_records:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->employee_sr->findSlug($slug);
-        });
-
-        return $employee_sr;
-
-    }
-
-
-
-
-
-    public function employeeTrngBySlug($slug){
-
-        $employee_trng = $this->cache->remember('employees:trainings:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->employee_trng->findSlug($slug);
-        });
-
-        return $employee_trng;
 
     }
 

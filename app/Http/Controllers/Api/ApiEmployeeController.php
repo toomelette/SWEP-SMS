@@ -39,7 +39,7 @@ class ApiEmployeeController extends Controller{
 
     	if($request->Ajax()){
 
-    		$response_employee_sr = $this->cache->remember('api:employees:employee_serviceRecords:bySlug:'. $slug .'', 240, function() use ($slug){
+    		$response_employee_sr = $this->cache->remember('api:employees:service_records:bySlug:'. $slug .'', 240, function() use ($slug){
         		return $this->employee_sr->where('slug', $slug)->get();
        		});
 
@@ -59,7 +59,7 @@ class ApiEmployeeController extends Controller{
 
     	if($request->Ajax()){
 
-    		$response_employee_trng = $this->cache->remember('api:employees:employee_trainings:bySlug:'. $slug .'', 240, function() use ($slug){
+    		$response_employee_trng = $this->cache->remember('api:employees:trainings:bySlug:'. $slug .'', 240, function() use ($slug){
         		return $this->employee_trng->where('slug', $slug)->get();
        		});
 

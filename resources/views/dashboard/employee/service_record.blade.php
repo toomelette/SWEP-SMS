@@ -1,6 +1,7 @@
 @php
   $table_sessions = [ 
                       Session::get('EMPLOYEE_SR_UPDATE_SUCCESS_SLUG'),
+                      Session::get('EMPLOYEE_SR_CREATE_SUCCESS_SLUG'),
                     ];
 @endphp
 
@@ -144,7 +145,7 @@
               <th>Salary</th>
               <th>Action</th>
             </tr>
-            @foreach($employee->employeeServiceRecord()->populate() as $data) 
+            @foreach($employee_service_records as $data) 
               <tr 
                 {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
                 {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}

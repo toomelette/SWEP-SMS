@@ -1,6 +1,7 @@
 @php
   $table_sessions = [ 
                       Session::get('EMPLOYEE_TRNG_UPDATE_SUCCESS_SLUG'),
+                      Session::get('EMPLOYEE_TRNG_CREATE_SUCCESS_SLUG'),
                     ];
 @endphp
 
@@ -112,7 +113,7 @@
               <th>Date To</th>
               <th>Action</th>
             </tr>
-            @foreach($employee->employeeTraining()->populate() as $data) 
+            @foreach($employee_trainings as $data) 
               <tr 
                 {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
                 {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}

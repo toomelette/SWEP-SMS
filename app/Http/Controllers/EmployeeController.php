@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Swep\Services\EmployeeService;
+use App\Swep\Services\EmployeeTrainingService;
+use App\Swep\Services\EmployeeServiceRecordService;
 use App\Http\Requests\EmployeeFormRequest;
 use App\Http\Requests\EmployeeFilterRequest;
 use App\Http\Requests\EmployeeServiceRecordCreateForm;
@@ -17,19 +19,23 @@ class EmployeeController extends Controller{
 
 
     protected $employee;
+    protected $employee_sr;
+    protected $employee_trng;
 
 
 
-    public function __construct(EmployeeService $employee){
+    public function __construct(EmployeeService $employee, EmployeeServiceRecordService $employee_sr, EmployeeTrainingService $employee_trng){
 
         $this->employee = $employee;
+        $this->employee_sr = $employee_sr;
+        $this->employee_trng = $employee_trng;
 
     }
 	
 
 
 
-
+    // Employee Master
 	public function index(EmployeeFilterRequest $request){
 
     	return $this->employee->fetchAll($request);
@@ -111,9 +117,10 @@ class EmployeeController extends Controller{
 
 
 
+    // Service Record
     public function serviceRecord($slug){
 
-        return $this->employee->serviceRecord($slug);
+        return $this->employee_sr->index($slug);
 
     }
 
@@ -122,7 +129,7 @@ class EmployeeController extends Controller{
 
     public function serviceRecordStore(EmployeeServiceRecordCreateForm $request, $slug){
 
-        return $this->employee->serviceRecordStore($request, $slug);
+        return $this->employee_sr->store($request, $slug);
 
     }
 
@@ -131,7 +138,7 @@ class EmployeeController extends Controller{
 
     public function serviceRecordUpdate(EmployeeServiceRecordEditForm $request, $emp_slug, $emp_sr_slug){
         
-        return $this->employee->serviceRecordUpdate($request, $emp_slug, $emp_sr_slug); 
+        return $this->employee_sr->update($request, $emp_slug, $emp_sr_slug); 
 
     }
 
@@ -140,7 +147,7 @@ class EmployeeController extends Controller{
 
     public function serviceRecordDestroy($slug){
         
-        return $this->employee->serviceRecordDestroy($slug);
+        return $this->employee_sr->destroy($slug);
 
     }
 
@@ -149,16 +156,16 @@ class EmployeeController extends Controller{
 
     public function serviceRecordPrint($slug){
         
-        return $this->employee->serviceRecordPrint($slug);
+        return $this->employee_sr->print($slug);
 
     }
 
 
 
-
+    // Trainings
     public function training($slug){
 
-        return $this->employee->training($slug);
+        return $this->employee_trng->index($slug);
 
     }
 
@@ -167,7 +174,7 @@ class EmployeeController extends Controller{
 
     public function trainingStore(EmployeeTrainingCreateForm $request, $slug){
 
-        return $this->employee->trainingStore($request, $slug);
+        return $this->employee_trng->store($request, $slug);
 
     }
 
@@ -176,7 +183,7 @@ class EmployeeController extends Controller{
 
     public function trainingUpdate(EmployeeTrainingEditForm $request, $emp_slug, $emp_trng_slug){
         
-        return $this->employee->trainingUpdate($request, $emp_slug, $emp_trng_slug); 
+        return $this->employee_trng->update($request, $emp_slug, $emp_trng_slug); 
 
     }
 
@@ -185,7 +192,7 @@ class EmployeeController extends Controller{
 
     public function trainingDestroy($slug){
         
-        return $this->employee->trainingDestroy($slug);
+        return $this->employee_trng->destroy($slug);
 
     }
 
@@ -194,7 +201,7 @@ class EmployeeController extends Controller{
 
     public function trainingPrint($slug){
         
-        return $this->employee->trainingPrint($slug);
+        return $this->employee_trng->print($slug);
 
     }
 
