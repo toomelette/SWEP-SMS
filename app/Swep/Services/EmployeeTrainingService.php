@@ -113,7 +113,13 @@ class EmployeeTrainingService extends BaseService{
 
     public function print($slug){
 
+        $employee = $this->employeeBySlug($slug);
 
+        $employee_trainings = $this->cache->remember('employees:trainings:byEmpNo:'. $employee->employee_no, 240, function() use ($employee){
+            return $this->employee_trng->populateByEmpNo($employee->employee_no);
+        });
+
+        return view('printables.employee_training')->with(['employee' => $employee, 'employee_trainings' => $employee_trainings,]);
     }
 
 
