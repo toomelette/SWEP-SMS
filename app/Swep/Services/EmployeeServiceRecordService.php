@@ -126,7 +126,12 @@ class EmployeeServiceRecordService extends BaseService{
     public function print($slug){
 
         $employee = $this->employeeBySlug($slug);
-        return view('printables.employee_service_record')->with('employee', $employee);
+
+        $employee_service_records = $this->cache->remember('employees:service_records:byEmpNo:'. $employee->employee_no, 240, function() use ($employee){
+            return $this->employee_sr->populateByEmpNo($employee->employee_no);
+        });
+
+        return view('printables.employee_service_record')->with(['employee' => $employee, 'employee_service_records' => $employee_service_records]);
 
     }
 

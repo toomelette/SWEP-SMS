@@ -45,9 +45,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** MENU **/
 	Route::resource('menu', 'MenuController');
 
-	/** SUBMENU **/
-	Route::resource('submenu', 'SubmenuController');
-
 	/** SIGNATORIES **/
 	Route::resource('signatory', 'SignatoryController');
 

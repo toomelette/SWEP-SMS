@@ -186,7 +186,7 @@
     </div>
 
 
-    @foreach ($employee->employeeServiceRecord()->populate() as $key => $data)
+    @foreach ($employee_service_records as $key => $data)
       @if($key < 25)
         <div class="row">
           <div class="col-sm-12 no-padding" style="line-height:13.5px;">
@@ -246,7 +246,7 @@
 
     <div style="border-bottom:solid 1px;"></div>  
 
-    @if(count($employee->employeeServiceRecord) < 20)
+    @if(count($employee_service_records) < 20)
       <div class="row" style="margin-top: 10px;">
         <div class="col-sm-12">
           <p style="font-size:9px;">Issued in Compliance with No. 54 dated August 10, 1954 and in accordance with Circular No. 58 dated August 10, 1954 of the System.</p>
@@ -327,7 +327,7 @@
   {{-- Break Page if Records is Greater than 20 --}}
 
 
-  @if(count($employee->employeeServiceRecord) > 20)
+  @if(count($employee_service_records) > 20)
     <div class="wrapper" style="overflow:hidden !important;">
 
       {{-- HEADER --}}
@@ -466,7 +466,7 @@
       </div>
 
 
-      @foreach ($employee->employeeServiceRecord()->populate() as $key => $data)
+      @foreach ($employee_service_records as $key => $data)
         @if($key >= 25)
           <div class="row">
             <div class="col-sm-12 no-padding" style="line-height:13.5px;">
