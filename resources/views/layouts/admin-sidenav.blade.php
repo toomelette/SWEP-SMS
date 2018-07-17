@@ -122,7 +122,7 @@
 
 
         {{-- ACCOUNTING --}}
-        @if(count($global_user_menus_hr) > 0)
+        @if(count($global_user_menus_acctg) > 0)
 
           <li class="header">ACCOUNTING</li>
           @foreach($global_user_menus_acctg as $user_menu)

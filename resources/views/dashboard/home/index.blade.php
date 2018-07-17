@@ -14,7 +14,7 @@
     </h1>
 </section>
 
-<section class="content">
+<!-- <section class="content">
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Title</h3>
@@ -26,6 +26,6 @@
             Footer
         </div>
     </div>
-</section>
+</section> -->
 
 @endsection
