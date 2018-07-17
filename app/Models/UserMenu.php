@@ -93,7 +93,7 @@ class UserMenu extends Model{
     public function getCountUserMenu() {
 
         $userMenu = Cache::remember('nav:user_menus:byUserId:' . Auth::user()->user_id .':byRoute:'. Route::currentRouteName(), 240, function(){
-            $num = $this->where('route', Route::currentRouteName())->where('user_id', Auth::user()->user_id)->first();
+            $num = $this->where('route', Route::currentRouteName())->where('user_id', Auth::user()->user_id)->get();
             return count($num);
         });
 

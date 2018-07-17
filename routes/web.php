@@ -96,12 +96,18 @@ Route::get('/dashboard/test', function(){
 
 	//return dd(Illuminate\Support\Str::random(16));
 
-	$list = App\Models\EmployeeTraining::where('slug', '')->get();
+	// $list = App\Models\EmployeeTraining::where('slug', '')->get();
 
-	foreach ($list as $data) {
-		$tr = App\Models\EmployeeTraining::find($data->id);
-		$tr->slug = Illuminate\Support\Str::random(16);
-		$tr->save();
-	}
+	// foreach ($list as $data) {
+	// 	$tr = App\Models\EmployeeTraining::find($data->id);
+	// 	$tr->slug = Illuminate\Support\Str::random(16);
+	// 	$tr->save();
+	// }
+
+    $userMenu = Cache::remember('nav:user_menus:byUserId:test', 240, function(){
+    $num = 'test';
+    return $num;
+    });
+    dd($userMenu);
 
 });
