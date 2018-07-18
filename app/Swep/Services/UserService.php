@@ -5,6 +5,7 @@ namespace App\Swep\Services;
 
 use Hash;
 use App\Models\User;
+use App\Models\Employee;
 use App\Models\Menu;
 use App\Models\SubMenu;
 use App\Models\UserMenu;
@@ -18,6 +19,7 @@ class UserService extends BaseService{
 
 
 	protected $user;
+    protected $employee;
     protected $menu;
     protected $submenu;
     protected $user_menu;
@@ -25,9 +27,10 @@ class UserService extends BaseService{
 
 
 
-    public function __construct(User $user, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubmenu $user_submenu){
+    public function __construct(User $user, Employee $employee, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubmenu $user_submenu){
 
         $this->user = $user;
+        $this->employee = $employee;
         $this->menu = $menu;
         $this->submenu = $submenu;
         $this->user_menu = $user_menu;
@@ -77,45 +80,53 @@ class UserService extends BaseService{
 
     public function store($request){
 
-        if(!$this->user->usernameExist($request->username) == 1){
+        $employee = $this->employeeBySlug($request->employee_sync);
+        
+        if($employee->user_id == null || $employee->user_id == ''){
+            
+            if(!$this->user->usernameExist($request->username) == 1){
 
-            $user = new User;
-            $user->slug = $this->str->random(16);
-            $user->user_id = $this->user->userIdInc;
-            $user->firstname = $request->firstname;
-            $user->middlename = $request->middlename;
-            $user->lastname = $request->lastname;
-            $user->email = $request->email;
-            $user->position = $request->position;
-            $user->username = $request->username;
-            $user->password = Hash::make($request->password);
-            $user->created_at = $this->carbon->now();
-            $user->updated_at = $this->carbon->now();
-            $user->ip_created = request()->ip();
-            $user->ip_updated = request()->ip();
-            $user->user_created = $this->auth->user()->user_id;
-            $user->user_updated = $this->auth->user()->user_id;
-            $user->save();
+                $user = new User;
+                $user->slug = $this->str->random(16);
+                $user->user_id = $this->user->userIdInc;
+                $user->firstname = $request->firstname;
+                $user->middlename = $request->middlename;
+                $user->lastname = $request->lastname;
+                $user->email = $request->email;
+                $user->position = $request->position;
+                $user->username = $request->username;
+                $user->password = Hash::make($request->password);
+                $user->created_at = $this->carbon->now();
+                $user->updated_at = $this->carbon->now();
+                $user->ip_created = request()->ip();
+                $user->ip_updated = request()->ip();
+                $user->user_created = $this->auth->user()->user_id;
+                $user->user_updated = $this->auth->user()->user_id;
+                $user->save();
 
-            if(count($request->menu) > 0){
+                $this->updateEmployee($employee, $user->user_id);
 
-                for($i = 0; $i < count($request->menu); $i++){
+                if(count($request->menu) > 0){
 
-                    $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+                    for($i = 0; $i < count($request->menu); $i++){
 
-                    $user_menu = new UserMenu;
-                    $this->storeUserMenu($user_menu, $user, $menu);
+                        $menu = $this->menu->whereMenuId($request->menu[$i])->first();
 
-                    if($request->submenu > 0){
+                        $user_menu = new UserMenu;
+                        $this->storeUserMenu($user_menu, $user, $menu);
 
-                        foreach($request->submenu as $data_submenu){
+                        if($request->submenu > 0){
 
-                            $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+                            foreach($request->submenu as $data_submenu){
 
-                            if($menu->menu_id === $submenu->menu_id){
+                                $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
 
-                                $user_submenu = new UserSubMenu;
-                                $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+                                if($menu->menu_id === $submenu->menu_id){
+
+                                    $user_submenu = new UserSubMenu;
+                                    $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                                }
 
                             }
 
@@ -125,15 +136,20 @@ class UserService extends BaseService{
 
                 }
 
+                $this->event->fire('user.store', [$request, $employee]);
+                return redirect()->back();
+
             }
 
-            $this->event->fire('user.store', $request);
-            return redirect()->back();
+            $this->session->flash('USER_FORM_FAIL_USERNAME_EXIST', 'The username you provided is already used by an existing account. Please provide another username.');
+            return redirect()->back()->withInput();
 
         }
 
-        $this->session->flash('USER_FORM_FAIL_USERNAME_EXIST', 'The username you provided is already used by an existing account. Please provide another username.');
+        $this->session->flash('USER_EMPLOYEE_SYNC_FAIL', 'The Employee selected is already synced with another user.');
         return redirect()->back()->withInput();
+
+       
 
     }
 
@@ -355,6 +371,11 @@ class UserService extends BaseService{
 
 
 
+
+
+
+
+
     // Utility Methods
 
     public function userBySlug($slug){
@@ -364,6 +385,20 @@ class UserService extends BaseService{
         }); 
         
         return $user;
+
+    }
+
+
+
+
+
+    public function employeeBySlug($slug){
+
+        $employee = $this->cache->remember('employees:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->employee->findSlug($slug);
+        });
+        
+        return $employee;
 
     }
 
@@ -402,6 +437,16 @@ class UserService extends BaseService{
 
     }
 
+
+
+
+
+    public function updateEmployee($employee, $user_id){
+
+        $employee->user_id = $user_id;
+        $employee->save();
+
+    }
 
 
 

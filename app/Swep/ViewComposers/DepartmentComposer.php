@@ -11,13 +11,13 @@ use Illuminate\Cache\Repository as Cache;
 class DepartmentComposer{
    
 
-	protected $departments;
+	protected $department;
 	protected $cache;
 
 
-	public function __construct(Department $departments, Cache $cache){
+	public function __construct(Department $department, Cache $cache){
 
-		$this->departments = $departments;
+		$this->department = $department;
 		$this->cache = $cache;
 		
 	}
@@ -27,7 +27,7 @@ class DepartmentComposer{
     public function compose($view){
 
         $departments = $this->cache->remember('departments:global:all', 240, function(){
-        	return $this->departments->select('name', 'department_id')->get();
+        	return $this->department->select('name', 'department_id')->get();
         });
         
     	$view->with('global_departments_all', $departments);

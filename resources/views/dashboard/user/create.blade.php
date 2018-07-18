@@ -17,7 +17,7 @@
         </div> 
       </div>
       
-      <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.store') }}">
+      <form id="user_create_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.store') }}">
 
         <div class="box-body">
 
@@ -25,9 +25,17 @@
             {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_FORM_FAIL_USERNAME_EXIST')) !!}
           @endif
 
+          @if(Session::has('USER_EMPLOYEE_SYNC_FAIL'))
+            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_EMPLOYEE_SYNC_FAIL')) !!}
+          @endif
+
           <div class="col-md-11">
                   
               @csrf    
+
+              {!! FormHelper::select_dynamic_inline(
+                'employee_sync', '<b style="color:#F4A460;">Sync to Specific Employee</b>', old('employee_sync'), $global_employees_all, 'slug', 'fullname', $errors->has('employee_sync'), $errors->first('employee_sync'), 'select2', ''
+              ) !!}
 
               {!! FormHelper::textbox_inline(
                   'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
@@ -244,7 +252,7 @@
 
 
 
-  {{-- AJAX --}}
+  {{-- AJAX Menu to Submenu--}}
   $(document).ready(function() {
     $(document).on("change", "#menu", function() {
         var key = $(this).val();
@@ -273,6 +281,61 @@
         }
     });
   });
+
+
+
+
+
+  {{-- AJAX Get Employee--}}
+  $(document).on("change", "#employee_sync", function () {
+
+    var key = $(this).val();
+
+    if(key){
+      $.ajax({
+        headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
+        url: "/api/user/response_from_employee/"+key,
+        type: "GET",
+        dataType: "json",
+        success:function(data) {       
+            
+          $.each(data, function(key, value) {
+
+            $("#user_create_form").find("input").not("input[name=_token]").val("");
+            $("#user_create_form").find("input").not("input[name=_token]").removeAttr("readonly");
+
+            if(value.firstname != ''){
+              $("#user_create_form #firstname").val(value.firstname).attr("readonly", true);
+            }
+
+            if(value.middlename != ''){
+              $("#user_create_form #middlename").val(value.middlename).attr("readonly", true);
+            }
+
+            if(value.lastname != ''){
+              $("#user_create_form #lastname").val(value.lastname).attr("readonly", true);
+            }
+
+            if(value.email != ''){
+              $("#user_create_form #email").val(value.email).attr("readonly", true);
+            }
+
+            if(value.position != ''){
+              $("#user_create_form #position").val(value.position).attr("readonly", true);
+            }
+          
+          });
+
+        }
+      });
+    }else{
+      $("#user_create_form").find("input").not("input[name=_token]").val("");
+      $("#user_create_form").find("input").not("input[name=_token]").removeAttr("readonly");
+    }
+    
+  });
+
+
 
 
 </script>

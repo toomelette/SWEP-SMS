@@ -3,27 +3,18 @@
 namespace App\Http\Requests;
 
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 
 class UserFormRequest extends FormRequest{
 
 
-    protected $user;
-
-
-    public function __construct(User $user){
-
-        $this->user = $user;
-
-    }
-
 
     public function authorize(){
 
         return true;
     }
+
 
     
     public function rules(){
@@ -32,6 +23,7 @@ class UserFormRequest extends FormRequest{
 
         $rules = [
             
+            'employee_sync'=>'nullable|string|max:45',
             'firstname'=>'required|string|max:90',
             'middlename'=>'required|string|max:90',
             'lastname'=>'required|string|max:90',
@@ -43,9 +35,9 @@ class UserFormRequest extends FormRequest{
         
 
         if($this->request->get('password') != null){
-
-            $rules['password'] = 'required|min:6|max:45|string|confirmed';
-
+            $rules['password'] = 'min:6|max:45|string|confirmed';
+        }else{
+            $rules['password'] = 'required';
         }
 
 
@@ -83,7 +75,12 @@ class UserFormRequest extends FormRequest{
     }
 
 
-     public function messages(){
+
+
+
+
+
+    public function messages(){
 
         $menus = $this->request->get('menu');
 

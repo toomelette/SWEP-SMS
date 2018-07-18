@@ -137,6 +137,23 @@ class FormHelper{
 
 
 
+    public static function select_dynamic_inline($key, $label, $old_value, $array, $var1, $var2, $error_has, $error_first, $select2, $extra_attr){
+      
+       return '<div class="form-group '. self::error_response($error_has) .'">
+                <label for="'. $key .'" class="col-sm-2 control-label">'. $label .'</label>
+                <div class="col-sm-10">
+                  <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>
+                    <option value="">Select</option>
+                    '. self::dynamic_options($array, $var1, $var2, $old_value) .'
+                  </select>
+                  '. self::error_message($error_has, $error_first) .'
+                </div>
+              </div>';
+                
+    }
+
+
+
 
 
     /** For Filters **/
