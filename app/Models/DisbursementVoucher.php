@@ -58,11 +58,6 @@ class DisbursementVoucher extends Model{
 
 
     //RELATIONSHIPS
-    public function user(){
-        return $this->hasOne('App\Models\User', 'user_id', 'user_id');
-    }
-
-
     public function project(){
         return $this->hasOne('App\Models\Project', 'project_id', 'project_id');
     }

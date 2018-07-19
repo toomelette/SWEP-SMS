@@ -29,39 +29,26 @@ class UserFormRequest extends FormRequest{
             'lastname'=>'required|string|max:90',
             'email'=>'required|string|email|max:90',
             'position'=>'required|string|max:90',
-            'username'=>'required|string|max:45',
+            'username'=>'required|string|max:45|unique:users,username,'.$this->route('user').',slug',
+            'username'=>'sometimes|required|string|min:6|max:45|confirmed',
 
         ];
-        
-
-        if($this->request->get('password') != null){
-            $rules['password'] = 'min:6|max:45|string|confirmed';
-        }else{
-            $rules['password'] = 'required';
-        }
 
 
         if(count($menus) > 0){
 
 
             if(count($this->request->get('menu')) > 0){
-
                 foreach($this->request->get('menu') as $key => $value){
-
                     $rules['menu.'.$key] = 'required|string';
-
                 } 
-
             }
 
 
 
             if(count($this->request->get('submenu')) > 0){
-
                 foreach($this->request->get('submenu') as $key => $value){
-
                     $rules['submenu.'.$key] = '';
-
                 }
             }
 
@@ -75,34 +62,6 @@ class UserFormRequest extends FormRequest{
     }
 
 
-
-
-
-
-
-    public function messages(){
-
-        $menus = $this->request->get('menu');
-
-        $messages = [];
-
-
-        if(count($menus) > 0){
-
-            foreach($this->request->get('menu') as $key => $value) {
-
-                $messages['menu.'.$key.'.required'] = 'Menu Field is Required.';
-                $messages['menu.'.$key.'.string'] = ' Invalid Input! You must enter a string value.';
-
-            }
-
-        }
-
-
-        return $messages;
-
-
-    }
 
 
 

@@ -37,10 +37,10 @@ class UserSubscriber extends BaseSubscriber{
 
 
 
-	public function onStore($request, $employee){
+	public function onStore(){
 
         $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
+        
         $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
         
 	}

@@ -63,17 +63,6 @@ class User extends Authenticatable{
 
 
     // RELATIONSHIPS 
-
-    public function disbursementVoucher() {
-      return $this->belongsTo('App\Models\DisbursementVoucher','user_id','user_id');
-    }
-
-
-    public function leaveApplication() {
-      return $this->belongsTo('App\Models\LeaveApplication','user_id','user_id');
-    }
-
-
     public function userMenu() {
         return $this->hasMany('App\Models\UserMenu','user_id','user_id');
     }
@@ -144,15 +133,6 @@ class User extends Authenticatable{
 
 
     /** SCOPES **/
-
-    public function scopeUsernameExist($query, $value){
-
-        return $query->where('username', $value)->count();
-
-    }
-
-
-
 
 
     public function scopeSearch($query, $key){

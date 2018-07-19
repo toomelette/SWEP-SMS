@@ -13,19 +13,5 @@ class Project extends Model{
 
 	public $timestamps = false;
 
-
-
-
-	// RELATIONSHIPS 
-
-	public function disbursementVoucher() {
-      
-      return $this->belongsTo('App\Models\DisbursementVoucher','project_id','project_id');
-
-    }
-
-
-
-
     
 }

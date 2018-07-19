@@ -41,11 +41,11 @@
                 <dt>DV No:</dt>
                 <dd>{{ $disbursement_voucher->dv_no }}</dd>
                 <dt>Station:</dt>
-                <dd>{{ count($disbursement_voucher->project) != 0 ? $disbursement_voucher->project->project_address : '' }}</dd>
+                <dd>{{ optional($disbursement_voucher->project)->project_address }}</dd>
                 <dt>Fund Source:</dt>
-                <dd>{{ count($disbursement_voucher->fundSource) != 0 ? $disbursement_voucher->fundSource->description : '' }}</dd>
+                <dd>{{ optional($disbursement_voucher->fundSource)->description }}</dd>
                 <dt>Mode of Payment:</dt>
-                <dd>{{ count($disbursement_voucher->modeOfPayment) != 0 ? $disbursement_voucher->modeOfPayment->description : ''  }}</dd>
+                <dd>{{ optional($disbursement_voucher->modeOfPayment)->description }}</dd>
                 <dt>Payee:</dt>
                 <dd>{{ $disbursement_voucher->payee }}</dd>
                 <dt>TIN:</dt>

@@ -20,15 +20,6 @@ class LeaveApplication extends Model{
     
 
 
-
-	// RELATIONSHIPS
-	public function user(){
-        return $this->hasOne('App\Models\User', 'user_id', 'user_id');
-    }
-
-
-
-
     protected $attributes = [
         
         'slug' => '',
@@ -69,6 +60,9 @@ class LeaveApplication extends Model{
 
     ];
 
+
+
+	// RELATIONSHIPS
 
 
 
