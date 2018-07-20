@@ -21,11 +21,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/home', 'HomeController@index')->name('home');
 
 	/** USER **/   
-	Route::post('/dashboard/user/activate/{slug}', 'UserController@activate')->name('user.activate');
-	Route::post('/dashboard/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
-	Route::post('/dashboard/user/logout/{slug}', 'UserController@logout')->name('user.logout');
-	Route::get('/dashboard/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
-	Route::patch('/dashboard/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
+	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
+	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
+	Route::post('/user/logout/{slug}', 'UserController@logout')->name('user.logout');
+	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
+	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
+	Route::get('/user/{slug}/sync_employee', 'UserController@syncEmployee')->name('user.sync_employee');
+	Route::patch('/user/sync_employee/{slug}', 'UserController@syncEmployeePost')->name('user.sync_employee_post');
 	Route::resource('user', 'UserController');
 
 	/** DISBURSEMENT VOUCHERS **/
@@ -89,7 +91,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 /** Testing **/
 
-Route::get('/dashboard/test', function(){
+//Route::get('/dashboard/test', function(){
 
 	//return dd(Illuminate\Support\Str::random(16));
 
@@ -101,10 +103,4 @@ Route::get('/dashboard/test', function(){
 	// 	$tr->save();
 	// }
 
-    $userMenu = Cache::remember('nav:user_menus:byUserId:test', 240, function(){
-    $num = 'test';
-    return $num;
-    });
-    dd($userMenu);
-
-});
+//});

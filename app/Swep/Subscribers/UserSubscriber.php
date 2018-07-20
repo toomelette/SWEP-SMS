@@ -30,6 +30,7 @@ class UserSubscriber extends BaseSubscriber{
         $events->listen('user.deactivate', 'App\Swep\Subscribers\UserSubscriber@onDeactivate');
         $events->listen('user.logout', 'App\Swep\Subscribers\UserSubscriber@onLogout');
         $events->listen('user.reset_password_post', 'App\Swep\Subscribers\UserSubscriber@onResetPasswordPost');
+        $events->listen('user.sync_employee_post', 'App\Swep\Subscribers\UserSubscriber@onSyncEmployeePost');
 
 	}
 
@@ -135,6 +136,23 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS_SLUG', $user->slug);
+
+    }
+
+
+
+
+
+    public function onSyncEmployeePost($user, $employee){
+
+        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+
+        $this->cacheHelper->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
+
+        $this->session->flash('USER_SYNC_EMPLOYEE_SUCCESS', 'User Successfully Synchronized!');
+        $this->session->flash('USER_SYNC_EMPLOYEE_SUCCESS_SLUG', $user->slug);
 
     }
 

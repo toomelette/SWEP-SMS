@@ -13,6 +13,7 @@ class UserFormRequest extends FormRequest{
     public function authorize(){
 
         return true;
+        
     }
 
 
@@ -30,13 +31,11 @@ class UserFormRequest extends FormRequest{
             'email'=>'required|string|email|max:90',
             'position'=>'required|string|max:90',
             'username'=>'required|string|max:45|unique:users,username,'.$this->route('user').',slug',
-            'username'=>'sometimes|required|string|min:6|max:45|confirmed',
+            'password'=>'sometimes|required|string|min:6|max:45|confirmed',
 
         ];
 
-
         if(count($menus) > 0){
-
 
             if(count($this->request->get('menu')) > 0){
                 foreach($this->request->get('menu') as $key => $value){
@@ -45,19 +44,15 @@ class UserFormRequest extends FormRequest{
             }
 
 
-
             if(count($this->request->get('submenu')) > 0){
                 foreach($this->request->get('submenu') as $key => $value){
                     $rules['submenu.'.$key] = '';
                 }
             }
 
-
         }
 
-
         return $rules;
-
 
     }
 

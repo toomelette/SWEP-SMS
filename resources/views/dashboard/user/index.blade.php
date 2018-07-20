@@ -5,6 +5,7 @@
                       Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
                       Session::get('USER_LOGOUT_SUCCESS_SLUG'),
                       Session::get('USER_RESET_PASSWORD_SUCCESS_SLUG'), 
+                      Session::get('USER_SYNC_EMPLOYEE_SUCCESS_SLUG'), 
                     ];
 
   $appended_requests = [
@@ -69,6 +70,7 @@
             <th>@sortablelink('firstname', 'Name')</th>
             <th>@sortablelink('is_online', 'Online')</th>
             <th>@sortablelink('is_active', 'Active')</th>
+            <th>Sync</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($users as $data) 
@@ -77,6 +79,7 @@
               <td>{{ $data->fullname }}</td>
               <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
               <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
+              <td>{!! $data->employee != null ? $span_check : $span_times !!}</td>
               <td> 
                 <select id="action" class="form-control input-sm">
                   <option value="">Select</option>
@@ -95,6 +98,10 @@
                   @endif
 
                   <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
+                  
+                  @if(count($data->employee) == 0)
+                    <option data-type="1" data-action="sync_employee" data-url="{{ route('dashboard.user.sync_employee', $data->slug) }}">Synchronize</option>
+                  @endif
 
                 </select>
               </td>
@@ -201,6 +208,12 @@
     {{-- RESET PASSWORD SUCCESS TOAST --}}
     @if(Session::has('USER_RESET_PASSWORD_SUCCESS'))
         {!! JSHelper::toast(Session::get('USER_RESET_PASSWORD_SUCCESS')) !!}
+    @endif
+
+
+    {{-- SYNC EMPLOYEE SUCCESS TOAST --}}
+    @if(Session::has('USER_SYNC_EMPLOYEE_SUCCESS'))
+        {!! JSHelper::toast(Session::get('USER_SYNC_EMPLOYEE_SUCCESS')) !!}
     @endif
 
   </script>

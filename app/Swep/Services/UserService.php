@@ -129,8 +129,6 @@ class UserService extends BaseService{
         $this->event->fire('user.store');
         return redirect()->back();
 
-       
-
     }
 
 
@@ -350,6 +348,43 @@ class UserService extends BaseService{
 
 
 
+    public function syncEmployee($slug){
+
+        $user = $this->userBySlug($slug);
+        return view('dashboard.user.sync_employee')->with('user', $user);
+
+    }
+
+
+
+
+
+
+    public function syncEmployeePost($request, $slug){
+
+        $user = $this->userBySlug($slug);
+        $employee = $this->employeeBySlug($request->s);
+
+        if(is_null($employee->user_id) || $employee->user_id == ''){
+
+            $employee->user_id = $user->user_id;
+            $employee->save();
+
+            $this->event->fire('user.sync_employee_post', [$user, $employee]);
+            return redirect()->route('dashboard.user.index');
+
+        }
+
+        $this->session->flash('USER_SYNC_EMPLOYEE_FAIL', 'The Employee you selected is currently sync to another user.');
+        return redirect()->back();
+
+    }
+
+
+
+
+
+
 
 
 
@@ -419,7 +454,7 @@ class UserService extends BaseService{
 
 
 
-    public function syncEmployee($employee, $user_id){
+    public function updateEmployee($employee, $user_id){
 
         $employee->user_id = $user_id;
         $employee->save();

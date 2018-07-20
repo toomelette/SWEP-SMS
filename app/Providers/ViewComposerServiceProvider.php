@@ -94,7 +94,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.signatory.edit'], 'App\Swep\ViewComposers\SignatoryTypeComposer');
 
         // EMPLOYEES
-        View::composer(['dashboard.user.create',], 'App\Swep\ViewComposers\EmployeeComposer');
+        View::composer(['dashboard.user.sync_employee',], 'App\Swep\ViewComposers\EmployeeComposer');
 
         
     }

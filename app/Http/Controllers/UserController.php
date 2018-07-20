@@ -7,6 +7,7 @@ use App\Swep\Services\UserService;
 use App\Http\Requests\UserFormRequest;
 use App\Http\Requests\UserFilterRequest;
 use App\Http\Requests\UserResetPasswordRequest;
+use App\Http\Requests\UserSyncEmployeeRequest;
 
 
 class UserController extends Controller{
@@ -130,6 +131,25 @@ class UserController extends Controller{
         return $this->user_service->resetPasswordPost($request, $slug);
         
     }
+
+
+
+
+    public function syncEmployee($slug){
+
+        return $this->user_service->syncEmployee($slug);
+        
+    }
+
+
+
+
+    public function syncEmployeePost(UserSyncEmployeeRequest $request, $slug){
+
+        return $this->user_service->syncEmployeePost($request, $slug);
+        
+    }
+
 
 
 
