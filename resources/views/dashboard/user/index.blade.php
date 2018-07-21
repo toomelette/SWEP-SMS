@@ -79,7 +79,7 @@
               <td>{{ $data->fullname }}</td>
               <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
               <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
-              <td>{!! $data->employee != null ? $span_check : $span_times !!}</td>
+              <td>{!! empty($data->employee) ? $span_times : '<p class="text-green"><b>Currently Sync to '. $data->employee->employee_no .'</b></p>' !!}</td>
               <td> 
                 <select id="action" class="form-control input-sm">
                   <option value="">Select</option>
@@ -99,7 +99,7 @@
 
                   <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
                   
-                  @if(count($data->employee) == 0)
+                  @if(empty($data->employee))
                     <option data-type="1" data-action="sync_employee" data-url="{{ route('dashboard.user.sync_employee', $data->slug) }}">Synchronize</option>
                   @endif
 
