@@ -5,7 +5,8 @@
                       Session::get('USER_DEACTIVATE_SUCCESS_SLUG'),
                       Session::get('USER_LOGOUT_SUCCESS_SLUG'),
                       Session::get('USER_RESET_PASSWORD_SUCCESS_SLUG'), 
-                      Session::get('USER_SYNC_EMPLOYEE_SUCCESS_SLUG'), 
+                      Session::get('USER_SYNC_EMPLOYEE_SUCCESS_SLUG'),  
+                      Session::get('USER_UNSYNC_EMPLOYEE_SUCCESS_SLUG'), 
                     ];
 
   $appended_requests = [
@@ -79,9 +80,9 @@
               <td>{{ $data->fullname }}</td>
               <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
               <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
-              <td>{!! empty($data->employee) ? $span_times : '<p class="text-green"><b>Currently Sync to '. $data->employee->employee_no .'</b></p>' !!}</td>
+              <td>{!! empty($data->employee) ? $span_times : '<p class="text-green"><b>'. $data->employee->employee_no .'</b></p>' !!}</td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.user.show', $data->slug) }}">Details</option>
                   <option data-type="1" data-url="{{ route('dashboard.user.edit', $data->slug) }}">Edit</option>
@@ -100,7 +101,9 @@
                   <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
                   
                   @if(empty($data->employee))
-                    <option data-type="1" data-action="sync_employee" data-url="{{ route('dashboard.user.sync_employee', $data->slug) }}">Synchronize</option>
+                    <option data-type="1" data-action="sync_employee" data-url="{{ route('dashboard.user.sync_employee', $data->slug) }}">Sync</option>
+                  @else
+                    <option data-type="0" data-action="unsync_employee" data-url="{{ route('dashboard.user.unsync_employee', $data->slug) }}">Unsync</option>
                   @endif
 
                 </select>
@@ -134,6 +137,10 @@
   </form>
 
   <form id="from_user_deactivate" method="POST" style="display: none;">
+    @csrf
+  </form>
+
+  <form id="from_user_unsync" method="POST" style="display: none;">
     @csrf
   </form>
 
@@ -173,6 +180,9 @@
 
     {{-- CALL DEACTIVATE FORM --}}
     {!! JSHelper::form_submitter_via_action('deactivate', 'from_user_deactivate') !!}
+
+    {{-- CALL UNSYNC FORM --}}
+    {!! JSHelper::form_submitter_via_action('unsync_employee', 'from_user_unsync') !!}
 
 
     {{-- UPDATE TOAST --}}
@@ -214,6 +224,12 @@
     {{-- SYNC EMPLOYEE SUCCESS TOAST --}}
     @if(Session::has('USER_SYNC_EMPLOYEE_SUCCESS'))
         {!! JSHelper::toast(Session::get('USER_SYNC_EMPLOYEE_SUCCESS')) !!}
+    @endif
+
+
+    {{-- UNSYNC EMPLOYEE SUCCESS TOAST --}}
+    @if(Session::has('USER_UNSYNC_EMPLOYEE_SUCCESS'))
+        {!! JSHelper::toast(Session::get('USER_UNSYNC_EMPLOYEE_SUCCESS')) !!}
     @endif
 
   </script>

@@ -123,7 +123,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">Service Records</h3> 
           <div class="box-tools">
-            <a href="{{ route('dashboard.employee.service_record_print', $employee->slug) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
+            <a href="#" id="print_service_record" data-url="{{ route('dashboard.employee.service_record_print', $employee->slug) }}" class="btn btn-sm btn-default">
+              <i class="fa fa-print"></i> Print
+            </a>
           </div>
         </div>
 
@@ -291,6 +293,46 @@
   </div>
 
 
+
+  {{-- Print Modal --}}
+  <div class="modal fade" id="print_sr_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Please set Signatories!</h4>
+        </div>
+        <form id="print_sr_form" method="GET" autocomplete="off" target="_blank">
+          <div class="modal-body">
+            {!! FormHelper::textbox(
+               '6', 'pn', 'text', 'Prepared By:', 'Prepared By', old('pn'), $errors->has('pn'), $errors->first('pn'), 'data-transform="uppercase"'
+            ) !!}
+
+            {!! FormHelper::textbox(
+               '6', 'pp', 'text', 'Prepared Position:', 'Prepared Position', old('pp'), $errors->has('pp'), $errors->first('pp'), 'data-transform="uppercase"'
+            ) !!}
+
+            {!! FormHelper::textbox(
+               '6', 'cn', 'text', 'Certified By:', 'Certified By', old('cn'), $errors->has('cn'), $errors->first('cn'), 'data-transform="uppercase"'
+            ) !!}
+
+            {!! FormHelper::textbox(
+               '6', 'cp', 'text', 'Certified Position:', 'Certified Position', old('cp'), $errors->has('cp'), $errors->first('cp'), 'data-transform="uppercase"'
+            ) !!} 
+
+          </div>
+          <div class="modal-footer" style="overflow: hidden;">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Print</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 @endsection 
 
 
@@ -373,6 +415,15 @@
         $('#sr_update').modal("hide");  
       }, 100);
     });
+
+
+    {{-- CALL PRINT SR MODAL --}}
+    $(document).on("click", "#print_service_record", function () {
+        $("#print_sr_modal").modal("show");
+        $("#print_sr_form").attr("action", $(this).data("url"));
+    });
+
+
 
   </script> 
     

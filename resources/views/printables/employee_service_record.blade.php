@@ -264,33 +264,83 @@
       </div>
 
 
-      <div class="row" style="margin-top: 40px;">
-        <div class="col-sm-6">
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-sm-2">
           &nbsp;
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('pn') }}</span>
         </div>
         <div class="col-sm-1">
           &nbsp;
         </div>
-        <div class="col-sm-5">
-          <span style="font-size:10px;">(Chief or Head of Office)</span>
+        <div class="col-sm-2" >
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('cn') }}</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
         </div>
       </div>
 
 
-      <div class="row" style="margin-top: 10px;">
-        <div class="col-sm-2">
+      <div class="row">
+        <div class="col-sm-6">
           &nbsp;
         </div>
         <div class="col-sm-2">
-          <span style="font-size:10px;">(Designation)</span>
+          &nbsp;
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3" style="text-align:center;">
+          <span style="font-size:10px;">(Chief or Head of Office)</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+      </div>
+
+
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('pp') }}</span>
+        </div>
+        <div class="col-sm-1">
           &nbsp;
         </div>
         <div class="col-sm-2" >
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('cp') }}</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="text-align: center;">
+          <span style="font-size:10px;">(Designation)</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="text-align: center;">
           <span style="font-size:10px; margin-left:25px;">(Designation)</span>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-1">
           &nbsp;
         </div>
       </div>
@@ -527,67 +577,117 @@
       <div style="border-bottom:solid 1px;"></div>  
 
         <div class="row" style="margin-top: 10px;">
-          <div class="col-sm-12">
-            <p style="font-size:9px;">Issued in Compliance with No. 54 dated August 10, 1954 and in accordance with Circular No. 58 dated August 10, 1954 of the System.</p>
-          </div>
+        <div class="col-sm-12">
+          <p style="font-size:9px;">Issued in Compliance with No. 54 dated August 10, 1954 and in accordance with Circular No. 58 dated August 10, 1954 of the System.</p>
         </div>
+      </div>
 
 
-        <div class="row" style="margin-top: 10px;">
-          <div class="col-sm-6">
-            <span style="font-size:13px;">PREPARED BY:</span>
-          </div>
-          <div class="col-sm-6">
-            <span style="font-size:13px;">CERTIFIED CORRECT:</span>
-          </div>
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-sm-6">
+          <span style="font-size:13px;">PREPARED BY:</span>
         </div>
-
-
-        <div class="row" style="margin-top: 40px;">
-          <div class="col-sm-6">
-            &nbsp;
-          </div>
-          <div class="col-sm-1">
-            &nbsp;
-          </div>
-          <div class="col-sm-5">
-            <span style="font-size:10px;">(Chief or Head of Office)</span>
-          </div>
+        <div class="col-sm-6">
+          <span style="font-size:13px;">CERTIFIED CORRECT:</span>
         </div>
+      </div>
 
 
-        <div class="row" style="margin-top: 10px;">
-          <div class="col-sm-2">
-            &nbsp;
-          </div>
-          <div class="col-sm-2">
-            <span style="font-size:10px;">(Designation)</span>
-          </div>
-          <div class="col-sm-3">
-            &nbsp;
-          </div>
-          <div class="col-sm-2" >
-            <span style="font-size:10px; margin-left:25px;">(Designation)</span>
-          </div>
-          <div class="col-sm-3">
-            &nbsp;
-          </div>
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-sm-2">
+          &nbsp;
         </div>
-
-
-        <div class="row" style="margin-top: 20px;">
-          <div class="col-sm-4">
-            &nbsp;
-          </div>
-          <div class="col-sm-4" style="text-align: center;">
-            <span style="font-size: 11px; font-weight: bold;">{{ Carbon::now()->format('F d, Y') }}</span><br>
-            <div style="border-top:solid 1px; text-align: center;"></div>
-            <span style="font-size: 11px;">(Date)</span>
-          </div>
-          <div class="col-sm-4">
-            &nbsp;
-          </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('pn') }}</span>
         </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+        <div class="col-sm-2" >
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('cn') }}</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          &nbsp;
+        </div>
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="text-align:center;">
+          <span style="font-size:10px;">(Chief or Head of Office)</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+      </div>
+
+
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('pp') }}</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+        <div class="col-sm-2" >
+        </div>
+        <div class="col-sm-3" style="border-bottom:1px solid; text-align: center;">
+          <span style="font-size:10px;">{{ Request::get('cp') }}</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="text-align: center;">
+          <span style="font-size:10px;">(Designation)</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+        <div class="col-sm-2">
+          &nbsp;
+        </div>
+        <div class="col-sm-3" style="text-align: center;">
+          <span style="font-size:10px; margin-left:25px;">(Designation)</span>
+        </div>
+        <div class="col-sm-1">
+          &nbsp;
+        </div>
+      </div>
+
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-sm-4">
+          &nbsp;
+        </div>
+        <div class="col-sm-4" style="text-align: center;">
+          <span style="font-size: 11px; font-weight: bold;">{{ Carbon::now()->format('F d, Y') }}</span><br>
+          <div style="border-top:solid 1px; text-align: center;"></div>
+          <span style="font-size: 11px;">(Date)</span>
+        </div>
+        <div class="col-sm-4">
+          &nbsp;
+        </div>
+      </div>
 
     </div>
   @endif

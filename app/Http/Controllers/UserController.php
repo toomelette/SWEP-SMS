@@ -153,4 +153,13 @@ class UserController extends Controller{
 
 
 
+    public function unsyncEmployee($slug){
+
+        return $this->user_service->unsyncEmployee($slug);
+        
+    }
+
+
+
+
 }

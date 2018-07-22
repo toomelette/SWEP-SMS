@@ -385,6 +385,28 @@ class UserService extends BaseService{
 
 
 
+    public function unsyncEmployee($slug){
+
+        $user = $this->userBySlug($slug);
+        $employee = $this->employeeByUserId($user->user_id);
+
+        if($employee->user_id != null || !$employee->user_id != ''){
+
+            $employee->user_id = null;
+            $employee->save();
+
+            $this->event->fire('user.unsync_employee', [$user, $employee]);
+            return redirect()->route('dashboard.user.index');
+
+        }
+
+        $this->session->flash('USER_UNSYNC_EMPLOYEE_FAIL', 'Cannot Unsync Employee.');
+        return redirect()->back();
+
+    }
+
+
+
 
 
 
@@ -409,6 +431,20 @@ class UserService extends BaseService{
 
         $employee = $this->cache->remember('employees:bySlug:' . $slug, 240, function() use ($slug){
             return $this->employee->findSlug($slug);
+        });
+        
+        return $employee;
+
+    }
+
+
+
+
+
+    public function employeeByUserId($user_id){
+
+        $employee = $this->cache->remember('employees:byUserId:' . $user_id, 240, function() use ($user_id){
+            return $this->employee->where('user_id', $user_id)->first();
         });
         
         return $employee;

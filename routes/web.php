@@ -28,6 +28,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
 	Route::get('/user/{slug}/sync_employee', 'UserController@syncEmployee')->name('user.sync_employee');
 	Route::patch('/user/sync_employee/{slug}', 'UserController@syncEmployeePost')->name('user.sync_employee_post');
+	Route::post('/user/unsync_employee/{slug}', 'UserController@unsyncEmployee')->name('user.unsync_employee');
 	Route::resource('user', 'UserController');
 
 	/** DISBURSEMENT VOUCHERS **/
@@ -91,7 +92,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 /** Testing **/
 
-//Route::get('/dashboard/test', function(){
+Route::get('/dashboard/test', function(){
 
 	//return dd(Illuminate\Support\Str::random(16));
 
@@ -103,4 +104,4 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// 	$tr->save();
 	// }
 
-//});
+});
