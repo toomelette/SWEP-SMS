@@ -137,7 +137,7 @@
               @endforeach
             </ul>
           @endif
-          <table class="table table-bordered">
+          <table class="table table-hover">
             <tr>
               <th>Seq #</th>
               <th>Date From</th>
@@ -304,7 +304,7 @@
           </button>
           <h4 class="modal-title">Please set Signatories!</h4>
         </div>
-        <form id="print_sr_form" method="GET" autocomplete="off" target="_blank">
+        <form id="print_sr_form" method="GET" target="_blank">
           <div class="modal-body">
             {!! FormHelper::textbox(
                '6', 'pn', 'text', 'Prepared By:', 'Prepared By', old('pn'), $errors->has('pn'), $errors->first('pn'), 'data-transform="uppercase"'

@@ -49,7 +49,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('employee_no', 'Employee No.')</th>
             <th>@sortablelink('fullname', 'Fullname')</th>
@@ -64,7 +64,7 @@
               <td>{{ $data->fullname }}</td>
               <td>{{ $data->position }}</td>
               <td>
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.employee.show', $data->slug) }}">Details</option>
                   <option data-type="1" data-url="{{ route('dashboard.employee.service_record', $data->slug) }}">Service Record</option>

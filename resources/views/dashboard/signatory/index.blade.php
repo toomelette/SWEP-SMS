@@ -37,7 +37,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('employee_name', 'Employee Name')</th>
             <th>@sortablelink('employee_position', 'Employee Position')</th>
@@ -50,7 +50,7 @@
               <td>{{ $data->employee_position }}</td>
               <td>{{ $data->type }}</td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.signatory.edit', $data->slug) }}">Edit</option>
                   <option data-type="0" data-action="delete" data-url="{{ route('dashboard.signatory.destroy', $data->slug) }}">Delete</option>

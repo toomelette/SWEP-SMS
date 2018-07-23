@@ -106,7 +106,7 @@
               @endforeach
             </ul>
           @endif
-          <table class="table table-bordered">
+          <table class="table table-hover">
             <tr>
               <th>Title</th>
               <th>Date From</th>

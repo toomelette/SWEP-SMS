@@ -87,7 +87,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('user.firstname', 'User')</th>
             <th>@sortablelink('doc_no', 'Doc No.')</th>
@@ -99,7 +99,7 @@
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : $span_user_not_exist; !!}</td>
+              <td>{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) ; !!}</td>
               <td>{{ $data->doc_no }}</td>
               <td>
                 @if($data->dv_no == null)
@@ -132,7 +132,7 @@
               </td>
 
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
                   <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>

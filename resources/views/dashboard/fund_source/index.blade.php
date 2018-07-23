@@ -37,7 +37,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('description', 'Description')</th>
             <th style="width: 150px">Action</th>
@@ -46,7 +46,7 @@
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->description }}</td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.fund_source.edit', $data->slug) }}">Edit</option>
                   <option data-type="0" data-action="delete" data-url="{{ route('dashboard.fund_source.destroy', $data->slug) }}">Delete</option>

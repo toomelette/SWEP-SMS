@@ -37,7 +37,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('route', 'Route')</th>
@@ -50,7 +50,7 @@
               <td>{{ $data->route }}</td>
               <td><i class="fa {{ $data->icon }}"></i></td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.menu.edit', $data->slug) }}">Edit</option>
                   <option data-type="0" data-action="delete" data-url="{{ route('dashboard.menu.destroy', $data->slug) }}">Delete</option>

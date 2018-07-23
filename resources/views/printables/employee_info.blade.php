@@ -1,8 +1,8 @@
 @php
 
-  if(isset($employee->employeeAddress)){
-    $res_address = isset($employee->employeeAddress->res_address_barangay) .' '. isset($employee->employeeAddress->res_address_city) .', '. isset($employee->employeeAddress->res_address_province);
-    $perm_address = isset($employee->employeeAddress->perm_address_barangay) .' '. isset($employee->employeeAddress->perm_address_city) .', '. isset($employee->employeeAddress->perm_address_province);
+  if(!empty($employee->employeeAddress)){
+    $res_address = optional($employee->employeeAddress)->res_address_barangay .' '. optional($employee->employeeAddress)->res_address_city .', '. optional($employee->employeeAddress)->res_address_province;
+    $perm_address = optional($employee->employeeAddress)->perm_address_barangay .' '. optional($employee->employeeAddress)->perm_address_city .', '. optional($employee->employeeAddress)->perm_address_province;
   }else{
     $res_address = "";
     $perm_address = "";
@@ -185,11 +185,11 @@
 
               <dl class="dl-horizontal">
                 <dt>Fathers Name</dt>
-                <dd>{{ isset($employee->employeeFamilyDetail->father_firstname) . " " . substr(isset($employee->employeeFamilyDetail->father_middlename) , 0, 1) . ". " . isset($employee->employeeFamilyDetail->father_lastname) }}</dd>
+                <dd>{{ optional($employee->employeeFamilyDetail)->father_firstname . " " . substr(optional($employee->employeeFamilyDetail)->father_middlename , 0, 1) . ". " . optional($employee->employeeFamilyDetail)->father_lastname }}</dd>
                 <dt>Mothers Name:</dt>
-                <dd>{{ isset($employee->employeeFamilyDetail->mother_firstname) . " " . substr(isset($employee->employeeFamilyDetail->mother_middlename) , 0, 1) . ". " . isset($employee->employeeFamilyDetail->mother_lastname) }}</dd>
+                <dd>{{ optional($employee->employeeFamilyDetail)->mother_firstname . " " . substr(optional($employee->employeeFamilyDetail)->mother_middlename , 0, 1) . ". " . optional($employee->employeeFamilyDetail)->mother_lastname }}</dd>
                 <dt>Spouse Name:</dt>
-                <dd>{{ isset($employee->employeeFamilyDetail->spouse_firstname) . " " . substr(isset($employee->employeeFamilyDetail->spouse_middlename) , 0, 1) . ". " . isset($employee->employeeFamilyDetail->spouse_lastname) }}</dd>
+                <dd>{{ optional($employee->employeeFamilyDetail)->spouse_firstname . " " . substr(optional($employee->employeeFamilyDetail)->spouse_middlename , 0, 1) . ". " . optional($employee->employeeFamilyDetail)->spouse_lastname }}</dd>
               </dl>
 
               <span style="font-size:17px;">Children:</span>
@@ -199,14 +199,14 @@
                     <th>Name</th>
                     <th>Date of Birth</th>
                   </tr>
-                  @foreach($employee->employeeChildren as $data) 
+                  @foreach($employee->employeeChildren as $data)
                     <tr>
                       <td>{{ $data->fullname }}</td>
                       <td>{{ $data->date_of_birth != null ? Carbon::parse($data->date_of_birth)->format('M d, Y') : ''}}</td>
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeChildren) == 0)
+                @if($employee->employeeChildren->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -244,7 +244,7 @@
                   </tr>
                 @endforeach
               </table>
-              @if(count($employee->employeeEducationalBackground) == 0)
+              @if($employee->employeeEducationalBackground->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -286,7 +286,7 @@
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeTraining) == 0)
+                @if($employee->employeeTraining->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -320,7 +320,7 @@
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeEligibility) == 0)
+                @if($employee->employeeEligibility->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -354,7 +354,7 @@
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeExperience) == 0)
+                @if($employee->employeeExperience->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -386,7 +386,7 @@
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeVoluntaryWork) == 0)
+                @if($employee->employeeVoluntaryWork->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -415,7 +415,7 @@
                       <td>{{ $data->title }}</td>                  </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeRecognition) == 0)
+                @if($employee->employeeRecognition->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -444,7 +444,7 @@
                       <td>{{ $data->name }}</td>                  </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeOrganization) == 0)
+                @if($employee->employeeOrganization->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -474,7 +474,7 @@
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeSpecialSkill) == 0)
+                @if($employee->employeeSpecialSkill->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -508,7 +508,7 @@
                     </tr>
                   @endforeach
                 </table>
-                @if(count($employee->employeeReference) == 0)
+                @if($employee->employeeReference->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>

@@ -81,7 +81,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('doc_no', 'Doc No.')</th>
             <th>@sortablelink('payee', 'Payee')</th>
@@ -104,7 +104,7 @@
                 @endif
               </td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
                   @if(Carbon::parse($data->date)->diffInDays(Carbon::now()->format('Y-m-d')) < 5)

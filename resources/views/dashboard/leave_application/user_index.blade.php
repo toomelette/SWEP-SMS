@@ -68,7 +68,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('type', 'Type of Leave')</th>
             <th>@sortablelink('date_of_filing', 'Date of Filing')</th>

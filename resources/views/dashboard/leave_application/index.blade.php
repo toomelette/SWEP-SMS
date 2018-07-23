@@ -70,7 +70,7 @@
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
-        <table class="table table-bordered">
+        <table class="table table-hover">
           <tr>
             <th>@sortablelink('user.firstname', 'User')</th>
             <th>@sortablelink('firstname', 'Name')</th>
@@ -80,7 +80,7 @@
           </tr>
           @foreach($leave_applications as $data) 
             <tr>
-              <td>{!! count($data->user) != 0 ? SanitizeHelper::html_encode(Str::limit($data->user->fullnameShort, 25)) : $span_user_not_exist !!}</td>
+              <td>{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) !!}</td>
               <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
               <td>
                 @foreach($types as $name => $key)
@@ -91,7 +91,7 @@
               </td>
               <td>{{ Carbon::parse($data->date_of_filing)->format('M d, Y') }}</td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Details</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.edit', $data->slug) }}">Edit</option>
