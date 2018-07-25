@@ -2,39 +2,30 @@
  
 namespace App\Swep\Services;
 
-
-use Hash;
-use App\Models\User;
-use App\Models\Employee;
-use App\Models\Menu;
-use App\Models\SubMenu;
-use App\Models\UserMenu;
-use App\Models\UserSubmenu;
 use App\Swep\BaseClasses\BaseService;
-
+use App\Swep\Interfaces\UserInterface;
+use App\Swep\Interfaces\EmployeeInterface;
+use App\Swep\Interfaces\MenuInterface;
+use App\Swep\Interfaces\SubmenuInterface;
 
 
 class UserService extends BaseService{
 
 
-
-	protected $user;
-    protected $employee;
-    protected $menu;
-    protected $submenu;
-    protected $user_menu;
-    protected $user_submenu;
+    protected $user_repo;
+    protected $employee_repo;
+    protected $menu_repo;
+    protected $submenu_repo;
 
 
 
-    public function __construct(User $user, Employee $employee, Menu $menu, SubMenu $submenu, UserMenu $user_menu, UserSubmenu $user_submenu){
+    public function __construct(UserInterface $user_repo, EmployeeInterface $employee_repo, MenuInterface $menu_repo, SubmenuInterface $submenu_repo){
 
-        $this->user = $user;
-        $this->employee = $employee;
-        $this->menu = $menu;
-        $this->submenu = $submenu;
-        $this->user_menu = $user_menu;
-        $this->user_submenu = $user_submenu;
+        $this->user_repo = $user_repo;
+        $this->employee_repo = $employee_repo;
+        $this->menu_repo = $menu_repo;
+        $this->submenu_repo = $submenu_repo;
+
         parent::__construct();
 
     }
@@ -45,27 +36,7 @@ class UserService extends BaseService{
 
     public function fetchAll($request){
 
-        $key = str_slug($request->fullUrl(), '_');
-
-        $users = $this->cache->remember('users:all:' . $key, 240, function() use ($request){
-
-            $user = $this->user->newQuery();
-            
-            if($request->q != null){
-                $user->search($request->q);
-            }
-            
-            if($request->ol != null){
-                $user->filterIsOnline($this->dataTypeHelper->string_to_boolean($request->ol));
-            }
-
-            if($request->a != null){
-                 $user->filterIsActive($this->dataTypeHelper->string_to_boolean($request->a));
-            }
-
-            return $user->populate();
-
-        });
+        $users = $this->user_repo->fetchAll($request);
 
         $request->flash();
         
@@ -80,42 +51,28 @@ class UserService extends BaseService{
 
     public function store($request){
 
-        $user = new User;
-        $user->slug = $this->str->random(16);
-        $user->user_id = $this->user->userIdInc;
-        $user->firstname = $request->firstname;
-        $user->middlename = $request->middlename;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->position = $request->position;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->created_at = $this->carbon->now();
-        $user->updated_at = $this->carbon->now();
-        $user->ip_created = request()->ip();
-        $user->ip_updated = request()->ip();
-        $user->user_created = $this->auth->user()->user_id;
-        $user->user_updated = $this->auth->user()->user_id;
-        $user->save();
+        $user = $this->user_repo->store($request);
 
         if(count($request->menu) > 0){
 
-            for($i = 0; $i < count($request->menu); $i++){
+            $count_menu = count($request->menu);
 
-                $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+            for($i = 0; $i < $count_menu; $i++){
 
-                $user_menu = new UserMenu;
-                $this->storeUserMenu($user_menu, $user, $menu);
+                $menu = $this->menu_repo->findByMenuId($request->menu[$i]);
+
+                $user_menu = $this->user_repo->storeUserMenu($user, $menu);
 
                 if($request->submenu > 0){
 
-                    foreach($request->submenu as $data_submenu){
+                    foreach($request->submenu as $data){
 
-                        $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+                        $submenu = $this->submenu_repo->findBySubmenuId($data);
 
                         if($menu->menu_id === $submenu->menu_id){
-                            $user_submenu = new UserSubMenu;
-                            $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                            $this->user_repo->storeUserSubmenu($submenu, $user_menu);
+                        
                         }
 
                     }
@@ -138,7 +95,7 @@ class UserService extends BaseService{
 
     public function show($slug){
         
-        $user = $this->userBySlug($slug);  
+        $user = $this->user_repo->findBySlug($slug);  
         return view('dashboard.user.show')->with('user', $user);
 
     }
@@ -150,7 +107,7 @@ class UserService extends BaseService{
 
     public function edit($slug){
 
-    	$user = $this->userBySlug($slug);  
+    	$user = $this->user_repo->findBySlug($slug);  
         return view('dashboard.user.edit')->with('user', $user);
 
     }
@@ -162,39 +119,28 @@ class UserService extends BaseService{
 
     public function update($request, $slug){
 
-        $user = $this->userBySlug($slug);
-        $user->firstname = $request->firstname;
-        $user->middlename = $request->middlename;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->position = $request->position;
-        $user->username = $request->username;
-        $user->updated_at = $this->carbon->now();
-        $user->ip_updated = request()->ip();
-        $user->user_updated = $this->auth->user()->user_id;
-        $user->save();
-
-        $user->userMenu()->delete();
-        $user->userSubmenu()->delete();
+        $user = $this->user_repo->update($request, $slug);
 
         if(count($request->menu) > 0){
 
-            for($i = 0; $i < count($request->menu); $i++){
+            $count_menu = count($request->menu);
 
-                $menu = $this->menu->whereMenuId($request->menu[$i])->first();
+            for($i = 0; $i < $count_menu; $i++){
 
-                $user_menu = new UserMenu;
-                $this->storeUserMenu($user_menu, $user, $menu);
+                $menu = $this->menu_repo->findByMenuId($request->menu[$i]);
+
+                $user_menu = $this->user_repo->storeUserMenu($user, $menu);
 
                 if($request->submenu > 0){
 
-                    foreach($request->submenu as $data_submenu){
+                    foreach($request->submenu as $data){
 
-                        $submenu = $this->submenu->whereSubmenuId($data_submenu)->first();
+                        $submenu = $this->submenu_repo->findBySubmenuId($data);
 
                         if($menu->menu_id === $submenu->menu_id){
-                            $user_submenu = new UserSubMenu;
-                            $this->storeUserSubmenu($user_submenu, $submenu, $user_menu);
+
+                            $this->user_repo->storeUserSubmenu($submenu, $user_menu);
+                        
                         }
 
                     }
@@ -217,10 +163,7 @@ class UserService extends BaseService{
 
     public function delete($slug){
 
-        $user = $this->userBySlug($slug);  
-        $user->delete();
-        $user->userMenu()->delete();
-        $user->userSubmenu()->delete();
+        $user = $this->user_repo->destroy($slug);
 
         $this->event->fire('user.destroy', $user);
         return redirect()->back();
@@ -234,18 +177,9 @@ class UserService extends BaseService{
 
     public function activate($slug){
 
-        $user = $this->userBySlug($slug);  
+        $user = $this->user_repo->activate($slug);  
 
-        if($user->is_active == 0){
-
-            $user->is_active = 1;
-            $user->save();
-
-            $this->event->fire('user.activate', $user);
-            return redirect()->back();
-
-        }
-
+        $this->event->fire('user.activate', $user);
         return redirect()->back();
 
     }
@@ -257,19 +191,9 @@ class UserService extends BaseService{
 
     public function deactivate($slug){
 
-        $user = $this->userBySlug($slug);  
-
-        if($user->is_active == 1){
-            
-            $user->is_active = 0;
-            $user->is_online = 0;
-            $user->save();
-            
-            $this->event->fire('user.deactivate', $user);
-            return redirect()->back();
-
-        }
-
+        $user = $this->user_repo->deactivate($slug);  
+        
+        $this->event->fire('user.deactivate', $user);
         return redirect()->back();
 
     }
@@ -281,18 +205,9 @@ class UserService extends BaseService{
 
     public function logout($slug){
 
-        $user = $this->userBySlug($slug);  
+        $user = $this->user_repo->logout($slug);  
 
-        if($user->is_active == 1 && $user->is_online == 1){
-
-            $user->is_online= 0;
-            $user->save();
-
-            $this->event->fire('user.logout', $user);
-            return redirect()->back();
-
-        }
-
+        $this->event->fire('user.logout', $user);
         return redirect()->back();
 
     }
@@ -304,7 +219,7 @@ class UserService extends BaseService{
 
     public function resetPassword($slug){
 
-        $user = $this->userBySlug($slug); 
+        $user = $this->user_repo->findBySlug($slug); 
         return view('dashboard.user.reset_password')->with('user', $user);
 
     }
@@ -316,7 +231,7 @@ class UserService extends BaseService{
 
     public function resetPasswordPost($request, $slug){
 
-        $user = $this->userBySlug($slug);  
+        $user = $this->user_repo->findBySlug($slug);  
 
         if ($request->username == $this->auth->user()->username && Hash::check($request->user_password, $this->auth->user()->password)) {
             
@@ -327,9 +242,7 @@ class UserService extends BaseService{
 
             }else{
 
-                $user->password = Hash::make($request->password);
-                $user->is_online = 0;
-                $user->save();
+                $this->user_repo->resetPassword($user, $request);
 
                 $this->event->fire('user.reset_password_post', $user);
                 return redirect()->route('dashboard.user.index');
@@ -350,7 +263,7 @@ class UserService extends BaseService{
 
     public function syncEmployee($slug){
 
-        $user = $this->userBySlug($slug);
+        $user = $this->user_repo->findBySlug($slug);
         return view('dashboard.user.sync_employee')->with('user', $user);
 
     }
@@ -359,16 +272,13 @@ class UserService extends BaseService{
 
 
 
-
     public function syncEmployeePost($request, $slug){
 
-        $user = $this->userBySlug($slug);
-        $employee = $this->employeeBySlug($request->s);
+        $employee = $this->employee_repo->employeeBySlug($request->s);
 
         if(is_null($employee->user_id) || $employee->user_id == ''){
-
-            $employee->user_id = $user->user_id;
-            $employee->save();
+            
+            $user = $this->user_repo->sync($employee, $slug);
 
             $this->event->fire('user.sync_employee_post', [$user, $employee]);
             return redirect()->route('dashboard.user.index');
@@ -387,115 +297,15 @@ class UserService extends BaseService{
 
     public function unsyncEmployee($slug){
 
-        $user = $this->userBySlug($slug);
-        $employee = $this->employeeByUserId($user->user_id);
+        $user = $this->user_repo->unsync($slug);
 
-        if($employee->user_id != null || !$employee->user_id != ''){
-
-            $employee->user_id = null;
-            $employee->save();
-
-            $this->event->fire('user.unsync_employee', [$user, $employee]);
-            return redirect()->route('dashboard.user.index');
-
-        }
-
-        $this->session->flash('USER_UNSYNC_EMPLOYEE_FAIL', 'Cannot Unsync Employee.');
-        return redirect()->back();
+        $this->event->fire('user.unsync_employee', $user);
+        return redirect()->route('dashboard.user.index');
 
     }
 
 
 
-
-
-
-
-    // Utility Methods
-
-    public function userBySlug($slug){
-
-        $user = $this->cache->remember('users:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        }); 
-        
-        return $user;
-
-    }
-
-
-
-
-
-    public function employeeBySlug($slug){
-
-        $employee = $this->cache->remember('employees:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->employee->findSlug($slug);
-        });
-        
-        return $employee;
-
-    }
-
-
-
-
-
-    public function employeeByUserId($user_id){
-
-        $employee = $this->cache->remember('employees:byUserId:' . $user_id, 240, function() use ($user_id){
-            return $this->employee->where('user_id', $user_id)->first();
-        });
-        
-        return $employee;
-
-    }
-
-
-
-
-
-    public function storeUserMenu($user_menu, $user, $menu){
-
-        $user_menu->user_menu_id = $this->user_menu->userMenuIdInc;
-        $user_menu->user_id = $user->user_id;
-        $user_menu->menu_id = $menu->menu_id;
-        $user_menu->category = $menu->category;
-        $user_menu->name = $menu->name;
-        $user_menu->route = $menu->route;
-        $user_menu->icon = $menu->icon;
-        $user_menu->is_menu = $menu->is_menu;
-        $user_menu->is_dropdown = $menu->is_dropdown; 
-        $user_menu->save();
-
-    }
-
-
-
-
-
-    public function storeUserSubmenu($user_submenu, $submenu, $user_menu){
-
-        $user_submenu->submenu_id = $submenu->submenu_id;
-        $user_submenu->user_menu_id = $user_menu->user_menu_id;
-        $user_submenu->user_id = $user_menu->user_id;
-        $user_submenu->is_nav = $submenu->is_nav;
-        $user_submenu->name = $submenu->name;
-        $user_submenu->route = $submenu->route;
-        $user_submenu->save();
-
-    }
-
-
-
-
-
-    public function updateEmployee($employee, $user_id){
-
-        $employee->user_id = $user_id;
-        $employee->save();
-
-    }
 
 
 

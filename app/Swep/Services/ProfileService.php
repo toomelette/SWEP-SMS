@@ -3,21 +3,22 @@
 namespace App\Swep\Services;
 
 use Hash;
-use App\Models\User;
 use App\Swep\BaseClasses\BaseService;
-
+use App\Swep\Interfaces\ProfileInterface;
 
 
 class ProfileService extends BaseService{
 
 
-	protected $user;
+
+    protected $profile_repo;
 
 
 
-    public function __construct(User $user){
+    public function __construct(ProfileInterface $profile_repo){
 
-        $this->user = $user;
+        $this->profile_repo = $profile_repo;
+
         parent::__construct();
 
     }
@@ -28,10 +29,7 @@ class ProfileService extends BaseService{
 
     public function updateAccountUsername($request, $slug){
 
-        $user = $this->userBySlug($slug);
-        $user->username = $request->username;
-        $user->is_online = 0;
-        $user->save();
+        $user = $this->profile_repo->updateUsername($request, $slug);
 
         $this->session->flush();
         $this->auth->logout();
@@ -47,14 +45,10 @@ class ProfileService extends BaseService{
 
 
     public function updateAccountPassword($request, $slug){
-        
-        $user = $this->userBySlug($slug);
 
         if(Hash::check($request->old_password, $this->auth->user()->password)){
 
-            $user->password = Hash::make($request->password);
-            $user->is_online = 0;
-            $user->save();
+            $user = $this->profile_repo->updatePassword($request, $slug);
 
             $this->session->flush();
             $this->auth->logout();
@@ -76,28 +70,10 @@ class ProfileService extends BaseService{
 
     public function updateAccountColor($request, $slug){
 
-        $user = $this->userBySlug($slug);
-        $user->color = $request->color;
-        $user->save();
+        $user = $this->profile_repo->updateColor($request, $slug);
 
         $this->event->fire('profile.update_account_color', $user);
         return redirect()->back();
-
-    }
-
-
-
-
-
-    // Utility Methods
-
-    public function userBySlug($slug){
-
-        $user = $this->cache->remember('users:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->findSlug($slug);
-        });
-        
-        return $user;
 
     }
 

@@ -41,33 +41,7 @@ class UserMenu extends Model{
 
 
     /** GETTERS **/
-
-    public function getUserMenuIdIncAttribute(){
-
-        $id = 'UM10000001';
-
-        $usermenu = $this->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();
-
-        if($usermenu != null){
-
-            if($usermenu->user_menu_id != null){
-
-                $num = str_replace('UM', '', $usermenu->user_menu_id) + 1;
-                
-                $id = 'UM' . $num;
-            
-            }
-        
-        }
-        
-        return $id;
-        
-    }
-
-
-
-
-
+    
     public function getUserNav() {
 
     	return $this->userSubmenu->where('is_nav', true);

@@ -62,7 +62,7 @@ class User extends Authenticatable{
 
 
 
-    // RELATIONSHIPS 
+    /** RELATIONSHIPS **/ 
     public function userMenu() {
         return $this->hasMany('App\Models\UserMenu','user_id','user_id');
     }
@@ -82,110 +82,27 @@ class User extends Authenticatable{
 
 
 
-
     /** GETTERS **/
-    
-    public function getUserIdIncAttribute(){
-
-        $id = 'U10001';
-
-        $user = $this->select('user_id')->orderBy('user_id', 'desc')->first();
-
-        if($user != null){
-
-            if($user->user_id != null){
-
-                $num = str_replace('U', '', $user->user_id) + 1;
-                
-                $id = 'U' . $num;
-            
-            }
-        
-        }
-        
-        return $id;
-        
-    }
-
-
-
-
-
     public function getFullnameShortAttribute(){
-
         return strtoupper(substr($this->firstname , 0, 1) . ". " . $this->lastname);
-
     }
-
 
 
 
 
     public function getFullnameAttribute(){
-
         return strtoupper($this->firstname . " " . substr($this->middlename , 0, 1) . ". " . $this->lastname);
-
     }
     
 
     
-
+    
 
 
     /** SCOPES **/
-
-
-    public function scopeSearch($query, $key){
-
-        return $query->where(function ($query) use ($key) {
-                $query->where('firstname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                      ->orwhere('lastname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('username', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-
-    public function scopeFilterIsOnline($query, $value){
-
-        return $query->where('is_online', $value);
-
-    }
-
-
-
-
-
-    public function scopeFilterIsActive($query, $value){
-
-        return $query->where('is_active', $value);
-
-    }
-
-
-
-
-
     public function scopeFindSlug($query, $slug){
 
         return $query->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->firstOrFail();
-
-    }
-    
-
-
-
-
-    public function scopePopulate($query){
-
-        return $query->select('user_id', 'username', 'firstname', 'middlename', 'lastname', 'is_online', 'is_active', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
 
     }
 
