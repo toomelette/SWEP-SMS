@@ -8,27 +8,19 @@ use App\Swep\Interfaces\EmployeeInterface;
 
 use Hash;
 use App\Models\User;
-use App\Models\UserMenu;
-use App\Models\UserSubmenu;
 
 
 class UserRepository extends BaseRepository implements UserInterface {
 	
 
 	protected $user;
-    protected $user_menu;
-    protected $user_submenu;
-
     protected $employee_repo;
 
 
 
-	public function __construct(User $user, UserMenu $user_menu, UserSubmenu $user_submenu, EmployeeInterface $employee_repo){
+	public function __construct(User $user, EmployeeInterface $employee_repo){
 
         $this->user = $user;
-        $this->user_menu = $user_menu;
-        $this->user_submenu = $user_submenu;
-
         $this->employee_repo = $employee_repo;
 
         parent::__construct();
@@ -251,49 +243,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-    public function storeUserMenu($user, $menu){
-
-    	$user_menu = new UserMenu;
-        $user_menu->user_menu_id = $this->getUserMenuIdInc();
-        $user_menu->user_id = $user->user_id;
-        $user_menu->menu_id = $menu->menu_id;
-        $user_menu->category = $menu->category;
-        $user_menu->name = $menu->name;
-        $user_menu->route = $menu->route;
-        $user_menu->icon = $menu->icon;
-        $user_menu->is_menu = $menu->is_menu;
-        $user_menu->is_dropdown = $menu->is_dropdown; 
-        $user_menu->save();
-
-        return $user_menu;
-        
-    }
-
-
-
-
-
-
-    public function storeUserSubmenu($submenu, $user_menu){
-
-    	$user_submenu = new UserSubMenu;
-        $user_submenu->submenu_id = $submenu->submenu_id;
-        $user_submenu->user_menu_id = $user_menu->user_menu_id;
-        $user_submenu->user_id = $user_menu->user_id;
-        $user_submenu->is_nav = $submenu->is_nav;
-        $user_submenu->name = $submenu->name;
-        $user_submenu->route = $submenu->route;
-        $user_submenu->save();
-
-        return $user_submenu;
-
-    }
-
-
-
-
-
-
 	public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
@@ -362,31 +311,6 @@ class UserRepository extends BaseRepository implements UserInterface {
     }
 
 
-
-
-
-
-    public function getUserMenuIdInc(){
-
-        $id = 'UM10000001';
-
-        $usermenu = $this->user_menu->select('user_menu_id')->orderBy('user_menu_id', 'desc')->first();
-
-        if($usermenu != null){
-
-            if($usermenu->user_menu_id != null){
-
-                $num = str_replace('UM', '', $usermenu->user_menu_id) + 1;
-                
-                $id = 'UM' . $num;
-            
-            }
-        
-        }
-        
-        return $id;
-        
-    }
 
 
 

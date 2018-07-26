@@ -27,9 +27,5 @@ interface UserInterface {
 	public function unsync($slug);
 	
 	public function findBySlug($slug);
-	
-	public function storeUserMenu($user, $menu);
-
-	public function storeUserSubmenu($submenu, $user_menu);
 		
 }

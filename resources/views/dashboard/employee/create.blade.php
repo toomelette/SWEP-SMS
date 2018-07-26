@@ -348,15 +348,15 @@
                       <div class="box-body">
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_lastname', 'text', 'Lastname *', 'Lastname', old('spouse_lastname'), $errors->has('spouse_lastname'), $errors->first('spouse_lastname'), 'data-transform="uppercase"'
+                           '3', 'spouse_lastname', 'text', 'Lastname', 'Lastname', old('spouse_lastname'), $errors->has('spouse_lastname'), $errors->first('spouse_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_firstname', 'text', 'Firstname *', 'Firstname', old('spouse_firstname'), $errors->has('spouse_firstname'), $errors->first('spouse_firstname'), 'data-transform="uppercase"'
+                           '3', 'spouse_firstname', 'text', 'Firstname', 'Firstname', old('spouse_firstname'), $errors->has('spouse_firstname'), $errors->first('spouse_firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_middlename', 'text', 'Middlename *', 'Middlename', old('spouse_middlename'), $errors->has('spouse_middlename'), $errors->first('spouse_middlename'), 'data-transform="uppercase"'
+                           '3', 'spouse_middlename', 'text', 'Middlename', 'Middlename', old('spouse_middlename'), $errors->has('spouse_middlename'), $errors->first('spouse_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(
@@ -366,7 +366,7 @@
                         <div class="col-md-12"></div>
 
                         {!! FormHelper::textbox(
-                           '3', 'spouse_occupation', 'text', 'Occupation *', 'Occupation', old('spouse_occupation'), $errors->has('spouse_occupation'), $errors->first('spouse_occupation'), 'data-transform="uppercase"'
+                           '3', 'spouse_occupation', 'text', 'Occupation', 'Occupation', old('spouse_occupation'), $errors->has('spouse_occupation'), $errors->first('spouse_occupation'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! FormHelper::textbox(

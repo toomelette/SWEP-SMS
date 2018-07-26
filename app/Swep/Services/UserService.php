@@ -4,31 +4,39 @@ namespace App\Swep\Services;
 
 use App\Swep\BaseClasses\BaseService;
 use App\Swep\Interfaces\UserInterface;
-use App\Swep\Interfaces\EmployeeInterface;
+use App\Swep\Interfaces\UserMenuInterface;
+use App\Swep\Interfaces\UserSubmenuInterface;
 use App\Swep\Interfaces\MenuInterface;
 use App\Swep\Interfaces\SubmenuInterface;
+use App\Swep\Interfaces\EmployeeInterface;
 
+use Hash;
 
 class UserService extends BaseService{
 
 
     protected $user_repo;
-    protected $employee_repo;
+    protected $user_menu_repo;
+    protected $user_submenu_repo;
     protected $menu_repo;
     protected $submenu_repo;
+    protected $employee_repo;
 
 
 
-    public function __construct(UserInterface $user_repo, EmployeeInterface $employee_repo, MenuInterface $menu_repo, SubmenuInterface $submenu_repo){
+    public function __construct(UserInterface $user_repo, UserMenuInterface $user_menu_repo, UserSubmenuInterface $user_submenu_repo, MenuInterface $menu_repo, SubmenuInterface $submenu_repo, EmployeeInterface $employee_repo){
 
         $this->user_repo = $user_repo;
-        $this->employee_repo = $employee_repo;
+        $this->user_menu_repo = $user_menu_repo;
+        $this->user_submenu_repo = $user_submenu_repo;
         $this->menu_repo = $menu_repo;
         $this->submenu_repo = $submenu_repo;
+        $this->employee_repo = $employee_repo;
 
         parent::__construct();
 
     }
+
 
 
 
@@ -61,7 +69,7 @@ class UserService extends BaseService{
 
                 $menu = $this->menu_repo->findByMenuId($request->menu[$i]);
 
-                $user_menu = $this->user_repo->storeUserMenu($user, $menu);
+                $user_menu = $this->user_menu_repo->store($user, $menu);
 
                 if($request->submenu > 0){
 
@@ -71,7 +79,7 @@ class UserService extends BaseService{
 
                         if($menu->menu_id === $submenu->menu_id){
 
-                            $this->user_repo->storeUserSubmenu($submenu, $user_menu);
+                            $this->user_submenu_repo->store($submenu, $user_menu);
                         
                         }
 
@@ -129,7 +137,7 @@ class UserService extends BaseService{
 
                 $menu = $this->menu_repo->findByMenuId($request->menu[$i]);
 
-                $user_menu = $this->user_repo->storeUserMenu($user, $menu);
+                $user_menu = $this->user_menu_repo->store($user, $menu);
 
                 if($request->submenu > 0){
 
@@ -139,7 +147,7 @@ class UserService extends BaseService{
 
                         if($menu->menu_id === $submenu->menu_id){
 
-                            $this->user_repo->storeUserSubmenu($submenu, $user_menu);
+                            $this->user_submenu_repo->store($submenu, $user_menu);
                         
                         }
 
@@ -274,7 +282,7 @@ class UserService extends BaseService{
 
     public function syncEmployeePost($request, $slug){
 
-        $employee = $this->employee_repo->employeeBySlug($request->s);
+        $employee = $this->employee_repo->findBySlug($request->s);
 
         if(is_null($employee->user_id) || $employee->user_id == ''){
             

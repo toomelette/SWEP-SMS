@@ -171,51 +171,6 @@ class Employee extends Model{
 
 
 
-    // SCOPES
-    public function scopePopulate($query){
-
-        return $query->select('employee_no', 'fullname', 'position', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
-
-    }
-
-
-
-
-    public function scopeSearch($query, $key){
-
-        return $query->where(function ($query) use ($key) {
-                $query->where('employee_no', 'LIKE', '%'. $key .'%')
-                      ->orwhere('lastname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('firstname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('fullname', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)
-                     ->with('employeeTraining', 
-                            'employeeChildren', 
-                            'employeeEducationalBackground', 
-                            'employeeEligibility',
-                            'employeeExperience',
-                            'employeeOrganization',
-                            'employeeRecognition',
-                            'employeeReference',
-                            'employeeSpecialSkill',
-                            'employeeVoluntaryWork',
-                            'employeeServiceRecord')
-                     ->firstorFail();
-
-    }
-
 
 
 
