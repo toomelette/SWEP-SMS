@@ -4,7 +4,7 @@ namespace App\Swep\Interfaces;
  
 
 
-interface MenuInterface {
+interface DepartmentInterface {
 
 	public function fetchAll($request);
 
@@ -14,8 +14,6 @@ interface MenuInterface {
 
 	public function destroy($slug);
 
-	public function findBySlug($menu_id);
-
-	public function findByMenuId($menu_id);
+	public function findBySlug($slug);
 		
 }

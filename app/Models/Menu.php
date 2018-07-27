@@ -39,83 +39,20 @@ class Menu extends Model{
 
 
     // RELATIONSHIPS
-
     public function user() {
-
     	return $this->belongsTo('App\Models\User','user_id','user_id');
-
    	}
 
 
 
 
     public function submenu() {
-
     	return $this->hasMany('App\Models\Submenu','menu_id','menu_id');
-
    	}
 
     
 
 
-    // SCOPE
-
-    public function scopeSearch($query, $key){
-
-        return $query->where(function ($query) use ($key) {
-                $query->where('name', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-    public function scopePopulate($query){
-
-        return $query->select('name', 'route', 'icon', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
-
-    }
-
-
-
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->firstOrFail();
-
-    }
-
-
-
-
-
-    // GETTERS
-
-    public function getMenuIdIncAttribute(){
-
-        $id = 'M10001';
-
-        $menu = $this->select('menu_id')->orderBy('menu_id', 'desc')->first();
-
-        if($menu != null){
-
-            if($menu->menu_id != null){
-
-                $num = str_replace('M', '', $menu->menu_id) + 1;
-                
-                $id = 'M' . $num;
-            
-            }
-        
-        }
-        
-        return $id;
-        
-    }
 
 
 }

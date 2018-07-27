@@ -18,7 +18,6 @@ class ProfileService extends BaseService{
     public function __construct(ProfileInterface $profile_repo){
 
         $this->profile_repo = $profile_repo;
-
         parent::__construct();
 
     }

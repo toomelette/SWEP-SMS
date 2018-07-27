@@ -69,7 +69,6 @@ class EmployeeService extends BaseService{
         $employees = $this->employee_repo->fetchAll($request);
 
         $request->flash();
-
         return view('dashboard.employee.index')->with('employees', $employees);
         
     }
@@ -82,7 +81,6 @@ class EmployeeService extends BaseService{
     public function store($request){
 
         $employee = $this->employee_repo->store($request);
-
         $this->fillDependencies($request, $employee);
 
         $this->event->fire('employee.store');
@@ -121,7 +119,6 @@ class EmployeeService extends BaseService{
     public function update($request, $slug){
         
         $employee = $this->employee_repo->update($request, $slug);
-
         $this->fillDependencies($request, $employee);
 
         $this->event->fire('employee.update', $employee);

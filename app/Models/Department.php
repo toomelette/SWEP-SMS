@@ -37,76 +37,13 @@ class Department extends Model{
 
 
 	public function projectCode() {
-
         return $this->hasMany('App\Models\ProjectCode','department_id','department_id');
-
     }
 
 
 
     public function departmentUnit() {
-
         return $this->hasMany('App\Models\DepartmentUnit','department_id','department_id');
-
-    }
-
-
-
-
-    // SCOPES
-
-    public function scopePopulate($query){
-
-        return $query->select('name', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
-
-    }
-
-
-
-    public function scopeSearch($query, $key){
-
-        return $query->where(function ($query) use ($key) {
-                $query->where('name', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->firstOrFail();
-
-    }
-
-
-
-
-    // GETTERS
-
-    public function getDepartmentIdIncAttribute(){
-
-        $id = 'D1001';
-
-        $department = $this->select('department_id')->orderBy('department_id', 'desc')->first();
-
-        if($department != null){
-            
-            if($department->department_id != null){
-            
-                $num = str_replace('D', '', $department->department_id) + 1;
-                
-                $id = 'D' . $num;
-            
-            }
-        
-        }
-        
-        return $id;
-        
     }
 
 

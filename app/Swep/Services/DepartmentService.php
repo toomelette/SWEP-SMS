@@ -3,7 +3,7 @@
 namespace App\Swep\Services;
 
 
-use App\Models\Department;
+use App\Swep\Interfaces\DepartmentInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -12,13 +12,13 @@ class DepartmentService extends BaseService{
 
 
 
-	protected $department;
+    protected $department_repo;
 
 
 
-    public function __construct(Department $department){
+    public function __construct(DepartmentInterface $department_repo){
 
-        $this->department = $department;
+        $this->department_repo = $department_repo;
         parent::__construct();
 
     }
@@ -29,19 +29,7 @@ class DepartmentService extends BaseService{
 
     public function fetchAll($request){
 
-       $key = str_slug($request->fullUrl(), '_');
-
-        $departments = $this->cache->remember('departments:all:' . $key, 240, function() use ($request){
-
-            $department = $this->department->newQuery();
-            
-            if($request->q != null){
-                $department->search($request->q);
-            }
-
-            return $department->populate();
-
-        });
+        $departments = $this->department_repo->fetchAll($request);
 
         $request->flash();
         return view('dashboard.department.index')->with('departments', $departments);
@@ -55,17 +43,7 @@ class DepartmentService extends BaseService{
 
     public function store($request){
 
-        $department = new Department;
-        $department->slug = $this->str->random(16);
-        $department->department_id = $this->department->departmentIdInc;
-        $department->name = $request->name;
-        $department->created_at = $this->carbon->now();
-        $department->updated_at = $this->carbon->now();
-        $department->ip_created = request()->ip();
-        $department->ip_updated = request()->ip();
-        $department->user_created = $this->auth->user()->user_id;
-        $department->user_updated = $this->auth->user()->user_id;
-        $department->save();
+        $department = $this->department_repo->store($request);
 
         $this->event->fire('department.store');
         return redirect()->back();
@@ -78,7 +56,7 @@ class DepartmentService extends BaseService{
 
     public function edit($slug){
 
-        $department = $this->departmentsBySlug($slug);
+        $department = $this->department_repo->findBySlug($slug);
         return view('dashboard.department.edit')->with('department', $department);
 
     }
@@ -89,12 +67,7 @@ class DepartmentService extends BaseService{
 
     public function update($request, $slug){
 
-        $department = $this->departmentsBySlug($slug);
-        $department->name = $request->name;
-        $department->updated_at = $this->carbon->now();
-        $department->ip_updated = request()->ip();
-        $department->user_updated = $this->auth->user()->user_id;
-        $department->save();
+        $department = $this->department_repo->update($request, $slug);
 
         $this->event->fire('department.update', $department);
         return redirect()->route('dashboard.department.index');
@@ -107,8 +80,7 @@ class DepartmentService extends BaseService{
 
     public function destroy($slug){
 
-        $department = $this->departmentsBySlug($slug);
-        $department->delete();
+        $department = $this->department_repo->destroy($slug);
 
         $this->event->fire('department.destroy', $department );
         return redirect()->route('dashboard.department.index');
@@ -117,19 +89,6 @@ class DepartmentService extends BaseService{
 
 
 
-
-
-    // Utility Methods
-
-    public function departmentsBySlug($slug){
-
-        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->department->findSlug($slug);
-        });
-        
-        return $department;
-
-    }
 
 
 

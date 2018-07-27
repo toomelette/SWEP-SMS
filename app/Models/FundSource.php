@@ -39,67 +39,9 @@ class FundSource extends Model{
     // RELATIONSHIPS
 
     public function disbursementVoucher() {
-      
       return $this->belongsTo('App\Models\DisbursementVoucher','fund_source_id','fund_source_id');
-
     }
 
-
-
-    // SCOPES
-
-    public function scopePopulate($query){
-
-        return $query->select('description', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
-
-    }
-
-
-
-    public function scopeSearch($query, $key){
-
-        return $query->where(function ($query) use ($key) {
-                $query->where('description', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->firstOrFail();
-
-    }
-
-
-
-    // GETTERS
-
-    public function getFundSourceIdIncAttribute(){
-
-        $id = 'FS1001';
-
-        $fund_source = $this->select('fund_source_id')->orderBy('fund_source_id', 'desc')->first();
-
-        if($fund_source != null){
-
-            if($fund_source->fund_source_id != null){
-                
-                $num = str_replace('FS', '', $fund_source->fund_source_id) + 1;
-                
-                $id = 'FS' . $num;
-            
-            }
-        
-        }
-        
-        return $id;
-        
-    }
 
 
 

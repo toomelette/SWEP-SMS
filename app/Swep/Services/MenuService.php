@@ -3,24 +3,23 @@
 namespace App\Swep\Services;
 
 
-use App\Models\Menu;
-use App\Models\Submenu;
+use App\Swep\Interfaces\MenuInterface;
+use App\Swep\Interfaces\SubmenuInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
 class MenuService extends BaseService{
 
 
-
-	protected $menu;
-    protected $submenu;
-
+    protected $menu_repo;
+    protected $submenu_repo;
 
 
-    public function __construct(Menu $menu, Submenu $submenu){
 
-        $this->menu = $menu;
-        $this->submenu = $submenu;
+    public function __construct(MenuInterface $menu_repo, SubmenuInterface $submenu_repo){
+
+        $this->menu_repo = $menu_repo;
+        $this->submenu_repo = $submenu_repo;
         parent::__construct();
 
     }
@@ -31,22 +30,9 @@ class MenuService extends BaseService{
 
     public function fetchAll($request){
 
-        $key = str_slug($request->fullUrl(), '_');
-
-        $menus = $this->cache->remember('menus:all:' . $key, 240, function() use ($request){
-
-            $menu = $this->menu->newQuery();
-            
-            if($request->q != null){
-                $menu->search($request->q);
-            }
-
-            return $menu->populate();
-
-        });
+        $menus = $this->menu_repo->fetchAll($request);
 
         $request->flash();
-        
         return view('dashboard.menu.index')->with('menus', $menus);
 
     }
@@ -60,40 +46,13 @@ class MenuService extends BaseService{
        
         $rows = $request->row;
 
-        $menu = new Menu;
-        $menu->menu_id = $this->menu->menuIdInc;
-        $menu->slug = $this->str->random(16);
-        $menu->name = $request->name;
-        $menu->route = $request->route;
-        $menu->icon = $request->icon;
-        $menu->is_menu = $this->dataTypeHelper->string_to_boolean($request->is_menu);
-        $menu->is_dropdown = $this->dataTypeHelper->string_to_boolean($request->is_dropdown);
-        $menu->created_at = $this->carbon->now();
-        $menu->updated_at = $this->carbon->now();
-        $menu->ip_created = request()->ip();
-        $menu->ip_updated = request()->ip();
-        $menu->user_created = $this->auth->user()->user_id;
-        $menu->user_updated = $this->auth->user()->user_id;
-        $menu->save();
+        $menu = $this->menu_repo->store($request);
 
         if(count($rows) > 0){
 
             foreach ($rows as $row) {
                 
-                $submenu = new Submenu;
-                $submenu->slug = $this->str->random(16);
-                $submenu->submenu_id = $this->submenu->submenuIdInc;
-                $submenu->menu_id = $menu->menu_id;
-                $submenu->name = $row['sub_name'];
-                $submenu->route = $row['sub_route'];
-                $submenu->is_nav = $this->dataTypeHelper->string_to_boolean($row['sub_is_nav']);  
-                $submenu->created_at = $this->carbon->now();
-                $submenu->updated_at = $this->carbon->now();
-                $submenu->ip_created = request()->ip();
-                $submenu->ip_updated = request()->ip();
-                $submenu->user_created = $this->auth->user()->user_id;
-                $submenu->user_updated = $this->auth->user()->user_id;
-                $submenu->save();
+                $submenu = $this->submenu_repo->store($row, $menu);
 
             }
         }
@@ -110,7 +69,7 @@ class MenuService extends BaseService{
 
     public function edit($slug){
 
-        $menu = $this->menuBySlug($slug);
+        $menu = $this->menu_repo->findbySlug($slug);
         return view('dashboard.menu.edit')->with('menu', $menu);
 
     }
@@ -122,16 +81,7 @@ class MenuService extends BaseService{
 
     public function update($request, $slug){
 
-        $menu = $this->menuBySlug($slug);
-        $menu->name = $request->name;
-        $menu->route = $request->route;
-        $menu->icon = $request->icon;
-        $menu->is_menu = $this->dataTypeHelper->string_to_boolean($request->is_menu);
-        $menu->is_dropdown = $this->dataTypeHelper->string_to_boolean($request->is_dropdown);
-        $menu->updated_at = $this->carbon->now();
-        $menu->ip_updated = request()->ip();
-        $menu->user_updated = $this->auth->user()->user_id;
-        $menu->save();
+        $menu = $this->menu_repo->update($request, $slug);
 
         $this->event->fire('menu.update', $menu);
         return redirect()->route('dashboard.menu.index');
@@ -145,30 +95,13 @@ class MenuService extends BaseService{
 
     public function destroy($slug){
 
-        $menu = $this->menuBySlug($slug);
-        $menu->delete();
-        $menu->submenu()->delete();
+        $menu = $this->menu_repo->destroy($slug);
 
         $this->event->fire('menu.destroy', $menu);
         return redirect()->route('dashboard.menu.index');
 
     }
 
-
-
-
-
-    // Utility Methods
-
-    public function menuBySlug($slug){
-
-        $menu = $this->cache->remember('menus:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->menu->findSlug($slug);
-        }); 
-        
-        return $menu;
-
-    }
 
 
 
