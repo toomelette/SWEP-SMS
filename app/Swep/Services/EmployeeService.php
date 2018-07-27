@@ -119,7 +119,7 @@ class EmployeeService extends BaseService{
 
 
     public function update($request, $slug){
-
+        
         $employee = $this->employee_repo->update($request, $slug);
 
         $this->fillDependencies($request, $employee);

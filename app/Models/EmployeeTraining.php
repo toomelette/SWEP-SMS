@@ -54,30 +54,6 @@ class EmployeeTraining extends Model{
 
 
 
-    // SCOPES
-    public function scopePopulate($query){
-
-        return $query->orderBy('date_from', 'desc')->get();
-
-    }
-    
-
-
-    public function scopePopulateByEmpNo($query, $employee_no){
-
-        return $query->where('employee_no', $employee_no)->orderBy('date_from', 'desc')->get();
-
-    }
-
-    
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->firstOrFail();
-
-    }
-
-
 
 
 }

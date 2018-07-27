@@ -52,28 +52,6 @@ class EmployeeServiceRecord extends Model{
     
 
 
-    // SCOPES
-    public function scopePopulate($query){
-
-        return $query->orderBy('sequence_no', 'asc')->get();
-
-    }
-
-
-
-    public function scopePopulateByEmpNo($query, $employee_no){
-
-        return $query->where('employee_no', $employee_no)->orderBy('sequence_no', 'asc')->get();
-
-    }
-
-    
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->firstOrFail();
-
-    }
     
     
 

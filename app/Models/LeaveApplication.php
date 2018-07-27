@@ -63,82 +63,11 @@ class LeaveApplication extends Model{
 
 
 	// RELATIONSHIPS
-
-
-
-
-    // SCOPES
-
-    public function scopePopulate($query){
-
-        return $query->select('user_id', 'firstname', 'middlename', 'lastname', 'type', 'date_of_filing', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
-
+    public function user(){
+        return $this->hasOne('App\Models\User', 'user_id', 'user_id');
     }
 
 
-
-    public function scopePopulateByUser($query, $id){
-
-        return $query->select('type', 'date_of_filing', 'slug')
-                     ->where('user_id', $id)
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
-
-    }
-    
-
-
-    public function scopeSearch($query, $key){
-
-        $query->where(function ($query) use ($key) {
-            $query->where('lastname', 'LIKE', '%'. $key .'%')
-                  ->orwhere('firstname', 'LIKE', '%'. $key .'%')
-                  ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                  ->orwhereHas('user', function ($query) use ($key) {
-                    $query->where('username', 'LIKE', '%'. $key .'%');
-                });
-        });
-
-    }
-
-
-
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->firstOrFail();
-
-    }
-
-
-
-
-
-    // GETTERS
-    public function getLeaveApplicationIdIncAttribute(){
-
-        $id = 'LA1000001';
-
-        $la = $this->select('leave_application_id')->orderBy('leave_application_id', 'desc')->first();
-
-        if($la != null){
-
-            if($la->leave_application_id != null){
-
-                $num = str_replace('LA', '', $la->leave_application_id) + 1;
-                
-                $id = 'LA' . $num;
-            
-            }
-            
-        }
-        
-        return $id;
-        
-    }
 
 
 

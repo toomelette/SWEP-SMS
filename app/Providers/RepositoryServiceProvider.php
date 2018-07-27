@@ -17,12 +17,14 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Swep\Interfaces\UserSubmenuInterface', 'App\Swep\Repositories\UserSubmenuRepository');
 
+
+
 		$this->app->bind('App\Swep\Interfaces\MenuInterface', 'App\Swep\Repositories\MenuRepository');
 
 		$this->app->bind('App\Swep\Interfaces\SubmenuInterface', 'App\Swep\Repositories\SubmenuRepository');
 
 		$this->app->bind('App\Swep\Interfaces\ProfileInterface', 'App\Swep\Repositories\ProfileRepository');
-	
+
 
 
 		$this->app->bind('App\Swep\Interfaces\EmployeeInterface', 'App\Swep\Repositories\EmployeeRepository');
@@ -50,6 +52,20 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Swep\Interfaces\EmployeeSpecialSkillInterface', 'App\Swep\Repositories\EmployeeSpecialSkillRepository');
 
 		$this->app->bind('App\Swep\Interfaces\EmployeeReferenceInterface', 'App\Swep\Repositories\EmployeeReferenceRepository');
+
+		$this->app->bind('App\Swep\Interfaces\EmployeeTrainingInterface', 'App\Swep\Repositories\EmployeeTrainingRepository');
+
+		$this->app->bind('App\Swep\Interfaces\EmployeeServiceRecordInterface', 'App\Swep\Repositories\EmployeeServiceRecordRepository');
+
+
+
+		$this->app->bind('App\Swep\Interfaces\DisbursementVoucherInterface', 'App\Swep\Repositories\DisbursementVoucherRepository');
+
+		$this->app->bind('App\Swep\Interfaces\SignatoryInterface', 'App\Swep\Repositories\SignatoryRepository');
+
+		$this->app->bind('App\Swep\Interfaces\LeaveApplicationInterface', 'App\Swep\Repositories\LeaveApplicationRepository');
+		
+
 	}
 
 

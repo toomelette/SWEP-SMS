@@ -14,9 +14,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     protected $employee;
-
 
 
 
