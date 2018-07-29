@@ -4,7 +4,7 @@ namespace App\Swep\Interfaces;
  
 
 
-interface SignatoryInterface {
+interface ProjectCodeInterface {
 
 	public function fetchAll($request);
 
@@ -15,7 +15,5 @@ interface SignatoryInterface {
 	public function destroy($slug);
 
 	public function findBySlug($slug);
-	
-	public function findByType($type);
-
+		
 }

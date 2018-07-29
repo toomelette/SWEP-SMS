@@ -70,6 +70,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Swep\Interfaces\DepartmentUnitInterface', 'App\Swep\Repositories\DepartmentUnitRepository');
 
 		$this->app->bind('App\Swep\Interfaces\FundSourceInterface', 'App\Swep\Repositories\FundSourceRepository');
+
+		$this->app->bind('App\Swep\Interfaces\ProjectCodeInterface', 'App\Swep\Repositories\ProjectCodeRepository');
 		
 
 	}
