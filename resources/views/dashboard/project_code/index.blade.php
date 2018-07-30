@@ -65,7 +65,7 @@
           </table>
       </div>
 
-      @if(empty($project_codes))
+      @if($project_codes->isEmpty())
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

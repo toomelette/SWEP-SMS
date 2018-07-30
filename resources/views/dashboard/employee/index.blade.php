@@ -80,7 +80,7 @@
         </table>
       </div>
 
-      @if(empty($employees))
+      @if($employees->isEmpty())
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

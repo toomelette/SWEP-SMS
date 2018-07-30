@@ -56,7 +56,7 @@
           </table>
       </div>
 
-      @if(empty($departments))
+      @if($departments->isEmpty())
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

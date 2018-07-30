@@ -172,7 +172,7 @@
             @endforeach
           </table>
 
-          @if(empty($employee->employeeServiceRecord))
+          @if($employee->employeeServiceRecord->isEmpty())
             <div style="padding :5px;">
               <center><h4>No Records found!</h4></center>
             </div>

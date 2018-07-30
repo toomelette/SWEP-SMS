@@ -135,7 +135,7 @@
             @endforeach
           </table>
 
-          @if(empty($employee->employeeTraining))
+          @if($employee->employeeTraining->isEmpty())
             <div style="padding :5px;">
               <center><h4>No Records found!</h4></center>
             </div>
