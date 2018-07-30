@@ -8,9 +8,14 @@ class EmployeeSpecialSkill extends Model{
 
 
 
+
+
+
 	protected $table = 'employee_special_skills';
 
     public $timestamps = false;
+
+
 
 
     
@@ -26,19 +31,24 @@ class EmployeeSpecialSkill extends Model{
 
 
 
-    // RELATIONSHIPS
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
     
 
 
-    // SCOPES
+    /** Scopes **/
     public function scopePopulate($query){
 
         return $query->orderBy('description', 'desc')->get();
 
     }
+
+
+
+
 
 
 

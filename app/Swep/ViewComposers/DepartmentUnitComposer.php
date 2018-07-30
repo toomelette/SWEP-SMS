@@ -4,29 +4,28 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\DepartmentUnit;
-use Illuminate\Cache\Repository as Cache;
+use App\Swep\Interfaces\DepartmentUnitInterface;
 
 
 class DepartmentUnitComposer{
    
 
-	protected $department_unit;
-	protected $cache;
+
+	protected $department_unit_repo;
 
 
-	public function __construct(DepartmentUnit $department_unit, Cache $cache){
-		$this->department_unit = $department_unit;
-		$this->cache = $cache;
+
+	public function __construct(DepartmentUnitInterface $department_unit_repo){
+
+		$this->department_unit_repo = $department_unit_repo;
+
 	}
 
 
 
     public function compose($view){
 
-        $department_units = $this->cache->remember('department_units:global:all', 240, function(){
-        	return $this->department_unit->select('name', 'department_unit_id', 'description')->get();
-        });
+        $department_units = $this->department_unit_repo->globalFetchAll();
         
     	$view->with('global_department_units_all', $department_units);
     	

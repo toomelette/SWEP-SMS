@@ -8,6 +8,8 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Department extends Model{
 
+
+
     use Sortable;
 
     protected $table = 'departments';
@@ -17,6 +19,9 @@ class Department extends Model{
     public $sortable = ['name'];
 
 	public $timestamps = false;
+
+
+
 
 
     protected $attributes = [
@@ -36,15 +41,18 @@ class Department extends Model{
 
 
 
+
+    /** RELATIONSHIPS **/
 	public function projectCode() {
         return $this->hasMany('App\Models\ProjectCode','department_id','department_id');
     }
 
 
-
     public function departmentUnit() {
         return $this->hasMany('App\Models\DepartmentUnit','department_id','department_id');
     }
+
+
 
 
 

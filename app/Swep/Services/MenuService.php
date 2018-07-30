@@ -48,7 +48,7 @@ class MenuService extends BaseService{
 
         $menu = $this->menu_repo->store($request);
 
-        if(count($rows) > 0){
+        if(!empty($rows)){
 
             foreach ($rows as $row) {
                 

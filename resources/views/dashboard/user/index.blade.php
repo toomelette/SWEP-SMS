@@ -113,7 +113,7 @@
           </table>
       </div>
 
-      @if($users->isEmpty())
+      @if(empty($users))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

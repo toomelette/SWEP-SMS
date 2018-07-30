@@ -7,12 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeServiceRecord extends Model{
 
 
+
+
+
+
 	protected $table = 'employee_service_records';
 
     protected $dates = ['created_at', 'updated_at'];
 
     public $timestamps = false;
     
+
+
+
 
 
     protected $attributes = [
@@ -45,11 +52,13 @@ class EmployeeServiceRecord extends Model{
 
 
 
-    // RELATIONSHIPS
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
     
+
 
 
     

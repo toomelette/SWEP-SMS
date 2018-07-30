@@ -3,29 +3,32 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\UserMenu;
-use App\Models\UserSubmenu;
+use App\Swep\Interfaces\UserMenuInterface;
+use App\Swep\Interfaces\UserSubmenuInterface;
 
 class CheckUserRouteExist{
 
 
-    protected $user_menu;
-    protected $user_submenu;
+
+    protected $user_menu_repo;
+    protected $user_submenu_repo;
 
 
-    public function __construct(UserMenu $user_menu, UserSubmenu $user_submenu){
 
-        $this->user_menu = $user_menu;
-        $this->user_submenu = $user_submenu;
+    public function __construct(UserMenuInterface $user_menu_repo, UserSubmenuInterface $user_submenu_repo){
+
+        $this->user_menu_repo = $user_menu_repo;
+        $this->user_submenu_repo = $user_submenu_repo;
         
     }
   
 
 
 
+
     public function handle($request, Closure $next){
-        
-        if($this->user_menu->getCountUserMenu() == 1 || $this->user_submenu->getCountUserSubmenu() == 1){
+
+        if($this->user_menu_repo->isExist() || $this->user_submenu_repo->isExist()){
 
             return $next($request);
 
@@ -34,6 +37,7 @@ class CheckUserRouteExist{
         return abort(403);
     
     }
+
 
 
 

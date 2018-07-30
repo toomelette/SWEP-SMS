@@ -192,4 +192,19 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
+    public function globalFetchAll(){
+
+        $menus = $this->cache->remember('menus:global:all', 240, function(){
+            return $this->menu->select('menu_id', 'name')->get();
+        });
+        
+        return $menus;
+
+    }
+
+
+
+
+
+
 }

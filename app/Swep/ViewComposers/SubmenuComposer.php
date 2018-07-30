@@ -4,36 +4,38 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\Submenu;
-use Illuminate\Cache\Repository as Cache;
+use App\Swep\Interfaces\SubmenuInterface;
+
 
 
 class SubmenuComposer{
    
 
-	protected $submenu;
-	protected $cache;
+
+	protected $submenu_repo;
 
 
 
-	public function __construct(Submenu $submenu, Cache $cache){
 
-		$this->submenu = $submenu;
-		$this->cache = $cache;
+	public function __construct(SubmenuInterface $submenu_repo){
+
+		$this->submenu_repo = $submenu_repo;
 
 	}
 
 
 
+
+
     public function compose($view){
 
-        $submenus = $this->cache->remember('submenus:global:all', 240, function(){
-        	return $this->submenu->select('menu_id','submenu_id', 'name', 'is_nav')->orderBy('submenu_id', 'asc')->get();
-        });
+        $submenus = $this->submenu_repo->globalFetchAll();
         
     	$view->with('global_submenus_all', $submenus);
 
     }
+
+
 
 
 

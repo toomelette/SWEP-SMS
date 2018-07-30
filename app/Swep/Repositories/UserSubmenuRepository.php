@@ -5,6 +5,7 @@ namespace App\Swep\Repositories;
 use App\Swep\BaseClasses\BaseRepository;
 use App\Swep\Interfaces\UserSubmenuInterface;
 
+use Route;
 use App\Models\UserSubmenu;
 
 
@@ -45,6 +46,26 @@ class UserSubmenuRepository extends BaseRepository implements UserSubmenuInterfa
 
     }
 
+
+
+
+
+
+    public function isExist() {
+
+        $user_id = $this->auth->user()->user_id;
+        $route_name = Route::currentRouteName();
+
+        $user_submenu = $this->cache->remember('nav:user_submenus:byUserId:' . $user_id .':byRoute:'. $route_name, 240, function() use($user_id, $route_name){
+            $usm = $this->user_submenu->where('route', $route_name)
+                                      ->where('user_id', $user_id)
+                                      ->exists();
+            return $usm;
+        });
+
+        return $user_submenu;
+
+    }
 
 
 

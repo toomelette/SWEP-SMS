@@ -8,9 +8,14 @@ class EmployeeOtherQuestion extends Model{
 
 
 
+
+
 	protected $table = 'employee_other_questions';
 
     public $timestamps = false;
+
+
+
 
     
 
@@ -46,10 +51,17 @@ class EmployeeOtherQuestion extends Model{
 
 
 
-    // RELATIONSHIPS
+
+
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
+
+
+
+
 
 
     

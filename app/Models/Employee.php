@@ -10,6 +10,8 @@ class Employee extends Model{
 
 
 
+
+
 	use Sortable;
 
     protected $table = 'employees';
@@ -17,6 +19,8 @@ class Employee extends Model{
     protected $dates = ['date_of_birth', 'firstday_gov', 'firstday_sra', 'appointment_date', 'adjustment_date', 'created_at', 'updated_at'];
 
     public $timestamps = false;
+
+
 
 
 
@@ -90,7 +94,8 @@ class Employee extends Model{
 
 
 
-    //RELATIONSHIPS
+
+    /** RELATIONSHIPS **/
     public function user() {
         return $this->belongsTo('App\Models\User','user_id','user_id');
     }

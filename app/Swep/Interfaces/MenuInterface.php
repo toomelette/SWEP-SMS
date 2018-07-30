@@ -17,5 +17,7 @@ interface MenuInterface {
 	public function findBySlug($menu_id);
 
 	public function findByMenuId($menu_id);
+
+	public function globalFetchAll();
 		
 }

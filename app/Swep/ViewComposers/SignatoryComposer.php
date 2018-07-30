@@ -4,33 +4,41 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\Signatory;
-use Illuminate\Cache\Repository as Cache;
+use App\Swep\Interfaces\SignatoryInterface;
 
 
 class SignatoryComposer{
    
 
-	protected $signatory;
-	protected $cache;
+
+	protected $signatory_repo;
 
 
-	public function __construct(Signatory $signatory, Cache $cache){
-		$this->signatory = $signatory;
-		$this->cache = $cache;
+
+	public function __construct(SignatoryInterface $signatory_repo){
+
+		$this->signatory_repo = $signatory_repo;
+
 	}
+
+
 
 
 
     public function compose($view){
 
-        $signatory = $this->cache->remember('signatories:global:all', 240, function(){
-        	return $this->signatory->select('employee_name', 'employee_position', 'type')->get();
-        });
+        $signatories = $this->signatory_repo->globalFetchAll();
+
+        $signatory_types = $this->signatory_repo->globalStaticTypes();
         
-    	$view->with('global_signatories_all', $signatory);
+    	$view->with([
+    		'global_signatories_all' => $signatories,
+    		'global_static_signatory_types' => $signatory_types,
+    	]);
 
     }
+
+
 
 
 

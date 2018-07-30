@@ -37,7 +37,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
             $department_unit = $this->department_unit->newQuery();
             
-            if($request->q != null){
+            if(isset($request->q)){
                 $this->search($department_unit, $request->q);
             }
 
@@ -177,6 +177,19 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
         
     }
 
+
+
+
+
+
+    public function globalFetchAll(){
+
+        $department_units = $this->cache->remember('department_units:global:all', 240, function(){
+            return $this->department_unit->select('name', 'department_unit_id', 'description')->get();
+        });
+        
+        return $department_units;
+    }
 
 
 

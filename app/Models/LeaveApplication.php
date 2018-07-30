@@ -10,6 +10,9 @@ use Kyslik\ColumnSortable\Sortable;
 class LeaveApplication extends Model{
 
 
+
+
+
 	use Sortable;
 
 	protected $table = 'leave_application';
@@ -18,6 +21,8 @@ class LeaveApplication extends Model{
 
 	public $timestamps = false;
     
+
+
 
 
     protected $attributes = [
@@ -62,7 +67,9 @@ class LeaveApplication extends Model{
 
 
 
-	// RELATIONSHIPS
+
+
+	/** RELATIONSHIPS **/
     public function user(){
         return $this->hasOne('App\Models\User', 'user_id', 'user_id');
     }

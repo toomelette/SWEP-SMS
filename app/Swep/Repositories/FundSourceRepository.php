@@ -36,7 +36,7 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
 
             $fund_source = $this->fund_source->newQuery();
             
-            if($request->q != null){
+            if(isset($request->q)){
                 $this->search($fund_source, $request->q);
             }
 
@@ -161,6 +161,20 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
         
         return $id;
         
+    }
+
+
+
+
+
+    public function globalFetchAll(){
+
+        $fund_source = $this->cache->remember('fund_sources:global:all', 240, function(){
+            return $this->fund_source->select('fund_source_id', 'description')->get();
+        });
+        
+        return $fund_source;
+
     }
 
 

@@ -57,7 +57,7 @@
           </table>
       </div>
 
-      @if($fund_sources->isEmpty())
+      @if(empty($fund_sources))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

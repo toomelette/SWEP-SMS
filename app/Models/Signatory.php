@@ -8,6 +8,9 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Signatory extends Model{
 
+
+
+
     use Sortable;
 
     protected $table = 'signatories';
@@ -17,6 +20,9 @@ class Signatory extends Model{
     public $sortable = ['employee_name', 'employee_position', 'type'];
 
 	public $timestamps = false;
+
+
+
 
 
 
@@ -35,6 +41,7 @@ class Signatory extends Model{
         'user_updated' => '',
 
     ];
+
 
 
 

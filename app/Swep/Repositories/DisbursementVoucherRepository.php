@@ -16,15 +16,15 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
     protected $disbursement_voucher;
-    protected $signatory;
+    protected $signatory_repo;
 
 
 
 
-	public function __construct(DisbursementVoucher $disbursement_voucher, SignatoryInterface $signatory){
+	public function __construct(DisbursementVoucher $disbursement_voucher, SignatoryInterface $signatory_repo){
 
         $this->disbursement_voucher = $disbursement_voucher;
-        $this->signatory = $signatory;
+        $this->signatory_repo = $signatory_repo;
         parent::__construct();
 
     }
@@ -94,10 +94,10 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
         $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
-        $disbursement_voucher->certified_by = $this->signatory->findByType('2')->employee_name;
-        $disbursement_voucher->certified_by_position = $this->signatory->findByType('2')->employee_position;
-        $disbursement_voucher->approved_by = $this->signatory->findByType('1')->employee_name;
-        $disbursement_voucher->approved_by_position = $this->signatory->findByType('1')->employee_position;
+        $disbursement_voucher->certified_by = $this->signatory_repo->findByType('2')->employee_name;
+        $disbursement_voucher->certified_by_position = $this->signatory_repo->findByType('2')->employee_position;
+        $disbursement_voucher->approved_by = $this->signatory_repo->findByType('1')->employee_name;
+        $disbursement_voucher->approved_by_position = $this->signatory_repo->findByType('1')->employee_position;
         $disbursement_voucher->created_at = $this->carbon->now();
         $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->ip_created = request()->ip();
@@ -288,6 +288,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         return $model->select('user_id', 'doc_no', 'dv_no', 'payee', 'date', 'processed_at', 'checked_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
+                     ->with('user')
                      ->paginate(10);
 
     }

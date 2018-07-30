@@ -8,6 +8,9 @@ use Kyslik\ColumnSortable\Sortable;
 
 class ProjectCode extends Model{
 
+
+
+
 	use Sortable;
 
     protected $table = 'project_codes';
@@ -17,6 +20,9 @@ class ProjectCode extends Model{
     public $sortable = ['project_code', 'department_name', 'description', 'project_in_charge'];
 
 	public $timestamps = false;
+
+
+
 
 
     protected $attributes = [
@@ -44,10 +50,9 @@ class ProjectCode extends Model{
 
 
 
+    /** RELATIONSHIPS **/
 	public function department() {
-      
-      return $this->belongsTo('App\Models\Department','department_id','department_id');
-
+        return $this->belongsTo('App\Models\Department','department_id','department_id');
     }
 
 

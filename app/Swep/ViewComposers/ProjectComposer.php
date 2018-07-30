@@ -3,34 +3,37 @@
 namespace App\Swep\ViewComposers;
 
 
+use App\Swep\Interfaces\ProjectInterface;
 use View;
-use App\Models\Project;
-use Illuminate\Cache\Repository as Cache;
 
 
 class ProjectComposer{
    
 
-	protected $projects;
-	protected $cache;
+
+	protected $project;
 
 
-	public function __construct(Project $projects, Cache $cache){
-		$this->projects = $projects;
-		$this->cache = $cache;
+
+	public function __construct(ProjectInterface $project){
+
+		$this->project = $project;
+
 	}
+
+
 
 
 
     public function compose($view){
 
-        $projects = $this->cache->remember('projects:global:all', 240, function(){
-        	return $this->projects->select('project_id', 'project_address')->get();
-        });
+        $projects = $this->project->globalFetchAll();
         
     	$view->with('global_projects_all', $projects);
 
     }
+
+
 
 
 

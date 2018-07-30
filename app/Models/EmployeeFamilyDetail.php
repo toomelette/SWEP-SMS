@@ -8,9 +8,14 @@ class EmployeeFamilyDetail extends Model{
 
 
 
+
+
 	protected $table = 'employee_family_details';
 
     public $timestamps = false;
+
+
+
 
 
 	protected $attributes = [
@@ -38,11 +43,17 @@ class EmployeeFamilyDetail extends Model{
 
 
 
-    // RELATIONSHIPS
+
+
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
     
+    
+
+
     
 
     

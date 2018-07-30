@@ -8,6 +8,10 @@ use Kyslik\ColumnSortable\Sortable;
 
 class FundSource extends Model{
 
+
+
+
+
 	use Sortable;
 
     protected $table = 'fund_sources';
@@ -17,6 +21,8 @@ class FundSource extends Model{
     public $sortable = ['description'];
 
 	public $timestamps = false;
+
+
 
 
 
@@ -36,11 +42,15 @@ class FundSource extends Model{
 
 
 
-    // RELATIONSHIPS
 
+
+
+    /** RELATIONSHIPS **/
     public function disbursementVoucher() {
       return $this->belongsTo('App\Models\DisbursementVoucher','fund_source_id','fund_source_id');
     }
+
+
 
 
 

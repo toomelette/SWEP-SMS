@@ -31,7 +31,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -51,7 +50,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         return $employees;
         
     }
-
 
 
 
@@ -128,7 +126,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function update($request, $slug){
 
         $employee = $this->findBySlug($slug);
@@ -197,7 +194,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function destroy($slug){
 
         $employee = $this->findBySlug($slug);
@@ -209,7 +205,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         return $employee;
 
     }
-
 
 
 
@@ -232,7 +227,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->employeeVoluntaryWork()->delete();
 
     }
-
 
 
 
@@ -267,7 +261,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function findByUserId($user_id){
 
         $employee = $this->cache->remember('employees:byUserId:' . $user_id, 240, function() use ($user_id){
@@ -277,7 +270,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         return $employee;
 
     }
-
 
 
 
@@ -300,7 +292,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function populate($model){
 
         return $model->select('employee_no', 'fullname', 'position', 'slug')
@@ -315,10 +306,23 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function getRequestFullname($request){
 
        return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
+
+    }
+
+
+
+
+
+    public function globalFetchAll(){
+
+        $employees = $this->cache->remember('employees:global:all', 240, function(){
+            return $this->employee->select('slug', 'fullname')->get();
+        });
+        
+        return $employees;
 
     }
 

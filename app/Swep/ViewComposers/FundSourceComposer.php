@@ -4,33 +4,37 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\FundSource;
-use Illuminate\Cache\Repository as Cache;
+use App\Swep\Interfaces\FundSourceInterface;
 
 
 class FundSourceComposer{
    
 
-	protected $fund_source;
-	protected $cache;
+
+	protected $fund_source_repo;
 
 
-	public function __construct(FundSource $fund_source, Cache $cache){
-		$this->fund_source = $fund_source;
-		$this->cache = $cache;
+
+
+	public function __construct(FundSourceInterface $fund_source_repo){
+
+		$this->fund_source_repo = $fund_source_repo;
+
 	}
+
+
 
 
 
     public function compose($view){
 
-        $fund_source = $this->cache->remember('fund_sources:global:all', 240, function(){
-        	return $this->fund_source->select('fund_source_id', 'description')->get();
-        });
+        $fund_source = $this->fund_source_repo->globalFetchAll();
         
     	$view->with('global_fund_source_all', $fund_source);
 
     }
+
+
 
 
 

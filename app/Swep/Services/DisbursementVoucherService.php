@@ -34,7 +34,6 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_vouchers = $this->dv_repo->fetchAll($request);
 
         $request->flash();
-
         return view('dashboard.disbursement_voucher.index')->with('disbursement_vouchers', $disbursement_vouchers);
 
     }
@@ -49,7 +48,6 @@ class DisbursementVoucherService extends BaseService{
         $disbursement_vouchers = $this->dv_repo->fetchByUser($request);
 
         $request->flash();
-
         return view('dashboard.disbursement_voucher.user_index')->with('disbursement_vouchers', $disbursement_vouchers);
 
     }
@@ -161,7 +159,7 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = $this->dv_repo->findBySlug($slug);
 
-        if($disbursement_voucher->processed_at != null){
+        if(isset($disbursement_voucher->processed_at)){
 
             $this->dv_repo->confirmCheck($disbursement_voucher);
 

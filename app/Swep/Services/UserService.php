@@ -61,7 +61,7 @@ class UserService extends BaseService{
 
         $user = $this->user_repo->store($request);
 
-        if(count($request->menu) > 0){
+        if(!empty($request->menu)){
 
             $count_menu = count($request->menu);
 
@@ -71,13 +71,13 @@ class UserService extends BaseService{
 
                 $user_menu = $this->user_menu_repo->store($user, $menu);
 
-                if($request->submenu > 0){
+                if(!empty($request->submenu)){
 
                     foreach($request->submenu as $data){
 
                         $submenu = $this->submenu_repo->findBySubmenuId($data);
 
-                        if($menu->menu_id === $submenu->menu_id){
+                        if($menu->menu_id == $submenu->menu_id){
 
                             $this->user_submenu_repo->store($submenu, $user_menu);
                         
@@ -129,7 +129,7 @@ class UserService extends BaseService{
 
         $user = $this->user_repo->update($request, $slug);
 
-        if(count($request->menu) > 0){
+        if(!empty($request->menu)){
 
             $count_menu = count($request->menu);
 
@@ -139,7 +139,7 @@ class UserService extends BaseService{
 
                 $user_menu = $this->user_menu_repo->store($user, $menu);
 
-                if($request->submenu > 0){
+                if(!empty($request->submenu)){
 
                     foreach($request->submenu as $data){
 
@@ -284,7 +284,7 @@ class UserService extends BaseService{
 
         $employee = $this->employee_repo->findBySlug($request->s);
 
-        if(is_null($employee->user_id) || $employee->user_id == ''){
+        if(empty($employee->user_id)){
             
             $user = $this->user_repo->sync($employee, $slug);
 

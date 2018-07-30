@@ -5,6 +5,7 @@ namespace App\Swep\Repositories;
 use App\Swep\BaseClasses\BaseRepository;
 use App\Swep\Interfaces\UserMenuInterface;
 
+use Route;
 use App\Models\UserMenu;
 
 
@@ -61,11 +62,8 @@ class UserMenuRepository extends BaseRepository implements UserMenuInterface {
         if($usermenu != null){
 
             if($usermenu->user_menu_id != null){
-
                 $num = str_replace('UM', '', $usermenu->user_menu_id) + 1;
-                
                 $id = 'UM' . $num;
-            
             }
         
         }
@@ -73,6 +71,50 @@ class UserMenuRepository extends BaseRepository implements UserMenuInterface {
         return $id;
         
     }
+
+
+
+
+
+
+
+
+    public function globalFetchByCategory($cat){
+
+        $user_menus_u = $this->cache->remember('user_menus:byUserId:'. $this->auth->user()->user_id .':'.$cat.'', 240, function() use ($cat){
+          return $this->user_menu->where('user_id', $this->auth->user()->user_id)
+                                 ->where('category', $cat)
+                                 ->with('userSubMenu')
+                                 ->get();
+        });
+
+        return $user_menus_u;
+        
+    }
+
+
+
+
+
+
+
+
+    public function isExist() {
+
+        $user_id = $this->auth->user()->user_id;
+        $route_name = Route::currentRouteName();
+
+        $user_menu = $this->cache->remember('nav:user_menus:byUserId:'. $user_id .':byRoute:'. $route_name, 240, function() use($user_id, $route_name){
+            $um = $this->user_menu->where('route', $route_name)
+                                  ->where('user_id', $user_id)
+                                  ->exists();
+            return $um;
+        });
+
+        return $user_menu;
+
+    }
+
 
 
 

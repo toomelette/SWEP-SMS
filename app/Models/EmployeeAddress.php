@@ -8,10 +8,16 @@ class EmployeeAddress extends Model{
 
 
 
+
+
 	protected $table = 'employee_address';
 
     public $timestamps = false;
     
+    
+
+
+
 
 	protected $attributes = [
         
@@ -35,14 +41,19 @@ class EmployeeAddress extends Model{
 
 
 
-    // RELATIONSHIPS
+
+
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
 
 
 
-    // GETTERS
+
+
+    /** Getters **/
     public function getFullResAddressAttribute(){
 
         return $this->res_address_barangay .' '. $this->res_address_city .', '. $this->res_address_province;
@@ -56,6 +67,10 @@ class EmployeeAddress extends Model{
     
     }
    
+
+
+
+
 
 
 }

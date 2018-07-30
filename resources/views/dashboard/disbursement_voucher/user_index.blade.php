@@ -118,7 +118,7 @@
         </table>
       </div>
 
-      @if($disbursement_vouchers->isEmpty())
+      @if(empty($disbursement_vouchers))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

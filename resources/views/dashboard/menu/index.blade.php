@@ -61,7 +61,7 @@
           </table>
       </div>
 
-      @if($menus->isEmpty())
+      @if(empty($menus))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

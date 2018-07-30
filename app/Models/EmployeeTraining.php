@@ -18,6 +18,8 @@ class EmployeeTraining extends Model{
     public $timestamps = false;
     
 
+    
+
 
     protected $attributes = [
         
@@ -45,7 +47,7 @@ class EmployeeTraining extends Model{
 
 
 
-    // RELATIONSHIPS
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }

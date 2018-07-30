@@ -20,7 +20,7 @@
 
 
       {{-- User --}}
-      @if(count($global_user_menus_u) > 0)
+      @if(!empty($global_user_menus_u))
 
           <li class="header">Navigation</li>
           @foreach($global_user_menus_u as $user_menu)
@@ -47,11 +47,15 @@
 
                     <ul class="treeview-menu">
 
-                      @foreach($user_menu->getUserNav() as $userNav)
+                      @foreach($user_menu->userSubMenu as $user_nav)
 
-                        <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
-                          <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
-                        </li>
+                        @if($user_nav->is_nav == true)
+
+                          <li class="{!! Route::currentRouteNamed($user_nav->route) ? 'active' : '' !!}">
+                            <a href="{{ route($user_nav->route) }}"><i class="fa fa-caret-right"></i> {{ $user_nav->name }}</a>
+                          </li>
+
+                        @endif
 
                       @endforeach
 
@@ -71,7 +75,7 @@
 
 
         {{-- SU --}}
-        @if(count($global_user_menus_su) > 0)
+        @if(!empty($global_user_menus_su))
 
           <li class="header">SU</li>
           @foreach($global_user_menus_su as $user_menu)
@@ -98,11 +102,15 @@
 
                     <ul class="treeview-menu">
 
-                      @foreach($user_menu->getUserNav() as $userNav)
+                      @foreach($user_menu->userSubMenu as $user_nav)
 
-                        <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
-                          <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
-                        </li>
+                        @if($user_nav->is_nav == true)
+
+                          <li class="{!! Route::currentRouteNamed($user_nav->route) ? 'active' : '' !!}">
+                            <a href="{{ route($user_nav->route) }}"><i class="fa fa-caret-right"></i> {{ $user_nav->name }}</a>
+                          </li>
+
+                        @endif
 
                       @endforeach
 
@@ -122,7 +130,7 @@
 
 
         {{-- ACCOUNTING --}}
-        @if(count($global_user_menus_acctg) > 0)
+        @if(!empty($global_user_menus_acctg))
 
           <li class="header">ACCOUNTING</li>
           @foreach($global_user_menus_acctg as $user_menu)
@@ -149,11 +157,15 @@
 
                     <ul class="treeview-menu">
 
-                      @foreach($user_menu->getUserNav() as $userNav)
+                      @foreach($user_menu->userSubMenu as $user_nav)
 
-                        <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
-                          <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
-                        </li>
+                        @if($user_nav->is_nav == true)
+
+                          <li class="{!! Route::currentRouteNamed($user_nav->route) ? 'active' : '' !!}">
+                            <a href="{{ route($user_nav->route) }}"><i class="fa fa-caret-right"></i> {{ $user_nav->name }}</a>
+                          </li>
+
+                        @endif
 
                       @endforeach
 
@@ -174,7 +186,7 @@
 
 
         {{-- HR --}}
-        @if(count($global_user_menus_hr) > 0)
+        @if(!empty($global_user_menus_hr))
 
           <li class="header">HUMAN RESOURCE</li>
           @foreach($global_user_menus_hr as $user_menu)
@@ -201,11 +213,15 @@
 
                     <ul class="treeview-menu">
 
-                      @foreach($user_menu->getUserNav() as $userNav)
+                      @foreach($user_menu->userSubMenu as $user_nav)
 
-                        <li class="{!! Route::currentRouteNamed($userNav->route) ? 'active' : '' !!}">
-                          <a href="{{ route($userNav->route) }}"><i class="fa fa-caret-right"></i> {{ $userNav->name }}</a>
-                        </li>
+                        @if($user_nav->is_nav == true)
+
+                          <li class="{!! Route::currentRouteNamed($user_nav->route) ? 'active' : '' !!}">
+                            <a href="{{ route($user_nav->route) }}"><i class="fa fa-caret-right"></i> {{ $user_nav->name }}</a>
+                          </li>
+
+                        @endif
 
                       @endforeach
 
@@ -220,6 +236,8 @@
           @endforeach
 
         @endif
+
+
 
 
 

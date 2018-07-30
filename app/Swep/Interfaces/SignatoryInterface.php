@@ -18,4 +18,9 @@ interface SignatoryInterface {
 	
 	public function findByType($type);
 
+	public function globalFetchAll();
+
+	public function globalStaticTypes();
+
+
 }

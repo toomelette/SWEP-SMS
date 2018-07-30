@@ -38,7 +38,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
             $department = $this->department->newQuery();
             
-            if($request->q != null){
+            if(isset($request->q)){
                 $this->search($department, $request->q);
             }
 
@@ -170,6 +170,22 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
         return $id;
         
     }
+
+
+
+
+
+
+    public function globalFetchAll(){
+
+        $departments = $this->cache->remember('departments:global:all', 240, function(){
+            return $this->department->select('name', 'department_id')->get();
+        });
+        
+        return $departments;
+
+    }
+
 
 
 

@@ -38,7 +38,7 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
             $project_code = $this->project_code->newQuery();
             
-            if($request->q != null){
+            if(isset($request->q)){
                 $this->search($project_code, $request->q);
             }
 
@@ -180,11 +180,8 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
         if($project_code != null){
 
             if($project_code->project_code_id != null){
-
                 $num = str_replace('A', '', $project_code->project_code_id) + 1;
-                
                 $id = 'A' . $num;
-
             }
             
         }
@@ -193,6 +190,20 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
         
     }
 
+
+
+
+
+
+    public function globalFetchAll(){
+
+        $project_codes = $this->cache->remember('project_codes:global:all', 240, function(){
+            return $this->project_code->select('project_code')->get();
+        });
+        
+        return $project_codes;
+
+    }
 
 
 

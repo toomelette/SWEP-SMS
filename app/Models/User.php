@@ -11,9 +11,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable{
 
 
+
+
     use Notifiable, Sortable;
     
-
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
 
     public $sortable = ['username', 'firstname', 'is_online', 'is_active'];
@@ -23,11 +24,13 @@ class User extends Authenticatable{
 
 
 
+
     protected $hidden = [
 
         'password', 'remember_token',
 
     ];
+
 
 
 
@@ -57,6 +60,7 @@ class User extends Authenticatable{
         'last_login_ip' => '',
 
     ];
+
 
 
 
@@ -95,16 +99,7 @@ class User extends Authenticatable{
     }
     
 
-    
-    
 
-
-    /** SCOPES **/
-    public function scopeFindSlug($query, $slug){
-
-        return $query->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->firstOrFail();
-
-    }
 
 
 

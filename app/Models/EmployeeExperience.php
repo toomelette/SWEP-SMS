@@ -8,12 +8,16 @@ class EmployeeExperience extends Model{
 
 
 
+
+
 	protected $table = 'employee_experiences';
 
     protected $dates = ['date_from', 'date_to'];
 
     public $timestamps = false;
     
+
+
 
 
     protected $attributes = [
@@ -34,19 +38,25 @@ class EmployeeExperience extends Model{
 
 
 
-    // RELATIONSHIPS
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
     
 
 
-    // SCOPES
+
+
+    /** Scopes **/
     public function scopePopulate($query){
 
         return $query->orderBy('date_from', 'desc')->get();
 
     }
+
+
+
 
 
     

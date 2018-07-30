@@ -103,7 +103,7 @@
         </table>
       </div>
 
-      @if($leave_applications->isEmpty())
+      @if(empty($leave_applications))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

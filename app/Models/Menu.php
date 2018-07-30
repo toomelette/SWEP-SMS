@@ -8,6 +8,10 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Menu extends Model{
 
+
+
+
+
     use Sortable;
 
     protected $table = 'menus';
@@ -15,6 +19,8 @@ class Menu extends Model{
     protected $dates = ['created_at', 'updated_at'];
     
 	public $timestamps = false;
+
+
 
 
 
@@ -38,7 +44,9 @@ class Menu extends Model{
 
 
 
-    // RELATIONSHIPS
+
+
+    /** RELATIONSHIPS **/
     public function user() {
     	return $this->belongsTo('App\Models\User','user_id','user_id');
    	}
@@ -51,6 +59,7 @@ class Menu extends Model{
    	}
 
     
+
 
 
 

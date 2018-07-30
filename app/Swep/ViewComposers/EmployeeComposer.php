@@ -4,35 +4,39 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\Employee;
-use Illuminate\Cache\Repository as Cache;
+use App\Swep\Interfaces\EmployeeInterface;
 
 
 class EmployeeComposer{
    
 
-	protected $employee;
-	protected $cache;
 
 
-	public function __construct(Employee $employee, Cache $cache){
+	protected $employee_repo;
 
-		$this->employee = $employee;
-		$this->cache = $cache;
+
+
+
+	public function __construct(EmployeeInterface $employee_repo){
+
+		$this->employee_repo = $employee_repo;
 		
 	}
 
 
 
+
+
+
     public function compose($view){
 
-        $employees = $this->cache->remember('employees:global:all', 240, function(){
-        	return $this->employee->select('slug', 'fullname')->get();
-        });
+        $employees = $this->employee_repo->globalFetchAll();
         
     	$view->with('global_employees_all', $employees);
 
     }
+
+
 
 
 

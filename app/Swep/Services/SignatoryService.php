@@ -14,7 +14,7 @@ class SignatoryService extends BaseService{
 
 
 
-    public function __construct(SignatoryInterface $signatory_repo, Signatory $signatory){
+    public function __construct(SignatoryInterface $signatory_repo){
 
         $this->signatory_repo = $signatory_repo;
         parent::__construct();

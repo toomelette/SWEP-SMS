@@ -85,7 +85,7 @@
               </td>
               <td>{{ Carbon::parse($data->date_of_filing)->format('M d, Y') }}</td>
               <td> 
-                <select id="action" class="form-control input-sm">
+                <select id="action" class="form-control input-md">
 
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Details</option>
@@ -101,7 +101,7 @@
         </table>
       </div>
 
-      @if($leave_applications->isEmpty())
+      @if(empty($leave_applications))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

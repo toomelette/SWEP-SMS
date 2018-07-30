@@ -155,7 +155,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Children
-        if(count($rows_children) > 0){
+        if(!empty($rows_children)){
             foreach($rows_children as $key => $value){   
                 $rules['row_children.'.$key.'.fullname'] = 'required|string|max:255';
                 $rules['row_children.'.$key.'.date_of_birth'] = 'required|date_format:"m/d/Y"';
@@ -164,7 +164,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Educational background
-        if(count($rows_eb) > 0){
+        if(!empty($rows_eb)){
             foreach($rows_eb as $key => $value){   
                 $rules['row_eb.'.$key.'.level'] = 'required|string|max:90';
                 $rules['row_eb.'.$key.'.school_name'] = 'nullable|string|max:255';
@@ -179,7 +179,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Eligibility
-        if(count($rows_eligibility) > 0){
+        if(!empty($rows_eligibility)){
             foreach($rows_eligibility as $key => $value){   
                 $rules['row_eligibility.'.$key.'.eligibility'] = 'required|string|max:250';
                 $rules['row_eligibility.'.$key.'.level'] = 'nullable|string|max:20';
@@ -193,7 +193,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Work Experience
-        if(count($rows_we) > 0){
+        if(!empty($rows_we)){
             foreach($rows_we as $key => $value){   
                 $rules['row_we.'.$key.'.date_from'] = 'required|date_format:"m/d/Y"';
                 $rules['row_we.'.$key.'.date_to'] = 'required|date_format:"m/d/Y"';
@@ -208,7 +208,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Voluntary Works
-        if(count($rows_vw) > 0){
+        if(!empty($rows_vw)){
             foreach($rows_vw as $key => $value){   
                 $rules['row_vw.'.$key.'.name'] = 'required|string|max:255';
                 $rules['row_vw.'.$key.'.address'] = 'nullable|string|max:255';
@@ -221,7 +221,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Recognition
-        if(count($rows_recognition) > 0){
+        if(!empty($rows_recognition)){
             foreach($rows_recognition as $key => $value){   
                 $rules['row_recognition.'.$key.'.title'] = 'required|string|max:255';
             } 
@@ -229,7 +229,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Organizations
-        if(count($rows_org) > 0){
+        if(!empty($rows_org)){
             foreach($rows_org as $key => $value){   
                 $rules['row_org.'.$key.'.name'] = 'required|string|max:255';
             } 
@@ -237,7 +237,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Special Skills
-        if(count($rows_ss) > 0){
+        if(!empty($rows_ss)){
             foreach($rows_ss as $key => $value){   
                 $rules['row_ss.'.$key.'.description'] = 'required|string|max:255';
             } 
@@ -245,7 +245,7 @@ class EmployeeFormRequest extends FormRequest{
 
 
         // Voluntary Works
-        if(count($rows_reference) > 0){
+        if(!empty($rows_reference)){
             foreach($rows_reference as $key => $value){   
                 $rules['row_reference.'.$key.'.fullname'] = 'required|string|max:255';
                 $rules['row_reference.'.$key.'.address'] = 'required|string|max:255';

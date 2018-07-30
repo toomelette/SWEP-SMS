@@ -60,7 +60,7 @@
           </table>
       </div>
 
-      @if($department_units->isEmpty())
+      @if(empty($department_units))
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>

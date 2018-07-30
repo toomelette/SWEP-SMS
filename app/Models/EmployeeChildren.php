@@ -8,12 +8,16 @@ class EmployeeChildren extends Model{
 
 
 
+
+
 	protected $table = 'employee_children';
 
     protected $dates = ['date_of_birth'];
 
     public $timestamps = false;
     
+
+
 
 
     protected $attributes = [
@@ -30,20 +34,28 @@ class EmployeeChildren extends Model{
 
 
 
-    // RELATIONSHIPS
+
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
     
 
 
-    // SCOPES
+
+
+
+    /** Scopes **/
     public function scopePopulate($query){
 
         return $query->orderBy('date_of_birth', 'desc')->get();
 
     }
     
+
+
+
 
     
 }

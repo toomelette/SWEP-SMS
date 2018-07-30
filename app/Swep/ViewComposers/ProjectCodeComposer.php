@@ -4,35 +4,38 @@ namespace App\Swep\ViewComposers;
 
 
 use View;
-use App\Models\ProjectCode;
+use App\Swep\Interfaces\ProjectCodeInterface;
 use Illuminate\Cache\Repository as Cache;
 
 
 class ProjectCodeComposer{
    
 
-	protected $project_code;
-	protected $cache;
+
+	protected $project_code_repo;
 
 
-	public function __construct(ProjectCode $project_code, Cache $cache){
 
-		$this->project_code = $project_code;
-		$this->cache = $cache;
+
+	public function __construct(ProjectCodeInterface $project_code_repo){
+
+		$this->project_code_repo = $project_code_repo;
 	
 	}
 
 
 
+
+
     public function compose($view){
 
-        $project_codes = $this->cache->remember('project_codes:global:all', 240, function(){
-        	return $this->project_code->select('project_code')->get();
-        });
+        $project_codes = $this->project_code_repo->globalFetchAll();
         
     	$view->with('global_project_codes_all', $project_codes);
 
     }
+
+
 
 
 

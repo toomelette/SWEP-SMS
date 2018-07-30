@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class DisbursementVoucher extends Model{
 
+
+
+
+
     use Sortable;
 
 	protected $table = 'disbursement_vouchers';
@@ -19,6 +23,9 @@ class DisbursementVoucher extends Model{
     public $sortable = ['doc_no', 'dv_no', 'payee', 'date'];
     
 	public $timestamps = false;
+
+
+
 
 
     protected $attributes = [
@@ -57,7 +64,10 @@ class DisbursementVoucher extends Model{
 
 
 
-    //RELATIONSHIPS
+
+
+
+    /** RELATIONSHIPS **/
     public function user(){
         return $this->hasOne('App\Models\User', 'user_id', 'user_id');
     }

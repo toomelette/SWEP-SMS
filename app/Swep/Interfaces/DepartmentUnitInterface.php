@@ -15,5 +15,7 @@ interface DepartmentUnitInterface {
 	public function destroy($slug);
 
 	public function findBySlug($slug);
+
+	public function globalFetchAll();
 		
 }

@@ -35,7 +35,7 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
         $submenu = new Submenu;
         $submenu->slug = $this->str->random(16);
-        $submenu->submenu_id = $this->submenu->submenuIdInc;
+        $submenu->submenu_id = $this->getSubmenuIdInc();
         $submenu->menu_id = $menu->menu_id;
         $submenu->name = $data['sub_name'];
         $submenu->route = $data['sub_route'];
@@ -66,6 +66,43 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
         return $submenu;
 
     }
+
+
+
+
+
+
+    public function getSubmenuIdInc(){
+
+        $id = 'SM100001';
+
+        $submenu = $this->submenu->select('submenu_id')->orderBy('submenu_id', 'desc')->first();
+
+        if($submenu != null){
+            $num = str_replace('SM', '', $submenu->submenu_id) + 1;
+            $id = 'SM' . $num;
+        }
+        
+        return $id;
+        
+    }
+
+
+
+
+
+
+    public function globalFetchAll(){
+
+        $submenus = $this->cache->remember('submenus:global:all', 240, function(){
+            return $this->submenu->select('menu_id','submenu_id', 'name', 'is_nav')->orderBy('submenu_id', 'asc')->get();
+        });
+        
+        return $submenus;
+
+    }
+
+
 
 
 

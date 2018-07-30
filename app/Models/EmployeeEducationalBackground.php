@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeEducationalBackground extends Model{
 
 
+
+
+
 	protected $table = 'employee_educational_background';
 
     protected $dates = [];
 
     public $timestamps = false;
+
+
 
 
 
@@ -34,7 +39,8 @@ class EmployeeEducationalBackground extends Model{
 
 
 
-    // RELATIONSHIPS
+
+    /** RELATIONSHIPS **/
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
@@ -43,12 +49,17 @@ class EmployeeEducationalBackground extends Model{
 
 
 
-    // SCOPES
+
+
+    /** Scopes **/
     public function scopePopulate($query){
 
         return $query->orderBy('graduate_year', 'desc')->get();
 
     }
+
+
+
 
 
     
