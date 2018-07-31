@@ -27,5 +27,7 @@ interface UserInterface {
 	public function unsync($slug);
 	
 	public function findBySlug($slug);
+
+	public function login($slug);
 		
 }

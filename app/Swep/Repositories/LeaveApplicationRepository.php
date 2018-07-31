@@ -85,7 +85,7 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         $leave_application->lastname = $request->lastname;
         $leave_application->firstname = $request->firstname;
         $leave_application->middlename = $request->middlename;
-        $leave_application->date_of_filing = $this->dataTypeHelper->date_in($request->date_of_filing);
+        $leave_application->date_of_filing = $this->dataTypeHelper->date_parse($request->date_of_filing, 'Y-m-d');
         $leave_application->position = $request->position;
         $leave_application->salary = $this->dataTypeHelper->string_to_num($request->salary);
         $leave_application->type = $request->type;
@@ -98,8 +98,8 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         $leave_application->spent_sick_inhospital_specific = $request->spent_sick_inhospital_specific;
         $leave_application->spent_sick_outpatient_specific = $request->spent_sick_outpatient_specific;
         $leave_application->working_days = $request->working_days;
-        $leave_application->working_days_date_from = $this->dataTypeHelper->date_in($request->working_days_date_from);
-        $leave_application->working_days_date_to = $this->dataTypeHelper->date_in($request->working_days_date_to);
+        $leave_application->working_days_date_from = $this->dataTypeHelper->date_parse($request->working_days_date_from, 'Y-m-d');
+        $leave_application->working_days_date_to = $this->dataTypeHelper->date_parse($request->working_days_date_to, 'Y-m-d');
         $leave_application->commutation = $this->dataTypeHelper->string_to_boolean($request->commutation);
         $leave_application->immediate_superior = $request->immediate_superior;
         $leave_application->immediate_superior_position = $request->immediate_superior_position;
@@ -132,7 +132,7 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         $leave_application->lastname = $request->lastname;
         $leave_application->firstname = $request->firstname;
         $leave_application->middlename = $request->middlename;
-        $leave_application->date_of_filing = $this->dataTypeHelper->date_in($request->date_of_filing);
+        $leave_application->date_of_filing = $this->dataTypeHelper->date_parse($request->date_of_filing, 'Y-m-d');
         $leave_application->position = $request->position;
         $leave_application->salary = $this->dataTypeHelper->string_to_num($request->salary);
         $leave_application->type = $request->type;
@@ -145,8 +145,8 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         $leave_application->spent_sick_inhospital_specific = $request->spent_sick_inhospital_specific;
         $leave_application->spent_sick_outpatient_specific = $request->spent_sick_outpatient_specific;
         $leave_application->working_days = $request->working_days;
-        $leave_application->working_days_date_from = $this->dataTypeHelper->date_in($request->working_days_date_from);
-        $leave_application->working_days_date_to = $this->dataTypeHelper->date_in($request->working_days_date_to);
+        $leave_application->working_days_date_from = $this->dataTypeHelper->date_parse($request->working_days_date_from, 'Y-m-d');
+        $leave_application->working_days_date_to = $this->dataTypeHelper->date_parse($request->working_days_date_to, 'Y-m-d');
         $leave_application->commutation = $this->dataTypeHelper->string_to_boolean($request->commutation);
         $leave_application->immediate_superior = $request->immediate_superior;
         $leave_application->immediate_superior_position = $request->immediate_superior_position;

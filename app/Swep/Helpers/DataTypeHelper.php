@@ -32,19 +32,7 @@ class DataTypeHelper{
 
 
 
-
-
-    public static function date_in($value){
-
-        return $value != null ? Carbon::parse($value)->format('Y-m-d') : null;
-
-    }
-
-
-
-
-
-    public static function date_out($value, $format = 'm/d/Y'){
+    public static function date_parse($value, $format = 'm/d/Y'){
 
         return $value != null ? Carbon::parse($value)->format($format) : null;
 

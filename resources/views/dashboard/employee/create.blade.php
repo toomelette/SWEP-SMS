@@ -14,7 +14,6 @@
 
 
 
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -52,17 +51,10 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#pi" data-toggle="tab">Personal Info</a></li>
               <li><a href="#fi" data-toggle="tab">Family Information</a></li>
-              <li><a href="#id" data-toggle="tab">Personal ID's</a></li>
               <li><a href="#ad" data-toggle="tab">Appointment Details</a></li>
-              <li><a href="#eb" data-toggle="tab">Educational background</a></li>
-              <li><a href="#e" data-toggle="tab">Eligibilities</a></li>
-              <li><a href="#we" data-toggle="tab">Work Experiences</a></li>
-              <li><a href="#vw" data-toggle="tab">Voluntary Works</a></li>
-              <li><a href="#r" data-toggle="tab">Recognitions</a></li>
-              <li><a href="#org" data-toggle="tab">Organizations</a></li>
-              <li><a href="#ss" data-toggle="tab">Special Skills</a></li>
-              <li><a href="#ref" data-toggle="tab">Reference</a></li>
-              <li><a href="#oq" data-toggle="tab">Other Questions</a></li>
+              <li><a href="#cre" data-toggle="tab">Credentials</a></li>
+              <li><a href="#ot" data-toggle="tab">Others Records</a></li>
+              <li><a href="#q" data-toggle="tab">Questions</a></li>
             </ul>
 
             <div class="tab-content">
@@ -72,103 +64,121 @@
               <div class="tab-pane active" id="pi">
                 <div class="row">
                     
-                  {!! FormHelper::textbox(
-                     '3', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
-                  ) !!}
+                  <div class="col-md-12">
+                    <div class="box">
+                      
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Personal Information</h3>
+                      </div>
+                      
+                      <div class="box-body">
 
-                  {!! FormHelper::textbox(
-                     '3', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'name_ext', 'text', 'Name Extension', 'Name Extension', old('name_ext'), $errors->has('name_ext'), $errors->first('name_ext'), 'data-transform="uppercase"'
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  <div class="col-md-12"></div>
+                        {!! FormHelper::textbox(
+                           '3', 'name_ext', 'text', 'Name Extension', 'Name Extension', old('name_ext'), $errors->has('name_ext'), $errors->first('name_ext'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  {!! FormHelper::datepicker(
-                    '3', 'date_of_birth',  'Date of Birth *', old('date_of_birth'), $errors->has('date_of_birth'), $errors->first('date_of_birth')
-                  ) !!}
+                        <div class="col-md-12"></div>
 
-                  {!! FormHelper::textbox(
-                    '6', 'place_of_birth', 'text', 'Place of Birth *', 'Place of Birth', old('place_of_birth'), $errors->has('place_of_birth'), $errors->first('place_of_birth'), 'data-transform="uppercase"'
-                  ) !!}
+                        {!! FormHelper::datepicker(
+                          '3', 'date_of_birth',  'Date of Birth *', old('date_of_birth'), $errors->has('date_of_birth'), $errors->first('date_of_birth')
+                        ) !!}
 
-                  {!! FormHelper::select_static(
-                    '3', 'sex', 'Sex *', old('sex'), ['Male' => 'MALE', 'Female' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                          '6', 'place_of_birth', 'text', 'Place of Birth *', 'Place of Birth', old('place_of_birth'), $errors->has('place_of_birth'), $errors->first('place_of_birth'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  <div class="col-md-12"></div>
-                  
+                        {!! FormHelper::select_static(
+                          '3', 'sex', 'Sex *', old('sex'), ['Male' => 'MALE', 'Female' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
+                        ) !!}
 
-                  {!! FormHelper::select_static(
-                    '3', 'civil_status', 'Civil Status *', old('civil_status'), $civil_status, $errors->has('civil_status'), $errors->first('civil_status'), '', ''
-                  ) !!}
+                        <div class="col-md-12"></div>
+                        
 
-                  {!! FormHelper::textbox(
-                     '3', 'height', 'text', 'Height', 'Height', old('height'), $errors->has('height'), $errors->first('height'), ''
-                  ) !!}
+                        {!! FormHelper::select_static(
+                          '3', 'civil_status', 'Civil Status *', old('civil_status'), $civil_status, $errors->has('civil_status'), $errors->first('civil_status'), '', ''
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'weight', 'text', 'Weight', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'height', 'text', 'Height', 'Height', old('height'), $errors->has('height'), $errors->first('height'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'blood_type', 'text', 'Blood Type *', 'Blood Type', old('blood_type'), $errors->has('blood_type'), $errors->first('blood_type'), 'data-transform="uppercase"'
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'weight', 'text', 'Weight', 'Weight', old('weight'), $errors->has('weight'), $errors->first('weight'), ''
+                        ) !!}
 
-                  <div class="col-md-12"></div>
+                        {!! FormHelper::textbox(
+                           '3', 'blood_type', 'text', 'Blood Type *', 'Blood Type', old('blood_type'), $errors->has('blood_type'), $errors->first('blood_type'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'tel_no', 'text', 'Telephone No.', 'Telephone No.', old('tel_no'), $errors->has('tel_no'), $errors->first('tel_no'), ''
-                  ) !!}
+                        <div class="col-md-12"></div>
 
-                  {!! FormHelper::textbox(
-                     '3', 'cell_no', 'text', 'Cellphone No. *', 'Cellphone No.', old('cell_no'), $errors->has('cell_no'), $errors->first('cell_no'), ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'tel_no', 'text', 'Telephone No.', 'Telephone No.', old('tel_no'), $errors->has('tel_no'), $errors->first('tel_no'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'email', 'text', 'Email Address', 'Email Address', old('email'), $errors->has('email'), $errors->first('email'), ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'cell_no', 'text', 'Cellphone No. *', 'Cellphone No.', old('cell_no'), $errors->has('cell_no'), $errors->first('cell_no'), ''
+                        ) !!}
 
-                  {!! FormHelper::select_static(
-                    '3', 'citizenship', 'Citizenship *', old('citizenship'), ['Filipino' => 'Filipino', 'Dual Citizenship' => 'Dual Citizenship'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'email', 'text', 'Email Address', 'Email Address', old('email'), $errors->has('email'), $errors->first('email'), ''
+                        ) !!}
 
-                  <div class="col-md-12"></div>
+                        {!! FormHelper::select_static(
+                          '3', 'citizenship', 'Citizenship *', old('citizenship'), ['Filipino' => 'Filipino', 'Dual Citizenship' => 'Dual Citizenship'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+                      
+                        {!! FormHelper::select_static(
+                          '3', 'citizenship_type', 'Citizenship Type *', old('citizenship_type'), ['by birth' => 'BB', 'by naturalization' => 'BN'], $errors->has('citizenship_type'), $errors->first('citizenship_type'), '', ''
+                        ) !!}
+                        
+                        {!! FormHelper::textbox(
+                           '3', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country'), $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox(
+                           '3', 'agency_no', 'text', 'Agency Employee No.', 'Agency Employee No.', old('agency_no'), $errors->has('agency_no'), $errors->first('agency_no'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox(
+                           '3', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id'), $errors->has('gov_id'), $errors->first('gov_id'), ''
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::textbox(
+                           '3', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no'), $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox(
+                           '3', 'id_date_issue', 'text', 'Date / Place of Issuance', 'Date / Place of Issuance', old('id_date_issue'), $errors->has('id_date_issue'), $errors->first('id_date_issue'), ''
+                        ) !!}
                 
-                  {!! FormHelper::select_static(
-                    '3', 'citizenship_type', 'Citizenship Type *', old('citizenship_type'), ['by birth' => 'BB', 'by naturalization' => 'BN'], $errors->has('citizenship_type'), $errors->first('citizenship_type'), '', ''
-                  ) !!}
-                  
-                  {!! FormHelper::textbox(
-                     '3', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country'), $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
-                  ) !!}
+                      </div>
+                    </div>
+                  </div>
 
-                  {!! FormHelper::textbox(
-                     '3', 'agency_no', 'text', 'Agency Employee No.', 'Agency Employee No.', old('agency_no'), $errors->has('agency_no'), $errors->first('agency_no'), ''
-                  ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id'), $errors->has('gov_id'), $errors->first('gov_id'), ''
-                  ) !!}
+
 
                   <div class="col-md-12"></div>
 
-                  {!! FormHelper::textbox(
-                     '3', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no'), $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
-                  ) !!}
 
-                  {!! FormHelper::textbox(
-                     '3', 'id_date_issue', 'text', 'Date / Place of Issuance', 'Date / Place of Issuance', old('id_date_issue'), $errors->has('id_date_issue'), $errors->first('id_date_issue'), ''
-                  ) !!}
-
-                  <div class="col-md-12"></div>
-
+                  {{-- Address --}}
                   <div class="col-md-6" style="padding-top: 30px;">
                     <div class="box">
                       <div class="box-header with-border">
@@ -461,43 +471,6 @@
                     </div>
                   </div>
 
-
-
-                </div>
-              </div>
-
-
-
-
-
-              {{-- Personal ID's --}}
-              <div class="tab-pane" id="id">
-                <div class="row">
-
-                  {!! FormHelper::textbox(
-                     '3', 'gsis', 'text', 'GSIS', 'GSIS', old('gsis'), $errors->has('gsis'), $errors->first('gsis'), ''
-                  ) !!}
-
-                  {!! FormHelper::textbox(
-                     '3', 'philhealth', 'text', 'PHILHEALTH', 'PHILHEALTH', old('philhealth'), $errors->has('philhealth'), $errors->first('philhealth'), ''
-                  ) !!}
-
-                  {!! FormHelper::textbox(
-                     '3', 'tin', 'text', 'TIN', 'TIN', old('tin'), $errors->has('tin'), $errors->first('tin'), ''
-                  ) !!}
-
-                  {!! FormHelper::textbox(
-                     '3', 'sss', 'text', 'SSS', 'SSS', old('sss'), $errors->has('sss'), $errors->first('sss'), ''
-                  ) !!}
-
-                  {!! FormHelper::textbox(
-                     '3', 'hdmf', 'text', 'HDMF', 'HDMF', old('hdmf'), $errors->has('hdmf'), $errors->first('hdmf'), ''
-                  ) !!}
-
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'hdmfpremiums', 'text', 'HDMF Premiums', 'HDMF Premiums', old('hdmfpremiums'), $errors->has('hdmfpremiums'), $errors->first('hdmfpremiums'), ''
-                  ) !!}
-
                 </div>
               </div>
 
@@ -510,93 +483,148 @@
               <div class="tab-pane" id="ad">
                 <div class="row">
 
-                  {!! FormHelper::textbox(
-                    '3', 'employee_no', 'text', 'Employee No. *', 'Employee No.', old('employee_no'), $errors->has('employee_no'), $errors->first('employee_no'), ''
-                  ) !!}
+                  <div class="col-md-12">
+                    <div class="box">
+                      
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Appointment Details</h3>
+                      </div>
+                      
+                      <div class="box-body">
 
-                  {!! FormHelper::textbox(
-                    '3', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
-                  ) !!}
+                        {!! FormHelper::textbox(
+                          '3', 'employee_no', 'text', 'Employee No. *', 'Employee No.', old('employee_no'), $errors->has('employee_no'), $errors->first('employee_no'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox(
-                    '3', 'item_no', 'text', 'Item No.', 'Item No.', old('item_no'), $errors->has('item_no'), $errors->first('item_no'), ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                          '3', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
+                        ) !!}
 
-                  {!! FormHelper::select_static(
-                    '3', 'appointment_status', 'Appointment Status *', old('appointment_status'), ['Permanent' => 'PERM', 'Job Order / Contract of Service' => 'COS'], $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                          '3', 'item_no', 'text', 'Item No.', 'Item No.', old('item_no'), $errors->has('item_no'), $errors->first('item_no'), ''
+                        ) !!}
+
+                        {!! FormHelper::select_static(
+                          '3', 'appointment_status', 'Appointment Status *', old('appointment_status'), ['Permanent' => 'PERM', 'Job Order / Contract of Service' => 'COS'], $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::textbox(
+                          '3', 'salary_grade', 'text', 'Salary Grade', 'Salary Grade', old('salary_grade'), $errors->has('salary_grade'), $errors->first('salary_grade'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox(
+                          '3', 'step_inc', 'text', 'Step Increment', 'Step Increment', old('step_inc'), $errors->has('step_inc'), $errors->first('step_inc'), ''
+                        ) !!}
+
+                        {!! FormHelper::select_dynamic(
+                          '3', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), '', ''
+                        ) !!}
+
+                        {!! FormHelper::select_dynamic(
+                          '3', 'department_unit_id', 'Unit *', old('department_unit_id'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), '', ''
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'monthly_basic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthly_basic'), $errors->has('monthly_basic'), $errors->first('monthly_basic'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'aca', 'text', 'ACA', 'ACA', old('aca'), $errors->has('aca'), $errors->first('aca'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'pera', 'text', 'PERA', 'PERA', old('pera'), $errors->has('pera'), $errors->first('pera'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'food_subsidy', 'text', 'Food Subsidy', 'Food Subsidy', old('food_subsidy'), $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'ra', 'text', 'RA', 'RA', old('ra'), $errors->has('ra'), $errors->first('ra'), ''
+                        ) !!}
+
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'ta', 'text', 'TA', 'TA', old('ta'), $errors->has('ta'), $errors->first('ta'), ''
+                        ) !!}
+
+                        {!! FormHelper::datepicker(
+                          '3', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov'), $errors->has('firstday_gov'), $errors->first('firstday_gov')
+                        ) !!}
+
+                        {!! FormHelper::datepicker(
+                          '3', 'firstday_sra',  'First Day in SRA *', old('firstday_sra'), $errors->has('firstday_sra'), $errors->first('firstday_sra')
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! FormHelper::datepicker(
+                          '3', 'appointment_date',  'Appointment Date', old('appointment_date'), $errors->has('appointment_date'), $errors->first('appointment_date')
+                        ) !!}
+
+                        {!! FormHelper::datepicker(
+                          '3', 'adjustment_date',  'Adjustment Date', old('adjustment_date'), $errors->has('adjustment_date'), $errors->first('adjustment_date')
+                        ) !!}
+
+                        {!! FormHelper::select_dynamic(
+                          '3', 'project_id', 'Station *', old('project_id'), $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
+                        ) !!}
+
+                        {!! FormHelper::select_static(
+                          '3', 'is_active', 'Status *', old('is_active'), ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'ACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
+                        ) !!}
+
+                      </div>
+                    </div>
+                  </div>
+
+
 
                   <div class="col-md-12"></div>
 
-                  {!! FormHelper::textbox(
-                    '3', 'salary_grade', 'text', 'Salary Grade', 'Salary Grade', old('salary_grade'), $errors->has('salary_grade'), $errors->first('salary_grade'), ''
-                  ) !!}
 
-                  {!! FormHelper::textbox(
-                    '3', 'step_inc', 'text', 'Step Increment', 'Step Increment', old('step_inc'), $errors->has('step_inc'), $errors->first('step_inc'), ''
-                  ) !!}
+                  {{-- Personal ID's --}}
+                  <div class="col-md-12" style="padding-top: 30px;">
+                    <div class="box">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Personal ID's</h3>
+                      </div>
+                      <div class="box-body">
 
-                  {!! FormHelper::select_dynamic(
-                    '3', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), '', ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'gsis', 'text', 'GSIS', 'GSIS', old('gsis'), $errors->has('gsis'), $errors->first('gsis'), ''
+                        ) !!}
 
-                  {!! FormHelper::select_dynamic(
-                    '3', 'department_unit_id', 'Unit *', old('department_unit_id'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), '', ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'philhealth', 'text', 'PHILHEALTH', 'PHILHEALTH', old('philhealth'), $errors->has('philhealth'), $errors->first('philhealth'), ''
+                        ) !!}
 
-                  <div class="col-md-12"></div>
+                        {!! FormHelper::textbox(
+                           '3', 'tin', 'text', 'TIN', 'TIN', old('tin'), $errors->has('tin'), $errors->first('tin'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'monthly_basic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthly_basic'), $errors->has('monthly_basic'), $errors->first('monthly_basic'), ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'sss', 'text', 'SSS', 'SSS', old('sss'), $errors->has('sss'), $errors->first('sss'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'aca', 'text', 'ACA', 'ACA', old('aca'), $errors->has('aca'), $errors->first('aca'), ''
-                  ) !!}
+                        {!! FormHelper::textbox(
+                           '3', 'hdmf', 'text', 'HDMF', 'HDMF', old('hdmf'), $errors->has('hdmf'), $errors->first('hdmf'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'pera', 'text', 'PERA', 'PERA', old('pera'), $errors->has('pera'), $errors->first('pera'), ''
-                  ) !!}
+                        {!! FormHelper::textbox_numeric(
+                          '3', 'hdmfpremiums', 'text', 'HDMF Premiums', 'HDMF Premiums', old('hdmfpremiums'), $errors->has('hdmfpremiums'), $errors->first('hdmfpremiums'), ''
+                        ) !!}
 
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'food_subsidy', 'text', 'Food Subsidy', 'Food Subsidy', old('food_subsidy'), $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
-                  ) !!}
+                      </div>
+                    </div>
+                  </div>
 
-                  <div class="col-md-12"></div>
-
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'ra', 'text', 'RA', 'RA', old('ra'), $errors->has('ra'), $errors->first('ra'), ''
-                  ) !!}
-
-                  {!! FormHelper::textbox_numeric(
-                    '3', 'ta', 'text', 'TA', 'TA', old('ta'), $errors->has('ta'), $errors->first('ta'), ''
-                  ) !!}
-
-                  {!! FormHelper::datepicker(
-                    '3', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov'), $errors->has('firstday_gov'), $errors->first('firstday_gov')
-                  ) !!}
-
-                  {!! FormHelper::datepicker(
-                    '3', 'firstday_sra',  'First Day in SRA *', old('firstday_sra'), $errors->has('firstday_sra'), $errors->first('firstday_sra')
-                  ) !!}
-
-                  <div class="col-md-12"></div>
-
-                  {!! FormHelper::datepicker(
-                    '3', 'appointment_date',  'Appointment Date', old('appointment_date'), $errors->has('appointment_date'), $errors->first('appointment_date')
-                  ) !!}
-
-                  {!! FormHelper::datepicker(
-                    '3', 'adjustment_date',  'Adjustment Date', old('adjustment_date'), $errors->has('adjustment_date'), $errors->first('adjustment_date')
-                  ) !!}
-
-                  {!! FormHelper::select_dynamic(
-                    '3', 'project_id', 'Station *', old('project_id'), $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
-                  ) !!}
-
-                  {!! FormHelper::select_static(
-                    '3', 'is_active', 'Status *', old('is_active'), ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'ACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
-                  ) !!}
 
                 </div>
               </div>
@@ -604,285 +632,608 @@
 
 
 
-              {{-- Educ Background --}}
-              <div class="tab-pane" id="eb">
+
+
+
+              {{-- Credentials --}}
+              <div class="tab-pane" id="cre">
                 <div class="row">
-                    
-                  <div class="box-header with-border">
-                    <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+
+                  <div class="col-md-12">
+                    <div class="box">
+                      
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Educational Background</h3>
+                        <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+
+                        <table class="table table-bordered">
+
+                          <tr>
+                            <th>Level *</th>
+                            <th style="width:20em;">Name of School *</th>
+                            <th style="width:15em;">Course</th>
+                            <th>Date From</th>
+                            <th>Date To</th>
+                            <th>Units</th>
+                            <th>Graduate Year *</th>
+                            <th style="width:15em;">Scholarship</th>
+                            <th style="width: 40px"></th>
+                          </tr>
+
+                          <tbody id="eb_table_body">
+
+                            @if(old('row_eb'))
+
+                              @foreach(old('row_eb') as $key => $value)
+
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::select_static_for_dt(
+                                      'row_eb['. $key .'][level]', $level, $value['level'], $errors->first('row_eb.'. $key .'.level')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][school_name]', 'Name of School', $value['school_name'], $errors->first('row_eb.'. $key .'.school_name')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][course]', 'Course', $value['course'], $errors->first('row_eb.'. $key .'.course')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][date_from]', 'Date From', $value['date_from'], $errors->first('row_eb.'. $key .'.date_from')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][date_to]', 'Date To', $value['date_to'], $errors->first('row_eb.'. $key .'.date_to')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][units]', 'Units', $value['units'], $errors->first('row_eb.'. $key .'.units')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][graduate_year]', 'Year', $value['graduate_year'], $errors->first('row_eb.'. $key .'.graduate_year')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eb['. $key .'][scholarship]', 'Scholarship', $value['scholarship'], $errors->first('row_eb.'. $key .'.scholarship')
+                                    ) !!}
+                                  </td>
+
+                                  <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::select_static_for_dt('row_eb[0][level]', $level, 'ELEMENTARY', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][school_name]', 'Name of School', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][course]', 'Course', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][date_from]', 'Date From', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][date_to]', 'Date To', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][units]', 'Units', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][graduate_year]', 'Year', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[0][scholarship]', 'Scholarship', '', '') !!}
+                                </td>
+
+                              </tr>
+
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::select_static_for_dt('row_eb[1][level]', $level, 'SECONDARY', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][school_name]', 'Name of School', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][course]', 'Course', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][date_from]', 'Date From', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][date_to]', 'Date To', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][units]', 'Units', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][graduate_year]', 'Year', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[1][scholarship]', 'Scholarship', '', '') !!}
+                                </td>
+
+                              </tr>
+
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::select_static_for_dt('row_eb[2][level]', $level, 'VOCATIONAL/TRADE COURSE', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][school_name]', 'Name of School', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][course]', 'Course', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][date_from]', 'Date From', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][date_to]', 'Date To', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][units]', 'Units', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][graduate_year]', 'Year', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[2][scholarship]', 'Scholarship', '', '') !!}
+                                </td>
+
+                              </tr>
+
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::select_static_for_dt('row_eb[3][level]', $level, 'COLLEGE', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][school_name]', 'Name of School', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][course]', 'Course', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][date_from]', 'Date From', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][date_to]', 'Date To', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][units]', 'Units', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][graduate_year]', 'Year', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[3][scholarship]', 'Scholarship', '', '') !!}
+                                </td>
+
+                              </tr>
+
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::select_static_for_dt('row_eb[4][level]', $level, 'GRADUATE STUDIES', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][school_name]', 'Name of School', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][course]', 'Course', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][date_from]', 'Date From', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][date_to]', 'Date To', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][units]', 'Units', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][graduate_year]', 'Year', '', '') !!}
+                                </td>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eb[4][scholarship]', 'Scholarship', '', '') !!}
+                                </td>
+
+                              </tr>
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                      </div>
+
+                    </div>
                   </div>
                   
-                  <div class="box-body no-padding">
 
-                    <table class="table table-bordered">
+                  
 
-                      <tr>
-                        <th>Level *</th>
-                        <th style="width:20em;">Name of School *</th>
-                        <th style="width:15em;">Course</th>
-                        <th>Date From</th>
-                        <th>Date To</th>
-                        <th>Units</th>
-                        <th>Graduate Year *</th>
-                        <th style="width:15em;">Scholarship</th>
-                        <th style="width: 40px"></th>
-                      </tr>
 
-                      <tbody id="eb_table_body">
 
-                        @if(old('row_eb'))
 
-                          @foreach(old('row_eb') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::select_static_for_dt(
-                                  'row_eb['. $key .'][level]', $level, $value['level'], $errors->first('row_eb.'. $key .'.level')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][school_name]', 'Name of School', $value['school_name'], $errors->first('row_eb.'. $key .'.school_name')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][course]', 'Course', $value['course'], $errors->first('row_eb.'. $key .'.course')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][date_from]', 'Date From', $value['date_from'], $errors->first('row_eb.'. $key .'.date_from')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][date_to]', 'Date To', $value['date_to'], $errors->first('row_eb.'. $key .'.date_to')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][units]', 'Units', $value['units'], $errors->first('row_eb.'. $key .'.units')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][graduate_year]', 'Year', $value['graduate_year'], $errors->first('row_eb.'. $key .'.graduate_year')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eb['. $key .'][scholarship]', 'Scholarship', $value['scholarship'], $errors->first('row_eb.'. $key .'.scholarship')
-                                ) !!}
-                              </td>
-
-                              <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
+                  {{-- Eligibilities --}}
+                  <div class="col-md-12">
+                    <div class="box" style="margin-top: 30px;">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Eligibilities</h3>
+                        <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-                            <td>
-                              {!! FormHelper::select_static_for_dt('row_eb[0][level]', $level, 'ELEMENTARY', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][school_name]', 'Name of School', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][course]', 'Course', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][date_from]', 'Date From', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][date_to]', 'Date To', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][units]', 'Units', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][graduate_year]', 'Year', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[0][scholarship]', 'Scholarship', '', '') !!}
-                            </td>
-
+                            <th>Eligibility *</th>
+                            <th>Level *</th>
+                            <th>Rating</th>
+                            <th>Place of Examination *</th>
+                            <th>Date of Examination *</th>
+                            <th>License No.</th>
+                            <th>License Validity</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="eligibility_table_body">
+
+                            @if(old('row_eligibility'))
+
+                              @foreach(old('row_eligibility') as $key => $value)
+
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eligibility['. $key .'][eligibility]', 'Eligibility', $value['eligibility'], $errors->first('row_eligibility.'. $key .'.eligibility')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eligibility['. $key .'][level]', 'Level', $value['level'], $errors->first('row_eligibility.'. $key .'.level')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eligibility['. $key .'][rating]', 'Rating', $value['rating'], $errors->first('row_eligibility.'. $key .'.rating')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eligibility['. $key .'][exam_place]', 'Place of Examination', $value['exam_place'], $errors->first('row_eligibility.'. $key .'.exam_place')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::datepicker_for_dt(
+                                      'row_eligibility['. $key .'][exam_date]', $value['exam_date'], $errors->first('row_eligibility.'. $key .'.exam_date')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_eligibility['. $key .'][license_no]', 'License No.', $value['license_no'], $errors->first('row_eligibility.'. $key .'.license_no')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::datepicker_for_dt(
+                                      'row_eligibility['. $key .'][license_validity]', $value['license_validity'], $errors->first('row_eligibility.'. $key .'.license_validity')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                      <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][eligibility]', 'Eligibility', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][level]', 'Level', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][rating]', 'Rating', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][exam_place]', 'Place of Examination', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::datepicker_for_dt('row_eligibility[0][exam_date]', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][license_no]', 'License No.', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::datepicker_for_dt('row_eligibility[0][license_validity]', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
+
+                  {{-- Work Experiences --}}
+                  <div class="col-md-12">
+                    <div class="box" style="margin-top: 30px;">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Work Experiences</h3>
+                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-                            <td>
-                              {!! FormHelper::select_static_for_dt('row_eb[1][level]', $level, 'SECONDARY', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][school_name]', 'Name of School', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][course]', 'Course', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][date_from]', 'Date From', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][date_to]', 'Date To', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][units]', 'Units', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][graduate_year]', 'Year', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[1][scholarship]', 'Scholarship', '', '') !!}
-                            </td>
-
+                            <th>Date From *</th>
+                            <th>Date to *</th>
+                            <th style="width:20em;">Company *</th>
+                            <th>Position *</th>
+                            <th>Salary *</th>
+                            <th>Salary Grade</th>
+                            <th>Appointment Status *</th>
+                            <th>Gov Service (Y/N) *</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="we_table_body">
 
-                          <tr>
+                            @if(old('row_we'))
 
-                            <td>
-                              {!! FormHelper::select_static_for_dt('row_eb[2][level]', $level, 'VOCATIONAL/TRADE COURSE', '') !!}
-                            </td>
+                              @foreach(old('row_we') as $key => $value)
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][school_name]', 'Name of School', '', '') !!}
-                            </td>
+                                <tr>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][course]', 'Course', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][date_from]', 'Date From', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][date_to]', 'Date To', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][units]', 'Units', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][graduate_year]', 'Year', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[2][scholarship]', 'Scholarship', '', '') !!}
-                            </td>
-
-                          </tr>
+                                  <td>
+                                    {!! FormHelper::datepicker_for_dt(
+                                      'row_we['. $key .'][date_from]', $value['date_from'], $errors->first('row_we.'. $key .'.date_from')
+                                    ) !!}
+                                  </td>
 
 
-                          <tr>
-
-                            <td>
-                              {!! FormHelper::select_static_for_dt('row_eb[3][level]', $level, 'COLLEGE', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][school_name]', 'Name of School', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][course]', 'Course', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][date_from]', 'Date From', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][date_to]', 'Date To', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][units]', 'Units', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][graduate_year]', 'Year', '', '') !!}
-                            </td>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[3][scholarship]', 'Scholarship', '', '') !!}
-                            </td>
-
-                          </tr>
+                                  <td>
+                                    {!! FormHelper::datepicker_for_dt(
+                                      'row_we['. $key .'][date_to]', $value['date_to'], $errors->first('row_we.'. $key .'.date_to')
+                                    ) !!}
+                                  </td>
 
 
-                          <tr>
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_we['. $key .'][company]', 'Company', $value['company'], $errors->first('row_we.'. $key .'.company')
+                                    ) !!}
+                                  </td>
 
-                            <td>
-                              {!! FormHelper::select_static_for_dt('row_eb[4][level]', $level, 'GRADUATE STUDIES', '') !!}
-                            </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][school_name]', 'Name of School', '', '') !!}
-                            </td>
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_we['. $key .'][position]', 'Position', $value['position'], $errors->first('row_we.'. $key .'.position')
+                                    ) !!}
+                                  </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][course]', 'Course', '', '') !!}
-                            </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][date_from]', 'Date From', '', '') !!}
-                            </td>
+                                  <td>
+                                    {!! FormHelper::textbox_numeric_for_dt(
+                                      'row_we['. $key .'][salary]', 'Salary', $value['salary'], $errors->first('row_we.'. $key .'.salary')
+                                    ) !!}
+                                  </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][date_to]', 'Date To', '', '') !!}
-                            </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][units]', 'Units', '', '') !!}
-                            </td>
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_we['. $key .'][salary_grade]', 'Salary Grade', $value['salary_grade'], $errors->first('row_we.'. $key .'.salary_grade')
+                                    ) !!}
+                                  </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][graduate_year]', 'Year', '', '') !!}
-                            </td>
 
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eb[4][scholarship]', 'Scholarship', '', '') !!}
-                            </td>
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_we['. $key .'][appointment_status]', 'Appointment Status', $value['appointment_status'], $errors->first('row_we.'. $key .'.appointment_status')
+                                    ) !!}
+                                  </td>
 
-                          </tr>
 
-                        @endif
+                                  <td>
+                                    {!! FormHelper::select_static_for_dt(
+                                      'row_we['. $key .'][is_gov_service]', $is_gov_service, $value['is_gov_service'], $errors->first('row_we.'. $key .'.is_gov_service')
+                                    ) !!}
+                                  </td>
 
-                        </tbody>
 
-                    </table>
+                                  <td>
+                                      <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::datepicker_for_dt('row_we[0][date_from]', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::datepicker_for_dt('row_we[0][date_to]', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_we[0][company]', 'Company', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_we[0][position]', 'Position', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_numeric_for_dt('row_we[0][salary]', 'Salary', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_we[0][salary_grade]', 'Salary Grade', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_we[0][appointment_status]', 'Appointment Status', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::select_static_for_dt('row_we[0][is_gov_service]', $is_gov_service, '', '') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
                   </div>
 
 
@@ -894,776 +1245,468 @@
 
 
 
-              {{-- Eligibilities --}}
-              <div class="tab-pane" id="e">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Eligibility *</th>
-                        <th>Level *</th>
-                        <th>Rating</th>
-                        <th>Place of Examination *</th>
-                        <th>Date of Examination *</th>
-                        <th>License No.</th>
-                        <th>License Validity</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="eligibility_table_body">
-
-                        @if(old('row_eligibility'))
-
-                          @foreach(old('row_eligibility') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eligibility['. $key .'][eligibility]', 'Eligibility', $value['eligibility'], $errors->first('row_eligibility.'. $key .'.eligibility')
-                                ) !!}
-                              </td>
 
 
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eligibility['. $key .'][level]', 'Level', $value['level'], $errors->first('row_eligibility.'. $key .'.level')
-                                ) !!}
-                              </td>
 
 
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eligibility['. $key .'][rating]', 'Rating', $value['rating'], $errors->first('row_eligibility.'. $key .'.rating')
-                                ) !!}
-                              </td>
+              {{-- Others --}}
+              <div class="tab-pane" id="ot">
+                <div class="row">
+      
 
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eligibility['. $key .'][exam_place]', 'Place of Examination', $value['exam_place'], $errors->first('row_eligibility.'. $key .'.exam_place')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_eligibility['. $key .'][exam_date]', $value['exam_date'], $errors->first('row_eligibility.'. $key .'.exam_date')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_eligibility['. $key .'][license_no]', 'License No.', $value['license_no'], $errors->first('row_eligibility.'. $key .'.license_no')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_eligibility['. $key .'][license_validity]', $value['license_validity'], $errors->first('row_eligibility.'. $key .'.license_validity')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
+                  {{-- Voluntary Works --}}
+                  <div class="col-md-12">
+                    <div class="box">
+                      <div class="box-header ">
+                        <h3 class="box-title">Voluntary Works</h3>
+                        <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eligibility[0][eligibility]', 'Eligibility', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eligibility[0][level]', 'Level', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eligibility[0][rating]', 'Rating', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eligibility[0][exam_place]', 'Place of Examination', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_eligibility[0][exam_date]', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_eligibility[0][license_no]', 'License No.', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_eligibility[0][license_validity]', '', '') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
+                            <th>Name of Organization *</th>
+                            <th>Address</th>
+                            <th>Date from *</th>
+                            <th>Date to *</th>
+                            <th>Hours</th>
+                            <th>Position</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="vw_table_body">
 
-                        @endif
+                            @if(old('row_vw'))
 
-                        </tbody>
+                              @foreach(old('row_vw') as $key => $value)
 
-                    </table>
-                   
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_vw['. $key .'][name]', 'Name of Organization', $value['name'], $errors->first('row_vw.'. $key .'.name')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_vw['. $key .'][address]', 'Address of Organization', $value['address'], $errors->first('row_vw.'. $key .'.address')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::datepicker_for_dt(
+                                      'row_vw['. $key .'][date_from]', $value['date_from'], $errors->first('row_vw.'. $key .'.date_from')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::datepicker_for_dt(
+                                      'row_vw['. $key .'][date_to]', $value['date_to'], $errors->first('row_vw.'. $key .'.date_to')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_vw['. $key .'][hours]', 'Hours', $value['hours'], $errors->first('row_vw.'. $key .'.hours')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_vw['. $key .'][position]', 'Position', $value['position'], $errors->first('row_vw.'. $key .'.position')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_vw[0][name]', 'Name of Organization', '','') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_vw[0][address]', 'Address of Organization', '','') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::datepicker_for_dt('row_vw[0][date_from]', '','') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::datepicker_for_dt('row_vw[0][date_to]', '','') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_vw[0][hours]', 'Hours', '','') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_vw[0][position]', 'Position', '','') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
                   </div>
 
-                </div>
-
-              </div>
 
 
-
-
-              {{-- Work Experiences --}}
-              <div class="tab-pane" id="we">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Date From *</th>
-                        <th>Date to *</th>
-                        <th style="width:20em;">Company *</th>
-                        <th>Position *</th>
-                        <th>Salary *</th>
-                        <th>Salary Grade</th>
-                        <th>Appointment Status *</th>
-                        <th>Gov Service (Y/N) *</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="we_table_body">
-
-                        @if(old('row_we'))
-
-                          @foreach(old('row_we') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_we['. $key .'][date_from]', $value['date_from'], $errors->first('row_we.'. $key .'.date_from')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_we['. $key .'][date_to]', $value['date_to'], $errors->first('row_we.'. $key .'.date_to')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_we['. $key .'][company]', 'Company', $value['company'], $errors->first('row_we.'. $key .'.company')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_we['. $key .'][position]', 'Position', $value['position'], $errors->first('row_we.'. $key .'.position')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_numeric_for_dt(
-                                  'row_we['. $key .'][salary]', 'Salary', $value['salary'], $errors->first('row_we.'. $key .'.salary')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_we['. $key .'][salary_grade]', 'Salary Grade', $value['salary_grade'], $errors->first('row_we.'. $key .'.salary_grade')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_we['. $key .'][appointment_status]', 'Appointment Status', $value['appointment_status'], $errors->first('row_we.'. $key .'.appointment_status')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::select_static_for_dt(
-                                  'row_we['. $key .'][is_gov_service]', $is_gov_service, $value['is_gov_service'], $errors->first('row_we.'. $key .'.is_gov_service')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
+                  {{-- Recognitions --}}
+                  <div class="col-md-12" style="padding-top: 30px;">
+                    <div class="box">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Recognitions</h3>
+                        <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_we[0][date_from]', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_we[0][date_to]', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_we[0][company]', 'Company', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_we[0][position]', 'Position', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_numeric_for_dt('row_we[0][salary]', 'Salary', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_we[0][salary_grade]', 'Salary Grade', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_we[0][appointment_status]', 'Appointment Status', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::select_static_for_dt('row_we[0][is_gov_service]', $is_gov_service, '', '') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
+                            <th>Title *</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="recognition_table_body">
 
-                        @endif
+                            @if(old('row_recognition'))
 
-                        </tbody>
+                              @foreach(old('row_recognition') as $key => $value)
 
-                    </table>
-                   
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_recognition['. $key .'][title]', 'Title', $value['title'], $errors->first('row_recognition.'. $key .'.title')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                      <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_recognition[0][title]', 'Title', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
                   </div>
 
-                </div>
-
-              </div>
 
 
-
-
-              {{-- Voluntary Works --}}
-              <div class="tab-pane" id="vw">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Name of Organization *</th>
-                        <th>Address</th>
-                        <th>Date from *</th>
-                        <th>Date to *</th>
-                        <th>Hours</th>
-                        <th>Position</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="vw_table_body">
-
-                        @if(old('row_vw'))
-
-                          @foreach(old('row_vw') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_vw['. $key .'][name]', 'Name of Organization', $value['name'], $errors->first('row_vw.'. $key .'.name')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_vw['. $key .'][address]', 'Address of Organization', $value['address'], $errors->first('row_vw.'. $key .'.address')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_vw['. $key .'][date_from]', $value['date_from'], $errors->first('row_vw.'. $key .'.date_from')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::datepicker_for_dt(
-                                  'row_vw['. $key .'][date_to]', $value['date_to'], $errors->first('row_vw.'. $key .'.date_to')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_vw['. $key .'][hours]', 'Hours', $value['hours'], $errors->first('row_vw.'. $key .'.hours')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_vw['. $key .'][position]', 'Position', $value['position'], $errors->first('row_vw.'. $key .'.position')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
+                  {{-- Organizations --}}
+                  <div class="col-md-12" style="padding-top: 30px;">
+                    <div class="box">
+                      <div class="box-header">
+                        <h3 class="box-title">Organizations</h3>
+                        <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_vw[0][name]', 'Name of Organization', '','') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_vw[0][address]', 'Address of Organization', '','') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_vw[0][date_from]', '','') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::datepicker_for_dt('row_vw[0][date_to]', '','') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_vw[0][hours]', 'Hours', '','') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_vw[0][position]', 'Position', '','') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
+                            <th>Name of Organization *</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="org_table_body">
 
-                        @endif
+                            @if(old('row_org'))
 
-                        </tbody>
+                              @foreach(old('row_org') as $key => $value)
 
-                    </table>
-                   
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_org['. $key .'][name]', 'Name of Organization', $value['name'], $errors->first('row_org.'. $key .'.name')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                      <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_org[0][name]', 'Name of Organization', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
                   </div>
 
-                </div>
-
-              </div>
 
 
 
+                  {{-- Special Skills --}}
+                  <div class="col-md-12" style="padding-top: 30px;">
 
-
-
-              {{-- Recognitions --}}
-              <div class="tab-pane" id="r">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Title *</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="recognition_table_body">
-
-                        @if(old('row_recognition'))
-
-                          @foreach(old('row_recognition') as $key => $value)
-
-                            <tr>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_recognition['. $key .'][title]', 'Title', $value['title'], $errors->first('row_recognition.'. $key .'.title')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
+                    <div class="box">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Special Skills</h3>
+                        <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_recognition[0][title]', 'Title', '', '') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
-
+                            <th>Special Skills or Hobies *</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="ss_table_body">
 
-                        @endif
+                            @if(old('row_ss'))
 
-                        </tbody>
+                              @foreach(old('row_ss') as $key => $value)
 
-                    </table>
-                   
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_ss['. $key .'][description]', 'Special Skills or Hobies', $value['description'], $errors->first('row_ss.'. $key .'.description')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                      <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_ss[0][description]', 'Special Skills or Hobies', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
+
                   </div>
 
-                </div>
-
-              </div>
 
 
 
+                  {{-- References --}}
+                  <div class="col-md-12" style="padding-top: 30px;">
 
-
-              {{-- Organizations --}}
-              <div class="tab-pane" id="org">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Name of Organization *</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="org_table_body">
-
-                        @if(old('row_org'))
-
-                          @foreach(old('row_org') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_org['. $key .'][name]', 'Name of Organization', $value['name'], $errors->first('row_org.'. $key .'.name')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
+                    <div class="box">
+                      <div class="box-header">
+                        <h3 class="box-title">References</h3>
+                        <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                      </div>
+                      
+                      <div class="box-body no-padding">
+                        
+                        <table class="table table-bordered">
 
                           <tr>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_org[0][name]', 'Name of Organization', '', '') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
-
+                            <th>Fullname *</th>
+                            <th>Address *</th>
+                            <th>Tel No. *</th>
+                            <th style="width: 40px"></th>
                           </tr>
 
+                          <tbody id="reference_table_body">
 
-                        @endif
+                            @if(old('row_reference'))
 
-                        </tbody>
+                              @foreach(old('row_reference') as $key => $value)
 
-                    </table>
-                   
+                                <tr>
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_reference['. $key .'][fullname]', 'Fullname', $value['fullname'], $errors->first('row_reference.'. $key .'.fullname')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_reference['. $key .'][address]', 'Address', $value['address'], $errors->first('row_reference.'. $key .'.address')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                    {!! FormHelper::textbox_for_dt(
+                                      'row_reference['. $key .'][tel_no]', 'Telephone No.', $value['tel_no'], $errors->first('row_reference.'. $key .'.tel_no')
+                                    ) !!}
+                                  </td>
+
+
+                                  <td>
+                                      <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                  </td>
+
+                                </tr>
+
+                              @endforeach
+
+                            @else
+
+                              <tr>
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_reference[0][fullname]', 'Fullname', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_reference[0][address]', 'Address', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                  {!! FormHelper::textbox_for_dt('row_reference[0][tel_no]', 'Telephone No.', '', '') !!}
+                                </td>
+
+
+                                <td>
+                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                                </td>
+
+                              </tr>
+
+
+                            @endif
+
+                            </tbody>
+
+                        </table>
+                       
+                      </div>
+
+                    </div>
+
                   </div>
+
+
 
                 </div>
-
               </div>
 
-
-
-
-
-              {{-- Special Skills --}}
-              <div class="tab-pane" id="ss">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Special Skills or Hobies *</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="ss_table_body">
-
-                        @if(old('row_ss'))
-
-                          @foreach(old('row_ss') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_ss['. $key .'][description]', 'Special Skills or Hobies', $value['description'], $errors->first('row_ss.'. $key .'.description')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
-
-                          <tr>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_ss[0][description]', 'Special Skills or Hobies', '', '') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
-                          </tr>
-
-
-                        @endif
-
-                        </tbody>
-
-                    </table>
-                   
-                  </div>
-
-                </div>
-
-              </div>
-
-
-
-
-
-              {{-- References --}}
-              <div class="tab-pane" id="ref">
-                
-                <div class="box box-solid">
-                  <div class="box-header with-border">
-                    <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
-                  </div>
-                  
-                  <div class="box-body no-padding">
-                    
-                    <table class="table table-bordered">
-
-                      <tr>
-                        <th>Fullname *</th>
-                        <th>Address *</th>
-                        <th>Tel No. *</th>
-                        <th style="width: 40px"></th>
-                      </tr>
-
-                      <tbody id="reference_table_body">
-
-                        @if(old('row_reference'))
-
-                          @foreach(old('row_reference') as $key => $value)
-
-                            <tr>
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_reference['. $key .'][fullname]', 'Fullname', $value['fullname'], $errors->first('row_reference.'. $key .'.fullname')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_reference['. $key .'][address]', 'Address', $value['address'], $errors->first('row_reference.'. $key .'.address')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                {!! FormHelper::textbox_for_dt(
-                                  'row_reference['. $key .'][tel_no]', 'Telephone No.', $value['tel_no'], $errors->first('row_reference.'. $key .'.tel_no')
-                                ) !!}
-                              </td>
-
-
-                              <td>
-                                  <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                              </td>
-
-                            </tr>
-
-                          @endforeach
-
-                        @else
-
-                          <tr>
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_reference[0][fullname]', 'Fullname', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_reference[0][address]', 'Address', '', '') !!}
-                            </td>
-
-
-                            <td>
-                              {!! FormHelper::textbox_for_dt('row_reference[0][tel_no]', 'Telephone No.', '', '') !!}
-                            </td>
-
-
-                            <td>
-                                <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                            </td>
-
-                          </tr>
-
-
-                        @endif
-
-                        </tbody>
-
-                    </table>
-                   
-                  </div>
-
-                </div>
-
-              </div>
 
 
 
 
               {{-- Questions --}}
-              <div class="tab-pane" id="oq">
+              <div class="tab-pane" id="q">
                 <div class="row">
                   
                   <div class="col-md-12" style="padding-bottom: 10px;">
@@ -1931,7 +1974,7 @@
 
 
     {!! JSHelper::ajax_select_to_select(
-      'department_id', 'department_unit_id', '/api/select_response_department_units_from_department/', 'department_unit_id', 'description'
+      'department_id', 'department_unit_id', '/api/department_unit/select_departmentUnit_byDeptId/', 'department_unit_id', 'description'
     ) !!}
 
 

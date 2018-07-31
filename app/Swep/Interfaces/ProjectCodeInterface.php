@@ -17,5 +17,7 @@ interface ProjectCodeInterface {
 	public function findBySlug($slug);
 
 	public function globalFetchAll();
+
+	public function apiGetByDepartmentName($dept_name);
 		
 }

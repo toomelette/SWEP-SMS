@@ -249,7 +249,7 @@
         if(key) {
             $.ajax({
                 headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-                url: "/api/select_response_submenu_from_menu/" + key,
+                url: "/api/submenu/select_submenu_byMenuId/" + key,
                 type: "GET",
                 dataType: "json",
                 success:function(data) {   

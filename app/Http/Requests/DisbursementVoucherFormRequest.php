@@ -23,7 +23,7 @@ class DisbursementVoucherFormRequest extends FormRequest{
 
             'project_id'=>'required|string|min:5|max:5',
             'fund_source_id'=>'required|string|min:6|max:6',
-            'mode_of_payment_id'=>'nullable|string|min:7|max:7',
+            'mode_of_payment'=>'nullable|string|min:4|max:5',
             'payee'=>'required|string|max:255',
             'tin'=>'nullable|string|max:20',
             'bur_no'=>'nullable|string|max:20',

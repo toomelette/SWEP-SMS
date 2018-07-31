@@ -11,5 +11,7 @@ interface SubmenuInterface {
 	public function findBySubmenuId($submenu_id);
 
 	public function globalFetchAll();
+
+	public function apiGetByMenuId($menu_id);
 		
 }

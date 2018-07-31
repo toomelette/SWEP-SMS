@@ -81,7 +81,7 @@ class FormHelper{
 
     public static function datepicker($class, $key, $label, $old_value, $error_has, $error_first){
 
-       $old_value = DataTypeHelper::date_out($old_value);
+       $old_value = DataTypeHelper::date_parse($old_value);
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'" style="overflow:hidden;">
                 <label for="'. $key .'">'. $label .'</label>
@@ -221,7 +221,7 @@ class FormHelper{
 
     public static function datepicker_for_dt($name, $value, $error_first){
 
-       $value = DataTypeHelper::date_out($value);
+       $value = DataTypeHelper::date_parse($value);
 
        return '<div class="form-group">
                   <div class="input-group">

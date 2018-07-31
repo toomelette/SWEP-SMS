@@ -44,11 +44,11 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\FundSourceComposer');
 
 
-        // MODE OF PAYMENT
+        // Disbursement Voucher
         View::composer(['dashboard.disbursement_voucher.create', 
                         'dashboard.disbursement_voucher.edit', 
                         'dashboard.disbursement_voucher.save_as',
-                        'printables.disbursement_voucher'], 'App\Swep\ViewComposers\ModeOfPaymentComposer');
+                        'printables.disbursement_voucher'], 'App\Swep\ViewComposers\DisbursementVoucherComposer');
 
 
         // DEPARTMENT

@@ -1800,7 +1800,7 @@
 
 
     {!! JSHelper::ajax_select_to_select(
-      'department_id', 'department_unit_id', '/api/select_response_department_units_from_department/', 'department_unit_id', 'description'
+      'department_id', 'department_unit_id', '/api/department_unit/select_departmentUnit_byDeptId/', 'department_unit_id', 'description'
     ) !!}
 
 

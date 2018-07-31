@@ -57,7 +57,7 @@
                 <dt>Middlename:</dt>
                 <dd>{{ $leave_application->middlename }}</dd>
                 <dt>Date of Filing:</dt>
-                <dd>{{ DataTypeHelper::date_out($leave_application->date_of_filing) }}</dd>
+                <dd>{{ DataTypeHelper::date_parse($leave_application->date_of_filing) }}</dd>
                 <dt>Salary:</dt>
                 <dd>{{ number_format($leave_application->salary, 2) }}</dd>
                 <dt>Type of Leave:</dt>

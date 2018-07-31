@@ -69,7 +69,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->middlename = $request->middlename;
         $employee->name_ext = $request->name_ext;
         $employee->fullname = $this->getRequestFullname($request);
-        $employee->date_of_birth = $this->dataTypeHelper->date_in($request->date_of_birth);
+        $employee->date_of_birth = $this->dataTypeHelper->date_parse($request->date_of_birth, 'Y-m-d');
         $employee->place_of_birth = $request->place_of_birth;
         $employee->sex = $request->sex;
         $employee->civil_status = $request->civil_status;
@@ -103,10 +103,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->food_subsidy = $this->dataTypeHelper->string_to_num($request->food_subsidy);
         $employee->ra = $this->dataTypeHelper->string_to_num($request->ra);
         $employee->ta = $this->dataTypeHelper->string_to_num($request->ta);
-        $employee->firstday_gov = $this->dataTypeHelper->date_in($request->firstday_gov);
-        $employee->firstday_sra = $this->dataTypeHelper->date_in($request->firstday_sra);
-        $employee->appointment_date = $this->dataTypeHelper->date_in($request->appointment_date);
-        $employee->adjustment_date = $this->dataTypeHelper->date_in($request->adjustment_date);
+        $employee->firstday_gov = $this->dataTypeHelper->date_parse($request->firstday_gov, 'Y-m-d');
+        $employee->firstday_sra = $this->dataTypeHelper->date_parse($request->firstday_sra, 'Y-m-d');
+        $employee->appointment_date = $this->dataTypeHelper->date_parse($request->appointment_date, 'Y-m-d');
+        $employee->adjustment_date = $this->dataTypeHelper->date_parse($request->adjustment_date, 'Y-m-d');
         $employee->is_active = $request->is_active;
         $employee->created_at = $this->carbon->now();
         $employee->updated_at = $this->carbon->now();
@@ -125,7 +125,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function update($request, $slug){
 
         $employee = $this->findBySlug($slug);
@@ -138,7 +137,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->middlename = $request->middlename;
         $employee->name_ext = $request->name_ext;
         $employee->fullname = $this->getRequestFullname($request);
-        $employee->date_of_birth = $this->dataTypeHelper->date_in($request->date_of_birth);
+        $employee->date_of_birth = $this->dataTypeHelper->date_parse($request->date_of_birth, 'Y-m-d');
         $employee->place_of_birth = $request->place_of_birth;
         $employee->sex = $request->sex;
         $employee->civil_status = $request->civil_status;
@@ -172,10 +171,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->food_subsidy = $this->dataTypeHelper->string_to_num($request->food_subsidy);
         $employee->ra = $this->dataTypeHelper->string_to_num($request->ra);
         $employee->ta = $this->dataTypeHelper->string_to_num($request->ta);
-        $employee->firstday_gov = $this->dataTypeHelper->date_in($request->firstday_gov);
-        $employee->firstday_sra = $this->dataTypeHelper->date_in($request->firstday_sra);
-        $employee->appointment_date = $this->dataTypeHelper->date_in($request->appointment_date);
-        $employee->adjustment_date = $this->dataTypeHelper->date_in($request->adjustment_date);
+        $employee->firstday_gov = $this->dataTypeHelper->date_parse($request->firstday_gov, 'Y-m-d');
+        $employee->firstday_sra = $this->dataTypeHelper->date_parse($request->firstday_sra, 'Y-m-d');
+        $employee->appointment_date = $this->dataTypeHelper->date_parse($request->appointment_date, 'Y-m-d');
+        $employee->adjustment_date = $this->dataTypeHelper->date_parse($request->adjustment_date, 'Y-m-d');
         $employee->is_active = $request->is_active;
         $employee->updated_at = $this->carbon->now();
         $employee->ip_updated = request()->ip();
@@ -187,7 +186,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         return $employee; 
 
     }
-
 
 
 
@@ -227,7 +225,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->employeeVoluntaryWork()->delete();
 
     }
-
 
 
 
@@ -291,7 +288,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-
     public function populate($model){
 
         return $model->select('employee_no', 'fullname', 'position', 'slug')
@@ -300,7 +296,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
                      ->paginate(10);
 
     }
-
 
 
 
@@ -325,6 +320,21 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         return $employees;
 
     }
+
+
+
+
+
+    public function apiGetBySlug($slug){
+
+        $employee = $this->cache->remember('api:employees:bySlug:'. $key .'', 240, function() use ($key){
+            return $this->employee->where('slug', $key)->get();
+        });
+        
+        return $employee;
+
+    }
+
 
 
 

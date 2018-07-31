@@ -38,7 +38,7 @@ class DepartmentSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:departments:all:*');
         $this->cacheHelper->deletePattern('swep_cache:departments:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:response_departments_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:api:departments:*');
 
         $this->session->flash('DEPARTMENT_CREATE_SUCCESS', 'The Department has been successfully created!');
 
@@ -52,7 +52,7 @@ class DepartmentSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:departments:all:*');
         $this->cacheHelper->deletePattern('swep_cache:departments:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:response_departments_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:api:departments:*');
         $this->cacheHelper->deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
 
         $this->session->flash('DEPARTMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
@@ -68,7 +68,7 @@ class DepartmentSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:departments:all:*');
         $this->cacheHelper->deletePattern('swep_cache:departments:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:response_departments_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:api:departments:*');
         $this->cacheHelper->deletePattern('swep_cache:departments:bySlug:'. $department->slug .'');
 
         $this->session->flash('DEPARTMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');

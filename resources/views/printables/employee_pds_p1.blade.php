@@ -164,7 +164,7 @@
         <p style="font-size:8px;">&nbsp;&nbsp;3. DATE OF BIRTH<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mm/dd/yyyy)</p>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom: 22px;">
-       <span style="font-size:10px; font-weight:bold;">{{ DataTypeHelper::date_out($employee->date_of_birth, 'm/d/Y') }}</span>
+       <span style="font-size:10px; font-weight:bold;">{{ DataTypeHelper::date_parse($employee->date_of_birth, 'm/d/Y') }}</span>
       </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8; padding-bottom: 2px;">
         <span style="font-size:8px;">16. CITIZENSHIP</span>

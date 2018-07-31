@@ -146,11 +146,11 @@
             </div>
 
             <div class="col-sm-1">
-              <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_from, 'm/d/Y') }}</span>
+              <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</span>
             </div>
 
             <div class="col-sm-1">
-              <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_to, 'm/d/Y') }}</span>
+              <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</span>
             </div>
 
             <div class="col-sm-1 no-padding" style="text-align: center;">
@@ -282,11 +282,11 @@
               </div>
 
               <div class="col-sm-1">
-                <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_from, 'm/d/Y') }}</span>
+                <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</span>
               </div>
 
               <div class="col-sm-1">
-                <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_to, 'm/d/Y') }}</span>
+                <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</span>
               </div>
 
               <div class="col-sm-1 no-padding" style="text-align: center;">
@@ -414,11 +414,11 @@
               </div>
 
               <div class="col-sm-1">
-                <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_from, 'm/d/Y') }}</span>
+                <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</span>
               </div>
 
               <div class="col-sm-1">
-                <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_to, 'm/d/Y') }}</span>
+                <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</span>
               </div>
 
               <div class="col-sm-1 no-padding" style="text-align: center;">
@@ -547,11 +547,11 @@
               </div>
 
               <div class="col-sm-1">
-                <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_from, 'm/d/Y') }}</span>
+                <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</span>
               </div>
 
               <div class="col-sm-1">
-                <span style="font-size:10px;">{{ DataTypeHelper::date_out($data->date_to, 'm/d/Y') }}</span>
+                <span style="font-size:10px;">{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</span>
               </div>
 
               <div class="col-sm-1 no-padding" style="text-align: center;">

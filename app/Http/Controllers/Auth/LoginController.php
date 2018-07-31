@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Swep\Interfaces\UserInterface;
 
 use Auth;
 use Session;
-use Carbon\Carbon;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Swep\Helpers\CacheHelper;
-use Illuminate\Events\Dispatcher;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -20,10 +19,10 @@ class LoginController extends Controller{
 
     use AuthenticatesUsers;
 
+    protected $user_repo;
+
     protected $auth;
     protected $session;
-    protected $carbon;
-    protected $user;
     protected $cacheHelper;
     protected $event;
     protected $redirectTo = 'dashboard/home';
@@ -34,14 +33,14 @@ class LoginController extends Controller{
 
 
 
-    public function __construct(Carbon $carbon, User $user, CacheHelper $cacheHelper, Dispatcher $event){
+    public function __construct(UserInterface $user_repo, CacheHelper $cacheHelper){
+
+
+        $this->user_repo = $user_repo;
 
         $this->auth = auth();
         $this->session = session();
-        $this->carbon = $carbon;
-        $this->user = $user;
         $this->cacheHelper = $cacheHelper;
-        $this->event = $event;
 
         $this->middleware('guest')->except('logout');
 
@@ -89,8 +88,7 @@ class LoginController extends Controller{
 
             }else{
 
-                $user = $this->user->find($this->auth->user()->id);
-                $this->loginDefaults($user);
+                $user = $this->user_repo->login($this->auth->user()->slug);
 
                 $this->cacheHelper->deletePattern('swep_cache:users:all:*');
                 $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
@@ -116,10 +114,7 @@ class LoginController extends Controller{
         
         if($request->isMethod('post')){
 
-            $user = $this->user->find($this->auth->user()->id);
-            
-            $user->is_online = 0;
-            $user->save();
+            $user = $this->user_repo->logout($this->auth->user()->slug);
             
             $this->session->flush();
             $this->guard()->logout();
@@ -137,21 +132,6 @@ class LoginController extends Controller{
     }
 
 
-
-
-
-
-    // Defaults
-
-    public function loginDefaults($user){
-
-        $user->is_online = 1;
-        $user->last_login_time = $this->carbon->now();
-        $user->last_login_machine = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        $user->last_login_ip = request()->ip();
-        $user->save();
-
-    }
 
 
 

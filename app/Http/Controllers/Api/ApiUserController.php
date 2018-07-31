@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
-use Illuminate\Cache\Repository as Cache;
+
 use Illuminate\Http\Request;
-use App\Models\Employee;
+use App\Swep\Interfaces\EmployeeInterface;
 
 
 
@@ -14,17 +14,16 @@ use App\Models\Employee;
 class ApiUserController extends Controller{
 
 
-	protected $cache;
-	protected $employee;
+
+	protected $employee_repo;
 
 
 
 
 
-	public function __construct(Cache $cache, Employee $employee){
+	public function __construct(EmployeeInterface_repo $employee_repo){
 
-		$this->cache = $cache;
-		$this->employee = $employee;
+		$this->employee_repo = $employee_repo;
 
 	}
 
@@ -33,14 +32,10 @@ class ApiUserController extends Controller{
 
 
 
-	public function responseFromEmployee(Request $request, $key){
+	public function responseFromEmployee(Request $request, $slug){
 
     	if($request->Ajax()){
-
-    		$response_employee = $this->cache->remember('api:employees:bySlug:'. $key .'', 240, function() use ($key){
-        		return $this->employee->where('slug', $key)->get();
-       		});
-
+    		$response_employee = $this->employee_repo->apiGetBySlug($slug);
 	    	return json_encode($response_employee);
 	    }
 

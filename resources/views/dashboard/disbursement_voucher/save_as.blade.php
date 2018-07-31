@@ -34,8 +34,8 @@
             '4', 'fund_source_id', 'Fund Source *', old('fund_source_id') ? old('fund_source_id') : $disbursement_voucher->fund_source_id, $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
           ) !!}
 
-          {!! FormHelper::select_dynamic(
-            '4', 'mode_of_payment_id', 'Mode Of Payment', old('mode_of_payment_id') ? old('mode_of_payment_id') : $disbursement_voucher->mode_of_payment_id, $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment_id'), $errors->first('mode_of_payment_id'), '', ''
+          {!! FormHelper::select_static(
+            '4', 'mode_of_payment', 'Mode Of Payment', old('mode_of_payment') ? old('mode_of_payment') : $disbursement_voucher->mode_of_payment, $global_dv_mode_of_payment, $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
           ) !!}
 
           <div class="col-md-12"></div>

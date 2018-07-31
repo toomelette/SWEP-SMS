@@ -166,21 +166,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-    public function logout($slug){
-
-        $user = $this->findBySlug($slug);
-        $user->is_online = 0;
-        $user->save();
-
-        return $user;
-
-    }
-
-
-
-
-
-
     public function resetPassword($model, $request){
 
         $model->password = Hash::make($request->password);
@@ -228,10 +213,59 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
+    public function login($slug){
+
+        $user = $this->findBySlug($slug);
+
+        $user->is_online = 1;
+        $user->last_login_time = $this->carbon->now();
+        $user->last_login_machine = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $user->last_login_ip = request()->ip();
+        $user->save();
+
+        return $user;
+
+    }
+
+
+
+
+
+
+    public function logout($slug){
+
+        $user = $this->findBySlug($slug);
+        $user->is_online = 0;
+        $user->save();
+
+        return $user;
+
+    }
+
+
+
+
+
+
 	public function findBySlug($slug){
 
         $user = $this->cache->remember('users:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->firstOrFail();
+            return $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->first();
+        }); 
+        
+        return $user;
+
+    }
+
+
+
+
+
+
+    public function findById($id){
+
+        $user = $this->cache->remember('users:byId:' . $id, 240, function() use ($id){
+            return $this->user->where('id', $id)->first();
         }); 
         
         return $user;

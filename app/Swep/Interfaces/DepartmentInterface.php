@@ -17,5 +17,7 @@ interface DepartmentInterface {
 	public function findBySlug($slug);
 
 	public function globalFetchAll();
+
+	public function apiGetByDepartmentId($dept_id);
 		
 }

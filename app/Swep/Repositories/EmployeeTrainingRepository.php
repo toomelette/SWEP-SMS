@@ -33,7 +33,6 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-
     public function fetchByEmpNo($slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
@@ -52,7 +51,6 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-
     public function store($request, $slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
@@ -61,8 +59,8 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
         $employee_trng->employee_no = $employee->employee_no;
         $employee_trng->title = $request->title;
         $employee_trng->type = $request->type;
-        $employee_trng->date_from = $this->dataTypeHelper->date_in($request->date_from);
-        $employee_trng->date_to = $this->dataTypeHelper->date_in($request->date_to);
+        $employee_trng->date_from = $this->dataTypeHelper->date_parse($request->date_from, 'Y-m-d');
+        $employee_trng->date_to = $this->dataTypeHelper->date_parse($request->date_to, 'Y-m-d');
         $employee_trng->hours = $request->hours;
         $employee_trng->conducted_by = $request->conducted_by;
         $employee_trng->venue = $request->venue;
@@ -84,15 +82,14 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-
     public function update($request, $emp_slug, $emp_trng_slug){
         
         $employee = $this->employee_repo->findBySlug($emp_slug);
         $employee_trng = $this->findBySlug($emp_trng_slug);
         $employee_trng->title = $request->e_title;
         $employee_trng->type = $request->e_type;
-        $employee_trng->date_from = $this->dataTypeHelper->date_in($request->e_date_from);
-        $employee_trng->date_to = $this->dataTypeHelper->date_in($request->e_date_to);
+        $employee_trng->date_from = $this->dataTypeHelper->date_parse($request->e_date_from, 'Y-m-d');
+        $employee_trng->date_to = $this->dataTypeHelper->date_parse($request->e_date_to, 'Y-m-d');
         $employee_trng->hours = $request->e_hours;
         $employee_trng->conducted_by = $request->e_conducted_by;
         $employee_trng->venue = $request->e_venue;
@@ -105,7 +102,6 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
         return $employee_trng;
 
     }
-
 
 
 
@@ -125,7 +121,6 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-
     public function populate($model, $employee_no){
 
         return $model->where('employee_no', $employee_no)
@@ -138,10 +133,23 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-
     public function findBySlug($slug){
             
         return $this->employee_trng->where('slug', $slug)->first();
+
+    }
+
+
+
+
+
+    public function apiGetBySlug($slug){
+            
+        $employee_trng = $this->cache->remember('api:employees:trainings:bySlug:'. $slug .'', 240, function() use ($slug){
+            return $this->employee_trng->where('slug', $slug)->get();
+        });
+
+        return $employee_trng;
 
     }
 

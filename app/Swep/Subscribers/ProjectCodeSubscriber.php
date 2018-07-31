@@ -36,7 +36,7 @@ class ProjectCodeSubscriber extends BaseSubscriber{
         
         $this->cacheHelper->deletePattern('swep_cache:project_codes:all:*');
         $this->cacheHelper->deletePattern('swep_cache:project_codes:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:response_project_codes_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:api:project_codes:*');
 
         $this->session->flash('PROJECT_CODE_CREATE_SUCCESS', 'The Project Code has been successfully created!');
 
@@ -50,7 +50,7 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:project_codes:all:*');
         $this->cacheHelper->deletePattern('swep_cache:project_codes:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:response_project_codes_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:api:project_codes:*');
         $this->cacheHelper->deletePattern('swep_cache:project_codes:bySlug:'. $project_code->slug .'');
 
         $this->session->flash('PROJECT_CODE_UPDATE_SUCCESS', 'The Project Code has been successfully updated!');
@@ -66,7 +66,7 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
         $this->cacheHelper->deletePattern('swep_cache:project_codes:all:*');
         $this->cacheHelper->deletePattern('swep_cache:project_codes:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:response_project_codes_from_department:*');
+        $this->cacheHelper->deletePattern('swep_cache:api:project_codes:*');
         $this->cacheHelper->deletePattern('swep_cache:project_codes:bySlug:'. $project_code->slug .'');
 
         $this->session->flash('PROJECT_CODE_DELETE_SUCCESS', 'The Project Code has been successfully deleted!');

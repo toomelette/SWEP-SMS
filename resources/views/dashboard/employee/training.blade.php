@@ -119,8 +119,8 @@
                 {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}
               >
                 <td>{{ str_limit($data->title, 50, '...') }}</td>
-                <td>{{ DataTypeHelper::date_out($data->date_from, 'm/d/Y') }}</td>
-                <td>{{ DataTypeHelper::date_out($data->date_to, 'm/d/Y') }}</td>
+                <td>{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</td>
+                <td>{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</td>
                 <td>
                   <div class="btn-group">
                     <a href="#" id="tr_update_btn" es="{{ $data->slug }}" data-url="{{ route('dashboard.employee.training_update', [$employee->slug, $data->slug]) }}" class="btn btn-sm btn-default">

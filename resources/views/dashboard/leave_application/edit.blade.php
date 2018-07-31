@@ -5,9 +5,9 @@
   $spent_sick = ['In Hospital' => 'SS1001', 'Out Patient' => 'SS1002'];
   $commutation_types = [ 'Requested' => 'true', 'Not Requested' => 'false'];
 
-  $date_of_filing =  DataTypeHelper::date_out($leave_application->date_of_filing);
-  $working_days_date_from =  DataTypeHelper::date_out($leave_application->working_days_date_from);
-  $working_days_date_to =  DataTypeHelper::date_out($leave_application->working_days_date_to);
+  $date_of_filing =  DataTypeHelper::date_parse($leave_application->date_of_filing);
+  $working_days_date_from =  DataTypeHelper::date_parse($leave_application->working_days_date_from);
+  $working_days_date_to =  DataTypeHelper::date_parse($leave_application->working_days_date_to);
 @endphp
 
 

@@ -84,7 +84,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->date = $this->carbon->format('Y-m-d');
         $disbursement_voucher->project_id = $request->project_id;
         $disbursement_voucher->fund_source_id = $request->fund_source_id;
-        $disbursement_voucher->mode_of_payment_id = $request->mode_of_payment_id;
+        $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
         $disbursement_voucher->payee = $request->payee;
         $disbursement_voucher->address =  $request->address;
         $disbursement_voucher->tin = $request->tin;
@@ -122,7 +122,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher = $this->findBySlug($slug);
         $disbursement_voucher->project_id = $request->project_id;
         $disbursement_voucher->fund_source_id = $request->fund_source_id;
-        $disbursement_voucher->mode_of_payment_id = $request->mode_of_payment_id;
+        $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
         $disbursement_voucher->payee = $request->payee;
         $disbursement_voucher->address =  $request->address;
         $disbursement_voucher->tin = $request->tin;
@@ -315,7 +315,6 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
 
-
     public function getDvIdInc(){
 
         $id = 'DV1000001';
@@ -333,6 +332,22 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         
         return $id;
         
+    }
+
+
+
+
+
+
+
+    public function getModeOfPayment(){
+
+        $mop = $this->cache->remember('disbursement_vouchers:static:mode_of_payments', 240, function(){
+            return $this->disbursement_voucher->mode_of_payment_col;
+        });
+        
+        return $mop;
+
     }
 
 

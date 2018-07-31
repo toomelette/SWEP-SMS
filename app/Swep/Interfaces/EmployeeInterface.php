@@ -19,5 +19,7 @@ interface EmployeeInterface {
 	public function findByUserId($user_id);
 
 	public function globalFetchAll();
+
+	public function apiGetBySlug($slug);
 		
 }

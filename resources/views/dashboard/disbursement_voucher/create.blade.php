@@ -31,8 +31,8 @@
           '4', 'fund_source_id', 'Fund Source *', old('fund_source_id'), $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
         ) !!}
 
-        {!! FormHelper::select_dynamic(
-          '4', 'mode_of_payment_id', 'Mode Of Payment', old('mode_of_payment_id'), $global_mode_of_payment_all, 'mode_of_payment_id', 'description', $errors->has('mode_of_payment_id'), $errors->first('mode_of_payment_id'), '', ''
+        {!! FormHelper::select_static(
+          '4', 'mode_of_payment', 'Mode Of Payment', old('mode_of_payment'), $global_dv_mode_of_payment, $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
         ) !!}
 
         <div class="col-md-12"></div>
@@ -125,11 +125,11 @@
     @endif
 
     {!! JSHelper::ajax_select_to_select(
-      'department_name', 'department_unit_name', '/api/select_response_department_units_from_department/', 'name', 'name'
+      'department_name', 'department_unit_name', '/api/department_unit/select_departmentUnit_byDeptName/', 'name', 'name'
     ) !!}
 
     {!! JSHelper::ajax_select_to_select(
-      'department_name', 'project_code', '/api/select_response_project_codes_from_department/', 'project_code', 'project_code'
+      'department_name', 'project_code', '/api/project_code/select_projectCode_byDeptName/', 'project_code', 'project_code'
     ) !!}
 
     $(function () {

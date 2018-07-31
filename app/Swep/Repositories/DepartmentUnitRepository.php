@@ -152,7 +152,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
                      ->paginate(10);
 
     }
-
+    
 
 
 
@@ -182,6 +182,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
+
     public function globalFetchAll(){
 
         $department_units = $this->cache->remember('department_units:global:all', 240, function(){
@@ -190,6 +191,47 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
         
         return $department_units;
     }
+
+
+
+
+
+
+
+    public function apiGetByDepartmentName($dept_name){
+
+        $department_unit = $this->cache->remember('api:department_units:byDepartmentName:'. $dept_name .'', 240, function() use ($dept_name){
+
+            return $this->department_unit->select('name', 'department_unit_id', 'description')
+                                         ->where('department_name', $dept_name)
+                                         ->get();
+
+        });     
+
+        return $department_unit;
+
+    }
+
+
+
+
+
+
+
+    public function apiGetByDepartmentId($dept_id){
+
+        $department_unit = $this->cache->remember('api:department_units:byDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
+
+            return $this->department_unit->select('name', 'department_unit_id', 'description')
+                                         ->where('department_id', $dept_id)
+                                         ->get();
+
+        });     
+
+        return $department_unit;
+
+    }
+
 
 
 

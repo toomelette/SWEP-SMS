@@ -26,6 +26,8 @@ class DisbursementVoucher extends Model{
 
 
 
+    public $mode_of_payment_col = ['CASH' => 'CASH', 'CHECK' => 'CHECK', 'OTHERS' => 'OTHERS'];
+
 
 
     protected $attributes = [
@@ -37,7 +39,7 @@ class DisbursementVoucher extends Model{
         'date' => null, 
         'project_id' => '', 
         'fund_source_id' => '', 
-        'mode_of_payment_id' => '', 
+        'mode_of_payment' => '',
         'payee' => '', 
         'address' => '', 
         'tin' => '',
@@ -79,11 +81,6 @@ class DisbursementVoucher extends Model{
 
     public function fundSource(){
         return $this->hasOne('App\Models\FundSource', 'fund_source_id', 'fund_source_id');
-    }
-
-
-    public function modeOfPayment(){
-        return $this->hasOne('App\Models\ModeOfPayment', 'mode_of_payment_id', 'mode_of_payment_id');
     }
 
 

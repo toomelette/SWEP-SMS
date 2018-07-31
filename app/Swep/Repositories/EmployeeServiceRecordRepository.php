@@ -33,7 +33,6 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
 
 
-
     public function fetchByEmpNo($slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
@@ -47,8 +46,6 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
 
     }
-
-
 
 
 
@@ -91,7 +88,6 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
 
 
-
     public function update($request, $emp_slug, $emp_sr_slug){
 
         $employee = $this->employee_repo->findBySlug($emp_slug);
@@ -124,7 +120,6 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
 
 
-
     public function destroy($slug){
         
         $employee_sr = $this->findBySlug($slug);
@@ -133,7 +128,6 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         return $employee_sr;
 
     }
-
 
 
 
@@ -152,11 +146,23 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
 
 
-
-
     public function findBySlug($slug){
 
         return $this->employee_sr->where('slug', $slug)->first();
+
+    }
+
+
+
+
+
+    public function apiGetBySlug($slug){
+
+        $employee_sr = $this->cache->remember('api:employees:service_records:bySlug:'. $slug .'', 240, function() use ($slug){
+            return $this->employee_sr->where('slug', $slug)->get();
+        });
+        
+        return $employee_sr;
 
     }
 

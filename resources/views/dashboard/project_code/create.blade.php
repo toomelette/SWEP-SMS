@@ -102,7 +102,7 @@
     @endif
 
     {!! JSHelper::ajax_select_to_input(
-      'department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name'
+      'department_id', 'department_name', '/api/department/textbox_department_ByDepartmentId/', 'name'
     ) !!}
 
   </script> 

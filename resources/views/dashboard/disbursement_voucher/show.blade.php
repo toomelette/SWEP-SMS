@@ -45,7 +45,7 @@
                 <dt>Fund Source:</dt>
                 <dd>{{ optional($disbursement_voucher->fundSource)->description }}</dd>
                 <dt>Mode of Payment:</dt>
-                <dd>{{ optional($disbursement_voucher->modeOfPayment)->description }}</dd>
+                <dd>{{ $disbursement_voucher->mode_of_payment }}</dd>
                 <dt>Payee:</dt>
                 <dd>{{ $disbursement_voucher->payee }}</dd>
                 <dt>TIN:</dt>

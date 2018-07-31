@@ -107,5 +107,24 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
 
 
+    public function apiGetByMenuId($menu_id){
+
+        $submenu = $this->cache->remember('api:submenus:byMenuId:'. $menu_id .'', 240, function() use ($menu_id){
+
+            return $this->submenu->select('submenu_id', 'name')
+                                 ->where('menu_id', $menu_id)
+                                 ->get();
+
+        });
+
+        return $submenu;
+
+    }
+
+
+
+
+
+
 
 }

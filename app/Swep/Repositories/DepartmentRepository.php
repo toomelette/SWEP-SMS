@@ -30,6 +30,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
 
+
     public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -183,6 +184,25 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
         });
         
         return $departments;
+
+    }
+
+
+
+
+
+
+    public function apiGetByDepartmentId($dept_id){
+
+        $department_name = $this->cache->remember('api:departments:byDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
+
+            return $this->department->select('name')
+                                    ->where('department_id', $dept_id)
+                                    ->get();
+                                    
+        });
+        
+        return $department_name;
 
     }
 

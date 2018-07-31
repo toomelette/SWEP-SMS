@@ -1,6 +1,6 @@
 @php
-  $date_started = DataTypeHelper::date_out($project_code->date_started);
-  $projected_date_end = DataTypeHelper::date_out($project_code->projected_date_end);
+  $date_started = DataTypeHelper::date_parse($project_code->date_started);
+  $projected_date_end = DataTypeHelper::date_parse($project_code->projected_date_end);
 @endphp
 
 
@@ -93,7 +93,7 @@
   <script type="text/javascript">
 
     {!! JSHelper::ajax_select_to_input(
-      'department_id', 'department_name', '/api/textbox_response_departmentName_from_departmentId/', 'name'
+      'department_id', 'department_name', '/api/department/textbox_department_ByDepartmentId/', 'name'
     ) !!}
 
   </script> 
