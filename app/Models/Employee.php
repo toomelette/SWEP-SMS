@@ -24,7 +24,6 @@ class Employee extends Model{
 
 
 
-
     protected $attributes = [
         
         'slug' => '',

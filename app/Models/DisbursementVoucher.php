@@ -26,7 +26,6 @@ class DisbursementVoucher extends Model{
 
 
 
-    public $mode_of_payment_col = ['CASH' => 'CASH', 'CHECK' => 'CHECK', 'OTHERS' => 'OTHERS'];
 
 
 

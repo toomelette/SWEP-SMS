@@ -32,7 +32,7 @@
         ) !!}
 
         {!! FormHelper::select_static(
-          '4', 'mode_of_payment', 'Mode Of Payment', old('mode_of_payment'), $global_dv_mode_of_payment, $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
+          '4', 'mode_of_payment', 'Mode Of Payment', old('mode_of_payment'), StaticHelper::dv_mode_of_payment(), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
         ) !!}
 
         <div class="col-md-12"></div>

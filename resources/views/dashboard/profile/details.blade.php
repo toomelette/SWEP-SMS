@@ -1,24 +1,3 @@
-@php
-  $user_colors = [
-                  'Blue/Dark' => 'sidebar-mini skin-blue',
-                  'White/Dark' => 'sidebar-mini skin-black',
-                  'Purple/Dark' => 'sidebar-mini skin-purple',
-                  'Green/Dark' => 'sidebar-mini skin-green',
-                  'Red/Dark' => 'sidebar-mini skin-red',
-                  'Yellow/Dark' => 'sidebar-mini skin-yellow',
-                  'Blue/Light' => 'sidebar-mini skin-blue-light',
-                  'White/Light' => 'sidebar-mini skin-black-light',
-                  'Purple/Light' => 'sidebar-mini skin-purple-light',
-                  'Green/Light' => 'sidebar-mini skin-green-light',
-                  'Red/Light' => 'sidebar-mini skin-red-light',
-                  'Yellow/Light' => 'sidebar-mini skin-yellow-light',
-                ];
-@endphp
-
-
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -190,7 +169,7 @@
                   <input name="_method" value="PATCH" type="hidden">
 
                   {!! FormHelper::select_static(
-                    '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, $user_colors, $errors->has('color'), $errors->first('color'), '', ''
+                    '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, StaticHelper::user_colors(), $errors->has('color'), $errors->first('color'), '', ''
                   ) !!}
 
                   <div class="form-group">

@@ -20,8 +20,8 @@ class LeaveApplication extends Model{
     protected $dates = ['working_days_date_from', 'working_days_date_to', 'created_at', 'updated_at'];
 
 	public $timestamps = false;
-    
 
+    
 
 
 

@@ -316,6 +316,7 @@ class UserRepository extends BaseRepository implements UserInterface {
 
         return $model->select('user_id', 'username', 'firstname', 'middlename', 'lastname', 'is_online', 'is_active', 'slug')
                      ->sortable()
+                     ->with('employee')
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
 

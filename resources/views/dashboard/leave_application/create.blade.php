@@ -1,14 +1,3 @@
-@php
-  $leave_types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
-  $vac_types = ['To seek employment' => 'TV1001', 'others' => 'TV1002'];
-  $spent_vacation = ['Within the Philippines' => 'SV1001', 'Abroad' => 'SV1002'];
-  $spent_sick = ['In Hospital' => 'SS1001', 'Out Patient' => 'SS1002'];
-  $commutation_types = [ 'Requested' => 'true', 'Not Requested' => 'false'];
-@endphp
-
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -76,13 +65,13 @@
             <h4>TYPE OF LEAVE:</h4>
 
             {!! FormHelper::select_static(
-              '3', 'type', 'Leave Type *', old('type'), $leave_types, $errors->has('type'), $errors->first('type'), '', ''
+              '3', 'type', 'Leave Type *', old('type'), StaticHelper::leave_types(), $errors->has('type'), $errors->first('type'), '', ''
             ) !!}
           
             <div class="col-md-9" id="type_vacation_div">
                 
               {!! FormHelper::select_static(
-                '3', 'type_vacation', 'Vacation Type *', old('type_vacation'), $vac_types, $errors->has('type_vacation'), $errors->first('type_vacation'), '', ''
+                '3', 'type_vacation', 'Vacation Type *', old('type_vacation'), StaticHelper::vacation_types(), $errors->has('type_vacation'), $errors->first('type_vacation'), '', ''
               ) !!}
                 
               {!! FormHelper::textbox(
@@ -112,7 +101,7 @@
             <div class="col-md-12">
               
               {!! FormHelper::select_static(
-                '3', 'spent_vacation', 'In case of Vacation Leave', old('spent_vacation'), $spent_vacation, $errors->has('spent_vacation'), $errors->first('spent_vacation'), '', ''
+                '3', 'spent_vacation', 'In case of Vacation Leave', old('spent_vacation'), StaticHelper::spent_vacation(), $errors->has('spent_vacation'), $errors->first('spent_vacation'), '', ''
               ) !!}
 
               <div class="col-md-9" id="spent_vacation_abroad_div">
@@ -129,7 +118,7 @@
             <div class="col-md-12">
               
               {!! FormHelper::select_static(
-                '3', 'spent_sick', 'In case of Sick Leave', old('spent_sick'), $spent_sick, $errors->has('spent_sick'), $errors->first('spent_sick'), '', ''
+                '3', 'spent_sick', 'In case of Sick Leave', old('spent_sick'), StaticHelper::spent_sick(), $errors->has('spent_sick'), $errors->first('spent_sick'), '', ''
               ) !!}
 
               <div class="col-md-9" id="spent_sick_inHospital_div">
@@ -182,7 +171,7 @@
             <h4>COMMUTATION:</h4>  
 
             {!! FormHelper::select_static(
-              '3', 'commutation', 'Commutation *', old('commutation'), $commutation_types, $errors->has('commutation'), $errors->first('commutation'), '', ''
+              '3', 'commutation', 'Commutation *', old('commutation'), StaticHelper::commutation_types(), $errors->has('commutation'), $errors->first('commutation'), '', ''
             ) !!}
 
           </div>

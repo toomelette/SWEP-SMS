@@ -20,7 +20,5 @@ interface SignatoryInterface {
 
 	public function globalFetchAll();
 
-	public function globalStaticTypes();
-
 
 }

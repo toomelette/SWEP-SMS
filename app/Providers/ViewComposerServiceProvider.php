@@ -11,9 +11,11 @@ class ViewComposerServiceProvider extends ServiceProvider{
     
     public function boot(){
 
-        
+        /** VIEW COMPOSERS  **/
+
+
         // USERMENU
-        View::composer('*', 'App\Swep\ViewComposers\UserMenuComposer');
+        View::composer('layouts.admin-sidenav', 'App\Swep\ViewComposers\UserMenuComposer');
 
 
         // MENU
@@ -42,13 +44,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.index',
                         'dashboard.disbursement_voucher.save_as',
                         'dashboard.disbursement_voucher.user_index'], 'App\Swep\ViewComposers\FundSourceComposer');
-
-
-        // Disbursement Voucher
-        View::composer(['dashboard.disbursement_voucher.create', 
-                        'dashboard.disbursement_voucher.edit', 
-                        'dashboard.disbursement_voucher.save_as',
-                        'printables.disbursement_voucher'], 'App\Swep\ViewComposers\DisbursementVoucherComposer');
+        
 
 
         // DEPARTMENT
@@ -95,14 +91,22 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // EMPLOYEES
         View::composer(['dashboard.user.sync_employee',], 'App\Swep\ViewComposers\EmployeeComposer');
 
+
+
         
     }
 
     
+
+
+
+
     
     public function register(){
 
       
+
+
     
     }
 

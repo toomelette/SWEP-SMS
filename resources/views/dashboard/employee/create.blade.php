@@ -1,19 +1,3 @@
-@php
-    $civil_status = [
-      'SINGLE' => 'SINGLE', 'MARRIED' => 'MARRIED', 'WIDOWED' => 'WIDOWED', 'SEPERATED' => 'SEPERATED', 'OTHERS' => 'OTHERS', 
-    ];
-
-    $level = [
-      'ELEMENTARY' => 'ELEMENTARY', 'SECONDARY' => 'SECONDARY', 'VOCATIONAL/TRADE COURSE' => 'VOCATIONAL/TRADE COURSE', 'COLLEGE' => 'COLLEGE', 'GRADUATE STUDIES' => 'GRADUATE STUDIES',
-    ];
-
-    $is_gov_service = [
-      'YES' => 'true', 'No' => 'false',
-    ];
-@endphp
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -107,7 +91,7 @@
                         
 
                         {!! FormHelper::select_static(
-                          '3', 'civil_status', 'Civil Status *', old('civil_status'), $civil_status, $errors->has('civil_status'), $errors->first('civil_status'), '', ''
+                          '3', 'civil_status', 'Civil Status *', old('civil_status'), StaticHelper::civil_status(), $errors->has('civil_status'), $errors->first('civil_status'), '', ''
                         ) !!}
 
                         {!! FormHelper::textbox(
@@ -673,7 +657,7 @@
 
                                   <td>
                                     {!! FormHelper::select_static_for_dt(
-                                      'row_eb['. $key .'][level]', $level, $value['level'], $errors->first('row_eb.'. $key .'.level')
+                                      'row_eb['. $key .'][level]', StaticHelper::educ_level(), $value['level'], $errors->first('row_eb.'. $key .'.level')
                                     ) !!}
                                   </td>
 
@@ -732,7 +716,7 @@
                               <tr>
 
                                 <td>
-                                  {!! FormHelper::select_static_for_dt('row_eb[0][level]', $level, 'ELEMENTARY', '') !!}
+                                  {!! FormHelper::select_static_for_dt('row_eb[0][level]', StaticHelper::educ_level(), 'ELEMENTARY', '') !!}
                                 </td>
 
                                 <td>
@@ -769,7 +753,7 @@
                               <tr>
 
                                 <td>
-                                  {!! FormHelper::select_static_for_dt('row_eb[1][level]', $level, 'SECONDARY', '') !!}
+                                  {!! FormHelper::select_static_for_dt('row_eb[1][level]', StaticHelper::educ_level(), 'SECONDARY', '') !!}
                                 </td>
 
                                 <td>
@@ -806,7 +790,7 @@
                               <tr>
 
                                 <td>
-                                  {!! FormHelper::select_static_for_dt('row_eb[2][level]', $level, 'VOCATIONAL/TRADE COURSE', '') !!}
+                                  {!! FormHelper::select_static_for_dt('row_eb[2][level]', StaticHelper::educ_level(), 'VOCATIONAL/TRADE COURSE', '') !!}
                                 </td>
 
                                 <td>
@@ -843,7 +827,7 @@
                               <tr>
 
                                 <td>
-                                  {!! FormHelper::select_static_for_dt('row_eb[3][level]', $level, 'COLLEGE', '') !!}
+                                  {!! FormHelper::select_static_for_dt('row_eb[3][level]', StaticHelper::educ_level(), 'COLLEGE', '') !!}
                                 </td>
 
                                 <td>
@@ -880,7 +864,7 @@
                               <tr>
 
                                 <td>
-                                  {!! FormHelper::select_static_for_dt('row_eb[4][level]', $level, 'GRADUATE STUDIES', '') !!}
+                                  {!! FormHelper::select_static_for_dt('row_eb[4][level]', StaticHelper::educ_level(), 'GRADUATE STUDIES', '') !!}
                                 </td>
 
                                 <td>
@@ -1161,7 +1145,7 @@
 
                                   <td>
                                     {!! FormHelper::select_static_for_dt(
-                                      'row_we['. $key .'][is_gov_service]', $is_gov_service, $value['is_gov_service'], $errors->first('row_we.'. $key .'.is_gov_service')
+                                      'row_we['. $key .'][is_gov_service]', ['YES' => 'true', 'NO' => 'false'], $value['is_gov_service'], $errors->first('row_we.'. $key .'.is_gov_service')
                                     ) !!}
                                   </td>
 
@@ -1214,7 +1198,7 @@
 
 
                                 <td>
-                                  {!! FormHelper::select_static_for_dt('row_we[0][is_gov_service]', $is_gov_service, '', '') !!}
+                                  {!! FormHelper::select_static_for_dt('row_we[0][is_gov_service]', ['YES' => 'true', 'NO' => 'false'], '', '') !!}
                                 </td>
 
 
@@ -2043,7 +2027,7 @@
                       '<div class="form-group">' +
                         '<select name="row_eb[' + i + '][level]" class="form-control">' +
                           '<option value="">Select</option>' +
-                          '@foreach($level as $name => $value)' +
+                          '@foreach(StaticHelper::educ_level() as $name => $value)' +
                             '<option value="{{ $value }}">{{ $name }}</option>' +
                           '@endforeach' +
                         '</select>' +

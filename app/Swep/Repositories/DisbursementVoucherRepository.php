@@ -198,7 +198,9 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
     public function findBySlug($slug){
 
         $disbursement_voucher = $this->cache->remember('disbursement_vouchers:bySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->where('slug', $slug)->first();
+            return $this->disbursement_voucher->where('slug', $slug)
+                                              ->with('project', 'fundSource')
+                                              ->first();
         });
         
         return $disbursement_voucher;
@@ -332,22 +334,6 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         
         return $id;
         
-    }
-
-
-
-
-
-
-
-    public function getModeOfPayment(){
-
-        $mop = $this->cache->remember('disbursement_vouchers:static:mode_of_payments', 240, function(){
-            return $this->disbursement_voucher->mode_of_payment_col;
-        });
-        
-        return $mop;
-
     }
 
 

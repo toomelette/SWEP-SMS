@@ -34,7 +34,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function fetchAll($request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -54,7 +53,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function fetchByUser($request){
 
         $key = str_slug($request->fullUrl(), '_');
@@ -67,7 +65,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         return $leave_applications;
 
     }
-
 
 
 
@@ -125,7 +122,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function update($request, $slug){
 
         $leave_application = $this->findBySlug($slug);
@@ -165,7 +161,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function destroy($slug){
 
         $leave_application = $this->findBySlug($slug);
@@ -181,7 +176,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function findBySlug($slug){
 
         $leave_application = $this->cache->remember('leave_applications:bySlug:' . $slug, 240, function() use ($slug){
@@ -191,7 +185,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         return $leave_application;
 
     }
-
 
 
 
@@ -228,7 +221,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function search($model, $key){
 
         $model->where(function ($model) use ($key) {
@@ -248,16 +240,15 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-
     public function populate($model){
 
         return $model->select('user_id', 'firstname', 'middlename', 'lastname', 'type', 'date_of_filing', 'slug')
                      ->sortable()
+                     ->with('user')
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
 
     }
-
 
 
 
@@ -273,7 +264,6 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
                      ->paginate(10);
 
     }
-
 
 
 
@@ -298,6 +288,8 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
         return $id;
         
     }
+
+
 
 
 

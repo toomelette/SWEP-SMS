@@ -21,15 +21,8 @@ class User extends Authenticatable{
 
     public $timestamps = false;
 
+    protected $hidden = ['password', 'remember_token',];
 
-
-
-
-    protected $hidden = [
-
-        'password', 'remember_token',
-
-    ];
 
 
 

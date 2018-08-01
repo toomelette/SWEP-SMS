@@ -8,8 +8,6 @@
                         'order' => Request::get('order'),
                       ];
 
-  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
-
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
 @endphp
 
@@ -37,7 +35,7 @@
 
       <div class="col-md-12">
           
-        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), $types, 'submit_la_filter', '') !!}
+        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), StaticHelper::leave_types(), 'submit_la_filter', '') !!}
 
       </div>
 
@@ -83,7 +81,7 @@
               <td>{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) !!}</td>
               <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
               <td>
-                @foreach($types as $name => $key)
+                @foreach(StaticHelper::leave_types() as $name => $key)
                   @if($key == $data->type)
                     {{ $name }}
                   @endif

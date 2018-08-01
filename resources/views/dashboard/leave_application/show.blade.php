@@ -1,5 +1,4 @@
 @php
-  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
   $inclusive_dates = Carbon::parse($leave_application->working_days_from)->format('M d, Y') .' - '. Carbon::parse($leave_application->working_days_to)->format('M d, Y');
 @endphp
 
@@ -62,7 +61,7 @@
                 <dd>{{ number_format($leave_application->salary, 2) }}</dd>
                 <dt>Type of Leave:</dt>
                 <dd>
-                  @foreach($types as $name => $key)
+                  @foreach(StaticHelper::leave_types() as $name => $key)
                     @if($key ==  $leave_application->type)
                       {{ $name }}
                     @endif

@@ -21,7 +21,5 @@ interface DisbursementVoucherInterface {
 	public function confirmCheck($model);
 
 	public function findBySlug($slug);
-
-	public function getModeOfPayment();
 		
 }

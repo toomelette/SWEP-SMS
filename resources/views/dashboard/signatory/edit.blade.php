@@ -36,7 +36,7 @@
             '4', 'employee_position', 'text', 'Position *', 'Position', old('employee_position') ? old('employee_position') : $signatory->employee_position, $errors->has('employee_position'), $errors->first('employee_position'), ''
           ) !!}
 
-          {!! FormHelper::select_static('4', 'type', 'Type *', old('type') ? old('type') : $signatory->type, $global_static_signatory_types, $errors->has('type'), $errors->first('type'), '', '') !!} 
+          {!! FormHelper::select_static('4', 'type', 'Type *', old('type') ? old('type') : $signatory->type, StaticHelper::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') !!} 
 
         </div>
 

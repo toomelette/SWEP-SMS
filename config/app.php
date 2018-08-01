@@ -225,6 +225,7 @@ return [
         'SanitizeHelper' => App\Swep\Helpers\SanitizeHelper::class,
         'DataTypeHelper' => App\Swep\Helpers\DataTypeHelper::class, 
         'PrintHelper' => App\Swep\Helpers\PrintHelper::class, 
+        'StaticHelper' => App\Swep\Helpers\StaticHelper::class, 
     ],
 
 ];

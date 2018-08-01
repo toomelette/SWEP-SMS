@@ -28,13 +28,8 @@ class SignatoryComposer{
     public function compose($view){
 
         $signatories = $this->signatory_repo->globalFetchAll();
-
-        $signatory_types = $this->signatory_repo->globalStaticTypes();
         
-    	$view->with([
-    		'global_signatories_all' => $signatories,
-    		'global_static_signatory_types' => $signatory_types,
-    	]);
+    	$view->with('global_signatories_all', $signatories);
 
     }
 

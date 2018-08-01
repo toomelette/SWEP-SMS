@@ -1,10 +1,3 @@
-@php
-  $boolean_array = ['1' => 'true', '0' => 'false'];
-@endphp
-
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -51,11 +44,11 @@
             <div class="col-md-12"></div>
             
             {!! FormHelper::select_static(
-              '4', 'is_menu', 'Is Menu *', old('is_menu'), $boolean_array, $errors->has('is_menu'), $errors->first('is_menu'), '', ''
+              '4', 'is_menu', 'Is Menu *', old('is_menu'), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}
             
             {!! FormHelper::select_static(
-              '4', 'is_dropdown', 'Is Dropdown *', old('is_dropdown'), $boolean_array, $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
+              '4', 'is_dropdown', 'Is Dropdown *', old('is_dropdown'), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
             ) !!}
 
           </div>

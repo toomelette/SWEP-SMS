@@ -8,7 +8,6 @@
                         'order' => Request::get('order'),
                       ];
 
-  $types = ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004',]
 @endphp
 
 
@@ -35,7 +34,7 @@
 
       <div class="col-md-12">
           
-        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), $types, 'submit_la_filter', '') !!}
+        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), StaticHelper::leave_types(), 'submit_la_filter', '') !!}
 
       </div>
 
