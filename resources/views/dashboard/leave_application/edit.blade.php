@@ -166,7 +166,7 @@
               
             <h4>COMMUTATION:</h4>  
 
-            {!! FormHelper::select_static('3', 'commutation', 'Commutation *', old('commutation') ? old('commutation') : $leave_application->commutation, StaticHelper::commutation_types(), $errors->has('commutation'), $errors->first('commutation'), '', '') !!}
+            {!! FormHelper::select_static('3', 'commutation', 'Commutation *', old('commutation') ? old('commutation') : DataTypeHelper::boolean_to_string($leave_application->commutation), StaticHelper::commutation_types(), $errors->has('commutation'), $errors->first('commutation'), '', '') !!}
 
           </div>
 
@@ -175,7 +175,7 @@
         </div>
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-default">Save</button>
+          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
         </div>
 
       </form>

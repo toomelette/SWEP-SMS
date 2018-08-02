@@ -42,7 +42,7 @@
         </div>
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-success">Sync</button>
+          <button type="submit" class="btn btn-success">Sync <i class="fa fa-fw fa-exchange"></i></button>
         </div>
 
       </form>

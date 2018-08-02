@@ -167,7 +167,7 @@
         </div>
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-default">Save</button>
+          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
         </div>
 
       </form>

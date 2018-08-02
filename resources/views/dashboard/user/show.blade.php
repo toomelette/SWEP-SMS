@@ -111,13 +111,13 @@
 
               @foreach($user->userMenu as $user_menu_data)
 
-                @if($user_menu_data->getFetchUserSubmenu()->isEmpty())
+                @if($user_menu_data->userSubmenu->isEmpty())
                   <li><b>{{ $user_menu_data->name }}</b></li>
                 @else
 
                 <li><b>{{ $user_menu_data->name }}</b>
                   <ul>
-                    @foreach($user_menu_data->getFetchUserSubmenu() as $user_submenu_data )
+                    @foreach($user_menu_data->userSubmenu as $user_submenu_data )
                       <li>{{ $user_submenu_data->name }}</li>
                     @endforeach
                   </ul>

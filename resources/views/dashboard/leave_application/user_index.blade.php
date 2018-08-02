@@ -76,7 +76,7 @@
           @foreach($leave_applications as $data) 
             <tr>
               <td>
-                @foreach($types as $name => $key)
+                @foreach(StaticHelper::leave_types() as $name => $key)
                   @if($key == $data->type)
                     {{ $name }}
                   @endif

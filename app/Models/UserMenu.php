@@ -31,7 +31,7 @@ class UserMenu extends Model{
 
 
 
-    public function userSubMenu() {
+    public function userSubmenu() {
     	return $this->hasMany('App\Models\UserSubmenu','user_menu_id','user_menu_id');
    	}
 

@@ -105,7 +105,7 @@
           </div>
 
           <div class="box-footer">
-            <button type="submit" class="btn btn-default">Save</button>
+          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
           </div>
 
         </form>
@@ -285,7 +285,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
         </div>
         </form>
       </div>

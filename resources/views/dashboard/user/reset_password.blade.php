@@ -48,7 +48,7 @@
       </form>
 
       <div class="box-footer">
-        <button class="btn btn-success" id="reset_button">Reset</button>
+          <button class="btn btn-success" id="reset_button">Reset <i class="fa fa-fw fa-refresh"></i></button>
       </div>
 
     </div>
