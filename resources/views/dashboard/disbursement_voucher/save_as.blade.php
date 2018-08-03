@@ -59,7 +59,7 @@
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '2', 'department_name', 'Department *', old('department_name') ? old('department_name') : $disbursement_voucher->department_name, $global_departments_all, 'name', 'name', $errors->has('department_name'), $errors->first('department_name'), 'select2', ''
+            '2', 'department_name', 'Department', old('department_name') ? old('department_name') : $disbursement_voucher->department_name, $global_departments_all, 'name', 'name', $errors->has('department_name'), $errors->first('department_name'), 'select2', ''
           ) !!}
 
           {!! FormHelper::select_dynamic(

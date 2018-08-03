@@ -28,7 +28,7 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'tin'=>'nullable|string|max:20',
             'bur_no'=>'nullable|string|max:20',
             'address'=>'string|max:255',
-            'department_name'=>'required|string|max:45',
+            'department_name'=>'nullable|string|max:45',
             'department_unit_name'=>'nullable|string|max:45',
             'project_code'=>'required|string|max:45',
             'explanation'=>'required',
