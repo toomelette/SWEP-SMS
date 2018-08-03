@@ -85,6 +85,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/employee/training/print/{slug}', 'EmployeeController@trainingPrint')->name('employee.training_print');
 
 	Route::resource('employee', 'EmployeeController');
+
+	/** MEMOS **/
+	Route::resource('memo', 'MemoController');
 	
 });
 
@@ -92,7 +95,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 /** Testing **/
 
-Route::get('/dashboard/test', function(){
+//Route::get('/dashboard/test', function(){
 
 	//return dd(Illuminate\Support\Str::random(16));
 
@@ -104,4 +107,4 @@ Route::get('/dashboard/test', function(){
 	// 	$tr->save();
 	// }
 
-});
+//});

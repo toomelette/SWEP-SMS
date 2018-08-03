@@ -47,6 +47,8 @@ class UserMenuComposer{
 
             $user_menus_hr = $this->user_menu_repo->globalFetchByCategory('HR');
 
+            $user_menus_records = $this->user_menu_repo->globalFetchByCategory('RECORDS');
+
         }  
 
 
@@ -55,6 +57,7 @@ class UserMenuComposer{
             'global_user_menus_acctg' => $user_menus_acctg, 
             'global_user_menus_hr' => $user_menus_hr, 
             'global_user_menus_su' => $user_menus_su,
+            'global_user_menus_records' => $user_menus_records,
         ]);
 
 

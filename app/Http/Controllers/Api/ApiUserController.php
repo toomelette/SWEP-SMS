@@ -21,7 +21,7 @@ class ApiUserController extends Controller{
 
 
 
-	public function __construct(EmployeeInterface_repo $employee_repo){
+	public function __construct(EmployeeInterface $employee_repo){
 
 		$this->employee_repo = $employee_repo;
 
