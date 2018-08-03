@@ -20,7 +20,7 @@
 
 
       {{-- User --}}
-      @if(!empty($global_user_menus_u))
+      @if(!$global_user_menus_u->isEmpty())
 
           <li class="header">Navigation</li>
           @foreach($global_user_menus_u as $user_menu)
@@ -75,7 +75,7 @@
 
 
         {{-- SU --}}
-        @if(!empty($global_user_menus_su))
+        @if(!$global_user_menus_su->isEmpty())
 
           <li class="header">SU</li>
           @foreach($global_user_menus_su as $user_menu)
@@ -130,7 +130,7 @@
 
 
         {{-- ACCOUNTING --}}
-        @if(!empty($global_user_menus_acctg))
+        @if(!$global_user_menus_acctg->isEmpty())
 
           <li class="header">ACCOUNTING</li>
           @foreach($global_user_menus_acctg as $user_menu)
@@ -186,7 +186,7 @@
 
 
         {{-- HR --}}
-        @if(!empty($global_user_menus_hr))
+        @if(!$global_user_menus_hr->isEmpty())
 
           <li class="header">HUMAN RESOURCE</li>
           @foreach($global_user_menus_hr as $user_menu)
@@ -242,9 +242,9 @@
 
 
         {{-- RECORDS --}}
-        @if(!empty($global_user_menus_records))
+        @if(!$global_user_menus_records->isEmpty())
 
-          <li class="header">RECORDS</li>
+          <li class="header">RECORDS {{  var_dump($global_user_menus_records) }} </li>
           @foreach($global_user_menus_records as $user_menu)
 
             @if($user_menu->is_menu == true)
