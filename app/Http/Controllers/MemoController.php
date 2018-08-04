@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Swep\Services\MemoService;
 use App\Http\Requests\MemoFormRequest;
 use App\Http\Requests\MemoFilterRequest;

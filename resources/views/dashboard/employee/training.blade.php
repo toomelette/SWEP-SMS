@@ -23,7 +23,7 @@
     <div class="col-md-6">
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Form</h3>
+          <h3 class="box-title">Create Form</h3>
           <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
           </div> 

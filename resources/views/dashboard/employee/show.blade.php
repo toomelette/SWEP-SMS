@@ -208,7 +208,7 @@
 
                 </table>
 
-                @if(count($employee->employeeChildren) == 0)
+                @if($employee->employeeChildren->isEmpty())
                   <div style="padding :5px;">
                     <center><h4>No Records found!</h4></center>
                   </div>
@@ -250,7 +250,7 @@
 
               </table>
 
-              @if(count($employee->employeeEducationalBackground) == 0)
+              @if($employee->employeeEducationalBackground->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -301,7 +301,7 @@
 
               </table>
 
-              @if(count($employee->employeeTraining) == 0)
+              @if($employee->employeeTraining->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -340,7 +340,7 @@
 
               </table>
 
-              @if(count($employee->employeeEligibility) == 0)
+              @if($employee->employeeEligibility->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -379,7 +379,7 @@
 
               </table>
 
-              @if(count($employee->employeeExperience) == 0)
+              @if($employee->employeeExperience->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -417,7 +417,7 @@
 
               </table>
 
-              @if(count($employee->employeeVoluntaryWork) == 0)
+              @if($employee->employeeVoluntaryWork->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -452,7 +452,7 @@
 
               </table>
 
-              @if(count($employee->employeeRecognition) == 0)
+              @if($employee->employeeRecognition->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -486,7 +486,7 @@
 
               </table>
 
-              @if(count($employee->employeeOrganization) == 0)
+              @if($employee->employeeOrganization->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -521,7 +521,7 @@
 
               </table>
 
-              @if(count($employee->employeeSpecialSkill) == 0)
+              @if($employee->employeeSpecialSkill->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>
@@ -560,7 +560,7 @@
 
               </table>
 
-              @if(count($employee->employeeReference) == 0)
+              @if($employee->employeeReference->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>

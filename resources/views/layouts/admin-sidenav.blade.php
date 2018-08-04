@@ -244,7 +244,7 @@
         {{-- RECORDS --}}
         @if(!$global_user_menus_records->isEmpty())
 
-          <li class="header">RECORDS {{  var_dump($global_user_menus_records) }} </li>
+          <li class="header">RECORDS</li>
           @foreach($global_user_menus_records as $user_menu)
 
             @if($user_menu->is_menu == true)

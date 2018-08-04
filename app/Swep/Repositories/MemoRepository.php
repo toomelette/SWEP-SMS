@@ -166,7 +166,7 @@ class MemoRepository extends BaseRepository implements MemoInterface {
 
     public function populate($model){
 
-        return $model->select('slug', 'reference_no', 'date', 'subject', 'remarks')
+        return $model->select('slug', 'reference_no', 'date', 'subject', 'person_to', 'person_from')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);

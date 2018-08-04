@@ -13,7 +13,7 @@ class StaticHelper{
     public static function dv_mode_of_payment(){
 
         return ['CASH' => 'CASH', 'CHECK' => 'CHECK', 'OTHERS' => 'OTHERS'];
-    
+        
     }
 
 

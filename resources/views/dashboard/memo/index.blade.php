@@ -52,16 +52,18 @@
           <tr>
             <th>@sortablelink('reference_no', 'Ref No')</th>
             <th>@sortablelink('subject', 'Subject')</th>
+            <th>@sortablelink('person_to', 'To')</th>
+            <th>@sortablelink('person_from', 'From')</th>
             <th>@sortablelink('date', 'Memo Dated')</th>
-            <th>@sortablelink('remarks', 'Remarks')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($memos as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->reference_no }}</td>
-              <td>{{ $data->subject }}</td>
+              <td>{{ Str::limit($data->subject, 30) }}</td>
+              <td>{{ Str::limit($data->person_to, 30) }}</td>
+              <td>{{ Str::limit($data->person_from, 30) }}</td>
               <td>{{ DataTypeHelper::date_parse($data->date) }}</td>
-              <td>{{ $data->remarks }}</td>
 
               <td> 
                 <select id="action" class="form-control input-md">

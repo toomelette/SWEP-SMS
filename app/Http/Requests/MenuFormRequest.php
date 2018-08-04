@@ -33,7 +33,7 @@ class MenuFormRequest extends FormRequest{
         ];
 
 
-        if(count($rows) > 0){
+        if(!empty($rows)){
 
             foreach($rows as $key => $value){
                     
@@ -50,38 +50,6 @@ class MenuFormRequest extends FormRequest{
     }
 
 
-
-
-
-    public function messages(){
-
-        $rows = $this->request->get('row');
-
-        $messages = [];
-
-        if(count($rows) > 0){
-
-            foreach($rows as $key => $value) {
-
-                $messages['row.'. $key .'.sub_name.required'] = 'Name Field is Required.';
-                $messages['row.'. $key .'.sub_name.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.sub_name.max'] = 'The Name field may not be greater than 45 characters.';
-                
-                $messages['row.'. $key .'.sub_route.required'] = 'Route Field is Required.';
-                $messages['row.'. $key .'.sub_route.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.sub_route.max'] = 'The Route field may not be greater than 45 characters.';
-
-                $messages['row.'. $key .'.sub_is_nav.required'] = 'Is Nav Field is Required.';
-                $messages['row.'. $key .'.sub_is_nav.string'] = 'Invalid Input! You must enter a string value.';
-                $messages['row.'. $key .'.sub_is_nav.max'] = 'The Is Nav field may not be greater than 5 characters.';
-
-            }
-            
-        }
-        
-        return $messages;
-
-    }
 
 
 

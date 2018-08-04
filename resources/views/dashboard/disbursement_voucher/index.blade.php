@@ -99,7 +99,7 @@
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) ; !!}</td>
+              <td>{!! empty($data->user) ? $span_user_not_exist : $data->user->fullnameShort ; !!}</td>
               <td>{{ $data->doc_no }}</td>
               <td>
                 @if($data->dv_no == null)
@@ -112,7 +112,7 @@
                   </a>
                 @endif
               </td>
-              <td>{{ $data->payee  }}</td>
+              <td>{{ Str::limit($data->payee, 30)  }}</td>
               <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)
