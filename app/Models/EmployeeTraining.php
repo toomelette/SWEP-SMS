@@ -56,6 +56,15 @@ class EmployeeTraining extends Model{
 
 
 
+    /** Scopes **/
+    public function scopePopulate($query){
+
+        return $query->orderBy('date_to', 'desc')->get();
+
+    }
+
+
+
 
 
 }

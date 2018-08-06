@@ -5,6 +5,7 @@ namespace App\Swep\Services;
 use Hash;
 use App\Swep\BaseClasses\BaseService;
 use App\Swep\Interfaces\ProfileInterface;
+use App\Swep\Interfaces\EmployeeInterface;
 
 
 class ProfileService extends BaseService{
@@ -12,12 +13,14 @@ class ProfileService extends BaseService{
 
 
     protected $profile_repo;
+    protected $employee_repo;
 
 
 
-    public function __construct(ProfileInterface $profile_repo){
+    public function __construct(ProfileInterface $profile_repo, EmployeeInterface $employee_repo){
 
         $this->profile_repo = $profile_repo;
+        $this->employee_repo = $employee_repo;
         parent::__construct();
 
     }
@@ -73,6 +76,31 @@ class ProfileService extends BaseService{
 
         $this->event->fire('profile.update_account_color', $user);
         return redirect()->back();
+
+    }
+
+
+
+
+
+
+    public function printPDS($slug, $page){
+
+        $employee = $this->employee_repo->findBySlug($slug);
+
+        if($page == 'p1'){
+            return view('printables.employee_pds_p1')->with('employee', $employee);
+        }elseif($page == 'p2'){
+            return view('printables.employee_pds_p2')->with('employee', $employee);
+        }elseif($page == 'p3'){
+            return view('printables.employee_pds_p3')->with('employee', $employee);
+        }elseif($page == 'p4'){
+            return view('printables.employee_pds_p4')->with('employee', $employee);
+        }elseif($page == 'p5'){
+            return view('printables.employee_pds_p5')->with('employee', $employee);
+        }
+
+        return abort(404);
 
     }
 

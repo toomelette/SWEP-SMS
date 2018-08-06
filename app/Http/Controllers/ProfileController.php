@@ -61,5 +61,16 @@ class ProfileController extends Controller{
     }
 
 
+    
+
+    public function printPds($slug, $page){
+
+        return $this->profile_service->printPds($slug, $page);
+        
+    }
+
+
+
+
 
 }

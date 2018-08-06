@@ -1,3 +1,16 @@
+@php
+  $gtChildren = count(Auth::user()->employee->employeeChildren) > 11;
+  $gtEligibility = count(Auth::user()->employee->employeeEligibility) > 10;
+  $gtExperience = count(Auth::user()->employee->employeeExperience) > 25;
+  $gtVoluntaryWork = count(Auth::user()->employee->employeeVoluntaryWork) > 7;
+  $gtTraining = count(Auth::user()->employee->employeeTraining) > 20;
+  $gtSpecialSkill = count(Auth::user()->employee->employeeSpecialSkill) > 7;
+  $gtRecognition = count(Auth::user()->employee->employeeRecognition) > 7;
+  $gtOrganization = count(Auth::user()->employee->employeeOrganization) > 7;
+@endphp
+
+
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -225,6 +238,41 @@
                     </div>
 
                   @else
+                    
+
+
+                    {{-- Print PDS --}}
+                    <div class="col-md-12">
+                      <div class="panel box box-default">
+                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#pds_bar">
+                          <h4 class="box-title">
+                            <span>
+                              Print your Personal Data Sheet
+                            </span>
+                          </h4>
+                        </div>
+                        <div id="pds_bar" class="panel-collapse collapse">
+                          <div class="box-body">
+
+                            {!! HtmlHelper::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'Before you print your PDS, please be reminded to set the <b>LAYOUT</b> to <b>PORTRAIT</b>, <b>PAPER SIZE</b> to <b>LEGAL</b>, and <b>SCALE</b> to <b>100%</b>.') !!} 
+
+                            <a href="{{ route('dashboard.profile.print_pds', [ Auth::user()->employee->slug, 'p1' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 1</a>&nbsp;
+                            <a href="{{ route('dashboard.profile.print_pds', [ Auth::user()->employee->slug, 'p2' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 2</a>&nbsp;
+                            <a href="{{ route('dashboard.profile.print_pds', [ Auth::user()->employee->slug, 'p3' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 3</a>&nbsp;
+                            <a href="{{ route('dashboard.profile.print_pds', [ Auth::user()->employee->slug, 'p4' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 4</a>&nbsp;
+
+                            @if($gtChildren || $gtEligibility || $gtExperience || $gtVoluntaryWork || $gtTraining || $gtSpecialSkill || $gtRecognition || $gtOrganization)
+                              <a href="{{ route('dashboard.profile.print_pds', [ Auth::user()->employee->slug, 'p5' ]) }}" target="_blank" class="btn btn-sm btn-default">
+                                <i class="fa fa-print"></i> Print PDS Extra Page
+                              </a>&nbsp;
+                            @endif
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
 
 
 
