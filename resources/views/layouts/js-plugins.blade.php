@@ -26,3 +26,13 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 
+
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/js/plugins/sortable.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/js/fileinput.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/js/locales/fr.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/js/locales/es.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/themes/explorer-fa/theme.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/popper.min.js') }}"></script>
+
+
+

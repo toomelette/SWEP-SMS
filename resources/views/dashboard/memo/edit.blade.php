@@ -32,7 +32,7 @@
           ) !!} 
 
           {!! FormHelper::datepicker(
-            '3', 'date',  'Memo Dated', old('date') ? old('date') : DataTypeHelper::date_parse($memo->date), $errors->has('date'), $errors->first('date')
+            '3', 'date',  'Memo Dated *', old('date') ? old('date') : DataTypeHelper::date_parse($memo->date), $errors->has('date'), $errors->first('date')
           ) !!}
 
           {!! FormHelper::textbox(
@@ -54,7 +54,7 @@
           ) !!} 
 
           {!! FormHelper::textbox(
-             '6', 'remarks', 'text', 'Remarks', 'From', old('remarks') ? old('remarks') : $memo->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
+             '6', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks') ? old('remarks') : $memo->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  
 
         </div>

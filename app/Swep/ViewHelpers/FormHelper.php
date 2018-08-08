@@ -12,7 +12,6 @@ class FormHelper{
 
 
     /** Default **/
-
     public static function textbox($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
@@ -98,10 +97,22 @@ class FormHelper{
 
 
 
+    public static function file($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr){
+
+       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+                <label for="'. $key .'">'. $label .'</label>
+                <div class="file-loading">
+                  <input class="file" name="'. $key .'" id="'. $key .'" value="'. self::string_value($old_value) .'" type="file" '. $extra_attr .'>
+                </div>
+                '. self::error_message($error_has, $error_first) .'
+              </div>';
+
+    }
+
+
 
 
     /** Inlines **/
-
     public static function textbox_inline($key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group '. self::error_response($error_has) .'">

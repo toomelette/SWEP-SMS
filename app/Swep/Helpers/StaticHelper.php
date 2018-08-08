@@ -147,6 +147,17 @@ class StaticHelper{
 
 
 
+    // File Directories
+    public static function archive_dir(){
+
+        return 'E:\XAMPP\htdocs\swep_document_storage';
+    
+    }
+
+
+
+
+
 
 
 

@@ -88,9 +88,6 @@ $(document).on("click","#delete_row" ,function(e) {
 
 
 
-
-
-
 // PJAX Form Caller
 $(document).on('submit', 'form[data-pjax]', function(event) {
     $.pjax.submit(event, '#pjax-container');

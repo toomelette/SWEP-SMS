@@ -17,40 +17,42 @@
         </div> 
       </div>
       
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.memo.store') }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.memo.store') }}" enctype="multipart/form-data">
 
         <div class="box-body">
      
-          @csrf    
+          @csrf
+
+          {!! FormHelper::file(
+             '4', 'doc_file', 'Upload File *', old('doc_file'), $errors->has('doc_file'), $errors->first('doc_file'), ''
+          ) !!} 
 
           {!! FormHelper::textbox(
-             '3', 'reference_no', 'text', 'Reference No. *', 'Reference No.', old('reference_no'), $errors->has('reference_no'), $errors->first('reference_no'), ''
+             '4', 'reference_no', 'text', 'Reference No. *', 'Reference No.', old('reference_no'), $errors->has('reference_no'), $errors->first('reference_no'), ''
           ) !!} 
 
           {!! FormHelper::datepicker(
-            '3', 'date',  'Memo Dated', old('date'), $errors->has('date'), $errors->first('date')
+            '4', 'date',  'Memo Dated *', old('date'), $errors->has('date'), $errors->first('date')
           ) !!}
 
           {!! FormHelper::textbox(
-             '6', 'person_to', 'text', 'To *', 'To', old('person_to'), $errors->has('person_to'), $errors->first('person_to'), ''
+             '4', 'person_to', 'text', 'To *', 'To', old('person_to'), $errors->has('person_to'), $errors->first('person_to'), ''
           ) !!} 
 
-          <div class="col-md-12"></div>
-
           {!! FormHelper::textbox(
-             '6', 'person_from', 'text', 'From *', 'From', old('person_from'), $errors->has('person_from'), $errors->first('person_from'), ''
+             '4', 'person_from', 'text', 'From *', 'From', old('person_from'), $errors->has('person_from'), $errors->first('person_from'), ''
           ) !!}
 
           {!! FormHelper::textbox(
-             '6', 'type', 'text', 'Type *', 'Type', old('type'), $errors->has('type'), $errors->first('type'), ''
+             '4', 'type', 'text', 'Type *', 'Type', old('type'), $errors->has('type'), $errors->first('type'), ''
           ) !!} 
           
           {!! FormHelper::textbox(
-             '6', 'subject', 'text', 'Subject *', 'Subject', old('subject'), $errors->has('subject'), $errors->first('subject'), ''
+             '4', 'subject', 'text', 'Subject *', 'Subject', old('subject'), $errors->has('subject'), $errors->first('subject'), ''
           ) !!} 
 
           {!! FormHelper::textbox(
-             '6', 'remarks', 'text', 'Remarks', 'From', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
+             '8', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  
 
         </div>
@@ -94,6 +96,8 @@
     @if(Session::has('MEMO_CREATE_SUCCESS'))
       $('#memo_create').modal('show');
     @endif
+
+    {!! JSHelper::file_upload('doc_file', 'fa', ['pdf', 'ss']) !!}
 
   </script> 
     

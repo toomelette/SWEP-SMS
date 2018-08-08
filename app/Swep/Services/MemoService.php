@@ -7,6 +7,8 @@ use App\Swep\Interfaces\MemoInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
+
+
 class MemoService extends BaseService{
 
 
@@ -40,6 +42,13 @@ class MemoService extends BaseService{
 
 
     public function store($request){
+
+
+        $file_name = $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
+
+        $request->file('doc_file')->move($this->staticHelper->archive_dir(), $file_name);
+
+        dd($request->file('doc_file'));
 
         $memo = $this->memo_repo->store($request);
         

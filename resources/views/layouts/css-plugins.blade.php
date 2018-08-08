@@ -22,3 +22,7 @@
 <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
 
 
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-fileinput/css/fileinput.min.css') }}">
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-fileinput/themes/explorer-fa/theme.css') }}">
+
+

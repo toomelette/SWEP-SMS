@@ -144,4 +144,24 @@ class JSHelper{
 
 
 
+
+
+    public static function file_upload($id, $theme, $file_ext){
+
+      return '$("#'. $id .'").fileinput({
+		        theme: "'. $theme .'",
+		        allowedFileExtensions: ["'. implode('","', $file_ext) .'"],
+		        showUpload: false,
+		        showCaption: false,
+		        browseClass: "btn btn-primary btn-md",
+		      });';
+
+    }
+
+
+
+
+
+
+
 }
