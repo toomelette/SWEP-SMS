@@ -5,7 +5,7 @@
 <section class="content-header">
     <h1>Update User</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.user.index']) !!}
+      {!! HtmlHelper::back_button(['dashboard.user.index', 'dashboard.user.show']) !!}
     </div>
 </section>
 

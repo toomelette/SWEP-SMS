@@ -24,29 +24,29 @@
           @csrf    
 
           {!! FormHelper::textbox(
-             '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
+             '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : optional(Auth::user()->employee)->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::textbox(
-             '4', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
+             '4', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname') ? old('firstname') : optional(Auth::user()->employee)->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
           ) !!}
 
           {!! FormHelper::textbox(
-             '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
+             '4', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : optional(Auth::user()->employee)->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
           ) !!} 
 
           <div class="col-md-12"></div>
 
           {!! FormHelper::datepicker(
-            '4', 'date_of_filing',  'Date of Filing *', old('date_of_filing'), $errors->has('date_of_filing'), $errors->first('date_of_filing')
+            '4', 'date_of_filing',  'Date of Filing *', old('date_of_filing') ? old('date_of_filing') : Carbon::now()->format('m/d/Y'), $errors->has('date_of_filing'), $errors->first('date_of_filing')
           ) !!}
           
           {!! FormHelper::textbox(
-             '4', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
+             '4', 'position', 'text', 'Position *', 'Position', old('position') ? old('position') : optional(Auth::user()->employee)->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
           ) !!} 
 
           {!! FormHelper::textbox_numeric(
-            '4', 'salary', 'text', 'Salary (Monthly) *', 'Salary', old('salary'), $errors->has('salary'), $errors->first('salary'), ''
+            '4', 'salary', 'text', 'Salary (Monthly) *', 'Salary', old('salary') ? old('salary') : optional(Auth::user()->employee)->monthly_basic , $errors->has('salary'), $errors->first('salary'), ''
           ) !!}
           
           <div class="col-md-12"></div>

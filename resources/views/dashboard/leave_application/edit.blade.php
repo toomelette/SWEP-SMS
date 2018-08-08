@@ -15,7 +15,10 @@
   <section class="content-header">
       <h1>Edit Leave Application</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.leave_application.index', 'dashboard.leave_application.user_index']) !!}
+        {!! HtmlHelper::back_button([
+          'dashboard.leave_application.index', 
+          'dashboard.leave_application.user_index',
+          'dashboard.leave_application.show']) !!}
       </div>
   </section>
 

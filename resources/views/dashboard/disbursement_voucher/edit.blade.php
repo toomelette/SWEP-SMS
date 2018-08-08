@@ -5,7 +5,11 @@
 <section class="content-header">
     <h1>Edit Voucher</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.disbursement_voucher.index', 'dashboard.disbursement_voucher.user_index']) !!}
+      {!! HtmlHelper::back_button([
+        'dashboard.disbursement_voucher.index', 
+        'dashboard.disbursement_voucher.user_index',
+        'dashboard.disbursement_voucher.show'
+      ]) !!}
     </div>
 </section>
 
