@@ -36,25 +36,25 @@
           ) !!}
 
           {!! FormHelper::textbox(
-             '6', 'subject', 'text', 'Subject *', 'Subject', old('subject') ? old('subject') : $memo->subject, $errors->has('subject'), $errors->first('subject'), ''
+             '6', 'person_to', 'text', 'To *', 'To', old('person_to') ? old('person_to') : $memo->person_to, $errors->has('person_to'), $errors->first('person_to'), ''
           ) !!} 
 
           <div class="col-md-12"></div>
-
-          {!! FormHelper::textbox(
-             '6', 'person_to', 'text', 'To *', 'To', old('person_to') ? old('person_to') : $memo->person_to, $errors->has('person_to'), $errors->first('person_to'), ''
-          ) !!} 
 
           {!! FormHelper::textbox(
              '6', 'person_from', 'text', 'From *', 'From', old('person_from') ? old('person_from') : $memo->person_from, $errors->has('person_from'), $errors->first('person_from'), ''
           ) !!}
 
           {!! FormHelper::textbox(
-             '3', 'type', 'text', 'Type *', 'Type', old('type') ? old('type') : $memo->type, $errors->has('type'), $errors->first('type'), ''
+             '6', 'type', 'text', 'Type *', 'Type', old('type') ? old('type') : $memo->type, $errors->has('type'), $errors->first('type'), ''
+          ) !!} 
+          
+          {!! FormHelper::textbox(
+             '6', 'subject', 'text', 'Subject *', 'Subject', old('subject') ? old('subject') : $memo->subject, $errors->has('subject'), $errors->first('subject'), ''
           ) !!} 
 
           {!! FormHelper::textbox(
-             '3', 'remarks', 'text', 'Remarks', 'From', old('remarks') ? old('remarks') : $memo->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
+             '6', 'remarks', 'text', 'Remarks', 'From', old('remarks') ? old('remarks') : $memo->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  
 
         </div>
