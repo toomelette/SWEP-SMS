@@ -59,7 +59,7 @@
             <div class="box box-solid">
               <div class="box-header with-border">
                 <h3 class="box-title">Submenu</h3>
-                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
               </div>
               
               <div class="box-body no-padding">
@@ -117,42 +117,6 @@
                         </tr>
 
                       @endforeach
-
-                    @else
-
-                      <tr>
-
-                        <td>
-                          <div class="form-group">
-                            <input type="text" name="row[0][sub_name]" class="form-control" placeholder="Name">
-                          </div>
-                        </td>
-
-
-                        <td>
-                          <div class="form-group">
-                            <input type="text" name="row[0][sub_route]" class="form-control" placeholder="Route">
-                          </div>
-                        </td>
-
-
-                        <td>
-                          <div class="form-group">
-                            <select name="row[0][sub_is_nav]" class="form-control">
-                              <option value="">Select</option>
-                                <option value="true">1</option>
-                                <option value="false">0</option>
-                            </select>
-                          </div>
-                        </td>
-
-
-                        <td>
-                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                        </td>
-
-                      </tr>
-
 
                     @endif
 

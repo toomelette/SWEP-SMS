@@ -397,7 +397,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Children</h3>
-                        <button id="children_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="children_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -650,7 +650,7 @@
 
                       <div class="box-header with-border">
                         <h3 class="box-title">Educational Background</h3>
-                        <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body">
@@ -795,7 +795,7 @@
 
                       <div class="box-header with-border">
                         <h3 class="box-title">Eligibilities</h3>
-                        <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body">
@@ -945,7 +945,7 @@
 
                       <div class="box-header with-border">
                         <h3 class="box-title">Work Experience</h3>
-                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>  
+                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>  
                       </div>
                       
                       <div class="box-body">
@@ -1128,7 +1128,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Voluntary Work</h3>
-                        <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1264,7 +1264,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Recognitions</h3>
-                        <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1337,7 +1337,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Organizations</h3>
-                        <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1408,7 +1408,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Special Skills</h3>
-                        <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1479,7 +1479,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">References</h3>
-                        <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">

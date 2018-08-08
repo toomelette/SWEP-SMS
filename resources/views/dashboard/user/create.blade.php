@@ -65,7 +65,7 @@
             <div class="box box-solid">
               <div class="box-header with-border">
                 <h3 class="box-title">User Menu</h3>
-                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
               </div>
               
               <div class="box-body no-padding">
@@ -116,34 +116,6 @@
                         </tr>
 
                       @endforeach
-
-                    @else
-
-                      <tr>
-
-                        <td style="width:450px;">
-                          <select name="menu[]" id="menu" class="form-control select2" style="width:90%;">
-                            <option value="">Select</option>
-                            @foreach($global_menus_all as $data) 
-                              <option value="{{ $data->menu_id }}">{{ $data->name }}</option>
-                            @endforeach
-                          </select>
-                        </td>
-
-                        <td>
-                          <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">
-                              <option value="">Select</option>
-                              @foreach($global_submenus_all as $data)
-                                <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
-                              @endforeach
-                          </select>
-                        </td>
-
-                        <td>
-                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                        </td>
-
-                      </tr>
 
                     @endif
 

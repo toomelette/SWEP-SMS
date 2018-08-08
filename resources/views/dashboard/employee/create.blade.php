@@ -385,7 +385,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Children</h3>
-                        <button id="children_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="children_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -425,25 +425,6 @@
                                 </tr>
 
                               @endforeach
-
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_children[0][fullname]', 'Fullname', '', '') !!}
-                                </td>
-
-                                <td> 
-                                  {!! FormHelper::datepicker_for_dt('row_children[0][date_of_birth]', '', '') !!}
-                                </td>
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
 
                             @endif
 
@@ -628,7 +609,7 @@
                       
                       <div class="box-header with-border">
                         <h3 class="box-title">Educational Background</h3>
-                        <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -918,7 +899,7 @@
                     <div class="box" style="margin-top: 30px;">
                       <div class="box-header with-border">
                         <h3 class="box-title">Eligibilities</h3>
-                        <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1001,52 +982,6 @@
 
                               @endforeach
 
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][eligibility]', 'Eligibility', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][level]', 'Level', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][rating]', 'Rating', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][exam_place]', 'Place of Examination', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::datepicker_for_dt('row_eligibility[0][exam_date]', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_eligibility[0][license_no]', 'License No.', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::datepicker_for_dt('row_eligibility[0][license_validity]', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
-
                             @endif
 
                             </tbody>
@@ -1067,7 +1002,7 @@
                     <div class="box" style="margin-top: 30px;">
                       <div class="box-header with-border">
                         <h3 class="box-title">Work Experiences</h3>
-                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1158,57 +1093,6 @@
 
                               @endforeach
 
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::datepicker_for_dt('row_we[0][date_from]', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::datepicker_for_dt('row_we[0][date_to]', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_we[0][company]', 'Company', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_we[0][position]', 'Position', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_numeric_for_dt('row_we[0][salary]', 'Salary', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_we[0][salary_grade]', 'Salary Grade', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_we[0][appointment_status]', 'Appointment Status', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::select_static_for_dt('row_we[0][is_gov_service]', ['YES' => 'true', 'NO' => 'false'], '', '') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
-
                             @endif
 
                             </tbody>
@@ -1243,7 +1127,7 @@
                     <div class="box">
                       <div class="box-header ">
                         <h3 class="box-title">Voluntary Works</h3>
-                        <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1318,47 +1202,6 @@
 
                               @endforeach
 
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_vw[0][name]', 'Name of Organization', '','') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_vw[0][address]', 'Address of Organization', '','') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::datepicker_for_dt('row_vw[0][date_from]', '','') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::datepicker_for_dt('row_vw[0][date_to]', '','') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_vw[0][hours]', 'Hours', '','') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_vw[0][position]', 'Position', '','') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
-
                             @endif
 
                             </tbody>
@@ -1377,7 +1220,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Recognitions</h3>
-                        <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1412,22 +1255,6 @@
 
                               @endforeach
 
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_recognition[0][title]', 'Title', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
-
                             @endif
 
                             </tbody>
@@ -1446,7 +1273,7 @@
                     <div class="box">
                       <div class="box-header">
                         <h3 class="box-title">Organizations</h3>
-                        <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1481,24 +1308,6 @@
 
                               @endforeach
 
-                            @else
-
-                              <tr>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_org[0][name]', 'Name of Organization', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-
-                              </tr>
-
-
                             @endif
 
                             </tbody>
@@ -1519,7 +1328,7 @@
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Special Skills</h3>
-                        <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1554,22 +1363,6 @@
 
                               @endforeach
 
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_ss[0][description]', 'Special Skills or Hobies', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
-
                             @endif
 
                             </tbody>
@@ -1591,7 +1384,7 @@
                     <div class="box">
                       <div class="box-header">
                         <h3 class="box-title">References</h3>
-                        <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right"><i class="fa fa-plus"></i></button>
+                        <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
                       
                       <div class="box-body no-padding">
@@ -1641,32 +1434,6 @@
                                 </tr>
 
                               @endforeach
-
-                            @else
-
-                              <tr>
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_reference[0][fullname]', 'Fullname', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_reference[0][address]', 'Address', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                  {!! FormHelper::textbox_for_dt('row_reference[0][tel_no]', 'Telephone No.', '', '') !!}
-                                </td>
-
-
-                                <td>
-                                    <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                                </td>
-
-                              </tr>
-
 
                             @endif
 
