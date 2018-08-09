@@ -89,6 +89,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** MEMOS **/
 	Route::resource('memo', 'MemoController');
+
+	/** DOCUMENTS **/
+	Route::resource('document', 'DocumentController');
 	
 });
 
