@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Document extends Model{
 
@@ -11,7 +12,7 @@ class Document extends Model{
 
     protected $table = 'documents';
 
-    protected $dates = ['date', 'year', 'created_at', 'updated_at'];
+    protected $dates = ['date', 'created_at', 'updated_at'];
 
     public $sortable = ['reference_no', 'date', 'person_to', 'person_from', 'subject', 'folder_code'];
 
@@ -23,7 +24,7 @@ class Document extends Model{
     protected $attributes = [
         
         'slug' => '',
-        'doc_id' => '',
+        'document_id' => '',
         'folder_code' => '',
         'reference_no' => '',
         'date' => null,
@@ -33,7 +34,7 @@ class Document extends Model{
         'subject' => '',
         'category' => '',
         'filename' => '',
-        'year' => '',
+        'year' => null,
         'remarks' => '',
         'created_at' => null, 
         'updated_at' => null,

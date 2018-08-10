@@ -29,10 +29,10 @@ class DocumentService extends BaseService{
 
     public function fetchAll($request){
 
-        // $department_units = $this->department_unit_repo->fetchAll($request);
+        $documents = $this->document_repo->fetchAll($request);
 
-        // $request->flash();
-        // return view('dashboard.department_unit.index')->with('department_units', $department_units);
+        $request->flash();
+        return view('dashboard.document.index')->with('documents', $documents);
 
     }
 
@@ -43,10 +43,12 @@ class DocumentService extends BaseService{
 
     public function store($request){
 
-        // $department_unit = $this->department_unit_repo->store($request);
+        $filename = $this->storeFile($request);
 
-        // $this->event->fire('department_unit.store');        
-        // return redirect()->back();
+        $document = $this->document_repo->store($request, $filename);
+
+        $this->event->fire('document.store');        
+        return redirect()->back();
 
     }
 
@@ -89,6 +91,24 @@ class DocumentService extends BaseService{
         // return redirect()->route('dashboard.department_unit.index');
 
     }
+
+
+
+
+
+
+    public function storeFile($request){
+
+        $filename = $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
+
+        $year = $this->dataTypeHelper->date_parse($request->date, 'Y');
+
+        $request->file('doc_file')->move($this->staticHelper->archive_dir() .'/'. $year .'/'. $request->folder_code , $filename);
+
+        return $filename;
+
+    }
+
 
 
 

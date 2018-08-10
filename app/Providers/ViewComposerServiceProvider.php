@@ -93,6 +93,13 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
 
 
+        // DOCUMENT TYPES
+        View::composer(['dashboard.document.create',
+                        'dashboard.document.edit',
+                        'dashboard.document.index',], 'App\Swep\ViewComposers\DocumentFolderComposer');
+
+
+
         
     }
 

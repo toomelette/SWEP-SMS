@@ -37,10 +37,8 @@ class DocumentSubscriber extends BaseSubscriber{
     public function onStore(){
 
         $this->cacheHelper->deletePattern('swep_cache:documents:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:documents:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:documents:*');
 
-        $this->session->flash('DOCUMENT_CREATE_SUCCESS', 'The Department has been successfully created!');
+        $this->session->flash('DOCUMENT_CREATE_SUCCESS', 'The Document has been successfully created!');
 
     }
 

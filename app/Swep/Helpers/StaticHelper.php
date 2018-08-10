@@ -157,6 +157,24 @@ class StaticHelper{
 
 
 
+    // Document Types
+    public static function document_types(){
+
+        return [
+
+            'Memorandum Circular'=> 'MEMO',
+            'Secretary Certificate' => 'SEC_CERT',
+            'Sugar Order' => 'SUGAR_ORD',
+            'Special Order' => 'SPECIAL_ORD',
+            'Circular Letter' => 'CIRCLR_LTR',
+
+        ];
+    
+    }
+
+
+
+
 
 
 

@@ -31,7 +31,9 @@
             '4', 'employee_position', 'text', 'Position *', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), 'data-transform="uppercase"'
           ) !!} 
 
-          {!! FormHelper::select_static('4', 'type', 'Type *', old('type'), StaticHelper::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') !!}
+          {!! 
+            FormHelper::select_static('4', 'type', 'Type *', old('type'), StaticHelper::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') 
+          !!}
 
         </div>
 
