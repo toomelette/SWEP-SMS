@@ -2,6 +2,7 @@
 
 namespace App\Swep\ViewHelpers;
 
+use App\Swep\Helpers\StaticHelper; 
 
 
 class JSHelper{
@@ -146,7 +147,7 @@ class JSHelper{
 
 
 
-    public static function file_upload($id, $theme, $file_ext){
+    public static function file_upload($id, $theme, $file_ext, $value){
 
       return '$("#'. $id .'").fileinput({
 		        theme: "'. $theme .'",

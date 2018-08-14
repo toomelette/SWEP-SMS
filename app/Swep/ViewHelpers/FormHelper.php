@@ -270,7 +270,7 @@ class FormHelper{
     public static function string_value($value){
 
         $value = $value ? $value : '';
-        return SanitizeHelper::html_attribute_encode($value);
+        return $value;
 
     }
 

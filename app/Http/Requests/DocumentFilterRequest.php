@@ -27,8 +27,8 @@ class DocumentFilterRequest extends FormRequest{
             
             'q' => 'nullable|string|max:255',
             'd' => 'nullable|date_format:"m/d/Y"',
-            'fc' => 'nullable|string|max:255',
-            'dt' => 'nullable|string|max:255',
+            'fc' => 'nullable|string|max:45',
+            'dt' => 'nullable|string|max:45',
             
         ];
     

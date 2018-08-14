@@ -37,7 +37,9 @@
         '3', 'dt', 'Document Types', old('dt'), StaticHelper::document_types(), 'submit_memo_filter', ''
       ) !!}
 
-      <section style="margin-top:12px;">
+      <div class="col-md-6" style="padding-bottom:50px;">&nbsp;</div>
+
+      <section>
 
         <h5>Date Filter : </h5>
 

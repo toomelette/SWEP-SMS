@@ -59,8 +59,8 @@ class DocumentService extends BaseService{
 
     public function edit($slug){
 
-        // $department_unit = $this->department_unit_repo->findBySlug($slug);
-        // return view('dashboard.department_unit.edit')->with('department_unit', $department_unit);
+        $document = $this->document_repo->findBySlug($slug);
+        return view('dashboard.document.edit')->with('document', $document);
 
     }
 
@@ -70,11 +70,11 @@ class DocumentService extends BaseService{
 
 
     public function update($request, $slug){
-
-        // $department_unit = $this->department_unit_repo->update($request, $slug);
+        dd($request->filename);
+        $document = $this->document->update($request, $slug);
         
-        // $this->event->fire('department_unit.update', $department_unit);
-        // return redirect()->route('dashboard.department_unit.index');
+        $this->event->fire('document.update', $document);
+        return redirect()->route('dashboard.document.index');
 
     }
 

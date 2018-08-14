@@ -14,6 +14,6 @@ interface DocumentInterface {
 
 	// public function destroy($slug);
 
-	// public function findBySlug($slug);
+	public function findBySlug($slug);
 		
 }

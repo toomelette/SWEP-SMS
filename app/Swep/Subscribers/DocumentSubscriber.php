@@ -49,11 +49,9 @@ class DocumentSubscriber extends BaseSubscriber{
     public function onUpdate($document){
 
         $this->cacheHelper->deletePattern('swep_cache:documents:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:documents:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:documents:*');
         $this->cacheHelper->deletePattern('swep_cache:documents:bySlug:'. $document->slug .'');
 
-        $this->session->flash('DOCUMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
+        $this->session->flash('DOCUMENT_UPDATE_SUCCESS', 'The Document has been successfully updated!');
         $this->session->flash('DOCUMENT_UPDATE_SUCCESS_SLUG', $document->slug);
 
     }

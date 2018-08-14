@@ -39,16 +39,22 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
             $document = $this->document->newQuery();
             
+            $parsed_date = $this->dataTypeHelper->date_parse($request->d, 'Y-m-d');
+
             if(isset($request->q)){
                 $this->search($document, $request->q);
             }
 
             if(isset($request->fc)){
-                $this->document->where('folder_code', $request->fc);
+                $document->whereFolderCode($request->fc);
             }
 
             if(isset($request->dt)){
-                $this->document->whereType($request->dt);
+                $document->whereType($request->dt);
+            }
+
+            if(isset($request->d)){
+                $document->where('date', $parsed_date);
             }
 
             return $this->populate($document);
@@ -96,18 +102,27 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    // public function update($request, $slug){
+    public function update($request, $slug){
 
-    //     $document = $this->findBySlug($slug);
-    //     $document->name = $request->name;
-    //     $document->updated_at = $this->carbon->now();
-    //     $document->ip_updated = request()->ip();
-    //     $document->user_updated = $this->auth->user()->user_id;
-    //     $document->save();
+        $document = $this->findBySlug($slug);
+        $document->filename = $filename;
+        $document->reference_no = $request->reference_no;
+        $document->date = $this->dataTypeHelper->date_parse($request->date, 'Y-m-d');
+        $document->person_to = $request->person_to;
+        $document->person_from = $request->person_from;
+        $document->type = $request->type;
+        $document->subject = $request->subject;
+        $document->folder_code = $request->folder_code;
+        $document->remarks = $request->remarks;
+        $document->year = $this->dataTypeHelper->date_parse($request->date, 'Y');
+        $document->updated_at = $this->carbon->now();
+        $document->ip_updated = request()->ip();
+        $document->user_updated = $this->auth->user()->user_id;
+        $document->save();
 
-    //     return $document;
+        return $document;
 
-    // }
+    }
 
 
 
@@ -128,15 +143,15 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    // public function findBySlug($slug){
+    public function findBySlug($slug){
 
-    //     $document = $this->cache->remember('documents:bySlug:' . $slug, 240, function() use ($slug){
-    //         return $this->document->where('slug', $slug)->first();
-    //     });
+        $document = $this->cache->remember('documents:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->document->where('slug', $slug)->first();
+        });
         
-    //     return $document;
+        return $document;
 
-    // }
+    }
 
 
 
