@@ -32,11 +32,11 @@
           <input name="_method" value="PUT" type="hidden">
           
           {!! FormHelper::select_dynamic(
-            '4', 'project_id', 'Station *', old('project_id') ? old('project_id') : $disbursement_voucher->project_id, $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
+            '4', 'project_id', 'Station', old('project_id') ? old('project_id') : $disbursement_voucher->project_id, $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '4', 'fund_source_id', 'Fund Source *', old('fund_source_id') ? old('fund_source_id') : $disbursement_voucher->fund_source_id, $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
+            '4', 'fund_source_id', 'Fund Source', old('fund_source_id') ? old('fund_source_id') : $disbursement_voucher->fund_source_id, $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
           ) !!}
 
           {!! FormHelper::select_static(
@@ -73,7 +73,7 @@
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '2', 'project_code', 'Project Code *', old('project_code') ? old('project_code') : $disbursement_voucher->project_code, $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2', ''
+            '2', 'project_code', 'Project Code', old('project_code') ? old('project_code') : $disbursement_voucher->project_code, $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2', ''
           ) !!}
 
           <div class="col-md-12">
