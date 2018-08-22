@@ -101,9 +101,9 @@ class DocumentService extends BaseService{
 
         $filename = $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
 
-        $year = $this->dataTypeHelper->date_parse($request->date, 'Y');
+        $folder = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
 
-        $request->file('doc_file')->move($this->staticHelper->archive_dir() .'/'. $year .'/'. $request->folder_code , $filename);
+        $request->file('doc_file')->storeAs($folder, $filename);
 
         return $filename;
 

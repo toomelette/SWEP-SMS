@@ -112,3 +112,19 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// }
 
 //});
+
+
+
+/** Testing **/
+
+Route::get('/local_storage/{file}', function($file){
+
+	if(file_exists($file)) {
+	    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+	    $mime = finfo_file($finfo, $file);
+	    finfo_close($finfo);
+	    header("Content-Type: $mime");
+	    readfile($file);
+	}
+
+});

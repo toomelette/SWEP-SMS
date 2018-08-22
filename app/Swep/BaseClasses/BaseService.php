@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Events\Dispatcher;
 use App\Swep\Helpers\StaticHelper;
 use App\Swep\Helpers\DataTypeHelper;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Cache\Repository as Cache;
 
 
@@ -25,6 +26,7 @@ class BaseService{
     protected $event;
     protected $staticHelper;
     protected $dataTypeHelper;
+    protected $storage;
     protected $cache;
 
 
@@ -38,6 +40,7 @@ class BaseService{
         $this->event = App::make(Dispatcher::class);
         $this->staticHelper = App::make(StaticHelper::class);
         $this->dataTypeHelper = App::make(DataTypeHelper::class);
+        $this->cache = App::make(Storage::class);
         $this->cache = App::make(Cache::class);
         
     }

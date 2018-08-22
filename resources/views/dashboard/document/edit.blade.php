@@ -4,6 +4,12 @@
     
   <section class="content-header">
       <h1>Edit Document</h1>
+      <div class="pull-right" style="margin-top: -25px;">
+      {!! HtmlHelper::back_button([
+        'dashboard.document.index',
+        'dashboard.document.show'
+      ]) !!}
+    </div>
   </section>
 
   <section class="content">
@@ -83,7 +89,7 @@
 
   <script type="text/javascript">
 
-    {!! JSHelper::file_upload('doc_file', 'fa', ['pdf'], $document->filename) !!}
+    {!! JSHelper::file_upload('doc_file', 'fa', ['pdf'], Storage::disk('local')->url($document->filename)) !!}
 
   </script> 
     

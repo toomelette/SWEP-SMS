@@ -147,7 +147,7 @@ class JSHelper{
 
 
 
-    public static function file_upload($id, $theme, $file_ext, $value){
+    public static function file_upload($id, $theme, $file_ext, $url){
 
       return '$("#'. $id .'").fileinput({
 		        theme: "'. $theme .'",
@@ -155,6 +155,13 @@ class JSHelper{
 		        showUpload: false,
 		        showCaption: false,
 		        browseClass: "btn btn-primary btn-md",
+        		initialPreviewAsData: true,
+		        initialPreview: [
+		            "'. $url .'",
+		        ],
+		        initialPreviewConfig: [
+		            {caption: "Document.jpg", size: 329892, width: "120px", url: "{$url}", key: 1},
+		        ]
 		      });';
 
     }

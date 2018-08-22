@@ -101,7 +101,7 @@
       $('#doc_create').modal('show');
     @endif
 
-    {!! JSHelper::file_upload('doc_file', 'fa', ['pdf']) !!}
+    {!! JSHelper::file_upload('doc_file', 'fa', ['pdf'], '') !!}
 
   </script> 
     
