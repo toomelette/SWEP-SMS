@@ -70,7 +70,9 @@ class DocumentService extends BaseService{
 
 
     public function update($request, $slug){
-        dd($request->filename);
+
+        dd($request->doc_file);
+        
         $document = $this->document->update($request, $slug);
         
         $this->event->fire('document.update', $document);

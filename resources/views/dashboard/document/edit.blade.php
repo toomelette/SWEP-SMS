@@ -32,7 +32,7 @@
           @csrf
 
           {!! FormHelper::file(
-             '4', 'doc_file', 'Upload File *', old('doc_file') ? old('doc_file') : StaticHelper::archive_dir() .'\\'. $document->filename, $errors->has('doc_file'), $errors->first('doc_file'), ''
+             '4', 'doc_file', 'Upload File *', old('doc_file') ? old('doc_file') : $document->filename, $errors->has('doc_file'), $errors->first('doc_file'), ''
           ) !!} 
 
           {!! FormHelper::textbox(
@@ -89,7 +89,9 @@
 
   <script type="text/javascript">
 
-    {!! JSHelper::file_upload('doc_file', 'fa', ['pdf'], Storage::disk('local')->url($document->filename)) !!}
+    {!! JSHelper::pdf_upload(
+      'doc_file', 'fa', Storage::disk('local')->url($document->year .'/'. $document->folder_code .'/'. $document->filename)
+    ) !!}
 
   </script> 
     

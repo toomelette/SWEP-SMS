@@ -46,7 +46,7 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => 'E:\swep_storage',
-            'url' => 'file:///E:/swep_storage',
+            'url' => env('APP_URL').'/local_storage',
         ],
 
         'public' => [

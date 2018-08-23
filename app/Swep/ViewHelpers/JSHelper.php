@@ -147,22 +147,27 @@ class JSHelper{
 
 
 
-    public static function file_upload($id, $theme, $file_ext, $url){
+    public static function pdf_upload($id, $theme, $url){
 
       return '$("#'. $id .'").fileinput({
 		        theme: "'. $theme .'",
-		        allowedFileExtensions: ["'. implode('","', $file_ext) .'"],
+		        allowedFileExtensions: ["pdf"],
+    			maxFileCount: 1,
 		        showUpload: false,
 		        showCaption: false,
+		        overwriteInitial: true,
+		        fileType: "pdf",
 		        browseClass: "btn btn-primary btn-md",
-        		initialPreviewAsData: true,
 		        initialPreview: [
 		            "'. $url .'",
 		        ],
+		        initialPreviewAsData: true,
 		        initialPreviewConfig: [
-		            {caption: "Document.jpg", size: 329892, width: "120px", url: "{$url}", key: 1},
-		        ]
-		      });';
+		            {type: "pdf", size: "100%", width: "100%", key: 1},
+		        ],
+		      }); 
+			  $(".kv-file-remove").hide();
+	  ';
 
     }
 

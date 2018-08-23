@@ -23,7 +23,7 @@ class DocumentFormRequest extends FormRequest{
     public function rules(){
 
         return [
-            
+                
             'doc_file' => 'required|mimes:pdf|max:10000',
             'reference_no' => 'required|max:45|string',
             'date' => 'required|date_format:"m/d/Y"',

@@ -117,14 +117,20 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 /** Testing **/
 
-Route::get('/local_storage/{file}', function($file){
+Route::get('/local_storage/{year}/{folder_code}/{filename}', function($year, $folder_code, $filename){
 
-	if(file_exists($file)) {
-	    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-	    $mime = finfo_file($finfo, $file);
-	    finfo_close($finfo);
-	    header("Content-Type: $mime");
-	    readfile($file);
-	}
+	$path = 'E:/swep_storage/'. $year .'/'. $folder_code .'/'. $filename;
+
+	if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
 
 });
