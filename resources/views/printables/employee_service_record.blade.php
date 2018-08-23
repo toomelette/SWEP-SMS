@@ -167,7 +167,7 @@
         </div>
 
         <div class="col-sm-2 no-padding" style="border-left:solid 1px; height: 2.93em;">
-          <span style="font-size:12px; font-weight:bold; margin-left: 20px;">SEPERATION</span>
+          <span style="font-size:12px; font-weight:bold; margin-left: 20px;">SEPARATION</span>
           <div class="col-sm-12 no-padding" style="border-top:solid 1px;">
             <div class="col-sm-6" style="border-right:solid 1px;">
               <span style="font-size:12px; margin-left:1px;">Date</span>
@@ -497,7 +497,7 @@
           </div>
 
           <div class="col-sm-2 no-padding" style="border-left:solid 1px; height: 2.93em;">
-            <span style="font-size:12px; font-weight:bold; margin-left: 20px;">SEPERATION</span>
+            <span style="font-size:12px; font-weight:bold; margin-left: 20px;">SEPARATION</span>
             <div class="col-sm-12 no-padding" style="border-top:solid 1px;">
               <div class="col-sm-6" style="border-right:solid 1px;">
                 <span style="font-size:12px; margin-left:1px;">Date</span>
