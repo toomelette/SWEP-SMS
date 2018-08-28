@@ -1,6 +1,6 @@
 @php
   $table_sessions = [ 
-                      Session::get('MEMO_UPDATE_SUCCESS_SLUG'),
+                      Session::get('DOCUMENT_UPDATE_SUCCESS_SLUG'),
                     ];
 
   $appended_requests = [
@@ -138,13 +138,13 @@
     {!! JSHelper::modal_confirm_delete_caller('doc_delete') !!}
 
     {{-- DOCUMENT DELETE TOAST --}}
-    @if(Session::has('DOCUMENTS_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('MEMO_DELETE_SUCCESS')) !!}
+    @if(Session::has('DOCUMENT_DELETE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('DOCUMENT_DELETE_SUCCESS')) !!}
     @endif
 
     {{-- DOCUMENT UPDATE TOAST --}}
-    @if(Session::has('DOCUMENTS_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('DOCUMENTS_UPDATE_SUCCESS')) !!}
+    @if(Session::has('DOCUMENT_UPDATE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('DOCUMENT_UPDATE_SUCCESS')) !!}
     @endif
 
   </script>

@@ -41,6 +41,7 @@ class DocumentService extends BaseService{
 
 
 
+
     public function store($request){
 
         $filename = $this->storeFile($request);
@@ -51,6 +52,7 @@ class DocumentService extends BaseService{
         return redirect()->back();
 
     }
+
 
 
 
@@ -69,16 +71,24 @@ class DocumentService extends BaseService{
 
 
 
+
     public function update($request, $slug){
 
-        dd($request->doc_file);
-        
-        $document = $this->document->update($request, $slug);
+        $document = $this->document_repo->findBySlug($slug);
+
+        $filename = $this->storeFile($request);
+
+        $this->removeFile($request, $document);
+
+        $this->moveFile($request, $document);
+
+        $this->document_repo->update($request, $filename, $document);
         
         $this->event->fire('document.update', $document);
         return redirect()->route('dashboard.document.index');
 
     }
+
 
 
 
@@ -99,17 +109,63 @@ class DocumentService extends BaseService{
 
 
 
+
     public function storeFile($request){
 
-        $filename = $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
+        if(!is_null($request->file('doc_file'))){
 
-        $folder = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+            $filename = $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
 
-        $request->file('doc_file')->storeAs($folder, $filename);
+            $folder = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
 
-        return $filename;
+            $request->file('doc_file')->storeAs($folder, $filename);
+
+            return $filename;
+
+        }
+
+        return null;
 
     }
+
+
+
+
+
+
+
+    public function removeFile($request, $document){
+
+        $file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
+
+        if(!is_null($request->file('doc_file')) && $this->storage->disk('local')->exists($file_dir)){       
+
+            $this->storage->disk('local')->delete($file_dir);
+
+        }
+
+    }
+
+
+
+
+
+
+
+    public function moveFile($request, $document){
+
+        $existing_dir = $document->year .'/'. $document->folder_code;
+
+        $request_dir = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+
+        if($existing_dir != $request_dir){
+
+            $this->storage->disk('local')->move($existing_dir .'/'. $document->filename, $request_dir .'/'. $document->filename);
+
+        }
+
+    }
+
 
 
 

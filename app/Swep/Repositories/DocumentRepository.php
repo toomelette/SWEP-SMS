@@ -102,10 +102,12 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    public function update($request, $slug){
+    public function update($request, $filename, $document){
 
-        $document = $this->findBySlug($slug);
-        $document->filename = $filename;
+        if(isset($filename)){
+            $document->filename = $filename;      
+        }
+
         $document->reference_no = $request->reference_no;
         $document->date = $this->dataTypeHelper->date_parse($request->date, 'Y-m-d');
         $document->person_to = $request->person_to;
@@ -121,7 +123,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document->save();
 
         return $document;
-
+        
     }
 
 

@@ -10,7 +10,7 @@ interface DocumentInterface {
 
 	public function store($request, $filename);
 
-	// public function update($request, $slug);
+	public function update($request, $filename, $document);
 
 	// public function destroy($slug);
 
