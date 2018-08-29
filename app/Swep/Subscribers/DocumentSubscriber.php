@@ -63,11 +63,9 @@ class DocumentSubscriber extends BaseSubscriber{
     public function onDestroy($document){
 
         $this->cacheHelper->deletePattern('swep_cache:documents:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:documents:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:documents:*');
         $this->cacheHelper->deletePattern('swep_cache:documents:bySlug:'. $document->slug .'');
 
-        $this->session->flash('DOCUMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');
+        $this->session->flash('DOCUMENT_DELETE_SUCCESS', 'The Document has been successfully deleted!');
         
     }
 

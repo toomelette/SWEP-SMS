@@ -51,6 +51,15 @@ class DocumentController extends Controller{
 
 
 
+    public function show($slug){
+
+        return $this->document->show($slug);
+        
+    }
+
+
+
+
     public function edit($slug){
 
         return $this->document->edit($slug);
@@ -72,6 +81,15 @@ class DocumentController extends Controller{
     public function destroy($slug){
 
        return $this->document->destroy($slug); 
+
+    }
+
+
+
+
+    public function viewFile($slug){
+
+       return $this->document->viewFile($slug); 
 
     }
 

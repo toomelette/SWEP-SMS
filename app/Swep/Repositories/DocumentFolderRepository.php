@@ -30,6 +30,29 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
 
 
 
+
+    public function fetchAll($request){
+
+       
+
+    }
+
+
+
+
+
+
+    public function store($request){
+
+       
+
+    }
+
+
+
+
+
+
     public function globalFetchAll(){
 
         $doc_folders = $this->cache->remember('document_folders:global:all', 240, function(){

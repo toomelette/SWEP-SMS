@@ -28,11 +28,11 @@
           ) !!} 
 
           {!! FormHelper::textbox(
-             '4', 'reference_no', 'text', 'Reference No. *', 'Reference No.', old('reference_no'), $errors->has('reference_no'), $errors->first('reference_no'), ''
+             '4', 'reference_no', 'text', 'Reference No. *', 'Reference No.', old('reference_no') , $errors->has('reference_no'), $errors->first('reference_no'), ''
           ) !!} 
 
           {!! FormHelper::datepicker(
-            '4', 'date',  'Date *', old('date'), $errors->has('date'), $errors->first('date')
+            '4', 'date',  'Date *', old('date') ? old('date') : Carbon::now()->format('m/d/Y'), $errors->has('date'), $errors->first('date')
           ) !!}
 
           {!! FormHelper::textbox(

@@ -90,7 +90,7 @@
   <script type="text/javascript">
 
     {!! JSHelper::pdf_upload(
-      'doc_file', 'fa', Storage::disk('local')->url($document->year .'/'. $document->folder_code .'/'. $document->filename)
+      'doc_file', 'fa', route('dashboard.document.view_file', $document->slug)
     ) !!}
 
   </script> 

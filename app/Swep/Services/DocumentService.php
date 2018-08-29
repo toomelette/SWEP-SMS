@@ -2,7 +2,7 @@
  
 namespace App\Swep\Services;
 
-
+use File;
 use App\Swep\Interfaces\DocumentInterface;
 use App\Swep\BaseClasses\BaseService;
 
@@ -44,7 +44,15 @@ class DocumentService extends BaseService{
 
     public function store($request){
 
-        $filename = $this->storeFile($request);
+        $filename = $this->filename($request);
+
+        $dir = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+
+        if(!is_null($request->file('doc_file'))){
+
+            $request->file('doc_file')->storeAs($dir, $filename);
+
+        }
 
         $document = $this->document_repo->store($request, $filename);
 
@@ -53,6 +61,17 @@ class DocumentService extends BaseService{
 
     }
 
+
+
+
+
+
+    public function show($slug){
+
+        $document = $this->document_repo->findBySlug($slug);
+        return view('dashboard.document.show')->with('document', $document);
+
+    }
 
 
 
@@ -76,11 +95,27 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->findBySlug($slug);
 
-        $filename = $this->storeFile($request);
+        $filename = $this->filename($request);
+        $old_dir = $document->year .'/'. $document->folder_code;
+        $new_dir = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+        $old_file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
-        $this->removeFile($request, $document);
 
-        $this->moveFile($request, $document);
+        if(!is_null($request->file('doc_file')) && $this->storage->disk('local')->exists($old_file_dir)){
+
+            $request->file('doc_file')->storeAs($new_dir, $filename);
+
+            $this->storage->disk('local')->delete($old_file_dir);
+
+        }
+
+
+        elseif($old_dir != $new_dir && $this->storage->disk('local')->exists($old_file_dir)){    
+
+            $this->storage->disk('local')->move($old_dir .'/'. $document->filename, $new_dir .'/'. $document->filename);
+
+        }
+
 
         $this->document_repo->update($request, $filename, $document);
         
@@ -97,10 +132,20 @@ class DocumentService extends BaseService{
 
     public function destroy($slug){
 
-        // $department_unit = $this->department_unit_repo->destroy($slug);
+        $document = $this->document_repo->findBySlug($slug);
         
-        // $this->event->fire('department_unit.destroy', $department_unit);
-        // return redirect()->route('dashboard.department_unit.index');
+        $file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
+
+        if(!is_null($document->filename) && $this->storage->disk('local')->exists($file_dir)){       
+
+            $this->storage->disk('local')->delete($file_dir);
+
+        }
+
+        $this->document_repo->destroy($document);
+
+        $this->event->fire('document.destroy', $document);
+        return redirect()->route('dashboard.document.index');
 
     }
 
@@ -110,62 +155,50 @@ class DocumentService extends BaseService{
 
 
 
-    public function storeFile($request){
+    public function viewFile($slug){
+
+        $document = $this->document_repo->findBySlug($slug);
+
+        if(!empty($document)){
+
+            $path = 'E:/swep_storage/'. $document->year .'/'. $document->folder_code .'/'. $document->filename;
+
+            if (!File::exists($path)) {
+                abort(404);
+            }
+
+            $file = File::get($path);
+            $type = File::mimeType($path);
+
+            $response = response()->make($file, 200);
+            $response->header("Content-Type", $type);
+
+            return $response;
+
+        }
+
+        return abort(404);
+        
+
+    }
+
+
+
+
+
+
+
+    public function filename($request){
 
         if(!is_null($request->file('doc_file'))){
 
-            $filename = $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
-
-            $folder = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
-
-            $request->file('doc_file')->storeAs($folder, $filename);
-
-            return $filename;
+            return $this->str->random(32) .'.'. $request->file('doc_file')->getClientOriginalExtension();
 
         }
 
         return null;
 
     }
-
-
-
-
-
-
-
-    public function removeFile($request, $document){
-
-        $file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
-
-        if(!is_null($request->file('doc_file')) && $this->storage->disk('local')->exists($file_dir)){       
-
-            $this->storage->disk('local')->delete($file_dir);
-
-        }
-
-    }
-
-
-
-
-
-
-
-    public function moveFile($request, $document){
-
-        $existing_dir = $document->year .'/'. $document->folder_code;
-
-        $request_dir = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
-
-        if($existing_dir != $request_dir){
-
-            $this->storage->disk('local')->move($existing_dir .'/'. $document->filename, $request_dir .'/'. $document->filename);
-
-        }
-
-    }
-
 
 
 

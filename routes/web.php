@@ -92,6 +92,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** DOCUMENTS **/
 	Route::resource('document', 'DocumentController');
+	Route::get('/document/view_file/{slug}', 'DocumentController@viewFile')->name('document.view_file');
+
+	/** Document Folder Codes **/
+	Route::resource('document_folder', 'DocumentFolderController');
 	
 });
 
@@ -113,24 +117,3 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 //});
 
-
-
-/** Testing **/
-
-Route::get('/local_storage/{year}/{folder_code}/{filename}', function($year, $folder_code, $filename){
-
-	$path = 'E:/swep_storage/'. $year .'/'. $folder_code .'/'. $filename;
-
-	if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-
-});

@@ -131,14 +131,12 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    // public function destroy($slug){
+    public function destroy($document){
 
-    //     $document = $this->findBySlug($slug);
-    //     $document->delete();
-
-    //     return $document;
-
-    // }
+        $document->delete();
+        return $document;
+        
+    }
 
 
 

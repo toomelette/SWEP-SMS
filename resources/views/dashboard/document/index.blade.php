@@ -76,7 +76,11 @@
           </tr>
           @foreach($documents as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td><a href="{{ route('dashboard.document.show', $data->slug) }}" class="btn btn-sm btn-success"><i class="fa fa-file-pdf-o"></i></a></td>
+              <td>
+                <a href="{{ route('dashboard.document.view_file', $data->slug) }}" class="btn btn-sm btn-success" target="_blank">
+                  <i class="fa fa-file-pdf-o"></i>
+                </a>
+              </td>
               <td>{{ $data->reference_no }}</td>
               <td>{{ DataTypeHelper::date_parse($data->date) }}</td>
               <td>{{ Str::limit($data->person_to, 30) }}</td>

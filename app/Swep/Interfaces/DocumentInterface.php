@@ -12,7 +12,7 @@ interface DocumentInterface {
 
 	public function update($request, $filename, $document);
 
-	// public function destroy($slug);
+	public function destroy($document);
 
 	public function findBySlug($slug);
 		
