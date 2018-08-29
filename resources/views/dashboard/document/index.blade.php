@@ -6,6 +6,9 @@
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         'd' => Request::get('d'),
+                        'dt' => Request::get('dt'),
+                        'fc' => Request::get('fc'),
+
                       ];
 @endphp
 

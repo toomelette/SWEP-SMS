@@ -2,42 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Swep\Services\DocumentFolderService;
 use App\Http\Requests\DocumentFolderFormRequest;
+use App\Http\Requests\DocumentFolderFilterRequest;
 
 
 
 class DocumentFolderController extends Controller{
 
 
-   
+   protected $doc_folder;
 
 
-    public function index(){
+
+    public function __construct(DocumentFolderService $doc_folder){
+
+        $this->doc_folder = $doc_folder;
+
+    }
 
 
+
+
+
+    public function index(DocumentFolderFilterRequest $request){
+
+        return $this->doc_folder->fetchAll($request);
         
     }
 
     
-
-
 
 
     public function create(){
         
-
+        return view('dashboard.document_folder.create');
 
     }
 
     
-
 
 
 
     public function store(DocumentFolderFormRequest $request){
 
-
+        return $this->doc_folder->store($request);
         
     }
 
@@ -57,7 +66,7 @@ class DocumentFolderController extends Controller{
 
     public function edit($slug){
         
-
+        return $this->doc_folder->edit($slug);
 
     }
 
@@ -67,7 +76,7 @@ class DocumentFolderController extends Controller{
 
     public function update(DocumentFolderFormRequest $request, $slug){
             
-
+        return $this->doc_folder->update($request, $slug);
 
     }
 
@@ -77,7 +86,7 @@ class DocumentFolderController extends Controller{
 
     public function destroy($slug){
         
-
+        return $this->doc_folder->destroy($slug);
 
     }
 

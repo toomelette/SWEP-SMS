@@ -136,7 +136,7 @@ class DocumentService extends BaseService{
         
         $file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
-        if(!is_null($document->filename) && $this->storage->disk('local')->exists($file_dir)){       
+        if(!is_null($document->filename) && $this->storage->disk('local')->exists($file_dir)){ 
 
             $this->storage->disk('local')->delete($file_dir);
 
@@ -161,7 +161,7 @@ class DocumentService extends BaseService{
 
         if(!empty($document)){
 
-            $path = 'E:/swep_storage/'. $document->year .'/'. $document->folder_code .'/'. $document->filename;
+            $path = $this->staticHelper->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
             if (!File::exists($path)) {
                 abort(404);

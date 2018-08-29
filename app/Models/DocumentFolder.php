@@ -23,7 +23,7 @@ class DocumentFolder extends Model{
 
     protected $attributes = [
         
-
+        'slug' => '',
         'folder_code' => '',
         'description' => '',
         'created_at' => null, 

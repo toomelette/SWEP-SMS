@@ -4,13 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DocumentFolderFormRequest extends FormRequest{
-    
+class DocumentFolderFilterRequest extends FormRequest{
 
 
 
     public function authorize(){
-        
+
         return true;
     
     }
@@ -23,13 +22,11 @@ class DocumentFolderFormRequest extends FormRequest{
 
         return [
 
-            'folder_code' => 'required|max:45|string',
-            'description' => 'nullable|max:255|string',
+            'q' => 'nullable|string|max:90',
             
         ];
-    
-    }
 
+    }
 
 
 

@@ -37,22 +37,9 @@ class DocumentFolderSubscriber extends BaseSubscriber{
     public function onStore(){
 
         $this->cacheHelper->deletePattern('swep_cache:document_folders:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:global:all');
 
-        $this->session->flash('DOCUMENT_FOLDER_CREATE_SUCCESS', 'The Document Folder has been successfully created!');
-
-    }
-
-
-
-
-
-    public function onUpdate($document_folder){
-
-        $this->cacheHelper->deletePattern('swep_cache:document_folder:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:document_folder:bySlug:'. $document_folder->slug .'');
-
-        $this->session->flash('DOCUMENT_FOLDER_UPDATE_SUCCESS', 'The Document Folder has been successfully updated!');
-        $this->session->flash('DOCUMENT_FOLDER_UPDATE_SUCCESS_SLUG', $document_folder->slug);
+        $this->session->flash('DOC_FOLDER_CREATE_SUCCESS', 'The Document Folder has been successfully created!');
 
     }
 
@@ -60,12 +47,28 @@ class DocumentFolderSubscriber extends BaseSubscriber{
 
 
 
-    public function onDestroy($document_folder){
+    public function onUpdate($doc_folder){
 
-        $this->cacheHelper->deletePattern('swep_cache:document_folder:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:document_folder:bySlug:'. $document_folder->slug .'');
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:bySlug:'. $doc_folder->slug .'');
 
-        $this->session->flash('DOCUMENT_FOLDER_DELETE_SUCCESS', 'The Document Folder has been successfully deleted!');
+        $this->session->flash('DOC_FOLDER_UPDATE_SUCCESS', 'The Document Folder has been successfully updated!');
+        $this->session->flash('DOC_FOLDER_UPDATE_SUCCESS_SLUG', $doc_folder->slug);
+
+    }
+
+
+
+
+
+    public function onDestroy($doc_folder){
+
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:all:*');
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:global:all');
+        $this->cacheHelper->deletePattern('swep_cache:document_folders:bySlug:'. $doc_folder->slug .'');
+
+        $this->session->flash('DOC_FOLDER_DELETE_SUCCESS', 'The Document Folder has been successfully deleted!');
         
     }
 

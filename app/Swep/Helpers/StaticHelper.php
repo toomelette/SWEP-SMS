@@ -150,7 +150,7 @@ class StaticHelper{
     // File Directories
     public static function archive_dir(){
 
-        return 'E:/swep_storage';
+        return 'E:/swep_storage/';
     
     }
 
