@@ -43,6 +43,8 @@
             '4', 'date',  'Date *', old('date') ? old('date') : $document->date, $errors->has('date'), $errors->first('date')
           ) !!}
 
+          <div class="col-md-8"></div>
+
           {!! FormHelper::textbox(
              '4', 'person_to', 'text', 'To *', 'To', old('person_to') ? old('person_to') : $document->person_to, $errors->has('person_to'), $errors->first('person_to'), ''
           ) !!} 
@@ -50,6 +52,8 @@
           {!! FormHelper::textbox(
              '4', 'person_from', 'text', 'From *', 'From', old('person_from') ? old('person_from') : $document->person_from, $errors->has('person_from'), $errors->first('person_from'), ''
           ) !!}
+
+          <div class="col-md-8"></div>
 
           {!! FormHelper::select_static(
             '4', 'type', 'Type', old('type') ? old('type') : $document->type, StaticHelper::document_types(), $errors->has('type'), $errors->first('type'), '', ''
@@ -59,6 +63,8 @@
              '4', 'subject', 'text', 'Subject *', 'Subject', old('subject') ? old('subject') : $document->subject, $errors->has('subject'), $errors->first('subject'), ''
           ) !!}  
 
+          <div class="col-md-8"></div>
+            
           {!! FormHelper::select_dynamic(
             '4', 'folder_code', 'Folder Code *', old('folder_code') ? old('folder_code') : $document->folder_code, $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('folder_code'), $errors->first('folder_code'), 'select2', ''
           ) !!}
