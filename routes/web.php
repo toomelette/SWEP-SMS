@@ -87,9 +87,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	Route::resource('employee', 'EmployeeController');
 
-	/** MEMOS **/
-	Route::resource('memo', 'MemoController');
-
 	/** DOCUMENTS **/
 	Route::get('/document/view_file/{slug}', 'DocumentController@viewFile')->name('document.view_file');
 	Route::resource('document', 'DocumentController');
