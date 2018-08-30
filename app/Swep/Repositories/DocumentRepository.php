@@ -70,6 +70,31 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
+
+    public function fetchByFolderCode($folder_code){
+
+        $documents = $this->cache->remember('documents:byFolderCode:' . $folder_code, 240, function() use ($folder_code){
+
+            $document = $this->document->newQuery();
+
+            return $document->select('subject', 'slug', 'updated_at')
+                            ->whereFolderCode($folder_code)
+                            ->sortable()
+                            ->orderBy('updated_at', 'desc')
+                            ->paginate(10);
+
+        });
+
+        return $documents;
+
+    }
+
+
+
+
+
+
+
     public function store($request, $filename){
 
         $document = new document;
@@ -149,6 +174,10 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
             return $this->document->where('slug', $slug)->first();
         });
         
+        if(empty($document)){
+            abort(404);
+        }
+        
         return $document;
 
     }
@@ -177,7 +206,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function populate($model){
 
-        return $model->select('filename', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug')
+        return $model->select('filename', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug', 'updated_at')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);

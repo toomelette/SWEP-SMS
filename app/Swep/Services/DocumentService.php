@@ -56,7 +56,7 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->store($request, $filename);
 
-        $this->event->fire('document.store');        
+        $this->event->fire('document.store', $document);        
         return redirect()->back();
 
     }

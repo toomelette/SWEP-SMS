@@ -124,6 +124,10 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
             return $this->signatory->where('slug', $slug)->first();
         });
         
+        if(empty($signatory)){
+            abort(404);
+        }
+
         return $signatory;
 
     }
@@ -139,6 +143,10 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
             return $this->signatory->where('type', $type)->first();
         }); 
 
+        if(empty($signatory)){
+            abort(404);
+        }
+        
         return $signatory;
 
     }

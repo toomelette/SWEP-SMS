@@ -132,6 +132,10 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
             return $this->project_code->where('slug', $slug)->first();
         });
         
+        if(empty($project_code)){
+            abort(404);
+        }
+        
         return $project_code;
 
     }

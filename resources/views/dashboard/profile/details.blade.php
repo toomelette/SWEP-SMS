@@ -229,7 +229,7 @@
 
 
 
-              <div class="tab-pane active" id="pi">
+              <div class="tab-pane" id="pi">
                 <div class="row">
 
                   @if(empty(Auth::user()->employee))

@@ -148,7 +148,13 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
     public function findBySlug($slug){
 
-        return $this->employee_sr->where('slug', $slug)->first();
+        $employee_sr = $this->employee_sr->where('slug', $slug)->first(); 
+
+        if(empty($employee_sr)){
+            abort(404);
+        }
+
+        return $employee_sr;
 
     }
 

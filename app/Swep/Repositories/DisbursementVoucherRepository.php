@@ -203,6 +203,10 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
                                               ->first();
         });
         
+        if(empty($disbursement_voucher)){
+            abort(404);
+        }
+
         return $disbursement_voucher;
 
     }

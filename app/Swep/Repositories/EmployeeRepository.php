@@ -250,8 +250,12 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
                                          'employeeVoluntaryWork',
                                          'employeeServiceRecord')
                                     ->first();
-                    });
+        });
         
+        if(empty($employee)){
+            abort(404);
+        }
+
         return $employee;
 
     }
@@ -266,7 +270,11 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee = $this->cache->remember('employees:byUserId:' . $user_id, 240, function() use ($user_id){
             return $this->employee->where('user_id', $user_id)->first();
         });
-        
+
+        if(empty($employee)){
+            abort(404);
+        }
+
         return $employee;
 
     }
@@ -333,7 +341,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee = $this->cache->remember('api:employees:bySlug:'. $key .'', 240, function() use ($key){
             return $this->employee->where('slug', $key)->get();
         });
-        
+
         return $employee;
 
     }

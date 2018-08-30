@@ -253,6 +253,10 @@ class UserRepository extends BaseRepository implements UserInterface {
             return $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->first();
         }); 
         
+        if(empty($user)){
+            abort(404);
+        }
+
         return $user;
 
     }
@@ -267,6 +271,10 @@ class UserRepository extends BaseRepository implements UserInterface {
         $user = $this->cache->remember('users:byId:' . $id, 240, function() use ($id){
             return $this->user->where('id', $id)->first();
         }); 
+        
+        if(empty($user)){
+            abort(404);
+        }
         
         return $user;
 

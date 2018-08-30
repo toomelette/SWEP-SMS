@@ -182,6 +182,10 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
             return $this->leave_application->where('slug', $slug)->first();
         });
         
+        if(empty($leave_application)){
+            abort(404);
+        }
+        
         return $leave_application;
 
     }

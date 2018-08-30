@@ -120,6 +120,10 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
             return $this->department_unit->where('slug', $slug)->first();
         });
         
+        if(empty($department_unit)){
+            abort(404);
+        }
+        
         return $department_unit;
 
     }

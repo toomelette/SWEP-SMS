@@ -118,6 +118,10 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
             return $this->doc_folder->where('slug', $slug)->first();
         });
         
+        if(empty($doc_folder)){
+            abort(404);
+        }
+        
         return $doc_folder;
 
     }

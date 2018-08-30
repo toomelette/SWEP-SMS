@@ -4,6 +4,7 @@ namespace App\Swep\Services;
 
 
 use App\Swep\Interfaces\DocumentFolderInterface;
+use App\Swep\Interfaces\DocumentInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -13,12 +14,14 @@ class DocumentFolderService extends BaseService{
 
 
     protected $doc_folder_repo;
+    protected $doc_repo;
 
 
 
-    public function __construct(DocumentFolderInterface $doc_folder_repo){
+    public function __construct(DocumentFolderInterface $doc_folder_repo, DocumentInterface $doc_repo){
 
         $this->doc_folder_repo = $doc_folder_repo;
+        $this->doc_repo = $doc_repo;
         parent::__construct();
 
     }
@@ -84,6 +87,18 @@ class DocumentFolderService extends BaseService{
 
         $this->event->fire('document_folder.destroy', $doc_folder);
         return redirect()->route('dashboard.document_folder.index');
+
+    }
+
+
+
+
+
+    public function browse($folder_code){
+
+        $documents = $this->doc_repo->fetchByFolderCOde($folder_code);
+
+        return view('dashboard.document_folder.browse')->with('documents', $documents);
 
     }
 

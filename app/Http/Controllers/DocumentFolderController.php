@@ -54,16 +54,6 @@ class DocumentFolderController extends Controller{
 
 
 
-    public function show($slug){
-
-
-        
-    }
-
-    
-
-
-
     public function edit($slug){
         
         return $this->doc_folder->edit($slug);
@@ -89,6 +79,17 @@ class DocumentFolderController extends Controller{
         return $this->doc_folder->destroy($slug);
 
     }
+
+    
+
+
+
+    public function browse($folder_code){
+        
+        return $this->doc_folder->browse($folder_code);
+
+    }
+
 
 
 

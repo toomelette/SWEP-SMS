@@ -110,6 +110,10 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
             return $this->fund_source->where('slug', $slug)->first();
         });
         
+        if(empty($fund_source)){
+            abort(404);
+        }
+
         return $fund_source;
 
     }

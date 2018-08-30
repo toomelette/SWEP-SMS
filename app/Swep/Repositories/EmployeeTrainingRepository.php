@@ -135,7 +135,13 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
     public function findBySlug($slug){
             
-        return $this->employee_trng->where('slug', $slug)->first();
+        $employee_trng = $this->employee_trng->where('slug', $slug)->first();
+
+        if(empty($employee_trng)){
+            abort(404);
+        }
+
+        return $employee_trng;
 
     }
 

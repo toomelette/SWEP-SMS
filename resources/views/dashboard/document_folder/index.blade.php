@@ -17,7 +17,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Document List</h1>
+      <h1>Document Folder List</h1>
   </section>
 
   <section class="content">
@@ -45,7 +45,7 @@
           @foreach($doc_folders as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>
-                <a href="#" style="text-decoration: underline; font-size:15px;">
+                <a href="{{route('dashboard.document_folder.browse', $data->folder_code )}}" style="text-decoration: underline; font-size:15px;">
                   {{ $data->folder_code .' - '. $data->description }}
                 </a>
               </td>

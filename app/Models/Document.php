@@ -14,7 +14,7 @@ class Document extends Model{
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
-    public $sortable = ['reference_no', 'date', 'person_to', 'person_from', 'subject', 'folder_code'];
+    public $sortable = ['reference_no', 'date', 'person_to', 'person_from', 'subject'];
 
 	public $timestamps = false;
 

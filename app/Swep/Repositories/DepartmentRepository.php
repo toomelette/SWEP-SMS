@@ -116,6 +116,10 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
         $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
             return $this->department->where('slug', $slug)->first();
         });
+
+        if(empty($department)){
+            abort(404);
+        }
         
         return $department;
 

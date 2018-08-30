@@ -63,6 +63,10 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
             return $this->submenu->where('submenu_id', $submenu_id)->first();
         });
         
+        if(empty($submenu)){
+            abort(404);
+        }
+        
         return $submenu;
 
     }

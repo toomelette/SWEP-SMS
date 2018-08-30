@@ -52,7 +52,7 @@
           ) !!}  
 
           {!! FormHelper::select_dynamic(
-            '4', 'folder_code', 'Folder Code *', old('folder_code'), $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('folder_code'), $errors->first('folder_code'), '', ''
+            '4', 'folder_code', 'Folder Code *', old('folder_code'), $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('folder_code'), $errors->first('folder_code'), 'select2', ''
           ) !!}
 
           {!! FormHelper::textbox(

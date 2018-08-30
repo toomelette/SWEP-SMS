@@ -118,6 +118,10 @@ class MenuRepository extends BaseRepository implements MenuInterface {
             return $this->menu->where('slug', $slug)->first();
         }); 
         
+        if(empty($menu)){
+            abort(404);
+        }
+
         return $menu;
 
     }
@@ -132,6 +136,10 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu = $this->cache->remember('menus:byMenuId:' . $menu_id, 240, function() use ($menu_id){
             return $this->menu->where('menu_id', $menu_id)->first();
         });
+        
+        if(empty($menu)){
+            abort(404);
+        }
         
         return $menu;
 

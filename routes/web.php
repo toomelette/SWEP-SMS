@@ -72,7 +72,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** EMPLOYEE **/
 	Route::get('/employee/print_pds/{slug}/{page}', 'EmployeeController@printPds')->name('employee.print_pds');
 	Route::get('/employee/print_info/{slug}', 'EmployeeController@printInfo')->name('employee.print_info');
-
+ 
 	Route::get('/employee/service_record/{slug}', 'EmployeeController@serviceRecord')->name('employee.service_record');
 	Route::post('/employee/service_record/store/{slug}', 'EmployeeController@serviceRecordStore')->name('employee.service_record_store');
 	Route::put('/employee/service_record/update/{slug}/{emp_sr_slug}', 'EmployeeController@serviceRecordUpdate')->name('employee.service_record_update');
@@ -91,13 +91,26 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('memo', 'MemoController');
 
 	/** DOCUMENTS **/
-	Route::resource('document', 'DocumentController');
 	Route::get('/document/view_file/{slug}', 'DocumentController@viewFile')->name('document.view_file');
+	Route::resource('document', 'DocumentController');
 
 	/** Document Folder Codes **/
+	Route::get('/document_folder/browse/{folder_code}', 'DocumentFolderController@browse')->name('document_folder.browse');
 	Route::resource('document_folder', 'DocumentFolderController');
 	
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
