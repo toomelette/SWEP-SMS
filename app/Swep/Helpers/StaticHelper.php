@@ -162,11 +162,18 @@ class StaticHelper{
 
         return [
 
-            'Memorandum Circular'=> 'MEMO',
+            'Administrative Order' => 'ADMIN_ORD',
+            'Circular Letter' => 'CIR_LTR',
+            'Memo' => 'MEMO',
+            'Memorandum Circular'=> 'MEMO_CIR',
+            'Memorandum Order' => 'MEMO_ORD',
             'Secretary Certificate' => 'SEC_CERT',
             'Sugar Order' => 'SUGAR_ORD',
             'Special Order' => 'SPECIAL_ORD',
-            'Circular Letter' => 'CIRCLR_LTR',
+            'VOM' => 'VOM',
+            'Incoming Letter' => 'IN_LTR',
+            'Outgoing Letter' => 'OUT_LTR',
+            'Others' => 'OTHERS',
 
         ];
     
