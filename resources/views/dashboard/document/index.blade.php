@@ -8,7 +8,8 @@
                         'd' => Request::get('d'),
                         'dt' => Request::get('dt'),
                         'fc' => Request::get('fc'),
-
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
                       ];
 @endphp
 

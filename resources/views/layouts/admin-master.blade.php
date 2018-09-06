@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @include('layouts.css-plugins')
-    
+
   </head>
 
   <body class="hold-transition {!! Auth::check() ? SanitizeHelper::html_encode(Auth::user()->color) : '' !!}">

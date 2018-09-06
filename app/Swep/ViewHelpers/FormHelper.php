@@ -97,6 +97,25 @@ class FormHelper{
 
 
 
+    public static function timepicker($class, $key, $label, $old_value, $error_has, $error_first){
+
+       return '<div class="col-md-'. $class .' bootstrap-timepicker">
+                <div class="form-group '. self::error_response($error_has) .'">
+                  <label>'. $label .'</label>
+                  <div class="input-group">
+                    <input id="'. $key .'" name="'. $key .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control timepicker">
+                    <div class="input-group-addon">
+                      <i class="fa fa-clock-o"></i>
+                    </div>
+                  </div>
+                  '. self::error_message($error_has, $error_first) .'
+                </div>
+              </div>';
+
+    }
+
+
+
     public static function file($class, $key, $label, $error_has, $error_first, $extra_attr){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">

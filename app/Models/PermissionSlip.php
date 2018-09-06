@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class PermissionSlip extends Model{
 
-
+    use Sortable;
+    
 	protected $table = 'permission_slip';
 
     protected $dates = ['date', 'time_out', 'time_in', 'created_at', 'updated_at'];
+
+    public $sortable = ['ps_id', 'date', 'time_out', 'time_in'];
 
 	public $timestamps = false;
 

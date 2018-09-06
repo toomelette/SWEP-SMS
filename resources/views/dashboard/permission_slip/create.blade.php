@@ -31,33 +31,13 @@
             '3', 'employee_no', 'Employee *', old('s'), $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
           ) !!}
 
+          {!! FormHelper::timepicker(
+            '3', 'time_out',  'Time Out *', old('time_out'), $errors->has('time_out'), $errors->first('time_out')
+          ) !!}
 
-          <div class="col-md-3 bootstrap-timepicker">
-            <div class="form-group">
-              <label>Time Out:</label>
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" name="time_out">
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-            </div>
-            {{ $errors->first('time_out') }}
-          </div>
-
-
-          <div class="col-md-3 bootstrap-timepicker">
-            <div class="form-group">
-              <label>Time In:</label>
-              <div class="input-group">
-                <input type="text" class="form-control timepicker" name="time_in">
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-              </div>
-            </div>
-            {{ $errors->first('time_in') }}
-          </div>
+          {!! FormHelper::timepicker(
+            '3', 'time_in',  'Time In *', old('time_in'), $errors->has('time_in'), $errors->first('time_in')
+          ) !!}
 
           <div class="col-md-12"></div>
 
@@ -108,12 +88,6 @@
     @if(Session::has('PS_CREATE_SUCCESS'))
       $('#ps_create').modal('show');
     @endif
-
-    $('.timepicker').timepicker({
-      showInputs: false,
-      minuteStep: 5,
-      showMeridian: true,
-    })
 
   </script> 
     

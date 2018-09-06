@@ -30,26 +30,25 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
 
 
+    public function fetchAll($request){
 
-    // public function fetchAll($request){
+        $key = str_slug($request->fullUrl(), '_');
 
-    //     $key = str_slug($request->fullUrl(), '_');
+        $permission_slips = $this->cache->remember('permission_slips:all:' . $key, 240, function() use ($request){
 
-    //     $permission_slips = $this->cache->remember('departments:all:' . $key, 240, function() use ($request){
-
-    //         $permission_slip = $this->permission_slip->newQuery();
+            $permission_slip = $this->permission_slip->newQuery();
             
-    //         if(isset($request->q)){
-    //             $this->search($permission_slip, $request->q);
-    //         }
+            if(isset($request->q)){
+                $this->search($permission_slip, $request->q);
+            }
 
-    //         return $this->populate($permission_slip);
+            return $this->populate($permission_slip);
 
-    //     });
+        });
 
-    //     return $permission_slips;
+        return $permission_slips;
 
-    // }
+    }
 
 
 
@@ -134,27 +133,32 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
 
 
-    // public function search($model, $key){
+    public function search($model, $key){
 
-    //     return $model->where(function ($model) use ($key) {
-    //             $model->where('name', 'LIKE', '%'. $key .'%');
-    //     });
+        return $model->where(function ($model) use ($key) {
+                $model->where('ps_id', 'LIKE', '%'. $key .'%')
+                      ->orwhereHas('employee', function ($model) use ($key) {
+                          $model->where('firstname', 'LIKE', '%'. $key .'%')
+                                ->orwhere('lastname', 'LIKE', '%'. $key .'%')
+                                ->orwhere('employee_no', 'LIKE', '%'. $key .'%');
+                    });
+        });
 
-    // }
+    }
 
 
 
 
 
 
-    // public function populate($model){
+    public function populate($model){
 
-    //     return $model->select('name', 'slug')
-    //                  ->sortable()
-    //                  ->orderBy('updated_at', 'desc')
-    //                  ->paginate(10);
+        return $model->select('ps_id', 'employee_no', 'date', 'time_out', 'time_out', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
-    // }
+    }
 
 
 

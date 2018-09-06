@@ -5,6 +5,8 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'order' => Request::get('order'),
                       ];
 @endphp
 

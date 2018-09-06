@@ -72,6 +72,16 @@ $('.datepicker').each(function(){
 });
 
 
+
+// Time Picker
+$('.timepicker').timepicker({
+  showInputs: false,
+  minuteStep: 5,
+  showMeridian: true,
+});
+
+
+
 // Table Rule
 $(document).on('change', 'select[id="action"]', function () {
   var element = $(this).children('option:selected');
