@@ -89,7 +89,9 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
 
         // EMPLOYEES
-        View::composer(['dashboard.user.sync_employee',], 'App\Swep\ViewComposers\EmployeeComposer');
+        View::composer(['dashboard.user.sync_employee',
+                        'dashboard.permission_slip.create',
+                        'dashboard.permission_slip.edit',], 'App\Swep\ViewComposers\EmployeeComposer');
 
 
 

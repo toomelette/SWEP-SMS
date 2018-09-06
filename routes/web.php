@@ -94,6 +94,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** Document Folder Codes **/
 	Route::get('/document_folder/browse/{folder_code}', 'DocumentFolderController@browse')->name('document_folder.browse');
 	Route::resource('document_folder', 'DocumentFolderController');
+
+	/** Permission Slip **/
+	Route::resource('permission_slip', 'PermissionSlipController');
 	
 });
 

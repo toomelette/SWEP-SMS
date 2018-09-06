@@ -17,6 +17,8 @@
 
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/iCheck/all.css')}}">
 
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/timepicker/bootstrap-timepicker.min.css')}}">
+
 <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">

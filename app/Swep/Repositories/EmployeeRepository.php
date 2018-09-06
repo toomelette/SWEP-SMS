@@ -325,7 +325,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
     public function globalFetchAll(){
 
         $employees = $this->cache->remember('employees:global:all', 240, function(){
-            return $this->employee->select('slug', 'fullname')->get();
+            return $this->employee->select('slug', 'employee_no', 'fullname')->get();
         });
         
         return $employees;

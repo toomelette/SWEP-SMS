@@ -21,6 +21,8 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/iCheck/icheck.min.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('template/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
