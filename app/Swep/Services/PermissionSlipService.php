@@ -55,10 +55,22 @@ class PermissionSlipService extends BaseService{
 
 
 
+    public function show($slug){
+
+        $permission_slip = $this->ps_repo->findBySlug($slug);
+        return view('dashboard.permission_slip.show')->with('permission_slip', $permission_slip);
+
+    }
+
+
+
+
+
+
     public function edit($slug){
 
-        // $permission_slip = $this->ps_repo->findBySlug($slug);
-        // return view('dashboard.permission_slip.edit')->with('permission_slip', $permission_slip);
+        $permission_slip = $this->ps_repo->findBySlug($slug);
+        return view('dashboard.permission_slip.edit')->with('permission_slip', $permission_slip);
 
     }
 
@@ -69,10 +81,10 @@ class PermissionSlipService extends BaseService{
 
     public function update($request, $slug){
 
-        // $permission_slip = $this->ps_repo->update($request, $slug);
+        $permission_slip = $this->ps_repo->update($request, $slug);
 
-        // $this->event->fire('ps.update', $permission_slip);
-        // return redirect()->route('dashboard.permission_slip.index');
+        $this->event->fire('ps.update', $permission_slip);
+        return redirect()->route('dashboard.permission_slip.index');
 
     }
 
@@ -83,10 +95,10 @@ class PermissionSlipService extends BaseService{
 
     public function destroy($slug){
 
-        // $permission_slip = $this->ps_repo->destroy($slug);
+        $permission_slip = $this->ps_repo->destroy($slug);
 
-        // $this->event->fire('ps.destroy', $permission_slip);
-        // return redirect()->route('dashboard.permission_slip.index');
+        $this->event->fire('ps.destroy', $permission_slip);
+        return redirect()->route('dashboard.permission_slip.index');
 
     }
 

@@ -21,6 +21,8 @@ class PermissionSlipFilterRequest extends FormRequest{
         return [
 
             'q' => 'nullable|string|max:90',
+            'emp' => 'nullable|string|max:20',
+            'd' => 'nullable|date_format:"m/d/Y"',
 
         ];
 

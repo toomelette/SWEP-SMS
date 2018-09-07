@@ -76,7 +76,7 @@ $('.datepicker').each(function(){
 // Time Picker
 $('.timepicker').timepicker({
   showInputs: false,
-  minuteStep: 5,
+  minuteStep: 1,
   showMeridian: true,
 });
 

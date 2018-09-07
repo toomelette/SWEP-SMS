@@ -52,9 +52,18 @@ class PermissionSlipController extends Controller{
 
 
 
+    public function show($slug){
+
+       return $this->permission_slip->show($slug);
+        
+    }
+
+
+
+
     public function edit($slug){
 
-       // return $this->permission_slip->edit($slug);
+       return $this->permission_slip->edit($slug);
         
     }
 
@@ -63,7 +72,7 @@ class PermissionSlipController extends Controller{
 
     public function update(PermissionSlipFormRequest $request, $slug){
 
-        //return $this->permission_slip->update($request, $slug);
+        return $this->permission_slip->update($request, $slug);
 
     }
 
@@ -72,7 +81,7 @@ class PermissionSlipController extends Controller{
 
     public function destroy($slug){
 
-       //return $this->permission_slip->destroy($slug); 
+       return $this->permission_slip->destroy($slug); 
 
     }
 

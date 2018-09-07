@@ -34,7 +34,7 @@
 
       <div class="col-md-12">
           
-        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), StaticHelper::leave_types(), 'submit_la_filter', '') !!}
+        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), StaticHelper::leave_types(), 'submit_la_filter', '', '') !!}
 
       </div>
 

@@ -34,16 +34,14 @@
     {!! HtmlHelper::filter_open() !!}
 
       {!! FormHelper::select_dynamic_for_filter(
-        '3', 'fc', 'Folder Code', old('fc'), $global_document_folders_all, 'folder_code', 'folder_code', 'submit_memo_filter', ''
+        '3', 'fc', 'Folder Code', old('fc'), $global_document_folders_all, 'folder_code', 'folder_code', 'submit_memo_filter', 'class="col-md-12"', 'style="width:100%;"'
       ) !!}
 
       {!! FormHelper::select_static_for_filter(
-        '3', 'dt', 'Document Types', old('dt'), StaticHelper::document_types(), 'submit_memo_filter', ''
+        '3', 'dt', 'Document Types', old('dt'), StaticHelper::document_types(), 'submit_memo_filter', '', ''
       ) !!}
 
-      <div class="col-md-6" style="padding-bottom:50px;">&nbsp;</div>
-
-      <section>
+      <div class="col-md-12 no-padding">
 
         <h5>Date Filter : </h5>
 
@@ -51,7 +49,7 @@
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
-      </section>
+      </div>
 
     {!! HtmlHelper::filter_close('submit_memo_filter') !!}
 

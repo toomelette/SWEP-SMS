@@ -5,7 +5,8 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'), 
-                        'fs' => Request::get('fs'), 
+                        'emp' => Request::get('emp'),
+                        'd' => Request::get('d'), 
                         'sort' => Request::get('sort'),
                         'order' => Request::get('order'),
                       ];
@@ -32,10 +33,12 @@
     {!! HtmlHelper::filter_open() !!}
         
       {!! FormHelper::select_dynamic_for_filter(
-        '12', 'emp', 'Employee', old('emp'), $global_employees_all, 'employee_no', 'fullname', 'submit_ps_filter', 'select2'
+        '3', 'emp', 'Employee', old('emp'), $global_employees_all, 'employee_no', 'fullname', 'submit_ps_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
-      <section>
+      <div class="col-md-12" style="margin-right: 100px;"></div>
+
+      <div class="col-md-12 no-padding">
         
         <h5>Date Filter : </h5>
 
@@ -43,7 +46,7 @@
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
-      </section>
+      </div>
 
 
     {!! HtmlHelper::filter_close('submit_ps_filter') !!}
@@ -53,7 +56,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.disbursement_voucher.index')) !!}
+        {!! HtmlHelper::table_search(route('dashboard.permission_slip.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -68,23 +71,24 @@
             <th>@sortablelink('date', 'Date')</th>
             <th>@sortablelink('time_out', 'Time Out')</th>
             <th>@sortablelink('time_in', 'Time In')</th>
-            <th>Status</th>
+            <th>@sortablelink('with_ps', 'With PS')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($permission_slips as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->ps_id }}</td>
               <td>{{ $data->employee->fullname }}</td>
-              <td>{{ $data->date }}</td>
-              <td>{{ $data->time_out  }}</td>
-              <td>{{ $data->time_out}}</td>
+              <td>{{ $data->date->format('M d, Y') }}</td>
+              <td>{{ date('h:i A', strtotime($data->time_out)) }}</td>
+              <td>{{ date('h:i A', strtotime($data->time_in)) }}</td>
+              <td>{{ $data->with_ps ? 'YES' : 'NO' }}</td>
 
               <td> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
-                  <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
-                  <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>
-                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.disbursement_voucher.destroy', $data->slug) }}">Delete</option>
+                  <option data-type="1" data-url="{{ route('dashboard.permission_slip.show', $data->slug) }}">Details</option>
+                  <option data-type="1" data-url="{{ route('dashboard.permission_slip.edit', $data->slug) }}">Edit</option>
+                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.permission_slip.destroy', $data->slug) }}">Delete</option>
                 </select>
               </td>
 
@@ -131,6 +135,11 @@
 
     {{-- CALL CONFIRM DELETE MODAL --}}
     {!! JSHelper::modal_confirm_delete_caller('ps_delete') !!}
+
+    {{-- PS DELETE TOAST --}}
+    @if(Session::has('PS_UPDATE_SUCCESS'))
+      {!! JSHelper::toast(Session::get('PS_UPDATE_SUCCESS')) !!}
+    @endif
 
     {{-- PS DELETE TOAST --}}
     @if(Session::has('PS_DELETE_SUCCESS'))

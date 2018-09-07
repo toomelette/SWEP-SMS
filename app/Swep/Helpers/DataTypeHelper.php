@@ -41,6 +41,15 @@ class DataTypeHelper{
 
 
 
+    public static function time_parse($value, $format = 'H:i:s'){
+
+        return $value != null ? date($format, strtotime($value)) : null;
+
+    }
+
+
+
+
 
     public static function string_to_num($value){
 

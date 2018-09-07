@@ -12,7 +12,7 @@ class PermissionSlip extends Model{
     
 	protected $table = 'permission_slip';
 
-    protected $dates = ['date', 'time_out', 'time_in', 'created_at', 'updated_at'];
+    protected $dates = ['date', 'created_at', 'updated_at'];
 
     public $sortable = ['ps_id', 'date', 'time_out', 'time_in'];
 
@@ -45,7 +45,6 @@ class PermissionSlip extends Model{
     public function employee() {
     	return $this->belongsTo('App\Models\Employee','employee_no','employee_no');
     }
-
 
 
 

@@ -198,7 +198,7 @@ class HtmlHelper{
     /** UTILITY METHODS **/
     public static function collapsed_filter(){
 
-       return Input::except('q', 'page', 'sort', 'order') ? '' : 'collapsed-box';
+       return Input::except('q', 'page', 'sort', 'direction') ? '' : 'collapsed-box';
 
     }
 

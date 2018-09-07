@@ -28,7 +28,7 @@
           ) !!}
 
           {!! FormHelper::select_dynamic(
-            '3', 'employee_no', 'Employee *', old('s'), $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
+            '3', 'employee_no', 'Employee *', old('employee_no'), $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
           ) !!}
 
           {!! FormHelper::timepicker(
@@ -42,7 +42,7 @@
           <div class="col-md-12"></div>
 
           {!! FormHelper::select_static(
-            '3', 'with_ps', 'With PS *', old('sex'), ['Yes' => 'true', 'No' => 'false'], $errors->has('with_ps'), $errors->first('with_ps'), '', ''
+            '3', 'with_ps', 'With PS *', old('with_ps'), ['Yes' => 'true', 'No' => 'false'], $errors->has('with_ps'), $errors->first('with_ps'), '', ''
           ) !!}
 
 
