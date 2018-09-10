@@ -85,6 +85,15 @@ class PermissionSlipController extends Controller{
 
     }
 
+    
+
+
+    public function report(){
+
+       return view('dashboard.permission_slip.report');
+
+    }
+
 
 
 

@@ -96,6 +96,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('document_folder', 'DocumentFolderController');
 
 	/** Permission Slip **/
+	Route::get('/permission_slip/report', 'PermissionSlipController@report')->name('permission_slip.report');
 	Route::resource('permission_slip', 'PermissionSlipController');
 	
 });
