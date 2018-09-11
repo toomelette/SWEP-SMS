@@ -8,6 +8,8 @@ interface EmployeeInterface {
 
 	public function fetchAll($request);
 
+	public function fetchByDepartmentId($dept_id);
+
 	public function store($request);
 
 	public function update($request, $slug);

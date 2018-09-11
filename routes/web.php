@@ -97,6 +97,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** Permission Slip **/
 	Route::get('/permission_slip/report', 'PermissionSlipController@report')->name('permission_slip.report');
+	Route::get('/permission_slip/report_generate', 'PermissionSlipController@reportGenerate')->name('permission_slip.report_generate');
 	Route::resource('permission_slip', 'PermissionSlipController');
 	
 });
@@ -112,14 +113,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 
-
-
-
 /** Testing **/
 
-//Route::get('/dashboard/test', function(){
+// Route::get('/dashboard/test', function(){
 
-	//return dd(Illuminate\Support\Str::random(16));
+	// return dd(Illuminate\Support\Str::random(16));
 
 	// $list = App\Models\EmployeeTraining::where('slug', '')->get();
 
@@ -129,5 +127,5 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// 	$tr->save();
 	// }
 
-//});
+// });
 

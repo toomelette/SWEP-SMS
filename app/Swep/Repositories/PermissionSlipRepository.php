@@ -7,6 +7,7 @@ use App\Swep\Interfaces\PermissionSlipInterface;
 
 
 use App\Models\PermissionSlip;
+use App\Models\Employee;
 
 
 class PermissionSlipRepository extends BaseRepository implements PermissionSlipInterface {
@@ -15,13 +16,15 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
 
     protected $permission_slip;
+    protected $employee;
 
 
 
 
-	public function __construct(PermissionSlip $permission_slip){
+	public function __construct(PermissionSlip $permission_slip, Employee $employee){
 
         $this->permission_slip = $permission_slip;
+        $this->employee = $employee;
         parent::__construct();
 
     }
@@ -57,6 +60,25 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
         });
 
         return $permission_slips;
+
+    }
+
+
+
+
+
+    public function fetchEmployeeByDepartmentIdWithMonthlyPS($dept_id, $df, $dt){
+
+        $employee = $this->employee->newQuery();
+
+        return $employee->select('fullname', 'employee_no')
+                        ->where('department_id', $dept_id)
+                        ->where('is_active', 'ACTIVE')
+                        ->with('permissionSlip')
+                        ->whereHas('permissionSlip', function ($model) use ($df, $dt) {
+                          $model->whereBetween('date', [$df, $dt]);
+                        })
+                        ->get();
 
     }
 

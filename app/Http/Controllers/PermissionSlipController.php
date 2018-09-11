@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Swep\Services\PermissionSlipService;
 use App\Http\Requests\PermissionSlipFormRequest;
 use App\Http\Requests\PermissionSlipFilterRequest;
+use App\Http\Requests\PermissionSlipReportRequest;
 
 
 
@@ -91,6 +92,15 @@ class PermissionSlipController extends Controller{
     public function report(){
 
        return view('dashboard.permission_slip.report');
+
+    }
+
+    
+
+
+    public function reportGenerate(PermissionSlipReportRequest $request){
+
+       return $this->permission_slip->reportGenerate($request);
 
     }
 

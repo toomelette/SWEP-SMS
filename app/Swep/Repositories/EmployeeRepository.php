@@ -56,6 +56,28 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
+    public function fetchByDepartmentId($dept_id){
+
+        $employees = $this->cache->remember('employees:byDepartmentId:' . $dept_id, 240, function() use ($dept_id){
+
+            $employee = $this->employee->newQuery();
+
+            return $employee->where('department_id', $dept_id)
+                            ->where('is_active', 'ACTIVE')
+                            ->with('permissionSlip')
+                            ->get();
+
+        });
+
+        return $employees;
+        
+    }
+
+
+
+
+
+
     public function store($request){
 
         $employee = new Employee;

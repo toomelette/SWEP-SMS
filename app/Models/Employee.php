@@ -173,6 +173,10 @@ class Employee extends Model{
         return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no');
     }
 
+    public function permissionSlip(){
+        return $this->hasMany('App\Models\PermissionSlip', 'employee_no', 'employee_no');
+    }
+
 
 
 

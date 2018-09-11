@@ -4,6 +4,8 @@ namespace App\Swep\Services;
 
 
 use App\Swep\Interfaces\PermissionSlipInterface;
+use App\Swep\Interfaces\DepartmentInterface;
+use App\Swep\Interfaces\EmployeeInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -13,12 +15,16 @@ class PermissionSlipService extends BaseService{
 
 
     protected $ps_repo;
+    protected $dept_repo;
+    protected $emp_repo;
 
 
 
-    public function __construct(PermissionSlipInterface $ps_repo){
+    public function __construct(PermissionSlipInterface $ps_repo, DepartmentInterface $dept_repo, EmployeeInterface $emp_repo){
 
         $this->ps_repo = $ps_repo;
+        $this->dept_repo = $dept_repo;
+        $this->emp_repo = $emp_repo;
         parent::__construct();
 
     }
@@ -99,6 +105,24 @@ class PermissionSlipService extends BaseService{
 
         $this->event->fire('ps.destroy', $permission_slip);
         return redirect()->route('dashboard.permission_slip.index');
+
+    }
+
+
+
+
+
+
+    public function reportGenerate($request){
+
+        $df = $this->dataTypeHelper->date_parse($request->df, 'Y-m-d');
+        $dt = $this->dataTypeHelper->date_parse($request->dt, 'Y-m-d');
+
+        $department = $this->dept_repo->findByDepartmentId($request->d);
+
+        $employees = $this->ps_repo->fetchEmployeeByDepartmentIdWithMonthlyPS($request->d, $df, $dt);
+
+        return view('printables.permission_slip_monthly_report', compact(['permission_slips', 'department', 'employees']));
 
     }
 

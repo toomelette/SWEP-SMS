@@ -26,6 +26,7 @@ class PermissionSlipFormRequest extends FormRequest{
             'time_out' => 'required|date_format:"h:i A"',
             'time_in' => 'required|date_format:"h:i A"',
             'with_ps' => 'required|max:5|min:4|string',
+            
         ];
     
     }

@@ -49,5 +49,16 @@ class PermissionSlip extends Model{
 
 
 
+    /** Scopes **/
+    public function scopeMonthlyPS($query, $df, $dt){
+
+        return $query->select('ps_id', 'employee_no', 'date', 'time_out', 'time_in', 'with_ps')
+                     ->whereBetween('date', [$df, $dt])
+                     ->get();
+
+    }
+
+
+
     
 }

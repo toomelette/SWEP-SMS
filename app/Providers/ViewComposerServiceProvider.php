@@ -58,7 +58,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.project_code.create',
                         'dashboard.project_code.edit',
                         'dashboard.employee.create',
-                        'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentComposer');
+                        'dashboard.employee.edit',
+                        'dashboard.permission_slip.report'], 'App\Swep\ViewComposers\DepartmentComposer');
 
 
         // DEPARTMENT UNITS
