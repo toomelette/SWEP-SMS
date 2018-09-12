@@ -53,7 +53,7 @@
             <div class="col-sm-8" style="text-align: center; padding-right:125px;">
               <span>Republic of the Philippines</span><br>
               <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
-              <span>Araneta Street, Singcang, Bacolod City</span>
+              <span>North Avenue, Diliman, Quezon City</span>
             </div>
 
         </div>

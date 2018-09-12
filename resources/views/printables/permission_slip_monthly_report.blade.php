@@ -81,38 +81,51 @@
 
       @foreach($employees as $data_emp)
 
-        <td>{{ $data_emp->fullname }}</td>
+        <tr>
 
-        @foreach(StaticHelper::days() as $data_days)
-          
-          @foreach($data_emp->permissionSlip()->monthlyPS($df,$dt) as $data_ps)
+          <td>{{ $data_emp->fullname }}</td>
 
-            <?php 
-              $date = DataTypeHelper::date_parse($data_ps->date, 'd');
-              $from = Carbon::createFromFormat('H:i:s', $data_ps->time_out);
-              $to = Carbon::createFromFormat('H:i:s', $data_ps->time_in);
-              $hrs = $to->diffInHours($from);
-              $mins = $to->copy()->subHours($hrs)->diffInMinutes($from);
+          @foreach(StaticHelper::days() as $data_days)
+            
+            <?php
+
+              $date = '';
+              $monthly_ps = $data_emp->permissionSlip()->monthlyPS($df,$dt);
             ?>
 
-            @if($data_days == $date)
+            @foreach( as $data_ps)
 
-              <td>{{ $hrs .':'. $mins}}</td>
+              <?php
+                $date = DataTypeHelper::date_parse($data_ps->date, 'd');
+                $from = Carbon::createFromFormat('H:i:s', $data_ps->time_out);
+                $to = Carbon::createFromFormat('H:i:s', $data_ps->time_in);
+                $hrs = $to->diffInHours($from);
+                $mins = $to->copy()->subHours($hrs)->diffInMinutes($from);
+              ?>
 
-            @else
-              <td>0</td>
-            @endif
+              @if($data_days == $date)
+
+                <td>{{ $hrs .':'. $mins }}</td>
+
+              @endif
+
+            @endforeach
+
+            <?php
+
+              $date
+
+            ?>
 
           @endforeach
-
-        @endforeach
+        
+        </tr>
 
       @endforeach
 
 
 
     </table>
-
 
 
 
