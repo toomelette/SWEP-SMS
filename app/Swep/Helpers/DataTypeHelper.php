@@ -61,4 +61,21 @@ class DataTypeHelper{
 
 
 
+    public static function construct_time_HM($hrs, $mins){
+
+        while ($mins >= 60) {
+          
+          $hrs = $hrs + 1;
+          $mins = $mins - 60;
+
+        }    
+
+        return $hrs .':'. $mins;
+
+    }
+
+
+
+
+
 }

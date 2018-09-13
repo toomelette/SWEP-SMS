@@ -122,7 +122,7 @@ class PermissionSlipService extends BaseService{
 
         $employees = $this->ps_repo->fetchEmployeeByDepartmentIdWithMonthlyPS($request->d, $df, $dt);
 
-        return view('printables.permission_slip_monthly_report', compact(['permission_slips', 'department', 'employees']));
+        return view('printables.permission_slip_monthly_report', compact(['department', 'employees']));
 
     }
 
