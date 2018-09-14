@@ -60,5 +60,17 @@ class PermissionSlip extends Model{
 
 
 
+
+    /** Scopes **/
+    public function scopeDailyPS($query, $date){
+
+        return $query->select('date', 'time_out', 'time_in')
+                     ->where('date', $date)
+                     ->get();
+
+    }
+
+
+
     
 }

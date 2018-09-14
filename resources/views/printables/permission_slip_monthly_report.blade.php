@@ -6,6 +6,8 @@
   $df = Carbon::parse(Request::get('df'))->format('Y-m-d');
   $dt = Carbon::parse(Request::get('dt'))->format('Y-m-d');
 
+  $df_YM = Carbon::parse(Request::get('df'))->format('Y-m');
+
 @endphp
 
 <!DOCTYPE html>
@@ -66,7 +68,7 @@
 
 
 
-    <table style="border: 1px solid black;">
+    <table style="border: 1px solid black; font-size: 15px;">
       
 
 
@@ -75,7 +77,7 @@
         @foreach(StaticHelper::days() as $data)
           <th>{{ $data }}</th>
         @endforeach  
-        <th>Total</th>
+        <th>TOTAL</th>
       </tr>
 
 
@@ -89,63 +91,98 @@
           @foreach (StaticHelper::days() as $data_days)
 
             <?php
+
               $table_data = '';
               $day_of_week = '';
+
               $total_hrs = 0;
               $total_mins = 0;
+
+              $subtotal_hrs = 0;
+              $subtotal_mins = 0;
+
               $monthly_ps = $data_emp->permissionSlip()->monthlyPS($df,$dt);
+              $daily_ps = $data_emp->permissionSlip()->dailyPS($df_YM.'-'.$data_days);
+
             ?>
 
             <td>
               
-              @foreach($monthly_ps as $data_ps)
+
+              {{-- Daily PS --}}
+              @foreach($daily_ps as $data_daily_ps)
 
                 <?php
-                  $date_year_month = DataTypeHelper::date_parse($data_ps->date, 'Y-m');
-                  $date_day = DataTypeHelper::date_parse($data_ps->date, 'd');
-                  $date_full = Carbon::createFromFormat('Y-m-d', $date_year_month .'-'. $data_days);
-                  $from = Carbon::createFromFormat('H:i:s', $data_ps->time_out);
-                  $to = Carbon::createFromFormat('H:i:s', $data_ps->time_in);
-                  $hrs = $to->diffInHours($from);
-                  $mins = $to->copy()->subHours($hrs)->diffInMinutes($from);
 
-                  $total_hrs += $hrs;
-                  $total_mins += $mins;
+                  $start = Carbon::createFromFormat('H:i:s', $data_daily_ps->time_out);
+                  $end = Carbon::createFromFormat('H:i:s', $data_daily_ps->time_in);
+                  $daily_hrs = $end->diffInHours($start);
+                  $daily_mins = $end->copy()->subHours($daily_hrs)->diffInMinutes($start);
+
+                  $subtotal_hrs += $daily_hrs;
+                  $subtotal_mins += $daily_mins;
+
+                  $table_data =  sprintf("%02d", $subtotal_hrs) .':'. sprintf("%02d", $subtotal_mins); 
+
                 ?>
 
-                @if($data_days == $date_day)
+                @if(count($daily_ps) >= 1)
+                  
+                  @if($loop->last)
+                    {{ $table_data }}
+                    <?php unset($table_data) ?>
+                    <?php unset($day_of_week) ?>
+                  @endif
 
-                  <?php $table_data =  $hrs .':'. $mins; ?>
+                @endif
+                
+              @endforeach
 
-                  {{ $table_data }}
 
-                  <?php unset($table_data) ?>
-                  <?php unset($day_of_week) ?>
 
-                @elseif($date_full->format( 'D' ) == 'Sun' && isset($table_data))
 
+              {{-- Monthly PS --}}
+              @foreach($monthly_ps as $data_monthly_ps)
+
+                <?php
+
+                  $date_YM = DataTypeHelper::date_parse($data_monthly_ps->date, 'Y-m');
+                  $date_D = DataTypeHelper::date_parse($data_monthly_ps->date, 'd');
+                  $date_YMD = Carbon::createFromFormat('Y-m-d', $date_YM .'-'. $data_days);
+
+                  $start = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_out);
+                  $end = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_in);
+
+                  $monthly_hrs = $end->diffInHours($start);
+                  $monthly_mins = $end->copy()->subHours($monthly_hrs)->diffInMinutes($start);
+
+                  $total_hrs += $monthly_hrs;
+                  $total_mins += $monthly_mins;
+
+                ?>
+
+                @if($date_YMD->format( 'D' ) == 'Sun')
                   <?php $day_of_week = 'SUN'; ?>
-
-                @elseif($date_full->format( 'D' ) == 'Sat' && isset($table_data))
-
+                @elseif($date_YMD->format( 'D' ) == 'Sat')
                   <?php $day_of_week = 'SAT'; ?>
-
                 @elseif(isset($table_data))
-
-                  <?php $table_data = '0:0'; ?>
-
+                  <?php $table_data = '00:00'; ?>
                 @endif
 
               @endforeach
 
+
+              {{-- Setting of Table Data --}}
               {{ isset($table_data) ? $table_data : '' }}
               {{ isset($day_of_week) ? $day_of_week : '' }}
+
+
 
             </td>
 
           @endforeach
           
-          <td>{{ DataTypeHelper::construct_time_HM($total_hrs, $total_mins) }}</td>
+          <td><b>{{ DataTypeHelper::construct_time_HM($total_hrs, $total_mins) }}</b></td>
 
         </tr>
 

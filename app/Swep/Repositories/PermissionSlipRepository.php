@@ -190,7 +190,7 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
     public function populate($model){
 
-        return $model->select('ps_id', 'employee_no', 'date', 'time_out', 'time_in', 'slug')
+        return $model->select('ps_id', 'employee_no', 'date', 'time_out', 'time_in', 'with_ps', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);

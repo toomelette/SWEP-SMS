@@ -81,7 +81,7 @@
               <td>{{ $data->date->format('M d, Y') }}</td>
               <td>{{ date('h:i A', strtotime($data->time_out)) }}</td>
               <td>{{ date('h:i A', strtotime($data->time_in)) }}</td>
-              <td>{{ $data->with_ps ? 'YES' : 'NO' }}</td>
+              <td>{{ $data->with_ps == 1 ? 'YES' : 'NO' }}</td>
 
               <td> 
                 <select id="action" class="form-control input-md">

@@ -70,7 +70,7 @@ class DataTypeHelper{
 
         }    
 
-        return $hrs .':'. $mins;
+        return sprintf("%02d", $hrs) .':'. sprintf("%02d", $mins);
 
     }
 
