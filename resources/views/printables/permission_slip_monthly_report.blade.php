@@ -45,7 +45,7 @@
   </style>
 
 </head>
-<body onload="//window.print();" onafterprint="window.close()">
+<body onload="window.print();" onafterprint="window.close()">
 
   <div class="wrapper">
 
@@ -68,7 +68,7 @@
 
 
 
-    <table style="border: 1px solid black; font-size: 15px;">
+    <table style="border: 1px solid black; font-size: 9px;">
       
 
 
@@ -116,8 +116,18 @@
 
                   $start = Carbon::createFromFormat('H:i:s', $data_daily_ps->time_out);
                   $end = Carbon::createFromFormat('H:i:s', $data_daily_ps->time_in);
+
+                  $start_H = Carbon::parse($start)->format('H');
+                  $end_H = Carbon::parse($end)->format('H');
+
                   $daily_hrs = $end->diffInHours($start);
                   $daily_mins = $end->copy()->subHours($daily_hrs)->diffInMinutes($start);
+
+                  if($start_H <= '12' && $end_H >= '01') {
+                    
+                    $daily_hrs = $daily_hrs - 1;
+
+                  }
 
                   $subtotal_hrs += $daily_hrs;
                   $subtotal_mins += $daily_mins;
@@ -153,8 +163,17 @@
                   $start = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_out);
                   $end = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_in);
 
+                  $start_H = Carbon::parse($start)->format('H');
+                  $end_H = Carbon::parse($end)->format('H');
+
                   $monthly_hrs = $end->diffInHours($start);
                   $monthly_mins = $end->copy()->subHours($monthly_hrs)->diffInMinutes($start);
+
+                  if($start_H <= '12' && $end_H >= '01') {
+                    
+                    $monthly_hrs = $monthly_hrs - 1;
+
+                  }
 
                   $total_hrs += $monthly_hrs;
                   $total_mins += $monthly_mins;
@@ -175,7 +194,6 @@
               {{-- Setting of Table Data --}}
               {{ isset($table_data) ? $table_data : '' }}
               {{ isset($day_of_week) ? $day_of_week : '' }}
-
 
 
             </td>
