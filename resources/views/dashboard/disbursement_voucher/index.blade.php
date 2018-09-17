@@ -89,18 +89,16 @@
       <div class="box-body no-padding">
         <table class="table table-hover">
           <tr>
-            <th>@sortablelink('user.firstname', 'User')</th>
-            <th>@sortablelink('doc_no', 'Doc No.')</th>
+            <th style="width:250px;">@sortablelink('payee', 'Payee')</th>
             <th>@sortablelink('dv_no', 'DV No.')</th>
-            <th>@sortablelink('payee', 'Payee')</th>
+            <th style="width:600px;">Explanation</th>
             <th>@sortablelink('date', 'Date')</th>
             <th>Status</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{!! empty($data->user) ? $span_user_not_exist : $data->user->fullnameShort ; !!}</td>
-              <td>{{ $data->doc_no }}</td>
+              <td>{{ Str::limit($data->payee, 30)  }}</td>
               <td>
                 @if($data->dv_no == null)
                   <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;">
@@ -112,7 +110,7 @@
                   </a>
                 @endif
               </td>
-              <td>{{ Str::limit($data->payee, 30)  }}</td>
+              <td>{!! Str::limit($data->explanation, 90)  !!}</td>
               <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)

@@ -83,16 +83,16 @@
       <div class="box-body no-padding">
         <table class="table table-hover">
           <tr>
-            <th>@sortablelink('doc_no', 'Doc No.')</th>
             <th>@sortablelink('payee', 'Payee')</th>
+            <th>Explanation</th>
             <th>@sortablelink('date', 'Date')</th>
             <th>Status</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr>
-              <td>{{ $data->doc_no }}</td>
-              <td>{{ $data->payee  }}</td>
+              <td>{{ $data->payee }}</td>
+              <td>{!! Str::limit($data->explanation, 120)  !!}</td>
               <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)
