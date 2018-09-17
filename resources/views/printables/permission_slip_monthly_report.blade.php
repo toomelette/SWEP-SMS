@@ -123,7 +123,7 @@
                   $daily_hrs = $end->diffInHours($start);
                   $daily_mins = $end->copy()->subHours($daily_hrs)->diffInMinutes($start);
 
-                  if($start_H <= '12' && $end_H >= '01') {
+                  if($start_H <= '12' && $end_H >= '13') {
                     
                     $daily_hrs = $daily_hrs - 1;
 
@@ -169,7 +169,7 @@
                   $monthly_hrs = $end->diffInHours($start);
                   $monthly_mins = $end->copy()->subHours($monthly_hrs)->diffInMinutes($start);
 
-                  if($start_H <= '12' && $end_H >= '01') {
+                  if($start_H <= '12' && $end_H >= '13') {
                     
                     $monthly_hrs = $monthly_hrs - 1;
 
