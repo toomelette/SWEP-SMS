@@ -1,4 +1,5 @@
-@php
+<?php
+
   $gtChildren = count(optional(Auth::user()->employee)->employeeChildren) > 11;
   $gtEligibility = count(optional(Auth::user()->employee)->employeeEligibility) > 10;
   $gtExperience = count(optional(Auth::user()->employee)->employeeExperience) > 25;
@@ -7,7 +8,8 @@
   $gtSpecialSkill = count(optional(Auth::user()->employee)->employeeSpecialSkill) > 7;
   $gtRecognition = count(optional(Auth::user()->employee)->employeeRecognition) > 7;
   $gtOrganization = count(optional(Auth::user()->employee)->employeeOrganization) > 7;
-@endphp
+
+?>
 
 
 

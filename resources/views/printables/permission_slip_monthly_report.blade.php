@@ -1,4 +1,4 @@
-@php
+<?php
 
   $df_header = Carbon::parse(Request::get('df'))->format('F d, Y');
   $dt_header = Carbon::parse(Request::get('dt'))->format('F d, Y');
@@ -8,7 +8,7 @@
 
   $df_YM = Carbon::parse(Request::get('df'))->format('Y-m');
 
-@endphp
+?>
 
 <!DOCTYPE html>
 <html>
@@ -50,8 +50,11 @@
   <div class="wrapper">
 
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <p style="font-size: 17px;">SUGAR REGULATORY ADMINISTRATION</p>
+      </div>
+      <div class="col-sm-6">
+        <span style="margin-left:450px;">Page 1 of 1</span>
       </div>
       <div class="col-sm-12">
         <p style="font-size: 15px; font-weight:bold;">SUMMARY OF PERMISSION SLIPS (WITH FILED PS)</p>
@@ -209,9 +212,6 @@
 
 
     </table>
-
-
-
 
 
   </div>

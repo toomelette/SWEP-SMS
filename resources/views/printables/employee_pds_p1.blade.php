@@ -1,9 +1,8 @@
-
-@php
+<?php
 
   $level = ['ELEMENTARY', 'SECONDARY', 'VOCATIONAL/TRADE COURSE', 'COLLEGE', 'GRADUATE STUDIES']; 
 
-@endphp
+?>
 
 
 <!DOCTYPE html>

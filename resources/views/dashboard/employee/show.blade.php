@@ -1,4 +1,4 @@
-@php
+<?php
 
   $gtChildren = count($employee->employeeChildren) > 11;
   $gtEligibility = count($employee->employeeEligibility) > 10;
@@ -9,7 +9,7 @@
   $gtRecognition = count($employee->employeeRecognition) > 7;
   $gtOrganization = count($employee->employeeOrganization) > 7;
   
-@endphp
+?>
 
 
 

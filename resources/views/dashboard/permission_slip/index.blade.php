@@ -1,4 +1,5 @@
-@php
+<?php
+
   $table_sessions = [ 
                       Session::get('PS_UPDATE_SUCCESS_SLUG'),
                     ];
@@ -8,9 +9,10 @@
                         'emp' => Request::get('emp'),
                         'd' => Request::get('d'), 
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
-@endphp
+
+?>
 
 
 

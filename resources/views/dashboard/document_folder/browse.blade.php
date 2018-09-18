@@ -1,6 +1,8 @@
-@php
+<?php
+
   $appended_requests = [];
-@endphp
+  
+?>
 
 
 

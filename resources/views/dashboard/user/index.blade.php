@@ -1,4 +1,5 @@
-@php
+<?php
+
   $table_sessions = [ 
                       Session::get('USER_UPDATE_SUCCESS_SLUG'), 
                       Session::get('USER_ACTIVATE_SUCCESS_SLUG'),
@@ -14,12 +15,13 @@
                         'online' => Request::get('online'), 
                         'active' => Request::get('active'),
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
 
   $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';
   $span_times = '<span class="badge bg-red"><i class="fa fa-times "></i></span>';
-@endphp
+
+?>
 
 
 

@@ -1,4 +1,4 @@
-@php
+<?php
 
   if(!empty($employee->employeeAddress)){
     $res_address = optional($employee->employeeAddress)->res_address_barangay .' '. optional($employee->employeeAddress)->res_address_city .', '. optional($employee->employeeAddress)->res_address_province;
@@ -8,7 +8,7 @@
     $perm_address = "";
   }
 
-@endphp
+?>
 
 <!DOCTYPE html>
 <html>

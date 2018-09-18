@@ -1,4 +1,5 @@
-@php
+<?php
+
   $table_sessions = [ 
                       Session::get('DOCUMENT_UPDATE_SUCCESS_SLUG'),
                     ];
@@ -9,9 +10,10 @@
                         'dt' => Request::get('dt'),
                         'fc' => Request::get('fc'),
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
-@endphp
+                      
+?>
 
 
 

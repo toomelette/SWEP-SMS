@@ -1,4 +1,5 @@
-@php
+<?php
+
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         'fs' => Request::get('fs'), 
@@ -9,11 +10,12 @@
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
 
   $span_not_set = '<span class="text-red"><b>Not Set!</b></span>';
-@endphp
+  
+?>
 
 
 
@@ -54,7 +56,7 @@
         '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', '', ''
       ) !!}
 
-      <section>
+      <div class="col-md-12 no-padding">
         
         <h5>Date Filter : </h5>
 
@@ -64,7 +66,7 @@
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
-      </section>
+      </div>
 
     {!! HtmlHelper::filter_close('submit_dv_filter') !!}
 

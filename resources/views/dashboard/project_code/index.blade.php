@@ -1,4 +1,5 @@
-@php
+<?php
+
   $table_sessions = [ 
                       Session::get('PROJECT_CODE_UPDATE_SUCCESS_SLUG') 
                     ];
@@ -6,9 +7,10 @@
   $appended_requests = [
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
-@endphp
+
+?>
 
 
 

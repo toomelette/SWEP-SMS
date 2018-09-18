@@ -1,14 +1,15 @@
-@php
+<?php
+
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         't'=> Request::get('t'), 
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
 
-@endphp
+?>
 
 
 
@@ -39,7 +40,7 @@
       </div>
 
 
-      <div class="col-md-12">
+      <div class="col-md-12 no-padding">
         
         <h5>Date of Filing Filter : </h5>
 

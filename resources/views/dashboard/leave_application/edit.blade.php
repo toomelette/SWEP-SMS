@@ -1,8 +1,10 @@
-@php
+<?php
+
   $date_of_filing =  DataTypeHelper::date_parse($leave_application->date_of_filing);
   $working_days_date_from =  DataTypeHelper::date_parse($leave_application->working_days_date_from);
   $working_days_date_to =  DataTypeHelper::date_parse($leave_application->working_days_date_to);
-@endphp
+
+?>
 
 
 

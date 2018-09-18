@@ -1,4 +1,5 @@
-@php
+<?php
+
   $table_sessions = [ 
                       Session::get('DV_SET_NO_SUCCESS_SLUG'),
                       Session::get('DV_CONFIRM_CHECK_SUCCESS_SLUG'),
@@ -14,11 +15,12 @@
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
                         'sort' => Request::get('sort'),
-                        'order' => Request::get('order'),
+                        'direction' => Request::get('direction'),
                       ];
 
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
-@endphp
+  
+?>
 
 
 
@@ -60,7 +62,7 @@
         '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', '', ''
       ) !!}
 
-      <section>
+      <div class="col-md-12 no-padding">
         
         <h5>Date Filter : </h5>
 
@@ -70,7 +72,7 @@
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
-      </section>
+      </div>
 
     {!! HtmlHelper::filter_close('submit_dv_filter') !!}
 
@@ -110,7 +112,7 @@
                   </a>
                 @endif
               </td>
-              <td>{!! Str::limit($data->explanation, 90)  !!}</td>
+              <td style="font-size:15px;">{!! Str::limit($data->explanation, 90)  !!}</td>
               <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)

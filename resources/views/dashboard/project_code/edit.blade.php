@@ -1,7 +1,9 @@
-@php
+<?php
+
   $date_started = DataTypeHelper::date_parse($project_code->date_started);
   $projected_date_end = DataTypeHelper::date_parse($project_code->projected_date_end);
-@endphp
+
+?>
 
 
 

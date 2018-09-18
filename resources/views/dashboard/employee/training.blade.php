@@ -1,9 +1,11 @@
-@php
+<?php
+
   $table_sessions = [ 
                       Session::get('EMPLOYEE_TRNG_UPDATE_SUCCESS_SLUG'),
                       Session::get('EMPLOYEE_TRNG_CREATE_SUCCESS_SLUG'),
                     ];
-@endphp
+
+?>
 
 @extends('layouts.admin-master')
 

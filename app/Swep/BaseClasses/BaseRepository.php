@@ -18,7 +18,6 @@ class BaseRepository{
     protected $auth;
     protected $carbon;
     protected $str;
-    protected $event;
     protected $dataTypeHelper;
     protected $cache;
 

@@ -1,6 +1,8 @@
-@php
+<?php
+
   $inclusive_dates = Carbon::parse($leave_application->working_days_from)->format('M d, Y') .' - '. Carbon::parse($leave_application->working_days_to)->format('M d, Y');
-@endphp
+
+?>
 
 
 
