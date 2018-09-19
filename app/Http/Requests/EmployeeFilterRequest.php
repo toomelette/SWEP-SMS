@@ -21,6 +21,8 @@ class EmployeeFilterRequest extends FormRequest{
         return [
 
             'q' => 'nullable|string|max:90',
+            'd' => 'nullable|string|max:6|min:5',
+            'a' => 'nullable|string|max:10|min:5',
 
         ];
 

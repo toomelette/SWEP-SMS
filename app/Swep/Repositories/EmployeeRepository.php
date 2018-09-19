@@ -43,6 +43,14 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
                 $this->search($employee, $request->q);
             }
 
+            if(isset($request->d)){
+                $employee->whereDepartmentId($request->d);
+            }
+
+            if(isset($request->a)){
+                $employee->whereIsActive($request->a);
+            }
+
             return $this->populate($employee);
 
         });

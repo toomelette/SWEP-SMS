@@ -34,7 +34,13 @@
     {{-- Advance Filters --}}
     {!! __html::filter_open() !!}
 
-      
+      {!! __form::select_dynamic_for_filter(
+        '2', 'd', 'Department', old('d'), $global_departments_all, 'department_id', 'name', 'submit_emp_filter', '', ''
+      ) !!}
+
+      {!! __form::select_static_for_filter(
+        '2', 'a', 'Status', old('a'), ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'INACTIVE'], 'submit_emp_filter', '', ''
+      ) !!}
 
     {!! __html::filter_close('submit_emp_filter') !!}
 
