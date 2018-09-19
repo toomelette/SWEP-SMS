@@ -93,7 +93,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->department_unit_name = $request->department_unit_name;
         $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
-        $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
+        $disbursement_voucher->amount = $this->__dataType->string_to_num($request->amount);
         $disbursement_voucher->certified_by = $this->signatory_repo->findByType('2')->employee_name;
         $disbursement_voucher->certified_by_position = $this->signatory_repo->findByType('2')->employee_position;
         $disbursement_voucher->approved_by = $this->signatory_repo->findByType('1')->employee_name;
@@ -131,7 +131,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->department_unit_name = $request->department_unit_name;
         $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
-        $disbursement_voucher->amount = $this->dataTypeHelper->string_to_num($request->amount);
+        $disbursement_voucher->amount = $this->__dataType->string_to_num($request->amount);
         $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->ip_updated = request()->ip();
         $disbursement_voucher->user_updated = $this->auth->user()->user_id;
@@ -291,7 +291,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
     public function populate($model){
 
-        return $model->select('dv_no', 'payee', 'explanation', 'date', 'processed_at', 'checked_at', 'slug')
+        return $model->select('payee', 'dv_no', 'explanation', 'date', 'processed_at', 'checked_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->with('user')

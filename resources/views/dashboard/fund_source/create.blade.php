@@ -23,7 +23,7 @@
      
           @csrf    
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
           ) !!} 
 
@@ -49,7 +49,7 @@
 
   @if(Session::has('FUND_SOURCE_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'fund_source_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('FUND_SOURCE_CREATE_SUCCESS')
     ) !!}
     

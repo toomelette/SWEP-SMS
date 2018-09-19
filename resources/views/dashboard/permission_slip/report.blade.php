@@ -21,16 +21,16 @@
 
         <div class="box-body">
 
-          {!! FormHelper::select_dynamic(
+          {!! __form::select_dynamic(
             '3', 'd', 'Department', old('d'), $global_departments_all, 'department_id', 'name', $errors->has('d'), $errors->first('d'), 'select2', ''
           ) !!}
 
 
-          {!! FormHelper::datepicker(
+          {!! __form::datepicker(
             '3', 'df',  'Date From *', old('df'), $errors->has('df'), $errors->first('df')
           ) !!}
 
-          {!! FormHelper::datepicker(
+          {!! __form::datepicker(
             '3', 'dt',  'Date To *', old('dt'), $errors->has('dt'), $errors->first('dt')
           ) !!}
 

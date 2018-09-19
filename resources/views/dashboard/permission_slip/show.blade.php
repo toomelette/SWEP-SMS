@@ -5,7 +5,7 @@
 <section class="content-header">
     <h1>PS Details</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.permission_slip.index',]) !!}
+      {!! __html::back_button(['dashboard.permission_slip.index',]) !!}
     </div>
 </section>
 
@@ -41,11 +41,11 @@
                 <dt>Date:</dt>
                 <dd>{{ Carbon::parse($permission_slip->date)->format('m/d/Y') }}</dd>
                 <dt>Time Out:</dt>
-                <dd>{{ DataTypeHelper::time_parse($permission_slip->time_out, 'h:i A') }}</dd>
+                <dd>{{ __dataType::time_parse($permission_slip->time_out, 'h:i A') }}</dd>
                 <dt>Time In:</dt>
-                <dd>{{ DataTypeHelper::time_parse($permission_slip->time_in, 'h:i A') }}</dd>
+                <dd>{{ __dataType::time_parse($permission_slip->time_in, 'h:i A') }}</dd>
                 <dt>Time In:</dt>
-                <dd>{{ DataTypeHelper::time_parse($permission_slip->time_in, 'h:i A') }}</dd>
+                <dd>{{ __dataType::time_parse($permission_slip->time_in, 'h:i A') }}</dd>
                 <dt>With PS:</dt>
                 <dd>{{ $permission_slip->with_ps == 1 ? 'YES' : 'NO'  }}</dd>
               </dl>

@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Edit Department Unit</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.department_unit.index']) !!}
+        {!! __html::back_button(['dashboard.department_unit.index']) !!}
       </div>
   </section>
 
@@ -28,17 +28,17 @@
 
           <input name="_method" value="PUT" type="hidden">
           
-          {!! FormHelper::select_dynamic(
+          {!! __form::select_dynamic(
           '4', 'department_id', 'Department *', old('department_id') ? old('department_id') : $department_unit->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
           ) !!}
 
           <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') ? old('department_name') : $department_unit->department_name }}">
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $department_unit->name, $errors->has('name'), $errors->first('name'), ''
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'description', 'text', 'Description *', 'Description', old('description') ? old('description') : $department_unit->description , $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
@@ -63,7 +63,7 @@
 
   <script type="text/javascript">
 
-    {!! JSHelper::ajax_select_to_input(
+    {!! __js::ajax_select_to_input(
       'department_id', 'department_name', '/api/department/textbox_department_ByDepartmentId/', 'name'
     ) !!}
 

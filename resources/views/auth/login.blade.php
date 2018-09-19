@@ -6,31 +6,31 @@
 	<div class="col-md-6">
 
 		@if(Session::has('AUTH_AUTHENTICATED'))
-			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_AUTHENTICATED')) !!}
+			{!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_AUTHENTICATED')) !!}
 		@endif
 
 		@if(Session::has('AUTH_UNACTIVATED'))
-			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_UNACTIVATED')) !!}
+			{!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_UNACTIVATED')) !!}
 		@endif
 
 		@if(Session::has('CHECK_UNAUTHENTICATED'))
-			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_UNAUTHENTICATED')) !!}
+			{!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_UNAUTHENTICATED')) !!}
 		@endif
 
 		@if(Session::has('CHECK_NOT_LOGGED_IN'))
-			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_LOGGED_IN')) !!}
+			{!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_LOGGED_IN')) !!}
 		@endif
 
 		@if(Session::has('CHECK_NOT_ACTIVE'))
-			{!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
+			{!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
 		@endif
 
 		@if(Session::has('PROFILE_UPDATE_USERNAME_SUCCESS'))
-			{!! HtmlHelper::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_USERNAME_SUCCESS')) !!}
+			{!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_USERNAME_SUCCESS')) !!}
 		@endif
 
 		@if(Session::has('PROFILE_UPDATE_PASSWORD_SUCCESS'))
-			{!! HtmlHelper::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_PASSWORD_SUCCESS')) !!}
+			{!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_PASSWORD_SUCCESS')) !!}
 		@endif
 
 		<div class="box box-default">
@@ -44,7 +44,7 @@
 					<div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
 						<label for="username" class="col-sm-2 control-label">Username</label>
 						<div class="col-sm-10">
-							<input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ SanitizeHelper::html_attribute_encode(old('username')) }}">
+							<input class="form-control is-invalid" name="username" id="username" placeholder="Username" type="text" value="{{ __sanitize::html_attribute_encode(old('username')) }}">
 							
 							@if ($errors->has('username'))
 							<span class="help-block"> {{ $errors->first('username') }} </span>

@@ -34,9 +34,9 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
     public function onStore(){
         
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:project_codes:*');
+        $this->__cache->deletePattern('swep_cache:project_codes:all:*');
+        $this->__cache->deletePattern('swep_cache:project_codes:global:all');
+        $this->__cache->deletePattern('swep_cache:api:project_codes:*');
 
         $this->session->flash('PROJECT_CODE_CREATE_SUCCESS', 'The Project Code has been successfully created!');
 
@@ -48,10 +48,10 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
     public function onUpdate($project_code){
 
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:project_codes:*');
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:bySlug:'. $project_code->slug .'');
+        $this->__cache->deletePattern('swep_cache:project_codes:all:*');
+        $this->__cache->deletePattern('swep_cache:project_codes:global:all');
+        $this->__cache->deletePattern('swep_cache:api:project_codes:*');
+        $this->__cache->deletePattern('swep_cache:project_codes:bySlug:'. $project_code->slug .'');
 
         $this->session->flash('PROJECT_CODE_UPDATE_SUCCESS', 'The Project Code has been successfully updated!');
         $this->session->flash('PROJECT_CODE_UPDATE_SUCCESS_SLUG', $project_code->slug);
@@ -64,10 +64,10 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
     public function onDestroy($project_code){
 
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:api:project_codes:*');
-        $this->cacheHelper->deletePattern('swep_cache:project_codes:bySlug:'. $project_code->slug .'');
+        $this->__cache->deletePattern('swep_cache:project_codes:all:*');
+        $this->__cache->deletePattern('swep_cache:project_codes:global:all');
+        $this->__cache->deletePattern('swep_cache:api:project_codes:*');
+        $this->__cache->deletePattern('swep_cache:project_codes:bySlug:'. $project_code->slug .'');
 
         $this->session->flash('PROJECT_CODE_DELETE_SUCCESS', 'The Project Code has been successfully deleted!');
 

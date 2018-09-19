@@ -31,11 +31,11 @@
 
 
     {{-- Advance Filters --}}
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
 
       <div class="col-md-12">
           
-        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), StaticHelper::leave_types(), 'submit_la_filter', '', '') !!}
+        {!! __form::select_static_for_filter('3', 't', 'Type of Leave', old('t'), __static::leave_types(), 'submit_la_filter', '', '') !!}
 
       </div>
 
@@ -44,15 +44,15 @@
         
         <h5>Date of Filing Filter : </h5>
 
-        {!! FormHelper::datepicker('3', 'df',  'From', old('df'), '', '') !!}
+        {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
 
-        {!! FormHelper::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
+        {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
       </div>
         
-    {!! HtmlHelper::filter_close('submit_la_filter') !!}
+    {!! __html::filter_close('submit_la_filter') !!}
 
 
 
@@ -60,7 +60,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.leave_application.user_index')) !!}
+        {!! __html::table_search(route('dashboard.leave_application.user_index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -77,7 +77,7 @@
           @foreach($leave_applications as $data) 
             <tr>
               <td>
-                @foreach(StaticHelper::leave_types() as $name => $key)
+                @foreach(__static::leave_types() as $name => $key)
                   @if($key == $data->type)
                     {{ $name }}
                   @endif
@@ -108,7 +108,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($leave_applications) !!}
+        {!! __html::table_counter($leave_applications) !!}
         {!! $leave_applications->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 

@@ -34,11 +34,11 @@ class MenuSubscriber extends BaseSubscriber{
 
     public function onStore(){
         
-        $this->cacheHelper->deletePattern('swep_cache:menus:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:menus:all:*');
+        $this->__cache->deletePattern('swep_cache:menus:global:all');
+        $this->__cache->deletePattern('swep_cache:menus:all:*');
         
-        $this->cacheHelper->deletePattern('swep_cache:submenus:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:submenus:all:*');
+        $this->__cache->deletePattern('swep_cache:submenus:global:all');
+        $this->__cache->deletePattern('swep_cache:submenus:all:*');
 
         $this->session->flash('MENU_CREATE_SUCCESS', 'The Menu has been successfully created!');
 
@@ -50,9 +50,9 @@ class MenuSubscriber extends BaseSubscriber{
 
     public function onUpdate($menu){
 
-        $this->cacheHelper->deletePattern('swep_cache:menus:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:menus:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');
+        $this->__cache->deletePattern('swep_cache:menus:global:all');
+        $this->__cache->deletePattern('swep_cache:menus:all:*');
+        $this->__cache->deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');
 
         $this->session->flash('MENU_UPDATE_SUCCESS', 'The Menu has been successfully updated!');
         $this->session->flash('MENU_UPDATE_SUCCESS_SLUG', $menu->slug);
@@ -63,12 +63,12 @@ class MenuSubscriber extends BaseSubscriber{
 
     public function onDestroy($menu){
 
-        $this->cacheHelper->deletePattern('swep_cache:menus:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:menus:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');
+        $this->__cache->deletePattern('swep_cache:menus:global:all');
+        $this->__cache->deletePattern('swep_cache:menus:all:*');
+        $this->__cache->deletePattern('swep_cache:menus:bySlug:'. $menu->slug .'');
 
-        $this->cacheHelper->deletePattern('swep_cache:submenus:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:submenus:all:*');
+        $this->__cache->deletePattern('swep_cache:submenus:global:all');
+        $this->__cache->deletePattern('swep_cache:submenus:all:*');
 
         $this->session->flash('MENU_DELETE_SUCCESS', 'The Menu has been successfully deleted!');
         $this->session->flash('MENU_DELETE_SUCCESS_SLUG', $menu->slug);

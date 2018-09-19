@@ -5,7 +5,7 @@
 <section class="content-header">
     <h1>Synchronize User to Employee</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.user.index']) !!}
+      {!! __html::back_button(['dashboard.user.index']) !!}
     </div>
 </section>
 
@@ -25,7 +25,7 @@
         <div class="box-body">
 
           @if(Session::has('USER_SYNC_EMPLOYEE_FAIL'))
-            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_SYNC_EMPLOYEE_FAIL')) !!}
+            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_SYNC_EMPLOYEE_FAIL')) !!}
           @endif
 
           <div class="col-md-11">
@@ -33,7 +33,7 @@
               <input name="_method" value="PATCH" type="hidden">
               @csrf
 
-              {!! FormHelper::select_dynamic(
+              {!! __form::select_dynamic(
                 '4', 's', 'Please Select Employee you want to sync *', old('s'), $global_employees_all, 'slug', 'fullname', $errors->has('s'), $errors->first('s'), 'select2', ''
               ) !!}
 

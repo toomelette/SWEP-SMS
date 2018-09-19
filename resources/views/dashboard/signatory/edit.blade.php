@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Edit Signatory</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.signatory.index']) !!}
+        {!! __html::back_button(['dashboard.signatory.index']) !!}
       </div>
   </section>
 
@@ -28,15 +28,15 @@
 
           @csrf    
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'employee_name', 'text', 'Employee Name *', 'Employee Name', old('employee_name') ? old('employee_name') : $signatory->employee_name, $errors->has('employee_name'), $errors->first('employee_name'), ''
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
             '4', 'employee_position', 'text', 'Position *', 'Position', old('employee_position') ? old('employee_position') : $signatory->employee_position, $errors->has('employee_position'), $errors->first('employee_position'), ''
           ) !!}
 
-          {!! FormHelper::select_static('4', 'type', 'Type *', old('type') ? old('type') : $signatory->type, StaticHelper::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') !!} 
+          {!! __form::select_static('4', 'type', 'Type *', old('type') ? old('type') : $signatory->type, __static::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') !!} 
 
         </div>
 

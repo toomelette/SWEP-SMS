@@ -4,7 +4,7 @@ namespace App\Swep\Helpers;
 
 
 
-class StaticHelper{
+class __static{
 
 
 

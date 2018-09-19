@@ -31,7 +31,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.menu.index')) !!}
+        {!! __html::table_search(route('dashboard.menu.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -47,7 +47,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($menus as $data) 
-            <tr {!! HtmlHelper::table_highlighter($table_sessions) !!} >
+            <tr {!! __html::table_highlighter($table_sessions) !!} >
               <td>{{ $data->name }}</td>
               <td>{{ $data->route }}</td>
               <td><i class="fa {{ $data->icon }}"></i></td>
@@ -70,7 +70,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($menus) !!}
+        {!! __html::table_counter($menus) !!}
         {!! $menus->appends($appended_requests)!!}
       </div>
 
@@ -86,7 +86,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('menu_delete') !!}
+  {!! __html::modal_delete('menu_delete') !!}
 
 @endsection 
 
@@ -99,16 +99,16 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('menu_delete') !!}
+    {!! __js::modal_confirm_delete_caller('menu_delete') !!}
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('MENU_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('MENU_UPDATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('MENU_UPDATE_SUCCESS')) !!}
     @endif
 
     {{-- DELETE TOAST --}}
     @if(Session::has('MENU_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('MENU_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('MENU_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

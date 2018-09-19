@@ -34,25 +34,25 @@
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.disbursement_voucher.user_index') }}">
 
 
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '3', 'fs', 'Fund Source', old('fs'), $global_fund_source_all, 'fund_source_id', 'description', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '3', 'pi', 'Station', old('pi'), $global_projects_all, 'project_id', 'project_address', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '2', 'dn', 'Department', old('dn'), $global_departments_all, 'name', 'name', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '2', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'name', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', '', ''
       ) !!}
 
@@ -60,22 +60,22 @@
         
         <h5>Date Filter : </h5>
 
-        {!! FormHelper::datepicker('3', 'df',  'From', old('df'), '', '') !!}
+        {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
 
-        {!! FormHelper::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
+        {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
       </div>
 
-    {!! HtmlHelper::filter_close('submit_dv_filter') !!}
+    {!! __html::filter_close('submit_dv_filter') !!}
 
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.disbursement_voucher.user_index')) !!}
+        {!! __html::table_search(route('dashboard.disbursement_voucher.user_index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -127,7 +127,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($disbursement_vouchers) !!}
+        {!! __html::table_counter($disbursement_vouchers) !!}
         {!! $disbursement_vouchers->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 

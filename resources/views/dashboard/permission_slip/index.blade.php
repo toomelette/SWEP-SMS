@@ -7,7 +7,8 @@
   $appended_requests = [
                         'q'=> Request::get('q'), 
                         'emp' => Request::get('emp'),
-                        'd' => Request::get('d'), 
+                        'df' => Request::get('df'), 
+                        'dt' => Request::get('dt'), 
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
                       ];
@@ -32,9 +33,9 @@
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.permission_slip.index') }}">
 
     {{-- Advance Filters --}}
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
         
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '3', 'emp', 'Employee', old('emp'), $global_employees_all, 'employee_no', 'fullname', 'submit_ps_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
@@ -44,21 +45,23 @@
         
         <h5>Date Filter : </h5>
 
-        {!! FormHelper::datepicker('3', 'd',  'Date', old('d'), '', '') !!}
+        {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
+
+        {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
       </div>
 
 
-    {!! HtmlHelper::filter_close('submit_ps_filter') !!}
+    {!! __html::filter_close('submit_ps_filter') !!}
 
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.permission_slip.index')) !!}
+        {!! __html::table_search(route('dashboard.permission_slip.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -77,7 +80,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($permission_slips as $data) 
-            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->ps_id }}</td>
               <td>{{ $data->employee->fullname }}</td>
               <td>{{ $data->date->format('M d, Y') }}</td>
@@ -106,7 +109,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($permission_slips) !!}
+        {!! __html::table_counter($permission_slips) !!}
         {!! $permission_slips->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 
@@ -123,7 +126,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('ps_delete') !!}
+  {!! __html::modal_delete('ps_delete') !!}
 
 @endsection 
 
@@ -136,16 +139,16 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('ps_delete') !!}
+    {!! __js::modal_confirm_delete_caller('ps_delete') !!}
 
     {{-- PS DELETE TOAST --}}
     @if(Session::has('PS_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('PS_UPDATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('PS_UPDATE_SUCCESS')) !!}
     @endif
 
     {{-- PS DELETE TOAST --}}
     @if(Session::has('PS_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('PS_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('PS_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

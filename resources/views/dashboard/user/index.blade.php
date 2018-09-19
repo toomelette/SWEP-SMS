@@ -1,3 +1,4 @@
+
 <?php
 
   $table_sessions = [ 
@@ -42,24 +43,24 @@
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.user.index') }}">
 
     {{-- Advance Filters --}}
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
 
-      {!! FormHelper::select_static_for_filter(
+      {!! __form::select_static_for_filter(
         '2', 'ol', 'Login Status', old('ol'), ['Online' => 'true', 'Offline' => 'false'], 'submit_user_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_static_for_filter(
+      {!! __form::select_static_for_filter(
         '2', 'a', 'User Status', old('a'), ['Active' => 'true', 'Inactive' => 'false'], 'submit_user_filter', '', ''
       ) !!}
 
-    {!! HtmlHelper::filter_close('submit_user_filter') !!}
+    {!! __html::filter_close('submit_user_filter') !!}
 
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.user.index')) !!}
+        {!! __html::table_search(route('dashboard.user.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -77,7 +78,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($users as $data) 
-            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions)!!}>
+            <tr {!! __html::table_highlighter( $data->slug, $table_sessions)!!}>
               <td>{{ $data->username }}</td>
               <td>{{ $data->fullname }}</td>
               <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
@@ -122,7 +123,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($users) !!}
+        {!! __html::table_counter($users) !!}
         {!! $users->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
       </div>
 
@@ -155,7 +156,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('user_delete') !!}
+  {!! __html::modal_delete('user_delete') !!}
 
 @endsection 
 
@@ -169,69 +170,69 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('user_delete') !!}
+    {!! __js::modal_confirm_delete_caller('user_delete') !!}
 
 
     {{-- CALL LOGOUT FORM --}}
-    {!! JSHelper::form_submitter_via_action('logout', 'from_user_logout') !!}
+    {!! __js::form_submitter_via_action('logout', 'from_user_logout') !!}
 
 
     {{-- CALL ACTIVATE FORM --}}
-    {!! JSHelper::form_submitter_via_action('activate', 'from_user_activate') !!}
+    {!! __js::form_submitter_via_action('activate', 'from_user_activate') !!}
 
 
     {{-- CALL DEACTIVATE FORM --}}
-    {!! JSHelper::form_submitter_via_action('deactivate', 'from_user_deactivate') !!}
+    {!! __js::form_submitter_via_action('deactivate', 'from_user_deactivate') !!}
 
     {{-- CALL UNSYNC FORM --}}
-    {!! JSHelper::form_submitter_via_action('unsync_employee', 'from_user_unsync') !!}
+    {!! __js::form_submitter_via_action('unsync_employee', 'from_user_unsync') !!}
 
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('USER_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_UPDATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('USER_UPDATE_SUCCESS')) !!}
     @endif
 
 
     {{-- DELETE TOAST --}}
     @if(Session::has('USER_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('USER_DELETE_SUCCESS')) !!}
     @endif
 
 
     {{-- LOGOUT TOAST --}}
     @if(Session::has('USER_LOGOUT_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_LOGOUT_SUCCESS')) !!}
+      {!! __js::toast(Session::get('USER_LOGOUT_SUCCESS')) !!}
     @endif
 
 
     {{-- ACTIVATE TOAST --}}
     @if(Session::has('USER_ACTIVATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('USER_ACTIVATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('USER_ACTIVATE_SUCCESS')) !!}
     @endif
 
 
     {{-- DEACTIVATE TOAST --}}
     @if(Session::has('USER_DEACTIVATE_SUCCESS'))
-        {!! JSHelper::toast(Session::get('USER_DEACTIVATE_SUCCESS')) !!}
+        {!! __js::toast(Session::get('USER_DEACTIVATE_SUCCESS')) !!}
     @endif
 
 
     {{-- RESET PASSWORD SUCCESS TOAST --}}
     @if(Session::has('USER_RESET_PASSWORD_SUCCESS'))
-        {!! JSHelper::toast(Session::get('USER_RESET_PASSWORD_SUCCESS')) !!}
+        {!! __js::toast(Session::get('USER_RESET_PASSWORD_SUCCESS')) !!}
     @endif
 
 
     {{-- SYNC EMPLOYEE SUCCESS TOAST --}}
     @if(Session::has('USER_SYNC_EMPLOYEE_SUCCESS'))
-        {!! JSHelper::toast(Session::get('USER_SYNC_EMPLOYEE_SUCCESS')) !!}
+        {!! __js::toast(Session::get('USER_SYNC_EMPLOYEE_SUCCESS')) !!}
     @endif
 
 
     {{-- UNSYNC EMPLOYEE SUCCESS TOAST --}}
     @if(Session::has('USER_UNSYNC_EMPLOYEE_SUCCESS'))
-        {!! JSHelper::toast(Session::get('USER_UNSYNC_EMPLOYEE_SUCCESS')) !!}
+        {!! __js::toast(Session::get('USER_UNSYNC_EMPLOYEE_SUCCESS')) !!}
     @endif
 
   </script>

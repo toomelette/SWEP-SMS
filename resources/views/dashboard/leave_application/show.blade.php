@@ -14,7 +14,7 @@
 <section class="content-header">
     <h1>Leave Application Details</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.leave_application.index', 'dashboard.leave_application.user_index']) !!}
+      {!! __html::back_button(['dashboard.leave_application.index', 'dashboard.leave_application.user_index']) !!}
     </div>
 </section>
 
@@ -58,12 +58,12 @@
                 <dt>Middlename:</dt>
                 <dd>{{ $leave_application->middlename }}</dd>
                 <dt>Date of Filing:</dt>
-                <dd>{{ DataTypeHelper::date_parse($leave_application->date_of_filing) }}</dd>
+                <dd>{{ __dataType::date_parse($leave_application->date_of_filing) }}</dd>
                 <dt>Salary:</dt>
                 <dd>{{ number_format($leave_application->salary, 2) }}</dd>
                 <dt>Type of Leave:</dt>
                 <dd>
-                  @foreach(StaticHelper::leave_types() as $name => $key)
+                  @foreach(__static::leave_types() as $name => $key)
                     @if($key ==  $leave_application->type)
                       {{ $name }}
                     @endif

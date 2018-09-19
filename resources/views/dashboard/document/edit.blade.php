@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Edit Document</h1>
       <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button([
+      {!! __html::back_button([
         'dashboard.document.index',
         'dashboard.document.show'
       ]) !!}
@@ -31,45 +31,45 @@
 
           @csrf
 
-          {!! FormHelper::file(
+          {!! __form::file(
              '4', 'doc_file', 'Upload File *', $errors->has('doc_file'), $errors->first('doc_file'), ''
           ) !!} 
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'reference_no', 'text', 'Reference No. *', 'Reference No.', old('reference_no') ? old('reference_no') : $document->reference_no, $errors->has('reference_no'), $errors->first('reference_no'), ''
           ) !!} 
 
-          {!! FormHelper::datepicker(
+          {!! __form::datepicker(
             '4', 'date',  'Date *', old('date') ? old('date') : $document->date, $errors->has('date'), $errors->first('date')
           ) !!}
 
           <div class="col-md-8"></div>
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'person_to', 'text', 'To *', 'To', old('person_to') ? old('person_to') : $document->person_to, $errors->has('person_to'), $errors->first('person_to'), ''
           ) !!} 
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'person_from', 'text', 'From *', 'From', old('person_from') ? old('person_from') : $document->person_from, $errors->has('person_from'), $errors->first('person_from'), ''
           ) !!}
 
           <div class="col-md-8"></div>
 
-          {!! FormHelper::select_static(
-            '4', 'type', 'Type', old('type') ? old('type') : $document->type, StaticHelper::document_types(), $errors->has('type'), $errors->first('type'), '', ''
+          {!! __form::select_static(
+            '4', 'type', 'Type', old('type') ? old('type') : $document->type, __static::document_types(), $errors->has('type'), $errors->first('type'), '', ''
           ) !!} 
           
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'subject', 'text', 'Subject *', 'Subject', old('subject') ? old('subject') : $document->subject, $errors->has('subject'), $errors->first('subject'), ''
           ) !!}  
 
           <div class="col-md-8"></div>
             
-          {!! FormHelper::select_dynamic(
+          {!! __form::select_dynamic(
             '4', 'folder_code', 'Folder Code *', old('folder_code') ? old('folder_code') : $document->folder_code, $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('folder_code'), $errors->first('folder_code'), 'select2', ''
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks') ? old('remarks') : $document->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  
 
@@ -95,7 +95,7 @@
 
   <script type="text/javascript">
 
-    {!! JSHelper::pdf_upload(
+    {!! __js::pdf_upload(
       'doc_file', 'fa', route('dashboard.document.view_file', $document->slug)
     ) !!}
 

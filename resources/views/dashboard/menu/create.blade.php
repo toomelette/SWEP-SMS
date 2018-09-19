@@ -22,32 +22,32 @@
         <div class="box-body">
 
           @if(Session::has('USER_FORM_FAIL_USERNAME_EXIST'))
-            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_FORM_FAIL_USERNAME_EXIST')) !!}
+            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_FORM_FAIL_USERNAME_EXIST')) !!}
           @endif
 
           <div class="col-md-11">
                   
             @csrf    
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
               '4', 'name', 'text', 'Name *', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
               '4', 'route', 'text', 'Route *', 'Route', old('route'), $errors->has('route'), $errors->first('route'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
               '4', 'icon', 'text', 'Icon *', 'Icon', old('icon'), $errors->has('icon'), $errors->first('icon'), ''
             ) !!}
 
             <div class="col-md-12"></div>
             
-            {!! FormHelper::select_static(
+            {!! __form::select_static(
               '4', 'is_menu', 'Is Menu *', old('is_menu'), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}
             
-            {!! FormHelper::select_static(
+            {!! __form::select_static(
               '4', 'is_dropdown', 'Is Dropdown *', old('is_dropdown'), ['1' => 'true', '0' => 'false'], $errors->has('is_dropdown'), $errors->first('is_dropdown'), '', ''
             ) !!}
 
@@ -150,7 +150,7 @@
 
   @if(Session::has('MENU_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'menu_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('MENU_CREATE_SUCCESS')
     ) !!}
   

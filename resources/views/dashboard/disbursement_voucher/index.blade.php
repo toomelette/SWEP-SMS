@@ -40,25 +40,25 @@
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.disbursement_voucher.index') }}">
 
     {{-- Advance Filters --}}
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '3', 'fs', 'Fund Source', old('fs'), $global_fund_source_all, 'fund_source_id', 'description', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '3', 'pi', 'Station', old('pi'), $global_projects_all, 'project_id', 'project_address', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '2', 'dn', 'Department', old('dn'), $global_departments_all, 'name', 'name', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '2', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'name', 'submit_dv_filter', '', ''
       ) !!}
 
-      {!! FormHelper::select_dynamic_for_filter(
+      {!! __form::select_dynamic_for_filter(
         '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', '', ''
       ) !!}
 
@@ -66,22 +66,22 @@
         
         <h5>Date Filter : </h5>
 
-        {!! FormHelper::datepicker('3', 'df',  'From', old('df'), '', '') !!}
+        {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
 
-        {!! FormHelper::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
+        {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
       </div>
 
-    {!! HtmlHelper::filter_close('submit_dv_filter') !!}
+    {!! __html::filter_close('submit_dv_filter') !!}
 
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.disbursement_voucher.index')) !!}
+        {!! __html::table_search(route('dashboard.disbursement_voucher.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -99,7 +99,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($disbursement_vouchers as $data) 
-            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ Str::limit($data->payee, 30)  }}</td>
               <td>
                 @if($data->dv_no == null)
@@ -152,7 +152,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($disbursement_vouchers) !!}
+        {!! __html::table_counter($disbursement_vouchers) !!}
         {!! $disbursement_vouchers->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 
@@ -173,9 +173,9 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('dv_delete') !!}
+  {!! __html::modal_delete('dv_delete') !!}
 
-  {!! HtmlHelper::modal(
+  {!! __html::modal(
     'dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')
   ) !!}
 
@@ -190,7 +190,7 @@
 
             <input name="_method" value="PATCH" type="hidden">
 
-            {!! FormHelper::textbox_inline(
+            {!! __form::textbox_inline(
                 'dv_no', 'text', 'DV No.', 'DV No.', old('dv_no'), $errors->has('dv_no'), $errors->first('dv_no'), ''
             ) !!}
         </div>
@@ -214,25 +214,25 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('dv_delete') !!}
+    {!! __js::modal_confirm_delete_caller('dv_delete') !!}
 
     {{-- DV DELETE TOAST --}}
     @if(Session::has('DV_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('DV_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('DV_DELETE_SUCCESS')) !!}
     @endif
 
     {{-- DV SET NO TOAST --}}
     @if(Session::has('DV_SET_NO_SUCCESS'))
-      {!! JSHelper::toast(Session::get('DV_SET_NO_SUCCESS')) !!}
+      {!! __js::toast(Session::get('DV_SET_NO_SUCCESS')) !!}
     @endif
 
     {{-- DV CONFIRM CHECK SUCCESS TOAST --}}
     @if(Session::has('DV_CONFIRM_CHECK_SUCCESS'))
-      {!! JSHelper::toast(Session::get('DV_CONFIRM_CHECK_SUCCESS')) !!}
+      {!! __js::toast(Session::get('DV_CONFIRM_CHECK_SUCCESS')) !!}
     @endif
 
     {{-- CALL CONFIRM CHECK --}}
-    {!! JSHelper::form_submitter_via_action('confirm_check', 'from_confirm_check') !!}
+    {!! __js::form_submitter_via_action('confirm_check', 'from_confirm_check') !!}
 
     {{-- CALL CONFIRM CHECK FAILED MODAL --}}
     @if(Session::has('DV_CONFIRM_CHECK_FAILED'))

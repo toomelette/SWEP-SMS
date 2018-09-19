@@ -7,7 +7,7 @@ use App;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use App\Swep\Helpers\DataTypeHelper;
+use App\Swep\Helpers\__dataType;
 use Illuminate\Cache\Repository as Cache;
 
 
@@ -18,7 +18,7 @@ class BaseRepository{
     protected $auth;
     protected $carbon;
     protected $str;
-    protected $dataTypeHelper;
+    protected $__dataType;
     protected $cache;
 
 
@@ -28,7 +28,7 @@ class BaseRepository{
         $this->auth = auth();
         $this->carbon = App::make(Carbon::class);
         $this->str = App::make(Str::class);
-        $this->dataTypeHelper = App::make(DataTypeHelper::class);
+        $this->__dataType = App::make(__dataType::class);
         $this->cache = App::make(Cache::class);
         
     }

@@ -33,7 +33,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.document_folder.index')) !!}
+        {!! __html::table_search(route('dashboard.document_folder.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -47,7 +47,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($doc_folders as $data) 
-            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>
                 <a href="{{route('dashboard.document_folder.browse', $data->folder_code )}}" style="text-decoration: underline; font-size:15px;">
                   {{ $data->folder_code .' - '. $data->description }}
@@ -73,7 +73,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($doc_folders) !!}
+        {!! __html::table_counter($doc_folders) !!}
         {!! $doc_folders->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 
@@ -91,7 +91,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('doc_folder_delete') !!}
+  {!! __html::modal_delete('doc_folder_delete') !!}
 
 @endsection 
 
@@ -104,16 +104,16 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('doc_folder_delete') !!}
+    {!! __js::modal_confirm_delete_caller('doc_folder_delete') !!}
 
     {{-- DOCUMENT FOLDER DELETE TOAST --}}
     @if(Session::has('DOC_FOLDER_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('DOC_FOLDER_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('DOC_FOLDER_DELETE_SUCCESS')) !!}
     @endif
 
     {{-- DOCUMENT FOLDER UPDATE TOAST --}}
     @if(Session::has('DOC_FOLDER_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('DOC_FOLDER_UPDATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('DOC_FOLDER_UPDATE_SUCCESS')) !!}
     @endif
 
   </script>

@@ -34,8 +34,8 @@ class EmployeeServiceRecordSubscriber extends BaseSubscriber{
 
     public function onStore($employee_sr){
 
-        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:employees:service_records:byEmpNo:'. $employee_sr->employee_no .'');
+        $this->__cache->deletePattern('swep_cache:employees:all:*');
+        $this->__cache->deletePattern('swep_cache:employees:service_records:byEmpNo:'. $employee_sr->employee_no .'');
 
         $this->session->flash('EMPLOYEE_SR_CREATE_SUCCESS_SLUG', $employee_sr->slug);
 
@@ -46,9 +46,9 @@ class EmployeeServiceRecordSubscriber extends BaseSubscriber{
 
     public function onUpdate($employee_sr){
 
-        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:employees:service_records:byEmpNo:'. $employee_sr->employee_no .'');
-        $this->cacheHelper->deletePattern('swep_cache:api:employees:service_records:bySlug:'. $employee_sr->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:all:*');
+        $this->__cache->deletePattern('swep_cache:employees:service_records:byEmpNo:'. $employee_sr->employee_no .'');
+        $this->__cache->deletePattern('swep_cache:api:employees:service_records:bySlug:'. $employee_sr->slug .'');
 
         $this->session->flash('EMPLOYEE_SR_UPDATE_SUCCESS_SLUG', $employee_sr->slug);
 
@@ -59,9 +59,9 @@ class EmployeeServiceRecordSubscriber extends BaseSubscriber{
 
     public function onDestroy($employee_sr){
 
-        $this->cacheHelper->deletePattern('swep_cache:employees:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:employees:service_records:byEmpNo:'. $employee_sr->employee_no .'');
-        $this->cacheHelper->deletePattern('swep_cache:api:employees:service_records:bySlug:'. $employee_sr->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:all:*');
+        $this->__cache->deletePattern('swep_cache:employees:service_records:byEmpNo:'. $employee_sr->employee_no .'');
+        $this->__cache->deletePattern('swep_cache:api:employees:service_records:bySlug:'. $employee_sr->slug .'');
 
     }
 

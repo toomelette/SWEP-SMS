@@ -41,7 +41,7 @@ class UserSubscriber extends BaseSubscriber{
 
 	public function onStore(){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
         
         $this->session->flash('USER_CREATE_SUCCESS', 'The User has been successfully created!');
         
@@ -53,11 +53,11 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onUpdate($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
-        $this->cacheHelper->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
-        $this->cacheHelper->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_UPDATE_SUCCESS', 'The User has been successfully updated!');
         $this->session->flash('USER_UPDATE_SUCCESS_SLUG', $user->slug);
@@ -70,11 +70,11 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onDestroy($user){
         
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
-        $this->cacheHelper->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
-        $this->cacheHelper->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_DELETE_SUCCESS', 'User successfully removed!');
 
@@ -86,9 +86,9 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onActivate($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
         $this->session->flash('USER_ACTIVATE_SUCCESS_SLUG', $user->slug);
@@ -101,9 +101,9 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onDeactivate($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
         $this->session->flash('USER_DEACTIVATE_SUCCESS_SLUG', $user->slug);
@@ -116,9 +116,9 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onLogout($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
         $this->session->flash('USER_LOGOUT_SUCCESS_SLUG', $user->slug);
@@ -131,9 +131,9 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onResetPasswordPost($user){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS_SLUG', $user->slug);
@@ -146,12 +146,12 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onSyncEmployeePost($user, $employee){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
-        $this->cacheHelper->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:employees:byUserId:'. $user->user_id .'');
+        $this->__cache->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_SYNC_EMPLOYEE_SUCCESS', 'User Successfully Synchronized!');
         $this->session->flash('USER_SYNC_EMPLOYEE_SUCCESS_SLUG', $user->slug);
@@ -164,12 +164,12 @@ class UserSubscriber extends BaseSubscriber{
 
     public function onUnsyncEmployee($user, $employee){
 
-        $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
 
-        $this->cacheHelper->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:employees:byUserId:'. $user->user_id .'');
+        $this->__cache->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:byUserId:'. $user->user_id .'');
 
         $this->session->flash('USER_UNSYNC_EMPLOYEE_SUCCESS', 'User Successfully Unsynchronized!');
         $this->session->flash('USER_UNSYNC_EMPLOYEE_SUCCESS_SLUG', $user->slug);

@@ -33,7 +33,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.project_code.index')) !!}
+        {!! __html::table_search(route('dashboard.project_code.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -50,7 +50,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($project_codes as $data) 
-            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->project_code }}</td>
               <td>{{ $data->department_name }}</td>
               <td>{{ $data->description }}</td>
@@ -74,7 +74,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($project_codes) !!}
+        {!! __html::table_counter($project_codes) !!}
         {!! $project_codes->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 
@@ -89,7 +89,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('project_code_delete') !!}
+  {!! __html::modal_delete('project_code_delete') !!}
 
 @endsection 
 
@@ -101,18 +101,18 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('project_code_delete') !!}
+    {!! __js::modal_confirm_delete_caller('project_code_delete') !!}
 
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('PROJECT_CODE_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('PROJECT_CODE_UPDATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('PROJECT_CODE_UPDATE_SUCCESS')) !!}
     @endif
 
 
     {{-- DELETE TOAST --}}
     @if(Session::has('PROJECT_CODE_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('PROJECT_CODE_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('PROJECT_CODE_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

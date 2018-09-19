@@ -32,18 +32,18 @@
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.employee.index') }}">
 
     {{-- Advance Filters --}}
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
 
       
 
-    {!! HtmlHelper::filter_close('submit_emp_filter') !!}
+    {!! __html::filter_close('submit_emp_filter') !!}
 
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.employee.index')) !!}
+        {!! __html::table_search(route('dashboard.employee.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -60,7 +60,7 @@
           </tr>
           @foreach($employees as $data) 
 
-            <tr {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               
               <td>{{ $data->employee_no }}</td>
               <td>{{ $data->fullname }}</td>
@@ -89,7 +89,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($employees) !!}
+        {!! __html::table_counter($employees) !!}
         {!! $employees->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 
@@ -109,7 +109,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('emp_delete') !!}
+  {!! __html::modal_delete('emp_delete') !!}
 
 @endsection 
 
@@ -121,14 +121,14 @@
 
   <script type="text/javascript">
 
-    {!! JSHelper::modal_confirm_delete_caller('emp_delete') !!}
+    {!! __js::modal_confirm_delete_caller('emp_delete') !!}
 
     @if(Session::has('EMPLOYEE_UPDATE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('EMPLOYEE_UPDATE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('EMPLOYEE_UPDATE_SUCCESS')) !!}
     @endif
 
     @if(Session::has('EMPLOYEE_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('EMPLOYEE_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('EMPLOYEE_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

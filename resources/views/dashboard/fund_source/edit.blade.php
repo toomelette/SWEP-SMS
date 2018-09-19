@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Update Fund Source</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.fund_source.index']) !!}
+        {!! __html::back_button(['dashboard.fund_source.index']) !!}
       </div>
   </section>
 
@@ -28,7 +28,7 @@
           
           @csrf    
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'description', 'text', 'Description *', 'Description', old('description') ? old('description') : $fund_source->description, $errors->has('description'), $errors->first('description'), ''
           ) !!} 
 

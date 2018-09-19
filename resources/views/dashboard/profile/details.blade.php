@@ -87,7 +87,7 @@
                 <h4>Account Settings</h4>
                 <hr>
 
-                {!! HtmlHelper::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'You will be logout from the system after you save changes.') !!}   
+                {!! __html::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'You will be logout from the system after you save changes.') !!}   
 
 
                 {{-- USERNAME SETTINGS --}}
@@ -109,7 +109,7 @@
 
                         <input name="_method" value="PATCH" type="hidden">
 
-                        {!! FormHelper::textbox_inline(
+                        {!! __form::textbox_inline(
                             'username', 'text', 'Username', 'Username', old('username') ? old('username') : Auth::user()->username, $errors->has('username') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('username'), ''
                         ) !!}
 
@@ -140,7 +140,7 @@
                     <div class="box-body">
 
                       @if(Session::has('PROFILE_OLD_PASSWORD_FAIL'))
-                        {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('PROFILE_OLD_PASSWORD_FAIL')) !!}
+                        {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('PROFILE_OLD_PASSWORD_FAIL')) !!}
                       @endif
 
                       <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_password', Auth::user()->slug) }}">
@@ -149,15 +149,15 @@
 
                         <input name="_method" value="PATCH" type="hidden">
 
-                        {!! FormHelper::password_inline(
+                        {!! __form::password_inline(
                             'old_password', 'Old Password', 'Old Password', $errors->has('old_password') || Session::has('PROFILE_OLD_PASSWORD_FAIL'), $errors->first('old_password'), ''
                         ) !!}
 
-                        {!! FormHelper::password_inline(
+                        {!! __form::password_inline(
                             'password', 'New Password', 'New Password', $errors->has('password'), $errors->first('password'), ''
                         ) !!}
 
-                        {!! FormHelper::password_inline(
+                        {!! __form::password_inline(
                             'password_confirmation', 'Confirm New Password', 'Confirm New Password', '', '', ''
                         ) !!}
 
@@ -193,8 +193,8 @@
 
                         <input name="_method" value="PATCH" type="hidden">
 
-                        {!! FormHelper::select_static(
-                          '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, StaticHelper::user_colors(), $errors->has('color'), $errors->first('color'), '', ''
+                        {!! __form::select_static(
+                          '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, __static::user_colors(), $errors->has('color'), $errors->first('color'), '', ''
                         ) !!}
 
                         <div class="form-group">
@@ -256,7 +256,7 @@
                         <div id="pds_bar" class="panel-collapse collapse">
                           <div class="box-body">
 
-                            {!! HtmlHelper::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'Before you print your PDS, please be reminded to set the <b>LAYOUT</b> to <b>PORTRAIT</b>, <b>PAPER SIZE</b> to <b>LEGAL</b>, and <b>SCALE</b> to <b>100%</b>.') !!} 
+                            {!! __html::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'Before you print your PDS, please be reminded to set the <b>LAYOUT</b> to <b>PORTRAIT</b>, <b>PAPER SIZE</b> to <b>LEGAL</b>, and <b>SCALE</b> to <b>100%</b>.') !!} 
 
                             <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p1' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 1</a>&nbsp;
                             <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p2' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 2</a>&nbsp;
@@ -295,7 +295,7 @@
                               <dt>Fullname:</dt>
                               <dd>{{ Auth::user()->employee->fullname }}</dd>
                               <dt>Date of Birth:</dt>
-                              <dd>{{ DataTypeHelper::date_parse(Auth::user()->employee->date_of_birth, 'M d, Y') }}</dd>
+                              <dd>{{ __dataType::date_parse(Auth::user()->employee->date_of_birth, 'M d, Y') }}</dd>
                               <dt>Place of Birth:</dt>
                               <dd>{{ Auth::user()->employee->place_of_birth }}</dd>
                               <dt>Sex:</dt>
@@ -367,13 +367,13 @@
                               <dt>TA:</dt>
                               <dd>{{ number_format(Auth::user()->employee->ta, 2) }}</dd>
                               <dt>Government Service:</dt>
-                              <dd>{{ DataTypeHelper::date_parse(Auth::user()->employee->firstday_gov, 'M d, Y') }}</dd>
+                              <dd>{{ __dataType::date_parse(Auth::user()->employee->firstday_gov, 'M d, Y') }}</dd>
                               <dt>First Day:</dt>
-                              <dd>{{ DataTypeHelper::date_parse(Auth::user()->employee->firstday_sra, 'M d, Y') }}</dd>
+                              <dd>{{ __dataType::date_parse(Auth::user()->employee->firstday_sra, 'M d, Y') }}</dd>
                               <dt>Appointment Date:</dt>
-                              <dd>{{ DataTypeHelper::date_parse(Auth::user()->employee->appointment_date, 'M d, Y') }}</dd>
+                              <dd>{{ __dataType::date_parse(Auth::user()->employee->appointment_date, 'M d, Y') }}</dd>
                               <dt>Adjustment Date:</dt>
-                              <dd>{{ DataTypeHelper::date_parse(Auth::user()->employee->adjustment_date, 'M d, Y') }}</dd>
+                              <dd>{{ __dataType::date_parse(Auth::user()->employee->adjustment_date, 'M d, Y') }}</dd>
                             </dl>
 
                           </div>
@@ -455,7 +455,7 @@
                                 @foreach(Auth::user()->employee->employeeChildren as $data)
                                   <tr>
                                     <td>{{ $data->fullname }}</td>
-                                    <td>{{ DataTypeHelper::date_parse($data->date_of_birth, 'M d, Y') }}</td>
+                                    <td>{{ __dataType::date_parse($data->date_of_birth, 'M d, Y') }}</td>
                                   </tr>
                                 @endforeach
 
@@ -547,13 +547,13 @@
                                   <td>{{ $data->title }}</td>
                                   <td>{{ $data->conducted_by }}</td>
                                   <td>
-                                    @if(DataTypeHelper::date_parse($data->date_from, 'M') == DataTypeHelper::date_parse($data->date_to, 'M'))
+                                    @if(__dataType::date_parse($data->date_from, 'M') == __dataType::date_parse($data->date_to, 'M'))
                                       
-                                      {{ DataTypeHelper::date_parse($data->date_from, 'M d') .' - '. DataTypeHelper::date_parse($data->date_to, 'd, Y') }}  
+                                      {{ __dataType::date_parse($data->date_from, 'M d') .' - '. __dataType::date_parse($data->date_to, 'd, Y') }}  
 
                                     @else
 
-                                      {{ DataTypeHelper::date_parse($data->date_from, 'M d, Y') .' - '. DataTypeHelper::date_parse($data->date_to, 'M d, Y') }}
+                                      {{ __dataType::date_parse($data->date_from, 'M d, Y') .' - '. __dataType::date_parse($data->date_to, 'M d, Y') }}
 
                                     @endif
                                   </td>
@@ -651,13 +651,13 @@
 
   <script type="text/javascript">
     
-    {!! JSHelper::show_password('old_password', 'show_old_password') !!}
-    {!! JSHelper::show_password('password', 'show_password') !!}
-    {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
+    {!! __js::show_password('old_password', 'show_old_password') !!}
+    {!! __js::show_password('password', 'show_password') !!}
+    {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
 
     {{-- PROFILE ACCOUNT COLOR SUCCESS --}}
     @if(Session::has('PROFILE_UPDATE_COLOR_SUCCESS'))
-      {!! JSHelper::toast(Session::get('PROFILE_UPDATE_COLOR_SUCCESS')) !!}
+      {!! __js::toast(Session::get('PROFILE_UPDATE_COLOR_SUCCESS')) !!}
     @endif
 
   </script>

@@ -14,7 +14,7 @@
   <section class="content-header">
       <h1>Edit Employee Service Record</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.employee.index']) !!}
+        {!! __html::back_button(['dashboard.employee.index']) !!}
       </div>
   </section>
 
@@ -37,69 +37,69 @@
 
           <div class="box-body">
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '2', 'sequence_no', 'text', 'Seq No. *', 'Seq No.', old('sequence_no'), $errors->has('sequence_no'), $errors->first('sequence_no'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '5', 'date_from', 'text', 'Date From *', 'Date From', old('date_from'), $errors->has('date_from'), $errors->first('date_from'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '5', 'date_to', 'text', 'Date To *', 'Date To', old('date_to'), $errors->has('date_to'), $errors->first('date_to'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'position', 'text', 'Position *', 'Position', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'appointment_status', 'text', 'Appointment Status *', 'Appointment Status', old('appointment_status'), $errors->has('appointment_status'), $errors->first('appointment_status'), 'data-transform="uppercase"'
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox_numeric(
+            {!! __form::textbox_numeric(
               '8', 'salary', 'text', 'Salary *', 'Salary', old('salary'), $errors->has('salary'), $errors->first('salary'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'mode_of_payment', 'text', 'Mode of Payment *', 'Mode of Payment', old('mode_of_payment'), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'station', 'text', 'Station *', 'Station', old('station'), $errors->has('station'), $errors->first('station'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'gov_serve', 'text', 'Government Serve', 'Government Serve', old('gov_serve'), $errors->has('gov_serve'), $errors->first('gov_serve'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'psc_serve', 'text', 'PSC Serve', 'PSC Serve', old('psc_serve'), $errors->has('psc_serve'), $errors->first('psc_serve'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'lwp', 'text', 'LWP', 'LWP', old('lwp'), $errors->has('lwp'), $errors->first('lwp'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'spdate', 'text', 'SP Date', 'SP Date', old('spdate'), $errors->has('spdate'), $errors->first('spdate'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '4', 'status', 'text', 'Status', 'Status', old('status'), $errors->has('status'), $errors->first('status'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '12', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
             ) !!}
 
@@ -151,7 +151,7 @@
             </tr>
             @foreach($employee_service_records as $data) 
               <tr 
-                {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
+                {!! __html::table_highlighter( $data->slug, $table_sessions) !!} 
                 {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}
               >
                 <td>{{ $data->sequence_no }}</td>
@@ -199,7 +199,7 @@
   
 
   {{-- Delete --}}
-  {!! HtmlHelper::modal_delete('sr_delete') !!}
+  {!! __html::modal_delete('sr_delete') !!}
 
 
   {{-- Update --}}
@@ -216,69 +216,69 @@
 
               <input name="e_slug" id="e_slug"  type="hidden">
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                '2', 'e_sequence_no', 'text', 'Seq No. *', 'Seq No.', old('e_sequence_no'), $errors->has('e_sequence_no'), $errors->first('e_sequence_no'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '5', 'e_date_from', 'text', 'Date From *', 'Date From', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '5', 'e_date_to', 'text', 'Date To *', 'Date To', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_position', 'text', 'Position *', 'Position', old('e_position'), $errors->has('e_position'), $errors->first('e_position'), 'data-transform="uppercase"'
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_appointment_status', 'text', 'Appointment Status *', 'Appointment Status', old('e_appointment_status'), $errors->has('e_appointment_status'), $errors->first('e_appointment_status'), 'data-transform="uppercase"'
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox_numeric(
+              {!! __form::textbox_numeric(
                 '8', 'e_salary', 'text', 'Salary *', 'Salary', old('e_salary'), $errors->has('e_salary'), $errors->first('e_salary'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_mode_of_payment', 'text', 'Mode of Payment *', 'Mode of Payment', old('e_mode_of_payment'), $errors->has('e_mode_of_payment'), $errors->first('e_mode_of_payment'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_station', 'text', 'Station *', 'Station', old('e_station'), $errors->has('e_station'), $errors->first('e_station'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_gov_serve', 'text', 'Government Serve', 'Government Serve', old('e_gov_serve'), $errors->has('e_gov_serve'), $errors->first('e_gov_serve'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_psc_serve', 'text', 'PSC Serve', 'PSC Serve', old('e_psc_serve'), $errors->has('e_psc_serve'), $errors->first('e_psc_serve'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_lwp', 'text', 'LWP', 'LWP', old('e_lwp'), $errors->has('e_lwp'), $errors->first('e_lwp'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_spdate', 'text', 'SP Date', 'SP Date', old('e_spdate'), $errors->has('e_spdate'), $errors->first('e_spdate'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '4', 'e_status', 'text', 'Status', 'Status', old('e_status'), $errors->has('e_status'), $errors->first('e_status'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '12', 'e_remarks', 'text', 'Remarks', 'Remarks', old('e_remarks'), $errors->has('e_remarks'), $errors->first('e_remarks'), ''
               ) !!}
 
@@ -308,19 +308,19 @@
         </div>
         <form id="print_sr_form" method="GET" target="_blank">
           <div class="modal-body">
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'pn', 'text', 'Prepared By:', 'Prepared By', old('pn'), $errors->has('pn'), $errors->first('pn'), 'data-transform="uppercase"'
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'pp', 'text', 'Prepared Position:', 'Prepared Position', old('pp'), $errors->has('pp'), $errors->first('pp'), 'data-transform="uppercase"'
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'cn', 'text', 'Certified By:', 'Certified By', old('cn'), $errors->has('cn'), $errors->first('cn'), 'data-transform="uppercase"'
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'cp', 'text', 'Certified Position:', 'Certified Position', old('cp'), $errors->has('cp'), $errors->first('cp'), 'data-transform="uppercase"'
             ) !!} 
 

@@ -22,7 +22,7 @@
 <section class="content-header">
     <h1>Employee Details</h1>
     <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button(['dashboard.employee.index']) !!}
+      {!! __html::back_button(['dashboard.employee.index']) !!}
     </div>
 </section>
 
@@ -63,7 +63,7 @@
                 <dt>Fullname:</dt>
                 <dd>{{ $employee->fullname }}</dd>
                 <dt>Date of Birth:</dt>
-                <dd>{{ DataTypeHelper::date_parse($employee->date_of_birth, 'M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->date_of_birth, 'M d, Y') }}</dd>
                 <dt>Place of Birth:</dt>
                 <dd>{{ $employee->place_of_birth }}</dd>
                 <dt>Sex:</dt>
@@ -130,13 +130,13 @@
                 <dt>TA:</dt>
                 <dd>{{ number_format($employee->ta, 2) }}</dd>
                 <dt>Government Service:</dt>
-                <dd>{{ DataTypeHelper::date_parse($employee->firstday_gov, 'M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->firstday_gov, 'M d, Y') }}</dd>
                 <dt>First Day:</dt>
-                <dd>{{ DataTypeHelper::date_parse($employee->firstday_sra, 'M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->firstday_sra, 'M d, Y') }}</dd>
                 <dt>Appointment Date:</dt>
-                <dd>{{ DataTypeHelper::date_parse($employee->appointment_date, 'M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->appointment_date, 'M d, Y') }}</dd>
                 <dt>Adjustment Date:</dt>
-                <dd>{{ DataTypeHelper::date_parse($employee->adjustment_date, 'M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->adjustment_date, 'M d, Y') }}</dd>
               </dl>
             </div>
           </div>
@@ -202,7 +202,7 @@
                   @foreach($employee->employeeChildren as $data)
                     <tr>
                       <td>{{ $data->fullname }}</td>
-                      <td>{{ DataTypeHelper::date_parse($data->date_of_birth, 'M d, Y') }}</td>
+                      <td>{{ __dataType::date_parse($data->date_of_birth, 'M d, Y') }}</td>
                     </tr>
                   @endforeach
 
@@ -285,13 +285,13 @@
                     <td>{{ $data->title }}</td>
                     <td>{{ $data->conducted_by }}</td>
                     <td>
-                      @if(DataTypeHelper::date_parse($data->date_from, 'M') == DataTypeHelper::date_parse($data->date_to, 'M'))
+                      @if(__dataType::date_parse($data->date_from, 'M') == __dataType::date_parse($data->date_to, 'M'))
                         
-                        {{ DataTypeHelper::date_parse($data->date_from, 'M d') .' - '. DataTypeHelper::date_parse($data->date_to, 'd, Y') }}  
+                        {{ __dataType::date_parse($data->date_from, 'M d') .' - '. __dataType::date_parse($data->date_to, 'd, Y') }}  
 
                       @else
 
-                        {{ DataTypeHelper::date_parse($data->date_from, 'M d, Y') .' - '. DataTypeHelper::date_parse($data->date_to, 'M d, Y') }}
+                        {{ __dataType::date_parse($data->date_from, 'M d, Y') .' - '. __dataType::date_parse($data->date_to, 'M d, Y') }}
 
                       @endif
                     </td>

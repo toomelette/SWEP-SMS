@@ -23,25 +23,25 @@
      
           @csrf 
 
-          {!! FormHelper::datepicker(
+          {!! __form::datepicker(
             '3', 'date',  'Date *', old('date') ? old('date') : Carbon::now()->format('m/d/Y'), $errors->has('date'), $errors->first('date')
           ) !!}
 
-          {!! FormHelper::select_dynamic(
+          {!! __form::select_dynamic(
             '3', 'employee_no', 'Employee *', old('employee_no'), $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
           ) !!}
 
-          {!! FormHelper::timepicker(
+          {!! __form::timepicker(
             '3', 'time_out',  'Time Out *', old('time_out'), $errors->has('time_out'), $errors->first('time_out')
           ) !!}
 
-          {!! FormHelper::timepicker(
+          {!! __form::timepicker(
             '3', 'time_in',  'Time In *', old('time_in'), $errors->has('time_in'), $errors->first('time_in')
           ) !!}
 
           <div class="col-md-12"></div>
 
-          {!! FormHelper::select_static(
+          {!! __form::select_static(
             '3', 'with_ps', 'With PS *', old('with_ps'), ['Yes' => 'true', 'No' => 'false'], $errors->has('with_ps'), $errors->first('with_ps'), '', ''
           ) !!}
 
@@ -69,7 +69,7 @@
 
   @if(Session::has('PS_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'ps_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('PS_CREATE_SUCCESS')
     ) !!}
     

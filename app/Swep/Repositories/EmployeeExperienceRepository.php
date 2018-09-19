@@ -34,14 +34,14 @@ class EmployeeExperienceRepository extends BaseRepository implements EmployeeExp
 
         $employee_exp = new EmployeeExperience;
         $employee_exp->employee_no = $employee->employee_no;
-        $employee_exp->date_from = $this->dataTypeHelper->date_parse($data['date_from'], 'Y-m-d');
-        $employee_exp->date_to = $this->dataTypeHelper->date_parse($data['date_to'], 'Y-m-d');
+        $employee_exp->date_from = $this->__dataType->date_parse($data['date_from'], 'Y-m-d');
+        $employee_exp->date_to = $this->__dataType->date_parse($data['date_to'], 'Y-m-d');
         $employee_exp->position = $data['position'];
         $employee_exp->company = $data['company'];
-        $employee_exp->salary = $this->dataTypeHelper->string_to_num($data['salary']);
+        $employee_exp->salary = $this->__dataType->string_to_num($data['salary']);
         $employee_exp->salary_grade = $data['salary_grade'];
         $employee_exp->appointment_status = $data['appointment_status'];
-        $employee_exp->is_gov_service =  $this->dataTypeHelper->string_to_boolean($data['is_gov_service']);
+        $employee_exp->is_gov_service =  $this->__dataType->string_to_boolean($data['is_gov_service']);
         $employee_exp->save();
 
     }

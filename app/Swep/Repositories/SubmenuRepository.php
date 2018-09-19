@@ -39,7 +39,7 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
         $submenu->menu_id = $menu->menu_id;
         $submenu->name = $data['sub_name'];
         $submenu->route = $data['sub_route'];
-        $submenu->is_nav = $this->dataTypeHelper->string_to_boolean($data['sub_is_nav']);  
+        $submenu->is_nav = $this->__dataType->string_to_boolean($data['sub_is_nav']);  
         $submenu->created_at = $this->carbon->now();
         $submenu->updated_at = $this->carbon->now();
         $submenu->ip_created = request()->ip();

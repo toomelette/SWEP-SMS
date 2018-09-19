@@ -2,12 +2,11 @@
 
 namespace App\Swep\ViewHelpers;
 
-use App\Swep\Helpers\SanitizeHelper;
-use App\Swep\Helpers\DataTypeHelper;
+use App\Swep\Helpers\__sanitize;
+use App\Swep\Helpers\__dataType;
 
 
-
-class FormHelper{
+class __form{
 
 
 
@@ -28,7 +27,7 @@ class FormHelper{
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control priceformat" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <input class="form-control priceformat" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. __sanitize::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                   '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -70,7 +69,7 @@ class FormHelper{
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <textarea id="editor" name="'. $key .'" rows="10" cols="80" '. $extra_attr .'>'. SanitizeHelper::html_encode($old_value) .'</textarea>
+                <textarea id="editor" name="'. $key .'" rows="10" cols="80" '. $extra_attr .'>'. __sanitize::html_encode($old_value) .'</textarea>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 
@@ -80,7 +79,7 @@ class FormHelper{
 
     public static function datepicker($class, $key, $label, $old_value, $error_has, $error_first){
 
-       $old_value = DataTypeHelper::date_parse($old_value);
+       $old_value = __dataType::date_parse($old_value);
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'" style="overflow:hidden;">
                 <label for="'. $key .'">'. $label .'</label>
@@ -88,7 +87,7 @@ class FormHelper{
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input id="'. $key .'" name="'. $key .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                  <input id="'. $key .'" name="'. $key .'" value="'. __sanitize::html_attribute_encode($old_value) .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
                 </div>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
@@ -103,7 +102,7 @@ class FormHelper{
                 <div class="form-group '. self::error_response($error_has) .'">
                   <label>'. $label .'</label>
                   <div class="input-group">
-                    <input id="'. $key .'" name="'. $key .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" type="text" class="form-control timepicker">
+                    <input id="'. $key .'" name="'. $key .'" value="'. __sanitize::html_attribute_encode($old_value) .'" type="text" class="form-control timepicker">
                     <div class="input-group-addon">
                       <i class="fa fa-clock-o"></i>
                     </div>
@@ -137,7 +136,7 @@ class FormHelper{
        return '<div class="form-group '. self::error_response($error_has) .'">
                   <label for="'. $key .'" class="col-sm-2 control-label">'. $label .'</label>
                   <div class="col-sm-10">
-                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. SanitizeHelper::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                    <input class="form-control" name="'. $key .'" id="'. $key .'" type="'. $type .'" value="'. __sanitize::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                     '. self::error_message($error_has, $error_first) .'
                   </div>
                 </div>';
@@ -228,7 +227,7 @@ class FormHelper{
     public static function textbox_for_dt($name, $placeholder, $value, $error_first){
 
        return '<div class="form-group">
-                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. SanitizeHelper::html_attribute_encode($value) .'">
+                  <input type="text" name="'. $name .'" class="form-control" placeholder="'. $placeholder .'" value="'. __sanitize::html_attribute_encode($value) .'">
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';
 
@@ -240,7 +239,7 @@ class FormHelper{
     public static function textbox_numeric_for_dt($name, $placeholder, $value, $error_first){
 
        return '<div class="form-group">
-                  <input type="text" name="'. $name .'" class="form-control priceformat" placeholder="'. $placeholder .'" value="'. SanitizeHelper::html_attribute_encode($value) .'">
+                  <input type="text" name="'. $name .'" class="form-control priceformat" placeholder="'. $placeholder .'" value="'. __sanitize::html_attribute_encode($value) .'">
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';
 
@@ -251,14 +250,14 @@ class FormHelper{
 
     public static function datepicker_for_dt($name, $value, $error_first){
 
-       $value = DataTypeHelper::date_parse($value);
+       $value = __dataType::date_parse($value);
 
        return '<div class="form-group">
                   <div class="input-group">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. SanitizeHelper::html_attribute_encode($value) .'">
+                    <input name="'. $name .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" value="'. __sanitize::html_attribute_encode($value) .'">
                   </div>
                   <small class="text-danger">'. $error_first .'</small>
                 </div>';

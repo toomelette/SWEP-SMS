@@ -23,7 +23,7 @@
      
           @csrf    
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'name', 'text', 'Name *', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
           ) !!} 
 
@@ -48,7 +48,7 @@
 
   @if(Session::has('DEPARTMENT_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'department_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('DEPARTMENT_CREATE_SUCCESS')
     ) !!}
     

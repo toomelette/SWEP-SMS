@@ -2,12 +2,11 @@
 
 namespace App\Swep\ViewHelpers;
 
-
 use URL;
 use Input;
 
 
-class HtmlHelper{
+class __html{
 
 
 

@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Create Department</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.department.index']) !!}
+        {!! __html::back_button(['dashboard.department.index']) !!}
       </div>
   </section>
 
@@ -28,7 +28,7 @@
 
           @csrf    
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $department->name , $errors->has('name'), $errors->first('name'), ''
           ) !!} 
 

@@ -5,7 +5,7 @@
 <section class="content-header">
   <h1>User Reset Password</h1>
   <div class="pull-right" style="margin-top: -25px;">
-    {!! HtmlHelper::back_button(['dashboard.user.index']) !!}
+    {!! __html::back_button(['dashboard.user.index']) !!}
   </div>
 </section>
 
@@ -22,22 +22,22 @@
         <div class="box-body">
 
           @if(Session::has('USER_RESET_PASSWORD_CONFIRMATION_FAIL'))
-            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_RESET_PASSWORD_CONFIRMATION_FAIL')) !!}
+            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_RESET_PASSWORD_CONFIRMATION_FAIL')) !!}
           @endif
 
           @if(Session::has('USER_RESET_PASSWORD_OWN_ACCOUNT_FAIL'))
-            {!! HtmlHelper::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_RESET_PASSWORD_OWN_ACCOUNT_FAIL')) !!}
+            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_RESET_PASSWORD_OWN_ACCOUNT_FAIL')) !!}
           @endif
 
           <div class="col-md-11">
                   
               @csrf    
 
-              {!! FormHelper::password_inline(
+              {!! __form::password_inline(
                   'password', 'New Password', 'New Password', $errors->has('password'), $errors->first('password'), ''
               ) !!}
 
-              {!! FormHelper::password_inline(
+              {!! __form::password_inline(
                   'password_confirmation', 'Confirm Password', 'Confirm Password', '', '', ''
               ) !!}
 
@@ -82,11 +82,11 @@
             <input id="password_in_modal" type="hidden" name="password" value="">
             <input id="password_confirmation_in_modal" type="hidden" name="password_confirmation" value="">
 
-            {!! FormHelper::textbox_inline(
+            {!! __form::textbox_inline(
                 'username', 'text', 'Username', 'Username', old('username'), $errors->has('username'), $errors->first('username'), ''
             ) !!}
 
-            {!! FormHelper::password_inline(
+            {!! __form::password_inline(
                 'user_password', 'Password', 'Password', $errors->has('user_password'), $errors->first('user_password'), ''
             ) !!}
 
@@ -114,9 +114,9 @@
 
   <script type="text/javascript">
 
-    {!! JSHelper::show_password('password', 'show_password') !!}
-    {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
-    {!! JSHelper::show_password('user_password', 'show_user_password') !!}
+    {!! __js::show_password('password', 'show_password') !!}
+    {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
+    {!! __js::show_password('user_password', 'show_user_password') !!}
 
     {{-- CALL RESET PASSWORD CONFIRMATION MODAL --}}
     $(document).on("click", "#reset_button", function () {

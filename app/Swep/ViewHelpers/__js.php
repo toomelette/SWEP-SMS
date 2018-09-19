@@ -2,10 +2,8 @@
 
 namespace App\Swep\ViewHelpers;
 
-use App\Swep\Helpers\StaticHelper; 
 
-
-class JSHelper{
+class __js{
 
 
 

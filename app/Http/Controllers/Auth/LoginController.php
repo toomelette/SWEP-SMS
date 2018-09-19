@@ -7,7 +7,7 @@ use App\Swep\Interfaces\UserInterface;
 use Auth;
 use Session;
 use Illuminate\Http\Request;
-use App\Swep\Helpers\CacheHelper;
+use App\Swep\Helpers\__cache;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -23,7 +23,7 @@ class LoginController extends Controller{
 
     protected $auth;
     protected $session;
-    protected $cacheHelper;
+    protected $__cache;
     protected $event;
     protected $redirectTo = 'dashboard/home';
     protected $maxAttempts = 4;
@@ -33,14 +33,14 @@ class LoginController extends Controller{
 
 
 
-    public function __construct(UserInterface $user_repo, CacheHelper $cacheHelper){
+    public function __construct(UserInterface $user_repo, __cache $__cache){
 
 
         $this->user_repo = $user_repo;
 
         $this->auth = auth();
         $this->session = session();
-        $this->cacheHelper = $cacheHelper;
+        $this->__cache = $__cache;
 
         $this->middleware('guest')->except('logout');
 
@@ -90,8 +90,8 @@ class LoginController extends Controller{
 
                 $user = $this->user_repo->login($this->auth->user()->slug);
 
-                $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-                $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+                $this->__cache->deletePattern('swep_cache:users:all:*');
+                $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
 
                 $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
@@ -120,8 +120,8 @@ class LoginController extends Controller{
             $this->guard()->logout();
             $request->session()->invalidate();
 
-            $this->cacheHelper->deletePattern('swep_cache:users:all:*');
-            $this->cacheHelper->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+            $this->__cache->deletePattern('swep_cache:users:all:*');
+            $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
 
             return redirect('/');
 

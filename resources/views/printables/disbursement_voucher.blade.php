@@ -87,7 +87,7 @@
         </div>
 
         <div class="col-sm-10" style="padding-top:5px;">
-          @foreach(StaticHelper::dv_mode_of_payment() as $key => $data)
+          @foreach(__static::dv_mode_of_payment() as $key => $data)
             <div class="col-sm-1" style="padding-left: 50px;">
               @if($key == $disbursement_voucher->mode_of_payment)
                 <div style="width: 20px; height: 20px; border: 10px solid;"></div>

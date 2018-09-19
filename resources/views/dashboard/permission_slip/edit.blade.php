@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Edit Permission</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button([
+        {!! __html::back_button([
           'dashboard.permission_slip.index',
           'dashboard.permission_slip.show',
         ]) !!}
@@ -31,26 +31,26 @@
 
           <input name="_method" value="PUT" type="hidden">
           
-          {!! FormHelper::datepicker(
+          {!! __form::datepicker(
             '3', 'date',  'Date *', old('date') ? old('date') : $permission_slip->date->format('m/d/Y'), $errors->has('date'), $errors->first('date')
           ) !!}
 
-          {!! FormHelper::select_dynamic(
+          {!! __form::select_dynamic(
             '3', 'employee_no', 'Employee *', old('employee_no') ? old('employee_no') : $permission_slip->employee_no, $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
           ) !!}
 
-          {!! FormHelper::timepicker(
+          {!! __form::timepicker(
             '3', 'time_out',  'Time Out *', old('time_out') ? old('time_out') : date('h:i A', strtotime($permission_slip->time_out)), $errors->has('time_out'), $errors->first('time_out')
           ) !!}
 
-          {!! FormHelper::timepicker(
+          {!! __form::timepicker(
             '3', 'time_in',  'Time In *', old('time_in') ? old('time_in') : date('h:i A', strtotime($permission_slip->time_in)), $errors->has('time_in'), $errors->first('time_in')
           ) !!}
 
           <div class="col-md-12"></div>
 
-          {!! FormHelper::select_static(
-            '3', 'with_ps', 'With PS *', old('with_ps') ? old('with_ps') : DataTypeHelper::boolean_to_string($permission_slip->time_in), ['Yes' => 'true', 'No' => 'false'], $errors->has('with_ps'), $errors->first('with_ps'), '', ''
+          {!! __form::select_static(
+            '3', 'with_ps', 'With PS *', old('with_ps') ? old('with_ps') : __dataType::boolean_to_string($permission_slip->time_in), ['Yes' => 'true', 'No' => 'false'], $errors->has('with_ps'), $errors->first('with_ps'), '', ''
           ) !!}
 
 

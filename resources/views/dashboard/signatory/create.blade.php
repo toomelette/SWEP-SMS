@@ -23,16 +23,16 @@
      
           @csrf    
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'employee_name', 'text', 'Employee Name *', 'Employee Name', old('employee_name'), $errors->has('employee_name'), $errors->first('employee_name'), 'data-transform="uppercase"'
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
             '4', 'employee_position', 'text', 'Position *', 'Position', old('employee_position'), $errors->has('employee_position'), $errors->first('employee_position'), 'data-transform="uppercase"'
           ) !!} 
 
           {!! 
-            FormHelper::select_static('4', 'type', 'Type *', old('type'), StaticHelper::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') 
+            __form::select_static('4', 'type', 'Type *', old('type'), __static::signatory_types(), $errors->has('type'), $errors->first('type'), '', '') 
           !!}
 
         </div>
@@ -56,7 +56,7 @@
 @section('modals')
 
   @if(Session::has('SIGNATORY_CREATE_SUCCESS'))
-    {!! HtmlHelper::modal('signatory_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('SIGNATORY_CREATE_SUCCESS')) !!}
+    {!! __html::modal('signatory_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('SIGNATORY_CREATE_SUCCESS')) !!}
   @endif
 
 @endsection 

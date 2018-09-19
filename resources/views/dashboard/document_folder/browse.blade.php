@@ -13,7 +13,7 @@
   <section class="content-header">
       <h1>Browse Files</h1>
       <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button([
+      {!! __html::back_button([
         'dashboard.document_folder.index',
       ]) !!}
   </section>
@@ -58,7 +58,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($documents) !!}
+        {!! __html::table_counter($documents) !!}
         {!! $documents->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 

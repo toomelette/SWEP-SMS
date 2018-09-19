@@ -33,11 +33,11 @@
 
 
     {{-- Advance Filters --}}
-    {!! HtmlHelper::filter_open() !!}
+    {!! __html::filter_open() !!}
 
       <div class="col-md-12">
           
-        {!! FormHelper::select_static_for_filter('3', 't', 'Type of Leave', old('t'), StaticHelper::leave_types(), 'submit_la_filter', '', '') !!}
+        {!! __form::select_static_for_filter('3', 't', 'Type of Leave', old('t'), __static::leave_types(), 'submit_la_filter', '', '') !!}
 
       </div>
 
@@ -46,15 +46,15 @@
         
         <h5>Date of Filing Filter : </h5>
 
-        {!! FormHelper::datepicker('3', 'df',  'From', old('df'), '', '') !!}
+        {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
 
-        {!! FormHelper::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
+        {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
 
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
       </div>
         
-    {!! HtmlHelper::filter_close('submit_la_filter') !!}
+    {!! __html::filter_close('submit_la_filter') !!}
 
 
 
@@ -62,7 +62,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! HtmlHelper::table_search(route('dashboard.leave_application.index')) !!}
+        {!! __html::table_search(route('dashboard.leave_application.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -83,7 +83,7 @@
               <td>{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) !!}</td>
               <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
               <td>
-                @foreach(StaticHelper::leave_types() as $name => $key)
+                @foreach(__static::leave_types() as $name => $key)
                   @if($key == $data->type)
                     {{ $name }}
                   @endif
@@ -110,7 +110,7 @@
       @endif
 
       <div class="box-footer">
-        {!! HtmlHelper::table_counter($leave_applications) !!}
+        {!! __html::table_counter($leave_applications) !!}
         {!! $leave_applications->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
       </div>
 
@@ -126,7 +126,7 @@
 
 @section('modals')
 
-  {!! HtmlHelper::modal_delete('la_delete') !!}
+  {!! __html::modal_delete('la_delete') !!}
 
 @endsection 
 
@@ -139,11 +139,11 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! JSHelper::modal_confirm_delete_caller('la_delete') !!}
+    {!! __js::modal_confirm_delete_caller('la_delete') !!}
 
     {{-- DV DELETE TOAST --}}
     @if(Session::has('LA_DELETE_SUCCESS'))
-      {!! JSHelper::toast(Session::get('LA_DELETE_SUCCESS')) !!}
+      {!! __js::toast(Session::get('LA_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

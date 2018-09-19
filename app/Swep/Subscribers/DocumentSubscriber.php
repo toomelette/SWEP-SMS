@@ -36,8 +36,8 @@ class DocumentSubscriber extends BaseSubscriber{
 
     public function onStore($document){
 
-        $this->cacheHelper->deletePattern('swep_cache:documents:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:documents:byFolderCode:'. $document->folder_code .'');
+        $this->__cache->deletePattern('swep_cache:documents:all:*');
+        $this->__cache->deletePattern('swep_cache:documents:byFolderCode:'. $document->folder_code .'');
 
         $this->session->flash('DOCUMENT_CREATE_SUCCESS', 'The Document has been successfully created!');
 
@@ -49,9 +49,9 @@ class DocumentSubscriber extends BaseSubscriber{
 
     public function onUpdate($document){
 
-        $this->cacheHelper->deletePattern('swep_cache:documents:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:documents:bySlug:'. $document->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:documents:byFolderCode:'. $document->folder_code .'');
+        $this->__cache->deletePattern('swep_cache:documents:all:*');
+        $this->__cache->deletePattern('swep_cache:documents:bySlug:'. $document->slug .'');
+        $this->__cache->deletePattern('swep_cache:documents:byFolderCode:'. $document->folder_code .'');
 
         $this->session->flash('DOCUMENT_UPDATE_SUCCESS', 'The Document has been successfully updated!');
         $this->session->flash('DOCUMENT_UPDATE_SUCCESS_SLUG', $document->slug);
@@ -64,9 +64,9 @@ class DocumentSubscriber extends BaseSubscriber{
 
     public function onDestroy($document){
 
-        $this->cacheHelper->deletePattern('swep_cache:documents:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:documents:bySlug:'. $document->slug .'');
-        $this->cacheHelper->deletePattern('swep_cache:documents:byFolderCode:'. $document->folder_code .'');
+        $this->__cache->deletePattern('swep_cache:documents:all:*');
+        $this->__cache->deletePattern('swep_cache:documents:bySlug:'. $document->slug .'');
+        $this->__cache->deletePattern('swep_cache:documents:byFolderCode:'. $document->folder_code .'');
 
         $this->session->flash('DOCUMENT_DELETE_SUCCESS', 'The Document has been successfully deleted!');
         

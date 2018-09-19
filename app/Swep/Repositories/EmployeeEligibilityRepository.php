@@ -38,9 +38,9 @@ class EmployeeEligibilityRepository extends BaseRepository implements EmployeeEl
         $employee_elig->level = $data['level'];
         $employee_elig->rating = $data['rating'];
         $employee_elig->exam_place = $data['exam_place'];
-        $employee_elig->exam_date = $this->dataTypeHelper->date_parse($data['exam_date'], 'Y-m-d');
+        $employee_elig->exam_date = $this->__dataType->date_parse($data['exam_date'], 'Y-m-d');
         $employee_elig->license_no = $data['license_no'];
-        $employee_elig->license_validity = $this->dataTypeHelper->date_parse($data['license_validity'], 'Y-m-d');
+        $employee_elig->license_validity = $this->__dataType->date_parse($data['license_validity'], 'Y-m-d');
         $employee_elig->save();
 
     }

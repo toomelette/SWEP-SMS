@@ -77,7 +77,7 @@
 
       <tr>
         <th>Employee Name</th>
-        @foreach(StaticHelper::days() as $data)
+        @foreach(__static::days() as $data)
           <th>{{ $data }}</th>
         @endforeach  
         <th>TOTAL</th>
@@ -91,7 +91,7 @@
 
           <td>{{ $data_emp->fullname }}</td>
 
-          @foreach (StaticHelper::days() as $data_days)
+          @foreach (__static::days() as $data_days)
 
             <?php
 
@@ -159,8 +159,8 @@
 
                 <?php
 
-                  $date_YM = DataTypeHelper::date_parse($data_monthly_ps->date, 'Y-m');
-                  $date_D = DataTypeHelper::date_parse($data_monthly_ps->date, 'd');
+                  $date_YM = __dataType::date_parse($data_monthly_ps->date, 'Y-m');
+                  $date_D = __dataType::date_parse($data_monthly_ps->date, 'd');
                   $date_YMD = Carbon::createFromFormat('Y-m-d', $date_YM .'-'. $data_days);
 
                   $start = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_out);
@@ -203,7 +203,7 @@
 
           @endforeach
           
-          <td><b>{{ DataTypeHelper::construct_time_HM($total_hrs, $total_mins) }}</b></td>
+          <td><b>{{ __dataType::construct_time_HM($total_hrs, $total_mins) }}</b></td>
 
         </tr>
 

@@ -125,7 +125,7 @@
         <span style="font-size:8px;">&nbsp;&nbsp;2. &nbsp;SURNAME</span>
       </div>
       <div class="col-sm-10" style="border-bottom:solid 1px;">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->lastname) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->lastname) }}</span>
       </div>
     </div>
 
@@ -134,7 +134,7 @@
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIRSTNAME</span>
       </div>
       <div class="col-sm-7" style="border-bottom:solid 1px;">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->firstname) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->firstname) }}</span>
       </div>
       <div class="col-sm-3 box-l-grey no-padding" style="border-bottom:solid 1px; border-left:solid 1px;">
         <div class="col-sm-12 no-padding">
@@ -142,7 +142,7 @@
             <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
           </div>
           <div class="col-sm-4 no-padding">
-            <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->name_ext) }}</span>
+            <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->name_ext) }}</span>
           </div>
         </div>  
       </div>
@@ -153,7 +153,7 @@
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MIDDLENAME</span>
       </div>
       <div class="col-sm-10" style="border-right:solid 1px;">
-         <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->middlename) }}</span>
+         <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->middlename) }}</span>
       </div>
     </div>
 
@@ -163,7 +163,7 @@
         <p style="font-size:8px;">&nbsp;&nbsp;3. DATE OF BIRTH<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mm/dd/yyyy)</p>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; padding-bottom: 22px;">
-       <span style="font-size:10px; font-weight:bold;">{{ DataTypeHelper::date_parse($employee->date_of_birth, 'm/d/Y') }}</span>
+       <span style="font-size:10px; font-weight:bold;">{{ __dataType::date_parse($employee->date_of_birth, 'm/d/Y') }}</span>
       </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8; padding-bottom: 2px;">
         <span style="font-size:8px;">16. CITIZENSHIP</span>
@@ -190,7 +190,7 @@
         <span style="font-size:8px;">&nbsp;&nbsp;4. PLACE OF BIRTH</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px;">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->place_of_birth) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->place_of_birth) }}</span>
       </div>
       <div class="col-sm-3 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-bottom:solid 1px; border-bottom-color: #e8e8e8;">
         <span style="font-size:8px;">If holder of dual citizenship, </span>
@@ -215,7 +215,7 @@
         <span style="font-size:8px;">please indicate the details.</span>
       </div>
       <div class="col-sm-4">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->dual_citizenship_country)}}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->dual_citizenship_country)}}</span>
       </div>
     </div>
 
@@ -247,20 +247,20 @@
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-          <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_block) }}</span>
+          <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_block) }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_street) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_street) }}</span>
         </div>
         <div class="col-sm-12" style="border-bottom:solid 1px; margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">House/Block/Lot No.</span>
             <span style="font-size:8px; font-style:italic; margin-left: 110px;">Street</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_village) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_village) }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_barangay) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_barangay) }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">Subdivision/Village</span>
@@ -274,17 +274,17 @@
         <span style="font-size:8px;">&nbsp;&nbsp;7. HEIGHT (m)</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; height:2.4em; padding-bottom:13px;">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->height) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->height) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:15px;">
         &nbsp;
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_city) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_city) }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_province) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_province) }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 30px;">City/Municipality</span>
@@ -298,13 +298,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;8. WEIGHT (kg)</span>
       </div>
       <div class="col-sm-3">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->weight) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->weight) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
       </div>
       <div class="col-sm-5">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->res_address_zipcode) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->res_address_zipcode) }}</span>
       </div>
     </div>
 
@@ -313,17 +313,17 @@
         <span style="font-size:8px;">&nbsp;&nbsp;9. BLOOD TYPE</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; height:2.7em; padding-bottom:17px;">
-         <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->blood_type) }}</span>
+         <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->blood_type) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom:6px;">
         <p style="font-size:8px;">18. PERMANENT ADDRESS</p>
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_block) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_block) }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_street) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_street) }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px; padding-bottom:3px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">House/Block/Lot No.</span>
@@ -337,17 +337,17 @@
         <span style="font-size:8px;">&nbsp;&nbsp;10. GSIS ID NO.</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; height:2.5em; padding-bottom:14px;">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->gsis) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->gsis) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
         &nbsp;
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_village) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_village) }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_barangay) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_barangay) }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 25px;">Subdivision/Village</span>
@@ -361,17 +361,17 @@
         <span style="font-size:8px;">&nbsp;&nbsp;11. PAG-IBIG ID NO.</span>
       </div>
       <div class="col-sm-3" style="border-bottom:solid 1px; height:2.5em; padding-bottom:14px;">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->hdmf) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->hdmf) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px; border-right:solid 1px;  border-bottom-color:#a7aaab; padding-bottom: 15px;">
         &nbsp;
       </div>
       <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-right:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_city) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_city) }}</span>
         </div>
         <div class="col-sm-6 no-padding" style="border-bottom:solid 1px; border-bottom-color:#a7aaab; text-align: center;"> 
-            <span style="font-size:7px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_province) }}</span>
+            <span style="font-size:7px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_province) }}</span>
         </div>
         <div class="col-sm-12" style="margin-top:-7px;"> 
             <span style="font-size:8px; font-style:italic; margin-left: 20px;">City/Municipality</span>
@@ -385,13 +385,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;12. PHILHEALTH NO.</span>
       </div>
       <div class="col-sm-3">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->philhealth) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->philhealth) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZIP CODE</span>
       </div>
       <div class="col-sm-5">
-       <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeAddress)->perm_address_zipcode) }}</span>
+       <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeAddress)->perm_address_zipcode) }}</span>
       </div>
     </div>
 
@@ -400,13 +400,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;13. SSS NO.</span>
       </div>
       <div class="col-sm-3">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->sss) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->sss) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">19.  TELEPHONE NO.</span>
       </div>
       <div class="col-sm-5">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->tel_no) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->tel_no) }}</span>
       </div>
     </div>
 
@@ -415,13 +415,13 @@
         <span style="font-size:8px;">&nbsp;&nbsp;14. TIN NO.</span>
       </div>
       <div class="col-sm-3">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->tin) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->tin) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <span style="font-size:8px;">20. MOBILE NO.</span>
       </div>
       <div class="col-sm-5">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->cell_no) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->cell_no) }}</span>
       </div>
     </div>
 
@@ -430,13 +430,13 @@
         <p style="font-size:7px; margin-top: 5px; margin-left: 2px;">15. AGENCY EMPLOYEE NO.</p>
       </div>
       <div class="col-sm-3">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->agency_no) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->agency_no) }}</span>
       </div>
       <div class="col-sm-2 box-l-grey" style="border-left:solid 1px; border-right:solid 1px;">
         <p style="font-size:7px; margin-top: 5px;">21. E-MAIL ADDRESS (if any)</p>
       </div>
       <div class="col-sm-5">
-        <span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap($employee->email) }}</span>
+        <span style="font-size:10px; font-weight:bold;">{{ __print::string_trap($employee->email) }}</span>
       </div>
     </div>
 
@@ -456,14 +456,14 @@
       		<span style="font-size:8px; margin-left:13px;">&nbsp;&nbsp;22. SPOUSE'S SURNAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_lastname) }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_lastname) }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
       	<div class="col-pds-8" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_firstname) }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_firstname) }}</span>
       	</div>
       	<div class="col-pds-2 box-l-grey no-padding" style="border-left:solid 1px; border-bottom:solid 1px;">
       		<div class="col-sm-12 no-padding">
@@ -471,7 +471,7 @@
               <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
             </div>
             <div class="col-sm-2 no-padding">
-              <span style="font-size:8px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_name_ext) }}</span>
+              <span style="font-size:8px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_name_ext) }}</span>
             </div>
           </div>
       	</div>
@@ -480,42 +480,42 @@
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;MIDDLENAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_middlename)}}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_middlename)}}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;OCCUPATION</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_ocupation)}}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_ocupation)}}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px;">
       		<span style="font-size:7px; margin-left:15px;">&nbsp;&nbsp;EMPLOYER/BUSINESS NAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_employer)}}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_employer)}}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; border-bottom:solid 1px; ">
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;BUSINESS ADDRESS</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->spouse_business_address)}}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->spouse_business_address)}}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:13px;">&nbsp;&nbsp;24. FATHER'S SURNAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->father_lastname)}}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->father_lastname)}}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
       	<div class="col-pds-8" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->father_firstname)}}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->father_firstname)}}</span>
       	</div>
       	<div class="col-pds-2 box-l-grey no-padding" style="border-left:solid 1px; border-bottom:solid 1px;">
       		<div class="col-sm-12 no-padding">
@@ -523,7 +523,7 @@
               <p style="font-size:7px;">NAME EXTENSION (JR., SR) </p>
             </div>
             <div class="col-sm-2 no-padding">
-              <span style="font-size:8px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->father_name_ext)}}</span>
+              <span style="font-size:8px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->father_name_ext)}}</span>
             </div>
           </div>
       	</div>
@@ -532,7 +532,7 @@
       		<span style="font-size:8px; margin-left:15px;">&nbsp;&nbsp;MIDDLENAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->father_middlename) }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->father_middlename) }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
@@ -546,14 +546,14 @@
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;SURNAME</span>
       	</div>
       	<div class="col-pds-10" style="border-bottom:solid 1px; padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->mother_lastname) }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->mother_lastname) }}</span>
       	</div>
 
       	<div class="col-pds-2 box-l-grey" style="border-right:solid 1px; padding-bottom: 1px;">
       		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;FIRSTNAME</span>
       	</div>
       	<div class="col-pds-10" style="padding-left: 10px;">
-      		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->mother_firstname) }}</span>
+      		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->mother_firstname) }}</span>
       	</div>
 
       </div>
@@ -601,7 +601,7 @@
 	  		<span style="font-size:8px; margin-left:17px;">&nbsp;&nbsp;&nbsp;MIDDLENAME</span>
 	  	</div>
 	  	<div class="col-sm-5" style="border-right:solid 1px; border-top:solid 1px; margin-left:1px; padding-left: 10px;">
-	  		<span style="font-size:10px; font-weight:bold;">{{ PrintHelper::string_trap(optional($employee->employeeFamilyDetail)->mother_middlename) }}</span>
+	  		<span style="font-size:10px; font-weight:bold;">{{ __print::string_trap(optional($employee->employeeFamilyDetail)->mother_middlename) }}</span>
 	  	</div>
 	  	<div class="col-sm-5 box-l-grey" style="border-right:solid 1px; border-top:solid 1px; ">
 	  		<p style="font-size: 7px; text-align: center; color:red !important; font-style: italic; -webkit-print-color-adjust: exact; margin-top: 5px; margin-bottom: 5px;">

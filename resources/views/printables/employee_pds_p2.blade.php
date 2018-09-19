@@ -131,7 +131,7 @@
           </div>
 
           <div class="col-sm-1 no-padding" style="border-right:solid 1px;">
-            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ DataTypeHelper::date_parse($data->exam_date, 'm/d/Y') }}</span>
+            <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ __dataType::date_parse($data->exam_date, 'm/d/Y') }}</span>
           </div>
 
           <div class="col-sm-4 no-padding" style="border-right:solid 1px;">
@@ -144,7 +144,7 @@
                 <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ $data->license_no }}</span>
               </div>
               <div class="col-sm-6 no-padding">
-                <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ DataTypeHelper::date_parse($data->license_validity, 'm/d/Y') }}</span>
+                <span style="font-size:8px; padding-left: 3px; font-weight: bold;"> {{ __dataType::date_parse($data->license_validity, 'm/d/Y') }}</span>
               </div>
             </div>
           </div>
@@ -279,10 +279,10 @@
           <div class="col-sm-2 no-padding" style="border-right:solid 1px;">
             <div class="col-sm-12">
               <div class="col-sm-6 no-padding" style="border-right:solid 1px; text-align: center;">
-                <span style="font-size:8px; font-weight: bold;">{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</span>
+                <span style="font-size:8px; font-weight: bold;">{{ __dataType::date_parse($data->date_from, 'm/d/Y') }}</span>
               </div>
               <div class="col-sm-6 no-padding" style="text-align: center;">
-                <span style="font-size:8px; font-weight: bold;">{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</span>
+                <span style="font-size:8px; font-weight: bold;">{{ __dataType::date_parse($data->date_to, 'm/d/Y') }}</span>
               </div>
             </div>
           </div>

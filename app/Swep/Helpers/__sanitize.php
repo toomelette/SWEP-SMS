@@ -4,7 +4,7 @@
 namespace App\Swep\Helpers;
 
 
-class SanitizeHelper {
+class __sanitize {
 
 
 	static $haveUnicode = false;
@@ -22,13 +22,13 @@ class SanitizeHelper {
 		$len = mb_strlen($str);
 		
 		for($cnt = 0; $cnt < $len; $cnt++){
-			$c = SanitizeHelper::uniord(SanitizeHelper::unicharat($str, $cnt));
+			$c = __sanitize::uniord(__sanitize::unicharat($str, $cnt));
 			if( ($c >= 97 && $c <= 122) ||
 				($c >= 65 && $c <= 90 ) ||
 				($c >= 48 && $c <= 57 ) ||
 				$c == 32 || $c == 44 || $c == 46 )
 			{
-				$out .= SanitizeHelper::unicharat($str, $cnt);
+				$out .= __sanitize::unicharat($str, $cnt);
 			}
 			else{
 				$out .= "&#$c;";
@@ -55,12 +55,12 @@ class SanitizeHelper {
 		$len = mb_strlen($str);
 		
 		for($cnt = 0; $cnt < $len; $cnt++){
-			$c = SanitizeHelper::uniord(SanitizeHelper::unicharat($str, $cnt));
+			$c = __sanitize::uniord(__sanitize::unicharat($str, $cnt));
 			if( ($c >= 97 && $c <= 122) ||
 				($c >= 65 && $c <= 90 ) ||
 				($c >= 48 && $c <= 57 ) )
 			{
-				$out .= SanitizeHelper::unicharat($str, $cnt);
+				$out .= __sanitize::unicharat($str, $cnt);
 			}
 			else{
 				$out .= "&#$c;";
@@ -87,13 +87,13 @@ class SanitizeHelper {
 		$len = mb_strlen($str);
 		
 		for($cnt = 0; $cnt < $len; $cnt++){
-			$c = SanitizeHelper::uniord(SanitizeHelper::unicharat($str, $cnt));
+			$c = __sanitize::uniord(__sanitize::unicharat($str, $cnt));
 			if( ($c >= 97 && $c <= 122) ||
 				($c >= 65 && $c <= 90 ) ||
 				($c >= 48 && $c <= 57 ) ||
 				$c == 32 || $c == 44 || $c == 46 )
 			{
-				$out .= SanitizeHelper::unicharat($str, $cnt);
+				$out .= __sanitize::unicharat($str, $cnt);
 			}
 			else{
 				$out .= "&#$c;";
@@ -121,12 +121,12 @@ class SanitizeHelper {
 
 		
 		for($cnt = 0; $cnt < $len; $cnt++){
-			$c = SanitizeHelper::uniord(SanitizeHelper::unicharat($str, $cnt));
+			$c = __sanitize::uniord(__sanitize::unicharat($str, $cnt));
 			if( ($c >= 97 && $c <= 122) ||
 				($c >= 65 && $c <= 90 ) ||
 				($c >= 48 && $c <= 57 ) )
 			{
-				$out .= SanitizeHelper::unicharat($str, $cnt);
+				$out .= __sanitize::unicharat($str, $cnt);
 			}
 			else{
 				$out .= "&#$c;";
@@ -161,13 +161,13 @@ class SanitizeHelper {
 		
 		for($cnt = 0; $cnt < $len; $cnt++){
 
-			$c = SanitizeHelper::uniord(SanitizeHelper::unicharat($str, $cnt));
+			$c = __sanitize::uniord(__sanitize::unicharat($str, $cnt));
 			if( ($c >= 97 && $c <= 122) ||
 				($c >= 65 && $c <= 90 ) ||
 				($c >= 48 && $c <= 57 ) ||
 				$c == 32 || $c == 44 || $c == 46 )
 			{
-				$out .= SanitizeHelper::unicharat($str, $cnt);
+				$out .= __sanitize::unicharat($str, $cnt);
 			}
 			elseif( $c <= 127 ){
 				$out .= sprintf('\x%02X', $c);
@@ -206,7 +206,7 @@ class SanitizeHelper {
 		
 		for($cnt = 0; $cnt < $len; $cnt++){
 
-			$c = SanitizeHelper::uniord(SanitizeHelper::unicharat($str, $cnt));
+			$c = __sanitize::uniord(__sanitize::unicharat($str, $cnt));
 
 			if( ($c >= 97 && $c <= 122) ||
 				($c >= 65 && $c <= 90 ) ||
@@ -219,7 +219,7 @@ class SanitizeHelper {
 					$out .= '&"';
 				}
 				
-				$out .= SanitizeHelper::unicharat($str, $cnt);
+				$out .= __sanitize::unicharat($str, $cnt);
 			}
 			else{
 
@@ -246,7 +246,7 @@ class SanitizeHelper {
 
 	public static function unichr($u){
 
-		if(SanitizeHelper::$haveUnicode == true){
+		if(__sanitize::$haveUnicode == true){
 			return mb_convert_encoding(pack("N",$u), 'UTF-8', 'UCS-4BE');
 		}
 		
@@ -258,7 +258,7 @@ class SanitizeHelper {
 
 	public static function uniord($u){
 
-		if(SanitizeHelper::$haveUnicode == true){
+		if(__sanitize::$haveUnicode == true){
 			$c = unpack("N", mb_convert_encoding($u, 'UCS-4BE', 'UTF-8'));
 			return $c[1];
 		}
@@ -272,7 +272,7 @@ class SanitizeHelper {
 
 	public static function unicharat($str, $cnt){
 
-		if(SanitizeHelper::$haveUnicode == true){
+		if(__sanitize::$haveUnicode == true){
 			return mb_substr($str, $cnt, 1);
 		}
 		

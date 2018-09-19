@@ -218,14 +218,17 @@ return [
         'Str' => 'Illuminate\Support\Str',
 
         /** View Helper **/
-        'FormHelper' => App\Swep\ViewHelpers\FormHelper::class,
-        'HtmlHelper' => App\Swep\ViewHelpers\HtmlHelper::class,
-        'JSHelper' => App\Swep\ViewHelpers\JSHelper::class,  
-        'CacheHelper' => App\Swep\Helpers\CacheHelper::class, 
-        'SanitizeHelper' => App\Swep\Helpers\SanitizeHelper::class,
-        'DataTypeHelper' => App\Swep\Helpers\DataTypeHelper::class, 
-        'PrintHelper' => App\Swep\Helpers\PrintHelper::class, 
-        'StaticHelper' => App\Swep\Helpers\StaticHelper::class, 
+        '__form' => App\Swep\ViewHelpers\__form::class,
+        '__html' => App\Swep\ViewHelpers\__html::class,
+        '__js' => App\Swep\ViewHelpers\__js::class,  
+
+        /** Helper **/
+        '__cache' => App\Swep\Helpers\__cache::class, 
+        '__sanitize' => App\Swep\Helpers\__sanitize::class,
+        '__dataType' => App\Swep\Helpers\__dataType::class, 
+        '__print' => App\Swep\Helpers\__print::class, 
+        '__static' => App\Swep\Helpers\__static::class,
+
     ],
 
 ];

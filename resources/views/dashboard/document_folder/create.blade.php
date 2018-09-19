@@ -23,11 +23,11 @@
      
           @csrf
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'folder_code', 'text', 'Folder Code *', 'Folder Code', old('folder_code'), $errors->has('folder_code'), $errors->first('folder_code'), ''
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '8', 'description', 'text', 'Description', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
@@ -52,7 +52,7 @@
 
   @if(Session::has('DOC_FOLDER_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'doc_folder_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('DOC_FOLDER_CREATE_SUCCESS')
     ) !!}
 

@@ -4,7 +4,7 @@ namespace App\Swep\BaseClasses;
 
 use App;
 use Session;
-use App\Swep\Helpers\CacheHelper;
+use App\Swep\Helpers\__cache;
 
 
 class BaseSubscriber{
@@ -18,7 +18,7 @@ class BaseSubscriber{
     public function __construct(){
 
         $this->session = session();
-        $this->cacheHelper = App::make(CacheHelper::class);
+        $this->__cache = App::make(__cache::class);
         
     }
 

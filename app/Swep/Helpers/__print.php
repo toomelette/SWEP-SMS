@@ -4,7 +4,7 @@ namespace App\Swep\Helpers;
 
 
 
-class PrintHelper{
+class __print{
 
 
 

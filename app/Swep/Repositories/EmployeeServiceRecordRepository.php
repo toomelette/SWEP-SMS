@@ -62,7 +62,7 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->date_to = $request->date_to;
         $employee_sr->position = $request->position;
         $employee_sr->appointment_status = $request->appointment_status;
-        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->salary);
+        $employee_sr->salary = $this->__dataType->string_to_num($request->salary);
         $employee_sr->mode_of_payment = $request->mode_of_payment;
         $employee_sr->station = $request->station;
         $employee_sr->gov_serve = $request->gov_serve;
@@ -97,7 +97,7 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->date_to = $request->e_date_to;
         $employee_sr->position = $request->e_position;
         $employee_sr->appointment_status = $request->e_appointment_status;
-        $employee_sr->salary = $this->dataTypeHelper->string_to_num($request->e_salary);
+        $employee_sr->salary = $this->__dataType->string_to_num($request->e_salary);
         $employee_sr->mode_of_payment = $request->e_mode_of_payment;
         $employee_sr->station = $request->e_station;
         $employee_sr->gov_serve = $request->e_gov_serve;

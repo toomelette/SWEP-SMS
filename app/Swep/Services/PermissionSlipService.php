@@ -115,8 +115,8 @@ class PermissionSlipService extends BaseService{
 
     public function reportGenerate($request){
 
-        $df = $this->dataTypeHelper->date_parse($request->df, 'Y-m-d');
-        $dt = $this->dataTypeHelper->date_parse($request->dt, 'Y-m-d');
+        $df = $this->__dataType->date_parse($request->df, 'Y-m-d');
+        $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d');
 
         $department = $this->dept_repo->findByDepartmentId($request->d);
 

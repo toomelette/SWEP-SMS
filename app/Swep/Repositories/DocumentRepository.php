@@ -37,9 +37,12 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
         $documents = $this->cache->remember('documents:all:' . $key, 240, function() use ($request){
 
+            $df = $this->carbon->parse($request->df)->format('Y-m-d');
+            $dt = $this->carbon->parse($request->dt)->format('Y-m-d');
+
             $document = $this->document->newQuery();
             
-            $parsed_date = $this->dataTypeHelper->date_parse($request->d, 'Y-m-d');
+            $parsed_date = $this->__dataType->date_parse($request->d, 'Y-m-d');
 
             if(isset($request->q)){
                 $this->search($document, $request->q);
@@ -49,12 +52,12 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
                 $document->whereFolderCode($request->fc);
             }
 
-            if(isset($request->dt)){
-                $document->whereType($request->dt);
+            if(isset($request->dct)){
+                $document->whereType($request->dct);
             }
 
-            if(isset($request->d)){
-                $document->where('date', $parsed_date);
+            if(isset($request->df) || isset($request->dt)){
+                $document->whereBetween('date', [$df, $dt]);
             }
 
             return $this->populate($document);
@@ -102,14 +105,14 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document->document_id = $this->getDocumentIdInc();
         $document->filename = $filename;
         $document->reference_no = $request->reference_no;
-        $document->date = $this->dataTypeHelper->date_parse($request->date, 'Y-m-d');
+        $document->date = $this->__dataType->date_parse($request->date, 'Y-m-d');
         $document->person_to = $request->person_to;
         $document->person_from = $request->person_from;
         $document->type = $request->type;
         $document->subject = $request->subject;
         $document->folder_code = $request->folder_code;
         $document->remarks = $request->remarks;
-        $document->year = $this->dataTypeHelper->date_parse($request->date, 'Y');
+        $document->year = $this->__dataType->date_parse($request->date, 'Y');
         $document->created_at = $this->carbon->now();
         $document->updated_at = $this->carbon->now();
         $document->ip_created = request()->ip();
@@ -134,14 +137,14 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         }
 
         $document->reference_no = $request->reference_no;
-        $document->date = $this->dataTypeHelper->date_parse($request->date, 'Y-m-d');
+        $document->date = $this->__dataType->date_parse($request->date, 'Y-m-d');
         $document->person_to = $request->person_to;
         $document->person_from = $request->person_from;
         $document->type = $request->type;
         $document->subject = $request->subject;
         $document->folder_code = $request->folder_code;
         $document->remarks = $request->remarks;
-        $document->year = $this->dataTypeHelper->date_parse($request->date, 'Y');
+        $document->year = $this->__dataType->date_parse($request->date, 'Y');
         $document->updated_at = $this->carbon->now();
         $document->ip_updated = request()->ip();
         $document->user_updated = $this->auth->user()->user_id;
@@ -206,7 +209,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function populate($model){
 
-        return $model->select('filename', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug', 'updated_at')
+        return $model->select('filename', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);

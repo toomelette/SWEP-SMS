@@ -46,7 +46,7 @@ class DocumentService extends BaseService{
 
         $filename = $this->filename($request);
 
-        $dir = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+        $dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
 
         if(!is_null($request->file('doc_file'))){
 
@@ -97,7 +97,7 @@ class DocumentService extends BaseService{
 
         $filename = $this->filename($request);
         $old_dir = $document->year .'/'. $document->folder_code;
-        $new_dir = $this->dataTypeHelper->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+        $new_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
         $old_file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
 
@@ -161,7 +161,7 @@ class DocumentService extends BaseService{
 
         if(!empty($document)){
 
-            $path = $this->staticHelper->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+            $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
             if (!File::exists($path)) {
                 abort(404);

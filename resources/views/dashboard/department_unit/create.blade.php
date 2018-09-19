@@ -23,17 +23,17 @@
      
           @csrf    
 
-          {!! FormHelper::select_dynamic(
+          {!! __form::select_dynamic(
           '4', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
           ) !!}
 
           <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') }}">
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'name', 'text', 'Name *', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
@@ -58,7 +58,7 @@
 
   @if(Session::has('DEPARTMENT_UNIT_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'department_unit_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('DEPARTMENT_UNIT_CREATE_SUCCESS')
     ) !!}
 
@@ -77,7 +77,7 @@
       $('#department_unit_create').modal('show');
     @endif
 
-    {!! JSHelper::ajax_select_to_input(
+    {!! __js::ajax_select_to_input(
       'department_id', 'department_name', '/api/department/textbox_department_ByDepartmentId/', 'name'
     ) !!}
 

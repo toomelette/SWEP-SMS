@@ -45,11 +45,11 @@ class UserRepository extends BaseRepository implements UserInterface {
             }
 
             if(isset($request->ol)){
-                $this->isOnline($user, $this->dataTypeHelper->string_to_boolean($request->ol));
+                $this->isOnline($user, $this->__dataType->string_to_boolean($request->ol));
             }
 
             if(isset($request->a)){
-                 $this->isActive($user, $this->dataTypeHelper->string_to_boolean($request->a));
+                 $this->isActive($user, $this->__dataType->string_to_boolean($request->a));
             }
 
             return $this->populate($user);

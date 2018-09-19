@@ -5,7 +5,7 @@ namespace App\Swep\Helpers;
 use Cache;
 
 
-class CacheHelper{
+class __cache{
 
 
 

@@ -16,7 +16,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{asset('images/avatar.jpeg')}}" class="user-image" alt="User Image">
             @if(Auth::check())
-              {{ SanitizeHelper::html_encode(Auth::user()->firstname) }}
+              {{ __sanitize::html_encode(Auth::user()->firstname) }}
             @endif
           </a>
           <ul class="dropdown-menu">
@@ -24,8 +24,8 @@
               <img src="{{asset('images/avatar.jpeg')}}" class="img-circle" alt="User Image">
               <p>
                 @if(Auth::check())
-                  {{ SanitizeHelper::html_encode(Auth::user()->firstname) .' '. SanitizeHelper::html_encode(Auth::user()->lastname) }}
-                  <small>{{ SanitizeHelper::html_encode(Auth::user()->position) }}</small>
+                  {{ __sanitize::html_encode(Auth::user()->firstname) .' '. __sanitize::html_encode(Auth::user()->lastname) }}
+                  <small>{{ __sanitize::html_encode(Auth::user()->position) }}</small>
                 @endif
                 
               </p>

@@ -520,7 +520,7 @@
                 </div>
                 <div class="col-sm-6 no-padding" style="text-align: center;">
                   <p style="font-size:8px; padding-top: 7px;">
-                    {{ PrintHelper::string_trap($employee->gov_id) }}
+                    {{ __print::string_trap($employee->gov_id) }}
                   </p>
                 </div>
               </div>
@@ -531,7 +531,7 @@
                 </div>
                 <div class="col-sm-6 no-padding" style="text-align: center;">
                   <p style="font-size:8px; padding-top: 7px;">
-                    {{ PrintHelper::string_trap($employee->license_passport_no) }}
+                    {{ __print::string_trap($employee->license_passport_no) }}
                   </p>
                 </div>
               </div>
@@ -542,7 +542,7 @@
                 </div>
                 <div class="col-sm-6 no-padding" style="text-align: center;">
                   <p style="font-size:8px; padding-top: 7px;">
-                    {{ PrintHelper::string_trap($employee->id_date_issue) }}
+                    {{ __print::string_trap($employee->id_date_issue) }}
                   </p>
                 </div>
               </div>

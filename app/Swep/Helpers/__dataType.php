@@ -5,7 +5,7 @@ namespace App\Swep\Helpers;
 use Carbon\Carbon;
 
 
-class DataTypeHelper{
+class __dataType{
 
 
 

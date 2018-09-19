@@ -14,7 +14,7 @@
   <section class="content-header">
       <h1>Edit Employee Seminars / Trainings</h1>
       <div class="pull-right" style="margin-top: -25px;">
-        {!! HtmlHelper::back_button(['dashboard.employee.index']) !!}
+        {!! __html::back_button(['dashboard.employee.index']) !!}
       </div>
   </section>
 
@@ -37,41 +37,41 @@
 
           <div class="box-body">
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'title', 'text', 'Title *', 'Title', old('title'), $errors->has('title'), $errors->first('title'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'type', 'text', 'Type of Seminar', 'Type of Seminar', old('type'), $errors->has('type'), $errors->first('type'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::datepicker(
+            {!! __form::datepicker(
               '6', 'date_from',  'Date From', old('date_from'), $errors->has('date_from'), $errors->first('date_from')
             ) !!}
 
-            {!! FormHelper::datepicker(
+            {!! __form::datepicker(
               '6', 'date_to',  'Date To', old('date_to'), $errors->has('date_to'), $errors->first('date_to')
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'hours', 'text', 'Hours *', 'Hours', old('hours'), $errors->has('hours'), $errors->first('hours'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'conducted_by', 'text', 'Conducted By', 'Conducted By', old('conducted_by'), $errors->has('conducted_by'), $errors->first('conducted_by'), ''
             ) !!}
 
             <div class="col-md-12"></div>
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'venue', 'text', 'Venue', 'Venue', old('venue'), $errors->has('venue'), $errors->first('venue'), ''
             ) !!}
 
-            {!! FormHelper::textbox(
+            {!! __form::textbox(
                '6', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
             ) !!}
 
@@ -117,12 +117,12 @@
             </tr>
             @foreach($employee_trainings as $data) 
               <tr 
-                {!! HtmlHelper::table_highlighter( $data->slug, $table_sessions) !!} 
+                {!! __html::table_highlighter( $data->slug, $table_sessions) !!} 
                 {!! old('e_slug') == $data->slug ? 'style="background-color: #F5B7B1;"' : '' !!}
               >
                 <td>{{ str_limit($data->title, 50, '...') }}</td>
-                <td>{{ DataTypeHelper::date_parse($data->date_from, 'm/d/Y') }}</td>
-                <td>{{ DataTypeHelper::date_parse($data->date_to, 'm/d/Y') }}</td>
+                <td>{{ __dataType::date_parse($data->date_from, 'm/d/Y') }}</td>
+                <td>{{ __dataType::date_parse($data->date_to, 'm/d/Y') }}</td>
                 <td>
                   <div class="btn-group">
                     <a href="#" id="tr_update_btn" es="{{ $data->slug }}" data-url="{{ route('dashboard.employee.training_update', [$employee->slug, $data->slug]) }}" class="btn btn-sm btn-default">
@@ -162,7 +162,7 @@
   
 
   {{-- Delete --}}
-  {!! HtmlHelper::modal_delete('tr_delete') !!}
+  {!! __html::modal_delete('tr_delete') !!}
 
 
   {{-- Update --}}
@@ -179,41 +179,41 @@
 
               <input name="e_slug" id="e_slug"  type="hidden">
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_title', 'text', 'Title *', 'Title', old('e_title'), $errors->has('e_title'), $errors->first('e_title'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_type', 'text', 'Type of Seminar', 'Type of Seminar', old('e_type'), $errors->has('e_type'), $errors->first('e_type'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::datepicker(
+              {!! __form::datepicker(
                 '6', 'e_date_from',  'Date From', old('e_date_from'), $errors->has('e_date_from'), $errors->first('e_date_from')
               ) !!}
 
-              {!! FormHelper::datepicker(
+              {!! __form::datepicker(
                 '6', 'e_date_to',  'Date To', old('e_date_to'), $errors->has('e_date_to'), $errors->first('e_date_to')
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_hours', 'text', 'Hours *', 'Hours', old('e_hours'), $errors->has('e_hours'), $errors->first('e_hours'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_conducted_by', 'text', 'Conducted By', 'Conducted By', old('e_conducted_by'), $errors->has('e_conducted_by'), $errors->first('e_conducted_by'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_venue', 'text', 'Venue', 'Venue', old('e_venue'), $errors->has('e_venue'), $errors->first('e_venue'), ''
               ) !!}
 
-              {!! FormHelper::textbox(
+              {!! __form::textbox(
                  '6', 'e_remarks', 'text', 'Remarks', 'Remarks', old('e_remarks'), $errors->has('e_remarks'), $errors->first('e_remarks'), ''
               ) !!}
 

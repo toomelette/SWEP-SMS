@@ -35,8 +35,8 @@ class SignatorySubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->cacheHelper->deletePattern('swep_cache:signatories:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:signatories:global:all');
+        $this->__cache->deletePattern('swep_cache:signatories:all:*');
+        $this->__cache->deletePattern('swep_cache:signatories:global:all');
 
         $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
 
@@ -48,9 +48,9 @@ class SignatorySubscriber extends BaseSubscriber{
 
     public function onUpdate($signatory){
 
-        $this->cacheHelper->deletePattern('swep_cache:signatories:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:signatories:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
+        $this->__cache->deletePattern('swep_cache:signatories:all:*');
+        $this->__cache->deletePattern('swep_cache:signatories:global:all');
+        $this->__cache->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
 
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS_SLUG', $signatory->slug);
@@ -63,9 +63,9 @@ class SignatorySubscriber extends BaseSubscriber{
 
     public function onDestroy($signatory){
 
-        $this->cacheHelper->deletePattern('swep_cache:signatories:all:*');
-        $this->cacheHelper->deletePattern('swep_cache:signatories:global:all');
-        $this->cacheHelper->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
+        $this->__cache->deletePattern('swep_cache:signatories:all:*');
+        $this->__cache->deletePattern('swep_cache:signatories:global:all');
+        $this->__cache->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
 
         $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');
 

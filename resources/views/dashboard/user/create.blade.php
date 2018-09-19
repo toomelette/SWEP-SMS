@@ -25,35 +25,35 @@
                   
               @csrf
 
-              {!! FormHelper::textbox_inline(
+              {!! __form::textbox_inline(
                   'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
               ) !!}
 
-              {!! FormHelper::textbox_inline(
+              {!! __form::textbox_inline(
                   'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
               ) !!}
 
-              {!! FormHelper::textbox_inline(
+              {!! __form::textbox_inline(
                   'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
               ) !!}
 
-              {!! FormHelper::textbox_inline(
+              {!! __form::textbox_inline(
                   'email', 'email', 'Email *', 'Email', old('email'), $errors->has('email'), $errors->first('email'), ''
               ) !!}
 
-              {!! FormHelper::textbox_inline(
+              {!! __form::textbox_inline(
                   'position', 'text', 'Position *', 'Position / Plantilla', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
               ) !!}
 
-              {!! FormHelper::textbox_inline(
+              {!! __form::textbox_inline(
                   'username', 'text', 'Username *', 'Username', old('username'), $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
               ) !!}
 
-              {!! FormHelper::password_inline(
+              {!! __form::password_inline(
                   'password', 'Password *', 'Password', $errors->has('password'), $errors->first('password'), ''
               ) !!}
 
-              {!! FormHelper::password_inline(
+              {!! __form::password_inline(
                   'password_confirmation', 'Confirm Password *', 'Confirm Password', '', '', ''
               ) !!}
 
@@ -149,7 +149,7 @@
 
   @if(Session::has('USER_CREATE_SUCCESS'))
 
-    {!! HtmlHelper::modal(
+    {!! __html::modal(
       'user_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('USER_CREATE_SUCCESS')
     ) !!}
 
@@ -165,8 +165,8 @@
 
   <script type="text/javascript">
 
-  {!! JSHelper::show_password('password', 'show_password') !!}
-  {!! JSHelper::show_password('password_confirmation', 'show_password_confirmation') !!}
+  {!! __js::show_password('password', 'show_password') !!}
+  {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
   
 
   @if(Session::has('USER_CREATE_SUCCESS'))

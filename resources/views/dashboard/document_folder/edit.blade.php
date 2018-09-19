@@ -5,7 +5,7 @@
   <section class="content-header">
       <h1>Edit Document Folder</h1>
       <div class="pull-right" style="margin-top: -25px;">
-      {!! HtmlHelper::back_button([
+      {!! __html::back_button([
         'dashboard.document_folder.index',
       ]) !!}
   </section>
@@ -29,11 +29,11 @@
         
           @csrf
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '4', 'folder_code', 'text', 'Folder Code *', 'Folder Code', old('folder_code') ? old('folder_code') : $doc_folder->folder_code, $errors->has('folder_code'), $errors->first('folder_code'), ''
           ) !!}
 
-          {!! FormHelper::textbox(
+          {!! __form::textbox(
              '8', 'description', 'text', 'Description', 'Description', old('description') ? old('description') : $doc_folder->description, $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
