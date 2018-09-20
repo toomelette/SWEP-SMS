@@ -32,7 +32,7 @@
           <input name="_method" value="PUT" type="hidden">
           
           {!! __form::datepicker(
-            '3', 'date',  'Date *', old('date') ? old('date') : $permission_slip->date->format('m/d/Y'), $errors->has('date'), $errors->first('date')
+            '3', 'date',  'Date *', old('date') ? old('date') : $permission_slip->date, $errors->has('date'), $errors->first('date')
           ) !!}
 
           {!! __form::select_dynamic(

@@ -133,5 +133,16 @@ class LeaveApplicationService extends BaseService{
 
 
 
+    public function saveAs($slug){
+
+        $leave_application = $this->leave_application_repo->findBySlug($slug);
+        return view('dashboard.leave_application.save_as')->with('leave_application', $leave_application);
+
+    }
+
+
+
+
+
 
 }

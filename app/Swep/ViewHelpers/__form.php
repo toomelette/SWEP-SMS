@@ -79,7 +79,7 @@ class __form{
 
     public static function datepicker($class, $key, $label, $old_value, $error_has, $error_first){
 
-       $old_value = __dataType::date_parse($old_value);
+       $old_value = __dataType::date_parse($old_value, 'm/d/Y');
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'" style="overflow:hidden;">
                 <label for="'. $key .'">'. $label .'</label>

@@ -67,6 +67,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** LEAVE APPLICATION **/
 	Route::get('/leave_application/user_index', 'LeaveApplicationController@userIndex')->name('leave_application.user_index');
 	Route::get('/leave_application/print/{slug}/{type}', 'LeaveApplicationController@print')->name('leave_application.print');
+	Route::get('/leave_application/{slug}/save_as', 'LeaveApplicationController@saveAs')->name('leave_application.save_as');
 	Route::resource('leave_application', 'LeaveApplicationController');
 
 	/** EMPLOYEE **/
@@ -115,9 +116,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 /** Testing **/
 
-// Route::get('/dashboard/test', function(){
+ //Route::get('/dashboard/test', function(){
 
-	// return dd(Illuminate\Support\Str::random(16));
+	//return dd(Illuminate\Support\Str::random(16));
 
 	// $list = App\Models\EmployeeTraining::where('slug', '')->get();
 
@@ -127,5 +128,5 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// 	$tr->save();
 	// }
 
-// });
+ //});
 

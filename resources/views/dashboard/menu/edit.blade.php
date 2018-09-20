@@ -48,6 +48,10 @@
 
             <div class="col-md-12"></div>
             
+            {!! __form::textbox(
+              '4', 'category', 'text', 'Category *', 'Category', old('category') ? old('category') : $menu->category, $errors->has('category'), $errors->first('category'), ''
+            ) !!}
+
             {!! __form::select_static(
               '4', 'is_menu', 'Is Menu *', old('is_menu') ? old('is_menu') : __dataType::boolean_to_string($menu->is_menu), ['1' => 'true', '0' => 'false'], $errors->has('is_menu'), $errors->first('is_menu'), '', ''
             ) !!}

@@ -110,4 +110,14 @@ class LeaveApplicationController extends Controller{
 
 
 
+
+    public function saveAs($slug){
+        
+        return $this->leave_application->saveAs($slug);
+
+    }
+
+
+
+
 }

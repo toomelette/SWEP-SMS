@@ -1,12 +1,3 @@
-<?php
-
-  $date_started = __dataType::date_parse($project_code->date_started, 'm/d/Y');
-  $projected_date_end = __dataType::date_parse($project_code->projected_date_end, 'm/d/Y');
-
-?>
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -62,11 +53,11 @@
           ) !!}
 
           {!! __form::datepicker(
-            '3', 'date_started',  'Date Started', old('date_started') ? old('date_started') : $date_started, '', ''
+            '3', 'date_started',  'Date Started', old('date_started') ? old('date_started') : $project_code->date_started, '', ''
           ) !!}
 
           {!! __form::datepicker(
-            '3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : $projected_date_end, '', ''
+            '3', 'projected_date_end',  'Projected Date End', old('projected_date_end') ? old('projected_date_end') : $project_code->projected_date_end, '', ''
           ) !!}
 
           {!! __form::textbox(

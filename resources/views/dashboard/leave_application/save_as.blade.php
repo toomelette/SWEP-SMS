@@ -3,12 +3,11 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Edit Leave Application</h1>
+      <h1>Save as new Leave Application </h1>
       <div class="pull-right" style="margin-top: -25px;">
         {!! __html::back_button([
-          'dashboard.leave_application.index', 
-          'dashboard.leave_application.user_index',
-          'dashboard.leave_application.show']) !!}
+          'dashboard.leave_application.user_index'
+        ]) !!}
       </div>
   </section>
 
@@ -23,13 +22,11 @@
         </div> 
       </div>
       
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.leave_application.update', $leave_application->slug) }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.leave_application.store') }}">
 
         <div class="box-body">
      
           @csrf    
-
-          <input name="_method" value="PUT" type="hidden">
 
           {!! __form::textbox(
              '4', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : $leave_application->lastname , $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
@@ -185,10 +182,10 @@
 
 @section('modals')
 
-  @if(Session::has('LA_UPDATE_SUCCESS'))
+  @if(Session::has('LA_CREATE_SUCCESS'))
 
    {!! __html::modal_print(
-      'la_update', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('LA_UPDATE_SUCCESS'), route('dashboard.leave_application.show', Session::get('LA_UPDATE_SUCCESS_SLUG'))
+      'la_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('LA_CREATE_SUCCESS'), route('dashboard.leave_application.show', Session::get('LA_CREATE_SUCCESS_SLUG'))
     ) !!}
     
   @endif
@@ -204,8 +201,8 @@
   <script type="text/javascript">
 
 
-    @if(Session::has('LA_UPDATE_SUCCESS'))
-      $('#la_update').modal('show');
+    @if(Session::has('LA_CREATE_SUCCESS'))
+      $('#la_create').modal('show');
     @endif
 
 

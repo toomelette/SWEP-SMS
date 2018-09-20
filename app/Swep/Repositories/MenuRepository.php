@@ -59,6 +59,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu->name = $request->name;
         $menu->route = $request->route;
         $menu->icon = $request->icon;
+        $menu->category = $request->category;
         $menu->is_menu = $this->__dataType->string_to_boolean($request->is_menu);
         $menu->is_dropdown = $this->__dataType->string_to_boolean($request->is_dropdown);
         $menu->created_at = $this->carbon->now();
@@ -83,6 +84,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu->name = $request->name;
         $menu->route = $request->route;
         $menu->icon = $request->icon;
+        $menu->category = $request->category;
         $menu->is_menu = $this->__dataType->string_to_boolean($request->is_menu);
         $menu->is_dropdown = $this->__dataType->string_to_boolean($request->is_dropdown);
         $menu->updated_at = $this->carbon->now();

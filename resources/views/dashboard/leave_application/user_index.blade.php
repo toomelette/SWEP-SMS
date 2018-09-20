@@ -94,6 +94,8 @@
                     <option data-type="1" data-url="{{ route('dashboard.leave_application.edit', $data->slug) }}">Edit</option>
                   @endif
 
+                  <option data-type="1" data-url="{{ route('dashboard.leave_application.save_as', $data->slug) }}">Save As</option>
+
                 </select>
               </td>
             </tr>
