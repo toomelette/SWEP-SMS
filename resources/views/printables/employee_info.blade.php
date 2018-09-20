@@ -59,7 +59,7 @@
                 <dt>Fullname:</dt>
                 <dd>{{ $employee->fullname }}</dd>
                 <dt>Date of Birth:</dt>
-                <dd>{{ Carbon::parse($employee->date_of_birth)->format('M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->date_of_birth, 'M d, Y') }}</dd>
                 <dt>Place of Birth:</dt>
                 <dd>{{ $employee->place_of_birth }}</dd>
                 <dt>Sex:</dt>
@@ -128,13 +128,13 @@
                 <dt>TA:</dt>
                 <dd>{{ number_format($employee->ta, 2) }}</dd>
                 <dt>Government Service:</dt>
-                <dd>{{ $employee->firstday_gov == '' ? '' : Carbon::parse($employee->firstday_gov)->format('M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->firstday_gov, 'M d, Y') }}</dd>
                 <dt>First Day:</dt>
-                <dd>{{ $employee->firstday_sra == '' ? '' : Carbon::parse($employee->firstday_sra)->format('M d, Y') }}</dd>
+                <dd>{{ __dataType::date_parse($employee->firstday_sra, 'M d, Y') }}</dd>
                 <dt>Appointment Date:</dt>
-                <dd>{{ $employee->appointment_date != null ? Carbon::parse($employee->appointment_date)->format('M d, Y') : ''}}</dd>
+                <dd>{{ __dataType::date_parse($employee->appointment_date, 'M d, Y') }}</dd>
                 <dt>Adjustment Date:</dt>
-                <dd>{{ $employee->adjustment_date != null ? Carbon::parse($employee->adjustment_date)->format('M d, Y') : ''}}</dd>
+                <dd>{{ __dataType::date_parse($employee->adjustment_date, 'M d, Y') }}</dd>
               </dl>
             </div>
           </div>
@@ -202,7 +202,7 @@
                   @foreach($employee->employeeChildren as $data)
                     <tr>
                       <td>{{ $data->fullname }}</td>
-                      <td>{{ $data->date_of_birth != null ? Carbon::parse($data->date_of_birth)->format('M d, Y') : ''}}</td>
+                      <td>{{ __dataType::date_parse($data->date_of_birth, 'M d, Y') }}</td>
                     </tr>
                   @endforeach
                 </table>
@@ -276,10 +276,10 @@
                       <td>{{ $data->title }}</td>
                       <td>{{ $data->conducted_by }}</td>
                       <td>
-                        @if(Carbon::parse($data->date_from)->format('M') == Carbon::parse($data->date_to)->format('M'))
-                          {{ Carbon::parse($data->date_from)->format('M d') .' - '. Carbon::parse($data->date_to)->format('d, Y') }}  
+                        @if( __dataType::date_parse($data->date_from, 'M') == __dataType::date_parse($data->date_to, 'M') )
+                          {{ __dataType::date_parse($data->date_from, 'M d') .' - '. __dataType::date_parse($data->date_to, 'd, Y') }}  
                         @else
-                          {{ Carbon::parse($data->date_from)->format('M d, Y') .' - '. Carbon::parse($data->date_to)->format('M d, Y') }}
+                          {{ __dataType::date_parse($data->date_from, 'M d, Y') .' - '. __dataType::date_parse($data->date_to, 'M d, Y') }}
                         @endif
                       </td>
                       <td>{{ $data->venue }}</td>

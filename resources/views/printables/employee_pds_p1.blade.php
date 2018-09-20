@@ -574,7 +574,7 @@
               <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ $data->fullname }}</span>
             </div>
             <div class="col-sm-5 no-padding" style="border-bottom:solid 1px;">
-              <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ Carbon::parse($data->date_of_birth)->format('m/d/Y') }}</span>
+              <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ __dataType::parse($data->date_of_birth) }}</span>
             </div>
           @endif
         @endforeach

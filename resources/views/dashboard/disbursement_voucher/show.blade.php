@@ -86,11 +86,11 @@
             <div class="box-body">
               <dl class="dl-horizontal">
                 <dt>Filed:</dt>
-                <dd>{{ $disbursement_voucher->created_at != null ? Carbon::parse($disbursement_voucher->created_at)->format('M d, Y h:i A') : '' }}</dd>
+                <dd>{{ $disbursement_voucher->created_at != null ? __dataType::date_parse($disbursement_voucher->created_at, 'M d, Y h:i A') : '' }}</dd>
                 <dt>Processed:</dt>
-                <dd>{{ $disbursement_voucher->processed_at != null ? Carbon::parse($disbursement_voucher->processed_at)->format('M d, Y h:i A') : '' }}</dd>
+                <dd>{{ $disbursement_voucher->processed_at != null ? __dataType::date_parse($disbursement_voucher->processed_at, 'M d, Y h:i A') : '' }}</dd>
                 <dt>Completed:</dt>
-                <dd>{{ $disbursement_voucher->checked_at != null ? Carbon::parse($disbursement_voucher->checked_at)->format('M d, Y h:i A') : '' }}</dd>
+                <dd>{{ $disbursement_voucher->checked_at != null ? __dataType::date_parse($disbursement_voucher->checked_at, 'M d, Y h:i A') : '' }}</dd>
               </dl>
             </div>
           </div>

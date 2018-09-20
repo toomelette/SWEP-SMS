@@ -66,8 +66,8 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
         $project_code->description = $request->description;
         $project_code->mooe = $this->__dataType->string_to_num($request->mooe);
         $project_code->co = $this->__dataType->string_to_num($request->co);
-        $project_code->date_started = $this->__dataType->date_parse($request->date_started, 'Y-m-d');
-        $project_code->projected_date_end = $this->__dataType->date_parse($request->projected_date_end, 'Y-m-d');
+        $project_code->date_started = $this->__dataType->date_parse($request->date_started);
+        $project_code->projected_date_end = $this->__dataType->date_parse($request->projected_date_end);
         $project_code->project_in_charge = $request->project_in_charge;
         $project_code->created_at = $this->carbon->now();
         $project_code->updated_at = $this->carbon->now();
@@ -95,8 +95,8 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
         $project_code->description = $request->description;
         $project_code->mooe = $this->__dataType->string_to_num($request->mooe);
         $project_code->co = $this->__dataType->string_to_num($request->co);
-        $project_code->date_started = $this->__dataType->date_parse($request->date_started, 'Y-m-d');
-        $project_code->projected_date_end = $this->__dataType->date_parse($request->projected_date_end, 'Y-m-d');
+        $project_code->date_started = $this->__dataType->date_parse($request->date_started);
+        $project_code->projected_date_end = $this->__dataType->date_parse($request->projected_date_end);
         $project_code->project_in_charge = $request->project_in_charge;
         $project_code->updated_at = $this->carbon->now();
         $project_code->ip_updated = request()->ip();

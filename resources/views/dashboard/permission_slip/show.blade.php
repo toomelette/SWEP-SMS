@@ -39,7 +39,7 @@
                 <dt>Employee:</dt>
                 <dd>{{ $permission_slip->employee->fullname }}</dd>
                 <dt>Date:</dt>
-                <dd>{{ Carbon::parse($permission_slip->date)->format('m/d/Y') }}</dd>
+                <dd>{{ __dataType::date_parse($permission_slip->date, 'm/d/Y') }}</dd>
                 <dt>Time Out:</dt>
                 <dd>{{ __dataType::time_parse($permission_slip->time_out, 'h:i A') }}</dd>
                 <dt>Time In:</dt>

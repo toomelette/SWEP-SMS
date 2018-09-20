@@ -89,7 +89,7 @@
                 </a>
               </td>
               <td>{{ $data->reference_no }}</td>
-              <td>{{ __dataType::date_parse($data->date) }}</td>
+              <td>{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>
               <td>{{ Str::limit($data->person_to, 30) }}</td>
               <td>{{ Str::limit($data->person_from, 30) }}</td>
               <td>{{ Str::limit($data->subject, 30) }}</td>

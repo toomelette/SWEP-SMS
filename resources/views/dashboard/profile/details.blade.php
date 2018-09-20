@@ -216,7 +216,7 @@
                 <hr>
 
                 <strong><i class="fa fa-clock-o "></i> Last Login Time</strong>
-                <p class="text-muted">{{ Carbon::parse(Auth::user()->last_login_time)->format('M d, Y h:i A') }}</p>
+                <p class="text-muted">{{ __dataType::date_parse(Auth::user()->last_login_time, 'M d, Y h:i A') }}</p>
             
                 <strong><i class="fa  fa-desktop margin-r-5"></i> Last Login Machine</strong>
                 <p class="text-muted">{{ Auth::user()->last_login_machine }}</p>

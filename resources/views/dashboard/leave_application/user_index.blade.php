@@ -83,7 +83,7 @@
                   @endif
                 @endforeach
               </td>
-              <td>{{ Carbon::parse($data->date_of_filing)->format('M d, Y') }}</td>
+              <td>{{ __dataType::date_parse($data->date_of_filing, 'M d, Y') }}</td>
               <td> 
                 <select id="action" class="form-control input-md">
 

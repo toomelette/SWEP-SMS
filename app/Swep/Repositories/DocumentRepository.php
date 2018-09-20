@@ -37,12 +37,12 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
         $documents = $this->cache->remember('documents:all:' . $key, 240, function() use ($request){
 
-            $df = $this->carbon->parse($request->df)->format('Y-m-d');
-            $dt = $this->carbon->parse($request->dt)->format('Y-m-d');
+            $df = $this->__dataType->date_parse($request->df);
+            $dt = $this->__dataType->date_parse($request->dt);
 
             $document = $this->document->newQuery();
             
-            $parsed_date = $this->__dataType->date_parse($request->d, 'Y-m-d');
+            $parsed_date = $this->__dataType->date_parse($request->d);
 
             if(isset($request->q)){
                 $this->search($document, $request->q);
@@ -105,7 +105,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document->document_id = $this->getDocumentIdInc();
         $document->filename = $filename;
         $document->reference_no = $request->reference_no;
-        $document->date = $this->__dataType->date_parse($request->date, 'Y-m-d');
+        $document->date = $this->__dataType->date_parse($request->date);
         $document->person_to = $request->person_to;
         $document->person_from = $request->person_from;
         $document->type = $request->type;
@@ -137,7 +137,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         }
 
         $document->reference_no = $request->reference_no;
-        $document->date = $this->__dataType->date_parse($request->date, 'Y-m-d');
+        $document->date = $this->__dataType->date_parse($request->date);
         $document->person_to = $request->person_to;
         $document->person_from = $request->person_from;
         $document->type = $request->type;

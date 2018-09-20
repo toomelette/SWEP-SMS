@@ -1,7 +1,7 @@
 <?php
 
-  $date_started = __dataType::date_parse($project_code->date_started);
-  $projected_date_end = __dataType::date_parse($project_code->projected_date_end);
+  $date_started = __dataType::date_parse($project_code->date_started, 'm/d/Y');
+  $projected_date_end = __dataType::date_parse($project_code->projected_date_end, 'm/d/Y');
 
 ?>
 

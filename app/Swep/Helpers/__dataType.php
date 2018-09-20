@@ -32,20 +32,37 @@ class __dataType{
 
 
 
-    public static function date_parse($value, $format = 'm/d/Y'){
 
-        return $value != null ? Carbon::parse($value)->format($format) : null;
+
+    public static function date_parse($value, $format = 'Y-m-d'){
+
+        $date = null;
+
+        if($value != null || $value != ''){
+          $date = Carbon::parse($value)->format($format);
+        }
+
+        return $date;
 
     }
+
+
 
 
 
 
     public static function time_parse($value, $format = 'H:i:s'){
 
-        return $value != null ? date($format, strtotime($value)) : null;
+      $time = null;
+
+      if($value != null || $value != ''){
+        $time = date($format, strtotime($value));
+      }
+
+      return $time;
 
     }
+
 
 
 
@@ -53,9 +70,16 @@ class __dataType{
 
     public static function string_to_num($value){
 
-        return  $value == null ? null : str_replace(',', '', $value);
+      $num = null;
+
+      if($value != null || $value != ''){
+        $num = str_replace(',', '', $value);
+      }
+
+      return $num;
 
     }
+
 
 
 
@@ -73,6 +97,8 @@ class __dataType{
         return sprintf("%02d", $hrs) .':'. sprintf("%02d", $mins);
 
     }
+
+
 
 
 

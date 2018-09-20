@@ -35,8 +35,8 @@ class EmployeeVoluntaryWorkRepository extends BaseRepository implements Employee
         $employee_vw->employee_no = $employee->employee_no;
         $employee_vw->name = $data['name'];
         $employee_vw->address = $data['address'];
-        $employee_vw->date_from = $this->__dataType->date_parse($data['date_from'], 'Y-m-d');
-        $employee_vw->date_to = $this->__dataType->date_parse($data['date_to'], 'Y-m-d');
+        $employee_vw->date_from = $this->__dataType->date_parse($data['date_from']);
+        $employee_vw->date_to = $this->__dataType->date_parse($data['date_to']);
         $employee_vw->hours = $data['hours'];
         $employee_vw->position = $data['position'];
         $employee_vw->save();

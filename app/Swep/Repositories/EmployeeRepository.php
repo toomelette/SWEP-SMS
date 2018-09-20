@@ -99,7 +99,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->middlename = $request->middlename;
         $employee->name_ext = $request->name_ext;
         $employee->fullname = $this->getRequestFullname($request);
-        $employee->date_of_birth = $this->__dataType->date_parse($request->date_of_birth, 'Y-m-d');
+        $employee->date_of_birth = $this->__dataType->date_parse($request->date_of_birth);
         $employee->place_of_birth = $request->place_of_birth;
         $employee->sex = $request->sex;
         $employee->civil_status = $request->civil_status;
@@ -133,10 +133,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->food_subsidy = $this->__dataType->string_to_num($request->food_subsidy);
         $employee->ra = $this->__dataType->string_to_num($request->ra);
         $employee->ta = $this->__dataType->string_to_num($request->ta);
-        $employee->firstday_gov = $this->__dataType->date_parse($request->firstday_gov, 'Y-m-d');
-        $employee->firstday_sra = $this->__dataType->date_parse($request->firstday_sra, 'Y-m-d');
-        $employee->appointment_date = $this->__dataType->date_parse($request->appointment_date, 'Y-m-d');
-        $employee->adjustment_date = $this->__dataType->date_parse($request->adjustment_date, 'Y-m-d');
+        $employee->firstday_gov = $this->__dataType->date_parse($request->firstday_gov);
+        $employee->firstday_sra = $this->__dataType->date_parse($request->firstday_sra);
+        $employee->appointment_date = $this->__dataType->date_parse($request->appointment_date);
+        $employee->adjustment_date = $this->__dataType->date_parse($request->adjustment_date);
         $employee->is_active = $request->is_active;
         $employee->created_at = $this->carbon->now();
         $employee->updated_at = $this->carbon->now();
@@ -167,7 +167,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->middlename = $request->middlename;
         $employee->name_ext = $request->name_ext;
         $employee->fullname = $this->getRequestFullname($request);
-        $employee->date_of_birth = $this->__dataType->date_parse($request->date_of_birth, 'Y-m-d');
+        $employee->date_of_birth = $this->__dataType->date_parse($request->date_of_birth);
         $employee->place_of_birth = $request->place_of_birth;
         $employee->sex = $request->sex;
         $employee->civil_status = $request->civil_status;
@@ -201,10 +201,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->food_subsidy = $this->__dataType->string_to_num($request->food_subsidy);
         $employee->ra = $this->__dataType->string_to_num($request->ra);
         $employee->ta = $this->__dataType->string_to_num($request->ta);
-        $employee->firstday_gov = $this->__dataType->date_parse($request->firstday_gov, 'Y-m-d');
-        $employee->firstday_sra = $this->__dataType->date_parse($request->firstday_sra, 'Y-m-d');
-        $employee->appointment_date = $this->__dataType->date_parse($request->appointment_date, 'Y-m-d');
-        $employee->adjustment_date = $this->__dataType->date_parse($request->adjustment_date, 'Y-m-d');
+        $employee->firstday_gov = $this->__dataType->date_parse($request->firstday_gov);
+        $employee->firstday_sra = $this->__dataType->date_parse($request->firstday_sra);
+        $employee->appointment_date = $this->__dataType->date_parse($request->appointment_date);
+        $employee->adjustment_date = $this->__dataType->date_parse($request->adjustment_date);
         $employee->is_active = $request->is_active;
         $employee->updated_at = $this->carbon->now();
         $employee->ip_updated = request()->ip();

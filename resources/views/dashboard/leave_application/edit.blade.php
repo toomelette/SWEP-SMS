@@ -1,8 +1,8 @@
 <?php
 
-  $date_of_filing =  __dataType::date_parse($leave_application->date_of_filing);
-  $working_days_date_from =  __dataType::date_parse($leave_application->working_days_date_from);
-  $working_days_date_to =  __dataType::date_parse($leave_application->working_days_date_to);
+  $date_of_filing =  __dataType::date_parse($leave_application->date_of_filing, 'm/d/Y');
+  $working_days_date_from =  __dataType::date_parse($leave_application->working_days_date_from, 'm/d/Y');
+  $working_days_date_to =  __dataType::date_parse($leave_application->working_days_date_to, 'm/d/Y');
 
 ?>
 

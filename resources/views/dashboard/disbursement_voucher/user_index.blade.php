@@ -95,7 +95,7 @@
             <tr>
               <td>{{ $data->payee }}</td>
               <td>{!! Str::limit($data->explanation, 120)  !!}</td>
-              <td>{{ Carbon::parse($data->date)->format('M d, Y') }}</td>
+              <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)
                   <span class="label label-warning">Filed..</span>

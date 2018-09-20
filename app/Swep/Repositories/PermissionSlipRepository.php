@@ -39,8 +39,8 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
         $permission_slips = $this->cache->remember('permission_slips:all:' . $key, 240, function() use ($request){
 
-            $df = $this->carbon->parse($request->df)->format('Y-m-d');
-            $dt = $this->carbon->parse($request->dt)->format('Y-m-d');
+            $df = $this->__dataType->date_parse($request->df);
+            $dt = $this->__dataType->date_parse($request->dt);
 
             $permission_slip = $this->permission_slip->newQuery();
 
@@ -94,7 +94,7 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
         $permission_slip->slug = $this->str->random(32);
         $permission_slip->ps_id = $this->getPSIdInc();
         $permission_slip->employee_no = $request->employee_no;
-        $permission_slip->date =  $this->__dataType->date_parse($request->date, 'Y-m-d');
+        $permission_slip->date =  $this->__dataType->date_parse($request->date);
         $permission_slip->time_out = $this->__dataType->time_parse($request->time_out);
         $permission_slip->time_in = $this->__dataType->time_parse($request->time_in);
         $permission_slip->with_ps = $this->__dataType->string_to_boolean($request->with_ps);
@@ -119,7 +119,7 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
         $permission_slip = $this->findBySlug($slug);
         $permission_slip->employee_no = $request->employee_no;
-        $permission_slip->date =  $this->__dataType->date_parse($request->date, 'Y-m-d');
+        $permission_slip->date =  $this->__dataType->date_parse($request->date);
         $permission_slip->time_out = $this->__dataType->time_parse($request->time_out);
         $permission_slip->time_in = $this->__dataType->time_parse($request->time_in);
         $permission_slip->with_ps = $this->__dataType->string_to_boolean($request->with_ps);

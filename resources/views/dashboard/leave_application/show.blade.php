@@ -1,6 +1,7 @@
 <?php
 
-  $inclusive_dates = Carbon::parse($leave_application->working_days_from)->format('M d, Y') .' - '. Carbon::parse($leave_application->working_days_to)->format('M d, Y');
+  $working_days_from = __dataType::date_parse($leave_application->working_days_date_from, 'M d, Y'); 
+  $working_days_to = __dataType::date_parse($leave_application->working_days_date_to, 'M d, Y');
 
 ?>
 
@@ -58,7 +59,7 @@
                 <dt>Middlename:</dt>
                 <dd>{{ $leave_application->middlename }}</dd>
                 <dt>Date of Filing:</dt>
-                <dd>{{ __dataType::date_parse($leave_application->date_of_filing) }}</dd>
+                <dd>{{ __dataType::date_parse($leave_application->date_of_filing, 'm/d/Y') }}</dd>
                 <dt>Salary:</dt>
                 <dd>{{ number_format($leave_application->salary, 2) }}</dd>
                 <dt>Type of Leave:</dt>
@@ -72,7 +73,7 @@
                 <dt>Number of Days:</dt>
                 <dd>{{ $leave_application->working_days }}</dd>
                 <dt>Inclusive Dates:</dt>
-                <dd>{{ $inclusive_dates }}</dd>
+                <dd>{{ $working_days_from .' - '. $working_days_to }}</dd>
               </dl>
             </div>
           </div>

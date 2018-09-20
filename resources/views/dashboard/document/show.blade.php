@@ -37,7 +37,7 @@
                 <dt>Reference No:</dt>
                 <dd>{{ $document->reference_no }}</dd>
                 <dt>Date:</dt>
-                <dd>{{ Carbon::parse($document->date)->format('m/d/Y') }}</dd>
+                <dd>{{ __dataType::date_parse($document->date, 'm/d/Y') }}</dd>
                 <dt>To:</dt>
                 <dd>{{ $document->person_to }}</dd>
                 <dt>From:</dt>

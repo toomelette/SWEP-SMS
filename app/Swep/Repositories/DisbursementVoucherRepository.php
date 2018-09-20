@@ -81,7 +81,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->dv_id = $this->getDvIdInc();
         $disbursement_voucher->user_id = $this->auth->user()->user_id;
         $disbursement_voucher->doc_no = 'DV' . rand(10000000, 99999999);
-        $disbursement_voucher->date = $this->carbon->format('Y-m-d');
+        $disbursement_voucher->date = $this->carbon->now()->format('Y-m-d');
         $disbursement_voucher->project_id = $request->project_id;
         $disbursement_voucher->fund_source_id = $request->fund_source_id;
         $disbursement_voucher->mode_of_payment = $request->mode_of_payment;
@@ -220,8 +220,8 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
     public function requestFilters($request){
 
-        $df = $this->carbon->parse($request->df)->format('Y-m-d');
-        $dt = $this->carbon->parse($request->dt)->format('Y-m-d');
+        $df = $this->__dataType->date_parse($request->df);
+        $dt = $this->__dataType->date_parse($request->dt);
 
         $disbursement_voucher = $this->disbursement_voucher->newQuery();
 

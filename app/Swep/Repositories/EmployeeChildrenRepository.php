@@ -35,7 +35,7 @@ class EmployeeChildrenRepository extends BaseRepository implements EmployeeChild
         $employee_children = new EmployeeChildren;
         $employee_children->employee_no = $employee->employee_no;
         $employee_children->fullname = $data['fullname'];
-        $employee_children->date_of_birth = $this->__dataType->date_parse($data['date_of_birth'], 'Y-m-d');
+        $employee_children->date_of_birth = $this->__dataType->date_parse($data['date_of_birth']);
         $employee_children->save();
         
     }

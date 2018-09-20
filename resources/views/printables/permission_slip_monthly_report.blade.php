@@ -1,12 +1,12 @@
 <?php
 
-  $df_header = Carbon::parse(Request::get('df'))->format('F d, Y');
-  $dt_header = Carbon::parse(Request::get('dt'))->format('F d, Y');
+  $df_header = __dataType::date_parse(Request::get('df'), 'F d, Y');
+  $dt_header = __dataType::date_parse(Request::get('dt'), 'F d, Y');
 
-  $df = Carbon::parse(Request::get('df'))->format('Y-m-d');
-  $dt = Carbon::parse(Request::get('dt'))->format('Y-m-d');
+  $df = __dataType::date_parse(Request::get('df'), 'Y-m-d');
+  $dt = __dataType::date_parse(Request::get('dt'), 'Y-m-d');
 
-  $df_YM = Carbon::parse(Request::get('df'))->format('Y-m');
+  $df_YM = __dataType::date_parse(Request::get('df'), 'Y-m');
 
 ?>
 
@@ -120,8 +120,8 @@
                   $start = Carbon::createFromFormat('H:i:s', $data_daily_ps->time_out);
                   $end = Carbon::createFromFormat('H:i:s', $data_daily_ps->time_in);
 
-                  $start_H = Carbon::parse($start)->format('H');
-                  $end_H = Carbon::parse($end)->format('H');
+                  $start_H = __dataType::date_parse($start, 'H');
+                  $end_H = __dataType::date_parse($end, 'H');
 
                   $daily_hrs = $end->diffInHours($start);
                   $daily_mins = $end->copy()->subHours($daily_hrs)->diffInMinutes($start);
@@ -166,8 +166,8 @@
                   $start = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_out);
                   $end = Carbon::createFromFormat('H:i:s', $data_monthly_ps->time_in);
 
-                  $start_H = Carbon::parse($start)->format('H');
-                  $end_H = Carbon::parse($end)->format('H');
+                  $start_H = __dataType::date_parse($start, 'H');
+                  $end_H = __dataType::date_parse($end, 'H');
 
                   $monthly_hrs = $end->diffInHours($start);
                   $monthly_mins = $end->copy()->subHours($monthly_hrs)->diffInMinutes($start);

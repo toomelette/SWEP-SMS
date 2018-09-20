@@ -58,7 +58,7 @@
           <div class="box-body">
             <dl class="dl-horizontal" style="padding-bottom:60px;">
               <dt>Last Login Time:</dt>
-              <dd>{{ Carbon::parse($user->last_login_time)->format('M d, Y h:i A') }}</dd>
+              <dd>{{ __dataType::date_parse($user->last_login_time, 'M d, Y h:i A') }}</dd>
               <dt>Last Login Machine:</dt>
               <dd>{{ $user->last_login_machine }}</dd>
               <dt>Last Login IP:</dt>
@@ -79,7 +79,7 @@
 
             <dl class="dl-horizontal col-sm-6">
               <dt>Time Created:</dt>
-              <dd>{{ Carbon::parse($user->created_at)->format('M d, Y h:i A') }}</dd>
+              <dd>{{ __dataType::date_parse($user->created_at, 'M d, Y h:i A') }}</dd>
               <dt>IP Created:</dt>
               <dd>{{ $user->ip_created }}</dd>
               <dt>User Created:</dt>
@@ -88,7 +88,7 @@
 
             <dl class="dl-horizontal col-sm-6">
               <dt>Time Updated:</dt>
-              <dd>{{ Carbon::parse($user->updated_at)->format('M d, Y h:i A') }}</dd>
+              <dd>{{ __dataType::date_parse($user->updated_at, 'M d, Y h:i A') }}</dd>
               <dt>IP Updated:</dt>
               <dd>{{ $user->ip_updated }}</dd>
               <dt>User Updated:</dt>
