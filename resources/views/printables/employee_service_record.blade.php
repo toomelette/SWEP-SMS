@@ -235,8 +235,8 @@
               </div>
             </div>
 
-            <div class="col-sm-1 no-padding" style="text-align: center;">
-              <span style="font-size:8px;">{{ $data->remarks }}</span>
+            <div class="col-sm-1" style="text-align: center;">
+              <span style="font-size:7px; line-height: 0.5px;">{{ $data->remarks }}</span>
             </div>
 
           </div>
