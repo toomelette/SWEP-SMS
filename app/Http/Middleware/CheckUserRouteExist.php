@@ -34,7 +34,7 @@ class CheckUserRouteExist{
 
         }
 
-        return abort(403);
+        return abort(404);
     
     }
 

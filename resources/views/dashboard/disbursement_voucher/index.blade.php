@@ -113,7 +113,7 @@
                 @endif
               </td>
               <td style="font-size:15px;">{!! Str::limit($data->explanation, 90)  !!}</td>
-              <td>{{ __dataType::date_parse($data->date, 'M d,y') }}</td>
+              <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
               <td>
                 @if($data->processed_at == null && $data->checked_at == null)
 

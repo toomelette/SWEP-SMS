@@ -108,16 +108,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 
-
-
-
-
-
-
 /** Testing **/
- Route::get('/dashboard/test', function(){
+ //Route::get('/dashboard/test', function(){
 
- 	phpinfo();
+ 	//phpinfo();
 	//return dd(Illuminate\Support\Str::random(16));
 
 	// $list = App\Models\EmployeeTraining::where('slug', '')->get();
@@ -128,5 +122,5 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// 	$tr->save();
 	// }
 
- });
+ //});
 
