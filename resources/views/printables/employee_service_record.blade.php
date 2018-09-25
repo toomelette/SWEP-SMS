@@ -246,7 +246,7 @@
 
     <div style="border-bottom:solid 1px;"></div>  
 
-    @if(count($employee_service_records) < 20)
+    @if(count($employee_service_records) <= 20)
       <div class="row" style="margin-top: 10px;">
         <div class="col-sm-12">
           <p style="font-size:9px;">Issued in Compliance with No. 54 dated August 10, 1954 and in accordance with Circular No. 58 dated August 10, 1954 of the System.</p>
