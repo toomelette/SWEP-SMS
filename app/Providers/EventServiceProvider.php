@@ -45,6 +45,7 @@ class EventServiceProvider extends ServiceProvider{
         'App\Swep\Subscribers\DocumentSubscriber',
         'App\Swep\Subscribers\DocumentFolderSubscriber',
         'App\Swep\Subscribers\PermissionSlipSubscriber',
+        'App\Swep\Subscribers\LeaveCardSubscriber',
         
     ];
 

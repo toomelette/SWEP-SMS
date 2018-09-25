@@ -80,6 +80,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Swep\Interfaces\DocumentFolderInterface', 'App\Swep\Repositories\DocumentFolderRepository');
 
 		$this->app->bind('App\Swep\Interfaces\PermissionSlipInterface', 'App\Swep\Repositories\PermissionSlipRepository');
+
+		$this->app->bind('App\Swep\Interfaces\LeaveCardInterface', 'App\Swep\Repositories\LeaveCardRepository');
 		
 
 	}

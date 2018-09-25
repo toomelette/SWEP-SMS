@@ -100,6 +100,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/permission_slip/report', 'PermissionSlipController@report')->name('permission_slip.report');
 	Route::get('/permission_slip/report_generate', 'PermissionSlipController@reportGenerate')->name('permission_slip.report_generate');
 	Route::resource('permission_slip', 'PermissionSlipController');
+
+
+	/** Leave Card **/
+	Route::resource('leave_card', 'LeaveCardController');
 	
 });
 
