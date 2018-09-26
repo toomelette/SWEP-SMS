@@ -1,5 +1,4 @@
-<?php
- 
+<?php 
 namespace App\Swep\Services;
 
 
@@ -39,25 +38,43 @@ class LeaveCardService extends BaseService{
 
 
 
-    public function fetchByUser($request){
-
-        $leave_cards = $this->leave_card_repo->fetchByUser($request);
-
-        $request->flash();
-        return view('dashboard.leave_card.user_index')->with('leave_cards', $leave_cards);
-
-    }
-
-
-
-
-
-
     public function store($request){
 
-        $leave_card = $this->leave_card_repo->store($request);
+        $days = 0;
+        $hrs = 0;
+        $mins = 0;
+        $credits = 0;
+        $bb_sick = $this->leave_card_repo->findLastSickLeaveBalanceByEmployee($request->employee_no);
+        $bb_vac = $this->leave_card_repo->findLastVacationLeaveBalanceByEmployee($request->employee_no);
+        $bb_overtime = $this->leave_card_repo->findLastOvertimeBalanceByEmployee($request->employee_no);
 
-        $this->event->fire('la.store', $leave_card);
+        $date_from = $this->carbon->parse($request->date_from);
+
+        if ($request->doc_type == 'LEAVE') {
+
+            $days = $date_from->diffInWeekdays($request->date_to);
+
+            $credits = number_format($days * .125, 3);
+
+            if($request->leave_type == 'SICK') {
+
+                $bb_sick = $bb_sick->bigbal_sick_leave - $credits;
+
+            }elseif($request->leave_type == 'VAC'){
+
+                $bb_sick = $bb_vac->bigbal_vac_leave - $credits;
+
+            }else{
+
+                abort(404);
+
+            }
+
+        }
+        
+        $leave_card = $this->leave_card_repo->store($request, $days, $hrs, $mins, $credits, $bb_sick, $bb_vac, $bb_overtime);
+
+        $this->event->fire('leave_card.store', $leave_card);
         return redirect()->back();
 
     }
@@ -83,7 +100,7 @@ class LeaveCardService extends BaseService{
 
         $leave_card = $this->leave_card_repo->update($request, $slug);
 
-        $this->event->fire('la.update', $leave_card);
+        $this->event->fire('leave_card.update', $leave_card);
         return redirect()->back();
 
     }
@@ -107,7 +124,7 @@ class LeaveCardService extends BaseService{
 
         $leave_card = $this->leave_card_repo->destroy($slug);
 
-        $this->event->fire('la.destroy', $leave_card );
+        $this->event->fire('leave_card.destroy', $leave_card );
         return redirect()->route('dashboard.leave_card.index');
 
     }

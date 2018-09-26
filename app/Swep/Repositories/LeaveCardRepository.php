@@ -43,9 +43,37 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function store($request){
+    public function store($request, $days, $hrs, $mins, $credits, $bb_sick, $bb_vac, $bb_overtime){
 
-        
+        $leave_card = new LeaveCard;
+        $leave_card->slug = $this->str->random(32);
+        $leave_card->leave_card_id = $this->getLeaveCardIdInc();
+        $leave_card->doc_type = $request->doc_type;
+        $leave_card->employee_no = $request->employee_no;
+        $leave_card->leave_type = $request->leave_type;
+        $leave_card->month = $request->month;
+        $leave_card->year = $request->year;
+        $leave_card->date_from = $this->__dataType->date_parse($request->date_from);
+        $leave_card->date_to = $this->__dataType->date_parse($request->date_to);
+        $leave_card->time_from = $this->__dataType->time_parse($request->time_from);
+        $leave_card->time_to = $this->__dataType->time_parse($request->time_to);
+        $leave_card->days = $days;
+        $leave_card->hrs = $hrs;
+        $leave_card->mins = $mins;
+        $leave_card->credits = $credits;
+        $leave_card->bigbal_sick_leave = $bb_sick;
+        $leave_card->bigbal_vacation_leave = $bb_vac;
+        $leave_card->bigbal_overtime = $bb_overtime;
+        $leave_card->created_at = $this->carbon->now();
+        $leave_card->updated_at = $this->carbon->now();
+        $leave_card->ip_created = request()->ip();
+        $leave_card->ip_updated = request()->ip();
+        $leave_card->user_created = $this->auth->user()->user_id;
+        $leave_card->user_updated = $this->auth->user()->user_id;
+        $leave_card->save();
+
+        return $leave_card;
+
 
     }
 
@@ -136,22 +164,94 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
+
     public function getLeaveCardIdInc(){
 
-        $id = 'LA1000001';
+        $id = 'LC1000001';
 
-        $la = $this->leave_card->select('leave_card_id')->orderBy('leave_card_id', 'desc')->first();
+        $lc = $this->leave_card->select('leave_card_id')->orderBy('leave_card_id', 'desc')->first();
 
-        if($la != null){
+        if($lc != null){
 
-            if($la->leave_card_id != null){
-                $num = str_replace('LA', '', $la->leave_card_id) + 1;
-                $id = 'LA' . $num;
+            if($lc->leave_card_id != null){
+                $num = str_replace('LC', '', $lc->leave_card_id) + 1;
+                $id = 'LC' . $num;
             }
             
         }
         
         return $id;
+        
+    }
+
+
+
+
+
+
+
+    public function findLastSickLeaveBalanceByEmployee($emp_no){
+
+        $last_sick_leave_balance = $this->leave_card->select('bigbal_sick_leave')
+                                                    ->where('employee_no', $emp_no)
+                                                    ->where('doc_type', 'LEAVE')
+                                                    ->where('leave_type', 'SICK')
+                                                    ->orderBy('updated_at', 'desc')->first();
+        
+        if(empty($last_sick_leave_balance)){
+            
+            return 0;
+
+        }
+
+        return $last_sick_leave_balance;
+        
+    }
+
+
+
+
+
+
+
+    public function findLastVacationLeaveBalanceByEmployee($emp_no){
+
+        $last_vac_leave_balance = $this->leave_card->select('bigbal_vacation_leave')
+                                                    ->where('employee_no', $emp_no)
+                                                    ->where('doc_type', 'LEAVE')
+                                                    ->where('leave_type', 'VAC')
+                                                    ->orderBy('updated_at', 'desc')->first();
+        
+        if(empty($last_vac_leave_balance)){
+            
+            return 0;
+
+        }
+
+        return $last_vac_leave_balance;
+        
+    }
+
+
+
+
+
+
+
+    public function findLastOvertimeBalanceByEmployee($emp_no){
+
+        $last_overtime_balance = $this->leave_card->select('bigbal_overtime')
+                                                       ->where('employee_no', $emp_no)
+                                                       ->where('doc_type', 'OT')
+                                                       ->orderBy('updated_at', 'desc')->first();
+        
+        if(empty($last_overtime_balance)){
+            
+            return 0;
+
+        }
+
+        return $last_overtime_balance;
         
     }
 

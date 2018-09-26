@@ -6,6 +6,7 @@ namespace App\Swep\BaseClasses;
 use App;
 use Auth;
 use Session;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\__static;
 use App\Swep\Helpers\__dataType;
@@ -19,6 +20,7 @@ class BaseService{
 
     protected $auth;
     protected $session;
+    protected $carbon;
     protected $str;
     protected $__static;
     protected $__dataType;
@@ -31,6 +33,7 @@ class BaseService{
         
         $this->auth = auth();
         $this->session = session();
+        $this->carbon = App::make(Carbon::class);
         $this->str = App::make(Str::class);
         $this->__static = App::make(__static::class);
         $this->__dataType = App::make(__dataType::class);

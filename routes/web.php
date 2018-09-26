@@ -103,6 +103,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** Leave Card **/
+	Route::get('/leave_card/create_overtime', 'LeaveCardController@createOvertime')->name('leave_card.create_overtime');
+	Route::get('/leave_card/create_undertime', 'LeaveCardController@createUndertime')->name('leave_card.create_undertime');
+	Route::get('/leave_card/create_tardy', 'LeaveCardController@createTardy')->name('leave_card.create_tardy');
+	Route::get('/leave_card/report', 'LeaveCardController@report')->name('leave_card.report');
+	Route::get('/leave_card/report_generate', 'LeaveCardController@reportGenerate')->name('leave_card.report_generate');
 	Route::resource('leave_card', 'LeaveCardController');
 	
 });
@@ -113,10 +118,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 /** Testing **/
- //Route::get('/dashboard/test', function(){
+ Route::get('/dashboard/test', function(){
 
  	//phpinfo();
-	//return dd(Illuminate\Support\Str::random(16));
+	return dd(Illuminate\Support\Str::random(16));
 
 	// $list = App\Models\EmployeeTraining::where('slug', '')->get();
 
@@ -126,5 +131,5 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// 	$tr->save();
 	// }
 
- //});
+ });
 

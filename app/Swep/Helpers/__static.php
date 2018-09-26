@@ -56,7 +56,7 @@ class __static{
     // Leave Application
     public static function leave_types(){
 
-        return ['Vacation' => 'T1001', 'Sick' => 'T1002', 'Maternity' => 'T1003', 'Others' => 'T1004'];
+        return ['Vacation' => 'VAC', 'Sick' => 'SICK', 'Maternity' => 'MAT', 'Forced' => 'FORCED', 'Others' => 'OTHERS'];
     
     }
 

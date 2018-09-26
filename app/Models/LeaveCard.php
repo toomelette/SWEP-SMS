@@ -27,6 +27,8 @@ class LeaveCard extends Model{
         'employee_no' => '',
         'doc_type' => '',
         'leave_type' => '',
+        'month' => '',
+        'year' => 0,
         'date_from' => null,
         'date_to' => null,
         'time_from' => null,
