@@ -13,7 +13,7 @@ class LeaveCard extends Model{
 
 	protected $table = 'leave_card';
 
-    protected $dates = ['date_from', 'date_to', 'created_at', 'updated_at'];
+    protected $dates = ['date', 'date_from', 'date_to', 'created_at', 'updated_at'];
 
 	public $timestamps = false;
 
@@ -29,6 +29,7 @@ class LeaveCard extends Model{
         'leave_type' => '',
         'month' => '',
         'year' => 0,
+        'date' => null,
         'date_from' => null,
         'date_to' => null,
         'time_from' => null,

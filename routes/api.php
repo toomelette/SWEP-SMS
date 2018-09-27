@@ -49,3 +49,10 @@ Route::get('/project_code/select_projectCode_byDeptName/{dept_name}', 'Api\ApiPr
 Route::get('/department/textbox_department_ByDepartmentId/{dept_id}', 'Api\ApiDepartmentController@textboxDepartmentByDepartmentId')
 		->name('textboxDepartmentByDepartmentId');
 
+
+
+
+// Leave Card
+Route::get('/leave_card/select_leaveCard_byEmployeeNo/{employee_no}', 'Api\ApiLeaveCardController@selectLeaveCardByEmployeeNo')
+		->name('selectLeaveCardByEmployeeNo');
+

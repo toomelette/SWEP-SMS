@@ -96,7 +96,9 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.permission_slip.edit',
                         'dashboard.permission_slip.index',
                         'dashboard.leave_card.create',
-                        'dashboard.leave_card.edit',], 'App\Swep\ViewComposers\EmployeeComposer');
+                        'dashboard.leave_card.edit',
+                        'dashboard.leave_card.create_overtime',
+                        'dashboard.leave_card.edit_overtime',], 'App\Swep\ViewComposers\EmployeeComposer');
 
 
 

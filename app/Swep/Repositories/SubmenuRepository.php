@@ -117,6 +117,7 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
             return $this->submenu->select('submenu_id', 'name')
                                  ->where('menu_id', $menu_id)
+                                 ->orderBy('submenu_id', 'asc')
                                  ->get();
 
         });

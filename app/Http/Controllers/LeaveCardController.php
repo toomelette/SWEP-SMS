@@ -74,7 +74,6 @@ class LeaveCardController extends Controller{
         return $this->leave_card->store($request);
         
     }
-
     
 
 

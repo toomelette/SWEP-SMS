@@ -43,7 +43,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function store($request, $days, $hrs, $mins, $credits, $bb_sick, $bb_vac, $bb_overtime){
+    public function store($request, $days, $hrs, $mins, $credits, $balance_sick, $balance_vacation, $balance_overtime){
 
         $leave_card = new LeaveCard;
         $leave_card->slug = $this->str->random(32);
@@ -61,9 +61,9 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->hrs = $hrs;
         $leave_card->mins = $mins;
         $leave_card->credits = $credits;
-        $leave_card->bigbal_sick_leave = $bb_sick;
-        $leave_card->bigbal_vacation_leave = $bb_vac;
-        $leave_card->bigbal_overtime = $bb_overtime;
+        $leave_card->bigbal_sick_leave = $balance_sick;
+        $leave_card->bigbal_vacation_leave = $balance_vacation;
+        $leave_card->bigbal_overtime = $balance_overtime;
         $leave_card->created_at = $this->carbon->now();
         $leave_card->updated_at = $this->carbon->now();
         $leave_card->ip_created = request()->ip();
@@ -190,21 +190,19 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function findLastSickLeaveBalanceByEmployee($emp_no){
+    public function findLastByEmployeeNo($emp_no){
 
-        $last_sick_leave_balance = $this->leave_card->select('bigbal_sick_leave')
-                                                    ->where('employee_no', $emp_no)
-                                                    ->where('doc_type', 'LEAVE')
-                                                    ->where('leave_type', 'SICK')
-                                                    ->orderBy('updated_at', 'desc')->first();
+        $leave_card = $this->leave_card->select('bigbal_sick_leave', 'bigbal_vacation_leave', 'bigbal_overtime')
+                                       ->where('employee_no', $emp_no)
+                                       ->orderBy('updated_at', 'desc')->first();
         
-        if(empty($last_sick_leave_balance)){
+        if(empty($leave_card)){
             
-            return 0;
+            return abort(404);
 
         }
 
-        return $last_sick_leave_balance;
+        return $leave_card;
         
     }
 
@@ -213,46 +211,14 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
+    public function apiGetByEmployeeNo($emp_no){
 
-    public function findLastVacationLeaveBalanceByEmployee($emp_no){
+        return $this->leave_card->select('bigbal_sick_leave', 'bigbal_vacation_leave', 'bigbal_overtime')
+                                ->where('employee_no', $emp_no)
+                                ->orderBy('updated_at', 'desc')
+                                ->take(1)
+                                ->get();
 
-        $last_vac_leave_balance = $this->leave_card->select('bigbal_vacation_leave')
-                                                    ->where('employee_no', $emp_no)
-                                                    ->where('doc_type', 'LEAVE')
-                                                    ->where('leave_type', 'VAC')
-                                                    ->orderBy('updated_at', 'desc')->first();
-        
-        if(empty($last_vac_leave_balance)){
-            
-            return 0;
-
-        }
-
-        return $last_vac_leave_balance;
-        
-    }
-
-
-
-
-
-
-
-    public function findLastOvertimeBalanceByEmployee($emp_no){
-
-        $last_overtime_balance = $this->leave_card->select('bigbal_overtime')
-                                                       ->where('employee_no', $emp_no)
-                                                       ->where('doc_type', 'OT')
-                                                       ->orderBy('updated_at', 'desc')->first();
-        
-        if(empty($last_overtime_balance)){
-            
-            return 0;
-
-        }
-
-        return $last_overtime_balance;
-        
     }
 
 
