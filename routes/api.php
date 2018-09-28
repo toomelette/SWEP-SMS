@@ -50,9 +50,3 @@ Route::get('/department/textbox_department_ByDepartmentId/{dept_id}', 'Api\ApiDe
 		->name('textboxDepartmentByDepartmentId');
 
 
-
-
-// Leave Card
-Route::get('/leave_card/select_leaveCard_byEmployeeNo/{employee_no}', 'Api\ApiLeaveCardController@selectLeaveCardByEmployeeNo')
-		->name('selectLeaveCardByEmployeeNo');
-

@@ -41,15 +41,10 @@ class LeaveCardService extends BaseService{
 
     public function store($request){
 
-        $last_leave_card = $this->leave_card_repo->findLastByEmployeeNo($request->employee_no);
-
         $days = 0;
         $hrs = 0;
         $mins = 0;
         $credits = 0;
-        $balance_sick = $last_leave_card->bigbal_sick_leave;
-        $balance_vacation = $last_leave_card->bigbal_vacation_leave;
-        $balance_overtime = $last_leave_card->bigbal_overtime;
 
         $date_from = $this->carbon->parse($request->date_from);
 
@@ -58,125 +53,31 @@ class LeaveCardService extends BaseService{
         if ($request->doc_type == 'LEAVE') {
 
             $days = $date_from->diffInWeekdays($request->date_to);
-
             $credits = number_format($days * 1.000, 3);
 
-            if($request->leave_type == 'SICK') {
+        }
 
-                if ($balance_sick < $credits) {
 
-                    $this->session->flash('LC_INSUFFICIENT_SICK_LEAVE_CREDIT', 'The employee dont have enough Sick Leave Credit.');
-                    $request->flash();
-                    return redirect()->back();
+        // OT
+        if($request->doc_type == 'OT' || $request->doc_type == 'TARDY' || $request->doc_type == 'UT'){
 
-                }
+            $hrs = $request->hrs;
+            $mins = $request->mins;
 
-                $balance_sick = $balance_sick - $credits;
+            $credits_hrs = number_format($hrs * .125, 3);
+            $credits_mins = number_format($mins * .125/60, 3);
 
-            }elseif($request->leave_type == 'VAC'){
-
-                if ($balance_vacation < $credits) {
-
-                    $this->session->flash('LC_INSUFFICIENT_VAC_LEAVE_CREDIT', 'The employee dont have enough Vacation Leave Credit.');
-                    $request->flash();
-                    return redirect()->back();
-
-                }
-
-                $balance_vacation = $balance_vacation - $credits;
-
-            }else{
-
-                abort(404);
-
-            }
-
-        }elseif($request->doc_type == 'OT'){
-
-            $
-            $credits = number_format($request->hrs * .125, 3);
+            $credits = $credits_hrs + $credits_mins;
 
         }
 
 
-        $leave_card = $this->leave_card_repo->store($request, $days, $hrs, $mins, $credits, $balance_sick, $balance_vacation, $balance_overtime);
+        $leave_card = $this->leave_card_repo->store($request, $days, $hrs, $mins, $credits);
 
         $this->event->fire('leave_card.store', $leave_card);
         return redirect()->back();
 
     }
-
-
-
-
-
-
-    public function store_overtime($request){
-
-        $last_leave_card = $this->leave_card_repo->findLastByEmployeeNo($request->employee_no);
-
-        $days = 0;
-        $hrs = 0;
-        $mins = 0;
-        $credits = 0;
-        $balance_sick = $last_leave_card->bigbal_sick_leave;
-        $balance_vacation = $last_leave_card->bigbal_vacation_leave;
-        $balance_overtime = $last_leave_card->bigbal_overtime;
-
-        $date_from = $this->carbon->parse($request->date_from);
-
-
-        // Leave
-        if ($request->doc_type == 'LEAVE') {
-
-            $days = $date_from->diffInWeekdays($request->date_to);
-
-            $credits = number_format($days * .125, 3);
-
-            if($request->leave_type == 'SICK') {
-
-                if ($balance_sick < $credits) {
-
-                    $this->session->flash('LC_INSUFFICIENT_SICK_LEAVE_CREDIT', 'The employee dont have enough Sick Leave Credit.');
-                    $request->flash();
-                    return redirect()->back();
-
-                }
-
-                $balance_sick = $balance_sick - $credits;
-
-            }elseif($request->leave_type == 'VAC'){
-
-                if ($balance_vacation < $credits) {
-
-                    $this->session->flash('LC_INSUFFICIENT_VAC_LEAVE_CREDIT', 'The employee dont have enough Vacation Leave Credit.');
-                    $request->flash();
-                    return redirect()->back();
-
-                }
-
-                $balance_vacation = $balance_vacation - $credits;
-
-            }else{
-
-                abort(404);
-
-            }
-
-        }else{
-
-            abort(404);
-
-        }
-
-
-        $leave_card = $this->leave_card_repo->store($request, $days, $hrs, $mins, $credits, $balance_sick, $balance_vacation, $balance_overtime);
-
-        $this->event->fire('leave_card.store', $leave_card);
-        return redirect()->back();
-
-    }
-
 
 
 

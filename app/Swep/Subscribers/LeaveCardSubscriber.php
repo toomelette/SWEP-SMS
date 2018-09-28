@@ -36,7 +36,7 @@ class LeaveCardSubscriber extends BaseSubscriber{
         
         $this->__cache->deletePattern('swep_cache:leave_cards:all:*');
 
-        $this->session->flash('LC_CREATE_SUCCESS', 'Your Leave Card has been successfully Created!');
+        $this->session->flash('LC_CREATE_SUCCESS', 'Your Record has been successfully Created!');
         $this->session->flash('LC_CREATE_SUCCESS_SLUG', $leave_card->slug);
 
     }
@@ -50,7 +50,7 @@ class LeaveCardSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:leave_cards:all:*');
         $this->__cache->deletePattern('swep_cache:leave_cards:bySlug:'. $leave_card->slug .'');
 
-        $this->session->flash('LC_UPDATE_SUCCESS', 'Your Leave Card has been successfully Updated!');
+        $this->session->flash('LC_UPDATE_SUCCESS', 'Your Record has been successfully Updated!');
         $this->session->flash('LC_UPDATE_SUCCESS_SLUG', $leave_card->slug);
 
     }
@@ -64,7 +64,7 @@ class LeaveCardSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:leave_cards:all:*');
         $this->__cache->deletePattern('swep_cache:leave_cards:bySlug:'. $leave_card->slug .'');
 
-        $this->session->flash('LC_DELETE_SUCCESS', 'Your Leave Card has been successfully Deleted!');
+        $this->session->flash('LC_DELETE_SUCCESS', 'Your Record has been successfully Deleted!');
 
     }
 

@@ -10,7 +10,7 @@ interface LeaveCardInterface {
 
 	//public function fetchByUser($request);
 
-	public function store($request, $days, $hrs, $mins, $credits, $balance_sick, $balance_vacation, $balance_overtime);
+	public function store($request, $days, $hrs, $mins, $credits);
 
 	//public function update($request, $slug);
 

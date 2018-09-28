@@ -43,7 +43,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function store($request, $days, $hrs, $mins, $credits, $balance_sick, $balance_vacation, $balance_overtime){
+    public function store($request, $days, $hrs, $mins, $credits){
 
         $leave_card = new LeaveCard;
         $leave_card->slug = $this->str->random(32);
@@ -55,15 +55,11 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->year = $request->year;
         $leave_card->date_from = $this->__dataType->date_parse($request->date_from);
         $leave_card->date_to = $this->__dataType->date_parse($request->date_to);
-        $leave_card->time_from = $this->__dataType->time_parse($request->time_from);
-        $leave_card->time_to = $this->__dataType->time_parse($request->time_to);
         $leave_card->days = $days;
         $leave_card->hrs = $hrs;
         $leave_card->mins = $mins;
         $leave_card->credits = $credits;
-        $leave_card->bigbal_sick_leave = $balance_sick;
-        $leave_card->bigbal_vacation_leave = $balance_vacation;
-        $leave_card->bigbal_overtime = $balance_overtime;
+        $leave_card->remarks = $request->remarks;
         $leave_card->created_at = $this->carbon->now();
         $leave_card->updated_at = $this->carbon->now();
         $leave_card->ip_created = request()->ip();
@@ -181,28 +177,6 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         }
         
         return $id;
-        
-    }
-
-
-
-
-
-
-
-    public function findLastByEmployeeNo($emp_no){
-
-        $leave_card = $this->leave_card->select('bigbal_sick_leave', 'bigbal_vacation_leave', 'bigbal_overtime')
-                                       ->where('employee_no', $emp_no)
-                                       ->orderBy('updated_at', 'desc')->first();
-        
-        if(empty($leave_card)){
-            
-            return abort(404);
-
-        }
-
-        return $leave_card;
         
     }
 
