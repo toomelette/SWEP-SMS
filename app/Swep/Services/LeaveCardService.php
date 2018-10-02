@@ -100,12 +100,42 @@ class LeaveCardService extends BaseService{
 
     public function update($request, $slug){
 
-        $leave_card = $this->leave_card_repo->update($request, $slug);
+        $days = 0;
+        $hrs = 0;
+        $mins = 0;
+        $credits = 0;
+
+        $date_from = $this->carbon->parse($request->date_from);
+
+        // Leave
+        if ($request->doc_type == 'LEAVE') {
+
+            $days = $date_from->diffInWeekdays($request->date_to);
+            $credits = number_format($days * 1.000, 3);
+
+        }
+
+
+        // OT
+        if($request->doc_type == 'OT' || $request->doc_type == 'TARDY' || $request->doc_type == 'UT'){
+
+            $hrs = $request->hrs;
+            $mins = $request->mins;
+
+            $credits_hrs = number_format($hrs * .125, 3);
+            $credits_mins = number_format($mins * .125/60, 3);
+
+            $credits = $credits_hrs + $credits_mins;
+
+        }
+
+        $leave_card = $this->leave_card_repo->update($request, $days, $hrs, $mins, $credits, $slug);
 
         $this->event->fire('leave_card.update', $leave_card);
-        return redirect()->back();
+        return redirect()->route('dashboard.leave_card.index');
 
     }
+
 
 
 
@@ -122,6 +152,7 @@ class LeaveCardService extends BaseService{
 
 
 
+
     public function destroy($slug){
 
         $leave_card = $this->leave_card_repo->destroy($slug);
@@ -130,6 +161,7 @@ class LeaveCardService extends BaseService{
         return redirect()->route('dashboard.leave_card.index');
 
     }
+
 
 
 

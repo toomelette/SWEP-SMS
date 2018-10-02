@@ -182,6 +182,16 @@ class __static{
 
 
 
+    // Leave Card
+    public static function document_types_leave_card(){
+
+        return ['Leave' => 'LEAVE', 'Overtime' => 'OT', 'Tardy' => 'TARDY', 'Undertime' => 'UT'];
+    
+    }
+
+
+
+
     // Month
     public static function months(){
 

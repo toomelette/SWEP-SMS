@@ -37,34 +37,6 @@ class LeaveCardController extends Controller{
         return view('dashboard.leave_card.create');
     
     }
-
-
-
-
-    public function createOvertime(){
-
-        return view('dashboard.leave_card.create_overtime');
-    
-    }
-
-
-
-
-    public function createUndertime(){
-
-        return view('dashboard.leave_card.create_undertime');
-    
-    }
-
-
-
-
-    public function createTardy(){
-
-        return view('dashboard.leave_card.create_tardy');
-    
-    }
-
     
 
 
@@ -113,6 +85,17 @@ class LeaveCardController extends Controller{
         return $this->leave_card->destroy($slug);
 
     }
+
+    
+
+
+
+    public function report(){
+
+        return view('dashboard.leave_card.report');
+
+    }
+
 
 	
 	

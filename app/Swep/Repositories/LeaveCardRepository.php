@@ -34,6 +34,42 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
     public function fetchAll($request){
 
+        $key = str_slug($request->fullUrl(), '_');
+
+        $leave_cards = $this->cache->remember('leave_cards:all:' . $key, 240, function() use ($request){
+
+            $df = $this->__dataType->date_parse($request->df);
+            $dt = $this->__dataType->date_parse($request->dt);
+
+            $leave_card = $this->leave_card->newQuery();
+            
+            if(isset($request->q)){
+                $this->search($leave_card, $request->q);
+            }
+
+            if(isset($request->emp)){
+                $leave_card->whereEmployeeNo($request->emp);
+            }
+
+            if(isset($request->doc_t)){
+                $leave_card->whereDocType($request->doc_t);
+            }
+
+            if(isset($request->leave_t)){
+                $leave_card->whereLeaveType($request->leave_t);
+            }
+
+            if(isset($request->df) || isset($request->dt)){
+                $leave_card->whereBetween('date', [$df, $dt])
+                           ->orwhereBetween('date_from', [$df, $dt]);
+            }
+
+            return $this->populate($leave_card);
+
+        });
+
+        return $leave_cards;
+
        
 
     }
@@ -53,6 +89,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->leave_type = $request->leave_type;
         $leave_card->month = $request->month;
         $leave_card->year = $request->year;
+        $leave_card->date = $this->__dataType->date_parse($request->date);
         $leave_card->date_from = $this->__dataType->date_parse($request->date_from);
         $leave_card->date_to = $this->__dataType->date_parse($request->date_to);
         $leave_card->days = $days;
@@ -79,9 +116,30 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function update($request, $slug){
+    public function update($request, $days, $hrs, $mins, $credits, $slug){
 
+        $leave_card = $this->findBySlug($slug);
+        $leave_card->slug = $this->str->random(32);
+        $leave_card->leave_card_id = $this->getLeaveCardIdInc();
+        $leave_card->doc_type = $request->doc_type;
+        $leave_card->employee_no = $request->employee_no;
+        $leave_card->leave_type = $request->leave_type;
+        $leave_card->month = $request->month;
+        $leave_card->year = $request->year;
+        $leave_card->date = $this->__dataType->date_parse($request->date);
+        $leave_card->date_from = $this->__dataType->date_parse($request->date_from);
+        $leave_card->date_to = $this->__dataType->date_parse($request->date_to);
+        $leave_card->days = $days;
+        $leave_card->hrs = $hrs;
+        $leave_card->mins = $mins;
+        $leave_card->credits = $credits;
+        $leave_card->remarks = $request->remarks;
+        $leave_card->updated_at = $this->carbon->now();
+        $leave_card->ip_updated = request()->ip();
+        $leave_card->user_updated = $this->auth->user()->user_id;
+        $leave_card->save();
 
+        return $leave_card;
 
     }
 
@@ -93,7 +151,10 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
     public function destroy($slug){
 
-       
+       $leave_card = $this->findBySlug($slug);
+       $leave_card->delete();
+
+       return $leave_card;
 
     }
     
@@ -105,7 +166,15 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
     public function findBySlug($slug){
 
-
+        $leave_card = $this->cache->remember('leave_cards:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->leave_card->where('slug', $slug)->first();
+        });
+        
+        if(empty($leave_card)){
+            abort(404);
+        }
+        
+        return $leave_card;
 
     }
 
@@ -129,11 +198,12 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
     public function search($model, $key){
 
         $model->where(function ($model) use ($key) {
-            $model->where('lastname', 'LIKE', '%'. $key .'%')
-                  ->orwhere('firstname', 'LIKE', '%'. $key .'%')
-                  ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                  ->orwhereHas('user', function ($model) use ($key) {
-                    $model->where('username', 'LIKE', '%'. $key .'%');
+            $model->where('employee_no', 'LIKE', '%'. $key .'%')
+                  ->orwhereHas('employee', function ($model) use ($key) {
+                    $model->where('fullname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('firstname', 'LIKE', '%'. $key .'%')
+                          ->orwhere('middlename', 'LIKE', '%'. $key .'%')
+                          ->orwhere('lastname', 'LIKE', '%'. $key .'%');
                 });
         });
 
@@ -147,9 +217,9 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
     public function populate($model){
 
-        return $model->select('user_id', 'firstname', 'middlename', 'lastname', 'type', 'date_of_filing', 'slug')
+        return $model->select('employee_no', 'doc_type', 'leave_type', 'date', 'date_from', 'date_to', 'credits', 'slug')
                      ->sortable()
-                     ->with('user')
+                     ->with('employee')
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
 
@@ -178,21 +248,6 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         
         return $id;
         
-    }
-
-
-
-
-
-
-    public function apiGetByEmployeeNo($emp_no){
-
-        return $this->leave_card->select('bigbal_sick_leave', 'bigbal_vacation_leave', 'bigbal_overtime')
-                                ->where('employee_no', $emp_no)
-                                ->orderBy('updated_at', 'desc')
-                                ->take(1)
-                                ->get();
-
     }
 
 
