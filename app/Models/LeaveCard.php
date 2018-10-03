@@ -58,5 +58,51 @@ class LeaveCard extends Model{
 
 
 
+    /** Scopes **/
+    public function scopeCountTardy($query, $emp, $month, $year){
+
+        return $query->where('employee_no', $emp)
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'TARDY')
+                     ->get()
+                     ->count();
+
+    }
+
+
+
+
+
+    public function scopeCountUndertime($query, $emp, $month, $year){
+
+        return $query->where('employee_no', $emp)
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'UT')
+                     ->get()
+                     ->count();
+
+    }
+
+
+
+
+
+    public function scopeGetLeave($query, $emp, $month, $year){
+
+        return $query->select('leave_type', 'date_from', 'date_to', 'days')
+                     ->where('employee_no', $emp)
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'LEAVE')
+                     ->get();
+
+    }
+
+
+
+
+
     
 }

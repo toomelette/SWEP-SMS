@@ -79,7 +79,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function store($request, $days, $hrs, $mins, $credits){
+    public function store($request, $year, $month, $days, $hrs, $mins, $credits){
 
         $leave_card = new LeaveCard;
         $leave_card->slug = $this->str->random(32);
@@ -87,8 +87,8 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->doc_type = $request->doc_type;
         $leave_card->employee_no = $request->employee_no;
         $leave_card->leave_type = $request->leave_type;
-        $leave_card->month = $request->month;
-        $leave_card->year = $request->year;
+        $leave_card->month = $month;
+        $leave_card->year = $year;
         $leave_card->date = $this->__dataType->date_parse($request->date);
         $leave_card->date_from = $this->__dataType->date_parse($request->date_from);
         $leave_card->date_to = $this->__dataType->date_parse($request->date_to);
@@ -116,7 +116,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function update($request, $days, $hrs, $mins, $credits, $slug){
+    public function update($request, $year, $month, $days, $hrs, $mins, $credits, $slug){
 
         $leave_card = $this->findBySlug($slug);
         $leave_card->slug = $this->str->random(32);
@@ -124,8 +124,8 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->doc_type = $request->doc_type;
         $leave_card->employee_no = $request->employee_no;
         $leave_card->leave_type = $request->leave_type;
-        $leave_card->month = $request->month;
-        $leave_card->year = $request->year;
+        $leave_card->month = $month;
+        $leave_card->year = $year;
         $leave_card->date = $this->__dataType->date_parse($request->date);
         $leave_card->date_from = $this->__dataType->date_parse($request->date_from);
         $leave_card->date_to = $this->__dataType->date_parse($request->date_to);
@@ -175,17 +175,6 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         }
         
         return $leave_card;
-
-    }
-
-
-
-
-
-
-
-    public function requestFilter($request){
-
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Swep\Services\LeaveCardService;
 use App\Http\Requests\LeaveCardFormRequest;
 use App\Http\Requests\LeaveCardFilterRequest;
+use App\Http\Requests\LeaveCardReportRequest;
 
 class LeaveCardController extends Controller{
     
@@ -93,6 +94,16 @@ class LeaveCardController extends Controller{
     public function report(){
 
         return view('dashboard.leave_card.report');
+
+    }
+
+    
+
+
+
+    public function reportGenerate(LeaveCardReportRequest $request){
+        
+        return $this->leave_card->reportGenerate($request);
 
     }
 

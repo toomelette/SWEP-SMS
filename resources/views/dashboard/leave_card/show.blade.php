@@ -56,7 +56,7 @@
                 @endif
 
                 <dt>Credits:</dt>
-                <dd>{!! '<span class="text-success">'. $leave_card->credits .'</span>' !!}</dd>
+                <dd>{!! $leave_card->credits !!}</dd>
                 
               </dl>
             </div>

@@ -43,6 +43,11 @@ class Department extends Model{
 
 
     /** RELATIONSHIPS **/
+    public function employee() {
+        return $this->hasMany('App\Models\Employee','department_id','department_id');
+    }
+
+
 	public function projectCode() {
         return $this->hasMany('App\Models\ProjectCode','department_id','department_id');
     }

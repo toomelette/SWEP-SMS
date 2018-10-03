@@ -100,15 +100,15 @@ class Employee extends Model{
     }
 
     public function department(){
-        return $this->hasOne('App\Models\Department', 'department_id', 'department_id');
+        return $this->belongsTo('App\Models\Department', 'department_id', 'department_id');
     }
 
     public function departmentUnit(){
-        return $this->hasOne('App\Models\Project', 'department_unit_id', 'department_unit_id');
+        return $this->belongsTo('App\Models\Project', 'department_unit_id', 'department_unit_id');
     }
 
     public function project(){
-        return $this->hasOne('App\Models\Project', 'project_id', 'project_id');
+        return $this->belongsTo('App\Models\Project', 'project_id', 'project_id');
     }
 
 
@@ -175,6 +175,10 @@ class Employee extends Model{
 
     public function permissionSlip(){
         return $this->hasMany('App\Models\PermissionSlip', 'employee_no', 'employee_no');
+    }
+
+    public function leaveCard(){
+        return $this->hasMany('App\Models\LeaveCard', 'employee_no', 'employee_no');
     }
 
 

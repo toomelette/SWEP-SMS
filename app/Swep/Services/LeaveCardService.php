@@ -3,6 +3,7 @@ namespace App\Swep\Services;
 
 
 use App\Swep\Interfaces\LeaveCardInterface;
+use App\Swep\Interfaces\EmployeeInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -10,12 +11,14 @@ class LeaveCardService extends BaseService{
 
 
     protected $leave_card_repo;
+    protected $employee_repo;
 
 
 
-    public function __construct(LeaveCardInterface $leave_card_repo){
+    public function __construct(LeaveCardInterface $leave_card_repo, EmployeeInterface $employee_repo){
 
         $this->leave_card_repo = $leave_card_repo;
+        $this->employee_repo = $employee_repo;
         parent::__construct();
 
     }
@@ -41,6 +44,8 @@ class LeaveCardService extends BaseService{
 
     public function store($request){
 
+        $year = 0;
+        $month = 0;
         $days = 0;
         $hrs = 0;
         $mins = 0;
@@ -52,8 +57,10 @@ class LeaveCardService extends BaseService{
         // Leave
         if ($request->doc_type == 'LEAVE') {
 
+            $year = $request->year;
+            $month = $request->month;
             $days = $date_from->diffInWeekdays($request->date_to);
-            $credits = number_format($days * 1.000, 3);
+            $credits = number_format($days * 1.000, 3) + 1;
 
         }
 
@@ -61,9 +68,10 @@ class LeaveCardService extends BaseService{
         // OT
         if($request->doc_type == 'OT' || $request->doc_type == 'TARDY' || $request->doc_type == 'UT'){
 
+            $year = $this->__dataType->date_parse($request->date, 'Y');
+            $month = $this->__dataType->date_parse($request->date, 'm');
             $hrs = $request->hrs;
-            $mins = $request->mins;
-
+            $mins = $request->hrs;
             $credits_hrs = number_format($hrs * .125, 3);
             $credits_mins = number_format($mins * .125/60, 3);
 
@@ -72,7 +80,7 @@ class LeaveCardService extends BaseService{
         }
 
 
-        $leave_card = $this->leave_card_repo->store($request, $days, $hrs, $mins, $credits);
+        $leave_card = $this->leave_card_repo->store($request, $year, $month, $days, $hrs, $mins, $credits);
 
         $this->event->fire('leave_card.store', $leave_card);
         return redirect()->back();
@@ -100,6 +108,8 @@ class LeaveCardService extends BaseService{
 
     public function update($request, $slug){
 
+        $year = 0;
+        $month = 0;
         $days = 0;
         $hrs = 0;
         $mins = 0;
@@ -107,10 +117,13 @@ class LeaveCardService extends BaseService{
 
         $date_from = $this->carbon->parse($request->date_from);
 
+
         // Leave
         if ($request->doc_type == 'LEAVE') {
 
-            $days = $date_from->diffInWeekdays($request->date_to);
+            $year = $request->year;
+            $month = $request->month;
+            $days = $date_from->diffInWeekdays($request->date_to) + 1;
             $credits = number_format($days * 1.000, 3);
 
         }
@@ -119,9 +132,10 @@ class LeaveCardService extends BaseService{
         // OT
         if($request->doc_type == 'OT' || $request->doc_type == 'TARDY' || $request->doc_type == 'UT'){
 
+            $year = $this->__dataType->date_parse($request->date, 'Y');
+            $month = $this->__dataType->date_parse($request->date, 'm');
             $hrs = $request->hrs;
-            $mins = $request->mins;
-
+            $mins = $request->hrs;
             $credits_hrs = number_format($hrs * .125, 3);
             $credits_mins = number_format($mins * .125/60, 3);
 
@@ -129,7 +143,7 @@ class LeaveCardService extends BaseService{
 
         }
 
-        $leave_card = $this->leave_card_repo->update($request, $days, $hrs, $mins, $credits, $slug);
+        $leave_card = $this->leave_card_repo->update($request, $year, $month, $days, $hrs, $mins, $credits, $slug);
 
         $this->event->fire('leave_card.update', $leave_card);
         return redirect()->route('dashboard.leave_card.index');
@@ -167,16 +181,15 @@ class LeaveCardService extends BaseService{
 
 
 
-    public function print($slug, $type){
+    public function reportGenerate($request){
 
-       $leave_card = $this->leave_card_repo->findBySlug($slug);
+        if($request->r_type == 'loat'){
 
-        if($type == 'front'){
-            return view('printables.leave_card')->with('leave_card', $leave_card);
-        }elseif($type == 'back'){
-            return view('printables.leave_card_back');
+            $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
+            return view('printables.leave_card_loat')->with('employees', $employees);
+
         }
-        return abort(404);
+        
 
     }
 

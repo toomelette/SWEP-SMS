@@ -56,7 +56,21 @@ class __static{
     // Leave Application
     public static function leave_types(){
 
-        return ['Vacation' => 'VAC', 'Sick' => 'SICK', 'Maternity' => 'MAT', 'Forced' => 'FORCED', 'Others' => 'OTHERS'];
+        return [
+
+            'Vacation Leave' => 'VL', 
+            'Sick Leave' => 'SL', 
+            'Maternity Leave' => 'ML', 
+            'Paternity Leave' => 'PL', 
+            'Special Leave' => 'SPL',
+            'Rehabilitation Leave' => 'RL',
+            'Study Leave' => 'STL',
+            'Special Emergency Leave' => 'SEL',
+            'Magna Carta Leave' => 'MC',
+            'Forced Leave' => 'FL',
+            'Solo Parent Leave' => 'SOLO'
+        ];
+
     
     }
 

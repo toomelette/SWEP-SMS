@@ -10,6 +10,8 @@ interface EmployeeInterface {
 
 	public function fetchByDepartmentId($dept_id);
 
+	public function fetchByIsActive($status);
+
 	public function store($request);
 
 	public function update($request, $slug);
