@@ -85,11 +85,11 @@
               ) !!}
 
               {!! __form::textbox(
-                 '3', 'hrs', 'text', 'Hours *', 'Hours', old('hrs') ? old('hrs') : $leave_card->hrs, $errors->has('hrs'), $errors->first('hrs'), ''
+                 '3', 'hrs', 'number', 'Hours', 'Hours', old('hrs') ? old('hrs') : $leave_card->hrs, $errors->has('hrs'), $errors->first('hrs'), ''
               ) !!}
 
               {!! __form::textbox(
-                 '3', 'mins', 'text', 'Minutes *', 'Minutes', old('mins') ? old('mins') : $leave_card->mins, $errors->has('mins'), $errors->first('mins'), ''
+                 '3', 'mins', 'number', 'Minutes', 'Minutes', old('mins') ? old('mins') : $leave_card->mins, $errors->has('mins'), $errors->first('mins'), ''
               ) !!}
 
             </div>

@@ -65,7 +65,7 @@
           <input type="hidden" name="r_type" value="ledger">
 
           {!! __form::select_dynamic(
-            '3', 'emp', 'Employee *', old('emp'), $global_employees_all, 'employee_no', 'fullname', $errors->has('emp'), $errors->first('emp'), 'select2', ''
+            '3', 's', 'Employee *', old('s'), $global_employees_all, 'slug', 'fullname', $errors->has('s'), $errors->first('s'), 'select2', ''
           ) !!}
 
         </div>

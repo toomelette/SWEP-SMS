@@ -59,19 +59,19 @@ class LeaveCardService extends BaseService{
 
             $year = $request->year;
             $month = $request->month;
-            $days = $date_from->diffInWeekdays($request->date_to);
-            $credits = number_format($days * 1.000, 3) + 1;
+            $days = $date_from->diffInWeekdays($request->date_to) + 1;
+            $credits = number_format($days * 1.000, 3);
 
         }
 
 
-        // OT
+        //  OT, TARDY, UT
         if($request->doc_type == 'OT' || $request->doc_type == 'TARDY' || $request->doc_type == 'UT'){
 
             $year = $this->__dataType->date_parse($request->date, 'Y');
             $month = $this->__dataType->date_parse($request->date, 'm');
             $hrs = $request->hrs;
-            $mins = $request->hrs;
+            $mins = $request->mins;
             $credits_hrs = number_format($hrs * .125, 3);
             $credits_mins = number_format($mins * .125/60, 3);
 
@@ -129,13 +129,13 @@ class LeaveCardService extends BaseService{
         }
 
 
-        // OT
+        // OT, TARDY, UT
         if($request->doc_type == 'OT' || $request->doc_type == 'TARDY' || $request->doc_type == 'UT'){
 
             $year = $this->__dataType->date_parse($request->date, 'Y');
             $month = $this->__dataType->date_parse($request->date, 'm');
             $hrs = $request->hrs;
-            $mins = $request->hrs;
+            $mins = $request->mins;
             $credits_hrs = number_format($hrs * .125, 3);
             $credits_mins = number_format($mins * .125/60, 3);
 
@@ -187,6 +187,15 @@ class LeaveCardService extends BaseService{
 
             $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
             return view('printables.leave_card_loat')->with('employees', $employees);
+
+        }elseif($request->r_type == 'ledger'){
+
+            $employee = $this->employee_repo->findBySlug($request->s);
+            return view('printables.leave_card_ledger')->with('employee', $employee);
+
+        }else{
+
+            abort(404);
 
         }
         

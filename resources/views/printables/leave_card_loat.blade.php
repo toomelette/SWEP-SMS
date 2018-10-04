@@ -46,84 +46,114 @@
   </style>
 
 </head>
+
 <body onload="window.print();" onafterprint="window.close()">
 
-  <div class="wrapper" style="overflow:hidden !important;">
+  <?php
 
-    <div class="row" style="text-align: center;">
-      <div class="col-sm-12">
-        <p style="font-size: 15px;">
-          SUGAR REGULATORY ADMINISTRATION
-          <br>LIST OF ABSENSES AND TARDINESS OF SRA VISAYAS EMPLOYEES
-          <br>{{ $month_name .', '. $year }}
-        </p>
+    $total = ceil(count($employees) / 35);
+    $start = 0;
+    $end = 34;
+    
+  ?>
+
+  @for ($i = 0; $i < $total; $i++)
+  
+    <?php
+
+      if($i >= 1){
+
+        $start = $start + 35;
+        $end = $end + 35;
+
+      }
+
+    ?>
+
+    <div class="wrapper" style="overflow:hidden !important;">
+
+      <div class="row" style="text-align: center;">
+        <div class="col-sm-12">
+          <p style="font-size: 15px;">
+            SUGAR REGULATORY ADMINISTRATION
+            <br>LIST OF ABSENSES AND TARDINESS OF SRA VISAYAS EMPLOYEES
+            <br>{{ $month_name .', '. $year }}
+          </p>
+        </div>
       </div>
+
+
+      <table style="border: 1px solid black; font-size: 9px;">
+        
+        <tr>
+          <th style="text-align:center;">Fullname</th>
+          <th>Department</th>
+          <th>Position</th>   
+          <th style="text-align:center; width:200px;">ABSENT/ONLEAVE</th>
+          <th style="text-align:center;">TARDY</th>
+          <th style="text-align:center;">UNDERTIME</th>
+        </tr>
+
+        @foreach ($employees as $key => $data)
+
+          @if($key >= $start && $key <= $end)
+
+            <?php 
+
+              $key = $key + 1; 
+              $leave_list = $data->leaveCard()->getLeave($month, $year);
+
+            ?>
+
+            <tr> 
+              <td>{!! $key .'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $data->fullname !!}</td>
+              <td>{{ empty($data->department) ? '' : $data->department->name }}</td>
+              <td>{{ $data->position }}</td>
+              <td style="text-align:center;">
+
+                @if(count($leave_list) > 0)
+
+                  @foreach ($leave_list as $data_leave)
+                    
+                    <?php
+                      
+                      $date_from_day = __dataType::date_parse($data_leave->date_from, 'd');
+                      $date_to_day = __dataType::date_parse($data_leave->date_to, 'd');
+
+                    ?>
+                    
+                    @if($data_leave->days > 1)
+
+                      {{ $data_leave->leave_type .'('. $date_from_day .' - '. $date_to_day .')'}}
+
+                    @elseif($data_leave->days == 1)
+
+                      {{ $data_leave->leave_type .'('. $date_from_day .')'}}
+
+                    @endif
+                    ,
+                  @endforeach
+
+                @else
+                  0
+                @endif
+              
+              </td>
+              <td style="text-align:center;">{{ $data->leaveCard()->countTardy($month, $year) }}</td>
+              <td style="text-align:center;">{{ $data->leaveCard()->countUndertime($month, $year) }}</td>
+            </tr>
+
+          @endif
+
+        @endforeach
+
+      </table>
+
     </div>
 
 
-    <table style="border: 1px solid black; font-size: 9px;">
-      
-      <tr>
-        <th style="text-align:center;">Fullname</th>
-        <th>Department</th>
-        <th>Position</th>   
-        <th style="text-align:center; width:200px;">ABSENT/ONLEAVE</th>
-        <th style="text-align:center;">TARDY</th>
-        <th style="text-align:center;">UNDERTIME</th>
-      </tr>
+  @endfor
 
-      @foreach ($employees as $key => $data)
-        <?php 
-
-          $key = $key + 1; 
-          $leave_list = $data->leaveCard()->getLeave($data->employee_no, $month, $year);
-
-        ?>
-        <tr> 
-          <td>{!! $key .'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $data->fullname !!}</td>
-          <td>{{ empty($data->department) ? '' : $data->department->name }}</td>
-          <td>{{ $data->position }}</td>
-          <td style="text-align:center;">
-
-            @if(count($leave_list) > 0)
-
-              @foreach ($leave_list as $data_leave)
-                
-                <?php
-                  
-                  $date_from_day = __dataType::date_parse($data_leave->date_from, 'd');
-                  $date_to_day = __dataType::date_parse($data_leave->date_to, 'd');
-
-                ?>
-                
-                @if($data_leave->days > 1)
-
-                  {{ $data_leave->leave_type .'('. $date_from_day .' - '. $date_to_day .')'}}
-
-                @elseif($data_leave->days == 1)
-
-                  {{ $data_leave->leave_type .'('. $date_from_day .')'}}
-
-                @endif
-                ,
-              @endforeach
-
-            @else
-              0
-            @endif
-          
-          </td>
-          <td style="text-align:center;">{{ $data->leaveCard()->countTardy($data->employee_no, $month, $year) }}</td>
-          <td style="text-align:center;">{{ $data->leaveCard()->countUndertime($data->employee_no, $month, $year) }}</td>
-        </tr>
-      @endforeach
-
-
-
-    </table>
-
-
-  </div>
 
 </body>
 </html>

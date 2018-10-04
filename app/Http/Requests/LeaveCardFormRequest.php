@@ -32,11 +32,8 @@ class LeaveCardFormRequest extends FormRequest{
             'date' => 'sometimes|required|date_format:"m/d/Y"',
             'date_from' => 'sometimes|required|date_format:"m/d/Y"',
             'date_to' => 'sometimes|required|date_format:"m/d/Y"',
-            'time_from' => 'sometimes|required|date_format:"h:i A"',
-            'time_to' => 'sometimes|required|date_format:"h:i A"',
-            'days' => 'sometimes|required|integer|max:240',
-            'hrs' => 'sometimes|required|integer|max:90',
-            'mins' => 'sometimes|required|integer|max:60',
+            'hrs' => 'sometimes|integer|max:90',
+            'mins' => 'sometimes|integer|max:60',
 
         ];
     

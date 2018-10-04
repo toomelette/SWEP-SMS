@@ -96,6 +96,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
             return $employee->select('employee_no', 'fullname', 'position', 'department_id')
                             ->where('is_active', $status)
                             ->with('leaveCard', 'department')
+                            ->orderBy('lastname', 'ASC')
                             ->get();
 
         });
@@ -379,7 +380,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
     public function globalFetchAll(){
 
         $employees = $this->cache->remember('employees:global:all', 240, function(){
-            return $this->employee->select('slug', 'employee_no', 'fullname')->get();
+            return $this->employee->select('slug', 'employee_no', 'fullname')
+                                  ->where('is_active', 'ACTIVE')
+                                  ->get();
         });
         
         return $employees;

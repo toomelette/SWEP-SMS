@@ -1,0 +1,1 @@
+{!! dd(__dataType::months_between_dates('2016-01-01', '2017-01-01')) !!}

@@ -2,6 +2,7 @@
 
 namespace App\Swep\Helpers;
 
+use App\Swep\Helpers\__static;
 use Carbon\Carbon;
 
 
@@ -96,6 +97,25 @@ class __dataType{
 
         return sprintf("%02d", $hrs) .':'. sprintf("%02d", $mins);
 
+    }
+
+
+
+
+
+
+    public static function months_between_dates($start, $end){
+
+      $start = Carbon::parse($start);
+      $end   = Carbon::parse($end);
+
+      while ($start->addMonth() <= $end){
+
+        $months[$start->format('m-Y')] = $start->format('F Y');
+
+      }
+
+      return $months;
     }
 
 

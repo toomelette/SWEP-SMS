@@ -287,7 +287,7 @@ class __form{
 
     public static function string_value($value){
 
-        $value = $value ? $value : '';
+        $value = isset($value) ? $value : '';
         return $value;
 
     }
