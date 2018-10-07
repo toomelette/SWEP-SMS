@@ -228,6 +228,7 @@ return [
         '__dataType' => App\Swep\Helpers\__dataType::class, 
         '__print' => App\Swep\Helpers\__print::class, 
         '__static' => App\Swep\Helpers\__static::class,
+        '__dynamic' => App\Swep\Helpers\__dynamic::class,
 
     ],
 

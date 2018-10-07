@@ -289,9 +289,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
         $employee = $this->cache->remember('employees:bySlug:' . $slug, 240, function() use ($slug){
             return $this->employee->where('slug', $slug)
-                                  ->with('EmployeeAddress',
-                                         'EmployeeFamilyDetail',
-                                         'EmployeeOtherQuestion',
+                                  ->with('employeeAddress',
+                                         'employeeFamilyDetail',
+                                         'employeeOtherQuestion',
                                          'employeeTraining', 
                                          'employeeChildren', 
                                          'employeeEducationalBackground', 
@@ -302,7 +302,8 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
                                          'employeeReference',
                                          'employeeSpecialSkill',
                                          'employeeVoluntaryWork',
-                                         'employeeServiceRecord')
+                                         'employeeServiceRecord',
+                                         'leaveCard')
                                     ->first();
         });
         

@@ -101,5 +101,50 @@ class LeaveCard extends Model{
 
 
 
+    public function scopeGetLeaveVacation($query, $month, $year){
+
+        return $query->select('leave_type', 'date_from', 'date_to', 'days')
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'LEAVE')
+                     ->where('leave_type', 'VL')
+                     ->get();
+
+    }
+
+
+
+
+
+    public function scopeGetLeaveSick($query, $month, $year){
+
+        return $query->select('leave_type', 'date_from', 'date_to', 'days')
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'LEAVE')
+                     ->where('leave_type', 'SL')
+                     ->get();
+
+    }
+
+
+
+
+
+    public function scopeGetLeaveForced($query, $month, $year){
+
+        return $query->select('leave_type', 'date_from', 'date_to', 'days')
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'LEAVE')
+                     ->where('leave_type', 'FL')
+                     ->get();
+
+    }
+
+
+
+
+
     
 }

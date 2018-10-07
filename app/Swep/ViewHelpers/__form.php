@@ -193,7 +193,7 @@ class __form{
 
        return '<div class="form-group col-md-'. $class .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <select name="'. $key .'" id="'. $key .'" class="form-control input-sm '. $select2 .'" onchange="document.getElementById('. $string .''. $form .''. $string .').click()" '. $extra_attr .'>
+                <select name="'. $key .'" id="'. $key .'" class="form-control input-md '. $select2 .'" onchange="document.getElementById('. $string .''. $form .''. $string .').click()" '. $extra_attr .'>
                   <option value="">Select</option>
                   '. self::static_options($array, $old_value) .'
                 </select>
@@ -210,7 +210,7 @@ class __form{
 
        return '<div class="form-group col-md-'. $class .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <select name="'. $key .'" id="'. $key .'" class="form-control input-sm '. $select2 .'" onchange="document.getElementById('. $string .''. $form .''. $string .').click()" '. $extra_attr .'>
+                <select name="'. $key .'" id="'. $key .'" class="form-control input-md '. $select2 .'" onchange="document.getElementById('. $string .''. $form .''. $string .').click()" '. $extra_attr .'>
                   <option value="">Select</option>
                   '. self::dynamic_options($array, $var1, $var2, $old_value) .'
                 </select>

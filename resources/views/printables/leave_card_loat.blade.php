@@ -11,7 +11,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>List of Absenses and Tardiness</title>
+  <title>List of Absences and Tardiness</title>
 
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -76,7 +76,7 @@
         <div class="col-sm-12">
           <p style="font-size: 15px;">
             SUGAR REGULATORY ADMINISTRATION
-            <br>LIST OF ABSENSES AND TARDINESS OF SRA VISAYAS EMPLOYEES
+            <br>LIST OF ABSENCES AND TARDINESS OF SRA VISAYAS EMPLOYEES
             <br>{{ $month_name .', '. $year }}
           </p>
         </div>

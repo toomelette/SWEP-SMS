@@ -70,8 +70,6 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
         return $leave_cards;
 
-       
-
     }
 
 
