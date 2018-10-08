@@ -61,6 +61,18 @@ class PermissionSlip extends Model{
 
 
 
+    public function scopeMonthlyPSM2($query, $month, $year){
+
+        return $query->select('time_out', 'time_in')
+                     ->whereMonth('date', $month)
+                     ->whereYear('date', $year)
+                     ->get();
+
+    }
+
+
+
+
     public function scopeDailyPS($query, $date){
 
         return $query->select('date', 'time_out', 'time_in')

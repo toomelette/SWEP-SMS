@@ -126,6 +126,10 @@ class Employee extends Model{
         return $this->hasOne('App\Models\EmployeeOtherQuestion', 'employee_no', 'employee_no');
     }
 
+    public function empBeginningCredits(){
+        return $this->hasOne('App\Models\EmpBeginningCredits', 'employee_no', 'employee_no');
+    }
+
 
 
 

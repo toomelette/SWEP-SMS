@@ -139,8 +139,8 @@
                 @endif
               
               </td>
-              <td style="text-align:center;">{{ $data->leaveCard()->countTardy($month, $year) }}</td>
-              <td style="text-align:center;">{{ $data->leaveCard()->countUndertime($month, $year) }}</td>
+              <td style="text-align:center;">{{ $data->leaveCard()->getTardy($month, $year)->count() }}</td>
+              <td style="text-align:center;">{{ $data->leaveCard()->getUndertime($month, $year)->count() }}</td>
             </tr>
 
           @endif
