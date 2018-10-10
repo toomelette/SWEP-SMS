@@ -199,7 +199,16 @@ class __static{
     // Leave Card
     public static function document_types_leave_card(){
 
-        return ['Leave' => 'LEAVE', 'Overtime' => 'OT', 'Tardy' => 'TARDY', 'Undertime' => 'UT'];
+        return ['Leave' => 'LEAVE', 'Overtime' => 'OT', 'Tardy' => 'TARDY', 'Undertime' => 'UT', 'Monitize' => 'MON'];
+    
+    }
+
+
+
+
+    public static function leave_card_charges(){
+
+        return ['Overtime' => 'OT', 'Vacation' => 'VL', 'Sick' => 'SL'];
     
     }
 

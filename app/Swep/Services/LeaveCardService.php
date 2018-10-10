@@ -80,6 +80,17 @@ class LeaveCardService extends BaseService{
         }
 
 
+        //  MON
+        if($request->doc_type == 'MON'){
+
+            $year = $this->__dataType->date_parse($request->date, 'Y');
+            $month = $this->__dataType->date_parse($request->date, 'm');
+            $days = $request->days;
+            $credits = number_format($days * 1.000, 3);
+            
+        }
+
+
         $leave_card = $this->leave_card_repo->store($request, $year, $month, $days, $hrs, $mins, $credits);
 
         $this->event->fire('leave_card.store', $leave_card);
@@ -143,6 +154,17 @@ class LeaveCardService extends BaseService{
 
         }
 
+
+        //  MON
+        if($request->doc_type == 'MON'){
+
+            $year = $this->__dataType->date_parse($request->date, 'Y');
+            $month = $this->__dataType->date_parse($request->date, 'm');
+            $days = $request->days;
+            $credits = number_format($days * 1.000, 3);
+            
+        }
+
         $leave_card = $this->leave_card_repo->update($request, $year, $month, $days, $hrs, $mins, $credits, $slug);
 
         $this->event->fire('leave_card.update', $leave_card);
@@ -190,8 +212,13 @@ class LeaveCardService extends BaseService{
 
         }elseif($request->r_type == 'ledger'){
 
+            $start_date = $this->__dataType->date_parse('2018-8-01', 'm/d/y');
+            $end_date = $this->carbon->now()->format('m/d/y');
+
             $employee = $this->employee_repo->findBySlug($request->s);
-            return view('printables.leave_card_ledger')->with('employee', $employee);
+            $list_of_months = $this->__dynamic->months_between_dates($start_date, $end_date);
+
+            return view('printables.leave_card_ledger', compact('employee','list_of_months'));
 
         }else{
 

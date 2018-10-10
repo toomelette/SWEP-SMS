@@ -85,6 +85,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->doc_type = $request->doc_type;
         $leave_card->employee_no = $request->employee_no;
         $leave_card->leave_type = $request->leave_type;
+        $leave_card->charge_to = $request->charge_to;
         $leave_card->month = $month;
         $leave_card->year = $year;
         $leave_card->date = $this->__dataType->date_parse($request->date);
@@ -122,6 +123,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
         $leave_card->doc_type = $request->doc_type;
         $leave_card->employee_no = $request->employee_no;
         $leave_card->leave_type = $request->leave_type;
+        $leave_card->charge_to = $request->charge_to;
         $leave_card->month = $month;
         $leave_card->year = $year;
         $leave_card->date = $this->__dataType->date_parse($request->date);

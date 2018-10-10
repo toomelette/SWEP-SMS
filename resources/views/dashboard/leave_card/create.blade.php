@@ -90,6 +90,29 @@
 
 
 
+            {{-- Monetize --}}
+            <div id="mon_div">
+
+              {!! __form::select_dynamic(
+                '3', 'employee_no', 'Employee *', old('employee_no'), $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
+              ) !!}
+
+              {!! __form::datepicker(
+                '3', 'date',  'Date *', old('date') , $errors->has('date'), $errors->first('date')
+              ) !!}
+
+              {!! __form::textbox(
+                 '3', 'days', 'number', 'Days *', 'Days', old('days') ? old('days') : 0, $errors->has('days'), $errors->first('days'), ''
+              ) !!}
+
+              {!! __form::select_static(
+                '3', 'charge_to', 'Charge to *', old('charge_to'), __static::leave_card_charges(), $errors->has('charge_to'), $errors->first('charge_to'), '', ''
+              ) !!}
+
+            </div>
+
+
+
           </div>
 
           <div class="box-footer">
@@ -142,7 +165,18 @@
         $('#leave_div').show();
         $("#leave_div :input").removeAttr("disabled");
         $('#others_div').hide();
-        $("#others_div :input").attr("disabled", "disabled");
+        $("#others_div :input").attr("disabled", true);
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
+      });
+    @elseif(old('doc_type') == 'MON')
+      $( document ).ready(function() {
+        $('#mon_div').show();
+        $("#mon_div :input").removeAttr("disabled");
+        $('#leave_div').hide();
+        $("#leave_div :input").attr("disabled", true);
+        $('#others_div').hide();
+        $("#others_div :input").attr("disabled", true);
       });
     @elseif(old('doc_type') == 'OT' || old('doc_type') == 'UT' || old('doc_type') == 'TARDY')
       $( document ).ready(function() {
@@ -150,6 +184,8 @@
         $("#others_div :input").removeAttr("disabled");
         $('#leave_div').hide();
         $("#leave_div :input").attr("disabled", true);
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
       });
     @else
       $( document ).ready(function() {
@@ -157,6 +193,8 @@
         $("#leave_div :input").attr("disabled", true);
         $('#others_div').hide();
         $("#others_div :input").attr("disabled", true);
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
       });
     @endif
 
@@ -168,16 +206,29 @@
         $("#leave_div :input").removeAttr("disabled");
         $('#others_div').hide();
         $("#others_div :input").attr("disabled", true);
-      }else if(val == ""){
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
+      }else if(val == "MON"){
+        $('#mon_div').show();
+        $("#mon_div :input").removeAttr("disabled");
         $('#leave_div').hide();
-        $('#others_div').hide();
         $("#leave_div :input").attr("disabled", true);
+        $('#others_div').hide();
         $("#others_div :input").attr("disabled", true);
-      }else{
+      }else if(val == "OT" || val == "UT" || val == "TARDY"){
         $('#others_div').show();
         $("#others_div :input").removeAttr("disabled");
         $('#leave_div').hide();
         $("#leave_div :input").attr("disabled", true);
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
+      }else if(val == ""){
+        $('#leave_div').hide();
+        $("#leave_div :input").attr("disabled", true);
+        $('#others_div').hide();
+        $("#others_div :input").attr("disabled", true);
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
       }
     });
 

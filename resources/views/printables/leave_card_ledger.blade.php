@@ -1,9 +1,7 @@
 <?php
-  
-  $start_date = __dataType::date_parse('2017-9-01', 'm/d/y');
-  $end_date = Carbon::now()->format('m/d/y');
-  $balance_sick = $employee->empBeginningCredits->bigbal_sick_leave;
-  $balance_vac = $employee->empBeginningCredits->bigbal_vacation_leave;
+
+  $leave_sl_balance = $employee->empBeginningCredits->bigbal_sick_leave;
+  $leave_vl_balance = $employee->empBeginningCredits->bigbal_vacation_leave;
 
 ?>
 
@@ -55,7 +53,7 @@
   </style>
 
 </head>
-<body {{-- onload="window.print();" onafterprint="window.close()" --}}>
+<body>
 
   <div class="wrapper" style="padding:50px;">
 
@@ -112,7 +110,8 @@
       <div class="col-sm-12 no-padding" style="border:solid 1px;">
 
         <div class="col-sm-1 no-padding" style="border-left:solid 1px; height: 4em; text-align: center;">
-          <span style="font-size:11px; font-weight:bold;">PERIOD</span>
+          <span style="font-size:11px; font-weight:bold;">PERIOD</span><br><br>
+          <span style="font-size:14px; font-weight:bold;">August 2018</span>
         </div>
 
         {{-- Particulars --}}
@@ -153,7 +152,7 @@
             <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 2.6em;">
               <span style="font-size:11px; margin-left:12px;">BALANCE</span>
               <div class="col-sm-12 no-padding" style="border-top:solid 1px; margin:0;">
-                <span style="font-size:11px; margin-left:20px;">{{ number_format($balance_vac, 3)  }}</span>
+                <span style="font-size:11px; margin-left:20px;">{{ number_format($leave_vl_balance, 3)  }}</span>
               </div>
             </div>
             <div class="col-sm-4 no-padding">
@@ -191,7 +190,7 @@
             <div class="col-sm-2 no-padding" style="border-right:solid 1px; height: 2.6em;">
               <span style="font-size:11px; margin-left:12px;">BALANCE</span>
               <div class="col-sm-12 no-padding" style="border-top:solid 1px; margin:0;">
-                <span style="font-size:11px; margin-left:20px;">{{ number_format($balance_sick, 3) }}</span>
+                <span style="font-size:11px; margin-left:20px;">{{ number_format($leave_sl_balance, 3) }}</span>
               </div>
             </div>
             <div class="col-sm-4 no-padding">
@@ -222,28 +221,54 @@
 
 
     {{-- TABLE BODY --}}
-    @foreach (__dynamic::months_between_dates($start_date, $end_date) as $key => $data)
+    @foreach ($list_of_months as $key => $data)
 
       <?php
 
         $month = substr($key, 0, 2);
         $year = substr($key, -4);
-        $vac_leave_days = 0;
-        $tardy = 0;
-        $ut_sum = 0;
-        $sick_leave_days = 0;
+
+
+        // Queries
+        $leave_vl_sum = $employee->leaveCard()->getLeaveVacation($month, $year)->sum('credits');
+        $leave_fl_sum = $employee->leaveCard()->getLeaveForced($month, $year)->sum('credits');
+        $leave_sl_sum = $employee->leaveCard()->getLeaveSick($month, $year)->sum('credits');
+        $monetize_vl_sum = $employee->leaveCard()->getMonitize($month, $year, 'VL')->sum('credits');
+        $monetize_sl_sum = $employee->leaveCard()->getMonitize($month, $year, 'SL')->sum('credits');
+        $undertime_sum = $employee->leaveCard()->getUndertime($month, $year)->sum('credits');
+        $tardy_sum = $employee->leaveCard()->getTardy($month, $year)->sum('credits');
+
+
+        // Sick Leave Balance and Deductions
+        $leave_sl_credits = $leave_sl_sum + $monetize_sl_sum;
+        $leave_sl_balance = $leave_sl_balance + 1.25;
+        $leave_sl_balance = $leave_sl_balance - $leave_sl_credits;
+
+
+        // Permission Slip Sum of Credits
         $ps_hrs = 0;
         $ps_mins = 0;
         $ps_total_time = 0;
         $ps_credits = 0;
 
         foreach ($employee->permissionSlip()->monthlyPSM2($month, $year) as $data_ps) {
-          
+
           $start = Carbon::createFromFormat('H:i:s', $data_ps->time_out);
           $end = Carbon::createFromFormat('H:i:s', $data_ps->time_in);
+          $start_H = __dataType::date_parse($start, 'H');
+          $end_H = __dataType::date_parse($end, 'H');
+
           $ps_hrs = $end->diffInHours($start);
           $ps_mins = $end->copy()->subHours($ps_hrs)->diffInMinutes($start) * .01;
-          $ps_total_time = $ps_hrs + $ps_mins;
+
+          if($start_H <= '12' && $end_H >= '13') {
+                    
+            $ps_hrs = $ps_hrs - 1;
+
+          }
+
+          $total_time = $ps_hrs + $ps_mins;
+          $ps_total_time += $total_time;
 
         }
 
@@ -258,6 +283,13 @@
           $ps_credits = $ps_credits_per_hr + $ps_credits_per_min;
 
         }
+
+
+       // Vacation Leave Balance and Deductions
+        $leave_vl_credits = $leave_vl_sum + $leave_fl_sum + $monetize_vl_sum + $undertime_sum + $ps_credits;
+        $leave_vl_deductions = $tardy_sum + $leave_vl_credits;
+        $leave_vl_balance = $leave_vl_balance + 1.25;
+        $leave_vl_balance = $leave_vl_balance - $leave_vl_deductions;
 
       ?>
 
@@ -312,32 +344,19 @@
                 <div class="col-sm-12 no-padding" style="margin:0;">
                   <div class="col-sm-6" style="border-right:solid 1px;">
                     <span style="font-size:11px; margin-left:5px;">
-                      <?php
-                        $vac_sum = $employee->leaveCard()->getLeaveVacation($month, $year)->sum('credits');
-                        $ut_sum = $employee->leaveCard()->getUndertime($month, $year)->sum('credits');
-                        $vac_leave_days = $ut_sum + $vac_sum;
-                      ?>
-                      {{ $vac_leave_days == 0 ? '' : number_format($vac_leave_days, 3) }}
+                      {{ $leave_vl_credits == 0 ? '' : number_format($leave_vl_credits, 3) }}
                     </span>
                   </div>
                   <div class="col-sm-6">
                     <span style="font-size:11px; margin-left:8px;">
-                      <?php
-                        $tardy = $employee->leaveCard()->getTardy($month, $year)->sum('credits');
-                      ?>
-                      {{ $tardy == 0 ? '' : number_format($tardy, 3) }}
+                      {{ $tardy_sum == 0 ? '' : number_format($tardy_sum, 3) }}
                     </span>
                   </div>
                 </div>
               </div>
               <div class="col-sm-2" style="border-right:solid 1px;">
-                <span style="font-size:11px; margin-left:8px;">
-                  <?php
-                    $deduct_vac = $tardy + $vac_leave_days + $ps_credits;
-                    $balance_vac = $balance_vac + 1.25;
-                    $balance_vac = $balance_vac - $deduct_vac;
-                  ?>
-                  {{ number_format($balance_vac, 3) }}
+                <span style="font-size:11px; margin-left:5px;">
+                  {{ number_format($leave_vl_balance, 3) }}
                 </span>
               </div>
               <div class="col-sm-4 no-padding">
@@ -367,10 +386,7 @@
                 <div class="col-sm-12 no-padding" style="margin:0;">
                   <div class="col-sm-6" style="border-right:solid 1px;">
                     <span style="font-size:11px; margin-left:8px;">
-                      <?php
-                        $sick_leave_days = $employee->leaveCard()->getLeaveSick($month, $year)->sum('credits');
-                      ?>
-                      {{ $sick_leave_days == 0 ? '' : number_format($sick_leave_days, 3) }}
+                      {{ $leave_sl_credits == 0 ? '' : number_format($leave_sl_credits, 3) }}
                     </span>
                   </div>
                   <div class="col-sm-6">
@@ -382,11 +398,7 @@
               </div>
               <div class="col-sm-2" style="border-right:solid 1px;">
                 <span style="font-size:11px; margin-left:7px;">
-                  <?php
-                    $balance_sick = $balance_sick + 1.25;
-                    $balance_sick = $balance_sick - $sick_leave_days;
-                  ?>
-                  {{ number_format($balance_sick, 3) }}
+                  {{ number_format($leave_sl_balance, 3) }}
                 </span>
               </div>
               <div class="col-sm-4 no-padding">
@@ -413,8 +425,16 @@
               <span style="font-size:11px;">Over PS - {{ $ps_credits }}, </span>
             @endif
 
-            @if($ut_sum > 0)
-              <span style="font-size:11px;">Undertime - {{ $ut_sum }}</span>
+            @if($undertime_sum > 0)
+              <span style="font-size:11px;">Undertime - {{ $undertime_sum }}</span>
+            @endif
+
+            @if($monetize_vl_sum > 0)
+              <span style="font-size:11px;">Monetize VL- {{ $monetize_vl_sum }}</span>
+            @endif
+
+            @if($monetize_sl_sum > 0)
+              <span style="font-size:11px;">Monetize SL - {{ $monetize_sl_sum }}</span>
             @endif
 
           </div>
@@ -423,7 +443,6 @@
       </div>
       
     @endforeach
-
 
 
   </div>

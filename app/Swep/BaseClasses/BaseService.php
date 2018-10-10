@@ -9,6 +9,7 @@ use Session;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Swep\Helpers\__static;
+use App\Swep\Helpers\__dynamic;
 use App\Swep\Helpers\__dataType;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\FilesystemManager as Storage;
@@ -36,6 +37,7 @@ class BaseService{
         $this->carbon = App::make(Carbon::class);
         $this->str = App::make(Str::class);
         $this->__static = App::make(__static::class);
+        $this->__dynamic = App::make(__dynamic::class);
         $this->__dataType = App::make(__dataType::class);
         $this->event = App::make(Dispatcher::class);
         $this->storage = App::make(Storage::class);

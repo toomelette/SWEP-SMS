@@ -27,6 +27,7 @@ class LeaveCard extends Model{
         'employee_no' => '',
         'doc_type' => '',
         'leave_type' => '',
+        'charge_to' => '',
         'month' => '',
         'year' => 0,
         'date' => null,
@@ -133,11 +134,26 @@ class LeaveCard extends Model{
 
     public function scopeGetLeaveForced($query, $month, $year){
 
-        return $query->select('leave_type', 'date_from', 'date_to', 'days')
+        return $query->select('leave_type', 'date_from', 'date_to', 'days', 'credits')
                      ->where('month', $month)
                      ->where('year', $year)
                      ->where('doc_type', 'LEAVE')
                      ->where('leave_type', 'FL')
+                     ->get();
+
+    }
+
+
+
+
+
+    public function scopeGetMonitize($query, $month, $year, $charge){
+
+        return $query->select('leave_type', 'date_from', 'date_to', 'days', 'credits')
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'MON')
+                     ->where('charge_to', $charge)
                      ->get();
 
     }
