@@ -8,6 +8,8 @@
 
   $df_YM = __dataType::date_parse(Request::get('df'), 'Y-m');
 
+  $days = __dynamic::days_between_dates($df, $dt);
+
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +79,7 @@
 
       <tr>
         <th>Employee Name</th>
-        @foreach(__static::days() as $data)
+        @foreach($days as $data)
           <th>{{ $data }}</th>
         @endforeach  
         <th>TOTAL</th>
@@ -91,7 +93,7 @@
 
           <td>{{ $data_emp->fullname }}</td>
 
-          @foreach (__static::days() as $data_days)
+          @foreach ($days as $data_days)
 
             <?php
 
