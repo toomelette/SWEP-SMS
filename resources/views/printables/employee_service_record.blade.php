@@ -235,11 +235,18 @@
               </div>
             </div>
 
+            <div class="col-sm-1" style="text-align: center;">
+              <span style="font-size:7px; line-height: 0.5px;"></span>
+            </div>
+
           </div>
 
           @if(isset($data->remarks) && $data->remarks != '')
-            <div class="col-sm-12" style="margin-top: -5px; text-align: center;">
-              <span style="font-size:10px; font-style: italic;">({{ $data->remarks }})</span>
+            <div class="col-sm-8">
+              &nbsp;
+            </div>
+            <div class="col-sm-4">
+              <p style="font-size:10px; font-style: italic; -webkit-print-color-adjust: exact; color: green !important;">({{ $data->remarks }})</p>
             </div>
           @endif
 
@@ -571,10 +578,20 @@
               </div>
 
               <div class="col-sm-1" style="text-align: center;">
-                <span style="font-size:7px; line-height: 0.5px;">{{ $data->remarks }}</span>
+                <span style="font-size:7px; line-height: 0.5px;"></span>
               </div>
 
             </div>
+
+            @if(isset($data->remarks) && $data->remarks != '')
+              <div class="col-sm-8">
+                &nbsp;
+              </div>
+              <div class="col-sm-4">
+                <p style="font-size:10px; font-style: italic; -webkit-print-color-adjust: exact; color: green !important;">({{ $data->remarks }})</p>
+              </div>
+            @endif
+
           </div>
         @endif
       @endforeach
