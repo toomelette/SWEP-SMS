@@ -176,7 +176,7 @@
               <span style="font-size:12px;">Cause</span>
             </div>
           </div>
-        </div>
+        </div>        
 
         <div class="col-sm-1 no-padding" style="border-left:solid 1px; height: 2.93em; text-align: center;">
           <span style="font-size:11px; font-weight:bold;">REMARKS</span>
@@ -235,16 +235,21 @@
               </div>
             </div>
 
-            <div class="col-sm-1" style="text-align: center;">
-              <span style="font-size:7px; line-height: 0.5px;">{{ $data->remarks }}</span>
-            </div>
-
           </div>
+
+          @if(isset($data->remarks) && $data->remarks != '')
+            <div class="col-sm-12" style="margin-top: -5px; text-align: center;">
+              <span style="font-size:10px; font-style: italic;">({{ $data->remarks }})</span>
+            </div>
+          @endif
+
         </div>
       @endif
     @endforeach
 
+
     <div style="border-bottom:solid 1px;"></div>  
+
 
     @if(count($employee_service_records) <= 20)
       <div class="row" style="margin-top: 10px;">
