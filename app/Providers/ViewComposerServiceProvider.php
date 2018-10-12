@@ -109,6 +109,20 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
 
 
+        // COURSE
+        View::composer(['dashboard.applicant.create',
+                        'dashboard.applicant.edit',
+                        'dashboard.applicant.index',], 'App\Swep\ViewComposers\CourseComposer');
+
+
+
+        // Applicant Position Applied
+        View::composer(['dashboard.applicant.create',
+                        'dashboard.applicant.edit',
+                        'dashboard.applicant.index',], 'App\Swep\ViewComposers\ApplicantPositionAppliedComposer');
+
+
+
         
     }
 
