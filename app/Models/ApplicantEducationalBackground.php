@@ -23,7 +23,7 @@ class ApplicantEducationalBackground extends Model{
         'applicant_id' => '',
         'course' => '',
         'school' => '',
-        'units' => 0.00,
+        'units' => '',
         'graduate_year' => '',
 
     ];

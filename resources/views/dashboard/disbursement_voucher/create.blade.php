@@ -60,7 +60,7 @@
         ) !!}
 
         {!! __form::select_dynamic(
-          '2', 'department_unit_name', 'Unit', old('department_unit_name'), $global_department_units_all, 'name', 'name', $errors->has('department_unit_name'), $errors->first('department_unit_name'), 'select2', ''
+          '2', 'department_unit_name', 'Unit', old('department_unit_name'), $global_department_units_all, 'name', 'description', $errors->has('department_unit_name'), $errors->first('department_unit_name'), 'select2', ''
         ) !!}
 
         {!! __form::select_dynamic(
@@ -125,7 +125,7 @@
     @endif
 
     {!! __js::ajax_select_to_select(
-      'department_name', 'department_unit_name', '/api/department_unit/select_departmentUnit_byDeptName/', 'name', 'name'
+      'department_name', 'department_unit_name', '/api/department_unit/select_departmentUnit_byDeptName/', 'name', 'description'
     ) !!}
 
     {!! __js::ajax_select_to_select(

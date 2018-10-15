@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Swep\Services\ApplicantService;
+use App\Http\Requests\ApplicantFormRequest;
 
 
 
 
 class ApplicantController extends Controller{
+
+
+
+	protected $applicant;
+
+
+
+    public function __construct(ApplicantService $applicant){
+
+        $this->applicant = $applicant;
+
+    }
 
 
 
@@ -17,6 +30,20 @@ class ApplicantController extends Controller{
         return view('dashboard.applicant.create');
 
     }
+
+
+
+
+	public function store(ApplicantFormRequest $request){
+
+		return $this->applicant->store($request);
+
+    }
+
+
+
+
+    
 
 
     
