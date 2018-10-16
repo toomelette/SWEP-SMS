@@ -22,7 +22,10 @@ class ApplicantFilterRequest extends FormRequest{
 
         return [
             
-            
+            'q' => 'nullable|string|max:90',
+            'c' => 'nullable|string|max:10',
+            'paf' => 'nullable|string|max:10',
+            'g' => 'nullable|string|max:10',
             
         ];
     

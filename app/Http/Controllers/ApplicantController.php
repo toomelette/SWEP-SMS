@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Swep\Services\ApplicantService;
 use App\Http\Requests\ApplicantFormRequest;
+use App\Http\Requests\ApplicantFilterRequest;
 
 
 
@@ -41,6 +42,49 @@ class ApplicantController extends Controller{
     }
 
 
+
+
+	public function index(ApplicantFilterRequest $request){
+
+		return $this->applicant->fetchAll($request);
+
+    }
+
+
+
+
+	public function show($slug){
+
+		return $this->applicant->show($slug);
+
+    }
+
+
+
+
+	public function edit($slug){
+
+		return $this->applicant->edit($slug);
+
+    }
+
+
+
+
+	public function update(ApplicantFormRequest $request, $slug){
+
+		return $this->applicant->update($request, $slug);
+
+    }
+
+
+
+
+	public function destroy($slug){
+
+		return $this->applicant->destroy($slug);
+
+    }
 
 
     

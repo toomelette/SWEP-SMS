@@ -250,7 +250,7 @@ class __form{
 
     public static function datepicker_for_dt($name, $value, $error_first){
 
-       $value = __dataType::date_parse($value);
+       $value = __dataType::date_parse($value, 'm/d/Y');
 
        return '<div class="form-group">
                   <div class="input-group">

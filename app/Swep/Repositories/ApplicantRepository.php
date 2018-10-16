@@ -31,6 +31,45 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
 
+
+    public function fetchAll($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+
+        $applicants = $this->cache->remember('applicants:all:' . $key, 240, function() use ($request){
+
+            $applicant = $this->applicant->newQuery();
+            
+            if(isset($request->q)){
+                $this->search($applicant, $request->q);
+            }
+
+            if(isset($request->c)){
+                $applicant->whereCourseId($request->c);
+            }
+
+            if(isset($request->paf)){
+                $applicant->whereApplicantPaId($request->paf);
+            }
+
+            if(isset($request->g)){
+                $applicant->whereGender($request->g);
+            }
+
+            return $this->populate($applicant);
+
+        });
+
+        return $applicants;
+
+    }
+
+
+
+
+
+
+
     public function store($request){
 
         $applicant = new Applicant;
@@ -57,6 +96,118 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->save();
 
         return $applicant;
+
+    }
+
+
+
+
+
+
+
+    public function update($request, $slug){
+
+        $applicant = $this->findBySlug($slug);
+        $applicant->course_id = $request->course_id;
+        $applicant->applicant_pa_id = $request->applicant_pa_id;
+        $applicant->lastname = $request->lastname;
+        $applicant->firstname = $request->firstname;
+        $applicant->middlename = $request->middlename;
+        $applicant->fullname = $this->getRequestFullname($request);
+        $applicant->gender = $request->gender;
+        $applicant->date_of_birth = $this->__dataType->date_parse($request->date_of_birth);
+        $applicant->civil_status = $request->civil_status;
+        $applicant->address = $request->address;
+        $applicant->contact_no = $request->contact_no;
+        $applicant->remarks = $request->remarks;
+        $applicant->updated_at = $this->carbon->now();
+        $applicant->ip_updated = request()->ip();
+        $applicant->user_updated = $this->auth->user()->user_id;
+        $applicant->save();
+
+        $this->destroyDependencies($applicant);
+
+        return $applicant;
+
+    }
+
+
+
+
+
+
+    public function destroy($slug){
+
+        $applicant = $this->findBySlug($slug);
+        $applicant->delete();
+        
+        $this->destroyDependencies($applicant);
+
+        return $applicant;
+
+    }
+
+
+
+
+
+
+    public function destroyDependencies($applicant){
+
+        $applicant->applicantEducationalBackground()->delete();
+        $applicant->applicantExperience()->delete();
+        $applicant->applicantTraining()->delete();
+
+    }
+
+
+
+
+
+    public function findBySlug($slug){
+
+        $applicant = $this->cache->remember('applicants:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->applicant->where('slug', $slug)->first();
+        });
+
+        if(empty($applicant)){
+            abort(404);
+        }
+        
+        return $applicant;
+
+    }
+
+
+
+
+
+
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('lastname', 'LIKE', '%'. $key .'%')
+                      ->orWhere('firstname', 'LIKE', '%'. $key .'%')
+                      ->orWhere('middlename', 'LIKE', '%'. $key .'%')
+                      ->orWhere('address', 'LIKE', '%'. $key .'%')
+                      ->orWhere('contact_no', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+
+
+    public function populate($model){
+
+        return $model->select('fullname', 'course_id', 'applicant_pa_id', 'date_of_birth', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
 
     }
     

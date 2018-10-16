@@ -36,14 +36,14 @@ class ApplicantService extends BaseService{
 
 
 
-    // public function fetchAll($request){
+    public function fetchAll($request){
 
-    //     $applicants = $this->applicant_repo->fetchAll($request);
+        $applicants = $this->applicant_repo->fetchAll($request);
 
-    //     $request->flash();
-    //     return view('dashboard.applicant.index')->with('applicants', $applicants);
+        $request->flash();
+        return view('dashboard.applicant.index')->with('applicants', $applicants);
 
-    // }
+    }
 
 
 
@@ -65,38 +65,52 @@ class ApplicantService extends BaseService{
 
 
 
-    // public function edit($slug){
 
-    //     $applicant = $this->applicant_repo->findBySlug($slug);
-    //     return view('dashboard.applicant.edit')->with('applicant', $applicant);
+    public function show($slug){
 
-    // }
+        $applicant = $this->applicant_repo->findBySlug($slug);
+        return view('dashboard.applicant.show')->with('applicant', $applicant);
 
-
-
-
-
-    // public function update($request, $slug){
-
-    //     $applicant = $this->applicant_repo->update($request, $slug);
-
-    //     $this->event->fire('applicant.update', $applicant);
-    //     return redirect()->route('dashboard.applicant.index');
-
-    // }
+    }
 
 
 
 
 
-    // public function destroy($slug){
 
-    //     $applicant = $this->applicant_repo->destroy($slug);
+    public function edit($slug){
 
-    //     $this->event->fire('applicant.destroy', $applicant );
-    //     return redirect()->route('dashboard.applicant.index');
+        $applicant = $this->applicant_repo->findBySlug($slug);
+        return view('dashboard.applicant.edit')->with('applicant', $applicant);
 
-    // }
+    }
+
+
+
+
+
+    public function update($request, $slug){
+
+        $applicant = $this->applicant_repo->update($request, $slug);
+        $this->fillDependencies($request, $applicant);
+
+        $this->event->fire('applicant.update', $applicant);
+        return redirect()->route('dashboard.applicant.index');
+
+    }
+
+
+
+
+
+    public function destroy($slug){
+
+        $applicant = $this->applicant_repo->destroy($slug);
+
+        $this->event->fire('applicant.destroy', $applicant );
+        return redirect()->route('dashboard.applicant.index');
+
+    }
 
 
 

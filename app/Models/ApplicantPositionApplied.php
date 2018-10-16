@@ -42,4 +42,6 @@ class ApplicantPositionApplied extends Model{
 
 
 
+
+
 }

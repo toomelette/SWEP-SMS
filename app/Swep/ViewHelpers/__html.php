@@ -114,7 +114,7 @@ class __html{
                 <div class="input-group input-group-sm" style="width: 250px;">
                   <input name="q" class="form-control pull-right" placeholder="Search any.." type="text" value="'. old("q") .'">
                   <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-default btn-md"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
               </div>

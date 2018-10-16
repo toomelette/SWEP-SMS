@@ -9,6 +9,7 @@ class ApplicantFormRequest extends FormRequest{
 
 
 
+
     public function authorize(){
 
         return true;
@@ -16,6 +17,7 @@ class ApplicantFormRequest extends FormRequest{
     }
 
     
+
 
 
     public function rules(){
@@ -76,6 +78,8 @@ class ApplicantFormRequest extends FormRequest{
         return $rules;
     
     }
+
+
 
 
 

@@ -14,7 +14,7 @@ class Applicant extends Model{
 
     protected $dates = ['date_of_birth', 'created_at', 'updated_at'];
 
-    public $sortable = ['applicant_id', 'fullname', 'gender'];
+    public $sortable = ['applicant_pa_id', 'course_id', 'fullname', 'date_of_birth'];
 
 	public $timestamps = false;
 
@@ -64,6 +64,17 @@ class Applicant extends Model{
 
     public function applicantTraining() {
         return $this->hasMany('App\Models\ApplicantTraining','applicant_id','applicant_id');
+    }
+
+
+
+    public function applicantPositionApplied() {
+        return $this->belongsTo('App\Models\ApplicantPositionApplied','applicant_pa_id','applicant_pa_id');
+    }
+
+
+    public function course() {
+        return $this->belongsTo('App\Models\Course','course_id','course_id');
     }
     
 
