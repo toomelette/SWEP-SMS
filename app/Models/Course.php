@@ -10,12 +10,13 @@ use Kyslik\ColumnSortable\Sortable;
 class Course extends Model{
 
 
+    use Sortable;
 
 	protected $table = 'courses';
 
     protected $dates = ['created_at', 'updated_at'];
 
-    public $sortable = ['acronym', 'description'];
+    public $sortable = ['acronym', 'name'];
 
 	public $timestamps = false;
 
@@ -28,7 +29,7 @@ class Course extends Model{
         'slug' => '',
         'course_id' => '',
         'acronym' => '',
-        'description' => '',
+        'name' => '',
         'created_at' => null, 
         'updated_at' => null,
         'ip_created' => '',

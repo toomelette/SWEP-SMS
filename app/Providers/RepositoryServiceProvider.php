@@ -85,9 +85,9 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Swep\Interfaces\CourseInterface', 'App\Swep\Repositories\CourseRepository');
 
+		$this->app->bind('App\Swep\Interfaces\PlantillaInterface', 'App\Swep\Repositories\PlantillaRepository');
 
 
-		$this->app->bind('App\Swep\Interfaces\ApplicantPositionAppliedInterface', 'App\Swep\Repositories\ApplicantPositionAppliedRepository');
 
 		$this->app->bind('App\Swep\Interfaces\ApplicantInterface', 'App\Swep\Repositories\ApplicantRepository');
 

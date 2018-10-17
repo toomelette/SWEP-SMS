@@ -56,11 +56,11 @@
           <div class="col-md-12"></div>
 
           {!! __form::select_dynamic(
-            '3', 'course_id', 'Course *', old('course_id'), $global_courses_all, 'course_id', 'description', $errors->has('course_id'), $errors->first('course_id'), 'select2', ''
+            '3', 'course_id', 'Course *', old('course_id'), $global_courses_all, 'course_id', 'name', $errors->has('course_id'), $errors->first('course_id'), 'select2', ''
           ) !!}
 
           {!! __form::select_dynamic(
-            '3', 'applicant_pa_id', 'Position Applied for', old('applicant_pa_id'), $global_applicant_pa_all, 'applicant_pa_id', 'position', $errors->has('applicant_pa_id'), $errors->first('applicant_pa_id'), 'select2', ''
+            '3', 'plantilla_id', 'Position Applied for', old('plantilla_id'), $global_plantilla_all, 'plantilla_id', 'name', $errors->has('plantilla_id'), $errors->first('plantilla_id'), 'select2', ''
           ) !!}
 
           {!! __form::textbox(
@@ -73,7 +73,7 @@
 
 
 
-          <div class="col-md-12" style="margin-top:20px;"></div>
+          <div class="col-md-12" style="margin-top:50px;"></div>
 
           {{-- EDC Background --}}
           <div class="col-md-12">
@@ -149,7 +149,7 @@
 
 
 
-          <div class="col-md-12" style="margin-top:20px;"></div>
+          <div class="col-md-12" style="margin-top:50px;"></div>
 
           {{-- Trainings --}}
           <div class="col-md-12">
@@ -239,7 +239,7 @@
 
 
 
-          <div class="col-md-12" style="margin-top:20px;"></div>
+          <div class="col-md-12" style="margin-top:50px;"></div>
 
           {{-- Experiences --}}
           <div class="col-md-12">

@@ -31,10 +31,164 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
 
+    public function fetchAll($request){
+
+        $key = str_slug($request->fullUrl(), '_');
+
+        $courses = $this->cache->remember('courses:all:' . $key, 240, function() use ($request){
+
+            $course = $this->course->newQuery();
+            
+            if(isset($request->q)){
+                $this->search($course, $request->q);
+            }
+
+            return $this->populate($course);
+
+        });
+
+        return $courses;
+
+    }
+
+
+
+
+
+
+
+    public function store($request){
+
+        $course = new Course;
+        $course->slug = $this->str->random(16);
+        $course->course_id = $this->getCourseIdInc();
+        $course->acronym = $request->acronym;
+        $course->name = $request->name;
+        $course->created_at = $this->carbon->now();
+        $course->updated_at = $this->carbon->now();
+        $course->ip_created = request()->ip();
+        $course->ip_updated = request()->ip();
+        $course->user_created = $this->auth->user()->user_id;
+        $course->user_updated = $this->auth->user()->user_id;
+        $course->save();
+
+        return $course;
+
+    }
+
+
+
+
+
+
+    public function update($request, $slug){
+
+        $course = $this->findBySlug($slug);
+        $course->acronym = $request->acronym;
+        $course->name = $request->name;
+        $course->updated_at = $this->carbon->now();
+        $course->ip_updated = request()->ip();
+        $course->user_updated = $this->auth->user()->user_id;
+        $course->save();
+
+        return $course;
+
+    }
+
+
+
+
+
+
+    public function destroy($slug){
+
+        $course = $this->findBySlug($slug);
+        $course->delete();
+
+        return $course;
+
+    }
+
+
+
+
+
+
+    public function findBySlug($slug){
+
+        $course = $this->cache->remember('courses:bySlug:' . $slug, 240, function() use ($slug){
+            return $this->course->where('slug', $slug)->first();
+        });
+
+        if(empty($course)){
+            abort(404);
+        }
+        
+        return $course;
+
+    }
+
+
+
+
+
+
+    public function search($model, $key){
+
+        return $model->where(function ($model) use ($key) {
+                $model->where('acronym', 'LIKE', '%'. $key .'%')
+                      ->orWhere('name', 'LIKE', '%'. $key .'%');
+        });
+
+    }
+
+
+
+
+
+
+    public function populate($model){
+
+        return $model->select('name', 'acronym', 'slug')
+                     ->sortable()
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate(10);
+
+    }
+
+
+
+
+
+
+    public function getCourseIdInc(){
+
+        $id = 'C10001';
+
+        $course = $this->course->select('course_id')->orderBy('course_id', 'desc')->first();
+
+        if($course != null){
+            
+            if($course->course_id != null){
+                $num = str_replace('C', '', $course->course_id) + 1;
+                $id = 'C' . $num;
+            }
+        
+        }
+        
+        return $id;
+        
+    }
+
+
+
+
+
+
     public function globalFetchAll(){
 
         $courses = $this->cache->remember('courses:global:all', 240, function(){
-            return $this->course->select('description', 'course_id')->get();
+            return $this->course->select('name', 'course_id')->get();
         });
         
         return $courses;

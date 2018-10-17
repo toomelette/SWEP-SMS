@@ -48,8 +48,8 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
                 $applicant->whereCourseId($request->c);
             }
 
-            if(isset($request->paf)){
-                $applicant->whereApplicantPaId($request->paf);
+            if(isset($request->p)){
+                $applicant->wherePlantillaId($request->p);
             }
 
             if(isset($request->g)){
@@ -76,7 +76,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->slug = $this->str->random(16);
         $applicant->applicant_id = $this->getApplicantIdInc();
         $applicant->course_id = $request->course_id;
-        $applicant->applicant_pa_id = $request->applicant_pa_id;
+        $applicant->plantilla_id = $request->plantilla_id;
         $applicant->lastname = $request->lastname;
         $applicant->firstname = $request->firstname;
         $applicant->middlename = $request->middlename;
@@ -109,7 +109,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicant = $this->findBySlug($slug);
         $applicant->course_id = $request->course_id;
-        $applicant->applicant_pa_id = $request->applicant_pa_id;
+        $applicant->plantilla_id = $request->plantilla_id;
         $applicant->lastname = $request->lastname;
         $applicant->firstname = $request->firstname;
         $applicant->middlename = $request->middlename;
@@ -204,7 +204,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
     public function populate($model){
 
-        return $model->select('fullname', 'course_id', 'applicant_pa_id', 'date_of_birth', 'slug')
+        return $model->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);

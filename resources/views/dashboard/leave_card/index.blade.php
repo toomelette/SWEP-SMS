@@ -94,7 +94,7 @@
           </tr>
           @foreach($leave_cards as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!}>
-              <td>{!! empty($data->employee) ? $data->employee_no : $data->employee->fullname !!}</td>
+              <td>{!! empty($data->employee) ? '' : $data->employee->fullname !!}</td>
               <td>{{ $data->doc_type }}</td>
               <td>{{ $data->doc_type == 'LEAVE' ? $data->leave_type : 'N/A' }}</td>
               <td>

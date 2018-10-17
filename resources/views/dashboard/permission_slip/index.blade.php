@@ -82,7 +82,7 @@
           @foreach($permission_slips as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->ps_id }}</td>
-              <td>{{ $data->employee->fullname }}</td>
+              <td>{{ empty($data->employee) ? '' : $data->employee->fullname }}</td>
               <td>{{ $data->date->format('M d, Y') }}</td>
               <td>{{ date('h:i A', strtotime($data->time_out)) }}</td>
               <td>{{ date('h:i A', strtotime($data->time_in)) }}</td>

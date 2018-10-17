@@ -104,24 +104,4 @@ class __dataType{
 
 
 
-    public static function months_between_dates($start, $end){
-
-      $start = Carbon::parse($start);
-      $end   = Carbon::parse($end);
-
-      while ($start->addMonth() <= $end){
-
-        $months[$start->format('m-Y')] = $start->format('F Y');
-
-      }
-
-      return $months;
-    }
-
-
-
-
-
-
-
 }

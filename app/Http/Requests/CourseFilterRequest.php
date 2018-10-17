@@ -4,11 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ApplicantFilterRequest extends FormRequest{
-    
+class CourseFilterRequest extends FormRequest{
 
 
 
+   
     public function authorize(){
 
         return true;
@@ -18,18 +18,17 @@ class ApplicantFilterRequest extends FormRequest{
     
 
 
+
     public function rules(){
 
         return [
             
             'q' => 'nullable|string|max:90',
-            'c' => 'nullable|string|max:10',
-            'p' => 'nullable|string|max:10',
-            'g' => 'nullable|string|max:10',
             
         ];
     
     }
+
 
 
 

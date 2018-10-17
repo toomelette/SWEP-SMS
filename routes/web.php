@@ -125,6 +125,16 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** Applicant **/
 	Route::resource('applicant', 'ApplicantController');
+
+
+	/** Course **/
+	Route::resource('course', 'CourseController');
+
+
+	/** Plantilla **/
+	Route::get('/plantilla/report', 'PlantillaController@report')->name('plantilla.report');
+	Route::get('/plantilla/report_generate', 'PlantillaController@reportGenerate')->name('plantilla.report_generate');
+	Route::resource('plantilla', 'PlantillaController');
 	
 	
 });

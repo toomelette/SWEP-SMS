@@ -136,30 +136,9 @@
 
 
 
-@section('modals')
-
-  @if(Session::has('LC_CREATE_SUCCESS'))
-
-    {!! __html::modal(
-      'lc_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('LC_CREATE_SUCCESS')
-    ) !!}
-    
-  @endif
-
-@endsection 
-
-
-
-
-
 @section('scripts')
 
   <script type="text/javascript">
-
-
-    @if(Session::has('LC_CREATE_SUCCESS'))
-      $('#lc_create').modal('show');
-    @endif
 
 
     @if(old('doc_type') == 'LEAVE' || $leave_card->doc_type == 'LEAVE')

@@ -8,13 +8,14 @@ use Kyslik\ColumnSortable\Sortable;
 
 class Applicant extends Model{
 
+
 	use Sortable;
 
     protected $table = 'applicants';
 
     protected $dates = ['date_of_birth', 'created_at', 'updated_at'];
 
-    public $sortable = ['applicant_pa_id', 'course_id', 'fullname', 'date_of_birth'];
+    public $sortable = ['plantilla_id', 'course_id', 'fullname', 'date_of_birth'];
 
 	public $timestamps = false;
 
@@ -27,7 +28,7 @@ class Applicant extends Model{
         'slug' => '',
         'applicant_id' => '',
         'course_id' => '',
-        'applicant_pa_id' => '',
+        'plantilla_id' => '',
         'lastname' => '',
         'firstname' => '',
         'middlename' => '',
@@ -68,8 +69,8 @@ class Applicant extends Model{
 
 
 
-    public function applicantPositionApplied() {
-        return $this->belongsTo('App\Models\ApplicantPositionApplied','applicant_pa_id','applicant_pa_id');
+    public function plantilla() {
+        return $this->belongsTo('App\Models\Plantilla','plantilla_id','plantilla_id');
     }
 
 

@@ -70,7 +70,11 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.disbursement_voucher.user_index',
                         'dashboard.disbursement_voucher.save_as',
                         'dashboard.employee.create',
-                        'dashboard.employee.edit'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
+                        'dashboard.employee.edit',
+                        'dashboard.plantilla.create',
+                        'dashboard.plantilla.edit',
+                        'dashboard.plantilla.index',
+                        'dashboard.plantilla.report',], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         // PROJECT CODES
@@ -116,10 +120,10 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
 
 
-        // Applicant Position Applied
+        // Plantilla
         View::composer(['dashboard.applicant.create',
                         'dashboard.applicant.edit',
-                        'dashboard.applicant.index',], 'App\Swep\ViewComposers\ApplicantPositionAppliedComposer');
+                        'dashboard.applicant.index',], 'App\Swep\ViewComposers\PlantillaComposer');
 
 
 

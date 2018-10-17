@@ -36,7 +36,7 @@ class ApplicantFormRequest extends FormRequest{
             'civil_status'=>'required|string|max:45',
             'address'=>'required|string|max:255',
             'course_id'=>'required|string|max:11',
-            'applicant_pa_id'=>'nullable|string|max:11',
+            'plantilla_id'=>'nullable|string|max:11',
             'contact_no'=>'nullable|string|max:90',
             'remarks'=>'nullable|string|max:255',
 

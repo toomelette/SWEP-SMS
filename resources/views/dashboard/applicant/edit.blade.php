@@ -61,11 +61,11 @@
           <div class="col-md-12"></div>
 
           {!! __form::select_dynamic(
-            '3', 'course_id', 'Course *', old('course_id') ? old('course_id') : $applicant->course_id, $global_courses_all, 'course_id', 'description', $errors->has('course_id'), $errors->first('course_id'), 'select2', ''
+            '3', 'course_id', 'Course *', old('course_id') ? old('course_id') : $applicant->course_id, $global_courses_all, 'course_id', 'name', $errors->has('course_id'), $errors->first('course_id'), 'select2', ''
           ) !!}
 
           {!! __form::select_dynamic(
-            '3', 'applicant_pa_id', 'Position Applied for', old('applicant_pa_id') ? old('applicant_pa_id') : $applicant->applicant_pa_id, $global_applicant_pa_all, 'applicant_pa_id', 'position', $errors->has('applicant_pa_id'), $errors->first('applicant_pa_id'), 'select2', ''
+            '3', 'plantilla_id', 'Position Applied for', old('plantilla_id') ? old('plantilla_id') : $applicant->plantilla_id, $global_plantilla_all, 'plantilla_id', 'name', $errors->has('plantilla_id'), $errors->first('plantilla_id'), 'select2', ''
           ) !!}
 
           {!! __form::textbox(
@@ -78,7 +78,7 @@
 
 
 
-          <div class="col-md-12" style="margin-top:20px;"></div>
+          <div class="col-md-12" style="margin-top:50px;"></div>
 
           {{-- EDC Background --}}
           <div class="col-md-12">
@@ -192,7 +192,7 @@
 
 
 
-          <div class="col-md-12" style="margin-top:20px;"></div>
+          <div class="col-md-12" style="margin-top:50px;"></div>
 
           {{-- Trainings --}}
           <div class="col-md-12">
@@ -333,7 +333,7 @@
 
 
 
-          <div class="col-md-12" style="margin-top:20px;"></div>
+          <div class="col-md-12" style="margin-top:50px;"></div>
 
           {{-- Experiences --}}
           <div class="col-md-12">
@@ -476,29 +476,9 @@
 
 
 
-@section('modals')
-
-  @if(Session::has('APPLICANT_CREATE_SUCCESS'))
-
-    {!! __html::modal(
-      'applicant_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('APPLICANT_CREATE_SUCCESS')
-    ) !!}
-    
-  @endif
-
-@endsection 
-
-
-
-
 @section('scripts')
 
   <script type="text/javascript">
-
-
-    @if(Session::has('APPLICANT_CREATE_SUCCESS'))
-      $('#applicant_create').modal('show');
-    @endif
 
 
     {{-- EDC Background ADD ROW --}}

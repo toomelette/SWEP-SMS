@@ -51,9 +51,9 @@
                 <dt>Contact No:</dt>
                 <dd>{{ $applicant->contact_no }}</dd>
                 <dt>Course:</dt>
-                <dd>{{ $applicant->course->description }}</dd>
+                <dd>{{ empty($applicant->course) ? '' : $applicant->course->name }}</dd>
                 <dt>Position Applied For:</dt>
-                <dd>{{ $applicant->applicantPositionApplied->position }}</dd>
+                <dd>{{ empty($applicant->plantilla) ? '' : $applicant->plantilla->name }}</dd>
                 <dt>Remarks:</dt>
                 <dd>{{ $applicant->remarks }}</dd>
               </dl>

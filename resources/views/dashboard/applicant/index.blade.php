@@ -7,7 +7,7 @@
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
                         'c' => Request::get('c'),
-                        'paf' => Request::get('paf'),
+                        'p' => Request::get('p'),
                         'g' => Request::get('g'),
                       ];
                       
@@ -33,11 +33,11 @@
     {!! __html::filter_open() !!}
 
       {!! __form::select_dynamic_for_filter(
-        '3', 'c', 'Course', old('c'), $global_courses_all, 'course_id', 'description', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
+        '3', 'c', 'Course', old('c'), $global_courses_all, 'course_id', 'name', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '3', 'paf', 'Position Applied For', old('paf'), $global_applicant_pa_all, 'applicant_pa_id', 'position', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
+        '3', 'p', 'Position Applied For', old('p'), $global_plantilla_all, 'plantilla_id', 'name', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!!
@@ -70,8 +70,8 @@
           @foreach($applicants as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>{{ $data->fullname }}</td>
-              <td>{{ $data->applicantPositionApplied->position }}</td>
-              <td>{{ $data->course->description }}</td>
+              <td>{{ empty($data->plantilla) ? '' : $data->plantilla->name }}</td>
+              <td>{{ empty($data->course) ? '' : $data->course->name }}</td>
               <td>{{ Carbon::parse($data->date_of_birth)->age }}</td>
               <td> 
                 <select id="action" class="form-control input-md">
