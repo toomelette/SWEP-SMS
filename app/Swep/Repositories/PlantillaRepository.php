@@ -191,7 +191,7 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
 
     public function globalFetchAll(){
 
-        $plantilla = $this->cache->remember('plantilla:global:all', 240, function(){
+        $plantilla = $this->cache->remember('plantillas:global:all', 240, function(){
             return $this->plantilla->select('plantilla_id', 'name')->get();
         });
         
