@@ -104,7 +104,7 @@ class Employee extends Model{
     }
 
     public function departmentUnit(){
-        return $this->belongsTo('App\Models\Project', 'department_unit_id', 'department_unit_id');
+        return $this->belongsTo('App\Models\DepartmentUnit', 'department_unit_id', 'department_unit_id');
     }
 
     public function project(){
@@ -184,6 +184,45 @@ class Employee extends Model{
     public function leaveCard(){
         return $this->hasMany('App\Models\LeaveCard', 'employee_no', 'employee_no');
     }
+
+
+
+
+    /** Scopes **/
+    public function scopeCountBySexAndDeptUnit($query, $dept_unit_id, $sex){
+
+        return $query->whereDepartmentUnitId($dept_unit_id)
+                     ->whereSex($sex)
+                     ->whereIsActive('ACTIVE')
+                     ->get()
+                     ->count();
+
+    }
+
+
+
+
+    public function scopeCountBySex($query, $sex){
+
+        return $query->whereSex($sex)
+                     ->whereIsActive('ACTIVE')
+                     ->get()
+                     ->count();
+
+    }
+
+
+
+
+    public function scopeCountByDeptUnit($query, $dept_unit_id){
+
+        return $query->whereDepartmentUnitId($dept_unit_id)
+                     ->whereIsActive('ACTIVE')
+                     ->get()
+                     ->count();
+
+    }
+
 
 
 

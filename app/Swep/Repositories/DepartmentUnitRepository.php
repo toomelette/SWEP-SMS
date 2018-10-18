@@ -241,5 +241,23 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
+    public function getAll(){
+
+        $department_units = $this->cache->remember('department_units:getAll', 240, function(){
+
+            return $this->department_unit->select('department_unit_id', 'name', 'description')
+                                         ->get();
+
+        });
+
+        return $department_units;
+
+    }
+
+
+
+
+
+
 
 }

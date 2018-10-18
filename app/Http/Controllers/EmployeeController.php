@@ -12,6 +12,7 @@ use App\Http\Requests\EmployeeServiceRecordCreateForm;
 use App\Http\Requests\EmployeeServiceRecordEditForm;
 use App\Http\Requests\EmployeeTrainingCreateForm;
 use App\Http\Requests\EmployeeTrainingEditForm;
+use App\Http\Requests\EmployeeReportRequest;
 
 
 class EmployeeController extends Controller{
@@ -202,6 +203,23 @@ class EmployeeController extends Controller{
     public function trainingPrint($slug){
         
         return $this->employee_trng->print($slug);
+
+    }
+
+
+
+
+    public function report(){
+        
+        return view('dashboard.employee.report');
+    }
+
+
+
+
+    public function reportGenerate(EmployeeReportRequest $request){
+        
+        return $this->employee->reportGenerate($request);
 
     }
 

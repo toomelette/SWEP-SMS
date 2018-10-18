@@ -93,7 +93,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
             $employee = $this->employee->newQuery();
 
-            return $employee->select('employee_no', 'fullname', 'position', 'department_id')
+            return $employee->select('employee_no', 'fullname', 'position', 'department_id', 'department_unit_id', 'monthly_basic')
                             ->where('is_active', $status)
                             ->with('leaveCard', 'department')
                             ->orderBy('lastname', 'ASC')
@@ -384,6 +384,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employees = $this->cache->remember('employees:global:all', 240, function(){
             return $this->employee->select('slug', 'employee_no', 'fullname')
                                   ->where('is_active', 'ACTIVE')
+                                  ->orderBy('lastname', 'ASC')
                                   ->get();
         });
         

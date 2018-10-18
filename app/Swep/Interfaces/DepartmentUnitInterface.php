@@ -21,5 +21,7 @@ interface DepartmentUnitInterface {
 	public function apiGetByDepartmentName($dept_name);
 
 	public function apiGetByDepartmentId($dept_id);
+
+	public function getAll();
 		
 }

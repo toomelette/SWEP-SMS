@@ -15,6 +15,7 @@ use App\Swep\Interfaces\EmployeeRecognitionInterface;
 use App\Swep\Interfaces\EmployeeOrganizationInterface;
 use App\Swep\Interfaces\EmployeeSpecialSkillInterface;
 use App\Swep\Interfaces\EmployeeReferenceInterface;
+use App\Swep\Interfaces\DepartmentUnitInterface;
 
 use App\Swep\BaseClasses\BaseService;
 
@@ -40,12 +41,13 @@ class EmployeeService extends BaseService{
     protected $employee_org_repo;
     protected $employee_ss_repo;
     protected $employee_ref_repo;
+    protected $dept_unit_repo;
 
 
 
 
 
-    public function __construct(EmployeeInterface $employee_repo, EmployeeFamilyDetailInterface $employee_fam_dtls_repo, EmployeeAddressInterface $employee_address_repo, EmployeeOtherQuestionInterface $employee_oq_repo, EmployeeChildrenInterface $employee_children_repo, EmployeeEducationalBackgroundInterface $employee_eb_repo, EmployeeEligibilityInterface $employee_elig_repo, EmployeeExperienceInterface $employee_exp_repo, EmployeeVoluntaryWorkInterface $employee_vw_repo, EmployeeRecognitionInterface $employee_recog_repo, EmployeeOrganizationInterface $employee_org_repo, EmployeeSpecialSkillInterface $employee_ss_repo, EmployeeReferenceInterface $employee_ref_repo){
+    public function __construct(EmployeeInterface $employee_repo, EmployeeFamilyDetailInterface $employee_fam_dtls_repo, EmployeeAddressInterface $employee_address_repo, EmployeeOtherQuestionInterface $employee_oq_repo, EmployeeChildrenInterface $employee_children_repo, EmployeeEducationalBackgroundInterface $employee_eb_repo, EmployeeEligibilityInterface $employee_elig_repo, EmployeeExperienceInterface $employee_exp_repo, EmployeeVoluntaryWorkInterface $employee_vw_repo, EmployeeRecognitionInterface $employee_recog_repo, EmployeeOrganizationInterface $employee_org_repo, EmployeeSpecialSkillInterface $employee_ss_repo, EmployeeReferenceInterface $employee_ref_repo, DepartmentUnitInterface $dept_unit_repo){
 
         $this->employee_repo = $employee_repo;
         $this->employee_fam_dtls_repo = $employee_fam_dtls_repo;
@@ -60,6 +62,7 @@ class EmployeeService extends BaseService{
         $this->employee_org_repo = $employee_org_repo;
         $this->employee_ss_repo = $employee_ss_repo;
         $this->employee_ref_repo = $employee_ref_repo;
+        $this->dept_unit_repo = $dept_unit_repo;
         parent::__construct();
 
     }
@@ -181,6 +184,27 @@ class EmployeeService extends BaseService{
 
         $employee = $this->employee_repo->findBySlug($slug);
         return view('printables.employee_info')->with('employee', $employee);
+
+    }
+
+
+
+
+
+
+    public function reportGenerate($request){
+
+        if($request->r_type == 'ALPHA'){
+            $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
+            return view('printables.employee_alphalist')->with('employees', $employees);
+        }elseif($request->r_type == 'GEN'){
+            $dept_units = $this->dept_unit_repo->getAll();
+            return view('printables.employee_by_gender')->with('dept_units', $dept_units);
+        }else{
+            abort(404);
+        }
+
+
 
     }
 
