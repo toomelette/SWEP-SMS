@@ -200,6 +200,9 @@ class EmployeeService extends BaseService{
         }elseif($request->r_type == 'GEN'){
             $dept_units = $this->dept_unit_repo->getAll();
             return view('printables.employee_by_gender')->with('dept_units', $dept_units);
+        }elseif($request->r_type == 'UNIT'){
+            $dept_units = $this->dept_unit_repo->getAll();
+            return view('printables.employee_by_unit')->with('dept_units', $dept_units);
         }else{
             abort(404);
         }
