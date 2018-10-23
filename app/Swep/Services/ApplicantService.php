@@ -4,9 +4,6 @@ namespace App\Swep\Services;
 
 
 use App\Swep\Interfaces\ApplicantInterface;
-use App\Swep\Interfaces\ApplicantTrainingInterface;
-use App\Swep\Interfaces\ApplicantExperienceInterface;
-use App\Swep\Interfaces\ApplicantEducationalBackgroundInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -16,18 +13,12 @@ class ApplicantService extends BaseService{
 
 
     protected $applicant_repo;
-    protected $applicant_trng_repo;
-    protected $applicant_exp_repo;
-    protected $applicant_edc_repo;
 
 
 
-    public function __construct(ApplicantInterface $applicant_repo, ApplicantTrainingInterface $applicant_trng_repo, ApplicantExperienceInterface $applicant_exp_repo, ApplicantEducationalBackgroundInterface $applicant_edc_repo){
+    public function __construct(ApplicantInterface $applicant_repo){
 
         $this->applicant_repo = $applicant_repo;
-        $this->applicant_trng_repo = $applicant_trng_repo;
-        $this->applicant_exp_repo = $applicant_exp_repo;
-        $this->applicant_edc_repo = $applicant_edc_repo;
         parent::__construct();
 
     }
@@ -122,21 +113,21 @@ class ApplicantService extends BaseService{
         // Applicant Training
         if(!empty($request->row_training)){
             foreach ($request->row_training as $row) {
-                $this->applicant_trng_repo->store($row, $applicant);
+                $this->applicant_repo->storeTrainings($row, $applicant);
             }
         }
 
         // Applicant Experience
         if(!empty($request->row_exp)){
             foreach ($request->row_exp as $row) {
-                $this->applicant_exp_repo->store($row, $applicant);
+                $this->applicant_repo->storeExperience($row, $applicant);
             }
         }
 
         // Applicant Educational Background
         if(!empty($request->row_edc_background)){
             foreach ($request->row_edc_background as $row) {
-                $this->applicant_edc_repo->store($row, $applicant);
+                $this->applicant_repo->storeEducationalBackground($row, $applicant);
             }
         }
 

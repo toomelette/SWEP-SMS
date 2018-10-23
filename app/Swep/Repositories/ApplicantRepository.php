@@ -7,6 +7,9 @@ use App\Swep\Interfaces\ApplicantInterface;
 
 
 use App\Models\Applicant;
+use App\Models\ApplicantEducationalBackground;
+use App\Models\ApplicantExperience;
+use App\Models\ApplicantTraining;
 
 
 class ApplicantRepository extends BaseRepository implements ApplicantInterface {
@@ -244,6 +247,60 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
        return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
 
     }
+
+
+
+
+
+    // Dependencies
+    public function storeEducationalBackground($data, $applicant){
+        
+        $applicant_edc = new ApplicantEducationalBackground;
+        $applicant_edc->applicant_id = $applicant->applicant_id;
+        $applicant_edc->course = $data['course'];
+        $applicant_edc->school = $data['school'];
+        $applicant_edc->units = $data['units'];
+        $applicant_edc->graduate_year = $data['graduate_year'];
+        $applicant_edc->save();
+
+    }
+
+
+
+
+
+    public function storeExperience($data, $applicant){
+        
+        $applicant_exp = new ApplicantExperience;
+        $applicant_exp->applicant_id = $applicant->applicant_id;
+        $applicant_exp->date_from = $this->__dataType->date_parse($data['date_from']);
+        $applicant_exp->date_to = $this->__dataType->date_parse($data['date_to']);
+        $applicant_exp->position = $data['position'];
+        $applicant_exp->company = $data['company'];
+        $applicant_exp->is_gov_service =  $this->__dataType->string_to_boolean($data['is_gov_service']);
+        $applicant_exp->save();
+
+    }
+
+
+
+
+
+    public function storeTrainings($data, $applicant){
+        
+        $applicant_trng = new ApplicantTraining;
+        $applicant_trng->applicant_id = $applicant->applicant_id;
+        $applicant_trng->title = $data['title'];
+        $applicant_trng->date_from = $this->__dataType->date_parse($data['date_from']);
+        $applicant_trng->date_to = $this->__dataType->date_parse($data['date_to']);
+        $applicant_trng->venue = $data['venue'];
+        $applicant_trng->conducted_by = $data['conducted_by'];
+        $applicant_trng->remarks = $data['remarks'];
+        $applicant_trng->save();
+
+    }
+
+
 
 
 
