@@ -82,6 +82,40 @@
 
 
 
+
+    <div class="box">
+    
+      <div class="box-header with-border">
+        <h3 class="box-title">Employee Overtime / Compensatory Report</h3>
+        <div class="pull-right">
+            <code>Fields with asterisks(*) are required</code>
+        </div> 
+      </div>
+      
+      <form role="form" method="GET" autocomplete="off" action="{{ route('dashboard.leave_card.report_generate') }}" target="_blank">
+
+        <div class="box-body">
+
+          <input type="hidden" name="r_type" value="comp">
+
+          {!! __form::select_dynamic(
+            '3', 's', 'Employee *', old('s'), $global_employees_all, 'slug', 'fullname', $errors->has('s'), $errors->first('s'), 'select2', ''
+          ) !!}
+
+        </div>
+
+        <div class="box-footer">
+          <button type="submit" class="btn btn-success">Generate <i class="fa fa-fw fa-refresh"></i></button>
+        </div>
+
+      </form>
+
+    </div>
+
+
+
+
+
   </section>
 
 @endsection

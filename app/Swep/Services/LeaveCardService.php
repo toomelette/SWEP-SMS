@@ -91,6 +91,25 @@ class LeaveCardService extends BaseService{
         }
 
 
+        //  COM
+        if($request->doc_type == 'COM'){
+
+            $year = $this->__dataType->date_parse($request->date, 'Y');
+            $month = $this->__dataType->date_parse($request->date, 'm');
+
+            $days = $request->days;
+            $hrs = $request->hrs;
+            $mins = $request->mins;
+
+            $credits_days = number_format($days * 1.000, 3);
+            $credits_hrs = number_format($hrs * .125, 3);
+            $credits_mins = number_format($mins * .125/60, 3);
+
+            $credits = $credits_days + $credits_hrs + $credits_mins;
+            
+        }
+
+
         $leave_card = $this->leave_card_repo->store($request, $year, $month, $days, $hrs, $mins, $credits);
 
         $this->event->fire('leave_card.store', $leave_card);
@@ -165,6 +184,26 @@ class LeaveCardService extends BaseService{
             
         }
 
+
+        //  COM
+        if($request->doc_type == 'COM'){
+
+            $year = $this->__dataType->date_parse($request->date, 'Y');
+            $month = $this->__dataType->date_parse($request->date, 'm');
+
+            $days = $request->days;
+            $hrs = $request->hrs;
+            $mins = $request->mins;
+
+            $credits_days = number_format($days * 1.000, 3);
+            $credits_hrs = number_format($hrs * .125, 3);
+            $credits_mins = number_format($mins * .125/60, 3);
+
+            $credits = $credits_days + $credits_hrs + $credits_mins;
+            
+        }
+        
+
         $leave_card = $this->leave_card_repo->update($request, $year, $month, $days, $hrs, $mins, $credits, $slug);
 
         $this->event->fire('leave_card.update', $leave_card);
@@ -219,6 +258,16 @@ class LeaveCardService extends BaseService{
             $list_of_months = $this->__dynamic->months_between_dates($start_date, $end_date);
 
             return view('printables.leave_card_ledger', compact('employee','list_of_months'));
+
+        }elseif($request->r_type == 'comp'){
+
+            $start_date = $this->__dataType->date_parse('2018-8-01', 'm/d/y');
+            $end_date = $this->carbon->now()->format('m/d/y');
+
+            $employee = $this->employee_repo->findBySlug($request->s);
+            $list_of_months = $this->__dynamic->months_between_dates($start_date, $end_date);
+
+            return view('printables.leave_card_comp', compact('employee','list_of_months'));
 
         }else{
 

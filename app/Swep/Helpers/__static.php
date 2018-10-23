@@ -68,7 +68,7 @@ class __static{
             'Special Emergency Leave' => 'SEL',
             'Magna Carta Leave' => 'MC',
             'Forced Leave' => 'FL',
-            'Solo Parent Leave' => 'SOLO'
+            'Solo Parent Leave' => 'SOLO',
         ];
 
     
@@ -199,7 +199,14 @@ class __static{
     // Leave Card
     public static function document_types_leave_card(){
 
-        return ['Leave' => 'LEAVE', 'Overtime' => 'OT', 'Tardy' => 'TARDY', 'Undertime' => 'UT', 'Monitize' => 'MON'];
+        return [
+                'Leave' => 'LEAVE', 
+                'Overtime' => 'OT', 
+                'Tardy' => 'TARDY', 
+                'Undertime' => 'UT', 
+                'Monitize' => 'MON', 
+                'Compensatory' => 'COM'
+            ];
     
     }
 

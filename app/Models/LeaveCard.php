@@ -149,11 +149,39 @@ class LeaveCard extends Model{
 
     public function scopeGetMonitize($query, $month, $year, $charge){
 
-        return $query->select('leave_type', 'date_from', 'date_to', 'days', 'credits')
+        return $query->select('leave_type', 'date', 'date_from', 'date_to', 'days', 'credits')
                      ->where('month', $month)
                      ->where('year', $year)
                      ->where('doc_type', 'MON')
                      ->where('charge_to', $charge)
+                     ->get();
+
+    }
+
+
+
+
+
+    public function scopeGetOvertime($query, $month, $year){
+
+        return $query->select('leave_type', 'date', 'credits')
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'OT')
+                     ->get();
+
+    }
+
+
+
+
+
+    public function scopeGetCompensatory($query, $month, $year){
+
+        return $query->select('leave_type', 'date', 'credits')
+                     ->where('month', $month)
+                     ->where('year', $year)
+                     ->where('doc_type', 'COM')
                      ->get();
 
     }

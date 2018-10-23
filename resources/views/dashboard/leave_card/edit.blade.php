@@ -115,6 +115,37 @@
 
 
 
+            {{-- Compensatory --}}
+            <div id="com_div">
+
+              {!! __form::select_dynamic(
+                '3', 'employee_no', 'Employee *', old('employee_no') ? old('employee_no') : $leave_card->employee_no, $global_employees_all, 'employee_no', 'fullname', $errors->has('employee_no'), $errors->first('employee_no'), 'select2', ''
+              ) !!}
+
+              {!! __form::datepicker(
+                '3', 'date',  'Date *', old('date') ? old('date') : $leave_card->date, $errors->has('date'), $errors->first('date')
+              ) !!}
+
+              {!! __form::textbox(
+                 '3', 'days', 'number', 'Days', 'Days', old('days') ? old('days') : $leave_card->days, $errors->has('days'), $errors->first('days'), ''
+              ) !!}
+
+              {!! __form::textbox(
+                 '3', 'hrs', 'number', 'Hours', 'Hours', old('hrs') ? old('hrs') : $leave_card->hrs, $errors->has('hrs'), $errors->first('hrs'), ''
+              ) !!}
+
+              <div class="col-md-12"></div>
+
+              {!! __form::textbox(
+                 '3', 'mins', 'number', 'Minutes', 'Minutes', old('mins') ? old('mins') : $leave_card->mins, $errors->has('mins'), $errors->first('mins'), ''
+              ) !!}
+
+            </div>
+
+
+
+
+
           </div>
 
           <div class="box-footer">
@@ -149,11 +180,26 @@
         $("#others_div :input").attr("disabled", true);
         $('#mon_div').hide();
         $("#mon_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
       });
-    @elseif(old('doc_type') == 'MON' || $leave_card->doc_type == 'MON' )
+    @elseif(old('doc_type') == 'MON' || $leave_card->doc_type == 'MON')
       $( document ).ready(function() {
         $('#mon_div').show();
         $("#mon_div :input").removeAttr("disabled");
+        $('#leave_div').hide();
+        $("#leave_div :input").attr("disabled", true);
+        $('#others_div').hide();
+        $("#others_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
+      });
+    @elseif(old('doc_type') == 'COM' || $leave_card->doc_type == 'COM')
+      $( document ).ready(function() {
+        $('#com_div').show();
+        $("#com_div :input").removeAttr("disabled");
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
         $('#leave_div').hide();
         $("#leave_div :input").attr("disabled", true);
         $('#others_div').hide();
@@ -167,6 +213,8 @@
         $("#leave_div :input").attr("disabled", true);
         $('#mon_div').hide();
         $("#mon_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
       });
     @else
       $( document ).ready(function() {
@@ -176,6 +224,8 @@
         $("#others_div :input").attr("disabled", true);
         $('#mon_div').hide();
         $("#mon_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
       });
     @endif
 
@@ -190,9 +240,22 @@
         $("#others_div :input").attr("disabled", true);
         $('#mon_div').hide();
         $("#mon_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
       }else if(val == "MON"){
         $('#mon_div').show();
         $("#mon_div :input").removeAttr("disabled");
+        $('#leave_div').hide();
+        $("#leave_div :input").attr("disabled", true);
+        $('#others_div').hide();
+        $("#others_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
+      }else if(val == "COM"){
+        $('#com_div').show();
+        $("#com_div :input").removeAttr("disabled");
+        $('#mon_div').hide();
+        $("#mon_div :input").attr("disabled", true);
         $('#leave_div').hide();
         $("#leave_div :input").attr("disabled", true);
         $('#others_div').hide();
@@ -204,6 +267,8 @@
         $("#leave_div :input").attr("disabled", true);
         $('#mon_div').hide();
         $("#mon_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
       }else if(val == ""){
         $('#leave_div').hide();
         $("#leave_div :input").attr("disabled", true);
@@ -211,6 +276,8 @@
         $("#others_div :input").attr("disabled", true);
         $('#mon_div').hide();
         $("#mon_div :input").attr("disabled", true);
+        $('#com_div').hide();
+        $("#com_div :input").attr("disabled", true);
       }
     });
 
