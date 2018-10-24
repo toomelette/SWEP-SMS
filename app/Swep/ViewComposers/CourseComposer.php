@@ -27,7 +27,7 @@ class CourseComposer{
 
     public function compose($view){
 
-        $courses = $this->course_repo->globalFetchAll();
+        $courses = $this->course_repo->getAll();
         
     	$view->with('global_courses_all', $courses);
 

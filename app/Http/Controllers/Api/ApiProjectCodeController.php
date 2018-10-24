@@ -36,7 +36,7 @@ class ApiProjectCodeController extends Controller{
 	public function selectProjectCodeByDepartmentName(Request $request, $dept_name){
 
     	if($request->Ajax()){
-    		$response_project_codes = $this->project_code_repo->apiGetByDepartmentName($dept_name);
+    		$response_project_codes = $this->project_code_repo->getByDepartmentName($dept_name);
 	    	return json_encode($response_project_codes);
 	    }
 

@@ -29,7 +29,7 @@ class UserController extends Controller{
 
     public function index(UserFilterRequest $request){
 
-        return $this->user_service->fetchAll($request);
+        return $this->user_service->fetch($request);
 
     }
 

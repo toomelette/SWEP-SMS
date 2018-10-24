@@ -44,7 +44,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($departments as $data) 
-            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
+            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td>{{ $data->name }}</td>
               <td> 
                 <select id="action" class="form-control input-md">

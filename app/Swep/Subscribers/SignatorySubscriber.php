@@ -50,8 +50,8 @@ class SignatorySubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern('swep_cache:signatories:all:*');
         $this->__cache->deletePattern('swep_cache:signatories:global:all');
+        $this->__cache->deletePattern('swep_cache:signatories:byType:'. $signatory->type .'');
         $this->__cache->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
-
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS_SLUG', $signatory->slug);
 
@@ -65,6 +65,7 @@ class SignatorySubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern('swep_cache:signatories:all:*');
         $this->__cache->deletePattern('swep_cache:signatories:global:all');
+        $this->__cache->deletePattern('swep_cache:signatories:byType:'. $signatory->type .'');
         $this->__cache->deletePattern('swep_cache:signatories:bySlug:'. $signatory->slug .'');
 
         $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');

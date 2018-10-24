@@ -14,6 +14,6 @@ interface EmployeeTrainingInterface {
 	
 	public function destroy($slug);
 
-	public function apiGetBySlug($slug);
+	public function getBySlug($slug);
 
 }

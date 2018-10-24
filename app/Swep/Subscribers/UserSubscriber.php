@@ -54,6 +54,7 @@ class UserSubscriber extends BaseSubscriber{
     public function onUpdate($user){
 
         $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:byId:'. $user->id .'');
         $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
@@ -71,6 +72,7 @@ class UserSubscriber extends BaseSubscriber{
     public function onDestroy($user){
         
         $this->__cache->deletePattern('swep_cache:users:all:*');
+        $this->__cache->deletePattern('swep_cache:users:byId:'. $user->id .'');
         $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
         $this->__cache->deletePattern('swep_cache:user_menus:byUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern('swep_cache:nav:user_menus:byUserId:'. $user->user_id .':*');

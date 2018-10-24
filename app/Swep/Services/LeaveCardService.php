@@ -28,9 +28,9 @@ class LeaveCardService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $leave_cards = $this->leave_card_repo->fetchAll($request);
+        $leave_cards = $this->leave_card_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.leave_card.index')->with('leave_cards', $leave_cards);
@@ -246,7 +246,7 @@ class LeaveCardService extends BaseService{
 
         if($request->r_type == 'loat'){
 
-            $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
+            $employees = $this->employee_repo->getByIsActive('ACTIVE');
             return view('printables.leave_card.loat')->with('employees', $employees);
 
         }elseif($request->r_type == 'ledger'){

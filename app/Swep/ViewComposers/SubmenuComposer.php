@@ -29,7 +29,7 @@ class SubmenuComposer{
 
     public function compose($view){
 
-        $submenus = $this->submenu_repo->globalFetchAll();
+        $submenus = $this->submenu_repo->getAll();
         
     	$view->with('global_submenus_all', $submenus);
 

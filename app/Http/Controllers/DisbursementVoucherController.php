@@ -25,7 +25,7 @@ class DisbursementVoucherController extends Controller{
     
     public function index(DisbursementVoucherFilterRequest $request){
 
-        return $this->disbursement_voucher->fetchAll($request);
+        return $this->disbursement_voucher->fetch($request);
 
     }
 

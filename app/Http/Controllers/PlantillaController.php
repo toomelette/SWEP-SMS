@@ -28,7 +28,7 @@ class PlantillaController extends Controller{
     
     public function index(PlantillaFilterRequest $request){
 
-        return $this->plantilla->fetchAll($request);
+        return $this->plantilla->fetch($request);
     
     }
 

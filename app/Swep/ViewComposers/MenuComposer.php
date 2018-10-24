@@ -30,7 +30,7 @@ class MenuComposer{
 
     public function compose($view){
 
-        $menus = $this->menu_repo->globalFetchAll();
+        $menus = $this->menu_repo->getAll();
         
     	$view->with('global_menus_all', $menus);
 

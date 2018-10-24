@@ -46,7 +46,7 @@ class ApplicantController extends Controller{
 
 	public function index(ApplicantFilterRequest $request){
 
-		return $this->applicant->fetchAll($request);
+		return $this->applicant->fetch($request);
 
     }
 

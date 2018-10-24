@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface DepartmentInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -18,8 +18,8 @@ interface DepartmentInterface {
 
 	public function findByDepartmentId($dept_id);
 
-	public function globalFetchAll();
+	public function getAll();
 
-	public function apiGetByDepartmentId($dept_id);
+	public function getByDepartmentId($dept_id);
 		
 }

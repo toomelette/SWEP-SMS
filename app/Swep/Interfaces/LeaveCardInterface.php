@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface LeaveCardInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request, $year, $month, $days, $hrs, $mins, $credits);
 

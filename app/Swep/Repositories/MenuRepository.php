@@ -27,11 +27,11 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $menus = $this->cache->remember('menus:all:' . $key, 240, function() use ($request){
+        $menus = $this->cache->remember('menus:fetch:' . $key, 240, function() use ($request){
 
             $menu = $this->menu->newQuery();
             
@@ -116,7 +116,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
     public function findBySlug($slug){
 
-        $menu = $this->cache->remember('menus:bySlug:' . $slug, 240, function() use ($slug){
+        $menu = $this->cache->remember('menus:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->menu->where('slug', $slug)->first();
         }); 
         
@@ -135,7 +135,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
     public function findByMenuId($menu_id){
 
-        $menu = $this->cache->remember('menus:byMenuId:' . $menu_id, 240, function() use ($menu_id){
+        $menu = $this->cache->remember('menus:findByMenuId:' . $menu_id, 240, function() use ($menu_id){
             return $this->menu->where('menu_id', $menu_id)->first();
         });
         
@@ -202,9 +202,9 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $menus = $this->cache->remember('menus:global:all', 240, function(){
+        $menus = $this->cache->remember('menus:getAll', 240, function(){
             return $this->menu->select('menu_id', 'name')->get();
         });
         

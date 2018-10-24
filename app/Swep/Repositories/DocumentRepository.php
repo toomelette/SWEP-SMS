@@ -31,11 +31,11 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $documents = $this->cache->remember('documents:all:' . $key, 240, function() use ($request){
+        $documents = $this->cache->remember('documents:fetch:' . $key, 240, function() use ($request){
 
             $df = $this->__dataType->date_parse($request->df);
             $dt = $this->__dataType->date_parse($request->dt);
@@ -76,7 +76,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function fetchByFolderCode($folder_code){
 
-        $documents = $this->cache->remember('documents:byFolderCode:' . $folder_code, 240, function() use ($folder_code){
+        $documents = $this->cache->remember('documents:fetchByFolderCode:' . $folder_code, 240, function() use ($folder_code){
 
             $document = $this->document->newQuery();
 
@@ -173,7 +173,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function findBySlug($slug){
 
-        $document = $this->cache->remember('documents:bySlug:' . $slug, 240, function() use ($slug){
+        $document = $this->cache->remember('documents:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->document->where('slug', $slug)->first();
         });
         

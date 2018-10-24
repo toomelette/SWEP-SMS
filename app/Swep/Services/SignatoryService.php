@@ -25,9 +25,9 @@ class SignatoryService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $signatories = $this->signatory_repo->fetchAll($request);
+        $signatories = $this->signatory_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.signatory.index')->with('signatories', $signatories);

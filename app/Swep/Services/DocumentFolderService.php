@@ -30,9 +30,9 @@ class DocumentFolderService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $doc_folders = $this->doc_folder_repo->fetchAll($request);
+        $doc_folders = $this->doc_folder_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.document_folder.index')->with('doc_folders', $doc_folders);

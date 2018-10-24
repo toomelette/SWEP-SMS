@@ -1,4 +1,4 @@
-hr_<?php
+<?php
 
 namespace App\Models;
 

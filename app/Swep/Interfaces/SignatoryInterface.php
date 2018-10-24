@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface SignatoryInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -18,7 +18,7 @@ interface SignatoryInterface {
 	
 	public function findByType($type);
 
-	public function globalFetchAll();
+	public function getAll();
 
 
 }

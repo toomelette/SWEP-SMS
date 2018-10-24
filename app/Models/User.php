@@ -14,8 +14,6 @@ class User extends Authenticatable{
 
 
     use Notifiable, Sortable;
-    
-    protected $table = 'su_users';
 
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
 

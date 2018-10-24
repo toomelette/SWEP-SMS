@@ -28,7 +28,7 @@ class PermissionSlipController extends Controller{
 
     public function index(PermissionSlipFilterRequest $request){
 
-        return $this->permission_slip->fetchAll($request);
+        return $this->permission_slip->fetch($request);
     
     }
 

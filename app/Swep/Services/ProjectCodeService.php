@@ -24,9 +24,9 @@ class ProjectCodeService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $project_codes = $this->project_code_repo->fetchAll($request);
+        $project_codes = $this->project_code_repo->fetch($request);
         
         $request->flash();
         return view('dashboard.project_code.index')->with('project_codes', $project_codes);

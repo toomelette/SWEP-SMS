@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface FundSourceInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -16,6 +16,6 @@ interface FundSourceInterface {
 
 	public function findBySlug($slug);
 
-	public function globalFetchAll();
+	public function getAll();
 		
 }

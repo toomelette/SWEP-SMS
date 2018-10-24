@@ -29,7 +29,7 @@ class ProjectCodeComposer{
 
     public function compose($view){
 
-        $project_codes = $this->project_code_repo->globalFetchAll();
+        $project_codes = $this->project_code_repo->getAll();
         
     	$view->with('global_project_codes_all', $project_codes);
 

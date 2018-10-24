@@ -35,11 +35,11 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:all:'. $key, 240, function() use ($request){
+        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetch:'. $key, 240, function() use ($request){
             $disbursement_voucher = $this->requestFilters($request);
             return $this->populate($disbursement_voucher);
         });
@@ -58,7 +58,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:byUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
+        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
             $disbursement_voucher = $this->requestFilters($request);
             return $this->populateByUser($disbursement_voucher, $this->auth->user()->user_id);
         });
@@ -197,7 +197,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
     public function findBySlug($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_vouchers:bySlug:' . $slug, 240, function() use ($slug){
+        $disbursement_voucher = $this->cache->remember('disbursement_vouchers:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->disbursement_voucher->where('slug', $slug)
                                               ->with('project', 'fundSource')
                                               ->first();

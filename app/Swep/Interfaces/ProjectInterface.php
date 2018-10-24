@@ -6,6 +6,6 @@ namespace App\Swep\Interfaces;
 
 interface ProjectInterface {
 
-	public function globalFetchAll();
+	public function getAll();
 		
 }

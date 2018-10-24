@@ -40,7 +40,7 @@ class ApiEmployeeController extends Controller{
 	public function editServiceRecord(Request $request, $slug){
 
     	if($request->Ajax()){
-    		$response_employee_sr = $this->employee_sr_repo->apiGetBySlug($slug);
+    		$response_employee_sr = $this->employee_sr_repo->getBySlug($slug);
 	    	return json_encode($response_employee_sr);
 	    }
 
@@ -57,7 +57,7 @@ class ApiEmployeeController extends Controller{
     public function editTraining(Request $request, $slug){
 
     	if($request->Ajax()){
-    		$response_employee_trng = $this->employee_trng_repo->apiGetBySlug($slug);
+    		$response_employee_trng = $this->employee_trng_repo->getBySlug($slug);
 	    	return json_encode($response_employee_trng);
 	    }
 

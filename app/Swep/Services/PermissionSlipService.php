@@ -33,9 +33,9 @@ class PermissionSlipService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $permission_slips = $this->ps_repo->fetchAll($request);
+        $permission_slips = $this->ps_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.permission_slip.index')->with('permission_slips', $permission_slips);

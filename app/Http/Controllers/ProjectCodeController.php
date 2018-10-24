@@ -26,7 +26,7 @@ class ProjectCodeController extends Controller{
     
     public function index(ProjectCodeFilterRequest $request){
 
-    	return $this->project_code->fetchAll($request);
+    	return $this->project_code->fetch($request);
     
     }
 

@@ -36,9 +36,9 @@ class EmployeeService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $employees = $this->employee_repo->fetchAll($request);
+        $employees = $this->employee_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.employee.index')->with('employees', $employees);
@@ -55,7 +55,7 @@ class EmployeeService extends BaseService{
         $employee = $this->employee_repo->store($request);
         $this->fillDependencies($request, $employee);
 
-        $this->event->fire('employee.store');
+        $this->event->fire('employee.store', $employee);
         return redirect()->back();
 
     }
@@ -142,22 +142,10 @@ class EmployeeService extends BaseService{
 
 
 
-    public function printInfo($slug){
-
-        $employee = $this->employee_repo->findBySlug($slug);
-        return view('printables.employee.info')->with('employee', $employee);
-
-    }
-
-
-
-
-
-
     public function reportGenerate($request){
 
         if($request->r_type == 'ALPHA'){
-            $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
+            $employees = $this->employee_repo->getByIsActive('ACTIVE');
             return view('printables.employee.alphalist')->with('employees', $employees);
         }elseif($request->r_type == 'GEN'){
             $dept_units = $this->dept_unit_repo->getAll();

@@ -28,9 +28,9 @@ class MenuService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $menus = $this->menu_repo->fetchAll($request);
+        $menus = $this->menu_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.menu.index')->with('menus', $menus);

@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface DocumentInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function fetchByFolderCode($folder_code);
 

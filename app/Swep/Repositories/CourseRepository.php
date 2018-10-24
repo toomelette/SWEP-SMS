@@ -31,11 +31,11 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $courses = $this->cache->remember('courses:all:' . $key, 240, function() use ($request){
+        $courses = $this->cache->remember('courses:fetch:' . $key, 240, function() use ($request){
 
             $course = $this->course->newQuery();
             
@@ -116,7 +116,7 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
     public function findBySlug($slug){
 
-        $course = $this->cache->remember('courses:bySlug:' . $slug, 240, function() use ($slug){
+        $course = $this->cache->remember('courses:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->course->where('slug', $slug)->first();
         });
 
@@ -185,9 +185,9 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $courses = $this->cache->remember('courses:global:all', 240, function(){
+        $courses = $this->cache->remember('courses:getAll', 240, function(){
             return $this->course->select('name', 'course_id')->get();
         });
         

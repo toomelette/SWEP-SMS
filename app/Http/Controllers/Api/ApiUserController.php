@@ -35,7 +35,7 @@ class ApiUserController extends Controller{
 	public function responseFromEmployee(Request $request, $slug){
 
     	if($request->Ajax()){
-    		$response_employee = $this->employee_repo->apiGetBySlug($slug);
+    		$response_employee = $this->employee_repo->getBySlug($slug);
 	    	return json_encode($response_employee);
 	    }
 

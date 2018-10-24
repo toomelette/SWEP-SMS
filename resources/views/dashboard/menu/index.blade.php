@@ -47,7 +47,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($menus as $data) 
-            <tr {!! __html::table_highlighter($table_sessions) !!} >
+            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td>{{ $data->name }}</td>
               <td>{{ $data->route }}</td>
               <td><i class="fa {{ $data->icon }}"></i></td>

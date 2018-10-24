@@ -37,7 +37,7 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
         $employee = $this->employee_repo->findBySlug($slug);
 
-        $employee_trngs = $this->cache->remember('employees:trainings:byEmpNo:'. $employee->employee_no, 240, function() use ($employee){
+        $employee_trngs = $this->cache->remember('employees:trainings:fetchByEmpNo:'. $employee->employee_no, 240, function() use ($employee){
             $employee_trng = $this->employee_trng->newQuery();
             return $this->populate($employee_trng, $employee->employee_no);
         });
@@ -149,9 +149,9 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-    public function apiGetBySlug($slug){
+    public function getBySlug($slug){
             
-        $employee_trng = $this->cache->remember('api:employees:trainings:bySlug:'. $slug .'', 240, function() use ($slug){
+        $employee_trng = $this->cache->remember('employees:trainings:getBySlug:'. $slug .'', 240, function() use ($slug){
             return $this->employee_trng->where('slug', $slug)->get();
         });
 

@@ -30,7 +30,7 @@ class EmployeeComposer{
 
     public function compose($view){
 
-        $employees = $this->employee_repo->globalFetchAll();
+        $employees = $this->employee_repo->getAll();
         
     	$view->with('global_employees_all', $employees);
 

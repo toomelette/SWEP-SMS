@@ -35,7 +35,6 @@ class EmployeeTrainingSubscriber extends BaseSubscriber{
 
     public function onStore($employee_trng){
 
-        $this->__cache->deletePattern('swep_cache:employees:all:*');
         $this->__cache->deletePattern('swep_cache:employees:trainings:byEmpNo:'. $employee_trng->employee_no .'');
 
         $this->session->flash('EMPLOYEE_TRNG_CREATE_SUCCESS_SLUG', $employee_trng->slug);
@@ -48,7 +47,6 @@ class EmployeeTrainingSubscriber extends BaseSubscriber{
 
     public function onUpdate($employee_trng){
 
-        $this->__cache->deletePattern('swep_cache:employees:all:*');
         $this->__cache->deletePattern('swep_cache:employees:trainings:byEmpNo:'. $employee_trng->employee_no .'');
         $this->__cache->deletePattern('swep_cache:api:employees:trainings:bySlug:'. $employee_trng->slug .'');
 
@@ -62,9 +60,9 @@ class EmployeeTrainingSubscriber extends BaseSubscriber{
 
     public function onDestroy($employee_trng){
 
-        $this->__cache->deletePattern('swep_cache:employees:all:*');
         $this->__cache->deletePattern('swep_cache:employees:trainings:byEmpNo:'. $employee_trng->employee_no .'');
         $this->__cache->deletePattern('swep_cache:api:employees:trainings:bySlug:'. $employee_trng->slug .'');
+        
     }
 
 

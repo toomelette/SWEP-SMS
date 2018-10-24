@@ -26,7 +26,7 @@ class DocumentController extends Controller{
     
     public function index(DocumentFilterRequest $request){
 
-        return $this->document->fetchAll($request);
+        return $this->document->fetch($request);
     
     }
 

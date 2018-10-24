@@ -28,11 +28,11 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $fund_sources = $this->cache->remember('fund_sources:all:' . $key, 240, function() use ($request){
+        $fund_sources = $this->cache->remember('fund_sources:fetch:' . $key, 240, function() use ($request){
 
             $fund_source = $this->fund_source->newQuery();
             
@@ -106,7 +106,7 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
 
     public function findBySlug($slug){
 
-        $fund_source = $this->cache->remember('fund_sources:bySlug:' . $slug, 240, function() use ($slug){
+        $fund_source = $this->cache->remember('fund_sources:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->fund_source->where('slug', $slug)->first();
         });
         
@@ -171,9 +171,9 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $fund_source = $this->cache->remember('fund_sources:global:all', 240, function(){
+        $fund_source = $this->cache->remember('fund_sources:getAll', 240, function(){
             return $this->fund_source->select('fund_source_id', 'description')->get();
         });
         

@@ -25,7 +25,7 @@ class CourseController extends Controller{
     
     public function index(CourseFilterRequest $request){
 
-        return $this->course->fetchAll($request);
+        return $this->course->fetch($request);
     
     }
 

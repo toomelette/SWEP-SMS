@@ -44,11 +44,11 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $employees = $this->cache->remember('employees:all:' . $key, 240, function() use ($request){
+        $employees = $this->cache->remember('employees:fetch:' . $key, 240, function() use ($request){
 
             $employee = $this->employee->newQuery();
             
@@ -65,52 +65,6 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
             }
 
             return $this->populate($employee);
-
-        });
-
-        return $employees;
-        
-    }
-
-
-
-
-
-
-    public function fetchByDepartmentId($dept_id){
-
-        $employees = $this->cache->remember('employees:byDepartmentId:' . $dept_id, 240, function() use ($dept_id){
-
-            $employee = $this->employee->newQuery();
-
-            return $employee->select('fullname')
-                            ->where('department_id', $dept_id)
-                            ->where('is_active', 'ACTIVE')
-                            ->with('permissionSlip')
-                            ->get();
-
-        });
-
-        return $employees;
-        
-    }
-
-
-
-
-
-
-    public function fetchByIsActive($status){
-
-        $employees = $this->cache->remember('employees:byIsActive:' . $status, 240, function() use ($status){
-
-            $employee = $this->employee->newQuery();
-
-            return $employee->select('employee_no', 'fullname', 'position', 'department_id', 'department_unit_id', 'monthly_basic')
-                            ->where('is_active', $status)
-                            ->with('leaveCard', 'department')
-                            ->orderBy('lastname', 'ASC')
-                            ->get();
 
         });
 
@@ -278,7 +232,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function findBySlug($slug){
 
-        $employee = $this->cache->remember('employees:bySlug:' . $slug, 240, function() use ($slug){
+        $employee = $this->cache->remember('employees:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->employee->where('slug', $slug)
                                   ->with('employeeAddress',
                                          'employeeFamilyDetail',
@@ -314,7 +268,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function findByUserId($user_id){
 
-        $employee = $this->cache->remember('employees:byUserId:' . $user_id, 240, function() use ($user_id){
+        $employee = $this->cache->remember('employees:findByUserId:' . $user_id, 240, function() use ($user_id){
             return $this->employee->where('user_id', $user_id)->first();
         });
 
@@ -370,9 +324,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $employees = $this->cache->remember('employees:global:all', 240, function(){
+        $employees = $this->cache->remember('employees:getAll', 240, function(){
             return $this->employee->select('slug', 'employee_no', 'fullname')
                                   ->where('is_active', 'ACTIVE')
                                   ->orderBy('lastname', 'ASC')
@@ -387,14 +341,37 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-    public function apiGetBySlug($slug){
+    public function getBySlug($slug){
 
-        $employee = $this->cache->remember('api:employees:bySlug:'. $key .'', 240, function() use ($key){
+        $employee = $this->cache->remember('employees:getbySlug:'. $key .'', 240, function() use ($key){
             return $this->employee->where('slug', $key)->get();
         });
 
         return $employee;
 
+    }
+
+
+
+
+
+
+    public function getByIsActive($status){
+
+        $employees = $this->cache->remember('employees:getByIsActive:' . $status, 240, function() use ($status){
+
+            $employee = $this->employee->newQuery();
+
+            return $employee->select('employee_no', 'fullname', 'position', 'department_id', 'department_unit_id', 'monthly_basic')
+                            ->where('is_active', $status)
+                            ->with('leaveCard', 'department')
+                            ->orderBy('lastname', 'ASC')
+                            ->get();
+
+        });
+
+        return $employees;
+        
     }
 
 

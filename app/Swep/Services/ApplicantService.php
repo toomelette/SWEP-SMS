@@ -27,9 +27,9 @@ class ApplicantService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $applicants = $this->applicant_repo->fetchAll($request);
+        $applicants = $this->applicant_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.applicant.index')->with('applicants', $applicants);

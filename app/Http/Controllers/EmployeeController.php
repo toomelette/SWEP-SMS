@@ -42,7 +42,7 @@ class EmployeeController extends Controller{
     // Employee Master
 	public function index(EmployeeFilterRequest $request){
 
-    	return $this->employee->fetchAll($request);
+    	return $this->employee->fetch($request);
     
     }
 
@@ -106,15 +106,6 @@ class EmployeeController extends Controller{
     public function printPDS($slug, $page){
 
         return $this->employee->printPDS($slug, $page);
-
-    }
-
-
-
-
-    public function printInfo($slug){
-
-        return $this->employee->printInfo($slug);
 
     }
 

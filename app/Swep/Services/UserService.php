@@ -42,9 +42,9 @@ class UserService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $users = $this->user_repo->fetchAll($request);
+        $users = $this->user_repo->fetch($request);
 
         $request->flash();
         

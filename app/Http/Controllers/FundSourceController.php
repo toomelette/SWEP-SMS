@@ -24,7 +24,7 @@ class FundSourceController extends Controller{
     
     public function index(FundSourceFilterRequest $request){
 
-        return $this->fund_source->fetchAll($request);
+        return $this->fund_source->fetch($request);
     
     }
 

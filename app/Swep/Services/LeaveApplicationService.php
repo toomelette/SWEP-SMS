@@ -25,9 +25,9 @@ class LeaveApplicationService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $leave_applications = $this->leave_application_repo->fetchAll($request);
+        $leave_applications = $this->leave_application_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.leave_application.index')->with('leave_applications', $leave_applications);

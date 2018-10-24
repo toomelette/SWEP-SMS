@@ -27,9 +27,9 @@ class CourseService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $courses = $this->course_repo->fetchAll($request);
+        $courses = $this->course_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.course.index')->with('courses', $courses);

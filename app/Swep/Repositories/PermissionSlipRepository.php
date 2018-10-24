@@ -33,11 +33,11 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $permission_slips = $this->cache->remember('permission_slips:all:' . $key, 240, function() use ($request){
+        $permission_slips = $this->cache->remember('permission_slips:fetch:' . $key, 240, function() use ($request){
 
             $df = $this->__dataType->date_parse($request->df);
             $dt = $this->__dataType->date_parse($request->dt);
@@ -153,7 +153,7 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
     public function findBySlug($slug){
 
-        $permission_slip = $this->cache->remember('permission_slips:bySlug:' . $slug, 240, function() use ($slug){
+        $permission_slip = $this->cache->remember('permission_slips:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->permission_slip->where('slug', $slug)->first();
         });
 

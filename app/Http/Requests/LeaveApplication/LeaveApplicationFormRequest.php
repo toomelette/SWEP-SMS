@@ -32,7 +32,7 @@ class LeaveApplicationFormRequest extends FormRequest{
             'salary'=>'required|string|max:13',
             'immediate_superior'=>'nullable|string|max:90',
             'immediate_superior_position'=>'nullable|string|max:90',
-            'type'=>'required|string|max:5|min:5',
+            'type'=>'required|string|max:10',
             'working_days'=>'required|string|max:45',
             'working_days_date_from'=>'nullable|date_format:"m/d/Y"',
             'working_days_date_to'=>'nullable|date_format:"m/d/Y"',

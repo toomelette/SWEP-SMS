@@ -25,7 +25,7 @@ class DepartmentUnitController extends Controller{
     
     public function index(DepartmentUnitFilterRequest $request){
         
-        return $this->department_unit->fetchAll($request);
+        return $this->department_unit->fetch($request);
 
     }
 

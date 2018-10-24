@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface DocumentFolderInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -16,6 +16,6 @@ interface DocumentFolderInterface {
 
 	public function findBySlug($slug);
 
-	public function globalFetchAll();
+	public function getAll();
 		
 }

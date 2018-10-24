@@ -8,7 +8,7 @@ interface ApplicantInterface {
 
 	public function store($request);
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function findBySlug($slug);
 
@@ -16,6 +16,8 @@ interface ApplicantInterface {
 
 	public function destroy($slug);
 
+
+	// Dependencies
 	public function storeTrainings($row, $applicant);
 
 	public function storeExperience($row, $applicant);

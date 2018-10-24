@@ -27,7 +27,7 @@ class DocumentFolderController extends Controller{
 
     public function index(DocumentFolderFilterRequest $request){
 
-        return $this->doc_folder->fetchAll($request);
+        return $this->doc_folder->fetch($request);
         
     }
 

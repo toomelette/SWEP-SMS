@@ -32,11 +32,11 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $leave_cards = $this->cache->remember('leave_cards:all:' . $key, 240, function() use ($request){
+        $leave_cards = $this->cache->remember('leave_cards:fetch:' . $key, 240, function() use ($request){
 
             $df = $this->__dataType->date_parse($request->df);
             $dt = $this->__dataType->date_parse($request->dt);
@@ -166,7 +166,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
     public function findBySlug($slug){
 
-        $leave_card = $this->cache->remember('leave_cards:bySlug:' . $slug, 240, function() use ($slug){
+        $leave_card = $this->cache->remember('leave_cards:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->leave_card->where('slug', $slug)->first();
         });
         

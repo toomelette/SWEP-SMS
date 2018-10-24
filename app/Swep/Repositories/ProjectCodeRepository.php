@@ -30,11 +30,11 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $project_codes = $this->cache->remember('project_codes:all:' . $key, 240, function() use ($request){
+        $project_codes = $this->cache->remember('project_codes:fetch:' . $key, 240, function() use ($request){
 
             $project_code = $this->project_code->newQuery();
             
@@ -128,7 +128,7 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
     public function findBySlug($slug){
 
-        $project_code = $this->cache->remember('project_codes:bySlug:' . $slug, 240, function() use ($slug){
+        $project_code = $this->cache->remember('project_codes:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->project_code->where('slug', $slug)->first();
         });
         
@@ -199,9 +199,9 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $project_codes = $this->cache->remember('project_codes:global:all', 240, function(){
+        $project_codes = $this->cache->remember('project_codes:getAll', 240, function(){
             return $this->project_code->select('project_code')->get();
         });
         
@@ -214,9 +214,9 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
 
-    public function apiGetByDepartmentName($dept_name){
+    public function getByDepartmentName($dept_name){
 
-        $project_code = $this->cache->remember('api:project_codes:byDepartmentName:'. $dept_name .'', 240, function() use ($dept_name){
+        $project_code = $this->cache->remember('project_codes:getByDepartmentName:'. $dept_name .'', 240, function() use ($dept_name){
                 
             return $this->project_code->select('project_code')
                                  ->where('department_name', $dept_name)

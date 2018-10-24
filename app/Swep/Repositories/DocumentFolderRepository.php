@@ -31,11 +31,11 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
        $key = str_slug($request->fullUrl(), '_');
 
-        $doc_folders = $this->cache->remember('document_folders:all:' . $key, 240, function() use ($request){
+        $doc_folders = $this->cache->remember('document_folders:fetch:' . $key, 240, function() use ($request){
 
             $doc_folder = $this->doc_folder->newQuery();
             
@@ -114,7 +114,7 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
 
     public function findBySlug($slug){
 
-        $doc_folder = $this->cache->remember('document_folders:bySlug:' . $slug, 240, function() use ($slug){
+        $doc_folder = $this->cache->remember('document_folders:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->doc_folder->where('slug', $slug)->first();
         });
         
@@ -131,9 +131,9 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $doc_folders = $this->cache->remember('document_folders:global:all', 240, function(){
+        $doc_folders = $this->cache->remember('document_folders:getAll', 240, function(){
             return $this->doc_folder->select('folder_code')->get();
         });
         

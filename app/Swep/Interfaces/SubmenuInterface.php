@@ -10,8 +10,8 @@ interface SubmenuInterface {
 	
 	public function findBySubmenuId($submenu_id);
 
-	public function globalFetchAll();
+	public function getAll();
 
-	public function apiGetByMenuId($menu_id);
+	public function getByMenuId($menu_id);
 		
 }

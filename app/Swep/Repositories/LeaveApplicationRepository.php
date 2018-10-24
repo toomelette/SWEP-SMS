@@ -34,11 +34,11 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $leave_applications = $this->cache->remember('leave_applications:all:' . $key, 240, function() use ($request){
+        $leave_applications = $this->cache->remember('leave_applications:fetch:' . $key, 240, function() use ($request){
             $leave_application = $this->requestFilter($request);
             return $this->populate($leave_application);
         });
@@ -57,7 +57,7 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $leave_applications = $this->cache->remember('leave_applications:byUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
+        $leave_applications = $this->cache->remember('leave_applications:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
             $leave_application = $this->requestFilter($request);
             return $this->populateByUser($leave_application, $this->auth->user()->user_id);
         });
@@ -178,7 +178,7 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
     public function findBySlug($slug){
 
-        $leave_application = $this->cache->remember('leave_applications:bySlug:' . $slug, 240, function() use ($slug){
+        $leave_application = $this->cache->remember('leave_applications:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->leave_application->where('slug', $slug)->first();
         });
         

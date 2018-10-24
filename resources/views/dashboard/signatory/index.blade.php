@@ -47,7 +47,7 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($signatories as $data) 
-            <tr {!! __html::table_highlighter($table_sessions) !!} >
+            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td>{{ $data->employee_name }}</td>
               <td>{{ $data->employee_position }}</td>
               <td>{{ $data->type }}</td>
@@ -86,7 +86,7 @@
 
 @section('modals')
 
-  {!! __html::modal_delete('menu_delete') !!}
+  {!! __html::modal_delete('sig_delete') !!}
 
 @endsection 
 
@@ -100,7 +100,7 @@
   <script type="text/javascript">
 
     {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! __js::modal_confirm_delete_caller('menu_delete') !!}
+    {!! __js::modal_confirm_delete_caller('sig_delete') !!}
 
     {{-- UPDATE TOAST --}}
     @if(Session::has('SIGNATORY_UPDATE_SUCCESS'))

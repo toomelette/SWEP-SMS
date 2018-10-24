@@ -29,11 +29,11 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
        $key = str_slug($request->fullUrl(), '_');
 
-        $department_units = $this->cache->remember('department_units:all:' . $key, 240, function() use ($request){
+        $department_units = $this->cache->remember('department_units:fetch:' . $key, 240, function() use ($request){
 
             $department_unit = $this->department_unit->newQuery();
             
@@ -116,7 +116,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
     public function findBySlug($slug){
 
-        $department_unit = $this->cache->remember('department_units:bySlug:' . $slug, 240, function() use ($slug){
+        $department_unit = $this->cache->remember('department_units:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->department_unit->where('slug', $slug)->first();
         });
         
@@ -187,24 +187,9 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
-    public function globalFetchAll(){
+    public function getByDepartmentName($dept_name){
 
-        $department_units = $this->cache->remember('department_units:global:all', 240, function(){
-            return $this->department_unit->select('name', 'department_unit_id', 'description')->get();
-        });
-        
-        return $department_units;
-    }
-
-
-
-
-
-
-
-    public function apiGetByDepartmentName($dept_name){
-
-        $department_unit = $this->cache->remember('api:department_units:byDepartmentName:'. $dept_name .'', 240, function() use ($dept_name){
+        $department_unit = $this->cache->remember('department_units:getByDepartmentName:'. $dept_name .'', 240, function() use ($dept_name){
 
             return $this->department_unit->select('name', 'department_unit_id', 'description')
                                          ->where('department_name', $dept_name)
@@ -222,9 +207,9 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
-    public function apiGetByDepartmentId($dept_id){
+    public function getByDepartmentId($dept_id){
 
-        $department_unit = $this->cache->remember('api:department_units:byDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
+        $department_unit = $this->cache->remember('department_units:getByDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
 
             return $this->department_unit->select('name', 'department_unit_id', 'description')
                                          ->where('department_id', $dept_id)
@@ -243,7 +228,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
     public function getAll(){
 
-        $department_units = $this->cache->remember('department_units:getAll', 240, function(){
+        $department_units = $this->cache->remember('department_units:all', 240, function(){
 
             return $this->department_unit->select('department_unit_id', 'name', 'description')
                                          ->with('employee')
@@ -254,6 +239,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
         return $department_units;
 
     }
+
 
 
 

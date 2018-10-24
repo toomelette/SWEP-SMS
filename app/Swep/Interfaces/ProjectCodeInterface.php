@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface ProjectCodeInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -16,8 +16,8 @@ interface ProjectCodeInterface {
 
 	public function findBySlug($slug);
 
-	public function globalFetchAll();
+	public function getAll();
 
-	public function apiGetByDepartmentName($dept_name);
+	public function getByDepartmentName($dept_name);
 		
 }

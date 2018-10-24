@@ -29,9 +29,9 @@ class DisbursementVoucherService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $disbursement_vouchers = $this->dv_repo->fetchAll($request);
+        $disbursement_vouchers = $this->dv_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.disbursement_voucher.index')->with('disbursement_vouchers', $disbursement_vouchers);

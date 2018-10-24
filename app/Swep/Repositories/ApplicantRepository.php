@@ -35,11 +35,11 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $applicants = $this->cache->remember('applicants:all:' . $key, 240, function() use ($request){
+        $applicants = $this->cache->remember('applicants:fetch:' . $key, 240, function() use ($request){
 
             $applicant = $this->applicant->newQuery();
             
@@ -169,7 +169,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
     public function findBySlug($slug){
 
-        $applicant = $this->cache->remember('applicants:bySlug:' . $slug, 240, function() use ($slug){
+        $applicant = $this->cache->remember('applicants:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->applicant->where('slug', $slug)->first();
         });
 
@@ -247,6 +247,10 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
        return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
 
     }
+
+
+
+
 
 
 

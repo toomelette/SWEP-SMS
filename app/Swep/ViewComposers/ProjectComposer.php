@@ -27,7 +27,7 @@ class ProjectComposer{
 
     public function compose($view){
 
-        $projects = $this->project->globalFetchAll();
+        $projects = $this->project->getAll();
         
     	$view->with('global_projects_all', $projects);
 

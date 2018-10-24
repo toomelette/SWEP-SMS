@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface PermissionSlipInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 

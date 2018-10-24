@@ -30,11 +30,11 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $signatories = $this->cache->remember('signatories:all:' . $key, 240, function() use ($request){
+        $signatories = $this->cache->remember('signatories:fetch:' . $key, 240, function() use ($request){
 
             $signatory = $this->signatory->newQuery();
             
@@ -120,7 +120,7 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
     public function findBySlug($slug){
 
-        $signatory = $this->cache->remember('signatories:bySlug:' . $slug, 240, function() use ($slug){
+        $signatory = $this->cache->remember('signatories:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->signatory->where('slug', $slug)->first();
         });
         
@@ -139,7 +139,7 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
     public function findByType($type){
 
-        $signatory = $this->cache->remember('signatories:byType:' . $type, 240, function() use ($type){
+        $signatory = $this->cache->remember('signatories:findByType:' . $type, 240, function() use ($type){
             return $this->signatory->where('type', $type)->first();
         }); 
 
@@ -209,9 +209,9 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $signatories = $this->cache->remember('signatories:global:all', 240, function(){
+        $signatories = $this->cache->remember('signatories:getAll', 240, function(){
             return $this->signatory->select('employee_name', 'employee_position', 'type')->get();
         });
         

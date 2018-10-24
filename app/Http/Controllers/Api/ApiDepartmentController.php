@@ -36,7 +36,7 @@ class ApiDepartmentController extends Controller{
 
     	if($request->Ajax()){
 
-    		$response_department_name = $this->department_repo->apiGetByDepartmentId($dept_id);
+    		$response_department_name = $this->department_repo->getByDepartmentId($dept_id);
 
 	    	return json_encode($response_department_name);
 

@@ -27,7 +27,7 @@ class SignatoryComposer{
 
     public function compose($view){
 
-        $signatories = $this->signatory_repo->globalFetchAll();
+        $signatories = $this->signatory_repo->getAll();
         
     	$view->with('global_signatories_all', $signatories);
 

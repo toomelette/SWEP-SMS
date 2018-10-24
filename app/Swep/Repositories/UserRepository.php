@@ -32,11 +32,11 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-	public function fetchAll($request){
+	public function fetch($request){
 	
 		$key = str_slug($request->fullUrl(), '_');
 
-        $users = $this->cache->remember('users:all:' . $key, 240, function() use ($request){
+        $users = $this->cache->remember('users:fetch:' . $key, 240, function() use ($request){
 
             $user = $this->user->newQuery();
             
@@ -249,7 +249,7 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 	public function findBySlug($slug){
 
-        $user = $this->cache->remember('users:bySlug:' . $slug, 240, function() use ($slug){
+        $user = $this->cache->remember('users:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->first();
         }); 
         
@@ -268,7 +268,7 @@ class UserRepository extends BaseRepository implements UserInterface {
 
     public function findById($id){
 
-        $user = $this->cache->remember('users:byId:' . $id, 240, function() use ($id){
+        $user = $this->cache->remember('users:findById:' . $id, 240, function() use ($id){
             return $this->user->where('id', $id)->first();
         }); 
         

@@ -27,9 +27,9 @@ class PlantillaService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $plantillas = $this->plantilla_repo->fetchAll($request);
+        $plantillas = $this->plantilla_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.plantilla.index')->with('plantillas', $plantillas);

@@ -26,7 +26,7 @@ class MenuController extends Controller{
     
     public function index(MenuFilterRequest $request){
         
-        return $this->menu->fetchAll($request);
+        return $this->menu->fetch($request);
 
     }
 

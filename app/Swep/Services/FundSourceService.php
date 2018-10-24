@@ -27,9 +27,9 @@ class FundSourceService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $fund_sources = $this->fund_source_repo->fetchAll($request);
+        $fund_sources = $this->fund_source_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.fund_source.index')->with('fund_sources', $fund_sources);

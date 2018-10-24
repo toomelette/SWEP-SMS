@@ -31,11 +31,11 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $departments = $this->cache->remember('departments:all:' . $key, 240, function() use ($request){
+        $departments = $this->cache->remember('departments:fetch:' . $key, 240, function() use ($request){
 
             $department = $this->department->newQuery();
             
@@ -113,7 +113,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
     public function findBySlug($slug){
 
-        $department = $this->cache->remember('departments:bySlug:' . $slug, 240, function() use ($slug){
+        $department = $this->cache->remember('departments:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->department->where('slug', $slug)->first();
         });
 
@@ -132,7 +132,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
     public function findByDepartmentId($dept_id){
 
-        $department = $this->cache->remember('departments:byDepartmentId:' . $dept_id, 240, function() use ($dept_id){
+        $department = $this->cache->remember('departments:findByDepartmentId:' . $dept_id, 240, function() use ($dept_id){
             return $this->department->where('department_id', $dept_id)->first();
         });
 
@@ -200,9 +200,9 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
 
-    public function globalFetchAll(){
+    public function getAll(){
 
-        $departments = $this->cache->remember('departments:global:all', 240, function(){
+        $departments = $this->cache->remember('departments:getAll', 240, function(){
             return $this->department->select('name', 'department_id')->get();
         });
         
@@ -215,9 +215,9 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
 
-    public function apiGetByDepartmentId($dept_id){
+    public function getByDepartmentId($dept_id){
 
-        $department_name = $this->cache->remember('api:departments:byDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
+        $department_name = $this->cache->remember('departments:getByDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
 
             return $this->department->select('name')
                                     ->where('department_id', $dept_id)

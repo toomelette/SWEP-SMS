@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface MenuInterface {
 
-	public function fetchAll($request);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -18,6 +18,6 @@ interface MenuInterface {
 
 	public function findByMenuId($menu_id);
 
-	public function globalFetchAll();
+	public function getAll();
 		
 }

@@ -39,15 +39,15 @@ class UserMenuComposer{
 
         if($this->auth->check()){
 
-            $user_menus_u = $this->user_menu_repo->globalFetchByCategory('U');
+            $user_menus_u = $this->user_menu_repo->getByCategory('U');
 
-            $user_menus_su = $this->user_menu_repo->globalFetchByCategory('SU');
+            $user_menus_su = $this->user_menu_repo->getByCategory('SU');
 
-            $user_menus_acctg = $this->user_menu_repo->globalFetchByCategory('ACCTG');
+            $user_menus_acctg = $this->user_menu_repo->getByCategory('ACCTG');
 
-            $user_menus_hr = $this->user_menu_repo->globalFetchByCategory('HR');
+            $user_menus_hr = $this->user_menu_repo->getByCategory('HR');
 
-            $user_menus_records = $this->user_menu_repo->globalFetchByCategory('RECORDS');
+            $user_menus_records = $this->user_menu_repo->getByCategory('RECORDS');
 
         }  
 

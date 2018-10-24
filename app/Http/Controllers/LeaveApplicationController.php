@@ -25,7 +25,7 @@ class LeaveApplicationController extends Controller{
 
     public function index(LeaveApplicationFilterRequest $request){
 
-        return $this->leave_application->fetchAll($request);
+        return $this->leave_application->fetch($request);
     
     }
 

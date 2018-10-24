@@ -38,10 +38,13 @@ class EmployeeSubscriber extends BaseSubscriber{
 
 
 
-    public function onStore(){
+    public function onStore($employee){
 
         $this->__cache->deletePattern('swep_cache:employees:all:*');
         $this->__cache->deletePattern('swep_cache:employees:global:all');
+        $this->__cache->deletePattern('swep_cache:api:employees:byIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:byDepartmentId:'. $employee->department_id .'');
+
         $this->session->flash('EMPLOYEE_CREATE_SUCCESS', 'The Employee has been successfully created!');
 
     }
@@ -55,6 +58,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:employees:all:*');
         $this->__cache->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
         $this->__cache->deletePattern('swep_cache:api:employees:bySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:api:employees:byIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:byDepartmentId:'. $employee->department_id .'');
         $this->__cache->deletePattern('swep_cache:employees:global:all');
 
         $this->session->flash('EMPLOYEE_UPDATE_SUCCESS', 'The Employee has been successfully updated!');
@@ -71,6 +76,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:employees:all:*');
         $this->__cache->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
         $this->__cache->deletePattern('swep_cache:api:employees:bySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:api:employees:byIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:byDepartmentId:'. $employee->department_id .'');
         $this->__cache->deletePattern('swep_cache:employees:global:all');
 
         $this->session->flash('EMPLOYEE_DELETE_SUCCESS', 'The Employee has been successfully deleted!');

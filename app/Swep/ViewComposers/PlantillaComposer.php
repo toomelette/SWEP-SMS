@@ -27,7 +27,7 @@ class PlantillaComposer{
 
     public function compose($view){
 
-        $plantillas = $this->plantilla_repo->globalFetchAll();
+        $plantillas = $this->plantilla_repo->getAll();
         
     	$view->with('global_plantilla_all', $plantillas);
 

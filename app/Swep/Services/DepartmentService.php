@@ -27,9 +27,9 @@ class DepartmentService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $departments = $this->department_repo->fetchAll($request);
+        $departments = $this->department_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.department.index')->with('departments', $departments);

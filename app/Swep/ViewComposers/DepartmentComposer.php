@@ -27,7 +27,7 @@ class DepartmentComposer{
 
     public function compose($view){
 
-        $departments = $this->department_repo->globalFetchAll();
+        $departments = $this->department_repo->getAll();
         
     	$view->with('global_departments_all', $departments);
 

@@ -25,7 +25,7 @@ class DocumentFolderComposer{
 
     public function compose($view){
 
-        $doc_folders = $this->doc_folder_repo->globalFetchAll();
+        $doc_folders = $this->doc_folder_repo->getAll();
         
     	$view->with('global_document_folders_all', $doc_folders);
     	

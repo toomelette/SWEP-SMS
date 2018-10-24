@@ -6,11 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface EmployeeInterface {
 
-	public function fetchAll($request);
-
-	public function fetchByDepartmentId($dept_id);
-
-	public function fetchByIsActive($status);
+	public function fetch($request);
 
 	public function store($request);
 
@@ -22,9 +18,11 @@ interface EmployeeInterface {
 
 	public function findByUserId($user_id);
 
-	public function globalFetchAll();
+	public function getAll();
 
-	public function apiGetBySlug($slug);
+	public function getBySlug($slug);
+
+	public function getByIsActive($status);
 
 	
 	public function storeFamilyDetails($request, $employee);

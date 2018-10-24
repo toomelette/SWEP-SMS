@@ -27,7 +27,7 @@ class SignatoryController extends Controller{
     
     public function index(SignatoryFilterRequest $request){
 
-        return $this->signatory->fetchAll($request);
+        return $this->signatory->fetch($request);
         
     }
 

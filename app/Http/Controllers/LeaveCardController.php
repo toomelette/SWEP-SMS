@@ -26,7 +26,7 @@ class LeaveCardController extends Controller{
 
     public function index(LeaveCardFilterRequest $request){
 
-        return $this->leave_card->fetchAll($request);
+        return $this->leave_card->fetch($request);
     
     }
 

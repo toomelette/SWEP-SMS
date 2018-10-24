@@ -27,9 +27,9 @@ class DocumentService extends BaseService{
 
 
 
-    public function fetchAll($request){
+    public function fetch($request){
 
-        $documents = $this->document_repo->fetchAll($request);
+        $documents = $this->document_repo->fetch($request);
 
         $request->flash();
         return view('dashboard.document.index')->with('documents', $documents);
