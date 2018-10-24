@@ -11,7 +11,7 @@ class EmployeeTraining extends Model{
 
 
 
-    protected $table = 'employee_trainings';
+    protected $table = 'hr_employee_trainings';
 
     protected $dates = ['date_from', 'date_to', 'created_at', 'updated_at'];
 

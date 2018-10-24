@@ -134,8 +134,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** Plantilla **/
-	Route::get('/plantilla/report', 'PlantillaController@report')->name('plantilla.report');
-	Route::get('/plantilla/report_generate', 'PlantillaController@reportGenerate')->name('plantilla.report_generate');
 	Route::resource('plantilla', 'PlantillaController');
 	
 	

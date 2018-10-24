@@ -10,7 +10,7 @@ class EmployeeVoluntaryWork extends Model{
 
 
 
-	protected $table = 'employee_voluntary_works';
+	protected $table = 'hr_employee_voluntary_works';
 
     protected $dates = ['date_from', 'date_to'];
 

@@ -12,7 +12,7 @@ class Department extends Model{
 
     use Sortable;
 
-    protected $table = 'departments';
+    protected $table = 'su_departments';
 
     protected $dates = ['created_at', 'updated_at'];
 

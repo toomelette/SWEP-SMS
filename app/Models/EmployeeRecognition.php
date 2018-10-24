@@ -10,7 +10,7 @@ class EmployeeRecognition extends Model{
 
 
 
-	protected $table = 'employee_recognitions';
+	protected $table = 'hr_employee_recognitions';
 
     public $timestamps = false;
     

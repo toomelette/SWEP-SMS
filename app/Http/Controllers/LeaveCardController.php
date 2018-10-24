@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\LeaveCardService;
-use App\Http\Requests\LeaveCardFormRequest;
-use App\Http\Requests\LeaveCardFilterRequest;
-use App\Http\Requests\LeaveCardReportRequest;
+use App\Http\Requests\LeaveCard\LeaveCardFormRequest;
+use App\Http\Requests\LeaveCard\LeaveCardFilterRequest;
+use App\Http\Requests\LeaveCard\LeaveCardReportRequest;
 
 class LeaveCardController extends Controller{
     

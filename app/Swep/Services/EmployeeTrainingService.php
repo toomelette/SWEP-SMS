@@ -84,7 +84,7 @@ class EmployeeTrainingService extends BaseService{
 
         $employee_trainings = $this->employee_trng_repo->fetchByEmpNo($slug);
 
-        return view('printables.employee_training')->with($employee_trainings);
+        return view('printables.employee.training')->with($employee_trainings);
 
     }
 

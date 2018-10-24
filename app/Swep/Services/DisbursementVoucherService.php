@@ -128,9 +128,9 @@ class DisbursementVoucherService extends BaseService{
        $disbursement_voucher = $this->dv_repo->findBySlug($slug);
 
         if($type == 'front'){
-            return view('printables.disbursement_voucher')->with('disbursement_voucher', $disbursement_voucher);
+            return view('printables.disbursement_voucher.dv_front')->with('disbursement_voucher', $disbursement_voucher);
         }elseif($type == 'back'){
-            return view('printables.disbursement_voucher_back');
+            return view('printables.disbursement_voucher.dv_back');
         }
         return abort(404);
 

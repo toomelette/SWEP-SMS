@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\DocumentService;
-use App\Http\Requests\DocumentFormRequest;
-use App\Http\Requests\DocumentFilterRequest;
+use App\Http\Requests\Document\DocumentFormRequest;
+use App\Http\Requests\Document\DocumentFilterRequest;
 
 
 class DocumentController extends Controller{

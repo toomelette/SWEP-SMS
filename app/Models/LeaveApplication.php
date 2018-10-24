@@ -15,7 +15,7 @@ class LeaveApplication extends Model{
 
 	use Sortable;
 
-	protected $table = 'leave_application';
+	protected $table = 'hr_leave_application';
 
     protected $dates = ['working_days_date_from', 'working_days_date_to', 'created_at', 'updated_at'];
 

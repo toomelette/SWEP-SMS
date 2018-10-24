@@ -8,7 +8,7 @@ class ApplicantTraining extends Model{
     
 
 
-	protected $table = 'applicant_trainings';
+	protected $table = 'hr_applicant_trainings';
 
     protected $dates = ['date_from', 'date_to'];
 

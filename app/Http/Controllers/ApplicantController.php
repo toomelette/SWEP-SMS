@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\ApplicantService;
-use App\Http\Requests\ApplicantFormRequest;
-use App\Http\Requests\ApplicantFilterRequest;
+use App\Http\Requests\Applicant\ApplicantFormRequest;
+use App\Http\Requests\Applicant\ApplicantFilterRequest;
 
 
 

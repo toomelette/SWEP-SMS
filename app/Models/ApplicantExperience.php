@@ -11,7 +11,7 @@ class ApplicantExperience extends Model{
     
 
 
-	protected $table = 'applicant_experiences';
+	protected $table = 'hr_applicant_experiences';
 
     protected $dates = ['date_from', 'date_to'];
 

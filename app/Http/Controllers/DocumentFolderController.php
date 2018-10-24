@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\DocumentFolderService;
-use App\Http\Requests\DocumentFolderFormRequest;
-use App\Http\Requests\DocumentFolderFilterRequest;
+use App\Http\Requests\DocumentFolder\DocumentFolderFormRequest;
+use App\Http\Requests\DocumentFolder\DocumentFolderFilterRequest;
 
 
 

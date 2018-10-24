@@ -8,7 +8,7 @@ class Project extends Model{
 
 
 
-    protected $table = 'projects';
+    protected $table = 'su_projects';
 
     protected $dates = ['created_at', 'updated_at'];
 

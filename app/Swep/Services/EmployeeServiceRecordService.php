@@ -85,7 +85,7 @@ class EmployeeServiceRecordService extends BaseService{
 
         $employee_sr = $this->employee_sr_repo->fetchByEmpNo($slug); 
 
-        return view('printables.employee_service_record')->with($employee_sr);
+        return view('printables.employee.service_record')->with($employee_sr);
 
     }
 

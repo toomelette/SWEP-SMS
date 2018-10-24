@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\DisbursementVoucherService;
-use App\Http\Requests\DisbursementVoucherFormRequest;
-use App\Http\Requests\DisbursementVoucherSetNoRequest;
-use App\Http\Requests\DisbursementVoucherFilterRequest;
+use App\Http\Requests\DisbursementVoucher\DisbursementVoucherFormRequest;
+use App\Http\Requests\DisbursementVoucher\DisbursementVoucherSetNoRequest;
+use App\Http\Requests\DisbursementVoucher\DisbursementVoucherFilterRequest;
 
 
 

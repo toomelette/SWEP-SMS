@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\ProfileService;
-use App\Http\Requests\ProfileUpdateAccountUsernameRequest;
-use App\Http\Requests\ProfileUpdateAccountPasswordRequest;
-use App\Http\Requests\ProfileUpdateAccountColorRequest;
+use App\Http\Requests\Profile\ProfileUpdateAccountUsernameRequest;
+use App\Http\Requests\Profile\ProfileUpdateAccountPasswordRequest;
+use App\Http\Requests\Profile\ProfileUpdateAccountColorRequest;
 
 
 class ProfileController extends Controller{

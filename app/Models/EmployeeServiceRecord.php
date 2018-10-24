@@ -11,7 +11,7 @@ class EmployeeServiceRecord extends Model{
 
 
 
-	protected $table = 'employee_service_records';
+	protected $table = 'hr_employee_service_records';
 
     protected $dates = ['created_at', 'updated_at'];
 

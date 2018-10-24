@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Swep\Services\DepartmentService;
-use App\Http\Requests\DepartmentFormRequest;
-use App\Http\Requests\DepartmentFilterRequest;
+use App\Http\Requests\Department\DepartmentFormRequest;
+use App\Http\Requests\Department\DepartmentFilterRequest;
 
 
 class DepartmentController extends Controller{

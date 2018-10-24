@@ -247,7 +247,7 @@ class LeaveCardService extends BaseService{
         if($request->r_type == 'loat'){
 
             $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
-            return view('printables.leave_card_loat')->with('employees', $employees);
+            return view('printables.leave_card.loat')->with('employees', $employees);
 
         }elseif($request->r_type == 'ledger'){
 
@@ -257,7 +257,7 @@ class LeaveCardService extends BaseService{
             $employee = $this->employee_repo->findBySlug($request->s);
             $list_of_months = $this->__dynamic->months_between_dates($start_date, $end_date);
 
-            return view('printables.leave_card_ledger', compact('employee','list_of_months'));
+            return view('printables.leave_card.leave_ledger', compact('employee','list_of_months'));
 
         }elseif($request->r_type == 'comp'){
 
@@ -267,7 +267,7 @@ class LeaveCardService extends BaseService{
             $employee = $this->employee_repo->findBySlug($request->s);
             $list_of_months = $this->__dynamic->months_between_dates($start_date, $end_date);
 
-            return view('printables.leave_card_comp', compact('employee','list_of_months'));
+            return view('printables.leave_card.ot_ledger', compact('employee','list_of_months'));
 
         }else{
 

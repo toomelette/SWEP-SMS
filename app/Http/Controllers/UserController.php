@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\UserService;
-use App\Http\Requests\UserFormRequest;
-use App\Http\Requests\UserFilterRequest;
-use App\Http\Requests\UserResetPasswordRequest;
-use App\Http\Requests\UserSyncEmployeeRequest;
+use App\Http\Requests\User\UserFormRequest;
+use App\Http\Requests\User\UserFilterRequest;
+use App\Http\Requests\User\UserResetPasswordRequest;
+use App\Http\Requests\User\UserSyncEmployeeRequest;
 
 
 class UserController extends Controller{

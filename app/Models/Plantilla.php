@@ -13,7 +13,7 @@ class Plantilla extends Model{
 
     use Sortable;
 
-	protected $table = 'plantillas';
+	protected $table = 'hr_plantillas';
 
     protected $dates = ['created_at', 'updated_at'];
 

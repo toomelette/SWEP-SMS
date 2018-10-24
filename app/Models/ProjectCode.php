@@ -13,7 +13,7 @@ class ProjectCode extends Model{
 
 	use Sortable;
 
-    protected $table = 'project_codes';
+    protected $table = 'acctg_project_codes';
 
     protected $dates = ['date_started', 'projected_date_end', 'created_at', 'updated_at'];
 

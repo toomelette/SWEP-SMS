@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\LeaveApplicationService;
-use App\Http\Requests\LeaveApplicationFormRequest;
-use App\Http\Requests\LeaveApplicationFilterRequest;
+use App\Http\Requests\LeaveApplication\LeaveApplicationFormRequest;
+use App\Http\Requests\LeaveApplication\LeaveApplicationFilterRequest;
 
 
 class LeaveApplicationController extends Controller{

@@ -11,7 +11,7 @@ class Applicant extends Model{
 
 	use Sortable;
 
-    protected $table = 'applicants';
+    protected $table = 'hr_applicants';
 
     protected $dates = ['date_of_birth', 'created_at', 'updated_at'];
 

@@ -122,15 +122,15 @@ class EmployeeService extends BaseService{
         $employee = $this->employee_repo->findBySlug($slug);
 
         if($page == 'p1'){
-            return view('printables.employee_pds_p1')->with('employee', $employee);
+            return view('printables.employee.pds_p1')->with('employee', $employee);
         }elseif($page == 'p2'){
-            return view('printables.employee_pds_p2')->with('employee', $employee);
+            return view('printables.employee.pds_p2')->with('employee', $employee);
         }elseif($page == 'p3'){
-            return view('printables.employee_pds_p3')->with('employee', $employee);
+            return view('printables.employee.pds_p3')->with('employee', $employee);
         }elseif($page == 'p4'){
-            return view('printables.employee_pds_p4')->with('employee', $employee);
+            return view('printables.employee.pds_p4')->with('employee', $employee);
         }elseif($page == 'p5'){
-            return view('printables.employee_pds_p5')->with('employee', $employee);
+            return view('printables.employee.pds_p5')->with('employee', $employee);
         }
 
         return abort(404);
@@ -145,7 +145,7 @@ class EmployeeService extends BaseService{
     public function printInfo($slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
-        return view('printables.employee_info')->with('employee', $employee);
+        return view('printables.employee.info')->with('employee', $employee);
 
     }
 
@@ -158,13 +158,13 @@ class EmployeeService extends BaseService{
 
         if($request->r_type == 'ALPHA'){
             $employees = $this->employee_repo->fetchByIsActive('ACTIVE');
-            return view('printables.employee_alphalist')->with('employees', $employees);
+            return view('printables.employee.alphalist')->with('employees', $employees);
         }elseif($request->r_type == 'GEN'){
             $dept_units = $this->dept_unit_repo->getAll();
-            return view('printables.employee_by_gender')->with('dept_units', $dept_units);
+            return view('printables.employee.gender_count')->with('dept_units', $dept_units);
         }elseif($request->r_type == 'UNIT'){
             $dept_units = $this->dept_unit_repo->getAll();
-            return view('printables.employee_by_unit')->with('dept_units', $dept_units);
+            return view('printables.employee.by_unit')->with('dept_units', $dept_units);
         }else{
             abort(404);
         }

@@ -10,7 +10,7 @@ class Document extends Model{
 
 	use Sortable;
 
-    protected $table = 'documents';
+    protected $table = 'rec_documents';
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 

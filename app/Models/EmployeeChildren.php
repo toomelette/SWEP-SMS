@@ -10,7 +10,7 @@ class EmployeeChildren extends Model{
 
 
 
-	protected $table = 'employee_children';
+	protected $table = 'hr_employee_children';
 
     protected $dates = ['date_of_birth'];
 

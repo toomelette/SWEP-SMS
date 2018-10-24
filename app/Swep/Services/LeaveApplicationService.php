@@ -121,9 +121,9 @@ class LeaveApplicationService extends BaseService{
        $leave_application = $this->leave_application_repo->findBySlug($slug);
 
         if($type == 'front'){
-            return view('printables.leave_application')->with('leave_application', $leave_application);
+            return view('printables.leave_application.la_front')->with('leave_application', $leave_application);
         }elseif($type == 'back'){
-            return view('printables.leave_application_back');
+            return view('printables.leave_application.la_back');
         }
         return abort(404);
 

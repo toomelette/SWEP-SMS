@@ -1,4 +1,4 @@
-<?php
+hr_<?php
 
 namespace App\Models;
 
@@ -10,7 +10,7 @@ class EmployeeOrganization extends Model{
 
 
 
-	protected $table = 'employee_organizations';
+	protected $table = 'hr_employee_organizations';
 
     public $timestamps = false;
 

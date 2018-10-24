@@ -10,7 +10,7 @@ class PermissionSlip extends Model{
 
     use Sortable;
     
-	protected $table = 'permission_slip';
+	protected $table = 'hr_permission_slip';
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 

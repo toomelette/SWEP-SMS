@@ -10,7 +10,7 @@ class EmployeeReference extends Model{
 
 
 
-	protected $table = 'employee_references';
+	protected $table = 'hr_employee_references';
 
     public $timestamps = false;
     

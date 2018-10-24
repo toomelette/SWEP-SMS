@@ -15,5 +15,11 @@ interface ApplicantInterface {
 	public function update($request, $slug);
 
 	public function destroy($slug);
+
+	public function storeTrainings($row, $applicant);
+
+	public function storeExperience($row, $applicant);
+
+	public function storeEducationalBackground($row, $applicant);
 		
 }

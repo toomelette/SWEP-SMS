@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\DepartmentUnitService;
-use App\Http\Requests\DepartmentUnitFormRequest;
-use App\Http\Requests\DepartmentUnitFilterRequest;
+use App\Http\Requests\DepartmentUnit\DepartmentUnitFormRequest;
+use App\Http\Requests\DepartmentUnit\DepartmentUnitFilterRequest;
 
 
 class DepartmentUnitController extends Controller{

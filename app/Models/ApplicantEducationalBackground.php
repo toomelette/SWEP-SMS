@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class ApplicantEducationalBackground extends Model{
 
 
-    protected $table = 'applicant_educational_background';
+    protected $table = 'hr_applicant_educational_background';
 
 	public $timestamps = false;
 

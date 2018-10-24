@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\ProjectCodeService;
-use App\Http\Requests\ProjectCodeFormRequest;
-use App\Http\Requests\ProjectCodeFilterRequest;
+use App\Http\Requests\ProjectCode\ProjectCodeFormRequest;
+use App\Http\Requests\ProjectCode\ProjectCodeFilterRequest;
 
 
 class ProjectCodeController extends Controller{

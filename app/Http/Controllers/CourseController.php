@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\CourseService;
-use App\Http\Requests\CourseFormRequest;
-use App\Http\Requests\CourseFilterRequest;
+use App\Http\Requests\Course\CourseFormRequest;
+use App\Http\Requests\Course\CourseFilterRequest;
 
 class CourseController extends Controller{
 

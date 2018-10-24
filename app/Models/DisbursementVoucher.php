@@ -16,7 +16,7 @@ class DisbursementVoucher extends Model{
 
     use Sortable;
 
-	protected $table = 'disbursement_vouchers';
+	protected $table = 'acctg_disbursement_vouchers';
 
 	protected $dates = ['processed_at', 'checked_at', 'created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 

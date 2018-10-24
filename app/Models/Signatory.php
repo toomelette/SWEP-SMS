@@ -13,7 +13,7 @@ class Signatory extends Model{
 
     use Sortable;
 
-    protected $table = 'signatories';
+    protected $table = 'su_signatories';
 
     protected $dates = ['created_at', 'updated_at'];
 

@@ -11,7 +11,7 @@ class LeaveCard extends Model{
 
 	use Sortable;
 
-	protected $table = 'leave_card';
+	protected $table = 'hr_leave_card';
 
     protected $dates = ['date', 'date_from', 'date_to', 'created_at', 'updated_at'];
 

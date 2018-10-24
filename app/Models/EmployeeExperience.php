@@ -10,7 +10,7 @@ class EmployeeExperience extends Model{
 
 
 
-	protected $table = 'employee_experiences';
+	protected $table = 'hr_employee_experiences';
 
     protected $dates = ['date_from', 'date_to'];
 

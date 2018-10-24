@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Swep\Services\MenuService;
-use App\Http\Requests\MenuFormRequest;
-use App\Http\Requests\MenuFilterRequest;
+use App\Http\Requests\Menu\MenuFormRequest;
+use App\Http\Requests\Menu\MenuFilterRequest;
 
 
 

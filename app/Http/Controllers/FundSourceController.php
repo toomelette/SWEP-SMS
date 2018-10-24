@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\FundSourceService;
-use App\Http\Requests\FundSourceFormRequest;
-use App\Http\Requests\FundSourceFilterRequest;
+use App\Http\Requests\FundSource\FundSourceFormRequest;
+use App\Http\Requests\FundSource\FundSourceFilterRequest;
 
 
 class FundSourceController extends Controller{

@@ -10,7 +10,7 @@ class EmployeeEligibility extends Model{
 
 
 
-	protected $table = 'employee_eligibilities';
+	protected $table = 'hr_employee_eligibilities';
 
     protected $dates = ['exam_date'];
 

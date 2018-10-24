@@ -10,7 +10,7 @@ class DocumentFolder extends Model{
 
 	use Sortable;
 
-    protected $table = 'document_folders';
+    protected $table = 'rec_document_folders';
 
     protected $dates = ['created_at', 'updated_at'];
 

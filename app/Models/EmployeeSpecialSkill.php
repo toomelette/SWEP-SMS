@@ -11,7 +11,7 @@ class EmployeeSpecialSkill extends Model{
 
 
 
-	protected $table = 'employee_special_skills';
+	protected $table = 'hr_employee_special_skills';
 
     public $timestamps = false;
 

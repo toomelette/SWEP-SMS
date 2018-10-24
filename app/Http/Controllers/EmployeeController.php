@@ -6,13 +6,16 @@ namespace App\Http\Controllers;
 use App\Swep\Services\EmployeeService;
 use App\Swep\Services\EmployeeTrainingService;
 use App\Swep\Services\EmployeeServiceRecordService;
-use App\Http\Requests\EmployeeFormRequest;
-use App\Http\Requests\EmployeeFilterRequest;
-use App\Http\Requests\EmployeeServiceRecordCreateForm;
-use App\Http\Requests\EmployeeServiceRecordEditForm;
-use App\Http\Requests\EmployeeTrainingCreateForm;
-use App\Http\Requests\EmployeeTrainingEditForm;
-use App\Http\Requests\EmployeeReportRequest;
+
+use App\Http\Requests\Employee\EmployeeFormRequest;
+use App\Http\Requests\Employee\EmployeeFilterRequest;
+use App\Http\Requests\Employee\EmployeeReportRequest;
+
+use App\Http\Requests\EmployeeServiceRecord\EmployeeServiceRecordCreateForm;
+use App\Http\Requests\EmployeeServiceRecord\EmployeeServiceRecordEditForm;
+
+use App\Http\Requests\EmployeeTraining\EmployeeTrainingCreateForm;
+use App\Http\Requests\EmployeeTraining\EmployeeTrainingEditForm;
 
 
 class EmployeeController extends Controller{

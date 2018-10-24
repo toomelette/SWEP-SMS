@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Swep\Services\PlantillaService;
-use App\Http\Requests\PlantillaFormRequest;
-use App\Http\Requests\PlantillaFilterRequest;
+use App\Http\Requests\Plantilla\PlantillaFormRequest;
+use App\Http\Requests\Plantilla\PlantillaFilterRequest;
 
 
 

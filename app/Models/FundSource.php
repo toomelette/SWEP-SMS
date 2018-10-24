@@ -14,7 +14,7 @@ class FundSource extends Model{
 
 	use Sortable;
 
-    protected $table = 'fund_sources';
+    protected $table = 'acctg_fund_sources';
 
     protected $dates = ['created_at', 'updated_at'];
 

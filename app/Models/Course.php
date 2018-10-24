@@ -12,7 +12,7 @@ class Course extends Model{
 
     use Sortable;
 
-	protected $table = 'courses';
+	protected $table = 'hr_courses';
 
     protected $dates = ['created_at', 'updated_at'];
 

@@ -13,7 +13,7 @@ class Submenu extends Model{
 
 	use Sortable;
 
-    protected $table = 'submenus';
+    protected $table = 'su_submenus';
 
     protected $dates = ['created_at', 'updated_at'];
 

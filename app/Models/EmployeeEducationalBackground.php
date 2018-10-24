@@ -10,7 +10,7 @@ class EmployeeEducationalBackground extends Model{
 
 
 
-	protected $table = 'employee_educational_background';
+	protected $table = 'hr_employee_educational_background';
 
     protected $dates = [];
 

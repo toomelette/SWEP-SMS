@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Swep\Services\PermissionSlipService;
-use App\Http\Requests\PermissionSlipFormRequest;
-use App\Http\Requests\PermissionSlipFilterRequest;
-use App\Http\Requests\PermissionSlipReportRequest;
+use App\Http\Requests\PermissionSlip\PermissionSlipFormRequest;
+use App\Http\Requests\PermissionSlip\PermissionSlipFilterRequest;
+use App\Http\Requests\PermissionSlip\PermissionSlipReportRequest;
 
 
 

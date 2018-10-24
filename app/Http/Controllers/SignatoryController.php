@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Swep\Services\SignatoryService;
-use App\Http\Requests\SignatoryFormRequest;
-use App\Http\Requests\SignatoryFilterRequest;
+use App\Http\Requests\Signatory\SignatoryFormRequest;
+use App\Http\Requests\Signatory\SignatoryFilterRequest;
 
 
 class SignatoryController extends Controller{

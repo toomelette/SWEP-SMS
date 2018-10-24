@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmpBeginningCredits extends Model{
 
 
-    protected $table = 'emp_beginning_credits';
+    protected $table = 'hr_emp_beginning_credits';
 
     public $timestamps = false;
 
