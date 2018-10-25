@@ -54,7 +54,7 @@ class EmployeeEducationalBackground extends Model{
     /** Scopes **/
     public function scopePopulate($query){
 
-        return $query->orderBy('graduate_year', 'desc')->get();
+        return $query->orderBy('graduate_year', 'asc')->get();
 
     }
 

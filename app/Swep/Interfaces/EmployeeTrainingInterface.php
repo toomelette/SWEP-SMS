@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface EmployeeTrainingInterface {
 
-	public function fetchByEmpNo($slug);
+	public function getByEmpNo($slug);
 
 	public function store($request, $slug);
 	

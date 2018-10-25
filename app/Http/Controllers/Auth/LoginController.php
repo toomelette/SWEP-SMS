@@ -90,8 +90,8 @@ class LoginController extends Controller{
 
                 $user = $this->user_repo->login($this->auth->user()->slug);
 
-                $this->__cache->deletePattern('swep_cache:users:all:*');
-                $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+                $this->__cache->deletePattern('swep_cache:users:fetch:*');
+                $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
 
                 $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
@@ -120,8 +120,8 @@ class LoginController extends Controller{
             $this->guard()->logout();
             $request->session()->invalidate();
 
-            $this->__cache->deletePattern('swep_cache:users:all:*');
-            $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+            $this->__cache->deletePattern('swep_cache:users:fetch:*');
+            $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
 
             return redirect('/');
 

@@ -17,8 +17,8 @@ class UserFilterRequest extends FormRequest{
 
         return [
 
-            'ol' => 'nullable|string|max:5',
-            'a' => 'nullable|string|max:5',
+            'ol' => 'nullable|string|max:11',
+            'a' => 'nullable|string|max:11',
 
         ];
 

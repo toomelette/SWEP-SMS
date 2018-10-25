@@ -230,7 +230,7 @@
                   <span style="font-size:10px;">{{ $data->spdate }}</span>
                 </div>
                 <div class="col-sm-6">
-                  <span style="font-size:10px; margin-left:12px;">&nbsp;</span>
+                  <span style="font-size:10px;">{{ $data->status }}</span>
                 </div>
               </div>
             </div>

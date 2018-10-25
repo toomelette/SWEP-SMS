@@ -22,7 +22,7 @@ class EmployeeReportRequest extends FormRequest{
     public function rules(){
 
         return [
-            'r_type' => 'nullable|string|max:10',
+            'r_type' => 'nullable|string|max:11',
         ];
     
     }

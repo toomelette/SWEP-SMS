@@ -32,11 +32,11 @@ class LeaveApplicationFormRequest extends FormRequest{
             'salary'=>'required|string|max:13',
             'immediate_superior'=>'nullable|string|max:90',
             'immediate_superior_position'=>'nullable|string|max:90',
-            'type'=>'required|string|max:10',
+            'type'=>'required|string|max:11',
             'working_days'=>'required|string|max:45',
             'working_days_date_from'=>'nullable|date_format:"m/d/Y"',
             'working_days_date_to'=>'nullable|date_format:"m/d/Y"',
-            'commutation'=>'required|string|max:5|min:4',
+            'commutation'=>'required|string|max:11',
 
         ];
 
@@ -44,7 +44,7 @@ class LeaveApplicationFormRequest extends FormRequest{
 
         if($this->request->get('type') == 'T1001'){
 
-            $rules['type_vacation'] = 'required|string|min:6|max:6';
+            $rules['type_vacation'] = 'required|string|max:11';
 
             if($this->request->get('type_vacation') == 'TV1002'){
 
@@ -65,7 +65,7 @@ class LeaveApplicationFormRequest extends FormRequest{
 
         if($this->request->get('type') == 'T1001'){
 
-        	$rules['spent_vacation'] = 'required|string|max:6|min:6';
+        	$rules['spent_vacation'] = 'required|string|max:11';
 
             if($this->request->get('spent_vacation') == 'SV1002'){
 
@@ -79,7 +79,7 @@ class LeaveApplicationFormRequest extends FormRequest{
 
         if($this->request->get('type') == 'T1002'){
 
-        	$rules['spent_sick'] = 'required|string|max:6|min:6';
+        	$rules['spent_sick'] = 'required|string|max:11';
 
             if($this->request->get('spent_sick') == 'SS1001'){
 

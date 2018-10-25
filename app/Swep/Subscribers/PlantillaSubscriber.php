@@ -36,8 +36,8 @@ class PlantillaSubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->__cache->deletePattern('swep_cache:plantillas:all:*');
-        $this->__cache->deletePattern('swep_cache:plantillas:global:all');
+        $this->__cache->deletePattern('swep_cache:plantillas:fetch:*');
+        $this->__cache->deletePattern('swep_cache:plantillas:getAll');
 
         $this->session->flash('PLANTILLA_CREATE_SUCCESS', 'The Plantilla has been successfully created!');
 
@@ -49,9 +49,9 @@ class PlantillaSubscriber extends BaseSubscriber{
 
     public function onUpdate($plantilla){
 
-        $this->__cache->deletePattern('swep_cache:plantillas:all:*');
-        $this->__cache->deletePattern('swep_cache:plantillas:bySlug:'. $plantilla->slug .'');
-        $this->__cache->deletePattern('swep_cache:plantillas:global:all');
+        $this->__cache->deletePattern('swep_cache:plantillas:fetch:*');
+        $this->__cache->deletePattern('swep_cache:plantillas:findBySlug:'. $plantilla->slug .'');
+        $this->__cache->deletePattern('swep_cache:plantillas:getAll');
 
         $this->session->flash('PLANTILLA_UPDATE_SUCCESS', 'The Plantilla has been successfully updated!');
         $this->session->flash('PLANTILLA_UPDATE_SUCCESS_SLUG', $plantilla->slug);
@@ -64,9 +64,9 @@ class PlantillaSubscriber extends BaseSubscriber{
 
     public function onDestroy($plantilla){
 
-        $this->__cache->deletePattern('swep_cache:plantillas:all:*');
-        $this->__cache->deletePattern('swep_cache:plantillas:bySlug:'. $plantilla->slug .'');
-        $this->__cache->deletePattern('swep_cache:plantillas:global:all');
+        $this->__cache->deletePattern('swep_cache:plantillas:fetch:*');
+        $this->__cache->deletePattern('swep_cache:plantillas:findBySlug:'. $plantilla->slug .'');
+        $this->__cache->deletePattern('swep_cache:plantillas:getAll');
 
         $this->session->flash('PLANTILLA_DELETE_SUCCESS', 'The Plantilla has been successfully deleted!');
         

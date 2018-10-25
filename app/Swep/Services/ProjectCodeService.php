@@ -42,7 +42,7 @@ class ProjectCodeService extends BaseService{
 
         $project_code = $this->project_code_repo->store($request);
 
-        $this->event->fire('project_code.store');
+        $this->event->fire('project_code.store', $project_code);
         return redirect()->back();
 
     }

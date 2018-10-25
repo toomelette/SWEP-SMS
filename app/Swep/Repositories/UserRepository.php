@@ -266,25 +266,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-    public function findById($id){
-
-        $user = $this->cache->remember('users:findById:' . $id, 240, function() use ($id){
-            return $this->user->where('id', $id)->first();
-        }); 
-        
-        if(empty($user)){
-            abort(404);
-        }
-        
-        return $user;
-
-    }
-
-
-
-
-
-
 	public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {

@@ -27,7 +27,7 @@ class EmployeeTrainingService extends BaseService{
 
     public function index($slug){
 
-        $employee_trainings = $this->employee_trng_repo->fetchByEmpNo($slug);
+        $employee_trainings = $this->employee_trng_repo->getByEmpNo($slug);
 
         return view('dashboard.employee.training')->with($employee_trainings);
 
@@ -82,7 +82,7 @@ class EmployeeTrainingService extends BaseService{
 
     public function print($slug){
 
-        $employee_trainings = $this->employee_trng_repo->fetchByEmpNo($slug);
+        $employee_trainings = $this->employee_trng_repo->getByEmpNo($slug);
 
         return view('printables.employee.training')->with($employee_trainings);
 

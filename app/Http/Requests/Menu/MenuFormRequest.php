@@ -28,7 +28,7 @@ class MenuFormRequest extends FormRequest{
             'route'=>'required|string|max:45',
             'icon'=>'required|string|max:45',
             'category'=>'required|string|max:45',
-            'is_menu'=>'required|string|max:5',
+            'is_menu'=>'required|string|max:11',
             'is_dropdown'=>'required|string|max:5',
 
         ];
@@ -40,7 +40,7 @@ class MenuFormRequest extends FormRequest{
                     
                 $rules['row.'.$key.'.sub_name'] = 'required|string|max:45';
                 $rules['row.'.$key.'.sub_route'] = 'required|string|max:45';
-                $rules['row.'.$key.'.sub_is_nav'] = 'required|string|max:5';
+                $rules['row.'.$key.'.sub_is_nav'] = 'required|string|max:11';
 
             } 
 

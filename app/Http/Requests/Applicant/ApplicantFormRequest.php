@@ -71,7 +71,7 @@ class ApplicantFormRequest extends FormRequest{
                 $rules['row_exp.'.$key.'.date_to'] = 'nullable|date_format:"m/d/Y"';
                 $rules['row_exp.'.$key.'.position'] = 'nullable|string|max:90';
                 $rules['row_exp.'.$key.'.company'] = 'required|string|max:255';
-                $rules['row_exp.'.$key.'.is_gov_service'] = 'required|string|min:4|max:5';
+                $rules['row_exp.'.$key.'.is_gov_service'] = 'required|string|max:11';
             } 
         }
 

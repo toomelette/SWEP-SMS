@@ -27,7 +27,7 @@ class EmployeeServiceRecordEditForm extends FormRequest{
             'e_date_to'=>'required|string|max:45',
             'e_position'=>'required|string|max:45',
             'e_appointment_status'=>'required|string|max:45',
-            'e_salary'=>'required|string|max:12',
+            'e_salary'=>'required|string|max:13',
             'e_mode_of_payment'=>'required|string|max:45',
             'e_station'=>'required|string|max:45',
             'e_gov_serve'=>'nullable|string|max:45',

@@ -6,12 +6,13 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'), 
-                        'dct' => Request::get('dct'),
-                        'fc' => Request::get('fc'),
-                        'df' => Request::get('df'),
-                        'dt' => Request::get('dt'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        
+                        'fc' => Request::get('fc'),
+                        'dct' => Request::get('dct'),
+                        'df' => Request::get('df'),
+                        'dt' => Request::get('dt'),
                       ];
                       
 ?>

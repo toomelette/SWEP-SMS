@@ -25,7 +25,7 @@ class EmployeeServiceRecordCreateForm extends FormRequest{
             'date_to'=>'required|string|max:45',
             'position'=>'required|string|max:45',
             'appointment_status'=>'required|string|max:45',
-            'salary'=>'required|string|max:12',
+            'salary'=>'required|string|max:13',
             'mode_of_payment'=>'required|string|max:45',
             'station'=>'required|string|max:45',
             'gov_serve'=>'nullable|string|max:45',

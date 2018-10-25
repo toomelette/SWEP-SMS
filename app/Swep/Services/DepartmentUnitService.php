@@ -45,7 +45,7 @@ class DepartmentUnitService extends BaseService{
 
         $department_unit = $this->department_unit_repo->store($request);
 
-        $this->event->fire('department_unit.store');        
+        $this->event->fire('department_unit.store', $department_unit);        
         return redirect()->back();
 
     }

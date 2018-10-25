@@ -21,7 +21,7 @@ class LeaveApplicationFilterRequest extends FormRequest{
         return [
 
             'q' => 'nullable|string|max:90',
-            't' => 'nullable|string|min:5|max:5',
+            't' => 'nullable|string|max:11',
             'df' => 'nullable|date_format:"m/d/Y"',
             'dt' => 'nullable|date_format:"m/d/Y"',
 

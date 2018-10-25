@@ -456,7 +456,7 @@
         </div>
 
 
-        @foreach ($employee->employeeReference as $data)
+        @foreach ($employee->employeeReference()->populate() as $data)
            <div class="col-sm-12 no-padding" style="border-bottom:solid 1px;">
             <div class="col-sm-5" style="border-right:solid 1px;">
               <p style="font-size:9px; padding-top: 2px; padding-left: 2px;">{{ $data->fullname }}</p>

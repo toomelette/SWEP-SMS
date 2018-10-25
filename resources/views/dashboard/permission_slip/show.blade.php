@@ -44,8 +44,6 @@
                 <dd>{{ __dataType::time_parse($permission_slip->time_out, 'h:i A') }}</dd>
                 <dt>Time In:</dt>
                 <dd>{{ __dataType::time_parse($permission_slip->time_in, 'h:i A') }}</dd>
-                <dt>Time In:</dt>
-                <dd>{{ __dataType::time_parse($permission_slip->time_in, 'h:i A') }}</dd>
                 <dt>With PS:</dt>
                 <dd>{{ $permission_slip->with_ps == 1 ? 'YES' : 'NO'  }}</dd>
               </dl>

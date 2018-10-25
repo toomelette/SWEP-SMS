@@ -198,7 +198,7 @@
                     <th>Name</th>
                     <th>Date of Birth</th>
                   </tr>
-                  @foreach($employee->employeeChildren as $data)
+                  @foreach($employee->employeeChildren()->populate() as $data)
                     <tr>
                       <td>{{ $data->fullname }}</td>
                       <td>{{ __dataType::date_parse($data->date_of_birth, 'M d, Y') }}</td>
@@ -238,7 +238,7 @@
                   <th>Course</th>
                   <th>Graduate Year</th>
                 </tr>
-                @foreach($employee->employeeEducationalBackground as $data) 
+                @foreach($employee->employeeEducationalBackground()->populate() as $data) 
                   <tr>
                     <td>{{ $data->level }}</td>
                     <td>{{ $data->school_name }}</td>
@@ -279,7 +279,7 @@
                   <th>Date</th>
                   <th>Venue</th>
                 </tr>
-                @foreach($employee->employeeTraining as $data) 
+                @foreach($employee->employeeTraining()->populate() as $data) 
                   <tr>
                     <td>{{ $data->title }}</td>
                     <td>{{ $data->conducted_by }}</td>
@@ -329,7 +329,7 @@
                   <th>Level</th>
                   <th>Rating</th>
                 </tr>
-                @foreach($employee->employeeEligibility as $data)
+                @foreach($employee->employeeEligibility()->populate() as $data)
                   <tr>
                     <td>{{ $data->eligibility }}</td>
                     <td>{{ $data->level }}</td>
@@ -368,7 +368,7 @@
                   <th>Position</th>
                   <th>Appointment Status</th>
                 </tr>
-                @foreach($employee->employeeExperience as $data) 
+                @foreach($employee->employeeExperience()->populate() as $data) 
                   <tr>
                     <td>{{ $data->company }}</td>
                     <td>{{ $data->position }}</td>
@@ -407,7 +407,7 @@
                   <th>Name of Organization</th>
                   <th>Position</th>
                 </tr>
-                @foreach($employee->employeeVoluntaryWork as $data) 
+                @foreach($employee->employeeVoluntaryWork()->populate() as $data) 
                   <tr>
                     <td>{{ $data->name }}</td>   
                     <td>{{ $data->position }}</td>                 
@@ -444,7 +444,7 @@
                 <tr>
                   <th>Title</th>
                 </tr>
-                @foreach($employee->employeeRecognition as $data) 
+                @foreach($employee->employeeRecognition()->populate() as $data) 
                   <tr>
                     <td>{{ $data->title }}</td>                  </tr>
                 @endforeach
@@ -478,7 +478,7 @@
                 <tr>
                   <th>Name of Organization</th>
                 </tr>
-                @foreach($employee->employeeOrganization as $data) 
+                @foreach($employee->employeeOrganization()->populate() as $data) 
                   <tr>
                     <td>{{ $data->name }}</td>                  </tr>
                 @endforeach
@@ -512,7 +512,7 @@
                 <tr>
                   <th>Special Skills or Hobies</th>
                 </tr>
-                @foreach($employee->employeeSpecialSkill as $data) 
+                @foreach($employee->employeeSpecialSkill()->populate() as $data) 
                   <tr>
                     <td>{{ $data->description }}</td>                
                   </tr>
@@ -549,7 +549,7 @@
                   <th>Address</th>
                   <th>Tel No.</th>
                 </tr>
-                @foreach($employee->employeeReference as $data) 
+                @foreach($employee->employeeReference()->populate() as $data) 
                   <tr>
                     <td>{{ $data->fullname }}</td>
                     <td>{{ $data->address }}</td>

@@ -568,7 +568,7 @@
       		<span style="font-size:7px;">&nbsp; DATE OF BIRTH (mm/dd/yyyy)</span>
       	</div>
         
-        @foreach ($employee->employeeChildren as $key => $data)
+        @foreach ($employee->employeeChildren()->populate() as $key => $data)
           @if($key <= 10)
             <div class="col-sm-7 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
               <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ $data->fullname }}</span>
@@ -655,7 +655,7 @@
 
     {{-- EB Content --}}
 
-    @foreach ($employee->employeeEducationalBackground as $data)
+    @foreach ($employee->employeeEducationalBackground()->populate() as $data)
 
       <div class="row" style="border-bottom:solid 1px;">
         <div class="col-sm-2 box-l-grey" style="border-right:solid 1px; height: 1.9em; margin-bottom: -5px; padding-bottom: 5px; overflow: hidden;">

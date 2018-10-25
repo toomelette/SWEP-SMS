@@ -68,25 +68,6 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
 
 
-    public function fetchEmployeeByDepartmentIdWithMonthlyPS($dept_id, $df, $dt){
-
-        $employee = $this->employee->newQuery();
-
-        return $employee->select('fullname', 'employee_no')
-                        ->where('department_id', $dept_id)
-                        ->where('is_active', 'ACTIVE')
-                        ->with('permissionSlip')
-                        ->whereHas('permissionSlip', function ($model) use ($df, $dt) {
-                          $model->whereBetween('date', [$df, $dt]);
-                        })
-                        ->get();
-
-    }
-
-
-
-
-
 
     public function store($request){
 
@@ -221,6 +202,26 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
         return $id;
         
     }
+
+
+
+
+
+    public function getEmployeeByDepartmentIdWithMonthlyPS($dept_id, $df, $dt){
+
+        $employee = $this->employee->newQuery();
+
+        return $employee->select('fullname', 'employee_no')
+                        ->where('department_id', $dept_id)
+                        ->where('is_active', 'ACTIVE')
+                        ->with('permissionSlip')
+                        ->whereHas('permissionSlip', function ($model) use ($df, $dt) {
+                                                        $model->whereBetween('date', [$df, $dt]);
+                                                    })
+                        ->get();
+
+    }
+    
 
 
 

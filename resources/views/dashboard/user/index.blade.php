@@ -13,10 +13,11 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'), 
-                        'online' => Request::get('online'), 
-                        'active' => Request::get('active'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+
+                        'ol' => Request::get('ol'), 
+                        'a' => Request::get('a'),
                       ];
 
   $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';

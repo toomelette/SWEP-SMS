@@ -5,13 +5,14 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'),
+                        'sort' => Request::get('sort'),
+                        'direction' => Request::get('direction'),
+
                         'emp'=> Request::get('emp'), 
                         'doc_t'=> Request::get('doc_t'),
                         'leave_t'=> Request::get('leave_t'),
                         'df'=> Request::get('df'),
                         'dt'=> Request::get('dt'),
-                        'sort' => Request::get('sort'),
-                        'direction' => Request::get('direction'),
                       ];
 
 ?>

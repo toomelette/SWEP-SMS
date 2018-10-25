@@ -28,7 +28,7 @@ class EmployeeServiceRecordService extends BaseService{
 
     public function index($slug){
 
-        $employee_sr = $this->employee_sr_repo->fetchByEmpNo($slug); 
+        $employee_sr = $this->employee_sr_repo->getByEmpNo($slug); 
 
         return view('dashboard.employee.service_record')->with($employee_sr);
 
@@ -83,7 +83,7 @@ class EmployeeServiceRecordService extends BaseService{
 
     public function print($slug){
 
-        $employee_sr = $this->employee_sr_repo->fetchByEmpNo($slug); 
+        $employee_sr = $this->employee_sr_repo->getByEmpNo($slug); 
 
         return view('printables.employee.service_record')->with($employee_sr);
 

@@ -36,8 +36,8 @@ class ProfileSubscriber extends BaseSubscriber{
     public function onUpdateAccountUsername($user){
 
 
-         $this->__cache->deletePattern('swep_cache:users:all:*');
-         $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+         $this->__cache->deletePattern('swep_cache:users:fetch:*');
+         $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
 
         $this->session->flash('PROFILE_UPDATE_USERNAME_SUCCESS', 'Your username has been successfully updated! Please sign in again.');
 
@@ -49,8 +49,8 @@ class ProfileSubscriber extends BaseSubscriber{
 
     public function onUpdateAccountPassword($user){
 
-         $this->__cache->deletePattern('swep_cache:users:all:*');
-         $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+         $this->__cache->deletePattern('swep_cache:users:fetch:*');
+         $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
 
         $this->session->flash('PROFILE_UPDATE_PASSWORD_SUCCESS', 'Your password has been successfully updated! Please sign in again.');
 
@@ -62,8 +62,8 @@ class ProfileSubscriber extends BaseSubscriber{
 
     public function onUpdateAccountColor($user){
 
-         $this->__cache->deletePattern('swep_cache:users:all:*');
-         $this->__cache->deletePattern('swep_cache:users:bySlug:'. $user->slug .'');
+         $this->__cache->deletePattern('swep_cache:users:fetch:*');
+         $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
 
         $this->session->flash('PROFILE_UPDATE_COLOR_SUCCESS', 'Color Scheme successfully set!');
 

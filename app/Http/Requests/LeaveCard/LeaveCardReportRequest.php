@@ -20,8 +20,8 @@ class LeaveCardReportRequest extends FormRequest{
 
         return [
 
-            'r_type' => 'required|string|max:10',
-            'm' => 'sometimes|required|string|max:5',
+            'r_type' => 'required|string|max:11',
+            'm' => 'sometimes|required|string|max:11',
             'y' => 'sometimes|required|integer|max:3000|min:2000',
             's' => 'sometimes|required|string|max:45',
             

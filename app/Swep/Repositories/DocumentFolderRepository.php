@@ -131,21 +131,6 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
 
 
 
-    public function getAll(){
-
-        $doc_folders = $this->cache->remember('document_folders:getAll', 240, function(){
-            return $this->doc_folder->select('folder_code')->get();
-        });
-        
-        return $doc_folders;
-
-    }
-
-
-
-
-
-
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {
@@ -166,6 +151,21 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
+
+    }
+
+
+
+
+
+
+    public function getAll(){
+
+        $doc_folders = $this->cache->remember('document_folders:getAll', 240, function(){
+            return $this->doc_folder->select('folder_code')->get();
+        });
+        
+        return $doc_folders;
 
     }
 

@@ -87,7 +87,7 @@
         <div class="col-sm-5 box-l-grey" style="border-bottom:solid 1px;">
           <span style="font-size:7px;">&nbsp; DATE OF BIRTH (mm/dd/yyyy)</span>
         </div>
-        @foreach ($employee->employeeChildren as $key => $data)
+        @foreach ($employee->employeeChildren()->populate() as $key => $data)
           @if($key > 10)
             <div class="col-sm-7" style="border-right:solid 1px; border-bottom:solid 1px;">
               <span style="font-size:8px; font-weight:bold; padding-left: 2px;">{{ $data->fullname }}</span>
@@ -155,7 +155,7 @@
       </div>
 
       {{-- ELIGIBILITY Content --}}
-      @foreach ($employee->employeeEligibility as $key => $data)
+      @foreach ($employee->employeeEligibility()->populate() as $key => $data)
         @if($key > 9)
           <div class="row" style="border-bottom:solid 1px;">
 
@@ -263,7 +263,7 @@
 
       {{-- Work Experience Content --}}
 
-      @foreach ($employee->employeeExperience as $key => $data)
+      @foreach ($employee->employeeExperience()->populate() as $key => $data)
         @if($key > 24)
           <div class="row" style="border-bottom:solid 1px;">
 
@@ -356,7 +356,7 @@
       </div>
 
       {{-- VOLUNTARY WORKS Content --}}
-      @foreach ($employee->employeeVoluntaryWork as $key => $data)
+      @foreach ($employee->employeeVoluntaryWork()->populate() as $key => $data)
         @if($key > 6)
           <div class="row" style="border-bottom:solid 1px; overflow:hidden;">
 
@@ -496,7 +496,7 @@
       <div class="row">
 
         {{-- SPECIAL SKILLS Content --}}
-        @foreach ($employee->employeeSpecialSkill as $key => $data)
+        @foreach ($employee->employeeSpecialSkill()->populate() as $key => $data)
           @if($key > 6 )
            <div class="col-sm-12" style="border-right:solid 1px; border-bottom:solid 1px;">
             <p style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->description }}</p>
@@ -524,7 +524,7 @@
       <div class="row">
 
         {{-- Recognitions Content --}}
-        @foreach ($employee->employeeRecognition as $key => $data)
+        @foreach ($employee->employeeRecognition()->populate() as $key => $data)
           @if($key > 6 )
             <div class="col-sm-12" style="border-right:solid 1px; border-bottom:solid 1px;">
               <p style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->title }}</p>
@@ -551,7 +551,7 @@
       <div class="row">
 
         {{-- Organization Content --}}
-        @foreach ($employee->employeeOrganization as $key => $data)
+        @foreach ($employee->employeeOrganization()->populate() as $key => $data)
           @if($key > 6)
             <div class="col-sm-12 no-padding" style="border-right:solid 1px; border-bottom:solid 1px;">
               <p style="font-size:8px; font-weight:bold; padding-left:3px;">{{ $data->name }}</p>

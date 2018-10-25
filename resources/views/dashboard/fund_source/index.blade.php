@@ -31,7 +31,7 @@
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.department.index')) !!}
+        {!! __html::table_search(route('dashboard.fund_source.index')) !!}
       </div>
 
     {{-- Form End --}}  

@@ -33,11 +33,11 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-    public function fetchByEmpNo($slug){
+    public function getByEmpNo($slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
 
-        $employee_trngs = $this->cache->remember('employees:trainings:fetchByEmpNo:'. $employee->employee_no, 240, function() use ($employee){
+        $employee_trngs = $this->cache->remember('employees:trainings:getByEmpNo:'. $employee->employee_no, 240, function() use ($employee){
             $employee_trng = $this->employee_trng->newQuery();
             return $this->populate($employee_trng, $employee->employee_no);
         });

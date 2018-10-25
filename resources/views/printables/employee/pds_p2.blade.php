@@ -118,7 +118,7 @@
 
     {{-- ELIGIBILITY Content --}}
 
-    @foreach ($employee->employeeEligibility as $key => $data)
+    @foreach ($employee->employeeEligibility()->populate() as $key => $data)
       @if($key <= 9)
         <div class="row" style="border-bottom:solid 1px;">
 
@@ -272,7 +272,7 @@
 
     {{-- Work Experience Content --}}
 
-    @foreach ($employee->employeeExperience as $key => $data)
+    @foreach ($employee->employeeExperience()->populate() as $key => $data)
       @if($key <= 24)
         <div class="row" style="border-bottom:solid 1px;">
 
@@ -318,7 +318,7 @@
     @if(count($employee->employeeExperience) < 25)
 
       <?php 
-        $diff = 25 - count($employee->employeeExperience); 
+        $diff = 25 - count($employee->employeeExperience);
       ?>
 
       @for ($i = 0; $i < $diff; $i++)

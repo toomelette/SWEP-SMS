@@ -40,10 +40,9 @@ class EmployeeSubscriber extends BaseSubscriber{
 
     public function onStore($employee){
 
-        $this->__cache->deletePattern('swep_cache:employees:all:*');
-        $this->__cache->deletePattern('swep_cache:employees:global:all');
-        $this->__cache->deletePattern('swep_cache:api:employees:byIsActive:'. $employee->is_active .'');
-        $this->__cache->deletePattern('swep_cache:employees:byDepartmentId:'. $employee->department_id .'');
+        $this->__cache->deletePattern('swep_cache:employees:fetch:*');
+        $this->__cache->deletePattern('swep_cache:employees:getAll');
+        $this->__cache->deletePattern('swep_cache:employees:getByIsActive:'. $employee->is_active .'');
 
         $this->session->flash('EMPLOYEE_CREATE_SUCCESS', 'The Employee has been successfully created!');
 
@@ -55,12 +54,12 @@ class EmployeeSubscriber extends BaseSubscriber{
 
     public function onUpdate($employee){
 
-        $this->__cache->deletePattern('swep_cache:employees:all:*');
-        $this->__cache->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
-        $this->__cache->deletePattern('swep_cache:api:employees:bySlug:'. $employee->slug .'');
-        $this->__cache->deletePattern('swep_cache:api:employees:byIsActive:'. $employee->is_active .'');
-        $this->__cache->deletePattern('swep_cache:employees:byDepartmentId:'. $employee->department_id .'');
-        $this->__cache->deletePattern('swep_cache:employees:global:all');
+        $this->__cache->deletePattern('swep_cache:employees:fetch:*');
+        $this->__cache->deletePattern('swep_cache:employees:getAll');
+        $this->__cache->deletePattern('swep_cache:employees:getbySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:getByIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:findBySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:findByUserId:'. $employee->user_id .'');
 
         $this->session->flash('EMPLOYEE_UPDATE_SUCCESS', 'The Employee has been successfully updated!');
         $this->session->flash('EMPLOYEE_UPDATE_SUCCESS_SLUG', $employee->slug);
@@ -73,12 +72,12 @@ class EmployeeSubscriber extends BaseSubscriber{
 
     public function onDestroy($employee){
 
-        $this->__cache->deletePattern('swep_cache:employees:all:*');
-        $this->__cache->deletePattern('swep_cache:employees:bySlug:'. $employee->slug .'');
-        $this->__cache->deletePattern('swep_cache:api:employees:bySlug:'. $employee->slug .'');
-        $this->__cache->deletePattern('swep_cache:api:employees:byIsActive:'. $employee->is_active .'');
-        $this->__cache->deletePattern('swep_cache:employees:byDepartmentId:'. $employee->department_id .'');
-        $this->__cache->deletePattern('swep_cache:employees:global:all');
+        $this->__cache->deletePattern('swep_cache:employees:fetch:*');
+        $this->__cache->deletePattern('swep_cache:employees:getAll');
+        $this->__cache->deletePattern('swep_cache:employees:getbySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:getByIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:findBySlug:'. $employee->slug .'');
+        $this->__cache->deletePattern('swep_cache:employees:findByUserId:'. $employee->user_id .'');
 
         $this->session->flash('EMPLOYEE_DELETE_SUCCESS', 'The Employee has been successfully deleted!');
 

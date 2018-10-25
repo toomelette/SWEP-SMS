@@ -251,7 +251,7 @@
         $ps_total_time = 0;
         $ps_credits = 0;
 
-        foreach ($employee->permissionSlip()->monthlyPSM2($month, $year) as $data_ps) {
+        foreach ($employee->permissionSlip()->monthlyPS2($month, $year) as $data_ps) {
 
           $start = Carbon::createFromFormat('H:i:s', $data_ps->time_out);
           $end = Carbon::createFromFormat('H:i:s', $data_ps->time_in);

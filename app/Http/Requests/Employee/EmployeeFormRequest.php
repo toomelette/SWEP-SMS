@@ -40,7 +40,7 @@ class EmployeeFormRequest extends FormRequest{
             'name_ext'=>'nullable|string|max:11',
             'date_of_birth' => 'nullable|date_format:"m/d/Y"',
             'place_of_birth'=>'nullable|string|max:255',
-            'sex'=>'nullable|string|max:20',
+            'sex'=>'nullable|string|max:11',
             'civil_status'=>'nullable|string|max:45',
             'height'=>'nullable|string|max:20',
             'weight'=>'nullable|string|max:20',
@@ -121,34 +121,34 @@ class EmployeeFormRequest extends FormRequest{
             'firstday_sra' => 'nullable|date_format:"m/d/Y"',
             'appointment_date' => 'nullable|date_format:"m/d/Y"',
             'adjustment_date' => 'nullable|date_format:"m/d/Y"',
-            'project_id' => 'nullable|string|min:5|max:5',
-            'is_active' => 'nullable|string|min:6|max:8',
+            'project_id' => 'nullable|string|max:11',
+            'is_active' => 'nullable|string|max:11',
 
 
             // Questions
-            'q_34_a'=>'nullable|string|max:5|min:4',
-            'q_34_b'=>'nullable|string|max:5|min:4',
+            'q_34_a'=>'nullable|string|max:11',
+            'q_34_b'=>'nullable|string|max:11',
             'q_34_b_yes_details'=>'nullable|string|max:255',
-            'q_35_a'=>'nullable|string|max:5|min:4',
+            'q_35_a'=>'nullable|string|max:11',
             'q_35_a_yes_details'=>'nullable|string|max:255',
-            'q_35_b'=>'nullable|string|max:5|min:4',
+            'q_35_b'=>'nullable|string|max:11',
             'q_35_b_yes_details_1'=>'nullable|string|max:255',
             'q_35_b_yes_details_2'=>'nullable|string|max:255',
-            'q_36'=>'nullable|string|max:5|min:4',
+            'q_36'=>'nullable|string|max:11',
             'q_36_yes_details'=>'nullable|string|max:255',
-            'q_37'=>'nullable|string|max:5|min:4',
+            'q_37'=>'nullable|string|max:11',
             'q_37_yes_details'=>'nullable|string|max:255',
-            'q_38_a'=>'nullable|string|max:5|min:4',
+            'q_38_a'=>'nullable|string|max:11',
             'q_38_a_yes_details'=>'nullable|string|max:255',
-            'q_38_b'=>'nullable|string|max:5|min:4',
+            'q_38_b'=>'nullable|string|max:11',
             'q_38_b_yes_details' => 'nullable|string|max:255',
-            'q_39' => 'nullable|string|max:5|min:4',
+            'q_39' => 'nullable|string|max:11',
             'q_39_yes_details' => 'nullable|string|max:255',
-            'q_40_a' => 'nullable|string|max:5|min:4',
+            'q_40_a' => 'nullable|string|max:11',
             'q_40_a_yes_details' => 'nullable|string|max:255',
-            'q_40_b' => 'nullable|string|max:5|min:4',
+            'q_40_b' => 'nullable|string|max:11',
             'q_40_b_yes_details' => 'nullable|string|max:255',
-            'q_40_c' => 'nullable|string|max:5|min:4',
+            'q_40_c' => 'nullable|string|max:11',
             'q_40_c_yes_details' => 'nullable|string|max:255',
 
         ];
@@ -202,7 +202,7 @@ class EmployeeFormRequest extends FormRequest{
                 $rules['row_we.'.$key.'.salary'] = 'nullable|string|max:13';
                 $rules['row_we.'.$key.'.salary_grade'] = 'nullable|int';
                 $rules['row_we.'.$key.'.appointment_status'] = 'nullable|string|max:45';
-                $rules['row_we.'.$key.'.is_gov_service'] = 'nullable|string|min:4|max:5';
+                $rules['row_we.'.$key.'.is_gov_service'] = 'nullable|string|max:11';
             } 
         }
 

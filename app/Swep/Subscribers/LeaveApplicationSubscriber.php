@@ -34,8 +34,8 @@ class LeaveApplicationSubscriber extends BaseSubscriber{
 
     public function onStore($leave_application){
         
-        $this->__cache->deletePattern('swep_cache:leave_applications:all:*');
-        $this->__cache->deletePattern('swep_cache:leave_applications:byUser:'. $leave_application->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:leave_applications:fetch:*');
+        $this->__cache->deletePattern('swep_cache:leave_applications:fetchByUser:'. $leave_application->user_id .':*');
 
         $this->session->flash('LA_CREATE_SUCCESS', 'Your Leave Application has been successfully Created!');
         $this->session->flash('LA_CREATE_SUCCESS_SLUG', $leave_application->slug);
@@ -48,9 +48,9 @@ class LeaveApplicationSubscriber extends BaseSubscriber{
 
     public function onUpdate($leave_application){
 
-        $this->__cache->deletePattern('swep_cache:leave_applications:all:*');
-        $this->__cache->deletePattern('swep_cache:leave_applications:byUser:'. $leave_application->user_id .':*');
-        $this->__cache->deletePattern('swep_cache:leave_applications:bySlug:'. $leave_application->slug .'');
+        $this->__cache->deletePattern('swep_cache:leave_applications:fetch:*');
+        $this->__cache->deletePattern('swep_cache:leave_applications:fetchByUser:'. $leave_application->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:leave_applications:findBySlug:'. $leave_application->slug .'');
 
         $this->session->flash('LA_UPDATE_SUCCESS', 'Your Leave Application has been successfully Updated!');
         $this->session->flash('LA_UPDATE_SUCCESS_SLUG', $leave_application->slug);
@@ -63,9 +63,9 @@ class LeaveApplicationSubscriber extends BaseSubscriber{
 
     public function onDestroy($leave_application){
 
-        $this->__cache->deletePattern('swep_cache:leave_applications:all:*');
-        $this->__cache->deletePattern('swep_cache:leave_applications:byUser:'. $leave_application->user_id .':*');
-        $this->__cache->deletePattern('swep_cache:leave_applications:bySlug:'. $leave_application->slug .'');
+        $this->__cache->deletePattern('swep_cache:leave_applications:fetch:*');
+        $this->__cache->deletePattern('swep_cache:leave_applications:fetchByUser:'. $leave_application->user_id .':*');
+        $this->__cache->deletePattern('swep_cache:leave_applications:findBySlug:'. $leave_application->slug .'');
 
         $this->session->flash('LA_DELETE_SUCCESS', 'Your Leave Application has been successfully Deleted!');
 

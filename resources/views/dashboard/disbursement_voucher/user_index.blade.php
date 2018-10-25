@@ -2,15 +2,16 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'), 
+                        'sort' => Request::get('sort'),
+                        'direction' => Request::get('direction'),
+
                         'fs' => Request::get('fs'), 
                         'pi' => Request::get('pi'),
                         'dn' => Request::get('dn'),
                         'dun' => Request::get('dun'),
-                        'ac' => Request::get('ac'),
+                        'pc' => Request::get('pc'),
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
-                        'sort' => Request::get('sort'),
-                        'direction' => Request::get('direction'),
                       ];
 
   $span_not_set = '<span class="text-red"><b>Not Set!</b></span>';

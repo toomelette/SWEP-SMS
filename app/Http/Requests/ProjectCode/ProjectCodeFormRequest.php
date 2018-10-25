@@ -24,7 +24,7 @@ class ProjectCodeFormRequest extends FormRequest{
 
         return [
 
-            'department_id' => 'required|max:5|min:5|string',
+            'department_id' => 'required|max:11|string',
             'department_name' => 'required|max:45|string',
             'project_code' => 'required|max:45|string',
             'description' => 'required|max:255|string',

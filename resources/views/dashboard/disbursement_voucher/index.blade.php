@@ -7,15 +7,16 @@
 
   $appended_requests = [
                         'q'=> Request::get('q'), 
+                        'sort' => Request::get('sort'),
+                        'direction' => Request::get('direction'),
+
                         'fs' => Request::get('fs'), 
                         'pi' => Request::get('pi'),
                         'dn' => Request::get('dn'),
                         'dun' => Request::get('dun'),
-                        'ac' => Request::get('ac'),
+                        'pc' => Request::get('pc'),
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
-                        'sort' => Request::get('sort'),
-                        'direction' => Request::get('direction'),
                       ];
 
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';

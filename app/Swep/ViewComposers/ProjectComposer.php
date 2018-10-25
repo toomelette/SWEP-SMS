@@ -11,13 +11,13 @@ class ProjectComposer{
    
 
 
-	protected $project;
+	protected $project_repo;
 
 
 
-	public function __construct(ProjectInterface $project){
+	public function __construct(ProjectInterface $project_repo){
 
-		$this->project = $project;
+		$this->project_repo = $project_repo;
 
 	}
 
@@ -27,7 +27,7 @@ class ProjectComposer{
 
     public function compose($view){
 
-        $projects = $this->project->getAll();
+        $projects = $this->project_repo->getAll();
         
     	$view->with('global_projects_all', $projects);
 

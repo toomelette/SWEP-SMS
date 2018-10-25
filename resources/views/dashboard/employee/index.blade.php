@@ -8,6 +8,9 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+
+                        'a' => Request::get('a'),
+                        'd' => Request::get('d'),
                       ];
 
   $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';

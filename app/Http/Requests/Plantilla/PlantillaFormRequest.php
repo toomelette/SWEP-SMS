@@ -25,7 +25,7 @@ class PlantillaFormRequest extends FormRequest{
 
             'department_unit_id' => 'required|max:11|string',
             'name' => 'required|max:255|string',
-            'is_vacant' => 'required|max:6|string',
+            'is_vacant' => 'required|max:11|string',
 
         ];
     
