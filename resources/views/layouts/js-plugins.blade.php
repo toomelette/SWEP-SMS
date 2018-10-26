@@ -1,4 +1,5 @@
 
+
 <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>  
 
 <script type="text/javascript" src="{{ asset('template/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -28,6 +29,16 @@
 <script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+
+
+{{-- Charts --}}
+<script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.resize.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.pie.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.categories.js') }}"></script>
 
 
 

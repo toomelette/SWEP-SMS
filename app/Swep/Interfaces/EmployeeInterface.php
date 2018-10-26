@@ -24,6 +24,10 @@ interface EmployeeInterface {
 
 	public function getByIsActive($status);
 
+	public function getBySex($sex);
+
+	public function getByDepartmentId($dept);
+
 	
 	public function storeFamilyDetails($request, $employee);
 

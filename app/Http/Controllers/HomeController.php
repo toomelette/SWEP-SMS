@@ -2,18 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
+use App\Swep\Services\HomeService;
+
 
 
 class HomeController extends Controller{
     
 
+
+
+	protected $home;
+
+
+
+
+    public function __construct(HomeService $home){
+
+        $this->home = $home;
+
+    }
+
+
+
+
+
     public function index(){
 
-    	return view('dashboard.home.index');
+    	return $this->home->view();
 
     }
     
+
+
+
 
 
 }

@@ -333,6 +333,20 @@ class UserRepository extends BaseRepository implements UserInterface {
         return $id;
         
     }
+
+
+
+
+
+    public function getByIsOnline($status){
+
+        $users = $this->cache->remember('users:getByIsOnline:'. $status .'', 240, function() use ($status){
+            return $this->user->where('is_online', $status)->get();
+        }); 
+
+        return $users;
+        
+    }
     
 
 

@@ -218,6 +218,7 @@ return [
         'Str' => 'Illuminate\Support\Str',
 
         /** View Helper **/
+        '__chart' => App\Swep\ViewHelpers\__chart::class,
         '__form' => App\Swep\ViewHelpers\__form::class,
         '__html' => App\Swep\ViewHelpers\__html::class,
         '__js' => App\Swep\ViewHelpers\__js::class,  

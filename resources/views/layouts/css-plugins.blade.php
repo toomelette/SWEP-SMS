@@ -26,5 +26,9 @@
 <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
 
 
+{{-- Charts --}}	
+<link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">
+
+
 
 

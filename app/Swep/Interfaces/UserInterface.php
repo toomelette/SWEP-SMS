@@ -29,5 +29,7 @@ interface UserInterface {
 	public function findBySlug($slug);
 
 	public function login($slug);
+
+	public function getByIsOnline($status);
 		
 }

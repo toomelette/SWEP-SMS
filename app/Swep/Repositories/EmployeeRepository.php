@@ -378,6 +378,44 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
+
+    public function getBySex($sex){
+
+        $employees = $this->cache->remember('employees:getBySex:' . $sex, 240, function() use ($sex){
+
+            return $this->employee->where('is_active', 'ACTIVE')
+                                  ->where('sex', $sex)
+                                  ->get();
+
+        });
+
+        return $employees;
+        
+    }
+
+
+
+
+
+
+    public function getByDepartmentId($dept){
+
+        $employees = $this->cache->remember('employees:getByDepartment:' . $dept, 240, function() use ($dept){
+
+            return $this->employee->where('is_active', 'ACTIVE')
+                                  ->where('department_id', $dept)
+                                  ->get();
+
+        });
+
+        return $employees;
+        
+    }
+
+
+
+
+
     // Dependencies
 
     public function storeAddress($request, $employee){
