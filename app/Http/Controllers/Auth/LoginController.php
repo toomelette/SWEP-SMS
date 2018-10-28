@@ -92,6 +92,7 @@ class LoginController extends Controller{
 
                 $this->__cache->deletePattern('swep_cache:users:fetch:*');
                 $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
+                $this->__cache->deletePattern('swep_cache:users:getByIsOnline:'. $user->is_online .'');
 
                 $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
@@ -122,6 +123,7 @@ class LoginController extends Controller{
 
             $this->__cache->deletePattern('swep_cache:users:fetch:*');
             $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
+            $this->__cache->deletePattern('swep_cache:users:getByIsOnline:'. $user->is_online .'');
 
             return redirect('/');
 

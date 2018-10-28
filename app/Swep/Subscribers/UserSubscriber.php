@@ -74,6 +74,7 @@ class UserSubscriber extends BaseSubscriber{
         
         $this->__cache->deletePattern('swep_cache:users:fetch:*');
         $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:users:getByIsOnline:'. $user->is_online .'');
         
         $this->__cache->deletePattern('swep_cache:user_menus:getByUserId:'. $user->user_id .':*');
 
@@ -122,6 +123,7 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern('swep_cache:users:fetch:*');
         $this->__cache->deletePattern('swep_cache:users:findBySlug:'. $user->slug .'');
+        $this->__cache->deletePattern('swep_cache:users:getByIsOnline:'. $user->is_online .'');
         $this->__cache->deletePattern('swep_cache:user_menus:getByUserId:'. $user->user_id .':*');
 
         $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');

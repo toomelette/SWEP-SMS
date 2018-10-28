@@ -26,12 +26,6 @@ class EmployeeSubscriber extends BaseSubscriber{
         $events->listen('employee.store', 'App\Swep\Subscribers\EmployeeSubscriber@onStore');
         $events->listen('employee.update', 'App\Swep\Subscribers\EmployeeSubscriber@onUpdate');
         $events->listen('employee.destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onDestroy');
-        $events->listen('employee.service_record_store', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordStore');
-        $events->listen('employee.service_record_update', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordUpdate');
-        $events->listen('employee.service_record_destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onServiceRecordDestroy');
-        $events->listen('employee.training_store', 'App\Swep\Subscribers\EmployeeSubscriber@onTrainingStore');
-        $events->listen('employee.training_update', 'App\Swep\Subscribers\EmployeeSubscriber@onTrainingUpdate');
-        $events->listen('employee.training_destroy', 'App\Swep\Subscribers\EmployeeSubscriber@onTrainingDestroy');
 
     }
 
@@ -43,6 +37,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:employees:fetch:*');
         $this->__cache->deletePattern('swep_cache:employees:getAll');
         $this->__cache->deletePattern('swep_cache:employees:getByIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:getBySex:'. $employee->sex .'');
+        $this->__cache->deletePattern('swep_cache:employees:getByDepartmentId:'. $employee->department_id .'');
 
         $this->session->flash('EMPLOYEE_CREATE_SUCCESS', 'The Employee has been successfully created!');
 
@@ -58,6 +54,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:employees:getAll');
         $this->__cache->deletePattern('swep_cache:employees:getbySlug:'. $employee->slug .'');
         $this->__cache->deletePattern('swep_cache:employees:getByIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:getBySex:'. $employee->sex .'');
+        $this->__cache->deletePattern('swep_cache:employees:getByDepartmentId:'. $employee->department_id .'');
         $this->__cache->deletePattern('swep_cache:employees:findBySlug:'. $employee->slug .'');
         $this->__cache->deletePattern('swep_cache:employees:findByUserId:'. $employee->user_id .'');
 
@@ -76,6 +74,8 @@ class EmployeeSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:employees:getAll');
         $this->__cache->deletePattern('swep_cache:employees:getbySlug:'. $employee->slug .'');
         $this->__cache->deletePattern('swep_cache:employees:getByIsActive:'. $employee->is_active .'');
+        $this->__cache->deletePattern('swep_cache:employees:getBySex:'. $employee->sex .'');
+        $this->__cache->deletePattern('swep_cache:employees:getByDepartmentId:'. $employee->department_id .'');
         $this->__cache->deletePattern('swep_cache:employees:findBySlug:'. $employee->slug .'');
         $this->__cache->deletePattern('swep_cache:employees:findByUserId:'. $employee->user_id .'');
 
