@@ -137,7 +137,7 @@
                   $subtotal_hrs += $daily_hrs;
                   $subtotal_mins += $daily_mins;
 
-                  $table_data =  sprintf("%02d", $subtotal_hrs) .':'. sprintf("%02d", $subtotal_mins); 
+                  $table_data = __dataType::construct_time_HM($subtotal_hrs, $subtotal_mins); 
 
                 ?>
 
