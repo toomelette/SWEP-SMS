@@ -72,6 +72,12 @@
             '3', 'contact_no', 'text', 'Contact No.', 'Contact No.', old('contact_no') ? old('contact_no') : $applicant->contact_no, $errors->has('contact_no'), $errors->first('contact_no'), ''
           ) !!}
 
+          {!! __form::select_dynamic(
+            '3', 'department_unit_id', 'Unit Applied *', old('department_unit_id') ? old('department_unit_id') : $applicant->department_unit_id, $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), 'select2', ''
+          ) !!}
+
+          <div class="col-md-12"></div>
+
           {!! __form::textbox(
             '3', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks') ? old('remarks') : $applicant->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}

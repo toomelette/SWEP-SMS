@@ -87,6 +87,24 @@ class ApplicantController extends Controller{
     }
 
 
+
+
+	public function report(){
+
+		return view('dashboard.applicant.report');
+
+    }
+
+
+
+
+	public function reportGenerate(){
+
+		return dd("R_generate");
+
+    }
+
+
     
 
 

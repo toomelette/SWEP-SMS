@@ -125,6 +125,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** Applicant **/
+	Route::get('/applicant/report', 'ApplicantController@report')->name('applicant.report');
+	Route::get('/applicant/report_generate', 'ApplicantController@reportGenerate')->name('applicant.report_generate');
 	Route::resource('applicant', 'ApplicantController');
 
 
@@ -144,11 +146,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 /** Testing **/
-//Route::get('/dashboard/test', function(){
+Route::get('/dashboard/test', function(){
 
  	//phpinfo();
 
-	//return dd(Illuminate\Support\Str::random(16));
+	return dd(Illuminate\Support\Str::random(16));
 
 	//dd(__dynamic::dates_between_dates('10/01/2018', '10/31/2018'));
 
@@ -160,5 +162,5 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	// 	$tr->save();
 	// }
 
-//});
+});
 

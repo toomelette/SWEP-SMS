@@ -74,7 +74,11 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.plantilla.create',
                         'dashboard.plantilla.edit',
                         'dashboard.plantilla.index',
-                        'dashboard.plantilla.report',], 'App\Swep\ViewComposers\DepartmentUnitComposer');
+                        'dashboard.plantilla.report',
+                        'dashboard.applicant.create',
+                        'dashboard.applicant.edit',
+                        'dashboard.applicant.index',
+                        'dashboard.applicant.report'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         // PROJECT CODES
@@ -116,7 +120,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // COURSE
         View::composer(['dashboard.applicant.create',
                         'dashboard.applicant.edit',
-                        'dashboard.applicant.index',], 'App\Swep\ViewComposers\CourseComposer');
+                        'dashboard.applicant.index',
+                        'dashboard.applicant.report',], 'App\Swep\ViewComposers\CourseComposer');
 
 
 

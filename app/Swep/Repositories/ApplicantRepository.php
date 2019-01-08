@@ -78,6 +78,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant = new Applicant;
         $applicant->slug = $this->str->random(16);
         $applicant->applicant_id = $this->getApplicantIdInc();
+        $applicant->department_unit_id = $request->department_unit_id;
         $applicant->course_id = $request->course_id;
         $applicant->plantilla_id = $request->plantilla_id;
         $applicant->lastname = $request->lastname;
@@ -111,8 +112,9 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
     public function update($request, $slug){
 
         $applicant = $this->findBySlug($slug);
-        $applicant->course_id = $request->course_id;
         $applicant->plantilla_id = $request->plantilla_id;
+        $applicant->department_unit_id = $request->department_unit_id;
+        $applicant->course_id = $request->course_id;
         $applicant->lastname = $request->lastname;
         $applicant->firstname = $request->firstname;
         $applicant->middlename = $request->middlename;

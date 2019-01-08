@@ -26,6 +26,7 @@ class Applicant extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'department_unit_id' => '',
         'applicant_id' => '',
         'course_id' => '',
         'plantilla_id' => '',
@@ -76,6 +77,11 @@ class Applicant extends Model{
 
     public function course() {
         return $this->belongsTo('App\Models\Course','course_id','course_id');
+    }
+
+
+    public function departmentUnit() {
+        return $this->belongsTo('App\Models\DepartmentUnit','department_unit_id','department_unit_id');
     }
     
 

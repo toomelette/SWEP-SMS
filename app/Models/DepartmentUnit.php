@@ -57,6 +57,11 @@ class DepartmentUnit extends Model{
     public function employee(){
         return $this->hasMany('App\Models\Employee', 'department_unit_id', 'department_unit_id');
     }
+
+
+    public function applicant() {
+        return $this->hasMany('App\Models\Applicant','department_unit_id','department_unit_id');
+    }
     
 
 

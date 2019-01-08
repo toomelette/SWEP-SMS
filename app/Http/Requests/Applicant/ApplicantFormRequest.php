@@ -38,6 +38,7 @@ class ApplicantFormRequest extends FormRequest{
             'course_id'=>'required|string|max:11',
             'plantilla_id'=>'nullable|string|max:11',
             'contact_no'=>'nullable|string|max:90',
+            'department_unit_id'=>'nullable|string|max:11',
             'remarks'=>'nullable|string|max:255',
 
         ];
