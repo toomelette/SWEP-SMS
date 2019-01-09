@@ -106,6 +106,32 @@ class ApplicantService extends BaseService{
 
 
 
+    public function reportGenerate($request){
+
+
+        if($request->r_type == "ABC"){
+
+            $applicants = $this->applicant_repo->getByCourseId($request->c); 
+            return view('printables.applicant.by_course')->with('applicants', $applicants);
+
+        }
+
+
+        if ($request->r_type == "ABU") {
+            
+            $applicants =$this->applicant_repo->getByDeptUnitId($request->du); 
+            return view('printables.applicant.by_dept_unit')->with('applicants', $applicants);
+
+        }
+
+        abort(404);
+
+    }
+
+
+
+
+
 
 
     public function fillDependencies($request, $applicant){

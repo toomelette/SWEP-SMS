@@ -255,6 +255,44 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
 
+    public function getByCourseId($course_id){
+
+        $applicants = $this->cache->remember('applicants:getByCourseId:'. $course_id .'', 240, function() use ($course_id){
+                
+            return $this->applicant->select('lastname', 'firstname', 'middlename', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks')
+                                 ->where('course_id', $course_id)
+                                 ->get();
+
+        });
+        
+        return $applicants;
+
+    }
+
+
+
+
+
+
+    public function getByDeptUnitId($dept_unit_id){
+
+        $applicants = $this->cache->remember('applicants:getByDeptUnitId:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
+                
+            return $this->applicant->select('lastname', 'firstname', 'middlename', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks')
+                                 ->where('department_unit_id', $dept_unit_id)
+                                 ->get();
+
+        });
+        
+        return $applicants;
+
+    }
+
+
+
+
+
+
 
 
 

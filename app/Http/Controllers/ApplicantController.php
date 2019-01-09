@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Swep\Services\ApplicantService;
 use App\Http\Requests\Applicant\ApplicantFormRequest;
 use App\Http\Requests\Applicant\ApplicantFilterRequest;
+use App\Http\Requests\Applicant\ApplicantReportRequest;
 
 
 
@@ -98,9 +99,9 @@ class ApplicantController extends Controller{
 
 
 
-	public function reportGenerate(){
+	public function reportGenerate(ApplicantReportRequest $request){
 
-		return dd("R_generate");
+		return $this->applicant->reportGenerate($request);
 
     }
 

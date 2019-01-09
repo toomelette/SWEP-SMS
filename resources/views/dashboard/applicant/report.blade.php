@@ -14,7 +14,7 @@
     <div class="box">
     
       <div class="box-header with-border">
-        <h3 class="box-title">Full List of Applicants</h3>
+        <h3 class="box-title">List of Applicants by Course</h3>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
         </div> 
@@ -24,10 +24,10 @@
 
         <div class="box-body">
 
-          <input type="hidden" name="r_type" value="gl">
+          <input type="hidden" name="r_type" value="ABC">
 
-          {!! __form::select_dynamic(
-            '3', 'du', 'Unit Applied', old('du'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('du'), $errors->first('du'), 'select2', ''
+          {!! __form::select_static(
+            '3', 'lt', 'List Type *', old('lt'), ['Full List' => 'FL', 'Consolidated List' => 'CL'], $errors->has('lt'), $errors->first('lt'), '', ''
           ) !!}
 
           {!! __form::select_dynamic(
@@ -50,7 +50,7 @@
     <div class="box">
     
       <div class="box-header with-border">
-        <h3 class="box-title">Shortlist of Applicants</h3>
+        <h3 class="box-title">List of Applicants By Unit</h3>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
         </div> 
@@ -60,14 +60,14 @@
 
         <div class="box-body">
 
-          <input type="hidden" name="r_type" value="sl">
+          <input type="hidden" name="r_type" value="ABU">
 
-          {!! __form::select_dynamic(
-            '3', 'du', 'Unit Applied', old('du'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('du'), $errors->first('du'), 'select2', ''
+          {!! __form::select_static(
+            '3', 'lt', 'List Type *', old('lt'), ['Full List' => 'FL', 'Consolidated List' => 'CL'], $errors->has('lt'), $errors->first('lt'), '', ''
           ) !!}
 
           {!! __form::select_dynamic(
-            '3', 'c', 'Course', old('c'), $global_courses_all, 'course_id', 'name', $errors->has('c'), $errors->first('c'), 'select2', ''
+            '3', 'du', 'Unit Applied', old('du'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('du'), $errors->first('du'), 'select2', ''
           ) !!}
 
         </div>
