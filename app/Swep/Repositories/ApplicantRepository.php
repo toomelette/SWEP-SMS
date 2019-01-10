@@ -210,6 +210,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
     public function populate($model){
 
         return $model->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'slug')
+                     ->with('course', 'departmentUnit') 
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
@@ -259,9 +260,10 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByCourseId:'. $course_id .'', 240, function() use ($course_id){
                 
-            return $this->applicant->select('lastname', 'firstname', 'middlename', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks')
-                                 ->where('course_id', $course_id)
-                                 ->get();
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks', 'course_id', 'applicant_id')
+                                   ->with('course', 'departmentUnit')           
+                                   ->where('course_id', $course_id)
+                                   ->get();
 
         });
         
@@ -278,9 +280,10 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByDeptUnitId:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
                 
-            return $this->applicant->select('lastname', 'firstname', 'middlename', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks')
-                                 ->where('department_unit_id', $dept_unit_id)
-                                 ->get();
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks',  'course_id', 'applicant_id')
+                                   ->with('course', 'departmentUnit') 
+                                   ->where('department_unit_id', $dept_unit_id)
+                                   ->get();
 
         });
         

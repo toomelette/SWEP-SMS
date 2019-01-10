@@ -46,7 +46,7 @@ class ApplicantService extends BaseService{
         $applicant = $this->applicant_repo->store($request);
         $this->fillDependencies($request, $applicant);
 
-        $this->event->fire('applicant.store');
+        $this->event->fire('applicant.store', $applicant);
         return redirect()->back();
 
     }

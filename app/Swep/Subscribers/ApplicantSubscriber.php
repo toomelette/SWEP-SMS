@@ -34,9 +34,11 @@ class ApplicantSubscriber extends BaseSubscriber{
 
 
 
-    public function onStore(){
+    public function onStore($applicant){
 
         $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_CREATE_SUCCESS', 'The Applicant has been successfully created!');
 
@@ -50,6 +52,8 @@ class ApplicantSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
         $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_UPDATE_SUCCESS', 'The Applicant has been successfully updated!');
         $this->session->flash('APPLICANT_UPDATE_SUCCESS_SLUG', $applicant->slug);
@@ -64,6 +68,8 @@ class ApplicantSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
         $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_DELETE_SUCCESS', 'The Applicant has been successfully deleted!');
         

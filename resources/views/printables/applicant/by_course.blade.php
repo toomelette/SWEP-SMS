@@ -25,12 +25,36 @@
         }
     }
 
+    .data-row{
+
+      border-left:solid 1px; 
+      text-align: center; 
+      margin-bottom: -200px; 
+      padding-bottom: 200px;
+      
+    }
+
+    .p-header{
+
+      font-size:12px; 
+      font-weight:bold;
+      padding-top: 5px;
+      
+    }
+
+    .p-body{
+
+      font-size:10px;
+      padding-top: 5px;
+      
+    }
+
   </style>
 
 </head>
 
 
-<body onload="window.print();" onafterprint="window.close()">
+<body onload="window.print();" onafterprint="window.close()" style="padding-right:20px;">
 
   <div class="wrapper" style="overflow:hidden !important;">
 
@@ -83,77 +107,77 @@
 
     <div class="row" style="margin:0px;">
 
-      <div class="col-sm-12" style="border:solid 1px; -webkit-print-color-adjust: exact; background-color: #65D165 !important;">
+      <div class="col-sm-12" style="border:solid 1px; -webkit-print-color-adjust: exact; background-color: #65D165 !important; overflow: hidden;">
 
 
         {{-- 1st div --}}
         <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-1 no-padding" style="text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">No.</span>
+          <div class="col-sm-1 no-padding" style="text-align: center;">
+            <p class="p-header">No.</p>
           </div>
 
-          <div class="col-sm-5 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Name</span>
+          <div class="col-sm-6 data-row">
+            <p class="p-header">Name</p>
           </div>
 
-          <div class="col-sm-6 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Address</span>
+          <div class="col-sm-5 data-row">
+            <p class="p-header">Address</p>
           </div>
           
         </div>
 
         {{-- 2nd div --}}
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
+        <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-2 no-padding" style="text-align: center;">
-            <span style="font-size:12px; font-weight:bold;">Civil Status</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-header">Civil Status</p>
           </div>
 
-          <div class="col-sm-2 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Gender</span>
+          <div class="col-sm-2 data-row">
+            <p class="p-header" style="margin-left:-10px;">Gender</p>
           </div>
 
-          <div class="col-sm-2 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Age</span>
+          <div class="col-sm-2 data-row">
+            <p class="p-header">Age</p>
           </div>
 
-          <div class="col-sm-6 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Birthdate</span>
+          <div class="col-sm-5 data-row">
+            <p class="p-header">Birthdate</p>
           </div>
           
         </div>
 
         {{-- 3rd div --}}
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
+        <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-3 no-padding" style="text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Contact No.</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-header">Contact No.</p>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Eligibility</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-header">Eligibility</p>
           </div>
 
-          <div class="col-sm-6 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Educational Qualifications</span>
+          <div class="col-sm-6 data-row">
+            <p class="p-header">Educational Qualifications</p>
           </div>
           
         </div>
 
         {{-- 4th div --}}
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
+        <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-3 no-padding" style="text-align:center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">School</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-header">School</p>
           </div>
 
-          <div class="col-sm-5 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Work Experience</span>
+          <div class="col-sm-5 data-row">
+            <p class="p-header">Work Experience</p>
           </div>
 
-          <div class="col-sm-4 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:12px; font-weight:bold;">Remarks</span>
+          <div class="col-sm-4 data-row">
+            <p class="p-header">Remarks</p>
           </div>
           
         </div>
@@ -164,80 +188,86 @@
     </div>
 
 
+
+
     {{-- TABLE BODY --}}
 
     @foreach ($applicants as $key => $data)
 
-      <div class="col-sm-12" style="border:solid 1px;">
+      <div class="col-sm-12" style="border:solid 1px; overflow: hidden;">
 
         {{-- 1st div --}}
         <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-1 no-padding" style="text-align: center; line-height: 40px;">
-            <span style="font-size:11px; ">{{ $key + 1 }}</span>
+          <div class="col-sm-1 no-padding" style="text-align: center;">
+            <p class="p-body">{{ $key + 1 }}</p>
           </div>
 
-          <div class="col-sm-5 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ $data->lastname }}</span>
+          <div class="col-sm-6 data-row">
+            <p class="p-body">{{ $data->fullname }}</p>
           </div>
 
-          <div class="col-sm-6 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ $data->address }}</span>
+          <div class="col-sm-5 data-row">
+            <p class="p-body">{{ $data->address }}</p>
           </div>
           
         </div>
 
         {{-- 2nd div --}}
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
+        <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-2 no-padding" style="text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ $data->civil_status }}</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-body">{{ $data->civil_status }}</p>
           </div>
 
-          <div class="col-sm-2 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ $data->gender }}</span>
+          <div class="col-sm-2 data-row">
+            <p class="p-body">{{ $data->gender }}</p>
           </div>
 
-          <div class="col-sm-2 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ Carbon::parse($data->date_of_birth)->age }}</span>
+          <div class="col-sm-2 data-row">
+            <p class="p-body">{{ Carbon::parse($data->date_of_birth)->age }}</p>
           </div>
 
-          <div class="col-sm-6 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ Carbon::parse($data->date_of_birth)->format("F d,y") }}</span>
+          <div class="col-sm-5 data-row">
+            <p class="p-body">{{ Carbon::parse($data->date_of_birth)->format("F d,Y") }}</p>
           </div>
           
         </div>
 
         {{-- 3rd div --}}
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
+        <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-3 no-padding" style="text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">{{ $data->contact_no }}</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-body" style="margin-left: -7px;">{{ $data->contact_no }}</p>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">Eligibility</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-body"></p>
           </div>
 
-          <div class="col-sm-6 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">Educational Qualifications</span>
+          <div class="col-sm-6 data-row">
+            <p class="p-body">{{ !empty($data->course) ? $data->course->name : 'N/A' }}</p>
           </div>
           
         </div>
 
         {{-- 4th div --}}
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
+        <div class="col-sm-3 no-padding">
 
-          <div class="col-sm-3 no-padding" style="text-align:center; line-height: 40px;">
-            <span style="font-size:11px;">School</span>
+          <div class="col-sm-3 data-row">
+            <p class="p-body"></p>
           </div>
 
-          <div class="col-sm-5 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">Work Experience</span>
+          <div class="col-sm-5" style="border-left:solid 1px; margin-bottom: -200px; padding-bottom: 200px;">
+            <p class="p-body">
+              @foreach ($data->applicantExperience as $data_exp)
+                &#8226; <b>{{ $data_exp->position }}</b> - {{ $data_exp->company }} <br>
+              @endforeach
+            </p>
           </div>
 
-          <div class="col-sm-4 no-padding" style="border-left:solid 1px; text-align: center; line-height: 40px;">
-            <span style="font-size:11px;">Remarks</span>
+          <div class="col-sm-4 data-row">
+            <p class="p-body">{{ $data->remarks }}</p>
           </div>
           
         </div>
