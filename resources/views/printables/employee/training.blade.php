@@ -137,7 +137,7 @@
 
 
     @foreach ($employee_trainings as $key => $data)
-      @if($key <= 24)
+      @if($key <= 19)
         <div class="row">
           <div class="col-sm-12 no-padding" style="line-height:13.5px;">
 
@@ -185,7 +185,7 @@
 
   {{-- if records are greater than 25 --}}
 
-  @if(count($employee_trainings) > 25)
+  @if(count($employee_trainings) > 20)
 
     <div class="row">
       <div class="col-sm-6" style="margin-bottom: -20px;">
@@ -273,7 +273,7 @@
 
 
       @foreach ($employee_trainings as $key => $data)
-        @if($key > 24 && $key <= 49)
+        @if($key > 19 && $key <= 39)
           <div class="row">
             <div class="col-sm-12 no-padding" style="line-height:13.5px;">
 
@@ -317,7 +317,7 @@
 
    {{-- if records are greater than 50 --}}
 
-  @if(count($employee_trainings) > 50)
+  @if(count($employee_trainings) > 40)
 
     <div class="row">
       <div class="col-sm-6" style="margin-bottom: -20px;">
@@ -405,7 +405,7 @@
 
 
       @foreach ($employee_trainings as $key => $data)
-        @if($key > 49 && $key <= 74)
+        @if($key > 39 && $key <= 59)
           <div class="row">
             <div class="col-sm-12 no-padding" style="line-height:13.5px;">
 
@@ -450,7 +450,7 @@
 
   {{-- if records are greater than 75 --}}
 
-  @if(count($employee_trainings) > 75)
+  @if(count($employee_trainings) > 60)
 
     <div class="row">
       <div class="col-sm-6" style="margin-bottom: -20px;">
@@ -538,7 +538,7 @@
 
 
       @foreach ($employee_trainings as $key => $data)
-        @if($key > 74 && $key <= 99)
+        @if($key > 59 && $key <= 79)
           <div class="row">
             <div class="col-sm-12 no-padding" style="line-height:13.5px;">
 
