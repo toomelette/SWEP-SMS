@@ -62,42 +62,76 @@
 
     {{-- HEADER --}}
 
-    <div class="row">
-        
+    <div class="row">  
 
-        <div class="col-sm-2"></div>
-
-
-        <div class="col-sm-8">
-
-            <div class="col-sm-2"></div>
-
-            <div class="col-sm-1 no-padding">
-              <img src="{{ asset('images/sra.png') }}" style="width:100%;">
-            </div>
-
-            <div class="col-sm-8" style="text-align: center; padding-right:125px;">
-              <span>Republic of the Philippines</span><br>
-              <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
-              <span>North Avenue, Diliman, Quezon City</span>
-            </div>
-
-        </div>
+      <div class="col-sm-2"></div>
 
 
-        <div class="col-sm-2"></div>
+      <div class="col-sm-8">
 
+          <div class="col-sm-2"></div>
 
-        <div class="col-sm-12" style="padding-bottom:10px;"></div>
+          <div class="col-sm-1 no-padding">
+            <img src="{{ asset('images/sra.png') }}" style="width:100%;">
+          </div>
 
-
-        {{-- <div class="col-sm-12" style="text-align: center; padding-bottom:10px;">
-          <span style="font-weight: bold;">EMPLOYEE ALPHALIST</span><br>
-          <span>As of {{ Carbon::now()->format('F Y') }}</span><br>
-        </div> --}}
-
+          <div class="col-sm-8" style="text-align: center; padding-right:125px;">
+            <span>Republic of the Philippines</span><br>
+            <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
+            <span>North Avenue, Diliman, Quezon City</span>
+          </div>
 
       </div>
+
+
+      <div class="col-sm-2"></div>
+
+
+      <div class="col-sm-12" style="padding-bottom:10px;"></div>
+
+
+
+      @if(Request::get('r_type') == "ABC")
+
+        <div class="col-sm-12" style="text-align: center; padding-bottom:10px;">
+          <span style="font-weight: bold;">
+            @if (Request::get('lt') == "FL")
+              Full List of
+            @elseif(Request::get('lt') == "SL")
+              Short List of
+            @else
+              &nbsp;
+            @endif
+             {{ $course->name }} Applicants
+          </span><br>
+          <span>As of {{ Carbon::now()->format("F d,Y") }}</span><br>
+        </div>
+
+      @elseif(Request::get('r_type') == "ABU")
+
+        <div class="col-sm-12" style="text-align: center; padding-bottom:10px;">
+          <span style="font-weight: bold;">
+            @if (Request::get('lt') == "FL")
+              Full List of
+            @elseif(Request::get('lt') == "SL")
+              Short List of
+            @else
+              &nbsp;
+            @endif
+             of Applicants for {{ $dept_unit->description }}
+          </span><br>
+          <span>As of {{ Carbon::now()->format("F d,Y") }}</span><br>
+        </div>
+
+      @else
+
+        &nbsp;
+
+      @endif
+
+    </div>
+
+
 
     <br>
 
@@ -155,12 +189,12 @@
             <p class="p-header">Contact No.</p>
           </div>
 
-          <div class="col-sm-3 data-row">
+          <div class="col-sm-4 data-row">
             <p class="p-header">Eligibility</p>
           </div>
 
-          <div class="col-sm-6 data-row">
-            <p class="p-header">Educational Qualifications</p>
+          <div class="col-sm-5 data-row">
+            <p class="p-header">Course</p>
           </div>
           
         </div>
@@ -241,11 +275,15 @@
             <p class="p-body" style="margin-left: -7px;">{{ $data->contact_no }}</p>
           </div>
 
-          <div class="col-sm-3 data-row">
-            <p class="p-body"></p>
+          <div class="col-sm-4" style="border-left:solid 1px; margin-bottom: -200px; padding-bottom: 200px;">
+            <p class="p-body" style="margin-left: -7px;">
+              @foreach ($data->applicantEligibility as $data_elig)
+                &#8226; <b>{{ $data_elig->eligibility }}</b> - {{ $data_elig->rating }} <br>
+              @endforeach
+            </p>
           </div>
 
-          <div class="col-sm-6 data-row">
+          <div class="col-sm-5 data-row">
             <p class="p-body">{{ !empty($data->course) ? $data->course->name : 'N/A' }}</p>
           </div>
           
@@ -255,7 +293,7 @@
         <div class="col-sm-3 no-padding">
 
           <div class="col-sm-3 data-row">
-            <p class="p-body"></p>
+            <p class="p-body">{{ $data->school }}</p>
           </div>
 
           <div class="col-sm-5" style="border-left:solid 1px; margin-bottom: -200px; padding-bottom: 200px;">

@@ -64,6 +64,10 @@
             '3', 'course_id', 'Course *', old('course_id') ? old('course_id') : $applicant->course_id, $global_courses_all, 'course_id', 'name', $errors->has('course_id'), $errors->first('course_id'), 'select2', ''
           ) !!}
 
+          {!! __form::textbox(
+            '3', 'school', 'text', 'School', 'School where you graduated your Degree', old('school') ? old('school') : $applicant->school, $errors->has('school'), $errors->first('school'), ''
+          ) !!}
+
           {!! __form::select_dynamic(
             '3', 'plantilla_id', 'Position Applied for', old('plantilla_id') ? old('plantilla_id') : $applicant->plantilla_id, $global_plantilla_all, 'plantilla_id', 'name', $errors->has('plantilla_id'), $errors->first('plantilla_id'), 'select2', ''
           ) !!}
@@ -72,11 +76,11 @@
             '3', 'contact_no', 'text', 'Contact No.', 'Contact No.', old('contact_no') ? old('contact_no') : $applicant->contact_no, $errors->has('contact_no'), $errors->first('contact_no'), ''
           ) !!}
 
+          <div class="col-md-12"></div>
+
           {!! __form::select_dynamic(
             '3', 'department_unit_id', 'Unit Applied *', old('department_unit_id') ? old('department_unit_id') : $applicant->department_unit_id, $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), 'select2', ''
           ) !!}
-
-          <div class="col-md-12"></div>
 
           {!! __form::textbox(
             '3', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks') ? old('remarks') : $applicant->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
@@ -465,6 +469,135 @@
           </div>
 
 
+
+
+
+          <div class="col-md-12" style="margin-top:50px;"></div>
+
+          {{-- Eligibility --}}
+          <div class="col-md-12">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">Work Experiences</h3>
+                <button id="elig_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
+              </div>
+              
+              <div class="box-body no-padding">
+
+                <table class="table table-bordered">
+
+                  <tr>
+                    <th>Eligibility *</th>
+                    <th>Level</th>
+                    <th>Rating *</th>
+                    <th>Exam Date</th>
+                    <th>Exam Place</th>
+                    <th style="width: 40px"></th>
+                  </tr>
+
+                  <tbody id="elig_table_body">
+
+                    @if(old('row_elig'))
+
+                      @foreach(old('row_elig') as $key => $value)
+
+                        <tr>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][eligibility]', 'Eligibility', $value['eligibility'], $errors->first('row_elig.'. $key .'.eligibility')
+                            ) !!}
+                          </td>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][level]', 'Level', $value['level'], $errors->first('row_elig.'. $key .'.level')
+                            ) !!}
+                          </td>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][rating]', 'Rating', $value['rating'], $errors->first('row_elig.'. $key .'.rating')
+                            ) !!}
+                          </td>
+
+                          <td> 
+                            {!! __form::datepicker_for_dt(
+                              'row_elig['. $key .'][exam_date]', $value['exam_date'], $errors->first('row_elig.'. $key .'.exam_date')
+                            ) !!}
+                          </td>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][exam_place]', 'Exam Place', $value['exam_place'], $errors->first('row_elig.'. $key .'.exam_place')
+                            ) !!}
+                          </td>
+
+                          <td>
+                              <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+                    @else
+
+                      @foreach($applicant->applicantEligibility as $key => $data)
+
+                        <tr>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][eligibility]', 'Eligibility', $data->eligibility, $errors->first('row_elig.'. $key .'.eligibility')
+                            ) !!}
+                          </td>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][level]', 'Level', $data->level, $errors->first('row_elig.'. $key .'.level')
+                            ) !!}
+                          </td>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][rating]', 'Rating', $data->rating, $errors->first('row_elig.'. $key .'.rating')
+                            ) !!}
+                          </td>
+
+                          <td> 
+                            {!! __form::datepicker_for_dt(
+                              'row_elig['. $key .'][exam_date]', $data->exam_date, $errors->first('row_elig.'. $key .'.exam_date')
+                            ) !!}
+                          </td>
+
+                          <td>
+                            {!! __form::textbox_for_dt(
+                              'row_elig['. $key .'][exam_place]', 'Exam Place', $data->exam_place, $errors->first('row_elig.'. $key .'.exam_place')
+                            ) !!}
+                          </td>
+
+                          <td>
+                              <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
+                          </td>
+
+                        </tr>
+
+                      @endforeach
+
+                    @endif
+
+                    </tbody>
+
+                </table>
+
+              </div>
+            </div>
+          </div>
+
+
+
+
         </div>
 
         <div class="box-footer">
@@ -669,6 +802,73 @@
                     '</tr>';
 
       $("#exp_table_body").append($(content));
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+        });
+      });
+      
+      $(this).removeClass('datepicker');
+
+      });
+
+    });
+
+
+
+
+    {{-- Eligibility ADD ROW --}}
+    $(document).ready(function() {
+
+      $("#elig_add_row").on("click", function() {
+      var i = $("#elig_table_body").children().length;
+      var content ='<tr>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_elig[' + i + '][eligibility]" class="form-control" placeholder="Eligibility">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_elig[' + i + '][level]" class="form-control" placeholder="Level">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_elig[' + i + '][rating]" class="form-control" placeholder="Rating">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<div class="input-group">' +
+                            '<div class="input-group-addon">' +
+                              '<i class="fa fa-calendar"></i>' +
+                            '</div>' +
+                            '<input name="row_elig[' + i + '][exam_date]" type="text" class="form-control datepicker" placeholder="mm/dd/yy">' +
+                          '</div>' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                        '<div class="form-group">' +
+                          '<input type="text" name="row_elig[' + i + '][exam_place]" class="form-control" placeholder="Exam Place">' +
+                        '</div>' +
+                      '</td>' +
+
+                      '<td>' +
+                          '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+
+                    '</tr>';
+
+      $("#elig_table_body").append($(content));
 
       $('.datepicker').each(function(){
           $(this).datepicker({

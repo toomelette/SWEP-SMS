@@ -10,6 +10,7 @@ use App\Models\Applicant;
 use App\Models\ApplicantEducationalBackground;
 use App\Models\ApplicantExperience;
 use App\Models\ApplicantTraining;
+use App\Models\ApplicantEligibility;
 
 
 class ApplicantRepository extends BaseRepository implements ApplicantInterface {
@@ -90,6 +91,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->civil_status = $request->civil_status;
         $applicant->address = $request->address;
         $applicant->contact_no = $request->contact_no;
+        $applicant->school = $request->school;
         $applicant->remarks = $request->remarks;
         $applicant->created_at = $this->carbon->now();
         $applicant->updated_at = $this->carbon->now();
@@ -124,6 +126,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->civil_status = $request->civil_status;
         $applicant->address = $request->address;
         $applicant->contact_no = $request->contact_no;
+        $applicant->school = $request->school;
         $applicant->remarks = $request->remarks;
         $applicant->updated_at = $this->carbon->now();
         $applicant->ip_updated = request()->ip();
@@ -162,6 +165,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->applicantEducationalBackground()->delete();
         $applicant->applicantExperience()->delete();
         $applicant->applicantTraining()->delete();
+        $applicant->applicantEligibility()->delete();
 
     }
 
@@ -260,7 +264,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByCourseId:'. $course_id .'', 240, function() use ($course_id){
                 
-            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks', 'course_id', 'applicant_id')
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'course_id', 'applicant_id')
                                    ->with('course', 'departmentUnit')           
                                    ->where('course_id', $course_id)
                                    ->get();
@@ -280,7 +284,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByDeptUnitId:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
                 
-            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'remarks',  'course_id', 'applicant_id')
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks',  'course_id', 'applicant_id')
                                    ->with('course', 'departmentUnit') 
                                    ->where('department_unit_id', $dept_unit_id)
                                    ->get();
@@ -344,6 +348,23 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant_trng->conducted_by = $data['conducted_by'];
         $applicant_trng->remarks = $data['remarks'];
         $applicant_trng->save();
+
+    }
+
+
+
+
+
+    public function storeEligibilities($data, $applicant){
+        
+        $applicant_elig = new ApplicantEligibility;
+        $applicant_elig->applicant_id = $applicant->applicant_id;
+        $applicant_elig->eligibility = $data['eligibility'];
+        $applicant_elig->level = $data['level'];
+        $applicant_elig->rating = $data['rating'];
+        $applicant_elig->exam_place = $data['exam_place'];
+        $applicant_elig->exam_date = $this->__dataType->date_parse($data['exam_date']);
+        $applicant_elig->save();
 
     }
 

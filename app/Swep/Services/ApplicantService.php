@@ -4,6 +4,8 @@ namespace App\Swep\Services;
 
 
 use App\Swep\Interfaces\ApplicantInterface;
+use App\Swep\Interfaces\CourseInterface;
+use App\Swep\Interfaces\DepartmentUnitInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -13,12 +15,16 @@ class ApplicantService extends BaseService{
 
 
     protected $applicant_repo;
+    protected $course_repo;
+    protected $dept_unit_repo;
 
 
 
-    public function __construct(ApplicantInterface $applicant_repo){
+    public function __construct(ApplicantInterface $applicant_repo, CourseInterface $course_repo, DepartmentUnitInterface $dept_unit_repo){
 
         $this->applicant_repo = $applicant_repo;
+        $this->course_repo = $course_repo;
+        $this->dept_unit_repo = $dept_unit_repo;
         parent::__construct();
 
     }
@@ -111,16 +117,18 @@ class ApplicantService extends BaseService{
 
         if($request->r_type == "ABC"){
 
+            $course = $this->course_repo->findByCourseId($request->c);
             $applicants = $this->applicant_repo->getByCourseId($request->c); 
-            return view('printables.applicant.by_course')->with('applicants', $applicants);
+            return view('printables.applicant.by_course', compact('course', 'applicants'));
 
         }
 
 
         if ($request->r_type == "ABU") {
-            
+
+            $dept_unit = $this->dept_unit_repo->findByDeptUnitId($request->du);
             $applicants =$this->applicant_repo->getByDeptUnitId($request->du); 
-            return view('printables.applicant.by_dept_unit')->with('applicants', $applicants);
+            return view('printables.applicant.by_course', compact('dept_unit', 'applicants'));
 
         }
 
@@ -154,6 +162,13 @@ class ApplicantService extends BaseService{
         if(!empty($request->row_edc_background)){
             foreach ($request->row_edc_background as $row) {
                 $this->applicant_repo->storeEducationalBackground($row, $applicant);
+            }
+        }
+
+        // Applicant Eligibility
+        if(!empty($request->row_elig)){
+            foreach ($request->row_elig as $row) {
+                $this->applicant_repo->storeEligibilities($row, $applicant);
             }
         }
 

@@ -53,6 +53,7 @@ class DepartmentUnitSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:department_units:getByDepartmentName:'. $department_unit->department_name .'');
         $this->__cache->deletePattern('swep_cache:department_units:getByDepartmentId:'. $department_unit->department_id .'');
         $this->__cache->deletePattern('swep_cache:department_units:findBySlug:'. $department_unit->slug .'');
+        $this->__cache->deletePattern('swep_cache:department_units:findByDeptUnitId:'. $department_unit->department_unit_id .'');
 
         $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS', 'The Department Unit has been successfully updated!');
         $this->session->flash('DEPARTMENT_UNIT_UPDATE_SUCCESS_SLUG', $department_unit->slug);
@@ -69,6 +70,7 @@ class DepartmentUnitSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:department_units:getByDepartmentName:'. $department_unit->department_name .'');
         $this->__cache->deletePattern('swep_cache:department_units:getByDepartmentId:'. $department_unit->department_id .'');
         $this->__cache->deletePattern('swep_cache:department_units:findBySlug:'. $department_unit->slug .'');
+        $this->__cache->deletePattern('swep_cache:department_units:findByDeptUnitId:'. $department_unit->department_unit_id .'');
 
         $this->session->flash('DEPARTMENT_UNIT_DELETE_SUCCESS', 'The Department Unit has been successfully deleted!');
 

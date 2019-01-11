@@ -25,6 +25,7 @@ class ApplicantFormRequest extends FormRequest{
         $rows_edc_background = $this->request->get('row_edc_background');
         $rows_trainings = $this->request->get('row_training');
         $rows_exp = $this->request->get('row_exp');
+        $rows_elig = $this->request->get('row_elig');
 
         $rules = [
             
@@ -73,6 +74,17 @@ class ApplicantFormRequest extends FormRequest{
                 $rules['row_exp.'.$key.'.position'] = 'nullable|string|max:90';
                 $rules['row_exp.'.$key.'.company'] = 'required|string|max:255';
                 $rules['row_exp.'.$key.'.is_gov_service'] = 'required|string|max:11';
+            } 
+        }
+
+        // Eligibility
+        if(!empty($rows_elig)){
+            foreach($rows_elig as $key => $value){
+                $rules['row_elig.'.$key.'.eligibility'] = 'required|string|max:255';
+                $rules['row_elig.'.$key.'.level'] = 'nullable|string|max:45';
+                $rules['row_elig.'.$key.'.rating'] = 'required|numeric';
+                $rules['row_elig.'.$key.'.exam_place'] = 'nullable|string|max:255';
+                $rules['row_elig.'.$key.'.exam_date'] = 'nullable|date_format:"m/d/Y"';
             } 
         }
 

@@ -133,6 +133,25 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
 
+    public function findByCourseId($id){
+
+        $course = $this->cache->remember('courses:findByCourseId:' . $id, 240, function() use ($id){
+            return $this->course->where('course_id', $id)->first();
+        });
+
+        if(empty($course)){
+            abort(404);
+        }
+        
+        return $course;
+
+    }
+
+
+
+
+
+
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {

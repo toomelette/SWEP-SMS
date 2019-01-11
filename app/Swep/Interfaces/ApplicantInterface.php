@@ -16,6 +16,9 @@ interface ApplicantInterface {
 
 	public function destroy($slug);
 
+	public function getByCourseId($course_id);
+
+	public function getByDeptUnitId($dept_unit_id);
 
 	// Dependencies
 	public function storeTrainings($row, $applicant);
@@ -23,5 +26,7 @@ interface ApplicantInterface {
 	public function storeExperience($row, $applicant);
 
 	public function storeEducationalBackground($row, $applicant);
+
+	public function storeEligibilities($row, $applicant);
 		
 }

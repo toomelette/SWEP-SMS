@@ -52,6 +52,7 @@ class CourseSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:courses:fetch:*');
         $this->__cache->deletePattern('swep_cache:courses:getAll');
         $this->__cache->deletePattern('swep_cache:courses:findBySlug:'. $course->slug .'');
+        $this->__cache->deletePattern('swep_cache:courses:findByCourseId:'. $course->course_id .'');
 
         $this->session->flash('COURSE_UPDATE_SUCCESS', 'The Course has been successfully updated!');
         $this->session->flash('COURSE_UPDATE_SUCCESS_SLUG', $course->slug);
@@ -67,6 +68,7 @@ class CourseSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:courses:fetch:*');
         $this->__cache->deletePattern('swep_cache:courses:getAll');
         $this->__cache->deletePattern('swep_cache:courses:findBySlug:'. $course->slug .'');
+        $this->__cache->deletePattern('swep_cache:courses:findByCourseId:'. $course->course_id .'');
 
         $this->session->flash('COURSE_DELETE_SUCCESS', 'The Course has been successfully deleted!');
         

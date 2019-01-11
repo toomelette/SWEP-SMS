@@ -52,6 +52,8 @@
                 <dd>{{ $applicant->contact_no }}</dd>
                 <dt>Course:</dt>
                 <dd>{{ empty($applicant->course) ? '' : $applicant->course->name }}</dd>
+                <dt>School:</dt>
+                <dd>{{ $applicant->school }}</dd>
                 <dt>Unit Applied:</dt>
                 <dd>{{ empty($applicant->departmentUnit) ? '' : $applicant->departmentUnit->description }}</dd>
                 <dt>Position Applied For:</dt>
@@ -177,6 +179,48 @@
               </table>
 
               @if($applicant->applicantEducationalBackground->isEmpty())
+                <div style="padding :5px;">
+                  <center><h4>No Records found!</h4></center>
+                </div>
+              @endif
+
+            </div>
+
+          </div>
+        </div>
+
+
+
+        {{-- Eligibilities --}}
+         <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Work Experiences</h3>
+            </div>
+            <div class="box-body" style="overflow-x:auto;">
+
+              <table class="table table-bordered">
+
+                <tr>
+                  <th>Eligibility</th>
+                  <th>Level</th>
+                  <th>Rating</th>
+                  <th>Exam Place</th>
+                  <th>Exam Date</th>
+                </tr>
+                @foreach($applicant->applicantEligibility as $data) 
+                  <tr>
+                    <td>{{ $data->eligibility }}</td>
+                    <td>{{ $data->level }}</td>
+                    <td>{{ $data->rating }}</td>
+                    <td>{{ $data->exam_place }}</td>
+                    <td>{{ __dataType::date_parse($data->exam_date, 'F d, Y') }}</td>
+                  </tr>
+                @endforeach
+
+              </table>
+
+              @if($applicant->applicantEligibility->isEmpty())
                 <div style="padding :5px;">
                   <center><h4>No Records found!</h4></center>
                 </div>

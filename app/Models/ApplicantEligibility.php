@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicantTraining extends Model{
+class ApplicantEligibility extends Model{
     
+	protected $table = 'hr_applicant_eligibilities';
 
-
-	protected $table = 'hr_applicant_trainings';
-
-    protected $dates = ['date_from', 'date_to'];
+    protected $dates = ['exam_date'];
 
 	public $timestamps = false;
-
 
 
 
@@ -21,12 +18,11 @@ class ApplicantTraining extends Model{
     protected $attributes = [
 
         'applicant_id' => '',
-        'title' => '',
-        'date_from' => null,
-        'date_to' => null,
-        'venue' => '',
-        'conducted_by' => '',
-        'remarks' => '',
+        'eligibility' => '',
+        'level' => '',
+        'rating' => 0.00,
+        'exam_place' => '',
+        'exam_date' => null,
 
     ];
 
@@ -38,7 +34,6 @@ class ApplicantTraining extends Model{
     public function applicant() {
         return $this->belongsTo('App\Models\Applicant','applicant_id','applicant_id');
     }
-
 
 
 }

@@ -12,6 +12,8 @@ interface CourseInterface {
 
 	public function findBySlug($slug);
 
+	public function findByCourseId($id);
+
 	public function update($request, $slug);
 
 	public function destroy($slug);

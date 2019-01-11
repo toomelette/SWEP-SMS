@@ -133,6 +133,25 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
+    public function findByDeptUnitId($id){
+
+        $department_unit = $this->cache->remember('department_units:findByDeptUnitId:' . $id, 240, function() use ($id){
+            return $this->department_unit->where('department_unit_id', $id)->first();
+        });
+        
+        if(empty($department_unit)){
+            abort(404);
+        }
+        
+        return $department_unit;
+
+    }
+
+
+
+
+
+
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {

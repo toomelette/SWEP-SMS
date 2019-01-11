@@ -39,6 +39,7 @@ class Applicant extends Model{
         'civil_status' => '',
         'address' => '',
         'contact_no' => '',
+        'school' => '',
         'remarks' => '',
         'created_at' => null, 
         'updated_at' => null,
@@ -66,6 +67,11 @@ class Applicant extends Model{
 
     public function applicantTraining() {
         return $this->hasMany('App\Models\ApplicantTraining','applicant_id','applicant_id');
+    }
+
+
+    public function applicantEligibility() {
+        return $this->hasMany('App\Models\ApplicantEligibility','applicant_id','applicant_id');
     }
 
 

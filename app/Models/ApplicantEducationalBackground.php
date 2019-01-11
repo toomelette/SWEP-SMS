@@ -33,7 +33,7 @@ class ApplicantEducationalBackground extends Model{
 
 
     /** RELATIONSHIPS **/
-    public function employee() {
+    public function applicant() {
         return $this->belongsTo('App\Models\Applicant','applicant_id','applicant_id');
     }
 

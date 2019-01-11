@@ -16,6 +16,8 @@ interface DepartmentUnitInterface {
 
 	public function findBySlug($slug);
 
+	public function findByDeptUnitId($id);
+
 	public function getAll();
 
 	public function getByDepartmentName($dept_name);
