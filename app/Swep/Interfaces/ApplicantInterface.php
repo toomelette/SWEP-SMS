@@ -20,6 +20,10 @@ interface ApplicantInterface {
 
 	public function getByDeptUnitId($dept_unit_id);
 
+	public function getByCourseIdShortlist($course_id);
+
+	public function getByDeptUnitIdShortlist($dept_unit_id);
+
 	// Dependencies
 	public function storeTrainings($row, $applicant);
 

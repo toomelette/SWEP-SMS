@@ -106,6 +106,24 @@ class ApplicantController extends Controller{
     }
 
 
+
+
+	public function addToShortList($slug){
+
+		return $this->applicant->addToShortList($slug);
+
+    }
+
+
+
+
+	public function removeToShortList($slug){
+
+		return $this->applicant->removeToShortList($slug);
+
+    }
+
+
     
 
 

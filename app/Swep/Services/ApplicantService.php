@@ -114,25 +114,73 @@ class ApplicantService extends BaseService{
 
     public function reportGenerate($request){
 
+        $applicants = [];
+
+        $course = [];
 
         if($request->r_type == "ABC"){
 
             $course = $this->course_repo->findByCourseId($request->c);
-            $applicants = $this->applicant_repo->getByCourseId($request->c); 
+            
+            if ($request->lt == "FL") {
+                
+                $applicants = $this->applicant_repo->getByCourseId($request->c);
+            
+            }elseif($request->lt == "SL"){
+                
+                $applicants = $this->applicant_repo->getByCourseIdShortlist($request->c);
+
+            }
+
             return view('printables.applicant.by_course', compact('course', 'applicants'));
 
-        }
-
-
-        if ($request->r_type == "ABU") {
+        }elseif ($request->r_type == "ABU") {
 
             $dept_unit = $this->dept_unit_repo->findByDeptUnitId($request->du);
-            $applicants =$this->applicant_repo->getByDeptUnitId($request->du); 
+            
+            if ($request->lt == "FL") {
+            
+                $applicants =$this->applicant_repo->getByDeptUnitId($request->du);
+            
+            }elseif($request->lt == "SL"){
+            
+                $applicants =$this->applicant_repo->getByDeptUnitIdShortlist($request->du);
+
+            }
+
             return view('printables.applicant.by_course', compact('dept_unit', 'applicants'));
+
+        }else{
+
+           abort(404); 
 
         }
 
-        abort(404);
+    }
+
+
+
+
+
+    public function addToShortList($slug){
+
+        $applicant = $this->applicant_repo->addToShortList($slug);
+
+        $this->event->fire('applicant.add_to_shortist', $applicant);
+        return redirect()->route('dashboard.applicant.index');
+
+    }
+
+
+
+
+
+    public function removeToShortList($slug){
+
+        $applicant = $this->applicant_repo->removeToShortList($slug);
+
+        $this->event->fire('applicant.remove_to_shortist', $applicant);
+        return redirect()->route('dashboard.applicant.index');
 
     }
 

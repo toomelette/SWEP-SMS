@@ -15,7 +15,7 @@ class Applicant extends Model{
 
     protected $dates = ['date_of_birth', 'created_at', 'updated_at'];
 
-    public $sortable = ['plantilla_id', 'course_id', 'fullname', 'date_of_birth'];
+    public $sortable = ['plantilla_id', 'course_id', 'fullname', 'date_of_birth', 'is_on_short_list'];
 
 	public $timestamps = false;
 
@@ -41,6 +41,7 @@ class Applicant extends Model{
         'contact_no' => '',
         'school' => '',
         'remarks' => '',
+        'is_on_short_list' => false,
         'created_at' => null, 
         'updated_at' => null,
         'ip_created' => '',

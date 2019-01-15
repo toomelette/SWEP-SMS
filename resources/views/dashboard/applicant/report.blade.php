@@ -27,7 +27,7 @@
           <input type="hidden" name="r_type" value="ABC">
 
           {!! __form::select_static(
-            '3', 'lt', 'List Type *', old('lt'), ['Full List' => 'FL', 'Consolidated List' => 'CL'], $errors->has('lt'), $errors->first('lt'), '', ''
+            '3', 'lt', 'List Type *', old('lt'), ['Full List' => 'FL', 'Short List' => 'SL'], $errors->has('lt'), $errors->first('lt'), '', ''
           ) !!}
 
           {!! __form::select_dynamic(
@@ -63,7 +63,7 @@
           <input type="hidden" name="r_type" value="ABU">
 
           {!! __form::select_static(
-            '3', 'lt', 'List Type *', old('lt'), ['Full List' => 'FL', 'Consolidated List' => 'CL'], $errors->has('lt'), $errors->first('lt'), '', ''
+            '3', 'lt', 'List Type *', old('lt'), ['Full List' => 'FL', 'Short List' => 'SL'], $errors->has('lt'), $errors->first('lt'), '', ''
           ) !!}
 
           {!! __form::select_dynamic(

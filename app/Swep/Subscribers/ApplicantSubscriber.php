@@ -27,6 +27,8 @@ class ApplicantSubscriber extends BaseSubscriber{
         $events->listen('applicant.store', 'App\Swep\Subscribers\ApplicantSubscriber@onStore');
         $events->listen('applicant.update', 'App\Swep\Subscribers\ApplicantSubscriber@onUpdate');
         $events->listen('applicant.destroy', 'App\Swep\Subscribers\ApplicantSubscriber@onDestroy');
+        $events->listen('applicant.add_to_shortist', 'App\Swep\Subscribers\ApplicantSubscriber@onAddToShortList');
+        $events->listen('applicant.remove_to_shortist', 'App\Swep\Subscribers\ApplicantSubscriber@onRemoveToShortList');
 
     }
 
@@ -39,6 +41,8 @@ class ApplicantSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
         $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
         $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_CREATE_SUCCESS', 'The Applicant has been successfully created!');
 
@@ -54,6 +58,8 @@ class ApplicantSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
         $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
         $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_UPDATE_SUCCESS', 'The Applicant has been successfully updated!');
         $this->session->flash('APPLICANT_UPDATE_SUCCESS_SLUG', $applicant->slug);
@@ -70,9 +76,47 @@ class ApplicantSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
         $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
         $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_DELETE_SUCCESS', 'The Applicant has been successfully deleted!');
         
+    }
+
+
+
+
+
+    public function onAddToShortList($applicant){
+
+        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
+        $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+
+        $this->session->flash('APPLICANT_ADD_SL_SUCCESS', 'The Applicant has been successfully added to Shortlist!');
+        $this->session->flash('APPLICANT_ADD_SL_SUCCESS_SLUG', $applicant->slug);
+
+    }
+
+
+
+
+
+    public function onRemoveToShortList($applicant){
+
+        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
+        $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+
+        $this->session->flash('APPLICANT_REMOVE_SL_SUCCESS', 'The Applicant has been successfully removed to Shortlist!');
+        $this->session->flash('APPLICANT_REMOVE_SL_SUCCESS_SLUG', $applicant->slug);
+
     }
 
 
