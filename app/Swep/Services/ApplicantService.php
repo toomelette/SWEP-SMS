@@ -132,7 +132,7 @@ class ApplicantService extends BaseService{
 
             }
 
-            return view('printables.applicant.by_course', compact('course', 'applicants'));
+            return view('printables.applicant.report_1', compact('course', 'applicants'));
 
         }elseif ($request->r_type == "ABU") {
 
@@ -148,7 +148,7 @@ class ApplicantService extends BaseService{
 
             }
 
-            return view('printables.applicant.by_course', compact('dept_unit', 'applicants'));
+            return view('printables.applicant.report_1', compact('dept_unit', 'applicants'));
 
         }else{
 

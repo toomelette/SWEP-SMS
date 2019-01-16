@@ -20,7 +20,7 @@
         </div> 
       </div>
       
-      <form role="form" method="GET" autocomplete="off" action="{{ route('dashboard.applicant.report_generate') }}" target="_blank">
+      <form role="form" method="GET" action="{{ route('dashboard.applicant.report_generate') }}" target="_blank">
 
         <div class="box-body">
 
@@ -32,6 +32,24 @@
 
           {!! __form::select_dynamic(
             '3', 'c', 'Course', old('c'), $global_courses_all, 'course_id', 'name', $errors->has('c'), $errors->first('c'), 'select2', ''
+          ) !!}
+
+          <div class="col-md-12"></div>
+
+          {!! __form::textbox(
+            '3', 'pn', 'text', 'Prepared By:', 'Prepared By', old('pn'), $errors->has('pn'), $errors->first('pn'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! __form::textbox(
+            '3', 'pd', 'text', 'Prepared Position:', 'Prepared Position', old('pd'), $errors->has('pd'), $errors->first('pd'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! __form::textbox(
+            '3', 'nn', 'text', 'Noted By:', 'Noted By', old('nn'), $errors->has('nn'), $errors->first('nn'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! __form::textbox(
+            '3', 'nd', 'text', 'Noted Position:', 'Noted Position', old('nd'), $errors->has('nd'), $errors->first('nd'), 'data-transform="uppercase"'
           ) !!}
 
         </div>
@@ -56,7 +74,7 @@
         </div> 
       </div>
       
-      <form role="form" method="GET" autocomplete="off" action="{{ route('dashboard.applicant.report_generate') }}" target="_blank">
+      <form role="form" method="GET" action="{{ route('dashboard.applicant.report_generate') }}" target="_blank">
 
         <div class="box-body">
 
@@ -68,6 +86,24 @@
 
           {!! __form::select_dynamic(
             '3', 'du', 'Unit Applied', old('du'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('du'), $errors->first('du'), 'select2', ''
+          ) !!}
+
+          <div class="col-md-12"></div>
+
+          {!! __form::textbox(
+            '3', 'pn', 'text', 'Prepared By:', 'Prepared By', old('pn'), $errors->has('pn'), $errors->first('pn'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! __form::textbox(
+            '3', 'pd', 'text', 'Prepared Position:', 'Prepared Position', old('pd'), $errors->has('pd'), $errors->first('pd'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! __form::textbox(
+            '3', 'nn', 'text', 'Noted By:', 'Noted By', old('nn'), $errors->has('nn'), $errors->first('nn'), 'data-transform="uppercase"'
+          ) !!}
+
+          {!! __form::textbox(
+            '3', 'nd', 'text', 'Noted Position:', 'Noted Position', old('nd'), $errors->has('nd'), $errors->first('nd'), 'data-transform="uppercase"'
           ) !!}
 
         </div>

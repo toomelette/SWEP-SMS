@@ -96,7 +96,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->address = $request->address;
         $applicant->contact_no = $request->contact_no;
         $applicant->school = $request->school;
-        $applicant->is_on_short_list = $request->school;
+        $applicant->is_on_short_list = false;
         $applicant->remarks = $request->remarks;
         $applicant->created_at = $this->carbon->now();
         $applicant->updated_at = $this->carbon->now();
