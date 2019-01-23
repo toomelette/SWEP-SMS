@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SWEP | Sugar Web Portal</title>
+    <title>SWEP-AFD | Sugar Web Portal</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
@@ -16,7 +16,7 @@
         <nav class="navbar navbar-static-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="#" class="navbar-brand"><b>SUGAR</b> WEB PORTAL</a>
+              <a href="#" class="navbar-brand"><b>SUGAR WEB PORTAL - AFD</b></a>
             </div>
             <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">
