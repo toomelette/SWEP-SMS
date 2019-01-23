@@ -86,7 +86,7 @@ class DocumentFolderService extends BaseService{
     	$doc_folder = $this->doc_folder_repo->destroy($slug);
 
         $this->event->fire('document_folder.destroy', $doc_folder);
-        return redirect()->route('dashboard.document_folder.index');
+        return redirect()->back();
 
     }
 

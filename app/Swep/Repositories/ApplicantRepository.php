@@ -97,6 +97,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->contact_no = $request->contact_no;
         $applicant->school = $request->school;
         $applicant->is_on_short_list = false;
+        $applicant->received_at = $this->__dataType->date_parse($request->received_at);
         $applicant->remarks = $request->remarks;
         $applicant->created_at = $this->carbon->now();
         $applicant->updated_at = $this->carbon->now();
@@ -132,6 +133,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->address = $request->address;
         $applicant->contact_no = $request->contact_no;
         $applicant->school = $request->school;
+        $applicant->received_at = $this->__dataType->date_parse($request->received_at);
         $applicant->remarks = $request->remarks;
         $applicant->updated_at = $this->carbon->now();
         $applicant->ip_updated = request()->ip();
@@ -299,8 +301,9 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByCourseId:'. $course_id .'', 240, function() use ($course_id){
 
-            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'course_id', 'applicant_id')
-                                   ->with('course', 'departmentUnit')           
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
+                                   ->with('course', 'departmentUnit')  
+                                   ->orderBy('received_at', 'asc')       
                                    ->where('course_id', $course_id)
                                    ->get();
 
@@ -319,10 +322,11 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByCourseIdShortlist:'. $course_id .'', 240, function() use ($course_id){
 
-            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'course_id', 'applicant_id')
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
                                    ->with('course', 'departmentUnit')           
-                                   ->where('course_id', $course_id)           
+                                   ->where('course_id', $course_id)            
                                    ->where('is_on_short_list', 1)
+                                   ->orderBy('lastname', 'asc') 
                                    ->get();
 
         });
@@ -340,8 +344,9 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByDeptUnitId:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
                 
-            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks',  'course_id', 'applicant_id')
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
                                    ->with('course', 'departmentUnit') 
+                                   ->orderBy('received_at', 'asc')  
                                    ->where('department_unit_id', $dept_unit_id)
                                    ->get();
 
@@ -360,10 +365,11 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
         $applicants = $this->cache->remember('applicants:getByDeptUnitIdShortlist:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
                 
-            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks',  'course_id', 'applicant_id')
+            return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at',  'course_id', 'applicant_id')
                                    ->with('course', 'departmentUnit') 
                                    ->where('department_unit_id', $dept_unit_id)        
                                    ->where('is_on_short_list', 1)
+                                   ->orderBy('lastname', 'asc')  
                                    ->get();
 
         });

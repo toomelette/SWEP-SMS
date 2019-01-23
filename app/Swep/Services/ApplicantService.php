@@ -104,7 +104,7 @@ class ApplicantService extends BaseService{
         $applicant = $this->applicant_repo->destroy($slug);
 
         $this->event->fire('applicant.destroy', $applicant );
-        return redirect()->route('dashboard.applicant.index');
+        return redirect()->back();
 
     }
 
@@ -167,7 +167,7 @@ class ApplicantService extends BaseService{
         $applicant = $this->applicant_repo->addToShortList($slug);
 
         $this->event->fire('applicant.add_to_shortist', $applicant);
-        return redirect()->route('dashboard.applicant.index');
+        return redirect()->back();
 
     }
 
@@ -180,7 +180,7 @@ class ApplicantService extends BaseService{
         $applicant = $this->applicant_repo->removeToShortList($slug);
 
         $this->event->fire('applicant.remove_to_shortist', $applicant);
-        return redirect()->route('dashboard.applicant.index');
+        return redirect()->back();
 
     }
 

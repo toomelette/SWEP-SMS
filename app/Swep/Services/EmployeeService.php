@@ -108,7 +108,7 @@ class EmployeeService extends BaseService{
         $employee = $this->employee_repo->destroy($slug);
 
         $this->event->fire('employee.destroy', $employee);
-        return redirect()->route('dashboard.employee.index');
+        return redirect()->back();
 
     }
 

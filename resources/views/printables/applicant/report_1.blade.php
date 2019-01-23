@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Seminars and Trainings</title>
+  <title>LIST OF APPLICANTS</title>
 
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -142,6 +142,7 @@
       <thead>
           
         <td class="data-row-head">No.</td>
+        <td class="data-row-head" style="width:50px;">Date Received</td>
         <td class="data-row-head" style="width:150px;">Name</td>
         <td class="data-row-head" style="width:150px;">Address</td>
         <td class="data-row-head">Civil Status</td>
@@ -162,12 +163,13 @@
         <tbody>
                 
           <td class="data-row-body">{{ $key + 1 }}</td>
+          <td class="data-row-body">{{ __dataType::date_parse($data->received_at, "M d,Y")}}</td>
           <td class="data-row-body">{{ $data->fullname }}</td>
           <td class="data-row-body">{{ $data->address }}</td>
           <td class="data-row-body">{{ $data->civil_status }}</td>
           <td class="data-row-body">{{ $data->gender }}</td>
           <td class="data-row-body">{{ Carbon::parse($data->date_of_birth)->age }}</td>
-          <td class="data-row-body">{{ Carbon::parse($data->date_of_birth)->format("F d,Y") }}</td>
+          <td class="data-row-body">{{ __dataType::date_parse($data->date_of_birth, "F d,y") }}</td>
           <td class="data-row-body" style="word-break: break-all;">{{ $data->contact_no }}</td>
           <td style="padding:5px; font-size:9px;">
             @foreach ($data->applicantEligibility as $data_elig)
@@ -178,7 +180,9 @@
           <td class="data-row-body">{{ $data->school }}</td>
           <td style="padding:5px; font-size:9px;">
             @foreach ($data->applicantExperience as $data_exp)
-              &#8226; <b>{{ $data_exp->position }}</b> - {{ $data_exp->company }} <br>
+              &#8226; <b>{{ $data_exp->position }}</b> - {{ $data_exp->company }}.
+              ({{ __dataType::date_parse($data_exp->date_from, "M d,Y")}} - 
+               {{ __dataType::date_parse($data_exp->date_to, "M d,Y")}})<br>
             @endforeach
           </td>
           <td class="data-row-body">{{ $data->remarks }}</td>

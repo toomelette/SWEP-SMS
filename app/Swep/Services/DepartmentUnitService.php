@@ -86,7 +86,7 @@ class DepartmentUnitService extends BaseService{
         $department_unit = $this->department_unit_repo->destroy($slug);
         
         $this->event->fire('department_unit.destroy', $department_unit);
-        return redirect()->route('dashboard.department_unit.index');
+        return redirect()->back();
 
     }
 

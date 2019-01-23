@@ -40,6 +40,7 @@ class ApplicantFormRequest extends FormRequest{
             'plantilla_id'=>'nullable|string|max:11',
             'contact_no'=>'nullable|string|max:90',
             'department_unit_id'=>'nullable|string|max:11',
+            'received_at' => 'required|date_format:"m/d/Y"',
             'remarks'=>'nullable|string|max:255',
 
         ];

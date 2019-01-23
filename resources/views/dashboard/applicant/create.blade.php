@@ -77,6 +77,10 @@
             '3', 'department_unit_id', 'Unit Applied *', old('department_unit_id'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), 'select2', ''
           ) !!}
 
+          {!! __form::datepicker(
+            '3', 'received_at',  'Date Received *', old('received_at'), $errors->has('received_at'), $errors->first('received_at')
+          ) !!}
+
           {!! __form::textbox(
             '3', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}

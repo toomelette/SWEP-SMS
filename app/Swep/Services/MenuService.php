@@ -98,7 +98,7 @@ class MenuService extends BaseService{
         $menu = $this->menu_repo->destroy($slug);
 
         $this->event->fire('menu.destroy', $menu);
-        return redirect()->route('dashboard.menu.index');
+        return redirect()->back();
 
     }
 

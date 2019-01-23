@@ -83,7 +83,7 @@ class CourseService extends BaseService{
         $course = $this->course_repo->destroy($slug);
 
         $this->event->fire('course.destroy', $course );
-        return redirect()->route('dashboard.course.index');
+        return redirect()->back();
 
     }
 

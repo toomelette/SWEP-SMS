@@ -83,7 +83,7 @@ class ProjectCodeService extends BaseService{
         $project_code = $this->project_code_repo->destroy($slug);
         
         $this->event->fire('project_code.destroy', $project_code);
-        return redirect()->route('dashboard.project_code.index');
+        return redirect()->back();
 
     }
 

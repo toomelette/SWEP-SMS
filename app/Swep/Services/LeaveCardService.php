@@ -233,7 +233,7 @@ class LeaveCardService extends BaseService{
         $leave_card = $this->leave_card_repo->destroy($slug);
 
         $this->event->fire('leave_card.destroy', $leave_card );
-        return redirect()->route('dashboard.leave_card.index');
+        return redirect()->back();
 
     }
 

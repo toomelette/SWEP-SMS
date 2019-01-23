@@ -108,7 +108,7 @@ class LeaveApplicationService extends BaseService{
         $leave_application = $this->leave_application_repo->destroy($slug);
 
         $this->event->fire('la.destroy', $leave_application );
-        return redirect()->route('dashboard.leave_application.index');
+        return redirect()->back();
 
     }
 

@@ -14,6 +14,7 @@
                         'c' => Request::get('c'),
                         'p' => Request::get('p'),
                         'g' => Request::get('g'),
+                        'du' => Request::get('du'),
                       ];
 
   $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';

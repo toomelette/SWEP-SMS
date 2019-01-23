@@ -84,7 +84,7 @@ class SignatoryService extends BaseService{
         $signatory = $this->signatory_repo->destroy($slug);
 
         $this->event->fire('signatory.destroy', $signatory);
-        return redirect()->route('dashboard.signatory.index');
+        return redirect()->back();
 
     }
 

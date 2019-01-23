@@ -145,7 +145,7 @@ class DocumentService extends BaseService{
         $this->document_repo->destroy($document);
 
         $this->event->fire('document.destroy', $document);
-        return redirect()->route('dashboard.document.index');
+        return redirect()->back();
 
     }
 

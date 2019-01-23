@@ -86,7 +86,7 @@ class FundSourceService extends BaseService{
         $fund_source = $this->fund_source_repo->destroy($slug);
 
         $this->event->fire('fund_source.destroy', $fund_source);
-        return redirect()->route('dashboard.fund_source.index');
+        return redirect()->back();
 
     }
 

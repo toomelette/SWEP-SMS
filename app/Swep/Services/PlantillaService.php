@@ -83,7 +83,7 @@ class PlantillaService extends BaseService{
         $plantilla = $this->plantilla_repo->destroy($slug);
 
         $this->event->fire('plantilla.destroy', $plantilla );
-        return redirect()->route('dashboard.plantilla.index');
+        return redirect()->back();
 
     }
 

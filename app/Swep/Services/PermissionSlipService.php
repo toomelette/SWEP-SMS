@@ -104,7 +104,7 @@ class PermissionSlipService extends BaseService{
         $permission_slip = $this->ps_repo->destroy($slug);
 
         $this->event->fire('ps.destroy', $permission_slip);
-        return redirect()->route('dashboard.permission_slip.index');
+        return redirect()->back();
 
     }
 
