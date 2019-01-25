@@ -38,11 +38,11 @@ class ApplicantSubscriber extends BaseSubscriber{
 
     public function onStore($applicant){
 
-        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_CREATE_SUCCESS', 'The Applicant has been successfully created!');
 
@@ -54,12 +54,12 @@ class ApplicantSubscriber extends BaseSubscriber{
 
     public function onUpdate($applicant){
 
-        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
-        $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_UPDATE_SUCCESS', 'The Applicant has been successfully updated!');
         $this->session->flash('APPLICANT_UPDATE_SUCCESS_SLUG', $applicant->slug);
@@ -72,12 +72,12 @@ class ApplicantSubscriber extends BaseSubscriber{
 
     public function onDestroy($applicant){
 
-        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
-        $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_DELETE_SUCCESS', 'The Applicant has been successfully deleted!');
         
@@ -89,12 +89,12 @@ class ApplicantSubscriber extends BaseSubscriber{
 
     public function onAddToShortList($applicant){
 
-        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
-        $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_ADD_SL_SUCCESS', 'The Applicant has been successfully added to Shortlist!');
         $this->session->flash('APPLICANT_ADD_SL_SUCCESS_SLUG', $applicant->slug);
@@ -107,12 +107,12 @@ class ApplicantSubscriber extends BaseSubscriber{
 
     public function onRemoveToShortList($applicant){
 
-        $this->__cache->deletePattern('swep_cache:applicants:fetch:*');
-        $this->__cache->deletePattern('swep_cache:applicants:findBySlug:'. $applicant->slug .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseId:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
-        $this->__cache->deletePattern('swep_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:findBySlug:'. $applicant->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseId:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitId:'. $applicant->department_unit_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByCourseIdShortlist:'. $applicant->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:applicants:getByDeptUnitIdShortlist:'. $applicant->department_unit_id .'');
 
         $this->session->flash('APPLICANT_REMOVE_SL_SUCCESS', 'The Applicant has been successfully removed to Shortlist!');
         $this->session->flash('APPLICANT_REMOVE_SL_SUCCESS_SLUG', $applicant->slug);

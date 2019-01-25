@@ -35,8 +35,8 @@ class SignatorySubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->__cache->deletePattern('swep_cache:signatories:fetch:*');
-        $this->__cache->deletePattern('swep_cache:signatories:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:getAll');
 
         $this->session->flash('SIGNATORY_CREATE_SUCCESS', 'The Signatory has been successfully created!');
 
@@ -48,10 +48,10 @@ class SignatorySubscriber extends BaseSubscriber{
 
     public function onUpdate($signatory){
 
-        $this->__cache->deletePattern('swep_cache:signatories:fetch:*');
-        $this->__cache->deletePattern('swep_cache:signatories:getAll');
-        $this->__cache->deletePattern('swep_cache:signatories:findByType:'. $signatory->type .'');
-        $this->__cache->deletePattern('swep_cache:signatories:findBySlug:'. $signatory->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:findByType:'. $signatory->type .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:findBySlug:'. $signatory->slug .'');
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS', 'The Signatory has been successfully updated!');
         $this->session->flash('SIGNATORY_UPDATE_SUCCESS_SLUG', $signatory->slug);
 
@@ -63,10 +63,10 @@ class SignatorySubscriber extends BaseSubscriber{
 
     public function onDestroy($signatory){
 
-        $this->__cache->deletePattern('swep_cache:signatories:fetch:*');
-        $this->__cache->deletePattern('swep_cache:signatories:getAll');
-        $this->__cache->deletePattern('swep_cache:signatories:findByType:'. $signatory->type .'');
-        $this->__cache->deletePattern('swep_cache:signatories:findBySlug:'. $signatory->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:findByType:'. $signatory->type .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:signatories:findBySlug:'. $signatory->slug .'');
 
         $this->session->flash('SIGNATORY_DELETE_SUCCESS', 'The Signatory has been successfully deleted!');
 

@@ -36,8 +36,8 @@ class DocumentFolderSubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->__cache->deletePattern('swep_cache:document_folders:fetch:*');
-        $this->__cache->deletePattern('swep_cache:document_folders:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:getAll');
 
         $this->session->flash('DOC_FOLDER_CREATE_SUCCESS', 'The Document Folder has been successfully created!');
 
@@ -49,9 +49,9 @@ class DocumentFolderSubscriber extends BaseSubscriber{
 
     public function onUpdate($doc_folder){
 
-        $this->__cache->deletePattern('swep_cache:document_folders:fetch:*');
-        $this->__cache->deletePattern('swep_cache:document_folders:getAll');
-        $this->__cache->deletePattern('swep_cache:document_folders:findBySlug:'. $doc_folder->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:findBySlug:'. $doc_folder->slug .'');
 
         $this->session->flash('DOC_FOLDER_UPDATE_SUCCESS', 'The Document Folder has been successfully updated!');
         $this->session->flash('DOC_FOLDER_UPDATE_SUCCESS_SLUG', $doc_folder->slug);
@@ -64,9 +64,9 @@ class DocumentFolderSubscriber extends BaseSubscriber{
 
     public function onDestroy($doc_folder){
 
-        $this->__cache->deletePattern('swep_cache:document_folders:fetch:*');
-        $this->__cache->deletePattern('swep_cache:document_folders:getAll');
-        $this->__cache->deletePattern('swep_cache:document_folders:findBySlug:'. $doc_folder->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:document_folders:findBySlug:'. $doc_folder->slug .'');
 
         $this->session->flash('DOC_FOLDER_DELETE_SUCCESS', 'The Document Folder has been successfully deleted!');
         

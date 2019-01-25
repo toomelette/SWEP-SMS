@@ -34,9 +34,9 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
     public function onStore($project_code){
         
-        $this->__cache->deletePattern('swep_cache:project_codes:fetch:*');
-        $this->__cache->deletePattern('swep_cache:project_codes:getAll');
-        $this->__cache->deletePattern('swep_cache:project_codes:getByDepartmentName:'. $project_code->department_name .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:getByDepartmentName:'. $project_code->department_name .'');
 
         $this->session->flash('PROJECT_CODE_CREATE_SUCCESS', 'The Project Code has been successfully created!');
 
@@ -48,10 +48,10 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
     public function onUpdate($project_code){
 
-        $this->__cache->deletePattern('swep_cache:project_codes:fetch:*');
-        $this->__cache->deletePattern('swep_cache:project_codes:getAll');
-        $this->__cache->deletePattern('swep_cache:project_codes:getByDepartmentName:'. $project_code->department_name .'');
-        $this->__cache->deletePattern('swep_cache:project_codes:findBySlug:'. $project_code->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:getByDepartmentName:'. $project_code->department_name .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:findBySlug:'. $project_code->slug .'');
 
         $this->session->flash('PROJECT_CODE_UPDATE_SUCCESS', 'The Project Code has been successfully updated!');
         $this->session->flash('PROJECT_CODE_UPDATE_SUCCESS_SLUG', $project_code->slug);
@@ -64,10 +64,10 @@ class ProjectCodeSubscriber extends BaseSubscriber{
 
     public function onDestroy($project_code){
 
-        $this->__cache->deletePattern('swep_cache:project_codes:fetch:*');
-        $this->__cache->deletePattern('swep_cache:project_codes:getAll');
-        $this->__cache->deletePattern('swep_cache:project_codes:getByDepartmentName:'. $project_code->department_name .'');
-        $this->__cache->deletePattern('swep_cache:project_codes:findBySlug:'. $project_code->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:getByDepartmentName:'. $project_code->department_name .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:project_codes:findBySlug:'. $project_code->slug .'');
 
         $this->session->flash('PROJECT_CODE_DELETE_SUCCESS', 'The Project Code has been successfully deleted!');
 

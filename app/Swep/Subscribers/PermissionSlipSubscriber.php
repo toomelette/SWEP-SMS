@@ -36,7 +36,7 @@ class PermissionSlipSubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->__cache->deletePattern('swep_cache:permission_slips:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:permission_slips:fetch:*');
 
         $this->session->flash('PS_CREATE_SUCCESS', 'The PS has been successfully created!');
 
@@ -48,8 +48,8 @@ class PermissionSlipSubscriber extends BaseSubscriber{
 
     public function onUpdate($permission_slip){
 
-        $this->__cache->deletePattern('swep_cache:permission_slips:fetch:*');
-        $this->__cache->deletePattern('swep_cache:permission_slips:findBySlug:'. $permission_slip->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:permission_slips:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:permission_slips:findBySlug:'. $permission_slip->slug .'');
 
         $this->session->flash('PS_UPDATE_SUCCESS', 'The PS has been successfully updated!');
         $this->session->flash('PS_UPDATE_SUCCESS_SLUG', $permission_slip->slug);
@@ -62,8 +62,8 @@ class PermissionSlipSubscriber extends BaseSubscriber{
 
     public function onDestroy($permission_slip){
 
-        $this->__cache->deletePattern('swep_cache:permission_slips:fetch:*');
-        $this->__cache->deletePattern('swep_cache:permission_slips:findBySlug:'. $permission_slip->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:permission_slips:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:permission_slips:findBySlug:'. $permission_slip->slug .'');
 
         $this->session->flash('PS_DELETE_SUCCESS', 'The PS has been successfully deleted!');
         

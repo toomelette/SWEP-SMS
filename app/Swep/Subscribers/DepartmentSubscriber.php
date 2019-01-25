@@ -36,8 +36,8 @@ class DepartmentSubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->__cache->deletePattern('swep_cache:departments:fetch:*');
-        $this->__cache->deletePattern('swep_cache:departments:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:getAll');
 
         $this->session->flash('DEPARTMENT_CREATE_SUCCESS', 'The Department has been successfully created!');
 
@@ -49,11 +49,11 @@ class DepartmentSubscriber extends BaseSubscriber{
 
     public function onUpdate($department){
 
-        $this->__cache->deletePattern('swep_cache:departments:fetch:*');
-        $this->__cache->deletePattern('swep_cache:departments:getAll');
-        $this->__cache->deletePattern('swep_cache:departments:findBySlug:'. $department->slug .'');
-        $this->__cache->deletePattern('swep_cache:departments:findByDepartmentId:'. $department->department_id .'');
-        $this->__cache->deletePattern('swep_cache:departments:getByDepartmentId:'. $department->department_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:findBySlug:'. $department->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:findByDepartmentId:'. $department->department_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:getByDepartmentId:'. $department->department_id .'');
 
         $this->session->flash('DEPARTMENT_UPDATE_SUCCESS', 'The Department has been successfully updated!');
         $this->session->flash('DEPARTMENT_UPDATE_SUCCESS_SLUG', $department->slug);
@@ -66,11 +66,11 @@ class DepartmentSubscriber extends BaseSubscriber{
 
     public function onDestroy($department){
 
-        $this->__cache->deletePattern('swep_cache:departments:fetch:*');
-        $this->__cache->deletePattern('swep_cache:departments:getAll');
-        $this->__cache->deletePattern('swep_cache:departments:findBySlug:'. $department->slug .'');
-        $this->__cache->deletePattern('swep_cache:departments:findByDepartmentId:'. $department->department_id .'');
-        $this->__cache->deletePattern('swep_cache:departments:getByDepartmentId:'. $department->department_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:findBySlug:'. $department->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:findByDepartmentId:'. $department->department_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:departments:getByDepartmentId:'. $department->department_id .'');
 
         $this->session->flash('DEPARTMENT_DELETE_SUCCESS', 'The Department has been successfully deleted!');
         

@@ -36,8 +36,8 @@ class CourseSubscriber extends BaseSubscriber{
 
     public function onStore(){
 
-        $this->__cache->deletePattern('swep_cache:courses:fetch:*');
-        $this->__cache->deletePattern('swep_cache:courses:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:getAll');
 
         $this->session->flash('COURSE_CREATE_SUCCESS', 'The Course has been successfully created!');
 
@@ -49,10 +49,10 @@ class CourseSubscriber extends BaseSubscriber{
 
     public function onUpdate($course){
 
-        $this->__cache->deletePattern('swep_cache:courses:fetch:*');
-        $this->__cache->deletePattern('swep_cache:courses:getAll');
-        $this->__cache->deletePattern('swep_cache:courses:findBySlug:'. $course->slug .'');
-        $this->__cache->deletePattern('swep_cache:courses:findByCourseId:'. $course->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:findBySlug:'. $course->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:findByCourseId:'. $course->course_id .'');
 
         $this->session->flash('COURSE_UPDATE_SUCCESS', 'The Course has been successfully updated!');
         $this->session->flash('COURSE_UPDATE_SUCCESS_SLUG', $course->slug);
@@ -65,10 +65,10 @@ class CourseSubscriber extends BaseSubscriber{
 
     public function onDestroy($course){
 
-        $this->__cache->deletePattern('swep_cache:courses:fetch:*');
-        $this->__cache->deletePattern('swep_cache:courses:getAll');
-        $this->__cache->deletePattern('swep_cache:courses:findBySlug:'. $course->slug .'');
-        $this->__cache->deletePattern('swep_cache:courses:findByCourseId:'. $course->course_id .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:findBySlug:'. $course->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:courses:findByCourseId:'. $course->course_id .'');
 
         $this->session->flash('COURSE_DELETE_SUCCESS', 'The Course has been successfully deleted!');
         
