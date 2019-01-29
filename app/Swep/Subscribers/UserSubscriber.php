@@ -56,7 +56,7 @@ class UserSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
 
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
@@ -75,8 +75,8 @@ class UserSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:*');
-        
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_submenus:byUserId:'. $user->user_id .':*');
@@ -93,7 +93,8 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->session->flash('USER_ACTIVATE_SUCCESS', 'User successfully activated!');
         $this->session->flash('USER_ACTIVATE_SUCCESS_SLUG', $user->slug);
@@ -108,7 +109,8 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->session->flash('USER_DEACTIVATE_SUCCESS', 'User successfully deactivated!');
         $this->session->flash('USER_DEACTIVATE_SUCCESS_SLUG', $user->slug);
@@ -124,7 +126,8 @@ class UserSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:1');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->session->flash('USER_LOGOUT_SUCCESS', 'User successfully logout!');
         $this->session->flash('USER_LOGOUT_SUCCESS_SLUG', $user->slug);
@@ -139,7 +142,8 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS', 'User password successfully reset!');
         $this->session->flash('USER_RESET_PASSWORD_SUCCESS_SLUG', $user->slug);
@@ -154,7 +158,8 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findBySlug:'. $employee->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findByUserId:'. $user->user_id .'');
@@ -172,7 +177,8 @@ class UserSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findBySlug:'. $employee->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:employees:findByUserId:'. $user->user_id .'');
