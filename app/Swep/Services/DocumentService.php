@@ -192,7 +192,7 @@ class DocumentService extends BaseService{
 
         if(!is_null($request->file('doc_file'))){
 
-            return $request->subject .'-'. $this->str->random(8) .'.'. $request->file('doc_file')->getClientOriginalExtension();
+            return $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8) .'.'. $request->file('doc_file')->getClientOriginalExtension();
 
         }
 
