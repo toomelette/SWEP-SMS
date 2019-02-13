@@ -188,7 +188,7 @@ class DocumentService extends BaseService{
 
 
 
-    public function filename($request){
+    private function filename($request){
 
         if(!is_null($request->file('doc_file'))){
 
