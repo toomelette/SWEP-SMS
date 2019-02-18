@@ -48,9 +48,17 @@ class DocumentService extends BaseService{
 
         $dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
 
+        $dir2 = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code2;
+
         if(!is_null($request->file('doc_file'))){
 
             $request->file('doc_file')->storeAs($dir, $filename);
+
+            if (isset($request->folder_code2)) {
+
+                $request->file('doc_file')->storeAs($dir2, $filename);
+
+            }
 
         }
 
@@ -159,7 +167,7 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->findBySlug($slug);
 
-        if(!empty($document)){
+        if(!empty($document->filename)){
 
             $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 

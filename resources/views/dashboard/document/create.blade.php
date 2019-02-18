@@ -61,6 +61,12 @@
             '4', 'folder_code', 'Folder Code *', old('folder_code'), $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('folder_code'), $errors->first('folder_code'), 'select2', ''
           ) !!}
 
+          {!! __form::select_dynamic(
+            '4', 'folder_code2', '2nd Folder Code (If Cross-File)', old('folder_code2'), $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('folder_code2'), $errors->first('folder_code2'), 'select2', ''
+          ) !!}
+
+          <div class="col-md-8"></div>
+
           {!! __form::textbox(
              '4', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  

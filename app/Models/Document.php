@@ -26,6 +26,7 @@ class Document extends Model{
         'slug' => '',
         'document_id' => '',
         'folder_code' => '',
+        'folder_code2' => '',
         'reference_no' => '',
         'date' => null,
         'person_to' => '',

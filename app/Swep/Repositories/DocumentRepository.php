@@ -111,6 +111,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document->type = $request->type;
         $document->subject = $request->subject;
         $document->folder_code = $request->folder_code;
+        $document->folder_code2 = $request->folder_code2;
         $document->remarks = $request->remarks;
         $document->year = $this->__dataType->date_parse($request->date, 'Y');
         $document->created_at = $this->carbon->now();
@@ -143,6 +144,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document->type = $request->type;
         $document->subject = $request->subject;
         $document->folder_code = $request->folder_code;
+        $document->folder_code2 = $request->folder_code2;
         $document->remarks = $request->remarks;
         $document->year = $this->__dataType->date_parse($request->date, 'Y');
         $document->updated_at = $this->carbon->now();
