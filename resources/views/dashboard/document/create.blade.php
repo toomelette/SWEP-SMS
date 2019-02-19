@@ -70,8 +70,6 @@
           {!! __form::textbox(
              '4', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  
-
-          <div class="col-md-8"></div>
           
         </div>
 

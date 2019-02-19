@@ -47,7 +47,10 @@
                 <dt>Reference No:</dt>
                 <dd>{{ $document->reference_no }}</dd>
                 <dt>Folder Code:</dt>
-                <dd>{{ $document->folder_code }}</dd>
+                <dd>
+                  {{ $document->folder_code }}, {{ !empty($document->folder_code2) ? $document->folder_code2 : '' }}
+
+                </dd>
                 <dt>Remarks:</dt>
                 <dd>{{ $document->remarks }}</dd>
               </dl>

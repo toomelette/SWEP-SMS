@@ -49,7 +49,8 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
             }
 
             if(isset($request->fc)){
-                $document->whereFolderCode($request->fc);
+                $document->where('folder_code', $request->fc)
+                         ->orWhere('folder_code2', $request->fc);
             }
 
             if(isset($request->dct)){
@@ -81,7 +82,8 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
             $document = $this->document->newQuery();
 
             return $document->select('subject', 'slug', 'updated_at')
-                            ->whereFolderCode($folder_code)
+                            ->where('folder_code', $folder_code)
+                            ->orwhere('folder_code2', $folder_code)
                             ->sortable()
                             ->orderBy('updated_at', 'desc')
                             ->paginate(10);

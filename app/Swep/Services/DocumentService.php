@@ -3,6 +3,9 @@
 namespace App\Swep\Services;
 
 use File;
+use Hash;
+use Zipper;
+use App\Swep\Interfaces\UserInterface;
 use App\Swep\Interfaces\DocumentInterface;
 use App\Swep\BaseClasses\BaseService;
 
@@ -13,11 +16,13 @@ class DocumentService extends BaseService{
 
 
     protected $document_repo;
+    protected $user_repo;
 
 
 
-    public function __construct(DocumentInterface $document_repo){
+    public function __construct(UserInterface $user_repo, DocumentInterface $document_repo){
 
+        $this->user_repo = $user_repo;
         $this->document_repo = $document_repo;
         parent::__construct();
 
@@ -104,24 +109,42 @@ class DocumentService extends BaseService{
         $document = $this->document_repo->findBySlug($slug);
 
         $filename = $this->filename($request);
+
         $old_dir = $document->year .'/'. $document->folder_code;
         $new_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
         $old_file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        
+        $old_dir2 = $document->year .'/'. $document->folder_code2;
+        $new_dir2 = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code2;
+        $old_file_dir2 = $document->year .'/'. $document->folder_code2 .'/'. $document->filename;
 
 
-        if(!is_null($request->file('doc_file')) && $this->storage->disk('local')->exists($old_file_dir)){
+        if(!is_null($request->file('doc_file')) ){
 
-            $request->file('doc_file')->storeAs($new_dir, $filename);
+            if ($this->storage->disk('local')->exists($old_file_dir)) {
 
-            $this->storage->disk('local')->delete($old_file_dir);
+                $request->file('doc_file')->storeAs($new_dir, $filename);
+                $this->storage->disk('local')->delete($old_file_dir);
+
+            }
+
+            if ($this->storage->disk('local')->exists($old_file_dir2)) {
+
+                $request->file('doc_file')->storeAs($new_dir2, $filename);
+                $this->storage->disk('local')->delete($old_file_dir2);  
+                
+            }
 
         }
 
 
-        elseif($old_dir != $new_dir && $this->storage->disk('local')->exists($old_file_dir)){    
-
+        if($old_dir != $new_dir && $this->storage->disk('local')->exists($old_file_dir)){    
             $this->storage->disk('local')->move($old_dir .'/'. $document->filename, $new_dir .'/'. $document->filename);
+        }
 
+
+        if($old_dir2 != $new_dir2 && $this->storage->disk('local')->exists($old_file_dir2)){    
+            $this->storage->disk('local')->move($old_dir2 .'/'. $document->filename, $new_dir2 .'/'. $document->filename);
         }
 
 
@@ -143,10 +166,17 @@ class DocumentService extends BaseService{
         $document = $this->document_repo->findBySlug($slug);
         
         $file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        $file_dir2 = $document->year .'/'. $document->folder_code2 .'/'. $document->filename;
 
-        if(!is_null($document->filename) && $this->storage->disk('local')->exists($file_dir)){ 
+        if(!is_null($document->filename)){
 
-            $this->storage->disk('local')->delete($file_dir);
+            if ($this->storage->disk('local')->exists($file_dir)) {
+                $this->storage->disk('local')->delete($file_dir);
+            }
+
+            if ($this->storage->disk('local')->exists($file_dir2)) {
+                $this->storage->disk('local')->delete($file_dir2);
+            }
 
         }
 
@@ -187,6 +217,32 @@ class DocumentService extends BaseService{
 
         return abort(404);
         
+
+    }
+
+
+
+
+
+
+
+    public function downloadDirect($request, $slug){
+
+        $user = $this->user_repo->findBySlug($slug);  
+
+        if ($request->username == $this->auth->user()->username && Hash::check($request->user_password, $this->auth->user()->password)) {
+
+            $files = glob($this->__static->archive_dir() .'2019/*');
+
+            Zipper::make('test.zip')->add($files)->close();
+
+            return response()->download('test.zip');
+
+        }
+
+        $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
+        return redirect()->back();
+
 
     }
 

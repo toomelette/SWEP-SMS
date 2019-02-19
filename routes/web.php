@@ -104,6 +104,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** DOCUMENTS **/
 	Route::get('/document/view_file/{slug}', 'DocumentController@viewFile')->name('document.view_file');
+	Route::get('/document/download', 'DocumentController@download')->name('document.download');
+	Route::post('/document/download_direct/{slug}', 'DocumentController@downloadDirect')->name('document.download_direct');
 	Route::resource('document', 'DocumentController');
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Swep\Services\DocumentService;
 use App\Http\Requests\Document\DocumentFormRequest;
 use App\Http\Requests\Document\DocumentFilterRequest;
+use App\Http\Requests\Document\DocumentDownloadRequest;
 
 
 class DocumentController extends Controller{
@@ -90,6 +91,24 @@ class DocumentController extends Controller{
     public function viewFile($slug){
 
        return $this->document->viewFile($slug); 
+
+    }
+
+
+
+
+    public function download(){
+
+        return view('dashboard.document.download');
+
+    }
+
+
+
+
+    public function downloadDirect(DocumentDownloadRequest $request, $slug){
+
+       return $this->document->downloadDirect($request, $slug); 
 
     }
 

@@ -32,7 +32,7 @@ class DocumentFormRequest extends FormRequest{
             'type' => 'required|max:45|string',
             'subject' => 'required|max:255|string',
             'folder_code' => 'required|max:45|string',
-            'folder_code2' => 'nullable|max:45|string',
+            'folder_code2' => 'nullable|max:45|string|different:folder_code',
             'remarks' => 'nullable|max:255|string',
 
         ];
