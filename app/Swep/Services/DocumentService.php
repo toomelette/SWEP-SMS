@@ -4,7 +4,10 @@ namespace App\Swep\Services;
 
 use File;
 use Hash;
-use Zipper;
+use ZipArchive;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+
 use App\Swep\Interfaces\UserInterface;
 use App\Swep\Interfaces\DocumentInterface;
 use App\Swep\BaseClasses\BaseService;
@@ -119,33 +122,45 @@ class DocumentService extends BaseService{
         $old_file_dir2 = $document->year .'/'. $document->folder_code2 .'/'. $document->filename;
 
 
+
         if(!is_null($request->file('doc_file')) ){
 
             if ($this->storage->disk('local')->exists($old_file_dir)) {
-
                 $request->file('doc_file')->storeAs($new_dir, $filename);
                 $this->storage->disk('local')->delete($old_file_dir);
-
             }
 
-            if ($this->storage->disk('local')->exists($old_file_dir2)) {
-
+            if (isset($request->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
                 $request->file('doc_file')->storeAs($new_dir2, $filename);
                 $this->storage->disk('local')->delete($old_file_dir2);  
-                
             }
 
         }
+
 
 
         if($old_dir != $new_dir && $this->storage->disk('local')->exists($old_file_dir)){    
-            $this->storage->disk('local')->move($old_dir .'/'. $document->filename, $new_dir .'/'. $document->filename);
+            $this->storage->disk('local')->move($old_dir .'/'. $document->filename, $new_dir .'/'. $filename);
         }
 
 
-        if($old_dir2 != $new_dir2 && $this->storage->disk('local')->exists($old_file_dir2)){    
-            $this->storage->disk('local')->move($old_dir2 .'/'. $document->filename, $new_dir2 .'/'. $document->filename);
+
+        if(isset($request->folder_code2) && $old_dir2 != $new_dir2){    
+
+            if (isset($document->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
+                $this->storage->disk('local')->move($old_dir2 .'/'. $document->filename, $new_dir2 .'/'. $document->filename);
+            }
+
+            $this->storage->disk('local')->copy($new_dir .'/'. $document->filename, $new_dir2 .'/'. $document->filename);
+
         }
+
+
+
+        if (is_null($request->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
+            $this->storage->disk('local')->delete($old_file_dir2);  
+        }
+
 
 
         $this->document_repo->update($request, $filename, $document);
@@ -232,17 +247,34 @@ class DocumentService extends BaseService{
 
         if ($request->username == $this->auth->user()->username && Hash::check($request->user_password, $this->auth->user()->password)) {
 
-            $files = glob($this->__static->archive_dir() .'2019/*');
+            $root_path = $this->__static->archive_dir() . $request->y .'/'. $request->fc;
 
-            Zipper::make('test.zip')->add($files)->close();
+            $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root_path), RecursiveIteratorIterator::LEAVES_ONLY);
 
-            return response()->download('test.zip');
+			$zip = new ZipArchive();
+
+			$zip->open($request->y .'-'. $request->fc .'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+			foreach ($files as $name => $file){
+
+			    if (!$file->isDir()){
+
+			        $file_path = $file->getRealPath();
+			        $relative_path = substr($file_path, strlen($root_path));
+
+			        $zip->addFile($file_path, $relative_path);
+			    }
+
+			}
+
+			$zip->close();
+
+            return response()->download($request->y .'-'. $request->fc .'.zip');
 
         }
 
         $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
         return redirect()->back();
-
 
     }
 
