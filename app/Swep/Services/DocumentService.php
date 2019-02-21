@@ -52,7 +52,7 @@ class DocumentService extends BaseService{
 
     public function store($request){
 
-        $filename = $this->filename($request);
+        $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8) .'.pdf';
 
         $dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
 
@@ -111,47 +111,69 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->findBySlug($slug);
 
-        $filename = $this->filename($request);
+        $filename = $this->filename($request, $document);
 
-        $old_dir = $document->year .'/'. $document->folder_code;
         $new_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
+        $old_dir = $document->year .'/'. $document->folder_code;
+        $new_file_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code .'/'. $filename;
         $old_file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
-        
-        $old_dir2 = $document->year .'/'. $document->folder_code2;
+
         $new_dir2 = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code2;
+        $old_dir2 = $document->year .'/'. $document->folder_code2;
+        $new_file_dir2 = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code2 .'/'. $filename;
         $old_file_dir2 = $document->year .'/'. $document->folder_code2 .'/'. $document->filename;
 
 
-
-        if(!is_null($request->file('doc_file')) ){
+        // If theres new file upload
+        if(!is_null($request->file('doc_file'))){
 
             if ($this->storage->disk('local')->exists($old_file_dir)) {
-                $request->file('doc_file')->storeAs($new_dir, $filename);
                 $this->storage->disk('local')->delete($old_file_dir);
             }
 
-            if (isset($request->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
+            $request->file('doc_file')->storeAs($new_dir, $filename);
+
+            if (isset($request->folder_code2)) {
+
+                if ($this->storage->disk('local')->exists($old_file_dir2)) {
+                    $this->storage->disk('local')->delete($old_file_dir2);  
+                }
+
                 $request->file('doc_file')->storeAs($new_dir2, $filename);
-                $this->storage->disk('local')->delete($old_file_dir2);  
+
             }
 
         }
 
 
 
-        if($old_dir != $new_dir && $this->storage->disk('local')->exists($old_file_dir)){    
-            $this->storage->disk('local')->move($old_dir .'/'. $document->filename, $new_dir .'/'. $filename);
+        // If theres no file upload
+        if($new_file_dir != $old_file_dir && $this->storage->disk('local')->exists($old_file_dir)){
+
+            if($new_file_dir != $old_file_dir2 || $new_file_dir2 != $old_file_dir){
+
+                $this->storage->disk('local')->move($old_file_dir, $new_file_dir);
+
+            }
+
         }
 
 
 
-        if(isset($request->folder_code2) && $old_dir2 != $new_dir2){    
+
+        if(isset($request->folder_code2) && $new_file_dir2 != $old_file_dir2){   
 
             if (isset($document->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
-                $this->storage->disk('local')->move($old_dir2 .'/'. $document->filename, $new_dir2 .'/'. $document->filename);
+
+                if($new_file_dir != $old_file_dir2 || $new_file_dir2 != $old_file_dir){
+                    $this->storage->disk('local')->move($old_file_dir2, $new_file_dir2);
+                }
+                
             }
 
-            $this->storage->disk('local')->copy($new_dir .'/'. $document->filename, $new_dir2 .'/'. $document->filename);
+            if (is_null($document->folder_code2) && $this->storage->disk('local')->exists($new_file_dir)) {
+                $this->storage->disk('local')->copy($new_file_dir, $new_file_dir2);
+            }
 
         }
 
@@ -284,15 +306,17 @@ class DocumentService extends BaseService{
 
 
 
-    private function filename($request){
+    private function filename($request, $document){
 
-        if(!is_null($request->file('doc_file'))){
+        $filename = $document->filename;;
+            
+        if($request->subject != $document->subject || $request->reference_no != $document->reference_no){
 
-            return $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8) .'.'. $request->file('doc_file')->getClientOriginalExtension();
+            $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8) .'.pdf';
 
         }
 
-        return null;
+        return $filename;
 
     }
 
