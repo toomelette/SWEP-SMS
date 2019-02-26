@@ -127,68 +127,76 @@ class DocumentService extends BaseService{
         // If theres new file upload
         if(!is_null($request->file('doc_file'))){
 
+
             if ($this->storage->disk('local')->exists($old_file_dir)) {
                 $this->storage->disk('local')->delete($old_file_dir);
             }
 
-            $request->file('doc_file')->storeAs($new_dir, $filename);
 
             if (isset($request->folder_code2)) {
-
                 if ($this->storage->disk('local')->exists($old_file_dir2)) {
-                    $this->storage->disk('local')->delete($old_file_dir2);  
+                    $this->storage->disk('local')->delete($old_file_dir2); 
                 }
+            }
+            
 
-                $request->file('doc_file')->storeAs($new_dir2, $filename);
+            $request->file('doc_file')->storeAs($new_dir, $filename);
 
+
+            if (isset($request->folder_code2)) {
+                $request->file('doc_file')->storeAs($new_dir2, $filename); 
             }
 
-        }
+
+        }else{
 
 
-
-        // If theres no file upload
-        if($new_file_dir != $old_file_dir && $this->storage->disk('local')->exists($old_file_dir)){
-
-            if($new_file_dir != $old_file_dir2 || $new_file_dir2 != $old_file_dir){
-
-                $this->storage->disk('local')->move($old_file_dir, $new_file_dir);
-
-            }
-
-        }
-
-
-
-
-        if(isset($request->folder_code2) && $new_file_dir2 != $old_file_dir2){   
-
-            if (isset($document->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
+            // If theres no file upload
+            if($new_file_dir != $old_file_dir && $this->storage->disk('local')->exists($old_file_dir)){
 
                 if($new_file_dir != $old_file_dir2 || $new_file_dir2 != $old_file_dir){
-                    $this->storage->disk('local')->move($old_file_dir2, $new_file_dir2);
+
+                    $this->storage->disk('local')->move($old_file_dir, $new_file_dir);
+
                 }
-                
+
             }
 
-            if (is_null($document->folder_code2) && $this->storage->disk('local')->exists($new_file_dir)) {
-                $this->storage->disk('local')->copy($new_file_dir, $new_file_dir2);
+
+
+
+            if(isset($request->folder_code2) && $new_file_dir2 != $old_file_dir2){   
+
+                if (isset($document->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
+
+                    if($new_file_dir != $old_file_dir2 || $new_file_dir2 != $old_file_dir){
+                        $this->storage->disk('local')->move($old_file_dir2, $new_file_dir2);
+                    }
+                    
+                }
+
+                if (is_null($document->folder_code2) && $this->storage->disk('local')->exists($new_file_dir)) {
+                    $this->storage->disk('local')->copy($new_file_dir, $new_file_dir2);
+                }
+
             }
 
+
+
+            if (is_null($request->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
+                $this->storage->disk('local')->delete($old_file_dir2);  
+            }
+
+
+
         }
-
-
-
-        if (is_null($request->folder_code2) && $this->storage->disk('local')->exists($old_file_dir2)) {
-            $this->storage->disk('local')->delete($old_file_dir2);  
-        }
-
 
 
         $this->document_repo->update($request, $filename, $document);
         
         $this->event->fire('document.update', $document);
         return redirect()->route('dashboard.document.index');
+
 
     }
 
@@ -291,7 +299,7 @@ class DocumentService extends BaseService{
 
 			$zip->close();
 
-            return response()->download($request->y .'-'. $request->fc .'.zip');
+            return response()->download($request->y .'-'. $request->fc .'.zip')->deleteFileAfterSend();
 
         }
 
