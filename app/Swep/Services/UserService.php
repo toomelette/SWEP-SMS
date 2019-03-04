@@ -211,20 +211,6 @@ class UserService extends BaseService{
 
 
 
-    public function logout($slug){
-
-        $user = $this->user_repo->logout($slug);  
-
-        $this->event->fire('user.logout', $user);
-        return redirect()->back();
-
-    }
-
-
-
-
-
-
     public function resetPassword($slug){
 
         $user = $this->user_repo->findBySlug($slug); 

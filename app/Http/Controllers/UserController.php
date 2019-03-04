@@ -108,15 +108,6 @@ class UserController extends Controller{
 
 
 
-    public function logout($slug){
-
-        return $this->user_service->logout($slug);
-        
-    }
-
-
-
-
     public function resetPassword($slug){
 
         return $this->user_service->resetPassword($slug);
