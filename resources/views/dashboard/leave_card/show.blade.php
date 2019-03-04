@@ -27,7 +27,7 @@
 
 
         {{-- DOC Info --}}
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Document Info</h3>
@@ -62,6 +62,38 @@
             </div>
           </div>
         </div>
+
+
+
+
+
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">User Modifications</h3>
+            </div>
+            <div class="box-body">
+
+              <dl class="dl-horizontal col-sm-12">
+                <dt>Date Created:</dt>
+                <dd>{{ __dataType::date_parse($leave_card->created_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Created:</dt>
+                <dd>{{ $leave_card->ip_created }}</dd>
+                <dt>User Created:</dt>
+                <dd>{{ $leave_card->user_created }}</dd>
+                <dt>Date Updated:</dt>
+                <dd>{{ __dataType::date_parse($leave_card->updated_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Updated:</dt>
+                <dd>{{ $leave_card->ip_updated }}</dd>
+                <dt>User Updated:</dt>
+                <dd>{{ $leave_card->user_updated }}</dd>
+              </dl>
+
+            </div>
+          </div>
+        </div> 
+
+
 
 
     </div>

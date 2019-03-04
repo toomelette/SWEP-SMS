@@ -80,6 +80,37 @@
         </div>
 
 
+
+
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">User Modifications</h3>
+            </div>
+            <div class="box-body">
+
+              <dl class="dl-horizontal col-sm-12">
+                <dt>Date Created:</dt>
+                <dd>{{ __dataType::date_parse($leave_application->created_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Created:</dt>
+                <dd>{{ $leave_application->ip_created }}</dd>
+                <dt>User Created:</dt>
+                <dd>{{ $leave_application->user_created }}</dd>
+                <dt>Date Updated:</dt>
+                <dd>{{ __dataType::date_parse($leave_application->updated_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Updated:</dt>
+                <dd>{{ $leave_application->ip_updated }}</dd>
+                <dt>User Updated:</dt>
+                <dd>{{ $leave_application->user_updated }}</dd>
+              </dl>
+
+            </div>
+          </div>
+        </div> 
+
+
+
+
       </div>
     </div>
 

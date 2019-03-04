@@ -98,6 +98,41 @@
 
 
 
+        
+
+
+
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">User Modifications</h3>
+            </div>
+            <div class="box-body">
+
+              <dl class="dl-horizontal col-sm-6">
+                <dt>Date Created:</dt>
+                <dd>{{ __dataType::date_parse($disbursement_voucher->created_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Created:</dt>
+                <dd>{{ $disbursement_voucher->ip_created }}</dd>
+                <dt>User Created:</dt>
+                <dd>{{ $disbursement_voucher->user_created }}</dd>
+              </dl>
+
+              <dl class="dl-horizontal col-sm-6">
+                <dt>Date Updated:</dt>
+                <dd>{{ __dataType::date_parse($disbursement_voucher->updated_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Updated:</dt>
+                <dd>{{ $disbursement_voucher->ip_updated }}</dd>
+                <dt>User Updated:</dt>
+                <dd>{{ $disbursement_voucher->user_updated }}</dd>
+              </dl>
+
+            </div>
+          </div>
+        </div> 
+
+
+
 
     </div>
   </div>

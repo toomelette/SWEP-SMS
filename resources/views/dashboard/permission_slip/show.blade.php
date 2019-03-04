@@ -52,6 +52,39 @@
         </div>
 
 
+
+
+
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">User Modifications</h3>
+            </div>
+            <div class="box-body">
+
+              <dl class="dl-horizontal col-sm-12">
+                <dt>Date Created:</dt>
+                <dd>{{ __dataType::date_parse($permission_slip->created_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Created:</dt>
+                <dd>{{ $permission_slip->ip_created }}</dd>
+                <dt>User Created:</dt>
+                <dd>{{ $permission_slip->user_created }}</dd>
+                <dt>Date Updated:</dt>
+                <dd>{{ __dataType::date_parse($permission_slip->updated_at, 'M d, Y h:i A') }}</dd>
+                <dt>IP Updated:</dt>
+                <dd>{{ $permission_slip->ip_updated }}</dd>
+                <dt>User Updated:</dt>
+                <dd>{{ $permission_slip->user_updated }}</dd>
+              </dl>
+
+            </div>
+          </div>
+        </div> 
+
+
+
+
+
     </div>
   </div>
 

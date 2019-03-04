@@ -78,7 +78,7 @@
           <div class="box-body">
 
             <dl class="dl-horizontal col-sm-6">
-              <dt>Time Created:</dt>
+              <dt>Date Created:</dt>
               <dd>{{ __dataType::date_parse($user->created_at, 'M d, Y h:i A') }}</dd>
               <dt>IP Created:</dt>
               <dd>{{ $user->ip_created }}</dd>
@@ -87,7 +87,7 @@
             </dl>
 
             <dl class="dl-horizontal col-sm-6">
-              <dt>Time Updated:</dt>
+              <dt>Date Updated:</dt>
               <dd>{{ __dataType::date_parse($user->updated_at, 'M d, Y h:i A') }}</dd>
               <dt>IP Updated:</dt>
               <dd>{{ $user->ip_updated }}</dd>
