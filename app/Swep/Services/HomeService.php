@@ -53,7 +53,7 @@ class HomeService extends BaseService{
 
 
 
-    public function getEmpByDept(){
+    private function getEmpByDept(){
 
         $afd = $this->employee_repo->getByDepartmentId('D1001')->count();
         $iad = $this->employee_repo->getByDepartmentId('D1002')->count();

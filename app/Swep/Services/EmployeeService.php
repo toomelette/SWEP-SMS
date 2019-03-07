@@ -166,8 +166,8 @@ class EmployeeService extends BaseService{
 
 
 
-
-    public function fillDependencies($request, $employee){
+    // Utils
+    private function fillDependencies($request, $employee){
 
         // Employee Family Details, Address, Other Questions
         $this->employee_repo->storeFamilyDetails($request, $employee);

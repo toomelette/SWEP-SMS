@@ -188,9 +188,8 @@ class ApplicantService extends BaseService{
 
 
 
-
-
-    public function fillDependencies($request, $applicant){
+    // Utils
+    private function fillDependencies($request, $applicant){
 
         // Applicant Training
         if(!empty($request->row_training)){

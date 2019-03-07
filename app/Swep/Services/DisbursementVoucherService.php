@@ -169,7 +169,7 @@ class DisbursementVoucherService extends BaseService{
         }
 
         $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED_SLUG', $disbursement_voucher->slug);
-        $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED', 'Voucher Status failed to update! Please check the DV No. if it is set.');
+        $this->session->flash('SESSION_DV_CONFIRM_CHECK_FAILED', 'Voucher Status failed to update! Please check the DV No if it is set.');
         return redirect()->back();
 
     }
