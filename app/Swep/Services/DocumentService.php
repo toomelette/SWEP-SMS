@@ -317,14 +317,14 @@ class DocumentService extends BaseService{
     private function filename($request, $document){
 
         $filename = $document->filename;;
-            
+        
         if($request->subject != $document->subject || $request->reference_no != $document->reference_no){
 
             $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8) .'.pdf';
 
         }
 
-        return $filename;
+        return stripslashes($filename);
 
     }
 
