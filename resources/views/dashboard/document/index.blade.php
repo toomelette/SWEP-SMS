@@ -13,8 +13,7 @@
                         'dct' => Request::get('dct'),
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
-                      ];
-                      
+                      ];                  
 ?>
 
 
@@ -83,11 +82,20 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($documents as $data) 
+
+            <?php
+              $filename = __dataType::date_parse($data->date, 'Y') .'/'. $data->folder_code .'/'. $data->filename;
+            ?> 
+
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>
-                <a href="{{ route('dashboard.document.view_file', $data->slug) }}" class="btn btn-sm btn-success" target="_blank">
-                  <i class="fa fa-file-pdf-o"></i>
-                </a>
+                @if(Storage::disk('local')->exists($filename))
+                  <a href="{{ route('dashboard.document.view_file', $data->slug) }}" class="btn btn-sm btn-success" target="_blank">
+                    <i class="fa fa-file-pdf-o"></i>
+                  </a>
+                @else
+                  <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-exclamation-circle"></i></a>
+                @endif
               </td>
               <td>{{ $data->reference_no }}</td>
               <td>{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>

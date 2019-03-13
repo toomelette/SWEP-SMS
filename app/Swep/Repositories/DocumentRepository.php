@@ -213,7 +213,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function populate($model){
 
-        return $model->select('filename', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug')
+        return $model->select('filename', 'folder_code', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate(10);
