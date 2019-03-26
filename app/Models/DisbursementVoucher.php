@@ -77,6 +77,10 @@ class DisbursementVoucher extends Model{
         return $this->hasOne('App\Models\Project', 'project_id', 'project_id');
     }
 
+    public function departmentUnit(){
+        return $this->hasOne('App\Models\DepartmentUnit', 'name', 'department_unit_name');
+    }
+
 
     public function fundSource(){
         return $this->hasOne('App\Models\FundSource', 'fund_source_id', 'fund_source_id');

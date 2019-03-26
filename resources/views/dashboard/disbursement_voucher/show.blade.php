@@ -57,9 +57,9 @@
                 <dt>Department:</dt>
                 <dd>{{ $disbursement_voucher->department_name }}</dd>
                 <dt>Unit:</dt>
-                <dd>{{ $disbursement_voucher->department_unit_name }}</dd>
-                <dt>Account Code:</dt>
-                <dd>{{ $disbursement_voucher->account_code }}</dd>
+                <dd>{{ $disbursement_voucher->departmentUnit->description }}</dd>
+                <dt>Project Code:</dt>
+                <dd>{{ $disbursement_voucher->project_code }}</dd>
                 <dt>Explanation:</dt>
                 <dd>
                   <div style="border:solid 1px; padding:10px;">

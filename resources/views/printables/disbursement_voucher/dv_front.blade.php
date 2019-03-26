@@ -148,7 +148,7 @@
 
           <div class="col-sm-6" style="border-right:solid 1.4px; padding-left:0; line-height:1.3;">
             <span style="font-size:9px; padding-left:2px;">Office/Unit/Project:</span>
-            <br><span style="font-size:12px; font-weight:bold; padding-left:15px;">{!! $disbursement_voucher->department_unit_name !!}</span>
+            <br><span style="font-size:12px; font-weight:bold; padding-left:15px;">{!! $disbursement_voucher->departmentUnit->description !!}</span>
           </div>
 
           <div class="col-sm-6" style="padding-left:0; line-height:1.3;">
