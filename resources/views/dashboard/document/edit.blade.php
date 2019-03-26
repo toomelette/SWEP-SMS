@@ -46,11 +46,11 @@
           <div class="col-md-8"></div>
 
           {!! __form::textbox(
-             '4', 'person_to', 'text', 'To *', 'To', old('person_to') ? old('person_to') : $document->person_to, $errors->has('person_to'), $errors->first('person_to'), ''
+             '4', 'person_to', 'text', 'To', 'To', old('person_to') ? old('person_to') : $document->person_to, $errors->has('person_to'), $errors->first('person_to'), ''
           ) !!} 
 
           {!! __form::textbox(
-             '4', 'person_from', 'text', 'From *', 'From', old('person_from') ? old('person_from') : $document->person_from, $errors->has('person_from'), $errors->first('person_from'), ''
+             '4', 'person_from', 'text', 'From', 'From', old('person_from') ? old('person_from') : $document->person_from, $errors->has('person_from'), $errors->first('person_from'), ''
           ) !!}
 
           <div class="col-md-8"></div>
