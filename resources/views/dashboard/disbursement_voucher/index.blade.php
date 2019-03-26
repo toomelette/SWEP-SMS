@@ -56,7 +56,7 @@
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '2', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'name', 'submit_dv_filter', '', ''
+        '2', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'description', 'submit_dv_filter', '', ''
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
