@@ -134,16 +134,13 @@ class DocumentService extends BaseService{
                 $this->storage->disk('local')->delete($old_file_dir);
             }
 
-
             if (isset($request->folder_code2)) {
                 if ($this->storage->disk('local')->exists($old_file_dir2)) {
                     $this->storage->disk('local')->delete($old_file_dir2); 
                 }
             }
             
-
             $request->file('doc_file')->storeAs($new_dir, $filename);
-
 
             if (isset($request->folder_code2)) {
                 $request->file('doc_file')->storeAs($new_dir2, $filename); 
@@ -163,7 +160,6 @@ class DocumentService extends BaseService{
                 }
 
             }
-
 
 
 
@@ -297,7 +293,7 @@ class DocumentService extends BaseService{
 
                     $filename = str_replace('.pdf', '', $relative_path);
 
-                    $relative_path = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.'], '', $filename) .'.pdf';
+                    $relative_path = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename) .'.pdf';
 
 			        $zip->addFile($file_path, $relative_path);
 			    }
@@ -339,7 +335,7 @@ class DocumentService extends BaseService{
 
     private function filterReservedChar($filename){
 
-        $filename = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.'], '', $filename);
+        $filename = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename);
 
         $filename = stripslashes($filename);
 
