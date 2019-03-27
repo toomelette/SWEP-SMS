@@ -44,23 +44,23 @@
     {!! __html::filter_open() !!}
 
       {!! __form::select_dynamic_for_filter(
-        '3', 'fs', 'Fund Source', old('fs'), $global_fund_source_all, 'fund_source_id', 'description', 'submit_dv_filter', '', ''
+        '3', 'dn', 'Department', old('dn'), $global_departments_all, 'name', 'name', 'submit_dv_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '3', 'pi', 'Station', old('pi'), $global_projects_all, 'project_id', 'project_address', 'submit_dv_filter', '', ''
+        '3', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'description', 'submit_dv_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '2', 'dn', 'Department', old('dn'), $global_departments_all, 'name', 'name', 'submit_dv_filter', '', ''
+        '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '2', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'description', 'submit_dv_filter', '', ''
+        '2', 'fs', 'Fund Source', old('fs'), $global_fund_source_all, 'fund_source_id', 'description', 'submit_dv_filter', '', ''
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', '', ''
+        '2', 'pi', 'Station', old('pi'), $global_projects_all, 'project_id', 'project_address', 'submit_dv_filter', '', ''
       ) !!}
 
       <div class="col-md-12 no-padding">

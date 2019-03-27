@@ -35,7 +35,7 @@
       {!! __html::filter_open() !!}
 
         {!! __form::select_dynamic_for_filter(
-          '3', 'du', 'Unit', old('du'), $global_department_units_all, 'department_unit_id', 'description', 'submit_plantilla_filter', '', ''
+          '3', 'du', 'Unit', old('du'), $global_department_units_all, 'department_unit_id', 'description', 'submit_plantilla_filter', 'select2', 'style="width:100%;"'
         ) !!}
 
       {!! __html::filter_close('submit_plantilla_filter') !!}

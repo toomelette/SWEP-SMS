@@ -37,7 +37,7 @@
     {!! __html::filter_open() !!}
 
       {!! __form::select_dynamic_for_filter(
-        '3', 'fc', 'Folder Code', old('fc'), $global_document_folders_all, 'folder_code', 'folder_code', 'submit_memo_filter', 'class="col-md-12"', 'style="width:100%;"'
+        '3', 'fc', 'Folder Code', old('fc'), $global_document_folders_all, 'folder_code', 'folder_code', 'submit_memo_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_static_for_filter(
