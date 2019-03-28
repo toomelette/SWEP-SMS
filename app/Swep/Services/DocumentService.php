@@ -52,7 +52,7 @@ class DocumentService extends BaseService{
 
     public function store($request){
 
-        $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8) .'.pdf';
+        $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8);
 
         $filename = $this->filterReservedChar($filename);
 
@@ -118,7 +118,7 @@ class DocumentService extends BaseService{
         $new_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
         $old_dir = $document->year .'/'. $document->folder_code;
         $new_file_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code .'/'. $filename;
-        $old_file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        $old_file_dir = $document->year .'/'. $document->folder_code .'/'. $document->filename;         
 
         $new_dir2 = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code2;
         $old_dir2 = $document->year .'/'. $document->folder_code2;
@@ -295,7 +295,7 @@ class DocumentService extends BaseService{
 
                     $relative_path = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename) .'.pdf';
 
-			        $zip->addFile($file_path, $relative_path);
+                    $zip->addFile($file_path, $relative_path);
 			    }
 
 			}
@@ -333,7 +333,13 @@ class DocumentService extends BaseService{
 
 
 
+
+
     private function filterReservedChar($filename){
+
+        $filename = str_replace('.pdf', '', $filename);
+
+        $filename = $this->str->limit($filename, 150);
 
         $filename = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename);
 
