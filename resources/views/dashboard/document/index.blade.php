@@ -13,7 +13,8 @@
                         'dct' => Request::get('dct'),
                         'df' => Request::get('df'),
                         'dt' => Request::get('dt'),
-                      ];                  
+                      ];
+
 ?>
 
 
@@ -84,8 +85,27 @@
           @foreach($documents as $data) 
 
             <?php
+
               $filename = __dataType::date_parse($data->date, 'Y') .'/'. $data->folder_code .'/'. $data->filename;
+              $file_errors = [];
+
+              if (!Storage::disk('local')->exists($filename)) {
+                $file_errors[] = $data->reference_no;
+              }
+
             ?> 
+            
+            {{-- File Errors --}}
+            <div style="margin-top: 15px;">
+              @if(!empty($file_errors))
+                <ul style="line-height: 2px;">
+                  @foreach ($file_errors as $file_error_data)
+                      <li><p class="text-danger">Ref No: {{ $file_error_data }} has no attached file.</p></li><br>
+                  @endforeach
+                </ul>
+              @endif
+            </div>
+
 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td>
