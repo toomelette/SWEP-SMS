@@ -63,11 +63,25 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="padding:10px; margin-bottom: 20px;">
       <div class="col-md-1"></div>
-      <div class="col-md-10" style="text-align: center;">
-        <span style="font-weight:bold; font-size:28px;">SEMINARS / TRAININGS</span><br>
-        <br>
+      <div class="col-md-12">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2" style="text-align: center;">
+            <img src="{{ asset('images/sra.png') }}" style="width:110px;">
+          </div>
+          <div class="col-sm-5" style="text-align: center; padding-right:125px;">
+            <span>Republic of the Philippines</span><br>
+            <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
+            <span>North Avenue, Diliman, Quezon City</span><br>
+            <span style="font-size:15px; font-weight:bold;">EMPLOYEE SEMINARS AND TRAINING</span><br>
+            <span>
+              @if (Request::get('df') || Request::get('dt'))
+                As of {{ __dataType::date_parse(Request::get('df'), 'F d, Y') }} to {{ __dataType::date_parse(Request::get('dt'), 'F d, Y') }} 
+              @endif
+            </span>
+          </div>
+          <div class="col-sm-3"></div>
       </div>
       <div class="col-md-1"></div>
     </div>
@@ -199,14 +213,26 @@
     </div>
 
     <div class="wrapper" style="overflow:hidden !important;">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10" style="text-align: center;">
-          <span style="font-weight:bold; font-size:28px;">SEMINARS / TRAININGS</span><br>
-          <br>
-        </div>
-        <div class="col-md-1"></div>
+
+      
+
+    <div class="row" style="padding:10px; margin-bottom: 20px;">
+      <div class="col-md-1"></div>
+      <div class="col-md-12">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2" style="text-align: center;">
+            <img src="{{ asset('images/sra.png') }}" style="width:110px;">
+          </div>
+          <div class="col-sm-5" style="text-align: center; padding-right:125px;">
+            <span>Republic of the Philippines</span><br>
+            <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
+            <span>North Avenue, Diliman, Quezon City</span><br>
+            <span style="font-size:15px; font-weight:bold;">EMPLOYEE SEMINARS AND TRAINING</span>
+          </div>
+          <div class="col-sm-3"></div>
       </div>
+      <div class="col-md-1"></div>
+    </div>
 
 
       <div class="row">
@@ -331,11 +357,22 @@
     </div>
 
     <div class="wrapper" style="overflow:hidden !important;">
-      <div class="row">
+
+
+      <div class="row" style="padding:10px; margin-bottom: 20px;">
         <div class="col-md-1"></div>
-        <div class="col-md-10" style="text-align: center;">
-          <span style="font-weight:bold; font-size:28px;">SEMINARS / TRAININGS</span><br>
-          <br>
+        <div class="col-md-12">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2" style="text-align: center;">
+              <img src="{{ asset('images/sra.png') }}" style="width:110px;">
+            </div>
+            <div class="col-sm-5" style="text-align: center; padding-right:125px;">
+              <span>Republic of the Philippines</span><br>
+              <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
+              <span>North Avenue, Diliman, Quezon City</span><br>
+              <span style="font-size:15px; font-weight:bold;">EMPLOYEE SEMINARS AND TRAINING</span>
+            </div>
+            <div class="col-sm-3"></div>
         </div>
         <div class="col-md-1"></div>
       </div>
@@ -464,11 +501,22 @@
     </div>
 
     <div class="wrapper" style="overflow:hidden !important;">
-      <div class="row">
+      
+
+      <div class="row" style="padding:10px; margin-bottom: 20px;">
         <div class="col-md-1"></div>
-        <div class="col-md-10" style="text-align: center;">
-          <span style="font-weight:bold; font-size:28px;">SEMINARS / TRAININGS</span><br>
-          <br>
+        <div class="col-md-12">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2" style="text-align: center;">
+              <img src="{{ asset('images/sra.png') }}" style="width:110px;">
+            </div>
+            <div class="col-sm-5" style="text-align: center; padding-right:125px;">
+              <span>Republic of the Philippines</span><br>
+              <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
+              <span>North Avenue, Diliman, Quezon City</span><br>
+              <span style="font-size:15px; font-weight:bold;">EMPLOYEE SEMINARS AND TRAINING</span>
+            </div>
+            <div class="col-sm-3"></div>
         </div>
         <div class="col-md-1"></div>
       </div>

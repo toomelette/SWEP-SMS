@@ -96,7 +96,9 @@
         <div class="box-header with-border">
           <h3 class="box-title">Seminars and Training</h3> 
           <div class="box-tools">
-            <a href="{{ route('dashboard.employee.training_print', $employee->slug) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print</a>
+            <a href="#" id="print_training" data-url="{{ route('dashboard.employee.training_print', $employee->slug) }}" class="btn btn-sm btn-default">
+              <i class="fa fa-print"></i> Print
+            </a>
           </div>
         </div>
 
@@ -230,6 +232,42 @@
   </div>
 
 
+
+
+  {{-- Print Modal --}}
+  <div class="modal fade" id="print_trng_modal" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Filters:</h4>
+        </div>
+        <form id="print_trng_form" method="GET" target="_blank">
+          <div class="modal-body">
+
+            <h5>Date Filter : </h5>
+
+            {!! __form::datepicker(
+              '6', 'df',  'Date From', old('df'), $errors->has('df'), $errors->first('df')
+            ) !!}
+
+            {!! __form::datepicker(
+              '6', 'dt',  'Date From', old('dt'), $errors->has('dt'), $errors->first('dt')
+            ) !!}
+
+          </div>
+          <div class="modal-footer" style="overflow: hidden;">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Print</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 @endsection 
 
 
@@ -306,6 +344,24 @@
       setTimeout(function(){
         $('#tr_update').modal("hide");  
       }, 100);
+    });
+
+
+    {{-- CALL PRINT SR MODAL --}}
+    $(document).on("click", "#print_training", function () {
+
+        $("#print_trng_modal").modal("show");
+        $("#print_trng_form").attr("action", $(this).data("url"));
+
+        // Datepicker
+        $('.datepicker').each(function(){
+            $(this).datepicker({
+                autoclose: true,
+                dateFormat: "mm/dd/yy",
+                orientation: "bottom"
+            })
+        });
+        
     });
 
 

@@ -16,6 +16,7 @@ use App\Http\Requests\EmployeeServiceRecord\EmployeeServiceRecordEditForm;
 
 use App\Http\Requests\EmployeeTraining\EmployeeTrainingCreateForm;
 use App\Http\Requests\EmployeeTraining\EmployeeTrainingEditForm;
+use App\Http\Requests\EmployeeTraining\EmployeeTrainingPrintFilterForm;
 
 
 class EmployeeController extends Controller{
@@ -194,9 +195,9 @@ class EmployeeController extends Controller{
 
 
 
-    public function trainingPrint($slug){
+    public function trainingPrint(EmployeeTrainingPrintFilterForm $request, $slug){
         
-        return $this->employee_trng->print($slug);
+        return $this->employee_trng->print($request, $slug);
 
     }
 

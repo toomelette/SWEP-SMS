@@ -33,13 +33,46 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-    public function getByEmpNo($slug){
+    public function fetchByEmployeeNo($slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
 
-        $employee_trngs = $this->cache->remember('employees:trainings:getByEmpNo:'. $employee->employee_no, 240, function() use ($employee){
+        $employee_trngs = $this->cache->remember('employees:trainings:fetchByEmployeeNo:'. $employee->employee_no, 240, function() use ($employee){
+
             $employee_trng = $this->employee_trng->newQuery();
-            return $this->populate($employee_trng, $employee->employee_no);
+
+            return $this->populateByEmployeeNo($employee_trng, $employee->employee_no);
+
+        });
+
+        return ['employee' => $employee, 'employee_trainings' => $employee_trngs];
+
+    }
+
+
+
+
+
+
+    public function getByEmployeeNoWithFilter($request, $slug){
+
+        $key = str_slug($request->fullUrl(), '_');
+
+        $employee = $this->employee_repo->findBySlug($slug);
+
+        $employee_trngs = $this->cache->remember('employees:trainings:getByEmployeeNoWithFilter:'. $employee->employee_no .':'. $key, 240, function() use ($employee, $request){
+
+            $employee_trng = $this->employee_trng->newQuery();
+
+            $df = $this->__dataType->date_parse($request->df);
+            $dt = $this->__dataType->date_parse($request->dt);
+
+            if(isset($request->df) || isset($request->dt)){
+                $employee_trng->whereBetween('date_from', [$df, $dt]);
+            }
+
+            return $this->populateByEmployeeNo($employee_trng, $employee->employee_no);
+
         });
 
         return ['employee' => $employee, 'employee_trainings' => $employee_trngs];
@@ -121,7 +154,7 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-    public function populate($model, $employee_no){
+    public function populateByEmployeeNo($model, $employee_no){
 
         return $model->where('employee_no', $employee_no)
                      ->orderBy('date_from', 'desc')
