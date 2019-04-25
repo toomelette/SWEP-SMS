@@ -75,6 +75,10 @@
                '6', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
             ) !!}
 
+            {!! __form::select_static(
+              '6', 'is_relevant', 'Relevant', old('is_relevant'), ['Yes' => 'true', 'No' => 'false'], $errors->has('is_relevant'), $errors->first('is_relevant'), '', ''
+            ) !!}
+
           </div>
 
           <div class="box-footer">
@@ -219,6 +223,10 @@
                  '6', 'e_remarks', 'text', 'Remarks', 'Remarks', old('e_remarks'), $errors->has('e_remarks'), $errors->first('e_remarks'), ''
               ) !!}
 
+              {!! __form::select_static(
+                '6', 'e_is_relevant', 'Relevant', old('e_is_relevant'), ['Yes' => 'true', 'No' => 'false'], $errors->has('e_is_relevant'), $errors->first('e_is_relevant'), '', ''
+              ) !!}
+
             </div>
 
         </div>
@@ -330,6 +338,14 @@
             $("#tr_update_form #e_conducted_by").val(value.conducted_by);
             $("#tr_update_form #e_venue").val(value.venue);
             $("#tr_update_form #e_remarks").val(value.remarks);
+
+            if(value.is_relevant ==1){
+              $("#tr_update_form #e_is_relevant").val("true");
+            }else if(value.is_relevant ==0){
+              $("#tr_update_form #e_is_relevant").val("false");
+            }
+
+            
           });
 
         }

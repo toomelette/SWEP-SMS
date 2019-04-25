@@ -30,6 +30,7 @@ class EmployeeTrainingEditForm extends FormRequest{
             'e_conducted_by'=>'nullable|string|max:250',
             'e_venue'=>'nullable|string|max:250',
             'e_remarks'=>'nullable|string|max:250',
+            'e_is_relevant'=>'nullable|string|max:11',
 
         ];
     

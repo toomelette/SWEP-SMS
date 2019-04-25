@@ -33,6 +33,7 @@ class EmployeeTraining extends Model{
         'conducted_by' => '',
         'venue' => '',
         'remarks' => '',
+        'is_relevant' => false,
         'created_at' => null, 
         'updated_at' => null,
         'ip_created' => '',

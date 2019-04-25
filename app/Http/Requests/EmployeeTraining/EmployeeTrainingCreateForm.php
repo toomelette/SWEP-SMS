@@ -30,6 +30,7 @@ class EmployeeTrainingCreateForm extends FormRequest{
             'conducted_by'=>'nullable|string|max:250',
             'venue'=>'nullable|string|max:250',
             'remarks'=>'nullable|string|max:250',
+            'is_relevant'=>'nullable|string|max:11',
 
         ];
 

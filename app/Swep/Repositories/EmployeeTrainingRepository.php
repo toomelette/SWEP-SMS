@@ -98,6 +98,7 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
         $employee_trng->conducted_by = $request->conducted_by;
         $employee_trng->venue = $request->venue;
         $employee_trng->remarks = $request->remarks;
+        $employee_trng->is_relevant = $this->__dataType->string_to_boolean($request->is_relevant);
         $employee_trng->created_at = $this->carbon->now();
         $employee_trng->updated_at = $this->carbon->now();
         $employee_trng->ip_created = request()->ip();
@@ -127,6 +128,7 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
         $employee_trng->conducted_by = $request->e_conducted_by;
         $employee_trng->venue = $request->e_venue;
         $employee_trng->remarks = $request->e_remarks;
+        $employee_trng->is_relevant = $this->__dataType->string_to_boolean($request->e_is_relevant);
         $employee_trng->updated_at = $this->carbon->now();
         $employee_trng->ip_updated = request()->ip();
         $employee_trng->user_updated = $this->auth->user()->user_id;
