@@ -262,7 +262,7 @@
             ) !!}
 
             {!! __form::datepicker(
-              '6', 'dt',  'Date From', old('dt'), $errors->has('dt'), $errors->first('dt')
+              '6', 'dt',  'Date To', old('dt'), $errors->has('dt'), $errors->first('dt')
             ) !!}
 
           </div>
