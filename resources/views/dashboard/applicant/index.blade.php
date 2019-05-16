@@ -75,8 +75,8 @@
         <table class="table table-hover">
           <tr>
             <th>@sortablelink('fullname', 'Name')</th>
-            <th>@sortablelink('applicantPositionApplied.position', 'Position Applied For')</th>
-            <th>@sortablelink('course.description', 'Course')</th>
+            <th>@sortablelink('plantilla.name', 'Position Applied For')</th>
+            <th>@sortablelink('course.name', 'Course')</th>
             <th>@sortablelink('date_of_birth', 'Age')</th>
             <th>@sortablelink('is_on_short_list', 'On Short List')</th>
             <th style="width: 150px">Action</th>
