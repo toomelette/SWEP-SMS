@@ -153,9 +153,9 @@ Route::get('/dashboard/test', function(){
 
  	//phpinfo();
 
-	return dd(Illuminate\Support\Str::random(16));
+	//return dd(Illuminate\Support\Str::random(16));
 
-	//return dd();
+	return view('printables.employee.employee_matrix');
 
 	//dd(__dynamic::dates_between_dates('10/01/2018', '10/31/2018'));
 
