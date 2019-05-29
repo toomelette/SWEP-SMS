@@ -187,6 +187,12 @@ class Employee extends Model{
 
 
 
+    public function employeeMatrix(){
+        return $this->hasOne('App\Models\EmployeeMatrix', 'employee_no', 'employee_no');
+    }
+
+
+
 
     /** Scopes **/
     public function scopeCountBySexAndDeptUnit($query, $dept_unit_id, $sex){

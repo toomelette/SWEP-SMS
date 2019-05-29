@@ -96,6 +96,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::delete('/employee/training/destroy/{slug}', 'EmployeeController@trainingDestroy')->name('employee.training_destroy');
 	Route::get('/employee/training/print/{slug}', 'EmployeeController@trainingPrint')->name('employee.training_print');
 
+	Route::get('/employee/matrix/{slug}', 'EmployeeController@matrix')->name('employee.matrix');
+	Route::get('/employee/matrix/print/{slug}', 'EmployeeController@matrixPrint')->name('employee.matrix_print');
+
 	Route::get('/employee/report', 'EmployeeController@report')->name('employee.report');
 	Route::get('/employee/report_generate', 'EmployeeController@reportGenerate')->name('employee.report_generate');
 	Route::resource('employee', 'EmployeeController');

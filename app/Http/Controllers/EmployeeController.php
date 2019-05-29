@@ -203,6 +203,24 @@ class EmployeeController extends Controller{
 
 
 
+    // Matrix
+    public function matrix($slug){
+
+        return dd('Matrix');
+
+    }
+
+
+
+
+    public function matrixPrint(EmployeeTrainingPrintFilterForm $request, $slug){
+        
+        return dd('Matrix Print');
+
+    }
+
+
+
 
     public function report(){
         
