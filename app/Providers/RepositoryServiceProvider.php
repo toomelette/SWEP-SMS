@@ -33,6 +33,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Swep\Interfaces\EmployeeServiceRecordInterface', 'App\Swep\Repositories\EmployeeServiceRecordRepository');
 
+		$this->app->bind('App\Swep\Interfaces\EmployeeMatrixInterface', 'App\Swep\Repositories\EmployeeMatrixRepository');
+
 
 
 		$this->app->bind('App\Swep\Interfaces\DisbursementVoucherInterface', 'App\Swep\Repositories\DisbursementVoucherRepository');

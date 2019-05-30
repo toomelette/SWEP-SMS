@@ -97,6 +97,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/employee/training/print/{slug}', 'EmployeeController@trainingPrint')->name('employee.training_print');
 
 	Route::get('/employee/matrix/{slug}', 'EmployeeController@matrix')->name('employee.matrix');
+	Route::post('/employee/matrix/update/{slug}', 'EmployeeController@matrixUpdate')->name('employee.matrix_update');
 	Route::get('/employee/matrix/print/{slug}', 'EmployeeController@matrixPrint')->name('employee.matrix_print');
 
 	Route::get('/employee/report', 'EmployeeController@report')->name('employee.report');
@@ -156,9 +157,9 @@ Route::get('/dashboard/test', function(){
 
  	//phpinfo();
 
-	//return dd(Illuminate\Support\Str::random(16));
+	return dd(Illuminate\Support\Str::random(16));
 
-	return view('printables.employee.employee_matrix');
+	//return view('printables.employee.employee_matrix');
 
 	//dd(__dynamic::dates_between_dates('10/01/2018', '10/31/2018'));
 

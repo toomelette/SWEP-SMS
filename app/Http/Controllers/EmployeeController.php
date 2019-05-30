@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Swep\Services\EmployeeService;
 use App\Swep\Services\EmployeeTrainingService;
 use App\Swep\Services\EmployeeServiceRecordService;
+use App\Swep\Services\EmployeeMatrixService;
 
 use App\Http\Requests\Employee\EmployeeFormRequest;
 use App\Http\Requests\Employee\EmployeeFilterRequest;
@@ -18,6 +19,9 @@ use App\Http\Requests\EmployeeTraining\EmployeeTrainingCreateForm;
 use App\Http\Requests\EmployeeTraining\EmployeeTrainingEditForm;
 use App\Http\Requests\EmployeeTraining\EmployeeTrainingPrintFilterForm;
 
+use App\Http\Requests\EmployeeMatrix\EmployeeMatrixFormRequest;
+use App\Http\Requests\EmployeeMatrix\EmployeeMatrixPrintRequest;
+
 
 class EmployeeController extends Controller{
 
@@ -26,14 +30,16 @@ class EmployeeController extends Controller{
     protected $employee;
     protected $employee_sr;
     protected $employee_trng;
+    protected $employee_matrix;
 
 
 
-    public function __construct(EmployeeService $employee, EmployeeServiceRecordService $employee_sr, EmployeeTrainingService $employee_trng){
+    public function __construct(EmployeeService $employee, EmployeeServiceRecordService $employee_sr, EmployeeTrainingService $employee_trng, EmployeeMatrixService $employee_matrix){
 
         $this->employee = $employee;
         $this->employee_sr = $employee_sr;
         $this->employee_trng = $employee_trng;
+        $this->employee_matrix = $employee_matrix;
 
     }
 	
@@ -206,16 +212,25 @@ class EmployeeController extends Controller{
     // Matrix
     public function matrix($slug){
 
-        return dd('Matrix');
+        return $this->employee_matrix->index($slug);
 
     }
 
 
 
 
-    public function matrixPrint(EmployeeTrainingPrintFilterForm $request, $slug){
+    public function matrixUpdate(EmployeeMatrixFormRequest $request, $slug){
         
-        return dd('Matrix Print');
+        return $this->employee_matrix->update($request, $slug);
+
+    }
+
+
+
+
+    public function matrixPrint(EmployeeMatrixPrintRequest $request, $slug){
+        
+        return $this->employee_matrix->print($request, $slug);
 
     }
 
