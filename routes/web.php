@@ -98,6 +98,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	Route::get('/employee/matrix/{slug}', 'EmployeeController@matrix')->name('employee.matrix');
 	Route::post('/employee/matrix/update/{slug}', 'EmployeeController@matrixUpdate')->name('employee.matrix_update');
+	Route::get('/employee/matrix/show/{slug}', 'EmployeeController@matrixShow')->name('employee.matrix_show');
 	Route::get('/employee/matrix/print/{slug}', 'EmployeeController@matrixPrint')->name('employee.matrix_print');
 
 	Route::get('/employee/report', 'EmployeeController@report')->name('employee.report');

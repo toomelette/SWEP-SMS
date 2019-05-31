@@ -50,7 +50,19 @@ class EmployeeMatrixService extends BaseService{
 
         $employee_matrix = $this->employee_matrix_repo->store($request, $employee->employee_no);
 
-        dd('Success');
+        $this->event->fire('employee_matrix.update', $employee);    
+        return redirect()->back();
+
+    }
+
+
+
+
+
+    public function show($slug){
+
+        $employee = $this->employee_repo->findBySlug($slug);
+        return view('dashboard.employee.matrix_show')->with('employee', $employee);
 
     }
 
@@ -60,7 +72,8 @@ class EmployeeMatrixService extends BaseService{
 
     public function print($request, $slug){
 
-        return dd('Print Matrix');
+        $employee = $this->employee_repo->findBySlug($slug);
+        return view('printables.employee.matrix')->with('employee', $employee);
 
     }
 

@@ -31,7 +31,7 @@
 	          		<li> Bachelor's Degree Graduate
 
 	          			{!! __form::textbox(
-			             	'12', 'educ_bachelors_degree', 'number', '', 'Score', old('educ_bachelors_degree'), $errors->has('educ_bachelors_degree'), $errors->first('educ_bachelors_degree'), 'step="any"'
+			             	'12', 'educ_bachelors_degree', 'number', '<code>(Max Score : 5)</code>', 'Score', old('educ_bachelors_degree') ? old('educ_bachelors_degree') : optional($employee->employeeMatrix)->educ_bachelors_degree, $errors->has('educ_bachelors_degree'), $errors->first('educ_bachelors_degree'), 'step="any"'
 			         	) !!} 
 
 			        </li>	
@@ -41,11 +41,11 @@
 	          			<div class="col-md-12">
 	          			
 		          			{!! __form::textbox(
-				            	'6', 'educ_undergrad_bachelor_units_earned', 'number', '', 'Units Earned', old('educ_undergrad_bachelor_units_earned'), $errors->has('educ_undergrad_bachelor_units_earned'), $errors->first('educ_undergrad_bachelor_units_earned'), 'step="any"'
+				            	'6', 'educ_undergrad_bachelor_units_earned', 'number', 'Units Earned <code>(Max Score : 160)</code>', 'Units Earned', old('educ_undergrad_bachelor_units_earned') ? old('educ_undergrad_bachelor_units_earned') : optional($employee->employeeMatrix)->educ_undergrad_bachelor_units_earned, $errors->has('educ_undergrad_bachelor_units_earned'), $errors->first('educ_undergrad_bachelor_units_earned'), 'step="any"'
 				         	) !!} 
 
 		          			{!! __form::textbox(
-				            	'6', 'educ_undergrad_bachelor', 'number', '', 'Score', old('educ_undergrad_bachelor'), $errors->has('educ_undergrad_bachelor'), $errors->first('educ_undergrad_bachelor'), 'step="any"'
+				            	'6', 'educ_undergrad_bachelor', 'number', 'Final Computation <code>(Max Score : 5)</code>', 'Score', old('educ_undergrad_bachelor') ? old('educ_undergrad_bachelor') : optional($employee->employeeMatrix)->educ_undergrad_bachelor, $errors->has('educ_undergrad_bachelor'), $errors->first('educ_undergrad_bachelor'), 'step="any"'
 				         	) !!} 
 	          					
 	          			</div>
@@ -55,7 +55,7 @@
 	          		<li>Master's Degree Graduate
 
 	          			{!! __form::textbox(
-			             	'12', 'educ_masters_degree', 'number', '', 'Score', old('educ_masters_degree'), $errors->has('educ_masters_degree'), $errors->first('educ_masters_degree'), 'step="any"'
+			             	'12', 'educ_masters_degree', 'number', '<code>(Max Score : 2)</code>', 'Score', old('educ_masters_degree') ? old('educ_masters_degree') : optional($employee->employeeMatrix)->educ_masters_degree, $errors->has('educ_masters_degree'), $errors->first('educ_masters_degree'), 'step="any"'
 			         	) !!} 
 
 	          		</li>
@@ -63,21 +63,21 @@
 	          		<li>Doctoral Degree Graduate
 
 	          			{!! __form::textbox(
-			             	'12', 'educ_doctoral_degree', 'number', '', 'Score', old('educ_doctoral_degree'), $errors->has('educ_doctoral_degree'), $errors->first('educ_doctoral_degree'), 'step="any"'
+			             	'12', 'educ_doctoral_degree', 'number', '<code>(Max Score : 2)</code>', 'Score', old('educ_doctoral_degree') ? old('educ_doctoral_degree') : optional($employee->employeeMatrix)->educ_doctoral_degree, $errors->has('educ_doctoral_degree'), $errors->first('educ_doctoral_degree'), 'step="any"'
 			         	) !!} 
 
 	          		</li>
 
-	          		<li>Undergraduate Masteral/Doctoral
+	          		<li>Undergraduate Masteral/Doctoral</code>)
 	          			
 	          			<div class="col-md-12">
 	          			
 		          			{!! __form::textbox(
-				            	'6', 'educ_undergrad_masteral_units_earned', 'number', '', 'Units Earned', old('educ_undergrad_masteral_units_earned'), $errors->has('educ_undergrad_masteral_units_earned'), $errors->first('educ_undergrad_masteral_units_earned'), 'step="any"'
+				            	'6', 'educ_undergrad_masteral_units_earned', 'number', 'Units Earned <code>(Max Score : 42)</code>', 'Units Earned', old('educ_undergrad_masteral_units_earned') ? old('educ_undergrad_masteral_units_earned') : optional($employee->employeeMatrix)->educ_undergrad_masteral_units_earned, $errors->has('educ_undergrad_masteral_units_earned'), $errors->first('educ_undergrad_masteral_units_earned'), 'step="any"'
 				         	) !!} 
 
 		          			{!! __form::textbox(
-				            	'6', 'educ_undergrad_masteral', 'number', '', 'Score', old('educ_undergrad_masteral'), $errors->has('educ_undergrad_masteral'), $errors->first('educ_undergrad_masteral'), 'step="any"'
+				            	'6', 'educ_undergrad_masteral', 'number', 'Final Computation <code>(Max Score : 1)</code>', 'Score', old('educ_undergrad_masteral') ? old('educ_undergrad_masteral') : optional($employee->employeeMatrix)->educ_undergrad_masteral, $errors->has('educ_undergrad_masteral'), $errors->first('educ_undergrad_masteral'), 'step="any"'
 				         	) !!} 
 	          					
 	          			</div>
@@ -87,7 +87,7 @@
 	          		<li>Graduate Certificate Course
 
 	          			{!! __form::textbox(
-			             	'12', 'educ_grad_certificate_course', 'number', '', 'Score', old('educ_grad_certificate_course'), $errors->has('educ_grad_certificate_course'), $errors->first('educ_grad_certificate_course'), 'step="any"'
+			             	'12', 'educ_grad_certificate_course', 'number', '<code>(Max Score : 2)</code>', 'Score', old('educ_grad_certificate_course') ? old('educ_grad_certificate_course') : optional($employee->employeeMatrix)->educ_grad_certificate_course, $errors->has('educ_grad_certificate_course'), $errors->first('educ_grad_certificate_course'), 'step="any"'
 			         	) !!} 
 
 	          		</li>
@@ -97,7 +97,7 @@
 	          				<li>Summa Cum Laude
 
 			          			{!! __form::textbox(
-					             	'12', 'educ_distinctions_summa_cum_laude', 'number', '', 'Score', old('educ_distinctions_summa_cum_laude'), $errors->has('educ_distinctions_summa_cum_laude'), $errors->first('educ_distinctions_summa_cum_laude'), 'step="any"'
+					             	'12', 'educ_distinctions_summa_cum_laude', 'number', '<code>(Max Score : 3)</code>', 'Score', old('educ_distinctions_summa_cum_laude') ? old('educ_distinctions_summa_cum_laude') : optional($employee->employeeMatrix)->educ_distinctions_summa_cum_laude, $errors->has('educ_distinctions_summa_cum_laude'), $errors->first('educ_distinctions_summa_cum_laude'), 'step="any"'
 					         	) !!} 
 
 	          				</li>
@@ -105,7 +105,7 @@
 	          				<li>Magna Cum Laude
 
 			          			{!! __form::textbox(
-					             	'12', 'educ_distinctions_magna_cum_laude', 'number', '', 'Score', old('educ_distinctions_magna_cum_laude'), $errors->has('educ_distinctions_magna_cum_laude'), $errors->first('educ_distinctions_magna_cum_laude'), 'step="any"'
+					             	'12', 'educ_distinctions_magna_cum_laude', 'number', '<code>(Max Score : 2)</code>', 'Score', old('educ_distinctions_magna_cum_laude') ? old('educ_distinctions_magna_cum_laude') : optional($employee->employeeMatrix)->educ_distinctions_magna_cum_laude, $errors->has('educ_distinctions_magna_cum_laude'), $errors->first('educ_distinctions_magna_cum_laude'), 'step="any"'
 					         	) !!} 
 
 	          				</li>
@@ -113,7 +113,7 @@
 	          				<li>Cum Laude / With Honors
 
 			          			{!! __form::textbox(
-					             	'12', 'educ_distinctions_cum_laude', 'number', '', 'Score', old('educ_distinctions_cum_laude'), $errors->has('educ_distinctions_cum_laude'), $errors->first('educ_distinctions_cum_laude'), 'step="any"'
+					             	'12', 'educ_distinctions_cum_laude', 'number', '<code>(Max Score : 1)</code>', 'Score', old('educ_distinctions_cum_laude') ? old('educ_distinctions_cum_laude') : optional($employee->employeeMatrix)->educ_distinctions_cum_laude, $errors->has('educ_distinctions_cum_laude'), $errors->first('educ_distinctions_cum_laude'), 'step="any"'
 					         	) !!} 
 
 	          				</li>
@@ -121,7 +121,7 @@
 	          				<li>Presidential Awardee
 
 			          			{!! __form::textbox(
-					             	'12', 'educ_distinctions_pres_awardee', 'number', '', 'Score', old('educ_distinctions_pres_awardee'), $errors->has('educ_distinctions_pres_awardee'), $errors->first('educ_distinctions_pres_awardee'), 'step="any"'
+					             	'12', 'educ_distinctions_pres_awardee', 'number', '<code>(Max Score : 3)</code>', 'Score', old('educ_distinctions_pres_awardee') ? old('educ_distinctions_pres_awardee') : optional($employee->employeeMatrix)->educ_distinctions_pres_awardee, $errors->has('educ_distinctions_pres_awardee'), $errors->first('educ_distinctions_pres_awardee'), 'step="any"'
 					         	) !!} 
 
 	          				</li>
@@ -129,7 +129,7 @@
 	          				<li>CSC / SRA / DA Awardee
 
 			          			{!! __form::textbox(
-					             	'12', 'educ_distinctions_csc_sra_da_awardee', 'number', '', 'Score', old('educ_distinctions_csc_sra_da_awardee'), $errors->has('educ_distinctions_csc_sra_da_awardee'), $errors->first('educ_distinctions_csc_sra_da_awardee'), 'step="any"'
+					             	'12', 'educ_distinctions_csc_sra_da_awardee', 'number', '<code>(Max Score : 3)</code>', 'Score', old('educ_distinctions_csc_sra_da_awardee') ? old('educ_distinctions_csc_sra_da_awardee') : optional($employee->employeeMatrix)->educ_distinctions_csc_sra_da_awardee, $errors->has('educ_distinctions_csc_sra_da_awardee'), $errors->first('educ_distinctions_csc_sra_da_awardee'), 'step="any"'
 					         	) !!} 
 
 	          				</li>
@@ -137,7 +137,7 @@
 	          				<li>Top 10 government licensure administered exams
 
 			          			{!! __form::textbox(
-					             	'12', 'educ_distinctions_top_gov_exam', 'number', '', 'Score', old('educ_distinctions_top_gov_exam'), $errors->has('educ_distinctions_top_gov_exam'), $errors->first('educ_distinctions_top_gov_exam'), 'step="any"'
+					             	'12', 'educ_distinctions_top_gov_exam', 'number', '<code>(Max Score : 3)</code>', 'Score', old('educ_distinctions_top_gov_exam') ? old('educ_distinctions_top_gov_exam') : optional($employee->employeeMatrix)->educ_distinctions_top_gov_exam, $errors->has('educ_distinctions_top_gov_exam'), $errors->first('educ_distinctions_top_gov_exam'), 'step="any"'
 					         	) !!} 
 
 	          				</li>
@@ -149,25 +149,25 @@
 	          	<h4>Experience</h4>
 
 	  			{!! __form::textbox(
-	             	'12', 'experience', 'number', '', 'Score', old('experience'), $errors->has('experience'), $errors->first('experience'), 'step="any"'
+	             	'12', 'experience', 'number', '<code>(Max Score : 20)</code>', 'Score', old('experience') ? old('experience') : optional($employee->employeeMatrix)->experience, $errors->has('experience'), $errors->first('experience'), 'step="any"'
 	         	) !!} 
 
 	          	<h4>Training</h4>
 
 	  			{!! __form::textbox(
-	             	'12', 'training', 'number', '', 'Score', old('training'), $errors->has('training'), $errors->first('training'), 'step="any"'
+	             	'12', 'training', 'number', '<code>(Max Score : 10)</code>', 'Score', old('training') ? old('training') : optional($employee->employeeMatrix)->training, $errors->has('training'), $errors->first('training'), 'step="any"'
 	         	) !!} 
 
 	          	<h4>Eligibility</h4>
 
 	  			{!! __form::textbox(
-	             	'12', 'eligibility', 'number', '', 'Score', old('eligibility'), $errors->has('eligibility'), $errors->first('eligibility'), 'step="any"'
+	             	'12', 'eligibility', 'number', '<code>(Max Score : 5)</code>', 'Score', old('eligibility') ? old('eligibility') : optional($employee->employeeMatrix)->eligibility, $errors->has('eligibility'), $errors->first('eligibility'), 'step="any"'
 	         	) !!} 
 
 	          	<h4>Performance</h4>
 
 	  			{!! __form::textbox(
-	             	'12', 'performance', 'number', '', 'Score', old('performance'), $errors->has('performance'), $errors->first('performance'), 'step="any"'
+	             	'12', 'performance', 'number', '<code>(Max Score : 20)</code>', 'Score', old('performance') ? old('performance') : optional($employee->employeeMatrix)->performance, $errors->has('performance'), $errors->first('performance'), 'step="any"'
 	         	) !!} 
 
 	          	<h4>Behavioral Events, Interview, Assesment (BEIA), Work Attitude</h4>
@@ -175,11 +175,11 @@
 	  			<div class="col-md-12">
 	  			
 	      			{!! __form::textbox(
-		            	'6', 'behavior_point_score', 'number', '', 'Point Score', old('behavior_point_score'), $errors->has('behavior_point_score'), $errors->first('behavior_point_score'), 'step="any"'
+		            	'6', 'behavior_point_score', 'number', 'Point Score <code>(Max Score : 5)</code>', 'Point Score', old('behavior_point_score') ? old('behavior_point_score') : optional($employee->employeeMatrix)->behavior_point_score, $errors->has('behavior_point_score'), $errors->first('behavior_point_score'), 'step="any"'
 		         	) !!} 
 
 	      			{!! __form::textbox(
-		            	'6', 'behavior', 'number', '', 'Score', old('behavior'), $errors->has('behavior'), $errors->first('behavior'), 'step="any"'
+		            	'6', 'behavior', 'number', 'Final Computation <code>(Max Score : 13)</code>', 'Score', old('behavior') ? old('behavior') : optional($employee->employeeMatrix)->behavior, $errors->has('behavior'), $errors->first('behavior'), 'step="any"'
 		         	) !!} 
 	  					
 	  			</div>
@@ -189,11 +189,11 @@
 	  			<div class="col-md-12">
 	  			
 	      			{!! __form::textbox(
-		            	'6', 'psycho_test_point_score', 'number', '', 'Point Score', old('psycho_test_point_score'), $errors->has('psycho_test_point_score'), $errors->first('psycho_test_point_score'), 'step="any"'
+		            	'6', 'psycho_test_point_score', 'number', 'Point Score <code>(Max Score : 100)</code>', 'Point Score', old('psycho_test_point_score') ? old('psycho_test_point_score') : optional($employee->employeeMatrix)->psycho_test_point_score, $errors->has('psycho_test_point_score'), $errors->first('psycho_test_point_score'), 'step="any"'
 		         	) !!} 
 
 	      			{!! __form::textbox(
-		            	'6', 'psycho_test', 'number', '', 'Score', old('psycho_test'), $errors->has('psycho_test'), $errors->first('psycho_test'), 'step="any"'
+		            	'6', 'psycho_test', 'number', 'Final Computation <code>(Max Score : 5)</code>', 'Score', old('psycho_test') ? old('psycho_test') : optional($employee->employeeMatrix)->psycho_test, $errors->has('psycho_test'), $errors->first('psycho_test'), 'step="any"'
 		         	) !!} 
 	  					
 	  			</div>
@@ -220,17 +220,21 @@
 
 
 
+
 @section('modals')
 
-  @if(Session::has('DEPARTMENT_CREATE_SUCCESS'))
+  @if(Session::has('EMPLOYEE_MATRIX_UPDATE_SUCCESS'))
 
-    {!! __html::modal(
-      'department_create', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('DEPARTMENT_CREATE_SUCCESS')
+    {!! __html::modal_print(
+      'emp_matrix_update', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('EMPLOYEE_MATRIX_UPDATE_SUCCESS'), route('dashboard.employee.matrix_show', Session::get('EMPLOYEE_MATRIX_UPDATE_SUCCESS_SLUG'))
     ) !!}
+
     
   @endif
 
 @endsection 
+
+
 
 
 
@@ -240,8 +244,8 @@
   <script type="text/javascript">
 
 
-    @if(Session::has('DEPARTMENT_CREATE_SUCCESS'))
-      $('#department_create').modal('show');
+    @if(Session::has('EMPLOYEE_MATRIX_UPDATE_SUCCESS'))
+      $('#emp_matrix_update').modal('show');
     @endif
 
 

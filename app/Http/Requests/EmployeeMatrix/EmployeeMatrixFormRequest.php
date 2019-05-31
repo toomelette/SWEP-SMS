@@ -30,6 +30,7 @@ class EmployeeMatrixFormRequest extends FormRequest{
             'educ_undergrad_masteral_units_earned' => 'nullable|numeric|max:42',
             'educ_undergrad_masteral' => 'nullable|numeric|max:1',
             'educ_grad_certificate_course' => 'nullable|numeric|max:2',
+            
             'educ_distinctions_summa_cum_laude' => 'nullable|numeric|max:3',
             'educ_distinctions_magna_cum_laude' => 'nullable|numeric|max:2',
             'educ_distinctions_cum_laude' => 'nullable|numeric|max:2',
@@ -43,7 +44,7 @@ class EmployeeMatrixFormRequest extends FormRequest{
             'performance' => 'nullable|numeric|max:20',
             'behavior_point_score' => 'nullable|numeric|max:5',
             'behavior' => 'nullable|numeric|max:13',
-            'psycho_test_point_score' => 'nullable|numeric|max:5',
+            'psycho_test_point_score' => 'nullable|numeric|max:100',
             'psycho_test' => 'nullable|numeric|max:5',
         
         ];

@@ -228,6 +228,15 @@ class EmployeeController extends Controller{
 
 
 
+    public function matrixShow($slug){
+        
+        return $this->employee_matrix->show($slug);
+
+    }
+
+
+
+
     public function matrixPrint(EmployeeMatrixPrintRequest $request, $slug){
         
         return $this->employee_matrix->print($request, $slug);

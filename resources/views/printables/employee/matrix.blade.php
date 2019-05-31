@@ -1,3 +1,29 @@
+<?php
+  
+  $total_score = optional($employee->employeeMatrix)->educ_bachelors_degree + 
+                 optional($employee->employeeMatrix)->educ_undergrad_bachelor + 
+                 optional($employee->employeeMatrix)->educ_masters_degree + 
+                 optional($employee->employeeMatrix)->educ_doctoral_degree + 
+                 optional($employee->employeeMatrix)->educ_undergrad_masteral + 
+                 optional($employee->employeeMatrix)->educ_grad_certificate_course + 
+
+                 optional($employee->employeeMatrix)->educ_distinctions_summa_cum_laude + 
+                 optional($employee->employeeMatrix)->educ_distinctions_magna_cum_laude + 
+                 optional($employee->employeeMatrix)->educ_distinctions_cum_laude + 
+                 optional($employee->employeeMatrix)->educ_distinctions_pres_awardee + 
+                 optional($employee->employeeMatrix)->educ_distinctions_csc_sra_da_awardee + 
+                 optional($employee->employeeMatrix)->educ_distinctions_top_gov_exam + 
+
+                 optional($employee->employeeMatrix)->experience + 
+                 optional($employee->employeeMatrix)->training +
+                 optional($employee->employeeMatrix)->eligibility + 
+                 optional($employee->employeeMatrix)->performance + 
+                 optional($employee->employeeMatrix)->behavior + 
+                 optional($employee->employeeMatrix)->psycho_test;
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,28 +108,28 @@
           <span><b>Fullname:</b></span>
         </div>
         <div class="col-sm-3">
-          <span>Test T. Test</span>
+          <span>{{ $employee->fullname }}</span>
         </div>
 
         <div class="col-sm-3">
           <span><b>Present Position:</b></span>
         </div>
         <div class="col-sm-3">
-          <span>Administrator</span>
+          <span>{{ $employee->position }}</span>
         </div>
 
         <div class="col-sm-3">
           <span><b>Employee No:</b></span>
         </div>
         <div class="col-sm-3">
-          <span>2019-001</span>
+          <span>{{ $employee->employee_no }}</span>
         </div>
 
         <div class="col-sm-3">
           <span><b>Vacant Position:</b></span>
         </div>
         <div class="col-sm-3">
-          <span>Administrator</span>
+          <span></span>
         </div>
 
       </div>
@@ -164,12 +190,12 @@
                  --------------- x &nbsp;&nbsp; 5.00<br>
                  160 Units 
               </p>
-              <p style="margin-top: 10px;">Units Earned<br>
-                 ------------------- x &nbsp;&nbsp; 5.00<br>
+              <p style="margin-top: 10px;">{{ number_format(optional($employee->employeeMatrix)->educ_undergrad_bachelor_units_earned) }} Units Earned<br>
+                 ----------------------- x &nbsp;&nbsp; 5.00<br>
                  160 Units 
               </p>  
-              <p style="margin-top: 115px;">Units Earned<br>
-                 ------------------- x &nbsp;&nbsp; 1.00<br>
+              <p style="margin-top: 115px;">{{ number_format(optional($employee->employeeMatrix)->educ_undergrad_masteral_units_earned) }} Units Earned<br>
+                 ----------------------- x &nbsp;&nbsp; 1.00<br>
                  42 Units 
               </p>
               <br>   
@@ -180,17 +206,23 @@
 
 
             <td style="vertical-align: text-top;">
-              <p>5.00</p>
-              <p style="margin-top: 105px;">2.00</p>
-              <p style="margin-top: 45px;">2.00</p>
-              <p style="margin-top: 38px;">1.00</p>
-              <p style="margin-top: 42px;">2.00</p>
-              <p style="margin-top: 55px;">3.00</p>
-              <p style="margin-top: -3px;">2.00</p>
-              <p style="margin-top: -3px;">1.00</p>
-              <p style="margin-top: -3px;">3.00</p>
-              <p style="margin-top: -3px;">3.00</p>
-              <p style="margin-top: -3px;">3.00</p>
+              <p>
+                @if (number_format(optional($employee->employeeMatrix)->educ_bachelors_degree) != 0)
+                  {{ number_format(optional($employee->employeeMatrix)->educ_bachelors_degree, 2) }}
+                 @else 
+                  {{ number_format(optional($employee->employeeMatrix)->educ_undergrad_bachelor, 2) }}
+                @endif
+              </p>
+              <p style="margin-top: 105px;">{{ number_format(optional($employee->employeeMatrix)->educ_masters_degree, 2) }}</p>
+              <p style="margin-top: 45px;">{{ number_format(optional($employee->employeeMatrix)->educ_doctoral_degree, 2) }}</p>
+              <p style="margin-top: 38px;">{{ number_format(optional($employee->employeeMatrix)->educ_undergrad_masteral, 2) }}</p>
+              <p style="margin-top: 42px;">{{ number_format(optional($employee->employeeMatrix)->educ_grad_certificate_course, 2) }}</p>
+              <p style="margin-top: 55px;">{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_summa_cum_laude, 2) }}</p>
+              <p style="margin-top: -3px;">{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_magna_cum_laude, 2) }}</p>
+              <p style="margin-top: -3px;">{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_cum_laude, 2) }}</p>
+              <p style="margin-top: -3px;">{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_pres_awardee, 2) }}</p>
+              <p style="margin-top: -3px;">{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_csc_sra_da_awardee, 2) }}</p>
+              <p style="margin-top: -3px;">{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_top_gov_exam, 2) }}</p>
             </td>
 
           </tr>
@@ -214,7 +246,7 @@
             </td>
 
             <td style="vertical-align: text-top;">
-              <p>20.00</p>
+              <p>{{ number_format(optional($employee->employeeMatrix)->experience, 2) }}</p>
             </td>
 
           </tr>
@@ -238,7 +270,7 @@
             </td>
 
             <td style="vertical-align: text-top;">
-              <p>10.00</p>
+              <p>{{ number_format(optional($employee->employeeMatrix)->training, 2) }}</p>
             </td>
 
           </tr>
@@ -270,7 +302,7 @@
             <td style="vertical-align: text-top;"></td>
 
             <td style="vertical-align: text-top;">
-              <p>5.00</p>
+              <p>{{ number_format(optional($employee->employeeMatrix)->eligibility, 2) }}</p>
             </td>
 
           </tr>
@@ -290,7 +322,7 @@
             <td style="vertical-align: text-top;"></td>
 
             <td style="vertical-align: text-top;">
-              <p>20.00</p>
+              <p>{{ number_format(optional($employee->employeeMatrix)->performance, 2) }}</p>
             </td>
 
           </tr>
@@ -310,14 +342,14 @@
             </td>
 
             <td style="vertical-align: text-top;">
-              <p>Point Score<br>
-                 ----------------- x &nbsp;&nbsp; 13.00<br>
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5       
+              <p>{{ number_format(optional($employee->employeeMatrix)->behavior_point_score, 2) }} Point Score<br>
+                 --------------------- x &nbsp;&nbsp; 13.00<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5       
               </p>
             </td>
 
             <td style="vertical-align: text-top;">
-              <p>13.00</p>
+              <p>{{ number_format(optional($employee->employeeMatrix)->behavior, 2) }}</p>
             </td>
 
           </tr>
@@ -337,14 +369,14 @@
             </td>
 
             <td style="vertical-align: text-top;">
-              <p>Point Score<br>
-                 ----------------- x &nbsp;&nbsp; 5.00<br>
+              <p>{{ number_format(optional($employee->employeeMatrix)->psycho_test_point_score, 2) }} Point Score<br>
+                 ---------------------- x &nbsp;&nbsp; 5.00<br>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100       
               </p>
             </td>
 
             <td style="vertical-align: text-top;">
-              <p>5.00</p>
+              <p>{{ number_format(optional($employee->employeeMatrix)->psycho_test, 2) }}</p>
             </td>
 
           </tr>
@@ -364,7 +396,7 @@
             <td></td>
 
             <td>
-              <span style="font-weight: bold;">100.00</span>
+              <span style="font-weight: bold;">{{ number_format($total_score, 2) }}</span>
             </td>
 
           </tr>
