@@ -64,38 +64,38 @@
 
               <ul>
                   
-                <li>Bachelor's Degree Graduate = {{ number_format(optional($employee->employeeMatrix)->educ_bachelors_degree, 2) }}</li>
-                <li>College Undergraduate = {{ number_format(optional($employee->employeeMatrix)->educ_undergrad_bachelor, 2) }}</li>
-                <li>Master's Degree = {{ number_format(optional($employee->employeeMatrix)->educ_masters_degree, 2) }}</li>
-                <li>Doctoral Degree Graduate = {{ number_format(optional($employee->employeeMatrix)->educ_doctoral_degree, 2) }}</li>
-                <li>Undergraduate Masteral / Doctoral = {{ number_format(optional($employee->employeeMatrix)->educ_undergrad_masteral, 2) }}</li>
-                <li>Graduate Certificate Course = {{ number_format(optional($employee->employeeMatrix)->educ_grad_certificate_course, 2) }}</li>
+                <li>Bachelor's Degree Graduate = <b>{{ number_format(optional($employee->employeeMatrix)->educ_bachelors_degree, 2) }}</b></li>
+                <li>College Undergraduate = <b>{{ number_format(optional($employee->employeeMatrix)->educ_undergrad_bachelor, 2) }}</b></li>
+                <li>Master's Degree = <b>{{ number_format(optional($employee->employeeMatrix)->educ_masters_degree, 2) }}</b></li>
+                <li>Doctoral Degree Graduate = <b>{{ number_format(optional($employee->employeeMatrix)->educ_doctoral_degree, 2) }}</b></li>
+                <li>Undergraduate Masteral / Doctoral = <b>{{ number_format(optional($employee->employeeMatrix)->educ_undergrad_masteral, 2) }}</b></li>
+                <li>Graduate Certificate Course = <b>{{ number_format(optional($employee->employeeMatrix)->educ_grad_certificate_course, 2) }}</b></li>
 
                 <li>Bachelor's Degree Graduate
                   <ul>  
-                      <li>Summa Cum Laude = {{ number_format(optional($employee->employeeMatrix)->educ_distinctions_summa_cum_laude, 2) }}</li>
-                      <li>Magna Cum Laude = {{ number_format(optional($employee->employeeMatrix)->educ_distinctions_magna_cum_laude, 2) }}</li>
-                      <li>Cum Laude / With Honors = {{ number_format(optional($employee->employeeMatrix)->educ_distinctions_cum_laude, 2) }}</li>
-                      <li>Presidential Awardee = {{ number_format(optional($employee->employeeMatrix)->educ_distinctions_pres_awardee, 2) }}</li>
-                      <li>CSC / SRA / DA Awardee = {{ number_format(optional($employee->employeeMatrix)->educ_distinctions_csc_sra_da_awardee, 2) }}</li>
-                      <li>Top 10 on government licensure administered exams = {{ number_format(optional($employee->employeeMatrix)->educ_distinctions_top_gov_exam, 2) }}</li>
+                      <li>Summa Cum Laude = <b>{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_summa_cum_laude, 2) }}</b></li>
+                      <li>Magna Cum Laude = <b>{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_magna_cum_laude, 2) }}</b></li>
+                      <li>Cum Laude / With Honors = <b>{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_cum_laude, 2) }}</b></li>
+                      <li>Presidential Awardee = <b>{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_pres_awardee, 2) }}</b></li>
+                      <li>CSC / SRA / DA Awardee = <b>{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_csc_sra_da_awardee, 2) }}</b></li>
+                      <li>Top 10 on government licensure administered exams = <b>{{ number_format(optional($employee->employeeMatrix)->educ_distinctions_top_gov_exam, 2) }}</b></li>
                   </ul>
                 </li>
 
               </ul>
 
 
-              <h4>Experience = {{ number_format(optional($employee->employeeMatrix)->experience, 2) }}</h4>
+              <h4>Experience = <b>{{ number_format(optional($employee->employeeMatrix)->experience, 2) }}</b></h4>
 
-              <h4>Training = {{ number_format(optional($employee->employeeMatrix)->training, 2) }}</h4>
+              <h4>Training = <b>{{ number_format(optional($employee->employeeMatrix)->training, 2) }}</b></h4>
 
-              <h4>Eligibility = {{ number_format(optional($employee->employeeMatrix)->eligibility, 2) }}</h4>
+              <h4>Eligibility = <b>{{ number_format(optional($employee->employeeMatrix)->eligibility, 2) }}</b></h4>
 
-              <h4>Performance = {{ number_format(optional($employee->employeeMatrix)->performance, 2) }}</h4>
+              <h4>Performance = <b>{{ number_format(optional($employee->employeeMatrix)->performance, 2) }}</b></h4>
 
-              <h4>Behavioral Events, Interview, Assesment (BEIA), Work Attitude = {{ number_format(optional($employee->employeeMatrix)->behavior, 2) }}</h4>
+              <h4>Behavioral Events, Interview, Assesment (BEIA), Work Attitude = <b>{{ number_format(optional($employee->employeeMatrix)->behavior, 2) }}</b></h4>
 
-              <h4>Psychological and Mental Aptitude Tests = {{ number_format(optional($employee->employeeMatrix)->psycho_test, 2) }}</h4>
+              <h4>Psychological and Mental Aptitude Tests = <b>{{ number_format(optional($employee->employeeMatrix)->psycho_test, 2) }}</b></h4>
 
               <h3>Total Score = {{ $total_score }}</h3>
 

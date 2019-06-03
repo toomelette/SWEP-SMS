@@ -23,7 +23,7 @@
 	 
 	      	@csrf    
 	      	
-	      	<div class="col-md-6">
+	      	<div class="col-md-8">
 
 	          	<h4>Education</h4>
 
@@ -148,15 +148,39 @@
 
 	          	<h4>Experience</h4>
 
-	  			{!! __form::textbox(
-	             	'12', 'experience', 'number', '<code>(Max Score : 20)</code>', 'Score', old('experience') ? old('experience') : optional($employee->employeeMatrix)->experience, $errors->has('experience'), $errors->first('experience'), 'step="any"'
-	         	) !!} 
+	          	<div class="col-md-12">
+
+		  			{!! __form::textbox(
+		             	'4', 'experience_years', 'number', 'No. of years', 'Score', old('experience_years') ? old('experience_years') : optional($employee->employeeMatrix)->experience_years, $errors->has('experience_years'), $errors->first('experience_years'), 'step="any"'
+		         	) !!} 
+
+		  			{!! __form::textbox(
+		             	'4', 'experience_req_years', 'number', 'Required no. of years', 'Score', old('experience_req_years') ? old('experience_req_years') : optional($employee->employeeMatrix)->experience_req_years, $errors->has('experience_req_years'), $errors->first('experience_req_years'), 'step="any"'
+		         	) !!} 
+
+		  			{!! __form::textbox(
+		             	'4', 'experience', 'number', 'Final Computation <code>(Max Score : 20)</code>', 'Score', old('experience') ? old('experience') : optional($employee->employeeMatrix)->experience, $errors->has('experience'), $errors->first('experience'), 'step="any"'
+		         	) !!} 
+
+	        	</div>
 
 	          	<h4>Training</h4>
 
-	  			{!! __form::textbox(
-	             	'12', 'training', 'number', '<code>(Max Score : 10)</code>', 'Score', old('training') ? old('training') : optional($employee->employeeMatrix)->training, $errors->has('training'), $errors->first('training'), 'step="any"'
-	         	) !!} 
+	          	<div class="col-md-12">
+
+		  			{!! __form::textbox(
+		             	'4', 'training_no', 'number', 'No. of trainings', 'Score', old('training_no') ? old('training_no') : optional($employee->employeeMatrix)->training_no, $errors->has('training_no'), $errors->first('training_no'), 'step="any"'
+		         	) !!}
+
+		  			{!! __form::textbox(
+		             	'4', 'training_req_no', 'number', 'Required no. of trainings', 'Score', old('training_req_no') ? old('training_req_no') : optional($employee->employeeMatrix)->training_req_no, $errors->has('training_req_no'), $errors->first('training_req_no'), 'step="any"'
+		         	) !!}
+
+		  			{!! __form::textbox(
+		             	'4', 'training', 'number', 'Final Computation<code>(Max Score : 10)</code>', 'Score', old('training') ? old('training') : optional($employee->employeeMatrix)->training, $errors->has('training'), $errors->first('training'), 'step="any"'
+		         	) !!} 
+
+	            </div>
 
 	          	<h4>Eligibility</h4>
 
@@ -305,6 +329,140 @@
 	    $("#educ_undergrad_masteral").val(score.toFixed(2));
 	  });
 	});
+
+
+
+    // Experience Years
+    $(document).ready(function(){
+	  $("#experience_years").keyup(function(){
+	  	var years = $(this).val();
+	  	var req_years = $("#experience_req_years").val();
+	  	var score = years / req_years * 20;
+
+	  	if(score > 20){
+	  		score = 20;
+	  	}
+
+	    $("#experience").val(score.toFixed(2));
+	  });
+	});
+
+
+
+    $(document).ready(function(){
+	  $("#experience_years").keyup(function(){
+	  	var years = $(this).val();
+	  	var req_years = $("#experience_req_years").val();
+	  	var score = years / req_years * 20;
+
+	  	if(score > 20){
+	  		score = 20;
+	  	}
+
+	    $("#experience").val(score.toFixed(2));
+	  });
+	});
+
+
+
+
+    // Experience Required Years
+    $(document).ready(function(){
+	  $("#experience_req_years").keyup(function(){
+	  	var req_years = $(this).val();
+	  	var years = $("#experience_years").val();
+	  	var score = years / req_years * 20;
+
+	  	if(score > 20){
+	  		score = 20;
+	  	}
+
+	    $("#experience").val(score.toFixed(2));
+	  });
+	});
+
+
+    $(document).ready(function(){
+	  $("#experience_req_years").keydown(function(){
+	  	var req_years = $(this).val();
+	  	var years = $("#experience_years").val();
+	  	var score = years / req_years * 20;
+
+	  	if(score > 20){
+	  		score = 20;
+	  	}
+
+	    $("#experience").val(score.toFixed(2));
+	  });
+	});
+
+
+
+    // No of trainings
+    $(document).ready(function(){
+	  $("#training_no").keyup(function(){
+	  	var trng_no = $(this).val();
+	  	var req_trng_no = $("#training_req_no").val();
+	  	var score = trng_no / req_trng_no * 10;
+
+	  	if(score > 10){
+	  		score = 10;
+	  	}
+
+	    $("#training").val(score.toFixed(2));
+	  });
+	});
+
+
+
+    $(document).ready(function(){
+	  $("#training_no").keydown(function(){
+	  	var trng_no = $(this).val();
+	  	var req_trng_no = $("#training_req_no").val();
+	  	var score = trng_no / req_trng_no * 10;
+
+	  	if(score > 10){
+	  		score = 10;
+	  	}
+
+	    $("#training").val(score.toFixed(2));
+	  });
+	});
+
+
+
+    // No of trainings required
+    $(document).ready(function(){
+	  $("#training_req_no").keyup(function(){
+	  	var trng_no = $("#training_no").val();
+	  	var req_trng_no = $(this).val();
+	  	var score = trng_no / req_trng_no * 10;
+
+	  	if(score > 10){
+	  		score = 10;
+	  	}
+
+	    $("#training").val(score.toFixed(2));
+	  });
+	});
+
+
+
+    $(document).ready(function(){
+	  $("#training_req_no").keydown(function(){
+	  	var trng_no = $("#training_no").val();
+	  	var req_trng_no = $(this).val();
+	  	var score = trng_no / req_trng_no * 10;
+
+	  	if(score > 10){
+	  		score = 10;
+	  	}
+
+	    $("#training").val(score.toFixed(2));
+	  });
+	});
+
+
 
 
 
