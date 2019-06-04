@@ -59,6 +59,17 @@
       padding:20px;
     }
 
+    .bg-wm{
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      position:absolute;
+      opacity:0.3;
+      margin-top: 200px;
+      padding:80px;
+    }
+
     @media print {
         .footer {
           page-break-after: always;
@@ -71,23 +82,25 @@
 
 <body onload="window.print();" onafterprint="window.close()">
 
+  <img class="bg-wm" src="{{ asset('images/sra_wm.jpg') }}">
 
   {{-- Header --}}
   <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-12">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-1 no-padding">
-        <img src="{{ asset('images/sra.png') }}" style="width:100%;">
+    <div class="col-md-12">
+      <div class="col-sm-3">
+        <img src="{{ asset('images/sra.png') }}" style="width:110px;">
       </div>
-      <div class="col-sm-8" style="text-align: center; padding-right:125px;">
-        <span>Republic of the Philippines</span><br>
-        <span style="font-size:15px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
-        <span>North Avenue, Diliman, Quezon City</span>
+      <div class="col-sm-8" style="padding-right:125px; font-family: tahoma; line-height:13px; margin-left:-40px;">
+        <span style="font-size:12px;">Republic of the Philippines</span><br>
+        <span style="font-size:12px;">Department of Agriculture</span><br>
+        <span style="font-size:12px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
+        <span style="font-size:12px;">North Avenue, Diliman, Quezon City</span><br>
+        <span style="font-size:12px;">Philippines 6100</span><br>
+        <span style="font-size:12px;">TIN 000-784-336</span>
       </div>
+      <div class="col-sm-1"></div>
     </div>
-    <div class="col-sm-1"></div>
-    <div class="col-sm-12" style="padding-bottom:10px;"></div>
+    <div class="col-sm-12" style="padding-bottom:20px;"></div>
     <div class="col-sm-12" style="text-align: center; padding-bottom:10px;">   
       <span style="font-weight: bold;">Employee Matrix</span><br>
     </div>
@@ -136,8 +149,9 @@
         
       <tr>
         <th style="text-align:center; width:120px;">Criteria</th>
-        <th style="text-align:center; width:250px;">Particulars</th>
+        <th style="text-align:center; width:300px;">Particulars</th>
         <th style="text-align:center; width:250px;">Formula</th>
+        <th style="text-align:center; width:50px;">Max Score</th>
         <th style="text-align:center; width:50px;">Score</th>
       </tr>
 
@@ -194,6 +208,21 @@
 
 
         <td style="vertical-align: text-top;">
+          <p>5.00</p>
+          <p style="margin-top: 105px;">2.00</p>
+          <p style="margin-top: 45px;">2.00</p>
+          <p style="margin-top: 38px;">1.00</p>
+          <p style="margin-top: 42px;">2.00</p>
+          <p style="margin-top: 55px;">3.00</p>
+          <p style="margin-top: -3px;">2.00</p>
+          <p style="margin-top: -3px;">1.00</p>
+          <p style="margin-top: -3px;">3.00</p>
+          <p style="margin-top: -3px;">3.00</p>
+          <p style="margin-top: -3px;">3.00</p>
+        </td>
+
+
+        <td style="vertical-align: text-top;">
           <p>
             @if (number_format(optional($employee->employeeMatrix)->educ_bachelors_degree) != 0)
               {{ number_format(optional($employee->employeeMatrix)->educ_bachelors_degree, 2) }}
@@ -226,7 +255,6 @@
         </td>
 
         <td style="vertical-align: text-top;">
-          CSC QS Manual and CSC MC No. 5 s. 2016, re: Revised Qualification Standards and Requirements for Division Chiefs, Departments Managers and/or Executive Managerial Positions, and SRA Job Description Competency - based QS.
         </td>
 
         <td style="vertical-align: text-top;">
@@ -237,6 +265,8 @@
           </p>
 
         </td>
+
+        <td style="vertical-align: text-top;">20.00</td>
 
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->experience, 2) }}</p>
@@ -255,15 +285,16 @@
         </td>
 
         <td style="vertical-align: text-top;">
-          CSC QS Manual and CSC MC No. 5 s. 2016, re: Revised Qualification Standards and Requirements for Division Chiefs, Departments Managers and/or Executive Managerial Positions, and SRA Job Description Competency - based QS. 
         </td>
 
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->training_no) }} Number of trainings<br>
              ------------------------------ x &nbsp;&nbsp; 10.00<br>
              {{ number_format(optional($employee->employeeMatrix)->training_req_no) }} Required number of trainings 
-          </p>
-        </td>
+          </p>  
+        </td> 
+
+        <td style="vertical-align: text-top;">10.00</td>
 
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->training, 2) }}</p>
@@ -282,20 +313,11 @@
         </td>
 
         <td style="vertical-align: text-top;">
-          <ol style="margin-top:-8px;">
-            <li>
-              First Level (Sub-Professional) or its equivalent RA 1080 eligibility
-            </li>
-            <li>
-              Second Level (Professional) or its equivalent RA 1080 eligibility
-            </li>
-            <li>
-              Second Level / Executive Managerial Positions: Division Chiefs, Department Managers and / or Executive Managerial Positions: CSC MC No. 5, s. 2016, re: Revised Qualification Standards and Requirements for Division Chiefs, Department Managers and/or Executive Managerial Positions, and SRA Job Description Competency-based QS.
-            </li>
-          </ol> 
         </td>
 
         <td style="vertical-align: text-top;"></td>
+
+        <td style="vertical-align: text-top;">5.00</td>
 
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->eligibility, 2) }}</p>
@@ -317,6 +339,8 @@
 
         <td style="vertical-align: text-top;"></td>
 
+        <td style="vertical-align: text-top;">20.00</td>
+
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->performance, 2) }}</p>
         </td>
@@ -334,7 +358,6 @@
         </td>
 
         <td style="vertical-align: text-top;">
-          HRMPSBs Panel Interview
         </td>
 
         <td style="vertical-align: text-top;">
@@ -343,6 +366,8 @@
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5       
           </p>
         </td>
+
+        <td style="vertical-align: text-top;">13.00</td>
 
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->behavior, 2) }}</p>
@@ -361,7 +386,6 @@
         </td>
 
         <td style="vertical-align: text-top;">
-          HRMO - Psychometrician examination
         </td>
 
         <td style="vertical-align: text-top;">
@@ -370,6 +394,8 @@
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100       
           </p>
         </td>
+
+        <td style="vertical-align: text-top;">5.00</td>
 
         <td style="vertical-align: text-top;">
           <p>{{ number_format(optional($employee->employeeMatrix)->psycho_test, 2) }}</p>
@@ -390,6 +416,8 @@
         <td></td>
 
         <td></td>
+
+        <td style="vertical-align: text-top;">100.00</td>
 
         <td>
           <span style="font-weight: bold;">{{ number_format($total_score, 2) }}</span>
