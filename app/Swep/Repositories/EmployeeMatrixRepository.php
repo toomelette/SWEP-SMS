@@ -46,8 +46,8 @@ class EmployeeMatrixRepository extends BaseRepository implements EmployeeMatrixI
         $employee_matrix->educ_distinctions_pres_awardee = $request->educ_distinctions_pres_awardee;
         $employee_matrix->educ_distinctions_csc_sra_da_awardee = $request->educ_distinctions_csc_sra_da_awardee;
         $employee_matrix->educ_distinctions_top_gov_exam = $request->educ_distinctions_top_gov_exam;
-        $employee_matrix->experience_years = $request->experience_years;
         $employee_matrix->experience_req_years = $request->experience_req_years;
+        $employee_matrix->experience_years = $request->experience_years;
         $employee_matrix->experience = $request->experience;
         $employee_matrix->training_req_no = $request->training_req_no;
         $employee_matrix->training_no = $request->training_no;

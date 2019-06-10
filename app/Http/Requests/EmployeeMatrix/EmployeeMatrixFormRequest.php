@@ -33,12 +33,16 @@ class EmployeeMatrixFormRequest extends FormRequest{
             
             'educ_distinctions_summa_cum_laude' => 'nullable|numeric|max:3',
             'educ_distinctions_magna_cum_laude' => 'nullable|numeric|max:2',
-            'educ_distinctions_cum_laude' => 'nullable|numeric|max:2',
+            'educ_distinctions_cum_laude' => 'nullable|numeric|max:1',
             'educ_distinctions_pres_awardee' => 'nullable|numeric|max:3',
             'educ_distinctions_csc_sra_da_awardee' => 'nullable|numeric|max:3',
             'educ_distinctions_top_gov_exam' => 'nullable|numeric|max:3',
 
+            'experience_req_years' => 'nullable|numeric',
+            'experience_years' => 'nullable|numeric',
             'experience' => 'nullable|numeric|max:20',
+            'training_req_years' => 'nullable|numeric',
+            'training_years' => 'nullable|numeric',
             'training' => 'nullable|numeric|max:10',
             'eligibility' => 'nullable|numeric|max:5',
             'performance' => 'nullable|numeric|max:20',

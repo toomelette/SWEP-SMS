@@ -4,6 +4,9 @@
     
   <section class="content-header">
       <h1>Employee Matrix</h1>
+	    <div class="pull-right" style="margin-top: -25px;">
+	      {!! __html::back_button(['dashboard.employee.matrix_show']) !!}
+	    </div>
   </section>
 
   <section class="content">

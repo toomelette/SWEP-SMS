@@ -32,6 +32,7 @@
     <div class="pull-right" style="margin-top: -25px;">
       {!! __html::back_button(['dashboard.employee.index']) !!}
     </div>
+
 </section>
 
 <section class="content">
@@ -45,7 +46,7 @@
         <div class="box-tools">
           <a href="{{ route('dashboard.employee.matrix', $employee->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
           &nbsp;
-          <a href="{{ route('dashboard.employee.matrix_print', [$employee->slug, 'front']) }}" target="_blank" class="btn btn-sm btn-default">
+          <a href="{{ route('dashboard.employee.matrix_print', $employee->slug) }}" target="_blank" class="btn btn-sm btn-default">
             <i class="fa fa-print"></i> Print 
           </a>
         </div>
@@ -60,7 +61,7 @@
           <div class="box">
             <div class="box-body">
 
-              <h4>Education- Relevant to the Position</h4>
+              <h4>Education - Relevant to the Position</h4>
 
               <ul>
                   
