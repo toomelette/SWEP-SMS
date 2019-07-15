@@ -229,7 +229,7 @@
       </div>
 
 
-      {{-- NAMES --}}
+      {{-- CERT && APPRV NAMES --}}
       <div class="row" style="border-top:solid 1.4px;">
         
         <div class="col-sm-2 div-height" style="border-right:solid 1.4px;"> 
@@ -237,11 +237,7 @@
         </div>
 
         <div class="col-sm-4 div-height" style="border-right:solid 1.4px;">
-          @foreach($global_signatories_all as $data)
-            @if($data->type == 2)
-              <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $data->employee_name }}</span>
-            @endif
-          @endforeach
+            <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $disbursement_voucher->certified_by }}</span>
         </div>
 
         <div class="col-sm-2 div-height" style="border-right:solid 1.4px; padding-left:0;"> 
@@ -249,17 +245,13 @@
         </div>
 
         <div class="col-sm-4 div-height" style="border-right:solid 1.4px;"> 
-          @foreach($global_signatories_all as $data)
-            @if($data->type == 1)
-              <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $data->employee_name }}</span>
-            @endif
-          @endforeach
+            <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $disbursement_voucher->approved_by }}</span>
         </div>
 
       </div>
 
 
-      {{-- POSITION --}}
+      {{-- CERT && APPRV POSITION --}}
       <div class="row" style="border-top:solid 1.4px; overflow: hidden;">
         
         <div class="col-sm-2 div-height" style="border-right:solid 1.4px;"> 
@@ -269,11 +261,7 @@
         <div class="col-sm-4" style="border-right:solid 1.4px; padding:0%; margin-top:-6px; overflow:hidden;">
 
           <div class="col-sm-12" style="border-bottom:solid 1.4px; width: 100%; padding-top:5px; padding-bottom:5px;">
-            @foreach($global_signatories_all as $data)
-              @if($data->type == 2)
-                <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $data->employee_position }}</span>
-              @endif
-            @endforeach
+            <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $disbursement_voucher->certified_by_position }}</span>
           </div>
 
           <div class="col-sm-12" style="">
@@ -289,11 +277,7 @@
         <div class="col-sm-4" style="border-right:solid 1.4px; padding:0%; margin-top:-6px; overflow:hidden;">
 
           <div class="col-sm-12" style="border-bottom:solid 1.4px; width: 100%; padding-top:5px; padding-bottom:5px;">
-            @foreach($global_signatories_all as $data)
-              @if($data->type == 1)
-                <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $data->employee_position }}</span>
-              @endif
-            @endforeach
+            <span style="font-size:12px; font-weight:bold;">&nbsp;{{ $disbursement_voucher->approved_by_position }}</span>
           </div>
 
           <div class="col-sm-12">
