@@ -9,6 +9,7 @@
                         'q'=> Request::get('q'), 
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'e' => Request::get('e'),
 
                         'fs' => Request::get('fs'), 
                         'pi' => Request::get('pi'),
@@ -96,7 +97,7 @@
             <th>@sortablelink('dv_no', 'DV No.')</th>
             <th style="width:600px;">Explanation</th>
             <th>@sortablelink('date', 'Date')</th>
-            <th>Status</th>
+            <th>@sortablelink('amount', 'Amount')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($disbursement_vouchers as $data) 
@@ -113,24 +114,9 @@
                   </a>
                 @endif
               </td>
-              <td style="font-size:15px;">{!! Str::limit($data->explanation, 90)  !!}</td>
+              <td style="font-size:15px;">{!! Str::limit(strip_tags($data->explanation), 75)  !!}</td>
               <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
-              <td>
-                @if($data->processed_at == null && $data->checked_at == null)
-
-                  <span class="label label-warning">Filed..</span>
-
-                @elseif($data->processed_at != null && $data->checked_at == null)
-
-                  <span class="label label-primary">Processing..</span> | 
-                  <a href="#" id="dv_confirm_check_link" data-url="{{ route('dashboard.disbursement_voucher.confirm_check', $data->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-check"></i></a>
-
-                @elseif($data->processed_at != null && $data->checked_at != null)
-
-                  <span class="label label-success">Completed!</span>
-
-                @endif
-              </td>
+              <td>{{ number_format($data->amount, 2) }}</td>
 
               <td> 
                 <select id="action" class="form-control input-md">

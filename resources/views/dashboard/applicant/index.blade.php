@@ -10,6 +10,7 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'e' => Request::get('e'),
                         
                         'c' => Request::get('c'),
                         'p' => Request::get('p'),

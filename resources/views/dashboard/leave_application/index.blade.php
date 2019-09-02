@@ -4,6 +4,7 @@
                         'q'=> Request::get('q'), 
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'e' => Request::get('e'),
 
                         't'=> Request::get('t'), 
                         'df' => Request::get('df'),

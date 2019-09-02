@@ -7,6 +7,7 @@
                         'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'e' => Request::get('e'),
 
                         'emp'=> Request::get('emp'), 
                         'doc_t'=> Request::get('doc_t'),

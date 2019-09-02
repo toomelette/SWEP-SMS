@@ -20,7 +20,7 @@ class DisbursementVoucher extends Model{
 
 	protected $dates = ['processed_at', 'checked_at', 'created_at', 'updated_at', 'date', 'certified_by_sig_date', 'approved_by_sig_date'];
 
-    public $sortable = ['doc_no', 'dv_no', 'payee', 'date'];
+    public $sortable = ['doc_no', 'dv_no', 'payee', 'amount', 'date'];
     
 	public $timestamps = false;
 

@@ -4,6 +4,7 @@
                         'q'=> Request::get('q'), 
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'e' => Request::get('e'),
 
                         'fs' => Request::get('fs'), 
                         'pi' => Request::get('pi'),
@@ -89,23 +90,15 @@
             <th>@sortablelink('payee', 'Payee')</th>
             <th>Explanation</th>
             <th>@sortablelink('date', 'Date')</th>
-            <th>Status</th>
+            <th>@sortablelink('amount', 'Amount')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr>
               <td>{{ $data->payee }}</td>
-              <td>{!! Str::limit($data->explanation, 90)  !!}</td>
+              <td>{!! Str::limit(strip_tags($data->explanation), 90)  !!}</td>
               <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
-              <td>
-                @if($data->processed_at == null && $data->checked_at == null)
-                  <span class="label label-warning">Filed..</span>
-                @elseif($data->processed_at != null && $data->checked_at == null)
-                  <span class="label label-primary">Processing..</span>
-                @elseif($data->processed_at != null && $data->checked_at != null)
-                  <span class="label label-success">Completed!</span>
-                @endif
-              </td>
+              <td>{{ number_format($data->amount, 2) }}</td>
               <td> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>

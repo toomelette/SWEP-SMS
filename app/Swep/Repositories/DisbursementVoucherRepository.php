@@ -293,7 +293,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
     public function populate($model, $entries){
 
-        return $model->select('payee', 'dv_no', 'explanation', 'date', 'processed_at', 'checked_at', 'slug')
+        return $model->select('payee', 'dv_no', 'explanation', 'date', 'amount', 'checked_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->with('user')
@@ -309,7 +309,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
      public function populateByUser($model, $id, $entries){
 
-        return $model->select('payee', 'explanation', 'date', 'processed_at', 'checked_at', 'slug')
+        return $model->select('payee', 'explanation', 'date', 'amount', 'checked_at', 'slug')
                      ->where('user_id', $id)
                      ->sortable()
                      ->orderBy('updated_at', 'desc')

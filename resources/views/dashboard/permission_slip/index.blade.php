@@ -8,6 +8,7 @@
                         'q'=> Request::get('q'), 
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
+                        'e' => Request::get('e'),
                         
                         'emp' => Request::get('emp'),
                         'df' => Request::get('df'), 
