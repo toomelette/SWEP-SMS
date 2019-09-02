@@ -38,10 +38,11 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetch:'. $key, 240, function() use ($request){
+        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetch:'. $key, 240, function() use ($request, $entries){
             $disbursement_voucher = $this->requestFilters($request);
-            return $this->populate($disbursement_voucher);
+            return $this->populate($disbursement_voucher, $entries);
         });
 
         return $disbursement_vouchers;
@@ -57,10 +58,11 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
     public function fetchByUser($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
+        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request, $entries){
             $disbursement_voucher = $this->requestFilters($request);
-            return $this->populateByUser($disbursement_voucher, $this->auth->user()->user_id);
+            return $this->populateByUser($disbursement_voucher, $this->auth->user()->user_id, $entries);
         });
 
         return $disbursement_vouchers;
@@ -289,13 +291,13 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('payee', 'dv_no', 'explanation', 'date', 'processed_at', 'checked_at', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->with('user')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 
@@ -305,13 +307,13 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
 
-     public function populateByUser($model, $id){
+     public function populateByUser($model, $id, $entries){
 
         return $model->select('payee', 'explanation', 'date', 'processed_at', 'checked_at', 'slug')
                      ->where('user_id', $id)
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

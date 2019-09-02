@@ -33,8 +33,9 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $signatories = $this->cache->remember('signatories:fetch:' . $key, 240, function() use ($request){
+        $signatories = $this->cache->remember('signatories:fetch:' . $key, 240, function() use ($request, $entries){
 
             $signatory = $this->signatory->newQuery();
             
@@ -42,7 +43,7 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
                 $this->search($signatory, $request->q);
             }
 
-            return $this->populate($signatory);
+            return $this->populate($signatory, $entries);
 
         });
 
@@ -156,12 +157,12 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('employee_name', 'employee_position', 'type', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

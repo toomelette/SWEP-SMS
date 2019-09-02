@@ -33,8 +33,9 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $plantillas = $this->cache->remember('plantillas:fetch:' . $key, 240, function() use ($request){
+        $plantillas = $this->cache->remember('plantillas:fetch:' . $key, 240, function() use ($request, $entries){
 
             $plantilla = $this->plantilla->newQuery();
             
@@ -46,7 +47,7 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
                 $plantilla->whereDepartmentUnitId($request->du);
             }
 
-            return $this->populate($plantilla);
+            return $this->populate($plantilla, $entries);
 
         });
 
@@ -151,12 +152,12 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('department_unit_id', 'name', 'is_vacant', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

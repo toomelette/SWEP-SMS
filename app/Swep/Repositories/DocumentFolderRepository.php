@@ -34,8 +34,9 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
     public function fetch($request){
 
        $key = str_slug($request->fullUrl(), '_');
+       $entries = isset($request->e) ? $request->e : 20;
 
-        $doc_folders = $this->cache->remember('document_folders:fetch:' . $key, 240, function() use ($request){
+        $doc_folders = $this->cache->remember('document_folders:fetch:' . $key, 240, function() use ($request, $entries){
 
             $doc_folder = $this->doc_folder->newQuery();
             
@@ -43,7 +44,7 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
                 $this->search($doc_folder, $request->q);
             }
 
-            return $this->populate($doc_folder);
+            return $this->populate($doc_folder, $entries);
 
         });
 
@@ -145,12 +146,12 @@ class DocumentFolderRepository extends BaseRepository implements DocumentFolderI
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('folder_code', 'description', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

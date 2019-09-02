@@ -31,8 +31,9 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $fund_sources = $this->cache->remember('fund_sources:fetch:' . $key, 240, function() use ($request){
+        $fund_sources = $this->cache->remember('fund_sources:fetch:' . $key, 240, function() use ($request, $entries){
 
             $fund_source = $this->fund_source->newQuery();
             
@@ -40,7 +41,7 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
                 $this->search($fund_source, $request->q);
             }
 
-            return $this->populate($fund_source);
+            return $this->populate($fund_source, $entries);
 
         });
 
@@ -123,12 +124,12 @@ class FundSourceRepository extends BaseRepository implements FundSourceInterface
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('description', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

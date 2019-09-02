@@ -36,8 +36,9 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $permission_slips = $this->cache->remember('permission_slips:fetch:' . $key, 240, function() use ($request){
+        $permission_slips = $this->cache->remember('permission_slips:fetch:' . $key, 240, function() use ($request, $entries){
 
             $df = $this->__dataType->date_parse($request->df);
             $dt = $this->__dataType->date_parse($request->dt);
@@ -56,7 +57,7 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
                 $permission_slip->whereBetween('date', [$df, $dt]);
             }
 
-            return $this->populate($permission_slip);
+            return $this->populate($permission_slip, $entries);
 
         });
 
@@ -170,12 +171,12 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('ps_id', 'employee_no', 'date', 'time_out', 'time_in', 'with_ps', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

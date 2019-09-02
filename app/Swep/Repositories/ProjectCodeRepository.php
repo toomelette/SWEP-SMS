@@ -33,8 +33,9 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $project_codes = $this->cache->remember('project_codes:fetch:' . $key, 240, function() use ($request){
+        $project_codes = $this->cache->remember('project_codes:fetch:' . $key, 240, function() use ($request, $entries){
 
             $project_code = $this->project_code->newQuery();
             
@@ -42,7 +43,7 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
                 $this->search($project_code, $request->q);
             }
 
-            return $this->populate($project_code);
+            return $this->populate($project_code, $entries);
 
         });
         
@@ -145,12 +146,12 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('project_code', 'department_name', 'description', 'project_in_charge', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

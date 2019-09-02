@@ -34,8 +34,9 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $documents = $this->cache->remember('documents:fetch:' . $key, 240, function() use ($request){
+        $documents = $this->cache->remember('documents:fetch:' . $key, 240, function() use ($request, $entries){
 
             $df = $this->__dataType->date_parse($request->df);
             $dt = $this->__dataType->date_parse($request->dt);
@@ -61,7 +62,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
                 $document->whereBetween('date', [$df, $dt]);
             }
 
-            return $this->populate($document);
+            return $this->populate($document, $entries);
 
         });
 
@@ -211,12 +212,12 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('filename', 'folder_code', 'reference_no', 'date', 'person_to', 'person_from', 'subject', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

@@ -34,8 +34,9 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $departments = $this->cache->remember('departments:fetch:' . $key, 240, function() use ($request){
+        $departments = $this->cache->remember('departments:fetch:' . $key, 240, function() use ($request, $entries){
 
             $department = $this->department->newQuery();
             
@@ -43,7 +44,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
                 $this->search($department, $request->q);
             }
 
-            return $this->populate($department);
+            return $this->populate($department, $entries);
 
         });
 
@@ -162,12 +163,12 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('name', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

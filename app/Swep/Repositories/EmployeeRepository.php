@@ -47,8 +47,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $employees = $this->cache->remember('employees:fetch:' . $key, 240, function() use ($request){
+        $employees = $this->cache->remember('employees:fetch:' . $key, 240, function() use ($request, $entries){
 
             $employee = $this->employee->newQuery();
             
@@ -64,7 +65,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
                 $employee->whereIsActive($request->a);
             }
 
-            return $this->populate($employee);
+            return $this->populate($employee, $entries);
 
         });
 
@@ -302,12 +303,12 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('employee_no', 'fullname', 'position', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

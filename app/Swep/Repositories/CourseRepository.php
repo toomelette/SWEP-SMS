@@ -34,8 +34,9 @@ class CourseRepository extends BaseRepository implements CourseInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $courses = $this->cache->remember('courses:fetch:' . $key, 240, function() use ($request){
+        $courses = $this->cache->remember('courses:fetch:' . $key, 240, function() use ($request, $entries){
 
             $course = $this->course->newQuery();
             
@@ -43,7 +44,7 @@ class CourseRepository extends BaseRepository implements CourseInterface {
                 $this->search($course, $request->q);
             }
 
-            return $this->populate($course);
+            return $this->populate($course, $entries);
 
         });
 
@@ -166,12 +167,12 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('name', 'acronym', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

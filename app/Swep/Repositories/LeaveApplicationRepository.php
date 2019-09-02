@@ -37,10 +37,11 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $leave_applications = $this->cache->remember('leave_applications:fetch:' . $key, 240, function() use ($request){
+        $leave_applications = $this->cache->remember('leave_applications:fetch:' . $key, 240, function() use ($request, $entries){
             $leave_application = $this->requestFilter($request);
-            return $this->populate($leave_application);
+            return $this->populate($leave_application, $entries);
         });
 
         return $leave_applications;
@@ -244,13 +245,13 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('user_id', 'firstname', 'middlename', 'lastname', 'type', 'date_of_filing', 'slug')
                      ->sortable()
                      ->with('user')
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

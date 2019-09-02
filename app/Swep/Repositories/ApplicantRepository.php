@@ -39,8 +39,9 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $applicants = $this->cache->remember('applicants:fetch:' . $key, 240, function() use ($request){
+        $applicants = $this->cache->remember('applicants:fetch:' . $key, 240, function() use ($request, $entries){
 
             $applicant = $this->applicant->newQuery();
             
@@ -64,7 +65,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
                 $applicant->whereDepartmentUnit_id($request->du);
             }
 
-            return $this->populate($applicant);
+            return $this->populate($applicant, $entries);
 
         });
 
@@ -248,13 +249,13 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'is_on_short_list', 'slug')
                      ->with('course', 'departmentUnit') 
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
     

@@ -32,8 +32,9 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
     public function fetch($request){
 
        $key = str_slug($request->fullUrl(), '_');
+       $entries = isset($request->e) ? $request->e : 20;
 
-        $department_units = $this->cache->remember('department_units:fetch:' . $key, 240, function() use ($request){
+        $department_units = $this->cache->remember('department_units:fetch:' . $key, 240, function() use ($request, $entries){
 
             $department_unit = $this->department_unit->newQuery();
             
@@ -41,7 +42,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
                 $this->search($department_unit, $request->q);
             }
 
-            return $this->populate($department_unit);
+            return $this->populate($department_unit, $entries);
 
         });
 
@@ -167,12 +168,12 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('name', 'department_name', 'description', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
     

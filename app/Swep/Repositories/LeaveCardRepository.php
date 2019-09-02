@@ -35,8 +35,9 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $leave_cards = $this->cache->remember('leave_cards:fetch:' . $key, 240, function() use ($request){
+        $leave_cards = $this->cache->remember('leave_cards:fetch:' . $key, 240, function() use ($request, $entries){
 
             $df = $this->__dataType->date_parse($request->df);
             $dt = $this->__dataType->date_parse($request->dt);
@@ -64,7 +65,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
                            ->orwhereBetween('date_from', [$df, $dt]);
             }
 
-            return $this->populate($leave_card);
+            return $this->populate($leave_card, $entries);
 
         });
 
@@ -204,13 +205,13 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('employee_no', 'doc_type', 'leave_type', 'date', 'date_from', 'date_to', 'credits', 'slug')
                      ->sortable()
                      ->with('employee')
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 

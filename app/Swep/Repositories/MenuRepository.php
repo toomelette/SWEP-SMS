@@ -30,8 +30,9 @@ class MenuRepository extends BaseRepository implements MenuInterface {
     public function fetch($request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-        $menus = $this->cache->remember('menus:fetch:' . $key, 240, function() use ($request){
+        $menus = $this->cache->remember('menus:fetch:' . $key, 240, function() use ($request, $entries){
 
             $menu = $this->menu->newQuery();
             
@@ -39,7 +40,7 @@ class MenuRepository extends BaseRepository implements MenuInterface {
                 $this->search($menu, $request->q);
             }
 
-            return $this->populate($menu);
+            return $this->populate($menu, $entries);
 
         });
 
@@ -164,12 +165,12 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-    public function populate($model){
+    public function populate($model, $entries){
 
         return $model->select('name', 'route', 'icon', 'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
-                     ->paginate(10);
+                     ->paginate($entries);
 
     }
 
