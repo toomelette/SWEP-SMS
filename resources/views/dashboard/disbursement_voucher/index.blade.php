@@ -114,7 +114,7 @@
                   </a>
                 @endif
               </td>
-              <td style="font-size:15px;">{!! Str::limit(strip_tags($data->explanation), 75)  !!}</td>
+              <td>{!! Str::limit(strip_tags($data->explanation), 75)  !!}</td>
               <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
               <td>{{ number_format($data->amount, 2) }}</td>
 
