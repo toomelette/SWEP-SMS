@@ -82,12 +82,17 @@
         @foreach($days as $data)
           <th>{{ $data }}</th>
         @endforeach  
+        <th>Freq</th>
         <th>TOTAL</th>
       </tr>
 
-
-
       @foreach($employees as $data_emp)
+
+        <?php
+
+          $freq = 0;
+
+        ?>
 
         <tr>
 
@@ -128,6 +133,8 @@
                   $daily_hrs = $end->diffInHours($start);
                   $daily_mins = $end->copy()->subHours($daily_hrs)->diffInMinutes($start);
 
+                  $freq += 1;
+
                   if($start_H <= '12' && $end_H >= '13') {
                     
                     $daily_hrs = $daily_hrs - 1;
@@ -139,10 +146,12 @@
 
                   $table_data = __dataType::construct_time_HM($subtotal_hrs, $subtotal_mins); 
 
+
+
                 ?>
 
                 @if(count($daily_ps) >= 1)
-                  
+
                   @if($loop->last)
                     {{ $table_data }}
                     <?php unset($table_data) ?>
@@ -205,6 +214,7 @@
 
           @endforeach
           
+          <td style="text-align:center;"><b>{{ $freq }}</b></td>
           <td><b>{{ __dataType::construct_time_HM($total_hrs, $total_mins) }}</b></td>
 
         </tr>
