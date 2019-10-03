@@ -142,8 +142,12 @@
           <span style="font-size:12px; font-weight:bold; margin-left: 60px;">Conducted By</span>
         </div>
 
-        <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
-          <span style="font-size:11px; font-weight:bold; margin-left: 140px;">Venue</span>
+        <div class="col-sm-2 no-padding" style="border-left:solid 1px;">
+          <span style="font-size:11px; font-weight:bold; margin-left: 80px;">Venue</span>
+        </div>
+
+        <div class="col-sm-1 no-padding" style="border-left:solid 1px;">
+          <span style="font-size:11px; font-weight:bold; margin-left: 25px;">Remarks</span>
         </div>
 
       </div>
@@ -175,8 +179,12 @@
               <span style="font-size:10px;">{{ $data->conducted_by }}</span>
             </div>
 
-            <div class="col-sm-3 no-padding">
+            <div class="col-sm-2 no-padding">
               <span style="font-size:10px;">{{ $data->venue }}</span>
+            </div>
+
+            <div class="col-sm-1 no-padding">
+              <span style="font-size:10px;">{{ $data->remarks }}</span>
             </div>
 
           </div>
@@ -293,8 +301,12 @@
             <span style="font-size:12px; font-weight:bold; margin-left: 60px;">Conducted By</span>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
-            <span style="font-size:11px; font-weight:bold; margin-left: 140px;">Venue</span>
+          <div class="col-sm-2 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 80px;">Venue</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 25px;">Remarks</span>
           </div>
 
         </div>
@@ -326,8 +338,12 @@
                 <span style="font-size:10px;">{{ $data->conducted_by }}</span>
               </div>
 
-              <div class="col-sm-3 no-padding" style="">
+              <div class="col-sm-2 no-padding" style="">
                 <span style="font-size:10px;">{{ $data->venue }}</span>
+              </div>
+
+              <div class="col-sm-1 no-padding">
+                <span style="font-size:10px;">{{ $data->remarks }}</span>
               </div>
 
             </div>
@@ -440,8 +456,12 @@
             <span style="font-size:12px; font-weight:bold; margin-left: 60px;">Conducted By</span>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
-            <span style="font-size:11px; font-weight:bold; margin-left: 140px;">Venue</span>
+          <div class="col-sm-2 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 80px;">Venue</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 25px;">Remarks</span>
           </div>
 
         </div>
@@ -473,8 +493,12 @@
                 <span style="font-size:10px;">{{ $data->conducted_by }}</span>
               </div>
 
-              <div class="col-sm-3 no-padding" style="">
+              <div class="col-sm-2 no-padding" style="">
                 <span style="font-size:10px;">{{ $data->venue }}</span>
+              </div>
+
+              <div class="col-sm-1 no-padding">
+                <span style="font-size:10px;">{{ $data->remarks }}</span>
               </div>
 
             </div>
@@ -588,8 +612,12 @@
             <span style="font-size:12px; font-weight:bold; margin-left: 60px;">Conducted By</span>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
-            <span style="font-size:11px; font-weight:bold; margin-left: 140px;">Venue</span>
+          <div class="col-sm-2 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 80px;">Venue</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 25px;">Remarks</span>
           </div>
 
         </div>
@@ -621,8 +649,12 @@
                 <span style="font-size:10px;">{{ $data->conducted_by }}</span>
               </div>
 
-              <div class="col-sm-3 no-padding" style="">
+              <div class="col-sm-2 no-padding" style="">
                 <span style="font-size:10px;">{{ $data->venue }}</span>
+              </div>
+
+              <div class="col-sm-1 no-padding">
+                <span style="font-size:10px;">{{ $data->remarks }}</span>
               </div>
 
             </div>
@@ -736,8 +768,12 @@
             <span style="font-size:12px; font-weight:bold; margin-left: 60px;">Conducted By</span>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
-            <span style="font-size:11px; font-weight:bold; margin-left: 140px;">Venue</span>
+          <div class="col-sm-2 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 80px;">Venue</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 25px;">Remarks</span>
           </div>
 
         </div>
@@ -769,8 +805,12 @@
                 <span style="font-size:10px;">{{ $data->conducted_by }}</span>
               </div>
 
-              <div class="col-sm-3 no-padding" style="">
+              <div class="col-sm-2 no-padding" style="">
                 <span style="font-size:10px;">{{ $data->venue }}</span>
+              </div>
+
+              <div class="col-sm-1 no-padding">
+                <span style="font-size:10px;">{{ $data->remarks }}</span>
               </div>
 
             </div>
@@ -884,8 +924,12 @@
             <span style="font-size:12px; font-weight:bold; margin-left: 60px;">Conducted By</span>
           </div>
 
-          <div class="col-sm-3 no-padding" style="border-left:solid 1px;">
-            <span style="font-size:11px; font-weight:bold; margin-left: 140px;">Venue</span>
+          <div class="col-sm-2 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 80px;">Venue</span>
+          </div>
+
+          <div class="col-sm-1 no-padding" style="border-left:solid 1px;">
+            <span style="font-size:11px; font-weight:bold; margin-left: 25px;">Remarks</span>
           </div>
 
         </div>
@@ -917,8 +961,12 @@
                 <span style="font-size:10px;">{{ $data->conducted_by }}</span>
               </div>
 
-              <div class="col-sm-3 no-padding" style="">
+              <div class="col-sm-2 no-padding" style="">
                 <span style="font-size:10px;">{{ $data->venue }}</span>
+              </div>
+
+              <div class="col-sm-1 no-padding">
+                <span style="font-size:10px;">{{ $data->remarks }}</span>
               </div>
 
             </div>
