@@ -19,12 +19,12 @@
 
   <style type="text/css">
 
-    .td-body-center{
-      text-align: center;
+    .td-body-font{
+      font-size: 12px;
     }
 
-    .td-head-center{
-      text-align: center;
+    .td-head-font{
+      font-size: 12px;
     }
 
     @media print {
@@ -112,24 +112,24 @@
     <div class="row" style="margin:0px;">
       <table class="table bordered">
           <tr>
-            <th>No.</th>  
-            <th style="width:330px;">TITLE</th>
-            <th style="width:150px;">DATE</th>
-            <th style="width:50px; text-align:center;">HRS</th>
-            <th style="width:230px;">CONDUCTED BY</th>
-            <th style="width:230px;">VENUE</th>
-            <th style="width:300px;">REMARKS</th>
+            <th class="td-head-font">No.</th>  
+            <th class="td-head-font" style="width:330px;">TITLE</th>
+            <th class="td-head-font" style="width:150px;">DATE</th>
+            <th class="td-head-font" style="width:50px; text-align:center;">HRS</th>
+            <th class="td-head-font" style="width:230px;">CONDUCTED BY</th>
+            <th class="td-head-font" style="width:230px;">VENUE</th>
+            <th class="td-head-font" style="width:300px;">REMARKS</th>
           </tr>
 
           @foreach ($employee_trainings as $key => $data)
             <tr>
-              <td>{{ $key + 1 }}</td>
-              <td>{{ $data->title }}</td>
-              <td>{{ __dataType::date_scope($data->date_from, $data->date_to) }}</td>
-              <td style="text-align:center;">{{ $data->hours }}</td>
-              <td>{{ $data->venue }}</td>
-              <td>{{ $data->conducted_by }}</td>
-              <td>{{ $data->remarks }}</td>
+              <td class="td-body-font">{{ $key + 1 }}</td>
+              <td class="td-body-font">{{ $data->title }}</td>
+              <td class="td-body-font">{{ __dataType::date_scope($data->date_from, $data->date_to) }}</td>
+              <td class="td-body-font" style="text-align:center;">{{ $data->hours }}</td>
+              <td class="td-body-font">{{ $data->venue }}</td>
+              <td class="td-body-font">{{ $data->conducted_by }}</td>
+              <td class="td-body-font">{{ $data->remarks }}</td>
             </tr>
           @endforeach
       </table>
