@@ -164,7 +164,7 @@ class __static{
     // File Directories
     public static function archive_dir(){
 
-        return 'D:/swep_storage/';
+        return '/home/swep_afd_storage/';
     
     }
 
