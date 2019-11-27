@@ -219,6 +219,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee = $this->findBySlug($slug);
         $employee->delete();
         $employee->employeeServiceRecord()->delete();
+        $employee->employeeTraining()->delete();
         
         $this->destroyDependencies($employee);
 

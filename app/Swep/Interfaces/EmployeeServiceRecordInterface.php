@@ -6,7 +6,7 @@ namespace App\Swep\Interfaces;
 
 interface EmployeeServiceRecordInterface {
 
-	public function getByEmpNo($slug);
+	public function fetchByEmpNo($slug);
 
 	public function store($request, $slug);
 

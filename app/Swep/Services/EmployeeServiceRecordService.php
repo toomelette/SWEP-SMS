@@ -28,7 +28,7 @@ class EmployeeServiceRecordService extends BaseService{
 
     public function index($slug){
 
-        $employee_sr = $this->employee_sr_repo->getByEmpNo($slug); 
+        $employee_sr = $this->employee_sr_repo->fetchByEmpNo($slug); 
 
         return view('dashboard.employee.service_record')->with($employee_sr);
 

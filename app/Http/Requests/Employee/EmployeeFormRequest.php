@@ -40,7 +40,7 @@ class EmployeeFormRequest extends FormRequest{
             'name_ext'=>'nullable|string|max:11',
             'date_of_birth' => 'nullable|date_format:"m/d/Y"',
             'place_of_birth'=>'nullable|string|max:255',
-            'sex'=>'nullable|string|max:11',
+            'sex'=>'nullable|string|max:20',
             'civil_status'=>'nullable|string|max:45',
             'height'=>'nullable|string|max:20',
             'weight'=>'nullable|string|max:20',
@@ -105,7 +105,7 @@ class EmployeeFormRequest extends FormRequest{
             // Appointment Status
             'employee_no'=>'required|string|max:20',
             'position'=>'nullable|string|max:90',
-            'item_no'=>'nullable|string|max:11',
+            'item_no'=>'nullable|int|max:10000',
             'appointment_status'=>'nullable|string|max:45',
             'salary_grade'=>'nullable|int',
             'step_inc'=>'nullable|int',
