@@ -177,6 +177,10 @@ class Employee extends Model{
         return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no');
     }
 
+    public function employeeMatrix(){
+        return $this->hasOne('App\Models\EmployeeMatrix', 'employee_no', 'employee_no');
+    }
+
     public function permissionSlip(){
         return $this->hasMany('App\Models\PermissionSlip', 'employee_no', 'employee_no');
     }
@@ -185,10 +189,8 @@ class Employee extends Model{
         return $this->hasMany('App\Models\LeaveCard', 'employee_no', 'employee_no');
     }
 
-
-
-    public function employeeMatrix(){
-        return $this->hasOne('App\Models\EmployeeMatrix', 'employee_no', 'employee_no');
+    public function documentDisseminationLog(){
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'employee_no', 'employee_no');
     }
 
 

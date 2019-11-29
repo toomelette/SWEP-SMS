@@ -244,9 +244,7 @@ class DocumentService extends BaseService{
 
             $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
-            if (!File::exists($path)) {
-                abort(404);
-            }
+            if (!File::exists($path)) { return "Cannot Detect File!"; }
 
             $file = File::get($path);
             $type = File::mimeType($path);
@@ -308,6 +306,28 @@ class DocumentService extends BaseService{
 
         $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
         return redirect()->back();
+
+    }
+
+
+
+
+
+
+    public function dissemination($slug){
+
+        $document = $this->document_repo->findBySlug($slug);
+        return view('dashboard.document.dissemination')->with('document', $document);
+
+    }
+
+
+
+
+
+    public function disseminationPost($request, $slug){
+
+        dd($request->employee);
 
     }
 

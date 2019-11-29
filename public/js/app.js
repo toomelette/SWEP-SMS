@@ -17,13 +17,6 @@ $('#loader')
 $('.select2').select2();
 
 
-
-// SELECT2 Multiple
-$('select[multiple]').select2({
-    closeOnSelect: false,
-});
-
-
 // Filter Form Submit Rule
 $(document).ready(function($){
    $("#filter_form").submit(function() {

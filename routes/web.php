@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
 /** Auth **/
 Route::group(['as' => 'auth.'], function () {
@@ -110,6 +111,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/document/view_file/{slug}', 'DocumentController@viewFile')->name('document.view_file');
 	Route::get('/document/download', 'DocumentController@download')->name('document.download');
 	Route::post('/document/download_direct/{slug}', 'DocumentController@downloadDirect')->name('document.download_direct');
+	Route::get('/document/dissemination/{slug}', 'DocumentController@dissemination')->name('document.dissemination');
+	Route::post('/document/dissemination_post/{slug}', 'DocumentController@disseminationPost')->name('document.dissemination_post');
 	Route::resource('document', 'DocumentController');
 
 
@@ -153,7 +156,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 
-/** Testing **/
+
+
+
+
+/** Test Route **/
 Route::get('/dashboard/test', function(){
 
  	//phpinfo();
@@ -170,7 +177,26 @@ Route::get('/dashboard/test', function(){
 	// 	$tr = App\Models\EmployeeTraining::find($data->id);
 	// 	$tr->slug = Illuminate\Support\Str::random(16);
 	// 	$tr->save();
-	// }
+	// }	
+
+	// $data = [
+
+	// 	'title' => 'Test title',
+	// 	'content' => 'Test Content'
+
+	// ];
+
+	// Mail::send('emails.test', $data, function ($message) {
+
+	//     $message->from('srawebportal@gmail.com', 'SRA WEB PORTAL');
+
+	//     $message->subject('Test Subject');
+
+	//     $message->attach('D:\swep_gad_storage\wew-82o3rBGh.pdf', ['name' => 'subject.pdf', 'mime' => 'application/pdf']);
+
+	//     $message->to('qpepper.main@gmail.com');
+
+	// });
 
 });
 

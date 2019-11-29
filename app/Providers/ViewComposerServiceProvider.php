@@ -106,7 +106,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.leave_card.create',
                         'dashboard.leave_card.edit',
                         'dashboard.leave_card.index',
-                        'dashboard.leave_card.report',], 'App\Swep\ViewComposers\EmployeeComposer');
+                        'dashboard.leave_card.report',
+                        'dashboard.document.dissemination',], 'App\Swep\ViewComposers\EmployeeComposer');
 
 
 

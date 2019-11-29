@@ -6,6 +6,7 @@ use App\Swep\Services\DocumentService;
 use App\Http\Requests\Document\DocumentFormRequest;
 use App\Http\Requests\Document\DocumentFilterRequest;
 use App\Http\Requests\Document\DocumentDownloadRequest;
+use App\Http\Requests\Document\DocumentDisseminationRequest;
 
 
 class DocumentController extends Controller{
@@ -110,6 +111,24 @@ class DocumentController extends Controller{
 
        return $this->document->downloadDirect($request, $slug); 
 
+    }
+
+
+
+
+    public function dissemination($slug){
+
+       return $this->document->dissemination($slug); 
+
+    }
+
+
+
+
+    public function disseminationPost(DocumentDisseminationRequest $request, $slug){
+
+       return $this->document->disseminationPost($request, $slug); 
+       
     }
 
 
