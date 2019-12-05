@@ -22,10 +22,22 @@ class DocumentDisseminationRequest extends FormRequest{
 
     public function rules(){
 
-        return [
-            
+        $rules = [
+
+        	'employee'=>'required|array|min:1',
+            'subject'=>'required|string|max:255',
+            'content'=>'nullable|string|max:255',
+
         ];
-    
+
+        if(!empty($this->request->get('employee'))){
+            foreach($this->request->get('employee') as $key => $value){
+                $rules['employee.'.$key] = 'string|max:45';
+            } 
+        }
+
+        return $rules;
+
     }
 
 

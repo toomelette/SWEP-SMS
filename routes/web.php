@@ -1,6 +1,4 @@
 <?php
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
 
 /** Auth **/
 Route::group(['as' => 'auth.'], function () {
@@ -165,7 +163,7 @@ Route::get('/dashboard/test', function(){
 
  	//phpinfo();
 
-	return dd(Illuminate\Support\Str::random(16));
+	//return dd(Illuminate\Support\Str::random(16));
 
 	//return view('printables.employee.employee_matrix');
 

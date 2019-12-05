@@ -8,8 +8,12 @@ use ZipArchive;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
-use App\Swep\Interfaces\UserInterface;
+use App\Mail\DocumentDisseminationMail;
+
 use App\Swep\Interfaces\DocumentInterface;
+use App\Swep\Interfaces\DocumentDisseminationLogInterface;
+use App\Swep\Interfaces\UserInterface;
+use App\Swep\Interfaces\EmployeeInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -19,14 +23,18 @@ class DocumentService extends BaseService{
 
 
     protected $document_repo;
+    protected $ddl_repo;
     protected $user_repo;
+    protected $employee_repo;
 
 
 
-    public function __construct(UserInterface $user_repo, DocumentInterface $document_repo){
+    public function __construct(DocumentInterface $document_repo, DocumentDisseminationLogInterface $ddl_repo, UserInterface $user_repo, EmployeeInterface $employee_repo){
 
-        $this->user_repo = $user_repo;
         $this->document_repo = $document_repo;
+        $this->ddl_repo = $ddl_repo;
+        $this->user_repo = $user_repo;
+        $this->employee_repo = $employee_repo;
         parent::__construct();
 
     }
@@ -304,7 +312,7 @@ class DocumentService extends BaseService{
 
         }
 
-        $this->session->flash('USER_RESET_PASSWORD_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
+        $this->session->flash('USER_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
         return redirect()->back();
 
     }
@@ -327,7 +335,32 @@ class DocumentService extends BaseService{
 
     public function disseminationPost($request, $slug){
 
-        dd($request->employee);
+        $document = $this->document_repo->findBySlug($slug);
+
+        // $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+
+        $path = "D:/swep_storage/" . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+
+        foreach ($request->employee as $employee_no) {
+
+            $employee = $this->employee_repo->findByEmployeeNo($employee_no);
+            $status = "";
+
+            if (isset($employee->email)) {
+
+                try {
+                    $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $employee->email, $request->content));
+                    $status = "SENT";
+                } catch (Exception $e) {
+                    $status = "FAILED";
+                }
+                $ddl = $this->ddl_repo->store($request, $employee->employee_no, $document->document_id, $employee->email, $status);
+            }
+
+        }
+
+        $this->session->flash('DISSEMINATION_SUCCESS', 'The system will send the emails in background. Please check the sent tab for failed emails.');
+        return redirect()->back();
 
     }
 

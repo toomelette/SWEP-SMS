@@ -69,7 +69,7 @@ class __form{
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <textarea id="editor" name="'. $key .'" rows="10" cols="80" '. $extra_attr .'>'. __sanitize::html_encode($old_value) .'</textarea>
+                <textarea class="form-control" id="editor" name="'. $key .'" rows="5" '. $extra_attr .'>'. __sanitize::html_encode($old_value) .'</textarea>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
 

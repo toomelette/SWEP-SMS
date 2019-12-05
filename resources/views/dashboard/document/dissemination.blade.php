@@ -31,7 +31,8 @@
                 <div class="row">   
                   <div class="col-md-12">
 
-                      <div class="form-group col-md-12">
+
+                      <div class="form-group col-md-12 {{ $errors->has('employee') ? 'has-error' : '' }}">
 
                         <label for="employee">Recipients *</label> <br>
                         <select name="employee[]" id="employee" class="form-control select2" multiple="multiple" data-placeholder="Recipients">
@@ -45,15 +46,22 @@
                             @endforeach
                         </select>
 
+                        @if ($errors->has('employee'))
+                          <p class="help-block"> {{ $errors->first('subject') }} </p>
+                        @endif
+
                       </div>
+
 
                       {!! __form::textbox(
                          '12', 'subject', 'text', 'Subject *', 'Subject', old('subject'), $errors->has('subject'), $errors->first('subject'), ''
                       ) !!}
 
-                      {!! __form::textbox(
-                         '12', 'content', 'text', 'Content', 'Content', old('content'), $errors->has('content'), $errors->first('content'), ''
+
+                      {!! __form::textarea(
+                         '12', 'content', 'Content', old('content'), $errors->has('content'), $errors->first('content'), ''
                       ) !!}
+
 
                       <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-default">Send <i class="fa fa-fw fa-envelope-o"></i></button>
@@ -125,8 +133,8 @@
 
 @section('modals')
 
-  @if(Session::has('EMPLOYEE_CREATE_SUCCESS'))
-    {!! __html::modal('employee', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('EMPLOYEE_CREATE_SUCCESS')) !!}
+  @if(Session::has('DISSEMINATION_SUCCESS'))
+    {!! __html::modal('doc_dissemination', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('DISSEMINATION_SUCCESS')) !!}
   @endif
 
 @endsection 
@@ -143,8 +151,8 @@
         closeOnSelect: true,
     });
 
-    @if(Session::has('EMPLOYEE_CREATE_SUCCESS'))
-      $('#employee').modal('show');
+    @if(Session::has('DISSEMINATION_SUCCESS'))
+      $('#doc_dissemination').modal('show');
     @endif
 
   </script> 

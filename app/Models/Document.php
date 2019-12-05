@@ -48,6 +48,12 @@ class Document extends Model{
 
     
 
+    // Relationships
+
+    public function document(){
+        return $this->hasMany('App\Models\EmployeeTraining', 'employee_no', 'employee_no');
+    }
+
 
 
 }

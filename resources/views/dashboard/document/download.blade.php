@@ -24,8 +24,8 @@
 
         <div class="box-body">
 
-          @if(Session::has('USER_RESET_PASSWORD_CONFIRMATION_FAIL'))
-            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_RESET_PASSWORD_CONFIRMATION_FAIL')) !!}
+          @if(Session::has('USER_CONFIRMATION_FAIL'))
+            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_CONFIRMATION_FAIL')) !!}
           @endif
 
           {!! __form::textbox(

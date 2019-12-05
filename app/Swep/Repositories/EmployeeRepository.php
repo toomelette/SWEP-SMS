@@ -288,6 +288,25 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
+    public function findByEmployeeNo($employee_no){
+
+        $employee = $this->cache->remember('employees:findByEmployeeNo:' . $employee_no, 240, function() use ($employee_no){
+            return $this->employee->where('employee_no', $employee_no)->first();
+        });
+
+        if(empty($employee)){
+            abort(404);
+        }
+
+        return $employee;
+
+    }
+
+
+
+
+
+
     public function search($model, $key){
 
         return $model->where(function ($model) use ($key) {

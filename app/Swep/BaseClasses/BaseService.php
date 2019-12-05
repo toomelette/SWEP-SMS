@@ -12,6 +12,7 @@ use App\Swep\Helpers\__static;
 use App\Swep\Helpers\__dynamic;
 use App\Swep\Helpers\__dataType;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Filesystem\FilesystemManager as Storage;
 
 
@@ -26,6 +27,7 @@ class BaseService{
     protected $__static;
     protected $__dataType;
     protected $event;
+    protected $mail;
     protected $storage;
 
 
@@ -40,6 +42,7 @@ class BaseService{
         $this->__dynamic = App::make(__dynamic::class);
         $this->__dataType = App::make(__dataType::class);
         $this->event = App::make(Dispatcher::class);
+        $this->mail = App::make(Mailer::class);
         $this->storage = App::make(Storage::class);
         
     }

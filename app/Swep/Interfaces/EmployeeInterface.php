@@ -18,6 +18,8 @@ interface EmployeeInterface {
 
 	public function findByUserId($user_id);
 
+	public function findByEmployeeNo($employee_no);
+
 	public function getAll();
 
 	public function getBySlug($slug);
