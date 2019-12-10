@@ -29,6 +29,18 @@ class DocumentDisseminationLog extends Model{
         'user_sent' => '',
 
     ];
+
+    
+
+    // Relationships
+
+    public function document(){
+        return $this->belongsTo('App\Models\Document', 'document_id', 'document_id');
+    }
+
+    public function employee(){
+        return $this->belongsTo('App\Models\Employee', 'employee_no', 'employee_no');
+    }
     
 
 

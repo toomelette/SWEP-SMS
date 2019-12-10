@@ -1,3 +1,10 @@
+<?php
+  
+$span_check = '<span class="badge bg-green">Sent</span>'; 
+
+?>
+
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -80,28 +87,30 @@
                 <div class="row">
                   <div class="col-md-12">
 
-                      <table class="table table-bordered">
+                      <table class="table table-hover">
 
                         <tr>
-                          <th>Fullame</th>
+                          <th>Fullname</th>
                           <th>Email</th>
                           <th>Subject</th>
                           <th>Content</th>
                           <th>Status</th>
-                          <th style="width: 40px"></th>
                         </tr>
 
                         <tbody>
 
-                          <tr>
+                          @foreach ($document->documentDisseminationLog as $data)
+                          
+                            <tr>
 
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-
-                          </tr>
+                              <td>{{ $data->employee->fullname }}</td>
+                              <td>{{ $data->employee->email }}</td>
+                              <td>{{ Str::limit($data->subject, 30) }}</td>
+                              <td>{{ Str::limit($data->content, 30) }}</td>
+                              <td>{!! $data->status == 'SENT' ? $span_check : $span_times !!}</td>
+                            </tr>
+                            
+                          @endforeach
 
                         </tbody>
 
