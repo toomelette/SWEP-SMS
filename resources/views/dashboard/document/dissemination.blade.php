@@ -102,12 +102,11 @@ $span_check = '<span class="badge bg-green">Sent</span>';
                           @foreach ($document->documentDisseminationLog as $data)
                           
                             <tr>
-
                               <td>{{ $data->employee->fullname }}</td>
                               <td>{{ $data->employee->email }}</td>
                               <td>{{ Str::limit($data->subject, 30) }}</td>
                               <td>{{ Str::limit($data->content, 30) }}</td>
-                              <td>{!! $data->status == 'SENT' ? $span_check : $span_times !!}</td>
+                              <td>{!! $data->status == 'SENT' ? $span_check : '' !!}</td>
                             </tr>
                             
                           @endforeach

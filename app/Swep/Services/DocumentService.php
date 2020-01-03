@@ -337,9 +337,9 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->findBySlug($slug);
 
-        // $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
-        $path = "D:/swep_storage/" . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        //$path = "D:/swep_storage/" . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
         foreach ($request->employee as $employee_no) {
 
