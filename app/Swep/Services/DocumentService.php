@@ -380,7 +380,7 @@ class DocumentService extends BaseService{
                         $status = "FAILED";
                     }
 
-                    $ddl = $this->ddl_repo->store($request, null, $department_unit->department_unit_id, $document->document_id, $employee->email, $status);
+                    $ddl = $this->ddl_repo->store($request, null, $department_unit->department_unit_id, $document->document_id, $department_unit->email, $status);
 
                 }
 
