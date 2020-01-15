@@ -1,6 +1,7 @@
 <?php
   
-$span_check = '<span class="badge bg-green">Sent</span>'; 
+$span_sent = '<span class="badge bg-green">Sent</span>'; 
+$span_failed = '<span class="badge bg-red">Failed</span>'; 
 
 ?>
 
@@ -38,12 +39,15 @@ $span_check = '<span class="badge bg-green">Sent</span>';
                 <div class="row">   
                   <div class="col-md-12">
 
+                      {!! __form::select_static(
+                        '3', 'type', 'Type', old('type'), ['By Unit' => 'U', 'By Employee' => 'E',], $errors->has('type'), $errors->first('type'), '', ''
+                      ) !!} 
+                      <div class="col-md-9"></div>
 
-                      <div class="form-group col-md-12 {{ $errors->has('employee') ? 'has-error' : '' }}">
 
+                      <div class="form-group col-md-12 {{ $errors->has('employee') ? 'has-error' : '' }}" id="employee_div">
                         <label for="employee">Recipients *</label> <br>
                         <select name="employee[]" id="employee" class="form-control select2" multiple="multiple" data-placeholder="Recipients">
-                            <option value="">Select</option>
                             @foreach($global_employees_all as $data)
                                 @if(old('employee'))
                                     <option value="{{ $data->employee_no }}" {!! in_array($data->employee_no, old('employee')) ? 'selected' : '' !!}>{{$data->fullname}}</option>
@@ -56,7 +60,24 @@ $span_check = '<span class="badge bg-green">Sent</span>';
                         @if ($errors->has('employee'))
                           <p class="help-block"> {{ $errors->first('subject') }} </p>
                         @endif
+                      </div>
 
+
+                      <div class="form-group col-md-12 {{ $errors->has('department_unit') ? 'has-error' : '' }}" id="department_unit_div">
+                        <label for="department_unit">Recipients *</label> <br>
+                        <select name="department_unit[]" id="department_unit" class="form-control select2" multiple="multiple" data-placeholder="Recipients">
+                            @foreach($global_department_units_all as $data)
+                                @if(old('department_unit'))
+                                    <option value="{{ $data->department_unit_id }}" {!! in_array($data->department_unit_id, old('department_unit')) ? 'selected' : '' !!}>{{$data->description}}</option>
+                                @else
+                                    <option value="{{ $data->department_unit_id }}">{{$data->description}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+
+                        @if ($errors->has('department_unit'))
+                          <p class="help-block"> {{ $errors->first('department_unit') }} </p>
+                        @endif
                       </div>
 
 
@@ -106,7 +127,7 @@ $span_check = '<span class="badge bg-green">Sent</span>';
                               <td>{{ $data->employee->email }}</td>
                               <td>{{ Str::limit($data->subject, 30) }}</td>
                               <td>{{ Str::limit($data->content, 30) }}</td>
-                              <td>{!! $data->status == 'SENT' ? $span_check : '' !!}</td>
+                              <td>{!! $data->status == 'SENT' ? $span_sent : $span_failed !!}</td>
                             </tr>
                             
                           @endforeach
@@ -155,13 +176,45 @@ $span_check = '<span class="badge bg-green">Sent</span>';
 
   <script type="text/javascript">
 
+
     $('select[multiple]').select2({
         closeOnSelect: true,
     });
 
+
     @if(Session::has('DISSEMINATION_SUCCESS'))
       $('#doc_dissemination').modal('show');
     @endif
+
+
+    @if($errors->has('employee') || old('type') == "E")
+      $('#employee_div').show();
+      $('#department_unit_div').hide();
+    @elseif($errors->has('department_unit') || old('type') == "U")
+      $('#department_unit_div').show();
+      $('#employee_div').hide();
+    @else
+      $('#employee_div').hide();
+      $('#department_unit_div').hide();
+    @endif
+
+
+    $(document).on("change", "#type", function () {
+      $('#employee').val('').change();
+      $('#department_unit').val('').change();
+      var val = $(this).val();
+        if(val == "E"){ 
+          $('#employee_div').show();
+          $('#department_unit_div').hide();
+        }else if(val == "U"){
+          $('#department_unit_div').show();
+          $('#employee_div').hide();
+        }else{
+          $('#employee_div').hide();
+          $('#department_unit_div').hide();
+        }
+   });
+
 
   </script> 
     

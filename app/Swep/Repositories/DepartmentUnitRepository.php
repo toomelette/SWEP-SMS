@@ -64,6 +64,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
         $department_unit->department_name = $request->department_name;
         $department_unit->name = $request->name;
         $department_unit->description = $request->description;
+        $department_unit->email = $request->email;
         $department_unit->created_at = $this->carbon->now();
         $department_unit->updated_at = $this->carbon->now();
         $department_unit->ip_created = request()->ip();
@@ -88,6 +89,7 @@ class DepartmentUnitRepository extends BaseRepository implements DepartmentUnitI
         $department_unit->department_name = $request->department_name;
         $department_unit->name = $request->name;
         $department_unit->description = $request->description;
+        $department_unit->email = $request->email;
         $department_unit->updated_at = $this->carbon->now();
         $department_unit->ip_updated = request()->ip();
         $department_unit->user_updated = $this->auth->user()->user_id;

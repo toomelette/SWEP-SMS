@@ -78,7 +78,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.applicant.create',
                         'dashboard.applicant.edit',
                         'dashboard.applicant.index',
-                        'dashboard.applicant.report'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
+                        'dashboard.applicant.report',
+                        'dashboard.document.dissemination'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         // PROJECT CODES

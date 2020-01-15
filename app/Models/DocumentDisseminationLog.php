@@ -18,8 +18,10 @@ class DocumentDisseminationLog extends Model{
     protected $attributes = [
         
         'slug' => '',
+        'type' => '',
         'document_id' => '',
         'employee_no' => '',
+        'department_unit_id' => '',
         'email' => '',
         'subject' => '',
         'content' => '',

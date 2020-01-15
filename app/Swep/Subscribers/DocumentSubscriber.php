@@ -27,6 +27,7 @@ class DocumentSubscriber extends BaseSubscriber{
         $events->listen('document.store', 'App\Swep\Subscribers\DocumentSubscriber@onStore');
         $events->listen('document.update', 'App\Swep\Subscribers\DocumentSubscriber@onUpdate');
         $events->listen('document.destroy', 'App\Swep\Subscribers\DocumentSubscriber@onDestroy');
+        $events->listen('document.dissemination', 'App\Swep\Subscribers\DocumentSubscriber@onDissemination');
 
     }
 
@@ -69,6 +70,18 @@ class DocumentSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:documents:findBySlug:'. $document->slug .'');
 
         $this->session->flash('DOCUMENT_DELETE_SUCCESS', 'The Document has been successfully deleted!');
+        
+    }
+
+
+
+
+
+    public function onDissemination($document){
+
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:documents:findBySlug:'. $document->slug .'');
+
+        $this->session->flash('DISSEMINATION_SUCCESS', 'The system will send the emails in background. Please check the sent tab for failed emails.');
         
     }
 

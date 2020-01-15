@@ -14,6 +14,7 @@ use App\Swep\Interfaces\DocumentInterface;
 use App\Swep\Interfaces\DocumentDisseminationLogInterface;
 use App\Swep\Interfaces\UserInterface;
 use App\Swep\Interfaces\EmployeeInterface;
+use App\Swep\Interfaces\DepartmentUnitInterface;
 use App\Swep\BaseClasses\BaseService;
 
 
@@ -26,15 +27,17 @@ class DocumentService extends BaseService{
     protected $ddl_repo;
     protected $user_repo;
     protected $employee_repo;
+    protected $dept_unit_repo;
 
 
 
-    public function __construct(DocumentInterface $document_repo, DocumentDisseminationLogInterface $ddl_repo, UserInterface $user_repo, EmployeeInterface $employee_repo){
+    public function __construct(DocumentInterface $document_repo, DocumentDisseminationLogInterface $ddl_repo, UserInterface $user_repo, EmployeeInterface $employee_repo, DepartmentUnitInterface $dept_unit_repo){
 
         $this->document_repo = $document_repo;
         $this->ddl_repo = $ddl_repo;
         $this->user_repo = $user_repo;
         $this->employee_repo = $employee_repo;
+        $this->dept_unit_repo = $dept_unit_repo;
         parent::__construct();
 
     }
@@ -339,30 +342,59 @@ class DocumentService extends BaseService{
 
         $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
-        //$path = "D:/swep_storage/" . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        if ($request->type == "E") {
+           
+            foreach ($request->employee as $employee_no) {
 
-        foreach ($request->employee as $employee_no) {
+                $employee = $this->employee_repo->findByEmployeeNo($employee_no);
+                $status = "";
 
-            $employee = $this->employee_repo->findByEmployeeNo($employee_no);
-            $status = "";
+                if (filter_var($employee->email, FILTER_VALIDATE_EMAIL ) != false) {
 
-            if (isset($employee->email)) {
+                    try {
+                        $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $employee->email, $request->content));
+                        $status = "SENT";
+                    } catch (Exception $e) {
+                        $status = "FAILED";
+                    }
 
-                try {
-                    $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $employee->email, $request->content));
-                    $status = "SENT";
-                } catch (Exception $e) {
-                    $status = "FAILED";
+                    $ddl = $this->ddl_repo->store($request, $employee->employee_no, null, $document->document_id, $employee->email, $status);
+
                 }
-                $ddl = $this->ddl_repo->store($request, $employee->employee_no, $document->document_id, $employee->email, $status);
+
             }
 
-        }
+        }elseif ($request->type == "U") {
+           
+            foreach ($request->department_unit as $department_unit) {
 
-        $this->session->flash('DISSEMINATION_SUCCESS', 'The system will send the emails in background. Please check the sent tab for failed emails.');
+                $department_unit = $this->dept_unit_repo->findByDeptUnitId($department_unit);
+                $status = "";
+
+                if (filter_var($department_unit->email, FILTER_VALIDATE_EMAIL ) != false) {
+
+                    try {
+                        $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $department_unit->email, $request->content));
+                        $status = "SENT";
+                    } catch (Exception $e) {
+                        $status = "FAILED";
+                    }
+
+                    $ddl = $this->ddl_repo->store($request, null, $department_unit->department_unit_id, $document->document_id, $employee->email, $status);
+
+                }
+
+            }
+
+        }   
+
+
+        $this->event->fire('document.dissemination', $document);
         return redirect()->back();
 
     }
+
+
 
 
 

@@ -34,6 +34,7 @@ class DepartmentUnit extends Model{
         'department_name' => '',
         'name' => '',
         'description' => '',
+        'email' => '',
         'created_at' => null, 
         'updated_at' => null,
         'ip_created' => '',
