@@ -43,6 +43,10 @@ class DocumentDisseminationLog extends Model{
     public function employee(){
         return $this->belongsTo('App\Models\Employee', 'employee_no', 'employee_no');
     }
+
+    public function departmentUnit(){
+        return $this->belongsTo('App\Models\DepartmentUnit', 'department_unit_id', 'department_unit_id');
+    }
     
 
 

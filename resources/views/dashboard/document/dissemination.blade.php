@@ -123,8 +123,13 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                           @foreach ($document->documentDisseminationLog as $data)
                           
                             <tr>
-                              <td>{{ $data->employee->fullname }}</td>
-                              <td>{{ $data->employee->email }}</td>
+                              @if (!empty($data->employee))
+                                <td>{{ $data->employee->fullname }}</td>  
+                              @else
+                                <td>{{ $data->departmentUnit->description }}</td>
+                              @endif
+                              
+                              <td>{{ $data->email }}</td>
                               <td>{{ Str::limit($data->subject, 30) }}</td>
                               <td>{{ Str::limit($data->content, 30) }}</td>
                               <td>{!! $data->status == 'SENT' ? $span_sent : $span_failed !!}</td>
