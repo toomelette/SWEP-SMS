@@ -9,6 +9,7 @@ class __cache{
 
 
 
+
     public static function deletePattern($key){
 
        $redis = Cache::getRedis();
@@ -22,6 +23,7 @@ class __cache{
          }
 
     }
+
     
 
 

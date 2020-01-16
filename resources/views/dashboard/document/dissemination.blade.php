@@ -12,6 +12,9 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
     
   <section class="content-header">
       <h1>Document Dissemination</h1>
+      <div class="pull-right" style="margin-top: -25px;">
+        {!! __html::back_button(['dashboard.document.index']) !!}
+      </div>
   </section>
 
   <section class="content">
