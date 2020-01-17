@@ -188,7 +188,7 @@
           <span style="float:right; font-size:10px;">10.</span>
         </div>
         <div class="col-sm-10">
-          <p style="font-size:10px;"><strong>Certfied (Box A)</strong> - certification by the Head of<br>
+          <p style="font-size:10px;"><strong>Certified (Box A)</strong> - certification by the Head of<br>
           Accounting Unit or his authorized representative<br>
           as to completeness of supporting documents.<br>
           The certifying officer shall affix his signature, print<br>
@@ -210,21 +210,21 @@
           <span style="float:right; font-size:10px;">12.</span>
         </div>
         <div class="col-sm-10">
-          <p style="font-size:10px;"><strong>Recieved Payment (Box C)</strong> - acknowledment by the<br>
+          <p style="font-size:10px;"><strong>Received Payment (Box C)</strong> - acknowledgement by the<br>
           claimant or his duly authorized representative for<br>
           the receipt of the check/cash and the date of receipt.<br>
           The claimant/payee shall affix his signature on the<br>
           space provided and shall indicate the number and<br>
           date of the check, bank name and number and<br>
           date of OR/other relevant documents issued to<br>
-          acknowledge the reciept of payment.</p>
+          acknowledge the receipt of payment.</p>
         </div>
         <div class="col-sm-2">
           <span style="float:right; font-size:10px;">13.</span>
         </div>
         <div class="col-sm-10">
           <p style="font-size:10px; font-size:10px;"><strong>JEV No. and Date</strong> - number and date of the Journal<br>
-          Entry VOucher<br></p>
+          Entry Voucher<br></p>
         </div>
       </div>
     </div>
