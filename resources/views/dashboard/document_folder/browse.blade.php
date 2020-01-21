@@ -20,13 +20,7 @@
 
   <section class="content">
     
-    {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.document_folder.index') }}">
-
     <div class="box" id="pjax-container" style="overflow-x:auto;">
-
-    {{-- Form End --}}  
-    </form>
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">

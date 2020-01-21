@@ -94,9 +94,9 @@ class DocumentFolderService extends BaseService{
 
 
 
-    public function browse($folder_code){
+    public function browse($folder_code, $request){
 
-        $documents = $this->doc_repo->fetchByFolderCode($folder_code);
+        $documents = $this->doc_repo->fetchByFolderCode($folder_code, $request);
 
         return view('dashboard.document_folder.browse')->with('documents', $documents);
 

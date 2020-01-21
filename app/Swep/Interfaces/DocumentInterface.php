@@ -8,7 +8,7 @@ interface DocumentInterface {
 
 	public function fetch($request);
 
-	public function fetchByFolderCode($folder_code);
+	public function fetchByFolderCode($folder_code, $request);
 
 	public function store($request, $filename);
 

@@ -76,9 +76,11 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-    public function fetchByFolderCode($folder_code){
+    public function fetchByFolderCode($folder_code, $request){
 
-        $documents = $this->cache->remember('documents:fetchByFolderCode:' . $folder_code, 240, function() use ($folder_code){
+        $key = str_slug($request->fullUrl(), '_');
+
+        $documents = $this->cache->remember('documents:fetchByFolderCode:' . $key, 240, function() use ($folder_code){
 
             $document = $this->document->newQuery();
 
@@ -87,7 +89,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
                             ->orwhere('folder_code2', $folder_code)
                             ->sortable()
                             ->orderBy('updated_at', 'desc')
-                            ->paginate(10);
+                            ->paginate(20);
 
         });
 
