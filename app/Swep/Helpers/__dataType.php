@@ -118,13 +118,14 @@ class __dataType{
         $t = self::date_parse($to, 'F d, Y');
         $mt = self::date_parse($to, 'F');
         $dt = self::date_parse($to, 'd');
+        $yt = self::date_parse($to, 'Y');
         $mdt = self::date_parse($to, 'M d');
 
-        if($mf == $mt){
+        if($mf == $mt && $yf == $yt){
           if($mdf == $mdt){
             $date_scope =  $mf .' '. $df .', '. $yf;
-          }else{ 
-            $date_scope = $mf .' '. $df .' - '. $dt .', '. $yf;
+          }else{
+            $date_scope = $mf .' '. $df .' - '. $dt .', '. $yt;
           }
         }else{
           $date_scope = $f .' - '. $t;

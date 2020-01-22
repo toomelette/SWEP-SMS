@@ -407,11 +407,11 @@ $employee_trainings_json = [];
     });
 
 
-    var employee_trainings_json = {!! json_encode($employee_trainings_json) !!};
+    // var employee_trainings_json = {!! json_encode($employee_trainings_json) !!};
 
-    $('#title').autocomplete({ 
-      source: employee_trainings_json,
-    });
+    // $('#title').autocomplete({ 
+    //   source: employee_trainings_json,
+    // });
 
 
   </script> 
