@@ -65,11 +65,7 @@
             <span style="font-size:13px; font-weight:bold;">SUGAR REGULATORY ADMINISTRATION</span><br>
             <span style="font-size:13px;">North Avenue, Diliman, Quezon City</span><br>
             <span style="font-size:13px; font-weight:bold;">LIST OF SEMINARS AND TRAININGS ATTENDED</span><br>
-            <span>
-              @if (Request::get('df') || Request::get('dt'))
-                As of {{ __dataType::date_scope(Request::get('df'), Request::get('dt')) }} 
-              @endif
-            </span>
+            <span>{{ __dataType::date_parse(Request::get('dt'), 'F d, Y') }}</span>
           </div>
           <div class="col-sm-3"></div>
       </div>
