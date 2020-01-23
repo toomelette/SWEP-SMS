@@ -5,22 +5,18 @@
                       Session::get('EMPLOYEE_TRNG_CREATE_SUCCESS_SLUG'),
                     ];
 
-$employee_trainings_json = [];
+  $employee_trainings_json = $employee_trainings->pluck('title')->toArray();
 
 ?>
 
 
 @extends('layouts.admin-master')
 
-  
-
-@section('css')
+@section('extras')
 
   <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/jquery-ui/jquery-ui.css') }}">
 
 @endsection
-
-
 
 @section('content')
     
@@ -135,16 +131,6 @@ $employee_trainings_json = [];
               <th>Action</th>
             </tr>
             @foreach($employee_trainings as $data)
-
-              <?php
-
-                $employee_trainings_json[] = [
-
-                  'value' => $data->title,
-
-                ];
-
-              ?>
 
               <tr 
                 {!! __html::table_highlighter( $data->slug, $table_sessions) !!} 
@@ -307,8 +293,6 @@ $employee_trainings_json = [];
 
 
 @section('scripts')
-  
-  <script type="text/javascript" src="{{ asset('template/plugins/jquery-ui/jquery-ui.js') }}"></script>
 
   <script type="text/javascript">
 
@@ -413,7 +397,6 @@ $employee_trainings_json = [];
       source: employee_trainings_json,
     });
 
-
-  </script> 
+  </script>
     
 @endsection

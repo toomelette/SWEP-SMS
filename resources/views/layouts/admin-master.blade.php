@@ -9,7 +9,7 @@
 
     @include('layouts.css-plugins')
 
-    @yield('css')
+    @yield('extras')
 
   </head>
 
