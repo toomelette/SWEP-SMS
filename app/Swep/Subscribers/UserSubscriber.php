@@ -77,6 +77,7 @@ class UserSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:*');
 
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByUserId:'. $user->user_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:user_menus:getByCategory:'. $user->user_id .':*');
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:nav:user_menus:byUserId:'. $user->user_id .':*');
