@@ -78,8 +78,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.applicant.create',
                         'dashboard.applicant.edit',
                         'dashboard.applicant.index',
-                        'dashboard.applicant.report',
-                        'dashboard.document.dissemination'], 'App\Swep\ViewComposers\DepartmentUnitComposer');
+                        'dashboard.applicant.report',], 'App\Swep\ViewComposers\DepartmentUnitComposer');
 
 
         // PROJECT CODES
@@ -112,7 +111,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
 
 
-        // DOCUMENT Folder
+        // DOCUMENT FOLDER
         View::composer(['dashboard.document.create',
                         'dashboard.document.edit',
                         'dashboard.document.index',
@@ -132,6 +131,11 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.applicant.create',
                         'dashboard.applicant.edit',
                         'dashboard.applicant.index',], 'App\Swep\ViewComposers\PlantillaComposer');
+
+
+
+        // EMAIL CONTACTS
+        View::composer(['dashboard.document.dissemination',], 'App\Swep\ViewComposers\EmailContactComposer');
 
 
 

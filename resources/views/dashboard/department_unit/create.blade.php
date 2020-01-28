@@ -24,21 +24,17 @@
           @csrf    
 
           {!! __form::select_dynamic(
-          '3', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
+            '4', 'department_id', 'Department *', old('department_id'), $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
           ) !!}
 
           <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') }}">
 
           {!! __form::textbox(
-             '3', 'name', 'text', 'Name *', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
+             '4', 'name', 'text', 'Name *', 'Name', old('name'), $errors->has('name'), $errors->first('name'), ''
           ) !!}
 
           {!! __form::textbox(
-             '3', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
-          ) !!}
-
-          {!! __form::textbox(
-             '3', 'email', 'text', 'Email *', 'Email', old('email'), $errors->has('email'), $errors->first('email'), ''
+             '4', 'description', 'text', 'Description *', 'Description', old('description'), $errors->has('description'), $errors->first('description'), ''
           ) !!}
 
         </div>

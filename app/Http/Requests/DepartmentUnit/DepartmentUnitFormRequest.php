@@ -24,7 +24,6 @@ class DepartmentUnitFormRequest extends FormRequest{
             'department_name' => 'required|max:45|string',
             'name' => 'required|max:45|string',
             'description' => 'required|max:90|string',
-            'email' => 'required|max:90|string',
         
         ];
 

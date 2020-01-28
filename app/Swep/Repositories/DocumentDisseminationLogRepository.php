@@ -28,12 +28,12 @@ class DocumentDisseminationLogRepository extends BaseRepository implements Docum
 
 
 
-    public function store($request, $employee_no, $department_unit_id, $document_id, $email, $status){
+    public function store($request, $employee_no, $email_contact_id, $document_id, $email, $status){
 
         $ddl = new DocumentDisseminationLog;
         $ddl->slug = $this->str->random(32);
         $ddl->employee_no = $employee_no;
-        $ddl->department_unit_id = $department_unit_id;
+        $ddl->email_contact_id = $email_contact_id;
         $ddl->document_id = $document_id;
         $ddl->email = $email;
         $ddl->subject = $request->subject;

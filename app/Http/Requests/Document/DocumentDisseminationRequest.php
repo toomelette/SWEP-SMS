@@ -23,10 +23,9 @@ class DocumentDisseminationRequest extends FormRequest{
     public function rules(){
 
         $rules = [
-
-            'type'=>'required|string|max:1',
+            
         	'employee'=>'nullable|array',
-            'department_unit'=>'nullable|array',
+            'email_contact'=>'nullable|array',
             'subject'=>'required|string|max:255',
             'content'=>'nullable|string|max:255',
 
@@ -38,9 +37,9 @@ class DocumentDisseminationRequest extends FormRequest{
             } 
         }
 
-        if(!empty($this->request->get('department_unit'))){
-            foreach($this->request->get('department_unit') as $key => $value){
-                $rules['department_unit.'.$key] = 'string|max:45';
+        if(!empty($this->request->get('email_contact'))){
+            foreach($this->request->get('email_contact') as $key => $value){
+                $rules['email_contact.'.$key] = 'string|max:45';
             } 
         }
 

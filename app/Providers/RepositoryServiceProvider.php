@@ -68,6 +68,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Swep\Interfaces\PlantillaInterface', 'App\Swep\Repositories\PlantillaRepository');
 
 		$this->app->bind('App\Swep\Interfaces\ApplicantInterface', 'App\Swep\Repositories\ApplicantRepository');
+
+		$this->app->bind('App\Swep\Interfaces\EmailContactInterface', 'App\Swep\Repositories\EmailContactRepository');
 		
 
 	}

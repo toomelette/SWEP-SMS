@@ -18,10 +18,9 @@ class DocumentDisseminationLog extends Model{
     protected $attributes = [
         
         'slug' => '',
-        'type' => '',
         'document_id' => '',
         'employee_no' => '',
-        'department_unit_id' => '',
+        'email_contact_id' => '',
         'email' => '',
         'subject' => '',
         'content' => '',
@@ -44,8 +43,8 @@ class DocumentDisseminationLog extends Model{
         return $this->belongsTo('App\Models\Employee', 'employee_no', 'employee_no');
     }
 
-    public function departmentUnit(){
-        return $this->belongsTo('App\Models\DepartmentUnit', 'department_unit_id', 'department_unit_id');
+    public function emailContact(){
+        return $this->belongsTo('App\Models\EmailContact', 'email_contact_id', 'email_contact_id');
     }
     
 

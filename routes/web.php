@@ -119,6 +119,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('document_folder', 'DocumentFolderController');
 
 
+	/** Email Contacts **/
+	Route::resource('email_contact', 'EmailContactController');
+
+
 	/** Permission Slip **/
 	Route::get('/permission_slip/report', 'PermissionSlipController@report')->name('permission_slip.report');
 	Route::get('/permission_slip/report_generate', 'PermissionSlipController@reportGenerate')->name('permission_slip.report_generate');
