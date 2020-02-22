@@ -24,7 +24,7 @@ class DocumentFormRequest extends FormRequest{
 
         return [
                 
-            'doc_file' => 'nullable|mimes:pdf|max:50000',
+            'doc_file' => 'nullable|mimes:pdf,jpeg,jpg,png|max:50000',
             'reference_no' => 'required|max:45|string',
             'date' => 'required|date_format:"m/d/Y"',
             'person_to' => 'nullable|max:90|string',

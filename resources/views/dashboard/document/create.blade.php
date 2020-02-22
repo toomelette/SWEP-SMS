@@ -113,7 +113,17 @@
       $('#doc_create').modal('show');
     @endif
 
-    {!! __js::pdf_upload('doc_file', 'fa', '') !!}
+    $("#doc_file").fileinput({
+      theme: "fa",
+      allowedFileExtensions: ["pdf", "jpeg", "jpg", "png"],
+      maxFileCount: 1,
+      showUpload: false,
+      showCaption: false,
+      overwriteInitial: true,
+      fileType: "pdf",
+      browseClass: "btn btn-primary btn-md",
+    }); 
+    $(".kv-file-remove").hide();
 
   </script> 
     

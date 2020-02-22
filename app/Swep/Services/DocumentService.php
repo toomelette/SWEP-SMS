@@ -62,8 +62,10 @@ class DocumentService extends BaseService{
 
 
     public function store($request){
+            
+        $fileext = File::extension($request->file('doc_file')->getClientOriginalName());
 
-        $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8);
+        $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8).'.'.$fileext;
 
         $filename = $this->filterReservedChar($filename);
 
@@ -408,10 +410,17 @@ class DocumentService extends BaseService{
     private function filename($request, $document){
 
         $filename = $document->filename;
-        
+        $fileext = File::extension($document->filename); 
+
         if($request->subject != $document->subject || $request->reference_no != $document->reference_no){
 
-            $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8);
+            $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
+
+        }elseif (!empty($request->file('doc_file'))) {
+            
+            $fileext = File::extension($request->file('doc_file')->getClientOriginalName());
+
+            $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
 
         }
 
@@ -425,7 +434,9 @@ class DocumentService extends BaseService{
 
     private function filterReservedChar($filename){
 
-        $filename = str_replace('.pdf', '', $filename);
+        $fileext = File::extension($filename); 
+
+        $filename = str_replace('.'. $fileext, '', $filename);
 
         $filename = $this->str->limit($filename, 150);
 
@@ -433,7 +444,7 @@ class DocumentService extends BaseService{
 
         $filename = stripslashes($filename);
 
-        return $filename .'.pdf';
+        return $filename .'.'.$fileext;
 
     }
 

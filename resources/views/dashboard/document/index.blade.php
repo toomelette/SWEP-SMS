@@ -123,7 +123,7 @@
               <td>
                 @if(Storage::disk('local')->exists($filename))
                   <a href="{{ route('dashboard.document.view_file', $data->slug) }}" class="btn btn-sm btn-success" target="_blank">
-                    <i class="fa fa-file-pdf-o"></i>
+                    <i class="fa fa-file-o"></i>
                   </a>
                 @else
                   <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-exclamation-circle"></i></a>

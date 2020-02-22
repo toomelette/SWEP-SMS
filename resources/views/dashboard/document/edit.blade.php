@@ -101,9 +101,24 @@
 
   <script type="text/javascript">
 
-    {!! __js::pdf_upload(
-      'doc_file', 'fa', route('dashboard.document.view_file', $document->slug)
-    ) !!}
+    $("#doc_file").fileinput({
+      theme: "fa",
+      allowedFileExtensions: ["pdf", "jpeg", "jpg", "png"],
+      maxFileCount: 1,
+      showUpload: false,
+      showCaption: false,
+      overwriteInitial: true,
+      fileType: "pdf",
+      browseClass: "btn btn-primary btn-md",
+      initialPreview: [
+          "{{ route('dashboard.document.view_file', $document->slug) }}",
+      ],
+      initialPreviewAsData: true,
+      initialPreviewConfig: [
+          {type: "{{ File::extension($document->filename) == 'pdf' ? 'pdf' : 'image' }}", size: "100%", width: "100%", key: 1},
+      ],
+    }); 
+    $(".kv-file-remove").hide();
 
   </script> 
     
