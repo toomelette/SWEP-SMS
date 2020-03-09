@@ -167,7 +167,7 @@ Route::get('/dashboard/test', function(){
 
  	//phpinfo();
 
-	//return dd(Illuminate\Support\Str::random(16));
+	return dd(Illuminate\Support\Str::random(16));
 
 	//return view('printables.employee.employee_matrix');
 

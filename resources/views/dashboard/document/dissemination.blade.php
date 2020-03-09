@@ -126,9 +126,8 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                               @else
                                 <td>{{ $data->emailContact->name }}</td>
                               @endif
-                              
                               <td>{{ $data->email }}</td>
-                              <td>{{ Str::limit($data->subject, 30) }}</td>
+                              <td>{{ $data->subject }}</td>
                               <td>{{ Str::limit($data->content, 30) }}</td>
                               <td>{!! $data->status == 'SENT' ? $span_sent : $span_failed !!}</td>
                             </tr>
