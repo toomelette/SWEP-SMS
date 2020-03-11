@@ -251,7 +251,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'is_on_short_list', 'slug')
+        return $model->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'received_at' , 'is_on_short_list', 'slug')
                      ->with('course', 'departmentUnit') 
                      ->sortable()
                      ->orderBy('updated_at', 'desc')

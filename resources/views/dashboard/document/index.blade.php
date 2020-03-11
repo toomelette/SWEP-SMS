@@ -133,7 +133,7 @@
               <td>{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>
               <td>{{ Str::limit($data->person_to, 30) }}</td>
               <td>{{ Str::limit($data->person_from, 30) }}</td>
-              <td>{{ Str::limit($data->subject, 30) }}</td>
+              <td style="width: 40%">{{ $data->subject}}</td>
 
               <td> 
                 <select id="action" class="form-control input-md">

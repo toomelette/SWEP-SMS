@@ -79,6 +79,7 @@
             <th>@sortablelink('plantilla.name', 'Position Applied For')</th>
             <th>@sortablelink('course.name', 'Course')</th>
             <th>@sortablelink('date_of_birth', 'Age')</th>
+            <th>@sortablelink('received_at', 'Date of Application')</th>
             <th>@sortablelink('is_on_short_list', 'On Short List')</th>
             <th style="width: 150px">Action</th>
           </tr>
@@ -88,6 +89,7 @@
               <td>{{ empty($data->plantilla) ? '' : $data->plantilla->name }}</td>
               <td>{{ empty($data->course) ? '' : $data->course->name }}</td>
               <td>{{ Carbon::parse($data->date_of_birth)->age }}</td>
+              <td>{!! __dataType::date_parse($data->received_at, 'M. d, Y') !!}</td>
               <td>{!! $data->is_on_short_list == 1 ? $span_check : $span_times !!}</td>
               <td> 
                 <select id="action" class="form-control input-md">
