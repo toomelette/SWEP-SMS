@@ -238,7 +238,8 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
                       ->orWhere('firstname', 'LIKE', '%'. $key .'%')
                       ->orWhere('middlename', 'LIKE', '%'. $key .'%')
                       ->orWhere('address', 'LIKE', '%'. $key .'%')
-                      ->orWhere('contact_no', 'LIKE', '%'. $key .'%');
+                      ->orWhere('contact_no', 'LIKE', '%'. $key .'%')
+                      ->orWhere('received_at', 'LIKE', '%'. $key .'%');
         });
 
     }
