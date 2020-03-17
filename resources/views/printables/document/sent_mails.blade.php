@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  		<title>Disbursement Voucher</title>
+  		<title>Dissemination Log</title>
 
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -71,7 +71,7 @@
 		</style>
 	</head>
 
-	<body onload="window.print();" onafterprint="/">
+	<body onload="window.print();"  onafterprint="window.close();">
 
 	 	<div class="wrapper">
 	 		<p class="no-margin">
