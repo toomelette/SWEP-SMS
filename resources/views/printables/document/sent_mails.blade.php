@@ -141,7 +141,7 @@
 											'<b>SENT</b>' : 
 											'<span class="text-danger">
 												<b>FAILED</b></span>'!!}
-											: {{ date("M. d, 'y | h:i:A",strtotime($log->sent_at)) }}</td>
+											: {{ date("M. d, 'y | h:i A",strtotime($log->sent_at)) }}</td>
 									<td></td>
 								</tr>
 							@endforeach
