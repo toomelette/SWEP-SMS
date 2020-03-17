@@ -335,6 +335,12 @@ class DocumentService extends BaseService{
     }
 
 
+    public function print($slug){
+
+        $document = $this->document_repo->findBySlug($slug);
+        return view('printables.document.sent_mails')->with('document', $document);
+
+    }
 
 
 

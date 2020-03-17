@@ -113,6 +113,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/document/dissemination_post/{slug}', 'DocumentController@disseminationPost')->name('document.dissemination_post');
 	Route::resource('document', 'DocumentController');
 
+	Route::get('/document/dissemination/print/{slug}', 'DocumentController@print')->name('document.dissemination.print');
+
 
 	/** Document Folder Codes **/
 	Route::get('/document_folder/browse/{folder_code}', 'DocumentFolderController@browse')->name('document_folder.browse');

@@ -131,7 +131,10 @@ class DocumentController extends Controller{
        
     }
 
-
+    public function print($slug)
+    {
+        return $this->document->print($slug); 
+    }
 
 
     

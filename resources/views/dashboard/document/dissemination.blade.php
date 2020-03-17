@@ -21,7 +21,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
     <div class="box">
 
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}">
+      <form id="form" role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}">
 
         @csrf
 
@@ -97,15 +97,18 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
               </div>
 
 
-
-
-
-
               {{-- Family Info --}}
               <div class="tab-pane" id="sent">
                 <div class="row">
                   <div class="col-md-12">
-
+                      <div class="row">
+                        <div class="col-md-12">
+        
+                          <button onclick="window.open('{{route('dashboard.document.dissemination.print',$document->slug)}}');" class="btn btn-default btn-sm pull-right"><i class="fa fa-print"></i> Print</button>
+           
+                        </div>
+                      </div>
+                      <hr style="margin-top: 3px">
                       <table class="table table-hover">
 
                         <tr>
@@ -178,9 +181,21 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
   <script type="text/javascript">
 
-
+    $("#form").submit(function (e) {
+      e.preventDefault();
+      console.log($(this).serializeArray());
+    })
     $('select[multiple]').select2({
         closeOnSelect: true,
+    });
+
+    $("select[multiple]").on("select2:select", function (evt) {
+      var element = evt.params.data.element;
+      var $element = $(element);
+      
+      $element.detach();
+      $(this).append($element);
+      $(this).trigger("change");
     });
 
 
