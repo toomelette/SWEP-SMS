@@ -21,7 +21,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
     <div class="box">
 
-      <form id="form" role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}">
 
         @csrf
 
@@ -181,10 +181,6 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
   <script type="text/javascript">
 
-    $("#form").submit(function (e) {
-      e.preventDefault();
-      console.log($(this).serializeArray());
-    })
     $('select[multiple]').select2({
         closeOnSelect: true,
     });
