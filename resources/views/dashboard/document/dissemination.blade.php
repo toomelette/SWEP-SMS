@@ -103,8 +103,10 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                   <div class="col-md-12">
                       <div class="row">
                         <div class="col-md-12">
-        
-                          <button onclick="window.open('{{route('dashboard.document.dissemination.print',$document->slug)}}');" class="btn btn-default btn-sm pull-right"><i class="fa fa-print"></i> Print</button>
+                        <a href="{{route('dashboard.document.dissemination.print',$document->slug)}}" target="_blank">
+                            <button type="button" class="btn btn-default btn-sm pull-right"><i class="fa fa-print"></i> Print</button>
+                        </a>
+                          
            
                         </div>
                       </div>

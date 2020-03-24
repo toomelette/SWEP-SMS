@@ -11,8 +11,6 @@
 
 		<link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
 
-		<link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
-
 		<link rel="stylesheet" href="{{ asset('css/print.css') }}">
 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
@@ -71,7 +69,7 @@
 		</style>
 	</head>
 
-	<body onload="window.print();"  onafterprint="window.close();">
+	<body onload="window.print()"  onafterprint="window.close()">
 
 	 	<div class="wrapper">
 	 		<p class="no-margin">
@@ -129,7 +127,7 @@
 							@foreach($email['logs'] as $log)
 
 								<tr>
-									<td>
+									<td style="width: 30%">
 										{{
 											$log->emailContact->name 
 											or 
