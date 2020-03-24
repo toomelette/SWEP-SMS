@@ -455,7 +455,17 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
 
+    public function getByDate($from, $to, $list_type){
+        $applicants = $this->applicant->whereBetween('received_at',[$from,$to])->orderBy('received_at','asc');
 
+        if($list_type == 'SL'){
+            $applicants = $applicants->where('is_on_short_list',1);
+        }
+
+        $applicants = $applicants->get();
+
+        return $applicants;
+    }
 
 
 

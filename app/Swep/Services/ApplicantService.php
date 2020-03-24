@@ -150,6 +150,13 @@ class ApplicantService extends BaseService{
 
             return view('printables.applicant.report_1', compact('dept_unit', 'applicants'));
 
+        }elseif ($request->r_type == "ABD") {
+            $from = date("Ymd",strtotime($request->from));
+            $to = date("Ymd",strtotime($request->to));
+            $applicants = $this->applicant_repo->getByDate($from,$to, $request->lt);
+            
+            return view('printables.applicant.report_1')->with('applicants', $applicants);
+
         }else{
 
            abort(404); 

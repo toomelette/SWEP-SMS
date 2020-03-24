@@ -125,6 +125,26 @@
           <span>As of {{ Carbon::now()->format("F d,Y") }}</span><br>
         </div>
 
+
+      @elseif(Request::get('r_type') == "ABD")
+
+        <div class="col-sm-12" style="text-align: center; padding-bottom:10px;">
+          <span style="font-weight: bold;">
+            @if (Request::get('lt') == "FL")
+              FULL LIST OF
+            @elseif(Request::get('lt') == "SL")
+              SHORT LIST OF
+            @else
+              &nbsp;
+            @endif
+            APPLICANTS
+          </span><br>
+          <span style="font-weight: bold;">
+            {{date("F d, Y",strtotime(Request::get('from')))}} to
+            {{date("F d, Y",strtotime(Request::get('to')))}}
+          </span><br>
+          <span>As of {{ Carbon::now()->format("F d,Y") }}</span><br>
+        </div>
       @else
 
         &nbsp;

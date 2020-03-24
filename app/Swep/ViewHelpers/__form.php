@@ -87,7 +87,7 @@ class __form{
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input id="'. $key .'" name="'. $key .'" value="'. __sanitize::html_attribute_encode($old_value) .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy">
+                  <input id="'. $key .'" name="'. $key .'" value="'. __sanitize::html_attribute_encode($old_value) .'" type="text" class="form-control datepicker" placeholder="mm/dd/yy" autocomplete="off">
                 </div>
                 '. self::error_message($error_has, $error_first) .'
               </div>';

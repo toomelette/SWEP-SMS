@@ -25,6 +25,8 @@ class ApplicantReportRequest extends FormRequest{
             't' => 'sometimes|string|max:2',
             'du' => 'nullable|string|max:11',
             'c' => 'nullable|string|max:11',
+            'from' => 'sometimes|date',
+            'to' => 'sometimes|date|after_or_equal:from',
             
         ];
 
