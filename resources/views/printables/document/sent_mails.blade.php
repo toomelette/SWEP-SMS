@@ -90,15 +90,15 @@
 					$emails = [];
 
 					foreach ($document->documentDisseminationLog as $log) {
-						
-						if(!isset($emails[$log->subject.'-'.$log->content])){
-							$emails[$log->subject.'-'.$log->content]['subject'] = $log->subject;
-							$emails[$log->subject.'-'.$log->content]['content'] = $log->content;
-							$emails[$log->subject.'-'.$log->content]['logs'][$log->slug] = $log;
-						}else{
-							$emails[$log->subject.'-'.$log->content]['logs'][$log->slug] = $log;
+						if($log->status != "FAILED"){
+							if(!isset($emails[$log->subject.'-'.$log->content])){
+								$emails[$log->subject.'-'.$log->content]['subject'] = $log->subject;
+								$emails[$log->subject.'-'.$log->content]['content'] = $log->content;
+								$emails[$log->subject.'-'.$log->content]['logs'][$log->slug] = $log;
+							}else{
+								$emails[$log->subject.'-'.$log->content]['logs'][$log->slug] = $log;
+							}
 						}
-						
 					}
 
 					//print("<pre>".print_r($emails,true)."</pre>");
@@ -119,14 +119,15 @@
 						<thead>
 							<tr>
 								<th>Fullname</th>
+								<th>Received</th>
 								<th>Email</th>
 								<th>Status</th>
-								<th>Received</th>
 							</tr>
 						</thead>
 						<tbody>
 							
 							@foreach($email['logs'] as $log)
+
 								<tr>
 									<td>
 										{{
@@ -135,6 +136,7 @@
 											$log->employee->lastname.', '.$log->employee->firstname
 										}}
 									</td>
+									<td></td>
 									<td>{{$log->email}}</td>
 									<td>
 										{!!$log->status == 'SENT' ? 
@@ -142,7 +144,7 @@
 											'<span class="text-danger">
 												<b>FAILED</b></span>'!!}
 											: {{ date("M. d, 'y | h:i A",strtotime($log->sent_at)) }}</td>
-									<td></td>
+									
 								</tr>
 							@endforeach
 						</tbody>
