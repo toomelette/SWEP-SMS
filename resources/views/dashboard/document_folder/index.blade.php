@@ -49,12 +49,12 @@
           </tr>
           @foreach($doc_folders as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>
+              <td id="mid-vert">
                 <a href="{{route('dashboard.document_folder.browse', $data->folder_code )}}" style="text-decoration: underline; font-size:15px;">
                   {{ $data->folder_code .' - '. $data->description }}
                 </a>
               </td>
-              <td> 
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.document_folder.edit', $data->slug) }}">Edit</option>

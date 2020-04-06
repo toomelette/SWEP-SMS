@@ -102,8 +102,8 @@
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{{ Str::limit($data->payee, 30)  }}</td>
-              <td>
+              <td id="mid-vert">{{ Str::limit($data->payee, 30)  }}</td>
+              <td id="mid-vert">
                 @if($data->dv_no == null)
                   <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;">
                     <b>Not Set!</b>
@@ -114,11 +114,11 @@
                   </a>
                 @endif
               </td>
-              <td>{!! Str::limit(strip_tags($data->explanation), 75)  !!}</td>
-              <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
-              <td>{{ number_format($data->amount, 2) }}</td>
+              <td id="mid-vert">{!! Str::limit(strip_tags($data->explanation), 75)  !!}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
+              <td id="mid-vert">{{ number_format($data->amount, 2) }}</td>
 
-              <td> 
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Print</option>

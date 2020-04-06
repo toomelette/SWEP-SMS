@@ -56,7 +56,7 @@
           <div class="col-md-8"></div>
 
           {!! __form::select_static(
-            '4', 'type', 'Type', old('type') ? old('type') : $document->type, __static::document_types(), $errors->has('type'), $errors->first('type'), '', ''
+            '4', 'type', 'Type', old('type') ? old('type') : $document->type, __static::document_types(), $errors->has('type'), $errors->first('type'), 'select2', ''
           ) !!} 
           
           {!! __form::textbox(

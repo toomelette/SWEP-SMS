@@ -1,5 +1,3 @@
-
-
 // LOADER
 $('#loader')
     .hide() 
@@ -12,9 +10,14 @@ $('#loader')
 ;
 
 
-
 // SELECT2 Caller
 $('.select2').select2();
+
+
+// SELECT2 Multiple
+$('select[multiple]').select2({
+    closeOnSelect: false,
+});
 
 
 // Filter Form Submit Rule
@@ -27,7 +30,6 @@ $(document).ready(function($){
 });
 
 
-
 // Price Format
 $(".priceformat").priceFormat({
     prefix: "",
@@ -35,7 +37,6 @@ $(".priceformat").priceFormat({
     clearOnEmpty: true,
     allowNegative: true
 });
-
 
 
 // Input to Uppercase
@@ -46,13 +47,11 @@ $(document).on('blur', "input[data-transform=uppercase]", function () {
 });
 
 
-
 // iCheck for checkbox and radio inputs
 $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
   checkboxClass: 'icheckbox_minimal-blue',
   radioClass   : 'iradio_minimal-blue'
 });
-
 
 
 // Date Picker

@@ -52,11 +52,11 @@
           </tr>
           @foreach($project_codes as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{{ $data->project_code }}</td>
-              <td>{{ $data->department_name }}</td>
-              <td>{{ $data->description }}</td>
-              <td>{{ $data->project_in_charge }}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->project_code }}</td>
+              <td id="mid-vert">{{ $data->department_name }}</td>
+              <td id="mid-vert">{{ $data->description }}</td>
+              <td id="mid-vert">{{ $data->project_in_charge }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.project_code.edit', $data->slug) }}">Edit</option>

@@ -87,7 +87,7 @@
                         <tr>
 
                           <td style="width:450px;">
-                            <select name="menu[]" id="menu" class="form-control select2" style="width: 90%;">
+                            <select name="menu[]" id="menu" class="form-control menu" style="width: 90%;">
                               <option value="">Select</option>
                               @foreach($global_menus_all as $data) 
                                   <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
@@ -97,7 +97,7 @@
                           </td>
 
                           <td style="min-width:50px; min-width:50px; max-width:50px">
-                            <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
+                            <select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
                                 <option value="">Select</option>
                                 @foreach($global_submenus_all as $data)
                                     @if(old('submenu') && $data->menu_id == old('menu.'.$key))
@@ -165,6 +165,7 @@
 
   <script type="text/javascript">
 
+
   {!! __js::show_password('password', 'show_password') !!}
   {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
   
@@ -180,7 +181,7 @@
         $('select').select2('destroy');
         var content ='<tr>' +
                       '<td style="width:450px;">' +
-                        '<select name="menu[]" id="menu" class="form-control select2" style="width:90%;">' +
+                        '<select name="menu[]" id="menu" class="form-control menu" style="width:90%;">' +
                           '<option value="">Select</option>' +
                           '@foreach($global_menus_all as $data)' +
                             '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
@@ -189,7 +190,7 @@
                       '</td>' +
 
                       '<td>' +
-                        '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
+                        '<select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
                           '<option value="">Select</option>' +
                           '@foreach($global_submenus_all as $data)' +
                               '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
@@ -204,12 +205,20 @@
                     '</tr>';
 
       $("#table_body").append($(content));
-      $('select').select2({width:400});
+
+      $('.menu').select2({
+        width:400,
+        dropdownParent: $('#table_body')
+      });
+
+      $('.submenu').select2({
+        width:400,
+        dropdownParent: $('#table_body'),
+        closeOnSelect: false,
+      });
+
     });
   });
-
-
-
 
 
   {{-- AJAX Menu to Submenu--}}
@@ -243,58 +252,15 @@
   });
 
 
+  $('.menu').select2({
+    width:400,
+    dropdownParent: $('#table_body')
+  });
 
-
-
-  {{-- AJAX Get Employee--}}
-  // $(document).on("change", "#employee_sync", function () {
-
-  //   var key = $(this).val();
-
-  //   if(key){
-  //     $.ajax({
-  //       headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-  //       url: "/api/user/response_from_employee/"+key,
-  //       type: "GET",
-  //       dataType: "json",
-  //       success:function(data) {       
-            
-  //         $.each(data, function(key, value) {
-
-  //           $("#user_create_form").find("input").not("input[name=_token]").val("");
-  //           $("#user_create_form").find("input").not("input[name=_token]").removeAttr("readonly");
-
-  //           if(value.firstname != ''){
-  //             $("#user_create_form #firstname").val(value.firstname).attr("readonly", true);
-  //           }
-
-  //           if(value.middlename != ''){
-  //             $("#user_create_form #middlename").val(value.middlename).attr("readonly", true);
-  //           }
-
-  //           if(value.lastname != ''){
-  //             $("#user_create_form #lastname").val(value.lastname).attr("readonly", true);
-  //           }
-
-  //           if(value.email != ''){
-  //             $("#user_create_form #email").val(value.email).attr("readonly", true);
-  //           }
-
-  //           if(value.position != ''){
-  //             $("#user_create_form #position").val(value.position).attr("readonly", true);
-  //           }
-          
-  //         });
-
-  //       }
-  //     });
-  //   }else{
-  //     $("#user_create_form").find("input").not("input[name=_token]").val("");
-  //     $("#user_create_form").find("input").not("input[name=_token]").removeAttr("readonly");
-  //   }
-    
-  // });
-
+  $('.submenu').select2({
+    width:400,
+    dropdownParent: $('#table_body')
+  });
 
 
 

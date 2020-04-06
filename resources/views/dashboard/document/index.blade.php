@@ -120,7 +120,7 @@
 
 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>
+              <td id="mid-vert">
                 @if(Storage::disk('local')->exists($filename))
                   <a href="{{ route('dashboard.document.view_file', $data->slug) }}" class="btn btn-sm btn-success" target="_blank">
                     <i class="fa fa-file-o"></i>
@@ -129,13 +129,13 @@
                   <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-exclamation-circle"></i></a>
                 @endif
               </td>
-              <td>{{ $data->reference_no }}</td>
-              <td>{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>
-              <td>{{ Str::limit($data->person_to, 30) }}</td>
-              <td>{{ Str::limit($data->person_from, 30) }}</td>
-              <td style="width: 40%">{{ $data->subject}}</td>
+              <td id="mid-vert">{{ $data->reference_no }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->date, 'm/d/Y') }}</td>
+              <td id="mid-vert">{{ Str::limit($data->person_to, 30) }}</td>
+              <td id="mid-vert">{{ Str::limit($data->person_from, 30) }}</td>
+              <td id="mid-vert" style="width: 40%">{{ $data->subject}}</td>
 
-              <td> 
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.document.dissemination', $data->slug) }}">Dissemination</option>

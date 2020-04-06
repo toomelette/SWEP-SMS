@@ -80,12 +80,12 @@
           </tr>
           @foreach($users as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions)!!}>
-              <td>{{ $data->username }}</td>
-              <td>{{ $data->fullname }}</td>
-              <td>{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
-              <td>{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
-              <td>{!! empty($data->employee) ? $span_times : '<p class="text-green"><b>'. $data->employee->employee_no .'</b></p>' !!}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->username }}</td>
+              <td id="mid-vert">{{ $data->fullname }}</td>
+              <td id="mid-vert">{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
+              <td id="mid-vert">{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
+              <td id="mid-vert">{!! empty($data->employee) ? $span_times : '<p class="text-green"><b>'. $data->employee->employee_no .'</b></p>' !!}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.user.show', $data->slug) }}">Details</option>

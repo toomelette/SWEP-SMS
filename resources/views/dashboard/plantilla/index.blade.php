@@ -62,10 +62,10 @@
           </tr>
           @foreach($plantillas as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{{ empty($data->departmentUnit) ? '' : $data->departmentUnit->description }}</td>
-              <td>{{ $data->name }}</td>
-              <td>{!! $data->is_vacant == 1 ? $span_check : $span_times !!}</td>
-              <td> 
+              <td id="mid-vert">{{ empty($data->departmentUnit) ? '' : $data->departmentUnit->description }}</td>
+              <td id="mid-vert">{{ $data->name }}</td>
+              <td id="mid-vert">{!! $data->is_vacant == 1 ? $span_check : $span_times !!}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.plantilla.edit', $data->slug) }}">Edit</option>

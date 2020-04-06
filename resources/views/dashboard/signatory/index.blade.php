@@ -49,10 +49,10 @@
           </tr>
           @foreach($signatories as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-              <td>{{ $data->employee_name }}</td>
-              <td>{{ $data->employee_position }}</td>
-              <td>{{ $data->type }}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->employee_name }}</td>
+              <td id="mid-vert">{{ $data->employee_position }}</td>
+              <td id="mid-vert">{{ $data->type }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.signatory.edit', $data->slug) }}">Edit</option>

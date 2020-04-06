@@ -84,7 +84,7 @@
                         <tr>
 
                           <td style="width:450px;">
-                            <select name="menu[]" id="menu" class="form-control select2" style="width: 90%;">
+                            <select name="menu[]" id="menu" class="form-control menu" style="width: 90%;">
                               <option value="">Select</option>
                               @foreach($global_menus_all as $data) 
                                   <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
@@ -94,7 +94,7 @@
                           </td>
 
                           <td style="min-width:50px; min-width:50px; max-width:50px">
-                            <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
+                            <select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
                                 <option value="">Select</option>
                                 @foreach($global_submenus_all as $data)
                                     @if(old('submenu') && $data->menu_id == old('menu.'.$key))
@@ -121,7 +121,7 @@
                         <tr>
 
                           <td style="width:450px;">
-                            <select name="menu[]" id="menu" class="form-control select2" style="width:90%;">
+                            <select name="menu[]" id="menu" class="form-control menu" style="width:90%;">
                               <option value="">Select</option>
                               @foreach($global_menus_all as $data) 
                                 <option value="{{ $data->menu_id }}" {!! $user_menu_data->menu_id == $data->menu_id ? 'selected' : '' !!}>{{ $data->name }}</option>
@@ -130,7 +130,7 @@
                           </td>
 
                           <td>
-                            <select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">
+                            <select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width:80%;">
                               <option value="">Select</option>
                               @foreach($global_submenus_all as $data)
                                   <option value="{{ $data->submenu_id }}"  {!! in_array($data->submenu_id, $user_menu_data->userSubMenu->pluck('submenu_id')->toArray()) ? 'selected' : '' !!}>{{ $data->name }}</option>
@@ -181,70 +181,87 @@
 
     {{-- ADD ROW --}}
     $(document).ready(function() {
-        $("#add_row").on("click", function() {
-            $('select').select2('destroy');
-            var content ='<tr>' +
-                          '<td style="width:450px;">' +
-                            '<select name="menu[]" id="menu" class="form-control select2" style="width:90%;">' +
-                              '<option value="">Select</option>' +
-                              '@foreach($global_menus_all as $data)' +
-                                '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
-                              '@endforeach' +
-                            '</select>' +
-                          '</td>' +
+      $("#add_row").on("click", function() {
+        $('select').select2('destroy');
+        var content ='<tr>' +
+                      '<td style="width:450px;">' +
+                        '<select name="menu[]" id="menu" class="form-control menu" style="width:90%;">' +
+                          '<option value="">Select</option>' +
+                          '@foreach($global_menus_all as $data)' +
+                            '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
+                          '@endforeach' +
+                        '</select>' +
+                      '</td>' +
 
-                          '<td>' +
-                            '<select name="submenu[]" id="submenu" class="form-control select2" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
-                              '<option value="">Select</option>' +
-                              '@foreach($global_submenus_all as $data)' +
-                                  '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
-                              '@endforeach' +
-                            '</select>' +
+                      '<td>' +
+                        '<select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
+                          '<option value="">Select</option>' +
+                          '@foreach($global_submenus_all as $data)' +
+                              '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
+                          '@endforeach' +
+                        '</select>' +
 
-                          '</td>' +
+                      '</td>' +
 
-                          '<td>' +
-                              '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
-                          '</td>' +
-                        '</tr>';
+                      '<td>' +
+                          '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
+                      '</td>' +
+                    '</tr>';
 
         $("#table_body").append($(content));
-        $('select').select2({width:400});
+
+        $('.menu').select2({
+          width:400,
+          dropdownParent: $('#table_body')
+        });
+
+        $('.submenu').select2({
+          width:400,
+          dropdownParent: $('#table_body'),
+          closeOnSelect: false,
+        });
+
       });
-
     });
-
-
 
 
     {{-- AJAX --}}
     $(document).ready(function() {
       $(document).on("change", "#menu", function() {
-          var id = $(this).val();
-          var parent = $(this).closest('tr');
-          console.log(parent);
-          if(id) {
-              $.ajax({
-                  headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-                  url: "/api/submenu/select_submenu_byMenuId/" + id,
-                  type: "GET",
-                  dataType: "json",
-                  success:function(data) {   
-
-                      $(parent).find("#submenu").empty();
-
-                      $.each(data, function(key, value) {
-                          $(parent).find("#submenu").append("<option value='" + value.submenu_id + "'>"+ value.name +"</option>");
-                      });
-
-                      $(parent).find("#submenu").append("<option value>Select</option>");
-          
-                  }
-              });
-          }else{
-              $(parent).find("#submenu").empty();
-          }
+        var id = $(this).val();
+        var parent = $(this).closest('tr');
+        console.log(parent);
+        if(id) {
+          $.ajax({
+            headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
+            url: "/api/submenu/select_submenu_byMenuId/" + id,
+            type: "GET",
+            dataType: "json",
+            success:function(data) {   
+                $(parent).find("#submenu").empty();
+                $.each(data, function(key, value) {
+                    $(parent).find("#submenu").append("<option value='" + value.submenu_id + "'>"+ value.name +"</option>");
+                });
+                $(parent).find("#submenu").append("<option value>Select</option>");
+            }
+          });
+        }else{
+          $(parent).find("#submenu").empty();
+        }
       });
+    });
+
+
+    $('.menu').select2({
+      width:400,
+      dropdownParent: $('#table_body')
+    });
+
+
+    $('.submenu').select2({
+      width:400,
+      dropdownParent: $('#table_body'),
+      closeOnSelect: false,
     });
 
 </script>

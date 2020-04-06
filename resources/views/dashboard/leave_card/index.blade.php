@@ -96,22 +96,22 @@
           </tr>
           @foreach($leave_cards as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!}>
-              <td>{!! empty($data->employee) ? '' : $data->employee->fullname !!}</td>
-              <td>{{ $data->doc_type }}</td>
-              <td>{{ $data->doc_type == 'LEAVE' ? $data->leave_type : 'N/A' }}</td>
-              <td>
+              <td id="mid-vert">{!! empty($data->employee) ? '' : $data->employee->fullname !!}</td>
+              <td id="mid-vert">{{ $data->doc_type }}</td>
+              <td id="mid-vert">{{ $data->doc_type == 'LEAVE' ? $data->leave_type : 'N/A' }}</td>
+              <td id="mid-vert">
                 @if($data->doc_type == 'LEAVE')
                   {{ __dataType::date_parse($data->date_from, 'M d, Y') .' - '. __dataType::date_parse($data->date_to, 'M d, Y') }}
                 @else
                   {{ __dataType::date_parse($data->date, 'M d, Y') }}
                 @endif
               </td>
-              <td>
+              <td id="mid-vert">
                 {!! 
                   $data->doc_type == 'OT' ? '<span class="text-success">'. $data->credits .'</span>' : '<span class="text-danger">'. $data->credits .'</span>'; 
                 !!}
               </td>
-              <td> 
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_card.show', $data->slug) }}">Details</option>

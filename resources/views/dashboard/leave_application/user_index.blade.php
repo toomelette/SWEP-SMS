@@ -77,26 +77,22 @@
           </tr>
           @foreach($leave_applications as $data) 
             <tr>
-              <td>
+              <td id="mid-vert">
                 @foreach(__static::leave_types() as $name => $key)
                   @if($key == $data->type)
                     {{ $name }}
                   @endif
                 @endforeach
               </td>
-              <td>{{ __dataType::date_parse($data->date_of_filing, 'M d, Y') }}</td>
-              <td> 
+              <td id="mid-vert">{{ __dataType::date_parse($data->date_of_filing, 'M d, Y') }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
-
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Details</option>
-
                   @if(Carbon::parse($data->date_of_filing)->diffInDays(Carbon::now()->format('Y-m-d')) < 15)
                     <option data-type="1" data-url="{{ route('dashboard.leave_application.edit', $data->slug) }}">Edit</option>
                   @endif
-
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.save_as', $data->slug) }}">Save As</option>
-
                 </select>
               </td>
             </tr>

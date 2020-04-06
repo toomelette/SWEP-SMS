@@ -83,14 +83,14 @@
           </tr>
           @foreach($permission_slips as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{{ $data->ps_id }}</td>
-              <td>{{ empty($data->employee) ? '' : $data->employee->fullname }}</td>
-              <td>{{ $data->date->format('M d, Y') }}</td>
-              <td>{{ date('h:i A', strtotime($data->time_out)) }}</td>
-              <td>{{ date('h:i A', strtotime($data->time_in)) }}</td>
-              <td>{{ $data->with_ps == 1 ? 'YES' : 'NO' }}</td>
+              <td id="mid-vert">{{ $data->ps_id }}</td>
+              <td id="mid-vert">{{ empty($data->employee) ? '' : $data->employee->fullname }}</td>
+              <td id="mid-vert">{{ $data->date->format('M d, Y') }}</td>
+              <td id="mid-vert">{{ date('h:i A', strtotime($data->time_out)) }}</td>
+              <td id="mid-vert">{{ date('h:i A', strtotime($data->time_in)) }}</td>
+              <td id="mid-vert">{{ $data->with_ps == 1 ? 'YES' : 'NO' }}</td>
 
-              <td> 
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.permission_slip.show', $data->slug) }}">Details</option>

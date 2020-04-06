@@ -48,10 +48,10 @@
           </tr>
           @foreach($department_units as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{{ $data->name }}</td>
-              <td>{{ $data->department_name }}</td>
-              <td>{{ $data->description }}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->name }}</td>
+              <td id="mid-vert">{{ $data->department_name }}</td>
+              <td id="mid-vert">{{ $data->description }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.department_unit.edit', $data->slug) }}">Edit</option>

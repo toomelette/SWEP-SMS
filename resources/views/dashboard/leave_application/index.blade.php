@@ -82,17 +82,17 @@
           </tr>
           @foreach($leave_applications as $data) 
             <tr>
-              <td>{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) !!}</td>
-              <td>{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
-              <td>
+              <td id="mid-vert">{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) !!}</td>
+              <td id="mid-vert">{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
+              <td id="mid-vert">
                 @foreach(__static::leave_types() as $name => $key)
                   @if($key == $data->type)
                     {{ $name }}
                   @endif
                 @endforeach
               </td>
-              <td>{{ __dataType::date_parse($data->date_of_filing, 'M d, Y') }}</td>
-              <td> 
+              <td id="mid-vert">{{ __dataType::date_parse($data->date_of_filing, 'M d, Y') }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Print</option>

@@ -85,13 +85,13 @@
           </tr>
           @foreach($applicants as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td>{{ $data->fullname }}</td>
-              <td>{{ empty($data->plantilla) ? '' : $data->plantilla->name }}</td>
-              <td>{{ empty($data->course) ? '' : $data->course->name }}</td>
-              <td>{{ Carbon::parse($data->date_of_birth)->age }}</td>
-              <td>{!! __dataType::date_parse($data->received_at, 'M. d, Y') !!}</td>
-              <td>{!! $data->is_on_short_list == 1 ? $span_check : $span_times !!}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->fullname }}</td>
+              <td id="mid-vert">{{ empty($data->plantilla) ? '' : $data->plantilla->name }}</td>
+              <td id="mid-vert">{{ empty($data->course) ? '' : $data->course->name }}</td>
+              <td id="mid-vert">{{ Carbon::parse($data->date_of_birth)->age }}</td>
+              <td id="mid-vert">{!! __dataType::date_parse($data->received_at, 'M. d, Y') !!}</td>
+              <td id="mid-vert">{!! $data->is_on_short_list == 1 ? $span_check : $span_times !!}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.applicant.show', $data->slug) }}">Details</option>

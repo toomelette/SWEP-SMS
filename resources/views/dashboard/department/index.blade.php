@@ -46,8 +46,8 @@
           </tr>
           @foreach($departments as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-              <td>{{ $data->name }}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->name }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.department.edit', $data->slug) }}">Edit</option>

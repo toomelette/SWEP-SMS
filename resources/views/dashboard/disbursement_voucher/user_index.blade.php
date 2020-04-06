@@ -95,11 +95,11 @@
           </tr>
           @foreach($disbursement_vouchers as $data) 
             <tr>
-              <td>{{ $data->payee }}</td>
-              <td>{!! Str::limit(strip_tags($data->explanation), 90)  !!}</td>
-              <td>{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
-              <td>{{ number_format($data->amount, 2) }}</td>
-              <td> 
+              <td id="mid-vert">{{ $data->payee }}</td>
+              <td id="mid-vert">{!! Str::limit(strip_tags($data->explanation), 90)  !!}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
+              <td id="mid-vert">{{ number_format($data->amount, 2) }}</td>
+              <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Details</option>
