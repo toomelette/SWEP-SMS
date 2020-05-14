@@ -435,6 +435,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
     }
 
 
+    public function getAllByResidentialAddressCity(){
+        return $this->employee->where('is_active','ACTIVE')->get();
+    }
 
 
 

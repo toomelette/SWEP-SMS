@@ -144,6 +144,8 @@ class EmployeeService extends BaseService{
 
     public function reportGenerate($request){
 
+
+
         if($request->r_type == 'ALPHA'){
             $employees = $this->employee_repo->getByIsActive('ACTIVE');
             return view('printables.employee.alphalist')->with('employees', $employees);
@@ -153,9 +155,16 @@ class EmployeeService extends BaseService{
         }elseif($request->r_type == 'UNIT'){
             $dept_units = $this->dept_unit_repo->getAll();
             return view('printables.employee.by_unit')->with('dept_units', $dept_units);
+        }elseif($request->r_type == 'RES_CITY') {
+            //$dept_units = $this->dept_unit_repo->getAll();
+            $employees = $this->employee_repo->getAllByResidentialAddressCity();
+       
+            return view('printables.employee.by_res_city')->with('employees',$employees);
         }else{
             abort(404);
         }
+
+
 
 
 

@@ -4,6 +4,7 @@ $report_types = [
                 'Alphabetical' => 'ALPHA',
                 'By Gender' => 'GEN', 
                 'By Unit' => 'UNIT',
+                'By City (Residential Address)' => 'RES_CITY',
               ];
 
 ?>
