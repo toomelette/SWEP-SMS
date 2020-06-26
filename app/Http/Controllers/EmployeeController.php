@@ -93,9 +93,7 @@ class EmployeeController extends Controller{
 
 
     public function update(EmployeeFormRequest $request, $slug){
-
-    	return $this->employee->update($request, $slug);
-
+        return $this->employee->update($request, $slug);
     }
 
     

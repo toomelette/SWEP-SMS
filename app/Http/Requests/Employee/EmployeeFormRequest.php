@@ -151,6 +151,34 @@ class EmployeeFormRequest extends FormRequest{
             'q_40_c' => 'nullable|string|max:11',
             'q_40_c_yes_details' => 'nullable|string|max:255',
 
+
+            //Health Declaration
+
+            'family_doctor' => 'nullable|string|max:45',
+            'contact_person' => 'nullable|string|max:45',
+            'contact_person_phone' => 'nullable|string|max:45',
+            'cities_ecq' => 'nullable|string|max:150',
+            'been_sick' => 'nullable|string|max:20',
+            'been_sick_yes_details' => 'nullable|string|max:45',
+            'fever_colds' => 'nullable|string|max:20',
+            'fever_colds_yes_details' => 'nullable|string|max:45',
+            'smoking' => 'nullable|string|max:20',
+            'smoking_yes_details' => 'nullable|string|max:45',
+            'drinking' => 'nullable|string|max:20',
+            'drinking_yes_details' => 'nullable|string|max:45',
+            'taking_drugs' => 'nullable|string|max:20',
+            'taking_drugs_yes_details' => 'nullable|string|max:45',
+            'taking_vitamins' => 'nullable|string|max:20',
+            'taking_vitamins_yes_details' => 'nullable|string|max:45',
+            'eyeglasses' => 'nullable|string|max:20',
+            'eyeglasses_yes_details' => 'nullable|string|max:45',
+            'exercise' => 'nullable|string|max:20',
+            'exercise_yes_details' => 'nullable|string|max:45',
+            'being_treated' => 'nullable|string|max:20',
+            'being_treated_yes_details' => 'nullable|string|max:45',
+            'chronic_injuries' => 'nullable|string|max:20',
+            'chronic_injuries_yes_details' => 'nullable|string|max:45',
+
         ];
 
 

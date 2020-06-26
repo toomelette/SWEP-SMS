@@ -126,6 +126,10 @@ class Employee extends Model{
         return $this->hasOne('App\Models\EmployeeOtherQuestion', 'employee_no', 'employee_no');
     }
 
+    public function employeeHealthDeclaration(){
+        return $this->hasOne('App\Models\EmployeeHealthDeclaration', 'employee_no', 'employee_no');
+    }
+
     public function empBeginningCredits(){
         return $this->hasOne('App\Models\EmpBeginningCredits', 'employee_no', 'employee_no');
     }
@@ -172,6 +176,11 @@ class Employee extends Model{
     public function employeeVoluntaryWork(){
         return $this->hasMany('App\Models\EmployeeVoluntaryWork', 'employee_no', 'employee_no');
     }
+
+    public function employeeMedicalHistories(){
+        return $this->hasMany('App\Models\EmployeeMedicalHistory', 'employee_no', 'employee_no');
+    }
+
 
     public function employeeServiceRecord(){
         return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no');

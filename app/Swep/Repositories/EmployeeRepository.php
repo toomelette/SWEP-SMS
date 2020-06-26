@@ -17,8 +17,8 @@ use App\Models\EmployeeRecognition;
 use App\Models\EmployeeReference;
 use App\Models\EmployeeSpecialSkill;
 use App\Models\EmployeeVoluntaryWork;
-
-
+use App\Models\EmployeeHealthDeclaration;
+use App\Models\EmployeeMedicalHistory;
 use App\Models\Employee;
 
 
@@ -29,19 +29,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     protected $employee;
 
-
-
-
 	public function __construct(Employee $employee){
-
         $this->employee = $employee;
         parent::__construct();
-
     }
-
-
-
-
 
 
     public function fetch($request){
@@ -686,8 +677,46 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
 
+    public function storeHealthDeclaration($request, $employee){
+
+        $employee_hd = new EmployeeHealthDeclaration;
+        $employee_hd->employee_no = $employee->employee_no;
+        $employee_hd->family_doctor = $request->family_doctor;
+        $employee_hd->contact_person = $request->contact_person;
+        $employee_hd->contact_person_phone = $request->contact_person_phone;
+        $employee_hd->cities_ecq = $request->cities_ecq;
+        $employee_hd->been_sick = $request->been_sick;
+        $employee_hd->been_sick_yes_details = $request->been_sick_yes_details;
+        $employee_hd->fever_colds = $request->fever_colds;
+        $employee_hd->fever_colds_yes_details = $request->fever_colds_yes_details;
+        $employee_hd->smoking = $request->smoking;
+        $employee_hd->smoking_yes_details = $request->smoking_yes_details;
+        $employee_hd->drinking = $request->drinking;
+        $employee_hd->drinking_yes_details = $request->drinking_yes_details;
+        $employee_hd->taking_drugs = $request->taking_drugs;
+        $employee_hd->taking_drugs_yes_details = $request->taking_drugs_yes_details;
+        $employee_hd->taking_vitamins = $request->taking_vitamins;
+        $employee_hd->taking_vitamins_yes_details = $request->taking_vitamins_yes_details;
+        $employee_hd->eyeglasses = $request->eyeglasses;
+        $employee_hd->eyeglasses_yes_details = $request->eyeglasses_yes_details;
+        $employee_hd->exercise = $request->exercise;
+        $employee_hd->exercise_yes_details = $request->exercise_yes_details;
+        $employee_hd->being_treated = $request->being_treated;
+        $employee_hd->being_treated_yes_details = $request->being_treated_yes_details;
+        $employee_hd->chronic_injuries = $request->chronic_injuries;
+        $employee_hd->chronic_injuries_yes_details = $request->chronic_injuries_yes_details;
+        $employee_hd->save();
+    }
 
 
+    public function storeMedicalHistory($medical_history, $medication, $employee){
+
+        $employee_mh = new EmployeeMedicalHistory;
+        $employee_mh->employee_no = $employee->employee_no;
+        $employee_mh->medical_history = $medical_history;
+        $employee_mh->medication = $medication; 
+        $employee_mh->save();
+    }
 
 
     public function destroyDependencies($employee){
@@ -704,7 +733,8 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->employeeReference()->delete();
         $employee->employeeSpecialSkill()->delete();
         $employee->employeeVoluntaryWork()->delete();
-
+        $employee->employeeHealthDeclaration()->delete();
+        $employee->employeeMedicalHistories()->delete();
     }
 
 
