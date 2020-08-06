@@ -64,6 +64,10 @@
 				color : white !important;
     			-webkit-print-color-adjust: exact; 
 			}
+
+			.blue{
+				color: blue !important
+			}
 		}
 
 		</style>
@@ -72,6 +76,7 @@
 	<body onload="window.print()"  onafterprint="window.close()">
 
 	 	<div class="wrapper">
+	 		<span class="no-margin blue" style="font-size: 22px"><b>{{$document->reference_no}}</b></span>
 	 		<p class="no-margin">
 				Document subject: <strong>{{$document->subject}}</strong>
 			</p>
@@ -113,6 +118,9 @@
 							{{$email['content']}}
 						</strong>
 					</p>
+					@php
+						$sent = 0;
+					@endphp
 					<table>
 						<thead>
 							<tr>
@@ -125,7 +133,11 @@
 						<tbody>
 							
 							@foreach($email['logs'] as $log)
-
+								@php
+									if($log->status == "SENT"){
+										$sent++;
+									}
+								@endphp
 								<tr>
 									<td style="width: 30%">
 										{{
@@ -147,17 +159,17 @@
 							@endforeach
 						</tbody>
 					</table>
-
+					<br>
+					<p class="no-margin pull-right">
+						Total of: <b>{{count($email['logs'])}} email(s)</b>
+					</p>
+					<br>
+					<p class="no-margin pull-right">{{$sent}} Sent | {{count($email['logs']) - $sent}} Failed </p>
 					<hr>
 				@endforeach
-
-
-				
-				
 			@else
 
 			@endif
-
 	 	</div>
 	</body>
 </html>

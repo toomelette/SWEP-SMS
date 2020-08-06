@@ -290,28 +290,28 @@ class DocumentService extends BaseService{
 
             $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root_path), RecursiveIteratorIterator::LEAVES_ONLY);
 
-			$zip = new ZipArchive();
+            $zip = new ZipArchive();
 
-			$zip->open($request->y .'-'. $request->fc .'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+            $zip->open($request->y .'-'. $request->fc .'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-			foreach ($files as $name => $file){
+            foreach ($files as $name => $file){
 
-			    if (!$file->isDir()){
+                if (!$file->isDir()){
 
-			        $file_path = $file->getRealPath();
+                    $file_path = $file->getRealPath();
 
-			        $relative_path = substr($file_path, strlen($root_path));
+                    $relative_path = substr($file_path, strlen($root_path));
 
                     $filename = str_replace('.pdf', '', $relative_path);
 
                     $relative_path = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename) .'.pdf';
 
                     $zip->addFile($file_path, $relative_path);
-			    }
+                }
 
-			}
+            }
 
-			$zip->close();
+            $zip->close();
 
             return response()->download($request->y .'-'. $request->fc .'.zip')->deleteFileAfterSend();
 
@@ -339,7 +339,6 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->findBySlug($slug);
         return view('printables.document.sent_mails')->with('document', $document);
-
     }
 
 
@@ -350,54 +349,137 @@ class DocumentService extends BaseService{
 
         $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
 
-        if (!empty($request->employee)) {
-           
-            foreach ($request->employee as $employee_no) {
+        $cc = []; //---> Array of recepients to be used for Logs
+        $to_be_emailed = []; //---> Array of emails to be used for sending
 
-                $employee = $this->employee_repo->findByEmployeeNo($employee_no);
-                $status = "";
+        // if($request->content == null){
+        //     return "blank";
+        // }else{
+        //     return "else";
+        // }
+        // return $request->content;
+
+        if(!empty($request->employee)){
+            foreach ($request->employee as $employee_from_form) {
+
+                $employee = $this->employee_repo->findByEmployeeNo($employee_from_form);
 
                 if (filter_var($employee->email, FILTER_VALIDATE_EMAIL ) != false) {
+                    $cc[$employee->employee_no] = [
+                        "type" => "employee",
+                        "email" => $employee->email
+                    ]; 
 
-                    try {
-                        $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $employee->email, $request->content));
-                        $status = "SENT";
-                    } catch (Exception $e) {
-                        $status = "FAILED";
-                    }
+                    array_push($to_be_emailed, $employee->email);
+                }
+                
+            }
+        }
 
-                }else{ $status = "FAILED"; }
+        if(!empty($request->email_contact)){
+            foreach ($request->email_contact as $email_contact_id) {
+                $email_contact = $this->email_contact_repo->findByEmailContactId($email_contact_id);
+                if (filter_var($email_contact->email, FILTER_VALIDATE_EMAIL ) != false) {
+                    $cc[$email_contact_id] = [
+                        "type" => "contact",
+                        "email" => $email_contact->email
+                    ];
 
-                $ddl = $this->ddl_repo->store($request, $employee->employee_no, null, $document->document_id, $employee->email, $status);
+                    array_push($to_be_emailed, $email_contact->email);
+                }
 
             }
+        }
 
+        $content = "Good day. Please see the attached file. Thank you";
+        if($request->content != null){
+            $content = $request->content;
         }
 
 
-        if (!empty($request->email_contact)) {
-           
-            foreach ($request->email_contact as $email_contact_id) {
+        $status = "PENDING";
 
-                $email_contact = $this->email_contact_repo->findByEmailContactId($email_contact_id);
-                $status = "";
+        //Check for internet connection
+        $connected = @fsockopen("www.google.com",80);
+        $connected_2 = @fsockopen("www.yahoo.com",80);
 
-                if (filter_var($email_contact->email, FILTER_VALIDATE_EMAIL ) != false) {
+        if(!$connected){
+            if(!$connected_2){
+                return "<center style='font-family:Arial; color:red; padding-top:100px; font-size:26px'><b>No internet or Server not responding</b></center>";
+            }
+        }
 
-                    try {
-                        $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $email_contact->email, $request->content));
-                        $status = "SENT";
-                    } catch (Exception $e) {
-                        $status = "FAILED";
-                    }
 
-                }else{ $status = "FAILED"; }
+        //SENDING EMAIL
+        try {
+            $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $to_be_emailed, $content));
+            $status = "SENT";
+        } catch (Exception $e) {
+            $status = "FAILED";
+        }
 
-                $ddl = $this->ddl_repo->store($request, null, $email_contact->email_contact_id, $document->document_id, $email_contact->email, $status);
 
+
+        //STORING LOG TO DATABASE
+        foreach ($cc as $key => $recepient) {
+            if($recepient['type'] == "employee"){
+                $ddl = $this->ddl_repo->store($request, $key, null, $document->document_id, $recepient['email'], $status);
             }
 
-        }   
+            if($recepient['type'] == "contact"){
+                $ddl = $this->ddl_repo->store($request, null, $key, $document->document_id, $recepient['email'], $status);
+            }
+        }
+        
+        // return $to_be_emailed;
+        // if (!empty($request->employee)) {
+           
+        //     foreach ($request->employee as $employee_no) {
+
+        //         $employee = $this->employee_repo->findByEmployeeNo($employee_no);
+        //         $status = "";
+
+        //         if (filter_var($employee->email, FILTER_VALIDATE_EMAIL ) != false) {
+
+        //             try {
+        //                 $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $employee->email, $request->content));
+        //                 $status = "SENT";
+        //             } catch (Exception $e) {
+        //                 $status = "FAILED";
+        //             }
+
+        //         }else{ $status = "FAILED"; }
+
+        //         $ddl = $this->ddl_repo->store($request, $employee->employee_no, null, $document->document_id, $employee->email, $status);
+
+        //     }
+
+        // }
+
+
+        // if (!empty($request->email_contact)) {
+           
+        //     foreach ($request->email_contact as $email_contact_id) {
+
+        //         $email_contact = $this->email_contact_repo->findByEmailContactId($email_contact_id);
+        //         $status = "";
+
+        //         if (filter_var($email_contact->email, FILTER_VALIDATE_EMAIL ) != false) {
+
+        //             try {
+        //                 $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $email_contact->email, $request->content));
+        //                 $status = "SENT";
+        //             } catch (Exception $e) {
+        //                 $status = "FAILED";
+        //             }
+
+        //         }else{ $status = "FAILED"; }
+
+        //         $ddl = $this->ddl_repo->store($request, null, $email_contact->email_contact_id, $document->document_id, $email_contact->email, $status);
+
+        //     }
+
+        // }   
 
 
         $this->event->fire('document.dissemination', $document);
@@ -407,11 +489,7 @@ class DocumentService extends BaseService{
 
 
 
-
-
-
-
-
+ 
     // Utils
     private function filename($request, $document){
 
