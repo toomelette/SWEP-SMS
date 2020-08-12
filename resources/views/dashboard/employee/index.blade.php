@@ -66,6 +66,7 @@
             <th>@sortablelink('employee_no', 'Employee No.')</th>
             <th>@sortablelink('fullname', 'Fullname')</th>
             <th>@sortablelink('position', 'Position')</th>
+            <th>@sortablelink('email', 'Email')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($employees as $data) 
@@ -75,6 +76,7 @@
               <td>{{ $data->employee_no }}</td>
               <td>{{ $data->fullname }}</td>
               <td>{{ $data->position }}</td>
+              <td style="width: 20%">{{ $data->email }}</td>
               <td>
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>

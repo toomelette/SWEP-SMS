@@ -316,7 +316,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('employee_no', 'fullname', 'position', 'slug')
+        return $model->select('employee_no', 'fullname', 'position', 'email' ,  'slug')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
