@@ -58,7 +58,7 @@
                   {{ $data->folder_code .' - '. $data->description }}
                 </a>
               </td>
-              <td style="width: 50px" class="text-center">{{count($data->documents)}}</td>
+              <td style="width: 50px" class="text-center">{{count($data->documents1) + count($data->documents2)}}</td>
               <td> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
