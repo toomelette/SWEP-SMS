@@ -37,6 +37,8 @@ class DocumentFolder extends Model{
     ];
 
 
-
+    public function documents(){
+        return $this->hasMany('App\Models\Document','folder_code','folder_code');
+    }
     
 }

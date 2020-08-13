@@ -1,6 +1,6 @@
 <?php
 
-  $appended_requests = [];
+  $appended_requests = [ 'q'=> Request::get('q')];
   
 ?>
 
@@ -21,6 +21,22 @@
   <section class="content">
     
     <div class="box" id="pjax-container" style="overflow-x:auto;">
+
+      <form id="filter_form" method="GET" autocomplete="off" >
+        <div class="box-header with-border">
+          <div class="box-title">  
+                <div class="input-group input-group-sm" style="width: 300px;">
+                  <input name="q" class="form-control pull-right" placeholder="Search" type="text" value="">
+                  <div class="input-group-btn">
+                    <button id="table_search_button" type="submit" class="btn btn-default btn-md"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <div></div>
+
+        </div>
+      </form>
 
       {{-- Table Grid --}}        
       <div class="box-body no-padding">

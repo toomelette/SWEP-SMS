@@ -80,17 +80,25 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
         $key = str_slug($request->fullUrl(), '_');
 
-        $documents = $this->cache->remember('documents:fetchByFolderCode:' . $key, 240, function() use ($folder_code){
+        $documents = $this->cache->remember('documents:fetchByFolderCode:' . $key, 240, function() use ($folder_code, $request){
 
             $document = $this->document->newQuery();
 
-            return $document->select('subject', 'slug', 'updated_at')
-                            ->where('folder_code', $folder_code)
-                            ->orwhere('folder_code2', $folder_code)
+            
+
+            $document =  $document->select('subject', 'slug', 'updated_at')
+                            ->where('folder_code', $folder_code);
+
+            if(isset($request->q)){
+                $document = $document->where('subject','LIKE', '%'.$request->q.'%');
+            }
+
+
+            $document = $document->orwhere('folder_code2', $folder_code)
                             ->sortable()
                             ->orderBy('updated_at', 'desc')
                             ->paginate(20);
-
+            return $document;
         });
 
         return $documents;
