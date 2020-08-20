@@ -40,20 +40,18 @@ class EmailContact extends Model{
 
 
     // Relationships
-
     public function documentDisseminationLogAll(){
-        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id');
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'email_contact_id', 'email_contact_id');
     }
 
     public function documentDisseminationLog(){
-        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->whereNull('send_copy');
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'email_contact_id', 'email_contact_id')->whereNull('send_copy');
     }
 
 
     public function documentDisseminationLogSendCopy(){
-        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->where('send_copy','=', 1);
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'email_contact_id', 'email_contact_id')->where('send_copy','=', 1);
     }
-
 
     
 }
