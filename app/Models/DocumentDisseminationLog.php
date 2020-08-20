@@ -25,6 +25,7 @@ class DocumentDisseminationLog extends Model{
         'subject' => '',
         'content' => '',
         'status' => '',
+        'status' => null,
         'sent_at' => null,
         'ip_sent' => '',
         'user_sent' => '',

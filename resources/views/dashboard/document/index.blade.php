@@ -139,6 +139,7 @@
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.document.dissemination', $data->slug) }}">Dissemination</option>
+                  <option data-type="1" data-url="{{ route('dashboard.document.dissemination', $data->slug) }}?send_copy=1">Send copy</option>
                   <option data-type="1" data-url="{{ route('dashboard.document.show', $data->slug) }}">Details</option>
                   <option data-type="1" data-url="{{ route('dashboard.document.edit', $data->slug) }}">Edit</option>
                   <option data-type="0" data-action="delete" data-url="{{ route('dashboard.document.destroy', $data->slug) }}">Delete</option>

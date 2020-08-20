@@ -327,10 +327,30 @@ class DocumentService extends BaseService{
 
 
 
-    public function dissemination($slug){
+    public function dissemination($request, $slug){
 
         $document = $this->document_repo->findBySlug($slug);
-        return view('dashboard.document.dissemination')->with('document', $document);
+        return view('dashboard.document.dissemination')->with(['document'=>$document, 'request' => $request]);
+
+
+        // if(!empty($request->send_copy)){
+        //     if($request->send_copy == 1){
+
+        //         //SEND COPY
+        //         $document = $this->document_repo->findBySlug($slug);
+        //         return view('dashboard.document.dissemination_send_copy')->with('document', $document);
+                
+        //     }else{
+        //         $document = $this->document_repo->findBySlug($slug);
+        //         return view('dashboard.document.dissemination')->with('document', $document);
+        //     }
+        // }else{
+           
+        //     $document = $this->document_repo->findBySlug($slug);
+        //     return view('dashboard.document.dissemination')->with('document', $document);
+           
+        // }
+        
 
     }
 
@@ -422,12 +442,24 @@ class DocumentService extends BaseService{
 
         //STORING LOG TO DATABASE
         foreach ($cc as $key => $recepient) {
+
+            if(empty($request->send_copy)){
+                $send_copy = null;
+            }else{
+                if($request->send_copy == 1){
+                    $send_copy = $request->send_copy;
+
+                }else{
+                    $send_copy = null;
+                }
+            }
+            
             if($recepient['type'] == "employee"){
-                $ddl = $this->ddl_repo->store($request, $key, null, $document->document_id, $recepient['email'], $status);
+                $ddl = $this->ddl_repo->store($request, $key, null, $document->document_id, $recepient['email'], $status, $send_copy);
             }
 
             if($recepient['type'] == "contact"){
-                $ddl = $this->ddl_repo->store($request, null, $key, $document->document_id, $recepient['email'], $status);
+                $ddl = $this->ddl_repo->store($request, null, $key, $document->document_id, $recepient['email'], $status, $send_copy);
             }
         }
         

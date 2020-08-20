@@ -340,7 +340,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
     public function getAll(){
 
         $employees = $this->cache->remember('employees:getAll', 240, function(){
-            return $this->employee->select('slug', 'employee_no', 'fullname')
+            return $this->employee->select('slug', 'employee_no', 'fullname', 'email')
                                   ->where('is_active', 'ACTIVE')
                                   ->orderBy('lastname', 'ASC')
                                   ->get();

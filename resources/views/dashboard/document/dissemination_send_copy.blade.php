@@ -6,21 +6,12 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 ?>
 
 
-@if($request->send_copy == 1)
-  @include("dashboard.document.dissemination_send_copy")
-  @php
-  exit();
-  @endphp
-@endif
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
     
   <section class="content-header">
-      <h1>Document Dissemination</h1>
+      <h1>Send a copy of a document</h1>
       <div class="pull-right" style="margin-top: -25px;">
         {!! __html::back_button(['dashboard.document.index']) !!}
       </div>
@@ -28,13 +19,18 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
   <section class="content">
 
-    <div class="box">
+    <div class="box box-danger">
 
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}?send_copy=1">
 
         @csrf
 
         <div class="box-body">
+          <div class="callout callout-warning">
+                <h4>Warning!</h4>
+
+                <p>Sending document as copy will not reflect in Document Dissemination Reports</p>
+              </div>
 
           {{-- Navigation --}}
           <div class="nav-tabs-custom">
@@ -103,7 +99,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
 
                       <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-default">Send <i class="fa fa-fw fa-envelope-o"></i></button>
+                        <button type="submit" class="btn btn-default">Send a copy<i class="fa fa-fw fa-envelope-o"></i></button>
                       </div>
                   </div>
                 </div>
@@ -117,15 +113,11 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                       <div class="row">
                         <div class="col-md-12">
                           <b>
-                            {{count($document->documentDisseminationLog)}} log(s) found.
+                            {{count($document->documentDisseminationLogSendCopy)}} log(s) found.
                           </b>
                           <i>
-                            This list does not include emails that are sent via "Send a copy" function.
+                            The list below only shows emails that are sent via "Send a copy" function.
                           </i>
-                        <a href="{{route('dashboard.document.dissemination.print',$document->slug)}}" target="_blank">
-                            <button type="button" class="btn btn-default btn-sm pull-right"><i class="fa fa-print"></i> Print</button>
-                        </a>
-                          
            
                         </div>
                       </div>
@@ -142,7 +134,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
                         <tbody>
 
-                          @foreach ($document->documentDisseminationLog as $data)
+                          @foreach ($document->documentDisseminationLogSendCopy as $data)
                           
                             <tr>
                               @if (!empty($data->employee))

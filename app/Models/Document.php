@@ -50,10 +50,17 @@ class Document extends Model{
 
     // Relationships
 
-    public function documentDisseminationLog(){
+    public function documentDisseminationLogAll(){
         return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id');
     }
 
+    public function documentDisseminationLog(){
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->whereNull('send_copy');
+    }
 
+
+    public function documentDisseminationLogSendCopy(){
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->where('send_copy','=', 1);
+    }
 
 }

@@ -7,7 +7,7 @@ use App\Http\Requests\Document\DocumentFormRequest;
 use App\Http\Requests\Document\DocumentFilterRequest;
 use App\Http\Requests\Document\DocumentDownloadRequest;
 use App\Http\Requests\Document\DocumentDisseminationRequest;
-
+use Illuminate\Http\Request;
 
 class DocumentController extends Controller{
 
@@ -116,9 +116,9 @@ class DocumentController extends Controller{
 
 
 
-    public function dissemination($slug){
+    public function dissemination(Request $request, $slug){
 
-       return $this->document->dissemination($slug); 
+       return $this->document->dissemination($request, $slug); 
 
     }
 
