@@ -118,7 +118,7 @@ class DocumentController extends Controller{
 
     public function dissemination(Request $request, $slug){
 
-       return $this->document->dissemination($request, $slug); 
+       return $this->document->dissemination($request,$slug); 
 
     }
 
@@ -136,6 +136,12 @@ class DocumentController extends Controller{
         return $this->document->print($slug); 
     }
 
-
+    public function report(){
+        return view('dashboard.document.report');
+    }
     
+    public function report_generate(Request $request){
+
+        return $this->document->report_generate($request);
+    }
 }

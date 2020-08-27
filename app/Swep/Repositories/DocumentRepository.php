@@ -261,7 +261,9 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-
+     public function getRaw(){
+        return $this->document;
+    }
 
 
 

@@ -566,8 +566,41 @@ class DocumentService extends BaseService{
 
 
 
+    public function report_generate($request){
+        $logs =  $this->ddl_repo->getRaw();
+        $dt = null;
+        $df = null;
+
+        if(!empty($request->df) AND !empty($request->dt)){
+            $df = date("Ymd",strtotime($request->df));
+            $dt = date("Ymd",strtotime($request->dt));
+        }
+        
+        $logs = $logs->whereBetween('sent_at',[$df,$dt])->get();
 
 
+        $logs_by_date = [];
 
+        foreach ($logs as $key => $log) {
+
+            $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['found'][$log->slug] = $log;
+
+            $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['subject'] = $log->document->subject;
+        }
+        //return $logs_by_date;
+        return view("printables.document.disseminated_report")->with([
+            'inclusive_dates' => [
+                'from' => $df,
+                'to' => $dt
+            ],
+
+            'logs' => $logs_by_date
+        ]);
+        // return $documents->get();
+    }
+
+    private function ymd($var){
+        return date("Ymd", strtotime($var));
+    }
 
 }

@@ -40,7 +40,13 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#email_dissemination" data-toggle="tab">Email Dissemination</a></li>
-              <li><a href="#sent" data-toggle="tab">Sent</a></li>
+              <li>
+                <a href="#sent" data-toggle="tab">Logs
+                  @if(count($document->documentDisseminationLog)>0)
+                  <span class="label label-success" style="font-size: 11px !important">{{count($document->documentDisseminationLog)}} </span>
+                  @endif
+                </a>
+              </li>
             </ul>
 
             <div class="tab-content">

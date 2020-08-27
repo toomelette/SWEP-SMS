@@ -50,7 +50,9 @@ class DocumentDisseminationLogRepository extends BaseRepository implements Docum
     }
 
 
-
+    public function getRaw(){
+        return $this->ddl;
+    }
 
 
 }
