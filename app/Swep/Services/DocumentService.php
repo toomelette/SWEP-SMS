@@ -583,9 +583,15 @@ class DocumentService extends BaseService{
 
         foreach ($logs as $key => $log) {
 
-            $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['found'][$log->slug] = $log;
+            if(!empty($log->document)){
+                $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['found'][$log->slug] = $log;
 
-            $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['subject'] = $log->document->subject;
+                $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['subject'] = $log->document->subject;
+            }else{
+                $logs_by_date[$this->ymd($log->sent_at)]['UNKNOWN DOCUMENT']['found']['UNKNOWN DOCUMENT'] = $log;
+
+                $logs_by_date[$this->ymd($log->sent_at)]['UNKNOWN DOCUMENT']['subject'] = 'UNKNOWN DOCUMENT';
+            }
         }
         //return $logs_by_date;
         return view("printables.document.disseminated_report")->with([
