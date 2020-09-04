@@ -566,12 +566,13 @@ class DocumentService extends BaseService{
             $df = date("Ymd",strtotime($request->df));
             $dt = date("Ymd",strtotime($request->dt ."+1 day"));
         }
-        
-        $logs = $logs->whereBetween('sent_at',[$df,$dt])
-                ->where('send_copy','=',0)
+
+        $logs = $logs->where('send_copy','=',null)
+                ->orWhere('send_copy','=',0)
+                ->whereBetween('sent_at',[$df,$dt])
                 ->get();
 
-
+        //return $logs->sql();
         $logs_by_date = [];
 
         foreach ($logs as $key => $log) {
