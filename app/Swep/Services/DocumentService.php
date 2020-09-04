@@ -80,13 +80,10 @@ class DocumentService extends BaseService{
             if (isset($request->folder_code2)) {
 
                 $request->file('doc_file')->storeAs($dir2, $filename);
-
             }
-
         }
 
         $document = $this->document_repo->store($request, $filename);
-
         $this->event->fire('document.store', $document);        
         return redirect()->back();
 
@@ -233,7 +230,6 @@ class DocumentService extends BaseService{
             if ($this->storage->disk('local')->exists($file_dir2)) {
                 $this->storage->disk('local')->delete($file_dir2);
             }
-
         }
 
         $this->document_repo->destroy($document);
@@ -256,17 +252,12 @@ class DocumentService extends BaseService{
         if(!empty($document->filename)){
 
             $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
-
             if (!File::exists($path)) { return "Cannot Detect File!"; }
-
             $file = File::get($path);
             $type = File::mimeType($path);
-
             $response = response()->make($file, 200);
             $response->header("Content-Type", $type);
-
             return $response;
-
         }
 
         return abort(404);
@@ -573,10 +564,12 @@ class DocumentService extends BaseService{
 
         if(!empty($request->df) AND !empty($request->dt)){
             $df = date("Ymd",strtotime($request->df));
-            $dt = date("Ymd",strtotime($request->dt));
+            $dt = date("Ymd",strtotime($request->dt ."+1 day"));
         }
         
-        $logs = $logs->whereBetween('sent_at',[$df,$dt])->get();
+        $logs = $logs->whereBetween('sent_at',[$df,$dt])
+                ->where('send_copy','=',0)
+                ->get();
 
 
         $logs_by_date = [];
@@ -597,7 +590,7 @@ class DocumentService extends BaseService{
         return view("printables.document.disseminated_report")->with([
             'inclusive_dates' => [
                 'from' => $df,
-                'to' => $dt
+                'to' => date('Ymd',strtotime($dt.'-1 day'))
             ],
 
             'logs' => $logs_by_date

@@ -143,6 +143,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                           <th>Email</th>
                           <th>Subject</th>
                           <th>Content</th>
+                          <th>Timestamp</th>
                           <th>Status</th>
                         </tr>
 
@@ -161,7 +162,8 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                               <td>{{ $data->email }}</td>
                               <td>{{ $data->subject }}</td>
                               <td>{{ Str::limit($data->content, 30) }}</td>
-                              <td>{!! $data->status == 'SENT' ? $span_sent : $span_failed !!}</td>
+                              <td style="width: 10%">{{date("M. d, 'y | h:i A",strtotime($data->sent_at))}}</td>
+                              <td style="width: 5%">{!! $data->status == 'SENT' ? $span_sent : $span_failed !!}</td>
                             </tr>
                             
                           @endforeach

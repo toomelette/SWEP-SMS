@@ -112,7 +112,7 @@
               @if(!empty($file_errors))
                 <ul style="line-height: 2px;">
                   @foreach ($file_errors as $file_error_data)
-                      <li><p class="text-danger">Ref No: {{ $file_error_data }} has no attached file.</p></li><br>
+                     {{--  <li><p class="text-danger">Ref No: {{ $file_error_data }} has no attached file.</p></li><br> --}}
                   @endforeach
                 </ul>
               @endif
@@ -126,7 +126,7 @@
                     <i class="fa fa-file-o"></i>
                   </a>
                 @else
-                  <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-exclamation-circle"></i></a>
+                  <a href="#" class="btn btn-sm btn-warning" title="File not found"><i class="fa fa-exclamation-circle" ></i></a>
                 @endif
               </td>
               <td>{{ $data->reference_no }}</td>
