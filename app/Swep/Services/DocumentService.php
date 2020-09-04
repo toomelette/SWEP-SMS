@@ -568,7 +568,6 @@ class DocumentService extends BaseService{
         }
 
         $logs = $logs->where('send_copy','=',null)
-                ->orWhere('send_copy','=',0)
                 ->whereBetween('sent_at',[$df,$dt])
                 ->get();
 
