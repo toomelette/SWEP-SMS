@@ -34,6 +34,7 @@
 </head>
 <body onload="window.print();" onafterprint="window.close()">
 
+
 <div class="printable">
   
 
@@ -382,7 +383,7 @@
         {{-- OR --}}
         <div class="row" style="padding-bottom: 5px;">
           
-          <div class="col-sm-8 div-height" style="border-right:solid 1.4px; border-top:solid 1.4px;">
+          <div class="col-sm-8 " style="border-right:solid 1.4px; border-top:solid 1.4px;">
             <p style="font-size:10px;">&nbsp;Official Receipt (OR)/Other Documents:</p>
           </div>
 
