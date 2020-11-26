@@ -32,7 +32,8 @@
   </style>
 
 </head>
-<body onload="" onafterprint="">
+<body onload="window.print();" onafterprint="window.close()">
+
 <div class="printable">
   
 
