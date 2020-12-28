@@ -121,6 +121,7 @@
             <span style="font-size:12px; font-weight:bold; word-wrap: break-word; margin-left: 2px;">{!! $disbursement_voucher->payee !!}</span>
           </div>
 
+
           <div class="col-sm-3 div-height" style="border-right:solid 1.4px; line-height: 1.3; padding-left:0;">
             <span style="font-size:9px; padding-left:2px;">TIN / Employee No.:</span>
             <br><span style="font-size:12px; font-weight:bold; padding-left:15px;">{!! $disbursement_voucher->tin !!}</span>
