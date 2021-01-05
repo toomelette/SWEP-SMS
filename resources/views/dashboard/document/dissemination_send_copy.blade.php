@@ -6,21 +6,12 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 ?>
 
 
-@if($request->send_copy == 1)
-  @include("dashboard.document.dissemination_send_copy")
-  @php
-  exit();
-  @endphp
-@endif
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
     
   <section class="content-header">
-      <h1>Document Dissemination</h1>
+      <h1>Send a copy of a document</h1>
       <div class="pull-right" style="margin-top: -25px;">
         {!! __html::back_button(['dashboard.document.index']) !!}
       </div>
@@ -28,28 +19,34 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
   <section class="content">
 
-    <div class="box">
+    <div class="box box-danger">
 
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}">
+      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.dissemination_post', $document->slug) }}?send_copy=1">
 
         @csrf
 
         <div class="box-body">
+          <div class="callout callout-warning">
+                <h4>Warning!</h4>
+
+                <p>Sending document as copy will not reflect in Document Dissemination Reports</p>
+              </div>
 
           {{-- Navigation --}}
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#email_dissemination" data-toggle="tab">Email Dissemination</a></li>
               <li>
-                <a href="#sent" data-toggle="tab">Logs
-                  @if(count($document->documentDisseminationLog)>0)
-                  <span class="label label-success" style="font-size: 11px !important">{{count($document->documentDisseminationLog)}} </span>
+                <a href="#sent" data-toggle="tab">
+                Logs  
+                @if(count($document->documentDisseminationLogSendCopy)>0)
+                  <span class="label label-success" style="font-size: 11px !important">{{count($document->documentDisseminationLogSendCopy)}} </span>
                   @endif
                 </a>
               </li>
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content" style="background-color: #e8f5e866">
 
 
               {{-- Personal Info --}}
@@ -109,7 +106,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
 
                       <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-default">Send <i class="fa fa-fw fa-envelope-o"></i></button>
+                        <button type="submit" class="btn btn-default">Send a copy<i class="fa fa-fw fa-envelope-o"></i></button>
                       </div>
                   </div>
                 </div>
@@ -123,20 +120,16 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                       <div class="row">
                         <div class="col-md-12">
                           <b>
-                            {{count($document->documentDisseminationLog)}} log(s) found.
+                            {{count($document->documentDisseminationLogSendCopy)}} log(s) found.
                           </b>
                           <i>
-                            This list does not include emails that are sent via "Send a copy" function.
+                            The list below only shows emails that are sent via "Send a copy" function.
                           </i>
-                        <a href="{{route('dashboard.document.dissemination.print',$document->slug)}}" target="_blank">
-                            <button type="button" class="btn btn-default btn-sm pull-right"><i class="fa fa-print"></i> Print</button>
-                        </a>
-                          
            
                         </div>
                       </div>
                       <hr style="margin-top: 3px">
-                      <table class="table table-hover">
+                      <table class="table table-hover table-striped">
 
                         <tr>
                           <th>Fullname</th>
@@ -149,25 +142,20 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
                         <tbody>
 
-                          @foreach ($document->documentDisseminationLog as $data)
-                          
+                          @foreach ($document->documentDisseminationLogSendCopy as $data)
                             <tr>
-                              <td>
-                                @if (!empty($data->employee))
-                                  {{ $data->employee->fullname }} 
-                                @elseif(!empty($data->emailContact->name))
-                                  {{ $data->emailContact->name }}
-                                @endif
-                              </td>
+                              @if (!empty($data->employee))
+                                <td>{{ $data->employee->fullname }}</td>  
+                              @else
+                                <td>{{ $data->emailContact->name }}</td>
+                              @endif
                               <td>{{ $data->email }}</td>
                               <td>{{ $data->subject }}</td>
                               <td>{{ Str::limit($data->content, 30) }}</td>
                               <td style="width: 10%">{{date("M. d, 'y | h:i A",strtotime($data->sent_at))}}</td>
                               <td style="width: 5%">{!! $data->status == 'SENT' ? $span_sent : $span_failed !!}</td>
                             </tr>
-                            
                           @endforeach
-
                         </tbody>
 
                       </table>

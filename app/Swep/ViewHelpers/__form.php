@@ -52,17 +52,48 @@ class __form{
 
     public static function select_static($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr){
       
-       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
-                <label for="'. $key .'">'. $label .'</label>
-                <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>
-                  <option value="">Select</option>
-                  '. self::static_options($array, $old_value) .'
-                </select>
-                '. self::error_message($error_has, $error_first) .'
-              </div>';
+
+     return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+              <label for="'. $key .'">'. $label .'</label>
+              <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>
+                <option value="">Select</option>
+                '. self::static_options($array, $old_value) .'
+              </select>
+              '. self::error_message($error_has, $error_first) .'
+            </div>';
                 
     }
 
+
+    public static function select_static2($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr){
+        
+      $select = '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+              <label for="'. $key .'">'. $label .'</label>
+              <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>';
+
+      if($old_value == null){
+        $select .= '<option value="" selected>Select</option>';
+      }else{
+        $select .= '<option value="">Select</option>';
+      }
+
+      foreach ($array as $key => $value) {
+        $s = '';
+        if($old_value == $value){
+          $s = "selected";
+        }
+        $select .= '<option value="'.$value.'" '.$s.' >'.$key.'</option>' ;
+      }
+      
+
+      $select .= '</select>'. self::error_message($error_has, $error_first).'
+            </div>';
+
+
+      
+     return $select;
+                
+    }
 
 
     public static function textarea($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr){

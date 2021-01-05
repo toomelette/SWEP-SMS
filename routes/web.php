@@ -106,6 +106,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** DOCUMENTS **/
+	Route::get('/document/report', 'DocumentController@report')->name('document.report');
+	Route::get('/document/report_generate', 'DocumentController@report_generate')->name('document.report_generate');
+
 	Route::get('/document/view_file/{slug}', 'DocumentController@viewFile')->name('document.view_file');
 	Route::get('/document/download', 'DocumentController@download')->name('document.download');
 	Route::post('/document/download_direct/{slug}', 'DocumentController@downloadDirect')->name('document.download_direct');
@@ -114,6 +117,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('document', 'DocumentController');
 
 	Route::get('/document/dissemination/print/{slug}', 'DocumentController@print')->name('document.dissemination.print');
+
+	
+
+
 
 
 	/** Document Folder Codes **/

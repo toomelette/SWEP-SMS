@@ -89,8 +89,10 @@ class EmployeeService extends BaseService{
 
 
     public function update($request, $slug){
-        
         $employee = $this->employee_repo->update($request, $slug);
+
+
+
         $this->fillDependencies($request, $employee);
 
         $this->event->fire('employee.update', $employee);
@@ -144,6 +146,8 @@ class EmployeeService extends BaseService{
 
     public function reportGenerate($request){
 
+
+
         if($request->r_type == 'ALPHA'){
             $employees = $this->employee_repo->getByIsActive('ACTIVE');
             return view('printables.employee.alphalist')->with('employees', $employees);
@@ -153,9 +157,16 @@ class EmployeeService extends BaseService{
         }elseif($request->r_type == 'UNIT'){
             $dept_units = $this->dept_unit_repo->getAll();
             return view('printables.employee.by_unit')->with('dept_units', $dept_units);
+        }elseif($request->r_type == 'RES_CITY') {
+            //$dept_units = $this->dept_unit_repo->getAll();
+            $employees = $this->employee_repo->getAllByResidentialAddressCity();
+       
+            return view('printables.employee.by_res_city')->with('employees',$employees);
         }else{
             abort(404);
         }
+
+
 
 
 
@@ -169,11 +180,12 @@ class EmployeeService extends BaseService{
     // Utils
     private function fillDependencies($request, $employee){
 
-        // Employee Family Details, Address, Other Questions
+        // Employee Family Details, Address, Other Questions, Health Declaration
         $this->employee_repo->storeFamilyDetails($request, $employee);
         $this->employee_repo->storeAddress($request, $employee);
         $this->employee_repo->storeQuestions($request, $employee);
-
+        $this->employee_repo->storeHealthDeclaration($request, $employee);
+        
         // Employee Children
         if(!empty($request->row_children)){
             foreach ($request->row_children as $row) {
@@ -234,6 +246,15 @@ class EmployeeService extends BaseService{
         if(!empty($request->row_reference)){
             foreach ($request->row_reference as $row) {
                 $this->employee_repo->storeReference($row, $employee);
+            }
+        }
+
+
+        // Employee Medical Histories
+
+        if(!empty($request->medical_histories)){
+            foreach ($request->medical_histories as $key => $medical_history) {
+                $this->employee_repo->storeMedicalHistory($medical_history, $request->medications[$key] , $employee);
             }
         }
 

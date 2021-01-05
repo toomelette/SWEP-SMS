@@ -61,7 +61,7 @@
           <div class="col-md-12" style="padding-top:50px;">
             <div class="box box-solid">
               <div class="box-header with-border">
-                <h3 class="box-title">User Menu</h3>
+                <h3 class="box-title">User Menus</h3>
                 <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
               </div>
               
@@ -169,9 +169,6 @@
 </section>
 
 @endsection
-
-
-
 
 
 

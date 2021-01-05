@@ -28,6 +28,7 @@
   <section class="content">
     
     {{-- Form Start --}}
+    
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.document_folder.index') }}">
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
@@ -45,8 +46,11 @@
         <table class="table">
           <tr>
             <th>@sortablelink('folder_code', 'Folder Code')</th>
+            <th>Documents</th>
             <th style="width: 150px">Action</th>
           </tr>
+
+
           @foreach($doc_folders as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td id="mid-vert">
@@ -54,7 +58,12 @@
                   {{ $data->folder_code .' - '. $data->description }}
                 </a>
               </td>
+<<<<<<< HEAD
               <td id="mid-vert"> 
+=======
+              <td style="width: 50px" class="text-center">{{count($data->documents1) + count($data->documents2)}}</td>
+              <td> 
+>>>>>>> fbc39d0b3095af5a7814a69f658062e24cc7225f
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.document_folder.edit', $data->slug) }}">Edit</option>

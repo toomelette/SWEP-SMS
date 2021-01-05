@@ -66,16 +66,25 @@
             <th>@sortablelink('employee_no', 'Employee No.')</th>
             <th>@sortablelink('fullname', 'Fullname')</th>
             <th>@sortablelink('position', 'Position')</th>
+            <th>@sortablelink('email', 'Email')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($employees as $data) 
 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               
+<<<<<<< HEAD
               <td id="mid-vert">{{ $data->employee_no }}</td>
               <td id="mid-vert">{{ $data->fullname }}</td>
               <td id="mid-vert">{{ $data->position }}</td>
               <td id="mid-vert">
+=======
+              <td>{{ $data->employee_no }}</td>
+              <td>{{ $data->fullname }}</td>
+              <td>{{ $data->position }}</td>
+              <td style="width: 20%">{{ $data->email }}</td>
+              <td>
+>>>>>>> fbc39d0b3095af5a7814a69f658062e24cc7225f
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.employee.show', $data->slug) }}">Details</option>

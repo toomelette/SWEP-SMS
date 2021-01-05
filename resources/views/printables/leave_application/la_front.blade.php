@@ -158,7 +158,7 @@
       <div class="row">
 
         <div class="col-sm-1">
-          @if($leave_application->type == 'T1001')
+          @if($leave_application->type == 'VL')
             <div style="width: 20px; height: 20px; border: 10px solid;"></div>
           @else
             <div style="width: 20px; height: 20px; border: 1.4px solid;"></div>
@@ -256,7 +256,7 @@
       <div class="row" style="padding-bottom:5px;">
 
         <div class="col-sm-1">
-          @if($leave_application->type == 'T1002')
+          @if($leave_application->type == 'SL')
             <div style="width: 20px; height: 20px; border: 10px solid;"></div>
           @else
             <div style="width: 20px; height: 20px; border: 1.4px solid;"></div>
@@ -280,7 +280,7 @@
       <div class="row" style="padding-bottom:5px;">
 
         <div class="col-sm-1">
-          @if($leave_application->type == 'T1003')
+          @if($leave_application->type == 'ML')
             <div style="width: 20px; height: 20px; border: 10px solid;"></div>
           @else
             <div style="width: 20px; height: 20px; border: 1.4px solid;"></div>
@@ -317,7 +317,7 @@
       <div class="row" style="padding-bottom:5px;">
 
         <div class="col-sm-1">
-          @if($leave_application->type == 'T1004')
+          @if($leave_application->type != 'SL' && $leave_application->type != 'ML' && $leave_application->type != 'VL')
             <div style="width: 20px; height: 20px; border: 10px solid;"></div>
           @else
             <div style="width: 20px; height: 20px; border: 1.4px solid;"></div>
@@ -327,9 +327,15 @@
         <div class="col-sm-5">
           <span style="font-size:14px; margin-left:-30px;">Others (Specify) &nbsp;&nbsp;</span>
           @if($leave_application->type == 'T1004')
-            <span style="text-decoration: underline; font-weight: bold;">{{ $leave_application->type_others_specific }}</span>
+            <span style="text-decoration: underline; font-weight: bold;"> {{ $leave_application->type_others_specific }}</span>
           @else
-            _________________________ ____________________________________
+              @if($leave_application->type != 'SL' && $leave_application->type != 'ML' && $leave_application->type != 'VL')
+            <u>{{array_search($leave_application->type ,__static::leave_types()) }}</u>
+                ____________________________________
+                @else
+               _________________________
+               ____________________________________
+                @endif
           @endif
         </div>
 

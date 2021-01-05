@@ -1,3 +1,30 @@
+<?php
+  $medical_history_options = [
+    'Hypertension' , 
+    'Vertigo/Chronic Headache',
+    'Diabetes',
+    'High Cholesterol',
+    'Asthma',
+    'Tuberculosis',
+    'EENT Disorder',
+    'Chronic Obstructive Pulmonary Disease (COPD)',
+    'Heart Disorder',
+    'Kidney Disease',
+    'Liver/Gallbladder Disease',
+    'Peptic Ulcer',
+    'UTI',
+    'Allergies',
+    'Infectious Disease',
+    'Stress Disorder',
+    'Measles',
+    'Chicken Pox',
+    'Depression/Anxiety Disorder',
+    'Hepatitis',
+    'Anemia',
+    'Epilepsy'
+  ];
+
+?>
 @extends('layouts.admin-master')
 
 @section('content')
@@ -43,10 +70,10 @@
               <li><a href="#cre" data-toggle="tab">Credentials</a></li>
               <li><a href="#or" data-toggle="tab">Other Records</a></li>
               <li><a href="#oq" data-toggle="tab">Other Questions</a></li>
+              <li><a href="#health_declaration" data-toggle="tab">Health Declaration <span class="label label-success">NEW</span></a></li>
             </ul>
 
             <div class="tab-content">
-
 
               {{-- Personal Info --}}
               <div class="tab-pane active" id="pi">
@@ -274,12 +301,6 @@
               </div>
 
 
-
-
-
-
-
-
               {{-- Family Info --}}
               <div class="tab-pane" id="fi">
                 <div class="row">
@@ -473,11 +494,6 @@
               </div>
 
 
-
-
-
-
-
               {{-- Appointment Details --}}
               <div class="tab-pane" id="ad">
                 <div class="row">
@@ -630,13 +646,6 @@
 
                 </div>
               </div>
-
-
-
-
-
-
-
 
 
 
@@ -937,8 +946,6 @@
                   </div>
 
 
-
-
                   {{-- Work Experience --}}
                   <div class="col-md-12" style="padding-top: 30px;">
                     <div class="box">
@@ -1106,20 +1113,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
               {{-- Other Records --}}
               <div class="tab-pane" id="or">
                 <div class="row">
-
 
 
                   {{-- Voluntary Work --}}
@@ -1253,7 +1249,6 @@
                        
                       </div>
                     </div>
-
                   </div>
                   
 
@@ -1329,8 +1324,6 @@
                   </div>
 
 
-
-
                   {{-- Organizations --}}
                   <div class="col-md-12" style="padding-top: 30px;">
                       
@@ -1401,7 +1394,6 @@
 
 
 
-
                   {{-- Special Skills --}}
                   <div class="col-md-12" style="padding-top: 30px;">
                       
@@ -1469,8 +1461,6 @@
                       </div>
                     </div>
                   </div>
-
-
 
 
                   {{-- References --}}
@@ -1571,14 +1561,6 @@
 
                 </div>
               </div>
-
-
-
-
-
-
-
-
 
 
               {{-- Questions --}}
@@ -1804,7 +1786,297 @@
               </div>
 
 
+              {{-- Health Declaration --}}
+              <div class="tab-pane" id="health_declaration">
+                <div class="row">
+                  
+                  <div class="col-md-12" style="padding-bottom: 10px;">
+                    <div class="col-md-12">
 
+                      <p class="text-primary well well-sm no-shadow">
+                        <i class="fa fa-info-circle"></i>
+                        Please be advised that the information below shall only be used in relation to COVID-19 and other medical internal protocols in accordance with Data Privacy Act.
+                      </p>
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-md-12">
+
+                    <div class="row"> 
+                      <div class="col-md-12">
+                        {!! __form::textbox(
+                           '3', 'family_doctor', 'text', 'Family Doctor, if any', 'Family Doctor, if any', old('family_doctor') ? old('family_doctor') : optional($employee->employeeHealthDeclaration)->family_doctor, $errors->has('family_doctor'), $errors->first('family_doctor'), ''
+                        ) !!}
+
+                        {!! __form::textbox(
+                           '2', 'contact_person', 'text', 'Contact person in case of emergency', 'Contact Person in case of emergency', old('contact_person') ? old('contact_person') : optional($employee->employeeHealthDeclaration)->contact_person, $errors->has('contact_person'), $errors->first('contact_person'), ''
+                        ) !!}
+
+                        {!! __form::textbox(
+                           '2', 'contact_person_phone', 'text', "Contact person's phone", "Contact person's phone", old('contact_person_phone') ? old('contact_person_phone') : optional($employee->employeeHealthDeclaration)->contact_person_phone, $errors->has('contact_person_phone'), $errors->first('contact_person_phone'), ''
+                        ) !!}
+
+                        {!! __form::textbox(
+                           '5', 'cities_ecq', 'text', "Cities in the Philippines you have worked, visited, transited in the past 14 days/ECQ period", "Cities in the Philippines you have worked, visited, transited in the past 14 days/ECQ period", old('cities_ecq') ? old('cities_ecq') : optional($employee->employeeHealthDeclaration)->cities_ecq , $errors->has('cities_ecq'), $errors->first('cities_ecq'), ''
+                        ) !!}
+
+                        <div class="col-md-12" style="border-top:solid 1px; padding-bottom:15px; color:gray;"></div>
+
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="col-md-6">
+                          <p style="margin-bottom:-10px; font-weight: bold;">Have you been sick in the past 30 days? Hospital visited if any?</p>
+                          {!! __form::select_static(
+                            '6', 'been_sick', '', old('been_sick') ? old('been_sick') : optional($employee->employeeHealthDeclaration)->been_sick, ['YES' => 'true', 'NO' => 'false'], $errors->has('been_sick'), $errors->first('been_sick'), '', ''
+                          ) !!}
+                        </div>
+
+                        <div class="col-md-6">
+                          <p style="margin-bottom:-10px;">If YES, pls. describe condition: </p>
+                          {!! __form::textbox(
+                           '12', 'been_sick_yes_details', 'text', '', '', old('been_sick_yes_details') ? old('been_sick_yes_details') : optional($employee->employeeHealthDeclaration)->been_sick_yes_details, $errors->has('been_sick_yes_details'), $errors->first('been_sick_yes_details'), ''
+                        ) !!}
+                        </div>
+
+                        <div class="col-md-6">
+                          <p style="margin-bottom:-10px; font-weight: bold;">In the last 14 days, did you have any of the following: fever, colds, cough, sore throat or difficulty in breating, diarrhea?</p>
+                          {!! __form::select_static2(
+                            '6', 'fever_colds', '', old('fever_colds') ? old('fever_colds') : optional($employee->employeeHealthDeclaration)->fever_colds , ['YES' => 'true', 'NO' => 'false'], $errors->has('fever_colds'), $errors->first('fever_colds'), '', ''
+                          ) !!}
+                        </div>
+
+                        <div class="col-md-6">
+                          <p style="margin-bottom:-10px;">If YES, pls. describe condition: </p>
+                          {!! __form::textbox(
+                           '12', 'fever_colds_yes_details', 'text', '', '', old('fever_colds_yes_details') ? old('fever_colds_yes_details') : optional($employee->employeeHealthDeclaration)->fever_colds_yes_details, $errors->has('fever_colds_yes_details'), $errors->first('fever_colds_yes_details'), ''
+                        ) !!}
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;">
+                      
+                    </div>
+                    <div class="form-group col-md-12 ">
+                      <label for="family_doctor">Medical history</label>
+                      <br>
+
+                      <?php
+                      $medical_histories_db = [];
+                      if (!empty($employee->employeeMedicalHistories)){
+                        foreach ($employee->employeeMedicalHistories as $key => $medical_history) {
+                          $medical_histories_db[$medical_history['medical_history']] = $medical_history['medication'];
+                        }
+
+                      }
+                      ?>
+                      <select name="medical_histories[]" id="medical_history" class="form-control select2" multiple="multiple" style="width: 100%">
+                        @foreach($medical_history_options as $option)
+                          @if(isset($medical_histories_db[$option]))
+                            <option value="{{$option}}" selected="">{{$option}}</option>
+                          @else
+                            <option value="{{$option}}">{{$option}}</option>
+                          @endif
+                        @endforeach
+                        
+                      </select>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <br>
+                          <table id="medical_history_table" class="table table-bordered table-striped">
+                            <thead class="bg-info">
+                              <tr>
+                                <th>Medical Condition</th>
+                                <th>Medication</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($medical_histories_db as $key => $medication_db)
+                                <tr>
+                                  <td>{{$key}}</td>
+                                  <td>
+                                    <input class="form-control input-sm" id="med_{{$key}}" name="medications[]" type="text" value="{{$medication_db}}" placeholder="Medication">
+                                  </td>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;">
+                      
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label style="padding-left: 15px;"><i>SOCIAL HISTORY / CURRENT</i> </label>
+                      <hr style="margin-bottom: 10px;margin-top: 0px;">
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">1. Do you SMOKE/VAPE?</p>
+                        {!! __form::select_static2(
+                          '6', 'smoking', '', old('smoking') ? old('smoking') : optional($employee->employeeHealthDeclaration)->smoking, ['YES' => 'true', 'NO' => 'false'], $errors->has('smoking'), $errors->first('smoking'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, number of packs per day: </p>
+                        {!! __form::textbox(
+                         '12', 'smoking_yes_details', 'text', '', '', old('smoking_yes_details') ? old('smoking_yes_details') : optional($employee->employeeHealthDeclaration)->smoking_yes_details, $errors->has('smoking_yes_details'), $errors->first('smoking_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">2. Do you DRINK ALCOHOL?</p>
+                        {!! __form::select_static2(
+                          '6', 'drinking', '', old('drinking') ? old('drinking') : optional($employee->employeeHealthDeclaration)->drinking , ['YES' => 'true', 'NO' => 'false'], $errors->has('drinking'), $errors->first('drinking'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, how often? </p>
+                        {!! __form::textbox(
+                         '12', 'drinking_yes_details', 'text', '', '', old('drinking_yes_details') ? old('drinking_yes_details') : optional($employee->employeeHealthDeclaration)->drinking_yes_details, $errors->has('drinking_yes_details'), $errors->first('drinking_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">3. Do you take prohibited DRUGS?</p>
+                        {!! __form::select_static2(
+                          '6', 'taking_drugs', '', old('taking_drugs') ? old('taking_drugs') : optional($employee->employeeHealthDeclaration)->taking_drugs , ['YES' => 'true', 'NO' => 'false'], $errors->has('taking_drugs'), $errors->first('taking_drugs'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, specify: </p>
+                        {!! __form::textbox(
+                         '12', 'taking_drugs_yes_details', 'text', '', '', old('taking_drugs_yes_details') ? old('taking_drugs_yes_details') : optional($employee->employeeHealthDeclaration)->taking_drugs_yes_details, $errors->has('taking_drugs_yes_details'), $errors->first('taking_drugs_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+                    <label style="padding-left:30px;"><i>HEALTH ROUTINES</i> </label>
+
+                    <hr style="margin-bottom: 10px;margin-top: 0px;">
+
+
+                      
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">1. Do you take VITAMINS?</p>
+            
+                        {!! __form::select_static2(
+                          '6', 'taking_vitamins', '', old('taking_vitamins') ? old('taking_vitamins') : optional($employee->employeeHealthDeclaration)->taking_vitamins , ['YES' => 'true', 'NO' => 'false'], $errors->has('taking_vitamins'), $errors->first('taking_vitamins'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, specify: </p>
+                        {!! __form::textbox(
+                         '12', 'taking_vitamins_yes_details', 'text', '', '', old('taking_vitamins_yes_details') ? old('taking_vitamins_yes_details') : optional($employee->employeeHealthDeclaration)->taking_vitamins_yes_details, $errors->has('taking_vitamins_yes_details'), $errors->first('taking_vitamins_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">2. Do you wear EYEGLASSES?</p>
+                        {!! __form::select_static2(
+                          '6', 'eyeglasses', '', old('eyeglasses') ? old('eyeglasses') : optional( $employee->employeeHealthDeclaration)->eyeglasses , ['YES' => 'true', 'NO' => 'false'], $errors->has('eyeglasses'), $errors->first('eyeglasses'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, specify visual actuality: </p>
+                        {!! __form::textbox(
+                         '12', 'eyeglasses_yes_details', 'text', '', '', old('eyeglasses_yes_details') ? old('eyeglasses_yes_details') : optional($employee->employeeHealthDeclaration)->eyeglasses_yes_details, $errors->has('eyeglasses_yes_details'), $errors->first('eyeglasses_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">3. Do you do Physical Conditioning (Exercise)?</p>
+                        {!! __form::select_static2(
+                          '6', 'exercise', '', old('exercise') ? old('exercise') : optional($employee->employeeHealthDeclaration)->exercise , ['YES' => 'true', 'NO' => 'false'], $errors->has('exercise'), $errors->first('exercise'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, how often? </p>
+                        {!! __form::textbox(
+                         '12', 'exercise_yes_details', 'text', '', '', old('exercise_yes_details') ? old('exercise_yes_details') : optional($employee->employeeHealthDeclaration)->exercise_yes_details, $errors->has('exercise_yes_details'), $errors->first('exercise_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+
+                    <label style="padding-left: 30px;"><i>CURRENT MEDICAL CONDITION</i> </label>
+                    
+                    <hr style="margin-bottom: 10px;margin-top: 0px;">
+
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px; font-weight: bold;">Are you currently being treated for any underlying medical conditions? <i>(ie. Diabetes, hypertension, cancer, COPD, etc.)</i></p>
+                        {!! __form::select_static2(
+                          '6', 'being_treated', '', old('being_treated') ? old('being_treated') : optional($employee->employeeHealthDeclaration)->being_treated , ['YES' => 'true', 'NO' => 'false'], $errors->has('being_treated'), $errors->first('being_treated'), '', ''
+                        ) !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, specify: <i><b>(Name, dose and frequency of any medicines)</b></i> </p>
+                        {!! __form::textbox(
+                         '12', 'being_treated_yes_details', 'text', '', '', old('being_treated_yes_details') ? old('being_treated_yes_details') : optional($employee->employeeHealthDeclaration)->being_treated_yes_details, $errors->has('being_treated_yes_details'), $errors->first('being_treated_yes_details'), ''
+                      ) !!}
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+
+                        <p style="margin-bottom:-10px; font-weight: bold;">
+                          Do you have any chronic illness or injuries that must be pointed out?
+                        </p>
+                        {!! __form::select_static2(
+                          '6',
+                          'chronic_injuries',
+                          '', 
+                          old('chronic_injuries') ? old('chronic_injuries') : optional($employee->employeeHealthDeclaration)->chronic_injuries , 
+                          ['YES' => 'true', 'NO' => 'false'], 
+                          $errors->has('chronic_injuries'), 
+                          $errors->first('chronic_injuries'), 
+                          '', 
+                          '') !!}
+                      </div>
+
+                      <div class="col-md-6">
+                        <p style="margin-bottom:-10px;">If YES, specify: <i><b>(Give details of illness or injuries and their treatment details)</b></i> </p>
+                        {!! __form::textbox(
+                         '12', 'chronic_injuries_yes_details', 'text', '', '', old('chronic_injuries_yes_details') ? old('chronic_injuries_yes_details') : optional($employee->employeeHealthDeclaration)->chronic_injuries_yes_details, $errors->has('chronic_injuries_yes_details'), $errors->first('chronic_injuries_yes_details'), '') !!}
+                      </div>
+                    </div>
+
+                  </div>
+                  
+
+                </div>
+              </div>
 
             </div>
 
@@ -1813,7 +2085,9 @@
         </div>
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
+          <button type="submit" class="btn btn-default">
+            Save <i class="fa fa-fw fa-save"></i>
+          </button>
         </div>
 
       </form>
@@ -1854,6 +2128,38 @@
     ) !!}
 
 
+
+    {{-- Medical History --}}
+    $(document).ready(function() {
+
+      
+      $("#medical_history").change(function(){
+        medical_history_typed = [];
+
+        $.each($(this).val(), function(i,item){
+          medical_history_typed["med_"+item] = "";
+        });
+
+        $("#medical_history_table tbody input").each(function(){
+            medical_history_typed[$(this).attr('id')] = $(this).val() ;
+        });
+
+
+        $("#medical_history_table tbody").html("");
+        $.each($(this).val(), function(i,item){
+
+          if(medical_history_typed["med_"+item] != ""){
+            $("#medical_history_table tbody").append("<tr><td>"+item+"</td><td><input class='form-control input-sm' id='med_"+item+"' name='medications[]' type='text' value='"+medical_history_typed["med_"+item]+"' placeholder='Medication'></td></tr>");
+          }else{
+            $("#medical_history_table tbody").append("<tr><td>"+item+"</td><td><input class='form-control input-sm' id='med_"+item+"' name='medications[]' type='text' value='' placeholder='Medication'></td></tr>");
+          }
+          
+        })
+        // console.log(medical_history_typed);
+      });
+
+
+    });
 
 
 

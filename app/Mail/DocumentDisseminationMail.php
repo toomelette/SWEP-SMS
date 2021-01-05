@@ -37,11 +37,15 @@ class DocumentDisseminationMail extends Mailable{
 
     public function build(){
 
+
+
          $path = $this->path;
          $subject = $this->subject;
          $filename = $this->filename;
          $email = $this->email;
          $content = $this->content;
+
+         
 
         return $this->subject($subject)
                     ->attach($path, ['name' => $filename, 'mime' => 'application/pdf'])
