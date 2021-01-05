@@ -285,23 +285,67 @@ class DocumentService extends BaseService{
 
             $zip->open($request->y .'-'. $request->fc .'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
+            $slugs = [];
+            $filename_only = [];
+
+            function get_string_between($string, $start, $end){
+                $string = ' ' . $string;
+                $ini = strpos($string, $start);
+                if ($ini == 0) return '';
+                $ini += strlen($start);
+                $len = strpos($string, $end, $ini) - $ini;
+                return substr($string, $ini, $len);
+            }
+
             foreach ($files as $name => $file){
 
                 if (!$file->isDir()){
 
+
                     $file_path = $file->getRealPath();
 
                     $relative_path = substr($file_path, strlen($root_path));
+                    
 
+                    $rawFileName = substr($relative_path, strrpos($relative_path, "\\" )+1);
+                    
+                
                     $filename = str_replace('.pdf', '', $relative_path);
+                   
+
 
                     $relative_path = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename) .'.pdf';
 
-                    $zip->addFile($file_path, $relative_path);
+                    //filename
+                    $fn = get_string_between($relative_path,'\\','.pdf');
+                    //array_push($filename_only,$fn);
+
+                    //get folder code
+                    $fc = substr(strrchr($root_path, "/"), 1);
+
+                    $doc = $this->document_repo->getToByFileName($fn.".pdf");
+
+                    if(!empty($doc)){
+                        $new_filename = $fc."\\".$doc->reference_no ." [TO ".$doc->person_to."] - ".str_replace($doc->reference_no."-","" , $doc->filename);
+                    }else{
+                        $new_filename = "UNKNOWN.pdf";
+                    }
+
+                    $new_filename = str_replace('/', ',', $new_filename);
+
+
+                    //array_push($slugs, str_replace('/', ',', $new_filename));
+
+                    $zip->addFile($file_path, $new_filename);
                 }
 
             }
 
+            
+
+            // print("<pre>".print_r($slugs,true)."</pre>");
+            // print("<pre>".print_r($filename_only,true)."</pre>");
+            // return 1;
             $zip->close();
 
             return response()->download($request->y .'-'. $request->fc .'.zip')->deleteFileAfterSend();
@@ -314,6 +358,7 @@ class DocumentService extends BaseService{
     }
 
 
+    
 
 
 
