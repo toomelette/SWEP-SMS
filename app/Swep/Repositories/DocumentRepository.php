@@ -267,5 +267,8 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
 
-
+    public function getToByFileName($filename){
+        $document = $this->document->where('filename',$filename)->first();
+        return $document;
+    }
 }
