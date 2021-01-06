@@ -126,13 +126,12 @@ class DocumentService extends BaseService{
 
 
     public function update($request, $slug){
-        //return $request;
+
 
         $document = $this->document_repo->findBySlug($slug);
 
         $filename = $this->filename($request, $document);
 
-        // return $filename;
 
         $new_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
         $old_dir = $document->year .'/'. $document->folder_code;
@@ -637,47 +636,6 @@ class DocumentService extends BaseService{
     public function rename_all(){
         
         
-
-        //return $this->update($req,'b');
-
-
-        // $documents = $this->document_repo->getRaw()->first();
-        // $document = $documents;
-        // $req = new \Illuminate\Http\Request();
-
-            
-        // $to = '';
-        // if (!empty($document->person_to)) {
-        //     $to = "[TO ".$document->person_to."]-";
-        // }
-
-        // $filename = $document->reference_no .'-'.$to. $document->subject .'-'. $this->str->random(8).'.pdf';
-
-        // // $req->filename = $filename;
-        // // $req->person_to = $document->person_to;
-        // // $req->subject = $document->subject;
-        // // $req->reference_no = $document->reference_no;
-        // // $req->folder_code = $document->folder_code;
-
-        // $myRequest = new \Illuminate\Http\Request();
-        // $myRequest->setMethod('POST');
-        // $myRequest->request->add([
-        //     'reference_no' => $document->reference_no,
-        //     'date' => date_format($document->date,'m/d/Y'),
-        //     'person_to' => $document->person_to,
-        //     'person_from' => $document->person_from,
-        //     'type' => $document->type,
-        //     'folder_code' => $document->folder_code,
-        //     'folder_code2' => $document->folder_code2,
-        //     'remarks' => $document->remarks,
-        //     'subject' => $document->subject,
-        // ]);
-
-
-        // return $this->update($myRequest,$document->slug);
-
-
-        // return $documents;
         $documents = $this->document_repo->getRaw()->get();
         //return $documents;
         $fn = [];
@@ -716,13 +674,17 @@ class DocumentService extends BaseService{
         }
 
 
-        return 1 ;
+        return 'Done rename All';
         
 
 
 
         // print("<pre>".print_r($fn,true)."</pre>");
         //return $this->document_repo->update_rename_all('a');
+    }
+
+    public function getRaw(){
+        return $documents = $this->document_repo->getRaw();
     }
 
 }

@@ -152,7 +152,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         }
 
         $document->reference_no = $request->reference_no;
-        //$document->date = $this->__dataType->date_parse($request->date);
+        $document->date = $this->__dataType->date_parse($request->date);
         $document->person_to = $request->person_to;
         $document->person_from = $request->person_from;
         $document->type = $request->type;
@@ -161,42 +161,14 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document->folder_code2 = $request->folder_code2;
         $document->remarks = $request->remarks;
         $document->year = $this->__dataType->date_parse($request->date, 'Y');
-       // $document->updated_at = $this->carbon->now();
-        //$document->ip_updated = request()->ip();
-        //$document->user_updated = $this->auth->user()->user_id;
+        $document->updated_at = $this->carbon->now();
+        $document->ip_updated = request()->ip();
+        $document->user_updated = $this->auth->user()->user_id;
         $document->save();
 
         return $document;
         
     }
-
-
-
-    public function update_rename_all($request){
-        return 'repo';
-        // if(isset($filename)){
-        //     $document->filename = $filename;      
-        // }
-
-        // $document->reference_no = $request->reference_no;
-        // $document->date = $this->__dataType->date_parse($request->date);
-        // $document->person_to = $request->person_to;
-        // $document->person_from = $request->person_from;
-        // $document->type = $request->type;
-        // $document->subject = $request->subject;
-        // $document->folder_code = $request->folder_code;
-        // $document->folder_code2 = $request->folder_code2;
-        // $document->remarks = $request->remarks;
-        // $document->year = $this->__dataType->date_parse($request->date, 'Y');
-        // $document->updated_at = $this->carbon->now();
-        // $document->ip_updated = request()->ip();
-        // $document->user_updated = $this->auth->user()->user_id;
-        // $document->save();
-
-        // return $document;
-        
-    }
-
 
 
 

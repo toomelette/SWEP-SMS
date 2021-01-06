@@ -28,13 +28,20 @@
             {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('USER_CONFIRMATION_FAIL')) !!}
           @endif
 
-          {!! __form::textbox(
+          {{-- {!! __form::textbox(
              '3', 'y', 'text', 'Year *', 'Year', old('y'), $errors->has('y'), $errors->first('y'), ''
-          ) !!} 
+          ) !!} --}}
+
+          {!! __form::select_static(
+            '3', 'y', 'Year *',  old('y'), $years, $errors->has('y'), $errors->first('y'), '', ''
+          ) !!}
+
+
 
           {!! __form::select_dynamic(
             '3', 'fc', 'Folder Code', old('fc'), $global_document_folders_all, 'folder_code', 'folder_code', $errors->has('fc'), $errors->first('fc'), 'select2', ''
           ) !!}
+
 
         </div>
 

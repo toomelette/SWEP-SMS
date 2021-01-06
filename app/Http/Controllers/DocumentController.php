@@ -99,8 +99,12 @@ class DocumentController extends Controller{
 
 
     public function download(){
-
-        return view('dashboard.document.download');
+        $ys = [];
+        $years = $this->document->getRaw()->groupBy('year')->orderBy('year','asc')->pluck('year'); 
+        foreach ($years as $year) {
+            $ys[$year] = $year;
+        }
+        return view('dashboard.document.download')->with(['years'=> $ys]);
 
     }
 
