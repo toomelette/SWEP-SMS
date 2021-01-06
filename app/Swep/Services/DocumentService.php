@@ -65,7 +65,13 @@ class DocumentService extends BaseService{
             
         $fileext = File::extension($request->file('doc_file')->getClientOriginalName());
 
-        $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8).'.'.$fileext;
+        $to = '';
+        if (!empty($request->person_to)) {
+            $to = " [TO ".$request->person_to."] - ";
+        }
+
+
+        $filename = $request->reference_no .'-'.$to. $request->subject .'-'. $this->str->random(8).'.'.$fileext;
 
         $filename = $this->filterReservedChar($filename);
 
@@ -120,10 +126,13 @@ class DocumentService extends BaseService{
 
 
     public function update($request, $slug){
+        //return $request;
 
         $document = $this->document_repo->findBySlug($slug);
 
         $filename = $this->filename($request, $document);
+
+        // return $filename;
 
         $new_dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
         $old_dir = $document->year .'/'. $document->folder_code;
@@ -139,7 +148,7 @@ class DocumentService extends BaseService{
         // If theres new file upload
         if(!is_null($request->file('doc_file'))){
 
-
+            //return 'if';
             if ($this->storage->disk('local')->exists($old_file_dir)) {
                 $this->storage->disk('local')->delete($old_file_dir);
             }
@@ -159,7 +168,7 @@ class DocumentService extends BaseService{
 
         }else{
 
-
+            //return 'else';
             // If theres no file upload
             if($new_file_dir != $old_file_dir && $this->storage->disk('local')->exists($old_file_dir)){
 
@@ -203,7 +212,7 @@ class DocumentService extends BaseService{
         $this->document_repo->update($request, $filename, $document);
         
         $this->event->fire('document.update', $document);
-        return redirect()->route('dashboard.document.index');
+        //return redirect()->route('dashboard.document.index');
 
 
     }
@@ -285,18 +294,6 @@ class DocumentService extends BaseService{
 
             $zip->open($request->y .'-'. $request->fc .'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-            $slugs = [];
-            $filename_only = [];
-
-            function get_string_between($string, $start, $end){
-                $string = ' ' . $string;
-                $ini = strpos($string, $start);
-                if ($ini == 0) return '';
-                $ini += strlen($start);
-                $len = strpos($string, $end, $ini) - $ini;
-                return substr($string, $ini, $len);
-            }
-
             foreach ($files as $name => $file){
 
                 if (!$file->isDir()){
@@ -305,47 +302,30 @@ class DocumentService extends BaseService{
                     $file_path = $file->getRealPath();
 
                     $relative_path = substr($file_path, strlen($root_path));
-                    
 
                     $rawFileName = substr($relative_path, strrpos($relative_path, "\\" )+1);
+                    $doc = $this->document_repo->getToByFileName($rawFileName);
                     
-                
-                    $filename = str_replace('.pdf', '', $relative_path);
-                   
+                    
+                    // echo $root_path;
+                    // //echo $file_path;
+                    // //echo $relative_path;
+                   //return 1;
+                    //$relative_path = $doc;
 
+                    $filename = str_replace('.pdf', '', $relative_path);
 
                     $relative_path = str_replace(['?', '%', '*', ':', ';', '|', '"', '<', '>', '.', '//', '/'], '', $filename) .'.pdf';
 
-                    //filename
-                    $fn = get_string_between($relative_path,'\\','.pdf');
-                    //array_push($filename_only,$fn);
 
-                    //get folder code
-                    $fc = substr(strrchr($root_path, "/"), 1);
-
-                    $doc = $this->document_repo->getToByFileName($fn.".pdf");
-
-                    if(!empty($doc)){
-                        $new_filename = $fc."\\".$doc->reference_no ." [TO ".$doc->person_to."] - ".str_replace($doc->reference_no."-","" , $doc->filename);
-                    }else{
-                        $new_filename = "UNKNOWN.pdf";
-                    }
-
-                    $new_filename = str_replace('/', ',', $new_filename);
+                   
 
 
-                    //array_push($slugs, str_replace('/', ',', $new_filename));
-
-                    $zip->addFile($file_path, $new_filename);
+                    $zip->addFile($file_path, $relative_path);
                 }
 
             }
 
-            
-
-            // print("<pre>".print_r($slugs,true)."</pre>");
-            // print("<pre>".print_r($filename_only,true)."</pre>");
-            // return 1;
             $zip->close();
 
             return response()->download($request->y .'-'. $request->fc .'.zip')->deleteFileAfterSend();
@@ -358,7 +338,6 @@ class DocumentService extends BaseService{
     }
 
 
-    
 
 
 
@@ -564,17 +543,25 @@ class DocumentService extends BaseService{
         $filename = $document->filename;
         $fileext = File::extension($document->filename); 
 
-        if($request->subject != $document->subject || $request->reference_no != $document->reference_no){
+        $to = '';
+        if (!empty($request->person_to)) {
+            $to = " [TO ".$request->person_to."] - ";
+        }
 
-            $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
+        if($request->subject != $document->subject || $request->reference_no != $document->reference_no){
+            
+            $filename = $request->reference_no .'-'.$to. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
 
         }elseif (!empty($request->file('doc_file'))) {
             
             $fileext = File::extension($request->file('doc_file')->getClientOriginalName());
 
-            $filename = $request->reference_no .'-'. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
+            $filename = $request->reference_no .'-'.$to. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
 
         }
+
+        //added by GJ
+        $filename = $request->reference_no .'-'.$to. $request->subject .'-'. $this->str->random(8).'.'. $fileext;
 
         return $this->filterReservedChar($filename);
 
@@ -645,6 +632,97 @@ class DocumentService extends BaseService{
 
     private function ymd($var){
         return date("Ymd", strtotime($var));
+    }
+
+    public function rename_all(){
+        
+        
+
+        //return $this->update($req,'b');
+
+
+        // $documents = $this->document_repo->getRaw()->first();
+        // $document = $documents;
+        // $req = new \Illuminate\Http\Request();
+
+            
+        // $to = '';
+        // if (!empty($document->person_to)) {
+        //     $to = "[TO ".$document->person_to."]-";
+        // }
+
+        // $filename = $document->reference_no .'-'.$to. $document->subject .'-'. $this->str->random(8).'.pdf';
+
+        // // $req->filename = $filename;
+        // // $req->person_to = $document->person_to;
+        // // $req->subject = $document->subject;
+        // // $req->reference_no = $document->reference_no;
+        // // $req->folder_code = $document->folder_code;
+
+        // $myRequest = new \Illuminate\Http\Request();
+        // $myRequest->setMethod('POST');
+        // $myRequest->request->add([
+        //     'reference_no' => $document->reference_no,
+        //     'date' => date_format($document->date,'m/d/Y'),
+        //     'person_to' => $document->person_to,
+        //     'person_from' => $document->person_from,
+        //     'type' => $document->type,
+        //     'folder_code' => $document->folder_code,
+        //     'folder_code2' => $document->folder_code2,
+        //     'remarks' => $document->remarks,
+        //     'subject' => $document->subject,
+        // ]);
+
+
+        // return $this->update($myRequest,$document->slug);
+
+
+        // return $documents;
+        $documents = $this->document_repo->getRaw()->get();
+        //return $documents;
+        $fn = [];
+        foreach ($documents as $document) {
+            array_push($fn, $document->reference_no);
+            $req = new \Illuminate\Http\Request();
+
+                
+            $to = '';
+            if (!empty($document->person_to)) {
+                $to = "[TO ".$document->person_to."]-";
+            }
+
+            $filename = $document->reference_no .'-'.$to. $document->subject .'-'. $this->str->random(8).'.pdf';
+
+            // $req->filename = $filename;
+            // $req->person_to = $document->person_to;
+            // $req->subject = $document->subject;
+            // $req->reference_no = $document->reference_no;
+            // $req->folder_code = $document->folder_code;
+
+            $myRequest = new \Illuminate\Http\Request();
+            $myRequest->setMethod('POST');
+            $myRequest->request->add([
+                'reference_no' => $document->reference_no,
+                'date' => date_format($document->date,'m/d/Y'),
+                'person_to' => $document->person_to,
+                'person_from' => $document->person_from,
+                'type' => $document->type,
+                'folder_code' => $document->folder_code,
+                'folder_code2' => $document->folder_code2,
+                'remarks' => $document->remarks,
+                'subject' => $document->subject,
+            ]);
+            $this->update($myRequest,$document->slug);
+        }
+
+
+        return 1 ;
+        
+
+
+
+        // print("<pre>".print_r($fn,true)."</pre>");
+        //return $this->document_repo->update_rename_all('a');
     }
 
 }

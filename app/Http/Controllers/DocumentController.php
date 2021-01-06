@@ -144,4 +144,9 @@ class DocumentController extends Controller{
 
         return $this->document->report_generate($request);
     }
+
+    public function rename_all(){
+        //return 1;
+        return $this->document->rename_all();
+    }
 }

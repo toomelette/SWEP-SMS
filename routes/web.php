@@ -114,6 +114,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::post('/document/download_direct/{slug}', 'DocumentController@downloadDirect')->name('document.download_direct');
 	Route::get('/document/dissemination/{slug}', 'DocumentController@dissemination')->name('document.dissemination');
 	Route::post('/document/dissemination_post/{slug}', 'DocumentController@disseminationPost')->name('document.dissemination_post');
+
+	Route::get('/document/rename_all', 'DocumentController@rename_all')->name('document.rename_all');
+
 	Route::resource('document', 'DocumentController');
 
 	Route::get('/document/dissemination/print/{slug}', 'DocumentController@print')->name('document.dissemination.print');
