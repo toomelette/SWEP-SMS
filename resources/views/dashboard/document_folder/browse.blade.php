@@ -43,6 +43,7 @@
         <table class="table">
           <tr>
             <th>@sortablelink('subject', 'Subject')</th>
+            <th>@sortablelink('person_to', 'To')</th>
             <th style="width:200px;">@sortablelink('updated-at', 'Last Modified')</th>
           </tr>
           @foreach($documents as $data) 
@@ -53,7 +54,7 @@
                   {{ $data->subject }}
                 </a>
               </td>
-
+              <td>{{$data->person_to}}</td>
               <td>{{ $data->updated_at->diffForHumans() }}</td>
 
             </tr>
