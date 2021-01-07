@@ -598,9 +598,15 @@ class DocumentService extends BaseService{
             $dt = date("Ymd",strtotime($request->dt ."+1 day"));
         }
 
-        $logs = $logs->where('send_copy','=',null)
+        $logs = $logs
+                ->where(function($q){
+                    $q->where('send_copy','=',null)
+                    ->orWhere('send_copy','=',0);
+                })
                 ->whereBetween('sent_at',[$df,$dt])
                 ->get();
+
+       
 
         //return $logs->sql();
         $logs_by_date = [];
@@ -608,15 +614,26 @@ class DocumentService extends BaseService{
         foreach ($logs as $key => $log) {
 
             if(!empty($log->document)){
-                $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['found'][$log->slug] = $log;
+                $logs_by_date[$this->ymd($log->sent_at)][$log->document->document_id]['found'][$log->slug] = $log;
 
-                $logs_by_date[$this->ymd($log->sent_at)][$log->document->reference_no]['subject'] = $log->document->subject;
+                $logs_by_date[$this->ymd($log->sent_at)][$log->document->document_id]['subject'] = $log->document->subject;
+
+                $logs_by_date[$this->ymd($log->sent_at)][$log->document->document_id]['reference_no'] = $log->document->reference_no;
+
+                $logs_by_date[$this->ymd($log->sent_at)][$log->document->document_id]['person_to'] = $log->document->person_to;
+
+
             }else{
                 $logs_by_date[$this->ymd($log->sent_at)]['UNKNOWN DOCUMENT']['found']['UNKNOWN DOCUMENT'] = $log;
 
                 $logs_by_date[$this->ymd($log->sent_at)]['UNKNOWN DOCUMENT']['subject'] = 'UNKNOWN DOCUMENT';
+
+                $logs_by_date[$this->ymd($log->sent_at)]['UNKNOWN DOCUMENT']['reference_no'] = 'UNKNOWN DOCUMENT';
+
+                $logs_by_date[$this->ymd($log->sent_at)]['UNKNOWN DOCUMENT']['person_to'] = 'UNKNOWN DOCUMENT';
             }
         }
+        //return $logs_by_date;
         //return $logs_by_date;
         return view("printables.document.disseminated_report")->with([
             'inclusive_dates' => [

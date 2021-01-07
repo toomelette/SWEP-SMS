@@ -43,12 +43,22 @@
 
 	
 		table td:first-child{
-			width: 12%;
+			width: 11%;
 		}
 
 		table td:nth-child(2){
-			width: 15%;
+			width: 10%;
 		}
+
+		table td:nth-child(3){
+			width: 10%;
+		}
+
+		table td:nth-child(4){
+			width: 50%;
+		}
+
+
 		table td:last-child{
 			width: 5%;
 		}
@@ -103,6 +113,7 @@
 						<tr>
 							<th>Date</th>
 							<th>Ref no.</th>
+							<th>To</th>
 							<th>Subject</th>
 							<th>No. of Disseminated</th>
 						</tr>
@@ -117,8 +128,9 @@
 								$total = $total + count($log_ref['found']);
 							@endphp
 								<tr>
-									<td>{{date("F d, Y",strtotime($key_date))}}</td>
-									<td>{{$key_ref}}</td>
+									<td>{{date("M d, 'y",strtotime($key_date))}}</td>
+									<td>{{$log_ref['reference_no']}}</td>
+									<td>{{$log_ref['person_to']}}</td>
 									<td>{{$log_ref['subject']}}</td>
 									<td style="text-align:right">{{count($log_ref['found'])}}</td>
 								</tr>
@@ -126,7 +138,7 @@
 						@endforeach
 
 						<tr style="font-size: 14px">
-							<td colspan="3" class="green" ><b>TOTAL</b></td>
+							<td colspan="4" class="green" ><b>TOTAL</b></td>
 							<td style="text-align: right">
 								<b>
 									{{number_format($total) }}
