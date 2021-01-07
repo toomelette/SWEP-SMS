@@ -41,6 +41,10 @@
     {{-- Form End --}}  
     </form>
 
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+      </ol>
+
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
         <table class="table">
@@ -54,11 +58,20 @@
           @foreach($doc_folders as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td id="mid-vert">
-                <a href="{{route('dashboard.document_folder.browse', $data->folder_code )}}" style="text-decoration: underline; font-size:15px;">
+                <i class="fa fa-folder" style="font-size: 20px; color: #3c8dbc"></i>
+                <a href="{{route('dashboard.document_folder.browse', $data->folder_code )}}?prev={{ Request::fullUrl() }}" style="text-decoration: underline; font-size:15px;">
+
                   {{ $data->folder_code .' - '. $data->description }}
                 </a>
               </td>
-              <td style="width: 50px" class="text-center">{{count($data->documents1) + count($data->documents2)}}</td>
+              <td style="width: 50px" class="text-center">
+                @if(count($data->documents1) + count($data->documents2)==0)
+                  Empty
+                @else
+                  {{count($data->documents1) + count($data->documents2) }}
+                @endif
+                
+              </td>
               <td> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>

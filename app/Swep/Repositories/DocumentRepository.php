@@ -83,7 +83,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $documents = $this->cache->remember('documents:fetchByFolderCode:' . $key, 240, function() use ($folder_code, $request){
 
             $document = $this->document->newQuery();
-            $document = $document->select('subject','person_to', 'slug', 'updated_at');
+            $document = $document->select('subject','person_to','reference_no', 'slug', 'updated_at');
 
             $document =  $document->where('subject','LIKE','%'.$request->q.'%');
 

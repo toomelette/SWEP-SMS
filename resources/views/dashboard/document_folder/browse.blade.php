@@ -38,21 +38,33 @@
         </div>
       </form>
 
+   
+      <ol class="breadcrumb">
+        <li><a href="{{$prev}}">Home</a></li>
+        <li><a href="#">{{$folder_code}}</a></li>
+      </ol>
+   
+
       {{-- Table Grid --}}        
       <div class="box-body no-padding">
         <table class="table">
           <tr>
+            <th style="width: 15px">View</th>
+            <th  style="width: 150px">@sortablelink('reference_no', 'Ref No')</th>
             <th>@sortablelink('subject', 'Subject')</th>
             <th>@sortablelink('person_to', 'To')</th>
             <th style="width:200px;">@sortablelink('updated-at', 'Last Modified')</th>
           </tr>
           @foreach($documents as $data) 
             <tr>
-
+              <td style="width: 15px"><a href="{{ route('dashboard.document.view_file', $data->slug) }}" class="btn btn-sm btn-success" target="_blank">
+                    <i class="fa fa-file-o"></i>
+                  </a></td>
+              <td >{{$data->reference_no}}</td>
               <td>
-                <a href="{{ route('dashboard.document.view_file', $data->slug) }}" style="text-decoration: underline; font-size:15px;" target="_blank">
+                {{-- <a href="{{ route('dashboard.document.view_file', $data->slug) }}" style="text-decoration: underline; font-size:15px;" target="_blank"> --}}
                   {{ $data->subject }}
-                </a>
+                {{-- </a> --}}
               </td>
               <td>{{$data->person_to}}</td>
               <td>{{ $data->updated_at->diffForHumans() }}</td>
