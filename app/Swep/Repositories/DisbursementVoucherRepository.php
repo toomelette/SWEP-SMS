@@ -98,8 +98,8 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->amount = $this->__dataType->string_to_num($request->amount);
         $disbursement_voucher->certified_by = $this->signatory_repo->findByType('2')->employee_name;
         $disbursement_voucher->certified_by_position = $this->signatory_repo->findByType('2')->employee_position;
-        $disbursement_voucher->approved_by = $this->signatory_repo->findByType('1')->employee_name;
-        $disbursement_voucher->approved_by_position = $this->signatory_repo->findByType('1')->employee_position;
+        $disbursement_voucher->approved_by = $this->signatory_repo->findByType('13')->employee_name;
+        $disbursement_voucher->approved_by_position = $this->signatory_repo->findByType('13')->employee_position;
         $disbursement_voucher->created_at = $this->carbon->now();
         $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->ip_created = request()->ip();

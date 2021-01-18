@@ -152,6 +152,7 @@ class __static{
             '10 - RDE VIS' => '10',
             '11 - SOILS VIS' => '11',
             '12 - SUGAR VIS' => '12',
+            '13 - DV PAYMENT APPROVAL' => '13',
 
         ];
 
