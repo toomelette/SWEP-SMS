@@ -25,6 +25,7 @@
 
 <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
 
+<link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 
 {{-- Charts --}}	
 <link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">

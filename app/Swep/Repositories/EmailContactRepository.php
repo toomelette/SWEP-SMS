@@ -186,7 +186,7 @@ class EmailContactRepository extends BaseRepository implements EmailContactInter
     public function getAll(){
 
         $email_contacts = $this->cache->remember('email_contacts:getAll', 240, function(){
-            return $this->email_contact->select('email_contact_id', 'name')->get();
+            return $this->email_contact->select('email_contact_id', 'name', 'email')->get();
         });
         
         return $email_contacts;

@@ -63,9 +63,9 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                         <select name="email_contact[]" id="email_contact" class="form-control select2" multiple="multiple" data-placeholder="Recipients">
                             @foreach($global_email_contacts_all as $data)
                                 @if(old('email_contact'))
-                                    <option value="{{ $data->email_contact_id }}" {!! in_array($data->email_contact_id, old('email_contact')) ? 'selected' : '' !!}>{{$data->name}} </option>
+                                    <option value="{{ $data->email_contact_id }}" {!! in_array($data->email_contact_id, old('email_contact')) ? 'selected' : '' !!} data-fullname="{{$data->name}}" data-email="{{$data->email}}">{{$data->name}} </option>
                                 @else
-                                    <option value="{{ $data->email_contact_id }}">{{$data->name}}</option>
+                                    <option value="{{ $data->email_contact_id }}" data-fullname="{{$data->name}}" data-email="{{$data->email}}" >{{$data->name}} | {{$data->email}}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -81,11 +81,10 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                         <select name="employee[]" id="employee" class="form-control select2" multiple="multiple" data-placeholder="Recipients">
                             @foreach($global_employees_all as $data)
                                 @if(old('employee'))
-                                    <option value="{{ $data->employee_no }}" {!! in_array($data->employee_no, old('employee')) ? 'selected' : '' !!}>{{$data->fullname}}</option>
+                                    <option value="{{ $data->employee_no }}"   {!! in_array($data->employee_no, old('employee')) ? 'selected' : '' !!}>{{$data->fullname}}</option>
                                 @else
-                                    <option value="{{ $data->employee_no }}">{{$data->fullname}}
                                       @if($data->email != "")
-                                        | {{$data->email}}
+                                        <option value="{{ $data->employee_no }}" data-fullname="{{$data->fullname}}" data-email="{{$data->email}}">{{$data->fullname}} | {{$data->email}}
                                       @endif
                                     </option>
                                 @endif
@@ -99,7 +98,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
 
                       {!! __form::textbox(
-                         '12', 'subject', 'text', 'Subject *', 'Subject', old('subject'), $errors->has('subject'), $errors->first('subject'), ''
+                         '12', 'subject', 'text', 'Subject *', 'Subject',$document->subject, $errors->has('subject'), $errors->first('subject'), ''
                       ) !!}
 
 
@@ -109,11 +108,33 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
 
                       <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-default">Send <i class="fa fa-fw fa-envelope-o"></i></button>
+                        <button type="submit" class="btn btn-primary pull-right">Send <i class="fa fa-fw fa-envelope-o"></i></button>
                       </div>
                   </div>
                 </div>
-              </div>
+                <hr>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                   <i class="fa fa-list"></i> Summary of email addresses
+                  </div>
+                  <div class="panel-body">
+                    <table class="table table-bordered table-striped" id="summary_tbl">
+                      
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th style="width: 5%">Type</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         
+                          
+                      </tbody>
+                    </table>
+                  </div>
+                  </div>
+                </div>
 
 
               {{-- Family Info --}}
@@ -212,6 +233,7 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 
   <script type="text/javascript">
 
+    
     $('select[multiple]').select2({
         closeOnSelect: true,
     });
@@ -223,7 +245,87 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
       $element.detach();
       $(this).append($element);
       $(this).trigger("change");
+      //alert('1');
     });
+
+    summary_tbl = $("#summary_tbl").DataTable();
+
+    type_contact = '<span class="label bg-green col-md-12">Contact</span>';
+    type_employee = '<span class="label bg-blue col-md-12">Employee</span>';
+
+    $("select[multiple]").on("select2:select", function(){
+      array =  [];
+      value_employee = $("#employee").val();
+      value_contacts = $("#email_contact").val();
+
+      $("#summary_tbl tbody").html('');
+      summary_tbl.clear();
+
+      //Employee
+      $.each(value_employee,function(i,item){
+        email = $("option[value='"+item+"']").attr('data-email');
+        fullname = $("option[value='"+item+"']").attr('data-fullname');
+        array[item] = {'email':email,'fullname':fullname};
+
+        summary_tbl.row.add( [
+            fullname,
+            email,
+            type_employee,
+        ] ).draw( false );
+      })
+
+      //Contact
+      $.each(value_contacts,function(i,item){
+        email = $("option[value='"+item+"']").attr('data-email');
+        fullname = $("option[value='"+item+"']").attr('data-fullname');
+        array[item] = {'email':email,'fullname':fullname};
+
+        summary_tbl.row.add( [
+            fullname,
+            email,
+            type_contact,
+        ] ).draw( false );
+      })
+    })
+
+
+    $("select[multiple]").on("select2:unselect", function(){
+      array =  [];
+      value_employee = $("#employee").val();
+      value_contacts = $("#email_contact").val();
+
+      $("#summary_tbl tbody").html('');
+      summary_tbl.clear();
+
+      //Employee
+      $.each(value_employee,function(i,item){
+        email = $("option[value='"+item+"']").attr('data-email');
+        fullname = $("option[value='"+item+"']").attr('data-fullname');
+        array[item] = {'email':email,'fullname':fullname};
+
+        summary_tbl.row.add( [
+            fullname,
+            email,
+            type_employee,
+        ] ).draw( false );
+      })
+
+      //Contact
+      $.each(value_contacts,function(i,item){
+        email = $("option[value='"+item+"']").attr('data-email');
+        fullname = $("option[value='"+item+"']").attr('data-fullname');
+        array[item] = {'email':email,'fullname':fullname};
+
+        summary_tbl.row.add( [
+            fullname,
+            email,
+            type_contact,
+        ] ).draw( false );
+      })
+    })
+
+
+    
 
 
     @if(Session::has('DISSEMINATION_SUCCESS'))

@@ -72,7 +72,7 @@
     {!! __html::filter_close('submit_memo_filter') !!}
 
 
-    <div class="box" id="pjax-container" style="overflow-x:auto;">
+    <div class="box" id="pjax-container" {{-- style="overflow-x:auto;" --}}>
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
@@ -134,7 +134,42 @@
               <td id="mid-vert">{{ Str::limit($data->person_to, 30) }}</td>
               <td id="mid-vert">{{ Str::limit($data->person_from, 30) }}</td>
               <td id="mid-vert" style="width: 40%">{{ $data->subject}}</td>
+              {{-- <td id="mid-vert">
+                <div class="btn-group" role="group" aria-label="...">
+                  <a href="{{ route('dashboard.document.edit', $data->slug) }}" data-toggle="tooltip" title="Edit" type="button" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                  <a href="{{ route('dashboard.document.dissemination', $data->slug) }}" data-toggle="tooltip" title="Disseminate" type="button" class="btn btn-default"><i class="fa fa-mail-forward"></i></a>
 
+                  <div class="btn-group" role="group">
+                    <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                      <li>
+                        <a href="{{ route('dashboard.document.dissemination', $data->slug) }}?send_copy=1" data-type="1"><i class="fa fa-clone"></i> Send Copy</a>
+                      </li>
+                      <li>
+                        <a href="{{ route('dashboard.document.show', $data->slug) }}"  data-type="1" ><i class="fa  fa-file-text"></i> Details</a></li>
+                      <li>
+                        <a style="color: red" ><i class="fa fa-trash"></i> Delete</a>
+                      </li>
+                      @if($data->folder_code != '' OR $data->folder_code2 != '')
+                        <li class="divider"></li>
+                        @if($data->folder_code != '')
+                          <li>
+                            <a style="color: blue" href="#" data="yzNvotHckJSypeNW" name="GERALD JESTER GUANCE" class="ac_dc" status="active"><i class="fa fa-folder"></i> {{$data->folder_code}}</a>
+                          </li>
+                        @endif
+
+                        @if($data->folder_code2 != '')
+                          <li>
+                            <a style="color: blue" href="#" data="yzNvotHckJSypeNW" name="GERALD JESTER GUANCE" class="ac_dc" status="active"><i class="fa fa-folder"></i> {{$data->folder_code2}}</a>
+                          </li>
+                        @endif
+                      @endif
+                    </ul>
+                  </div>
+                </div>
+              </td> --}}
               <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>

@@ -211,7 +211,7 @@ class DocumentService extends BaseService{
         $this->document_repo->update($request, $filename, $document);
         
         $this->event->fire('document.update', $document);
-        //return redirect()->route('dashboard.document.index');
+        return redirect()->route('dashboard.document.index');
 
 
     }

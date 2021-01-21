@@ -34,6 +34,9 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 
+<script type="text/javascript" src="{{ asset('template/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
 {{-- Charts --}}
 <script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.js') }}"></script>
 
