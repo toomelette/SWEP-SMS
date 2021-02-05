@@ -28,9 +28,9 @@
         <h3 class="box-title">Details</h3>
 
         <div class="box-tools">
-          <a href="{{ route('dashboard.leave_application.edit', $leave_application->slug) }}" class="btn btn-sm btn-default">
+          {{-- <a href="{{ route('dashboard.leave_application.edit', $leave_application->slug) }}" class="btn btn-sm btn-default">
             <i class="fa fa-edit"></i> Edit
-          </a>
+          </a> --}}
 
 
           <a href="{{ route('dashboard.leave_application.print', [$leave_application->slug, 'front']) }}" target="_blank" class="btn btn-sm btn-default">
