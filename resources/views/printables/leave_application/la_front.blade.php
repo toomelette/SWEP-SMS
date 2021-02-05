@@ -46,10 +46,10 @@
 
 </head>
 <body onload="window.print();" onafterprint="window.close()">
-
+{{-- <body onload="" onafterprint=""> --}}
 <div>
 
-  <div class="wrapper" style="padding-top:50px;">
+  <div class="wrapper" style="">
 
 
       {{-- HEADER --}}
@@ -672,7 +672,7 @@
 
 
       {{-- APPROVED FOR cat's --}}
-      <div class="row" style="padding-bottom:30px;">
+      <div class="row" style="padding-bottom:20px;">
 
         <div class="col-sm-6">
           <span style="font-size:14px; margin-left: 20px;">_____ Others (Specify)</span>
@@ -685,7 +685,7 @@
 
 
       {{-- Signature --}}
-      <div class="row" style="padding-bottom:25px;">
+      <div class="row" style="padding-bottom:15px;">
 
         <div class="col-sm-4"></div>
 
@@ -760,7 +760,7 @@
 {{-- SUFFIX --}}
 <div class="row">
   
-  <div class="col-sm-8 div-height">
+  <div class="col-sm-8 div-height" style="padding-bottom: 0px">
     <p style="font-size:10px;">Username: {!! Auth::user()->username !!} | Doc No: {{ $leave_application->doc_no }}</p>
   </div>
 

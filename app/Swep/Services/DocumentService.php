@@ -206,13 +206,9 @@ class DocumentService extends BaseService{
 
 
         }
-
-
         $this->document_repo->update($request, $filename, $document);
-        
         $this->event->fire('document.update', $document);
         return redirect()->route('dashboard.document.index');
-
 
     }
 
@@ -269,13 +265,7 @@ class DocumentService extends BaseService{
         }
 
         return abort(404);
-        
-
     }
-
-
-
-
 
 
 
@@ -323,17 +313,12 @@ class DocumentService extends BaseService{
                     $zip->addFile($file_path, $relative_path);
                 }
 
-            }
-
+            } 
             $zip->close();
-
             return response()->download($request->y .'-'. $request->fc .'.zip')->deleteFileAfterSend();
-
         }
-
         $this->session->flash('USER_CONFIRMATION_FAIL', 'The credentials you provided does not match the current user!');
         return redirect()->back();
-
     }
 
 
