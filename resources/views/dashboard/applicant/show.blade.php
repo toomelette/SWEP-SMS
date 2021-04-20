@@ -27,43 +27,58 @@
 
 
         {{-- DOC Info --}}
-        <div class="col-md-12">
+
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Applicant Info</h3>
             </div>
             <div class="box-body">
-              <dl class="dl-horizontal">
-                <dt>Applicant ID:</dt>
-                <dd>{{ $applicant->applicant_id }}</dd>
-                <dt>Fullname:</dt>
-                <dd>{{ $applicant->fullname }}</dd>
-                <dt>Gender:</dt>
-                <dd>{{ $applicant->gender }}</dd>
-                <dt>Date of Birth:</dt>
-                <dd>{{ __dataType::date_parse($applicant->date_of_birth, 'm/d/Y') }}</dd>
-                <dt>Age:</dt>
-                <dd>{{ Carbon::parse($applicant->date_of_birth)->age }}</dd>
-                <dt>Civil Status:</dt>
-                <dd>{{ $applicant->civil_status }}</dd>
-                <dt>Address:</dt>
-                <dd>{{ $applicant->address }}</dd>
-                <dt>Contact No:</dt>
-                <dd>{{ $applicant->contact_no }}</dd>
-                <dt>Course:</dt>
-                <dd>{{ empty($applicant->course) ? '' : $applicant->course->name }}</dd>
-                <dt>School:</dt>
-                <dd>{{ $applicant->school }}</dd>
-                <dt>Unit Applied:</dt>
-                <dd>{{ empty($applicant->departmentUnit) ? '' : $applicant->departmentUnit->description }}</dd>
-                <dt>Position Applied For:</dt>
-                <dd>{{ empty($applicant->plantilla) ? '' : $applicant->plantilla->name }}</dd>
-                <dt>Remarks:</dt>
-                <dd>{{ $applicant->remarks }}</dd>
-              </dl>
+              <div class="row">
+                <div class="col-md-6">
+                  <dl class="dl-horizontal">
+                    <dt>Applicant ID:</dt>
+                    <dd>{{ $applicant->applicant_id }}</dd>
+                    <dt>Fullname:</dt>
+                    <dd>{{ $applicant->fullname }}</dd>
+                    <dt>Gender:</dt>
+                    <dd>{{ $applicant->gender }}</dd>
+                    <dt>Date of Birth:</dt>
+                    <dd>{{ __dataType::date_parse($applicant->date_of_birth, 'm/d/Y') }}</dd>
+                    <dt>Age:</dt>
+                    <dd>{{ Carbon::parse($applicant->date_of_birth)->age }}</dd>
+                    <dt>Civil Status:</dt>
+                    <dd>{{ $applicant->civil_status }}</dd>
+                    <dt>Address:</dt>
+                    <dd>{{ $applicant->address }}</dd>
+                    <dt>Contact No:</dt>
+                    <dd>{{ $applicant->contact_no }}</dd>
+                    <dt>Course:</dt>
+                    <dd>{{ empty($applicant->course) ? '' : $applicant->course->name }}</dd>
+                    <dt>School:</dt>
+                    <dd>{{ $applicant->school }}</dd>
+                    <dt>Unit Applied:</dt>
+                    <dd>{{ empty($applicant->departmentUnit) ? '' : $applicant->departmentUnit->description }}</dd>
+        
+                    <dt>Remarks:</dt>
+                    <dd>{{ $applicant->remarks }}</dd>
+                  </dl>
+                </div>
+                <div class="col-lg-6">
+                  <p>Position Applied for:</p>
+                  <ul>
+                    @if(!empty($applicant->positionApplied))
+                      @foreach($applicant->positionApplied as $positionApplied)
+                        <li>{{$positionApplied->position_applied}}</li>
+                      @endforeach
+                    @endif
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+
+
+
 
 
 

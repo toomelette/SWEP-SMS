@@ -2,6 +2,7 @@
 
 namespace App\Swep\Repositories;
  
+use App\Models\ApplicantPositionApplied;
 use App\Swep\BaseClasses\BaseRepository;
 use App\Swep\Interfaces\ApplicantInterface;
 
@@ -174,7 +175,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant->applicantExperience()->delete();
         $applicant->applicantTraining()->delete();
         $applicant->applicantEligibility()->delete();
-
+        $applicant->positionApplied()->delete();
     }
 
 
@@ -253,7 +254,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
     public function populate($model, $entries){
 
         return $model->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'received_at' , 'is_on_short_list', 'slug')
-                     ->with('course', 'departmentUnit') 
+                     ->with('course', 'departmentUnit','positionApplied')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);
@@ -451,6 +452,13 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $applicant_elig->exam_date = $this->__dataType->date_parse($data['exam_date']);
         $applicant_elig->save();
 
+    }
+
+    public function storePositionApplied($position_applied, $slug){
+        $applicant_pa = new ApplicantPositionApplied;
+        $applicant_pa->applicant_slug = $slug;
+        $applicant_pa->position_applied = $position_applied;
+        $applicant_pa->save();
     }
 
 

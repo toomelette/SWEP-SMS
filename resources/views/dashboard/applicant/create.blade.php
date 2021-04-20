@@ -63,19 +63,30 @@
             '3', 'school', 'text', 'School', 'School where you graduated your Degree', old('school'), $errors->has('school'), $errors->first('school'), ''
           ) !!}
 
-          {!! __form::select_dynamic(
-            '3', 'plantilla_id', 'Position Applied for', old('plantilla_id'), $global_plantilla_all, 'plantilla_id', 'name', $errors->has('plantilla_id'), $errors->first('plantilla_id'), 'select2', ''
-          ) !!}
+{{--          {!! __form::select_dynamic(--}}
+{{--            '3', 'plantilla_id', 'Position Applied for', old('plantilla_id'), $global_plantilla_all, 'plantilla_id', 'name', $errors->has('plantilla_id'), $errors->first('plantilla_id'), 'select2', ''--}}
+{{--          ) !!}--}}
+
+
 
           {!! __form::textbox(
             '3', 'contact_no', 'text', 'Contact No.', 'Contact No.', old('contact_no'), $errors->has('contact_no'), $errors->first('contact_no'), ''
           ) !!}
 
-          <div class="col-md-12"></div>
-
           {!! __form::select_dynamic(
-            '3', 'department_unit_id', 'Unit Applied *', old('department_unit_id'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), 'select2', ''
-          ) !!}
+           '3', 'department_unit_id', 'Unit Applied *', old('department_unit_id'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), 'select2', ''
+         ) !!}
+
+
+
+          <div class="col-md-12"></div>
+          <div class="form-group col-md-6 ">
+            <label for="school">Position Applied</label>
+            <br>
+            <input type="text" name="position_applied" id="position_applied" class="form-control" value="" data-role="tagsinput" style="width:100%;">
+          </div>
+
+
 
           {!! __form::datepicker(
             '3', 'received_at',  'Date Received *', old('received_at'), $errors->has('received_at'), $errors->first('received_at')
@@ -462,6 +473,15 @@
 
     {{-- EDC Background ADD ROW --}}
     $(document).ready(function() {
+
+
+
+      $('.bootstrap-tagsinput input').on('keypress', function(e){
+        if (e.keyCode == 13){
+          e.keyCode = 188;
+          e.preventDefault();
+        };
+      });
 
       $("#edc_background_add_row").on("click", function() {
       var i = $("#edc_background_table_body").children().length;

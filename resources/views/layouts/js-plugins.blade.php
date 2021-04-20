@@ -46,7 +46,7 @@
 
 <script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.categories.js') }}"></script>
 
-
+<script type="text/javascript" src="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
 
 
 

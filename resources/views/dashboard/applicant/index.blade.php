@@ -86,11 +86,19 @@
           @foreach($applicants as $data) 
             <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->fullname }}</td>
-              <td id="mid-vert">{{ empty($data->plantilla) ? '' : $data->plantilla->name }}</td>
-              <td id="mid-vert">{{ empty($data->course) ? '' : $data->course->name }}</td>
+              <td id="mid-vert">
+                @if(!empty($data->positionApplied))
+                <ul style="padding-left: 2px; margin-bottom: 0px">
+                  @foreach($data->positionApplied as $position_applied)
+                    <li>{{$position_applied->position_applied}}</li>
+                  @endforeach
+                </ul>
+                @endif
+              </td>
+              <td id="mid-vert" style="width: 30%">{{ empty($data->course) ? '' : str_replace('BACHELOR OF SCIENCE IN ','BS ',$data->course->name) }}</td>
               <td id="mid-vert">{{ Carbon::parse($data->date_of_birth)->age }}</td>
               <td id="mid-vert">{!! __dataType::date_parse($data->received_at, 'M. d, Y') !!}</td>
-              <td id="mid-vert">{!! $data->is_on_short_list == 1 ? $span_check : $span_times !!}</td>
+              <td id="mid-vert" style="width: 5%">{!! $data->is_on_short_list == 1 ? $span_check : $span_times !!}</td>
               <td id="mid-vert"> 
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>

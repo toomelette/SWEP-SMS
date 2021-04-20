@@ -31,5 +31,5 @@
 <link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">
 
 
-
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 

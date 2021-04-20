@@ -6,8 +6,7 @@ use App\Swep\Services\ApplicantService;
 use App\Http\Requests\Applicant\ApplicantFormRequest;
 use App\Http\Requests\Applicant\ApplicantFilterRequest;
 use App\Http\Requests\Applicant\ApplicantReportRequest;
-
-
+use Illuminate\Http\Request;
 
 
 class ApplicantController extends Controller{

@@ -92,7 +92,9 @@ class Applicant extends Model{
         return $this->belongsTo('App\Models\DepartmentUnit','department_unit_id','department_unit_id');
     }
     
-
+    public function positionApplied(){
+        return $this->hasMany('App\Models\ApplicantPositionApplied','applicant_slug','slug');
+    }
 
     
 }

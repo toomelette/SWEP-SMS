@@ -42,3 +42,14 @@ input[data-transform=uppercase] {
 body{
     font-family: 'Open Sans', sans-serif;
 }
+
+.bootstrap-tagsinput{
+    width: 100% !important;
+    line-height: 25px !important;
+    border-radius: 0px !important;
+}
+
+.bootstrap-tagsinput .label{
+    font-size: 95%;
+    line-height: 2.3;
+}

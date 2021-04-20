@@ -3,6 +3,8 @@
 namespace App\Swep\Services;
 
 
+use App\Models\Applicant;
+use App\Models\ApplicantPositionApplied;
 use App\Swep\Interfaces\ApplicantInterface;
 use App\Swep\Interfaces\CourseInterface;
 use App\Swep\Interfaces\DepartmentUnitInterface;
@@ -157,6 +159,18 @@ class ApplicantService extends BaseService{
             
             return view('printables.applicant.report_1')->with('applicants', $applicants);
 
+        }elseif($request->r_type == "ABP"){
+            $applicants_array = [];
+            if($request->lt == 'All'){
+                $applicants = ApplicantPositionApplied::with('applicant')->orderBy('position_applied','asc')->get();
+            }else{
+                $applicants = ApplicantPositionApplied::with('applicant')->where('position_applied',$request->lt)->orderBy('position_applied','asc')->get();
+            }
+            foreach ($applicants as $applicant){
+                $applicants_array[$applicant->position_applied][$applicant->applicant_slug] = $applicant;
+            }
+            //print('<pre>'.print_r($applicants_array,true).'</pre>');
+            return view('printables.applicant.report_2')->with('positions', $applicants_array);
         }else{
 
            abort(404); 
@@ -223,6 +237,16 @@ class ApplicantService extends BaseService{
         if(!empty($request->row_elig)){
             foreach ($request->row_elig as $row) {
                 $this->applicant_repo->storeEligibilities($row, $applicant);
+            }
+        }
+
+        //Applicant Position Applied
+        if(!empty($request->position_applied)){
+            $position_applied_string = $request->position_applied;
+            $position_applied_array = explode(',',$position_applied_string);
+
+            foreach ($position_applied_array as $position_applied){
+                $this->applicant_repo->storePositionApplied($position_applied,$applicant->slug);
             }
         }
 
