@@ -94,8 +94,9 @@
             <div class="panel panel-default">
               <div class="panel-body">
                   <div class="col-md-12">
+                    
                     {!! __form::textbox(
-                    '8', 'certified_by', 'text', 'Certified by:', 'Certified by', old('certified_by') ? old('certified_by') : $disbursement_voucher->certified_by, $errors->has('amount') , $errors->has('certified_by'), $errors->first('certified_by'), 'data-transform="uppercase" list="certified_list"'
+                      '8', 'certified_by', 'text', 'Certified by:', 'Certified by', old('certified_by') ? old('certified_by') : $disbursement_voucher->certified_by, $errors->has('certified_by'), $errors->first('certified_by'), 'data-transform="uppercase" list="certified_list"'
                     ) !!}
                     @php 
                       $certified_bys = App\Models\DisbursementVoucher::select('certified_by')->groupBy('certified_by')->get();
