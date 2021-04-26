@@ -84,6 +84,7 @@
             <label for="school">Position Applied</label>
             <br>
             <input type="text" name="position_applied" id="position_applied" class="form-control" value="" data-role="tagsinput" style="width:100%;">
+            <p class="text-info"><i class="fa fa-info"></i> You can add more "Position applied for" by pressing <b>ENTER</b>. </p>
           </div>
 
 

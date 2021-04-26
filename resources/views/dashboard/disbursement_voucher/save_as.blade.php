@@ -84,6 +84,85 @@
             '2', 'amount', 'text', 'Amount *', 'Amount', old('amount') ? old('amount') : $disbursement_voucher->amount, $errors->has('amount'), $errors->first('amount'), ''
           ) !!}
 
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                  <div class="col-md-12">
+                    {!! __form::textbox(
+                    '8', 'certified_by', 'text', 'Certified by:', 'Certified by', old('certified_by') ? old('certified_by') : $disbursement_voucher->certified_by, $errors->has('amount') , $errors->has('certified_by'), $errors->first('certified_by'), 'data-transform="uppercase" list="certified_list"'
+                    ) !!}
+                    @php 
+                      $certified_bys = App\Models\DisbursementVoucher::select('certified_by')->groupBy('certified_by')->get();
+                    @endphp
+                    <datalist id="certified_list">
+                      @if($certified_bys->count() > 0)
+                        @foreach($certified_bys as $certified_by)
+                          <option>{{$certified_by->certified_by}}</option>
+                        @endforeach
+                      @endif
+                    </datalist>
+
+                    {!! __form::textbox(
+                      '8', 'certified_by_position', 'text', 'Position', 'Position', old('certified_by_position') ? old('certified_by_position') : $disbursement_voucher->certified_by_position, $errors->has('certified_by_position'), $errors->first('certified_by_position'), 'data-transform="uppercase" list="certified_list_position"'
+                    ) !!}
+
+                    @php 
+                      $certified_by_positions = App\Models\DisbursementVoucher::select('certified_by_position')->groupBy('certified_by_position')->get();
+                    @endphp
+                    <datalist id="certified_list_position">
+                      @if($certified_by_positions->count() > 0)
+                        @foreach($certified_by_positions as $certified_by_position)
+                          <option>{{$certified_by_position->certified_by_position}}</option>
+                        @endforeach
+                      @endif
+                    </datalist>
+
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                  <div class="col-md-12">
+                    {!! __form::textbox(
+                    '8', 'approved_by', 'text', 'Approved for payment by:', 'Approved by',old('approved_by') ? old('approved_by') : $disbursement_voucher->approved_by, $errors->has('approved_by'), $errors->first('approved_by'), 'data-transform="uppercase" list="approved_list"'
+                    ) !!}
+                    @php 
+                      $approved_bys = App\Models\DisbursementVoucher::select('approved_by')->where('approved_by','!=','-')->groupBy('approved_by')->get();
+                    @endphp
+                    <datalist id="approved_list">
+                      @if($approved_bys->count() > 0)
+                        @foreach($approved_bys as $approved_by)
+                          <option>{{$approved_by->approved_by}}</option>
+                        @endforeach
+                      @endif
+                    </datalist>
+
+                    {!! __form::textbox(
+                      '8', 'approved_by_position', 'text', 'Position', 'Position', old('approved_by_position') ? old('approved_by_position') : $disbursement_voucher->approved_by_position, $errors->has('approved_by_position'), $errors->first('approved_by_position'), 'data-transform="uppercase" list="approved_list_position"'
+                    ) !!}
+
+                     @php 
+                      $approved_by_positions = App\Models\DisbursementVoucher::select('approved_by_position')->where('approved_by_position','!=','-')->groupBy('approved_by_position')->get();
+                    @endphp
+                    <datalist id="approved_list_position">
+                      @if($approved_by_positions->count() > 0)
+                        @foreach($approved_by_positions as $approved_by_position)
+                          <option>{{strtoupper($approved_by_position->approved_by_position)}}</option>
+                        @endforeach
+                      @endif
+                    </datalist>
+                  </div>
+
+              </div>
+            </div>
+        
+          </div>
+
+          
+
         </div>
 
         <div class="box-footer">
