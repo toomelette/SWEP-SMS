@@ -574,7 +574,7 @@ class DocumentService extends BaseService{
 
 
     public function report_generate($request){
-        $logs =  $this->ddl_repo->getRaw();
+        $logs =  $this->ddl_repo->getRaw()->with(['document']);
         $dt = null;
         $df = null;
 
