@@ -140,11 +140,14 @@
 								@endphp
 								<tr>
 									<td style="width: 30%">
-										{{
-											$log->emailContact->name 
-											or 
-											$log->employee->lastname.', '.$log->employee->firstname
-										}}
+										@if(!empty($log->emailContact))
+											{{$log->emailContact->name}}
+										@elseif(!empty($log->employee))
+											{{$log->employee->lastname.', '.$log->employee->firstname}}
+										@else
+											<i>Contact not found</i>
+										@endif
+
 									</td>
 									<td></td>
 									<td>{{$log->email}}</td>

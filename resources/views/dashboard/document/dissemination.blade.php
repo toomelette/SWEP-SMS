@@ -178,6 +178,8 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
                                   {{ $data->employee->fullname }} 
                                 @elseif(!empty($data->emailContact->name))
                                   {{ $data->emailContact->name }}
+                                @else
+                                  <p class="text-danger"><i class="fa fa-exclamation"></i> Contact not found</p>
                                 @endif
                               </td>
                               <td>{{ $data->email }}</td>

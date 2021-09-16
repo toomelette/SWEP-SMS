@@ -33,9 +33,9 @@
 
       Document List 
 
-      <p style="float:right;">
-        {{ __dataType::convert_bytes(disk_free_space("/home")) }} free of {{ __dataType::convert_bytes(disk_total_space("/home")) }}
-      </p>
+{{--      <p style="float:right;">--}}
+{{--        {{ __dataType::convert_bytes(disk_free_space("/home")) }} free of {{ __dataType::convert_bytes(disk_total_space("/home")) }}--}}
+{{--      </p>--}}
 
     </h1>
 
