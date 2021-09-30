@@ -48,5 +48,7 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
 
-
+<script type="text/javascript" src="{{asset('template/plugins/moment/moment.js')}}"></script>
+<script type="text/javascript" src="{{asset('template/plugins/daterangepicker/daterangepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('template/plugins/jquery-sortable/source/js/jquery-sortable-min.js')}}"></script>
 

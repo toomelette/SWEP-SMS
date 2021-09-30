@@ -43,6 +43,9 @@ body{
     font-family: 'Open Sans', sans-serif;
 }
 
+.text-strong{
+    font-weight: bold;
+}
 .bootstrap-tagsinput{
     width: 100% !important;
     line-height: 25px !important;
@@ -53,3 +56,29 @@ body{
     font-size: 95%;
     line-height: 2.3;
 }
+
+.todo-list>li{
+    background-color: #a7e8cb !important;
+    padding: 3px 10px !important;
+}
+
+
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+ol.example li.placeholder {
+    position: relative;
+    /** More li styles **/
+}
+ol.example li.placeholder:before {
+    position: absolute;
+    /** Define arrowhead **/
+}
+

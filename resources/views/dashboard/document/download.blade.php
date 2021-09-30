@@ -4,7 +4,7 @@
 
 
 @section('content')
-    
+
   <section class="content-header">
       <h1>Document Download</h1>
   </section>
@@ -12,14 +12,14 @@
   <section class="content">
 
     <div class="box">
-    
+
       <div class="box-header with-border">
         <h3 class="box-title">Document Download</h3>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
-        </div> 
+        </div>
       </div>
-      
+
       <form role="form">
 
         <div class="box-body">
@@ -64,7 +64,7 @@
 
 @section('modals')
 
-  {{-- USER CONFIRMATION MODAL --}}  
+  {{-- USER CONFIRMATION MODAL --}}
   <div class="modal fade" id="document_download" data-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -76,7 +76,7 @@
         </div>
         <div class="modal-body">
           <form id="download_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.document.download_direct', Auth::user()->slug) }}" target="_blank">
-            
+
             @csrf
             <p style="font-size: 17px;">Confirm first your identity before downloading!</p><br>
             <input id="y_in_modal" type="hidden" name="y" value="">
@@ -123,5 +123,5 @@
     });
 
   </script>
-    
+
 @endsection

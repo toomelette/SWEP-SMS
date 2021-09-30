@@ -212,7 +212,15 @@ class __html{
 
      }
 
-
+    public static  function file_size($int){
+        switch ($int){
+            case ($int>=1000000):
+                return number_format(($int/1000000),1).' MB';
+                break;
+            case ($int>1000):
+                return number_format(($int/1000),1).' KB';
+        }
+    }
 
 
     /** UTILITY METHODS **/

@@ -40,7 +40,16 @@ class __sanitize {
 	}
 
 
+    public static function date_range($date_range){
+	   // $date_range = str_replace('/','',$date_range);
+	    $date_range = str_replace(' ','',$date_range);
+	    $date_range_arr = explode('-',$date_range);
+	    foreach ($date_range_arr as $key=>$value){
+            $date_range_arr[$key] = date('Ymd',strtotime($value));
+        }
 
+	    return $date_range_arr;
+    }
 
 
 	public static function html_attribute_encode($str, $default = ''){

@@ -50,7 +50,7 @@ class __form{
 
 
 
-    public static function select_static($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr){
+    public static function select_static($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr,$select_class = null){
       
 
      return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">

@@ -172,7 +172,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 
+Route::get('/file_explorer',function (){
 
+//    $files =scandir('E:/home/');
+//    dd($files);
+   return view('dashboard.file_explorer.index');
+})->name('dashboard.documents.file_explorer.index');
 
 /** Test Route **/
 Route::get('/dashboard/test', function(){
