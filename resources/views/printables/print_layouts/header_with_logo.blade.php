@@ -1,8 +1,8 @@
 <div class="row clearfix">
     <div style=" overflow: auto;">
         <div style=" width: 80px; height: 50px; display: inline-block; padding-right: 15px ">
-            <div style=" width: 50px; float: right; ">
-                <img src="http://10.36.1.14:8003/images/sra.png" style="width: inherit; ">
+            <div style=" width: 60px; float: right; ">
+                <img src="{{asset('images/sra.png')}}" style="width: inherit; ">
             </div>
 
         </div>
