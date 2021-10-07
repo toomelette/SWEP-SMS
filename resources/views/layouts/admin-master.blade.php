@@ -6,14 +6,14 @@
     <title>SRA Web Portal - AFD</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+      <link href="http://fonts.cdnfonts.com/css/google-sans" rel="stylesheet">
     @include('layouts.css-plugins')
 
     @yield('extras')
 
   </head>
 
-  <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" style="zoom:90%;">
+  <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" >
 
     <div id="loader"></div>
 
@@ -21,9 +21,9 @@
 
       @include('layouts.admin-topnav')
 
-      @include('layouts.admin-sidenav') 
+      @include('layouts.admin-sidenav')
 
-      <div class="content-wrapper" style="height:500em;"> 
+      <div class="content-wrapper" >
 
         @yield('content')
 
@@ -40,7 +40,7 @@
     </div>
 
     @include('layouts.js-plugins')
-    
+
     @yield('modals')
 
     @yield('scripts')

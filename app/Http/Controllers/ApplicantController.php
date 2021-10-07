@@ -219,6 +219,7 @@ class ApplicantController extends Controller{
     private function report_columns(){
         return [
             'numbering' => 'Numbering',
+            'received_at' => 'Date of Application',
             'fullname' => 'Fullname',
             'course' => 'Course',
             'department_unit' => 'Unit Applied',
@@ -228,7 +229,6 @@ class ApplicantController extends Controller{
             'address' => 'Address',
             'contact_no' => 'Contact #',
             'school' => 'School',
-            'received_at' => 'Date of Application',
             'remarks' => 'Remarks',
             'position_applied' => 'Position Applied',
         ];

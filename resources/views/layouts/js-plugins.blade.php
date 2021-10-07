@@ -52,3 +52,6 @@
 <script type="text/javascript" src="{{asset('template/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/plugins/jquery-sortable/source/js/jquery-sortable-min.js')}}"></script>
 
+
+{{--CHARTS--}}
+<script type="text/javascript" src="{{asset('template/plugins/chartjs/dist/Chart.min.js')}}"></script>

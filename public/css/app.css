@@ -25,27 +25,31 @@ input[data-transform=uppercase] {
 }
 
 
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: url('/fonts/open-sans-v17-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local('Open Sans Regular'), local('OpenSans-Regular'),
-       url('/fonts/open-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'),
-       url('/fonts/open-sans-v17-latin-regular.woff2') format('woff2'),
-       url('/fonts/open-sans-v17-latin-regular.woff') format('woff'),
-       url('/fonts/open-sans-v17-latin-regular.ttf') format('truetype'),
-       url('/fonts/open-sans-v17-latin-regular.svg#OpenSans') format('svg');
-}
+/*@font-face {*/
+/*  font-family: 'Open Sans';*/
+/*  font-style: normal;*/
+/*  font-weight: 600;*/
+/*  src: url('/fonts/open-sans-v17-latin-regular.eot'); !* IE9 Compat Modes *!*/
+/*  src: local('Open Sans Regular'), local('OpenSans-Regular'),*/
+/*       url('/fonts/open-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'),*/
+/*       url('/fonts/open-sans-v17-latin-regular.woff2') format('woff2'),*/
+/*       url('/fonts/open-sans-v17-latin-regular.woff') format('woff'),*/
+/*       url('/fonts/open-sans-v17-latin-regular.ttf') format('truetype'),*/
+/*       url('/fonts/open-sans-v17-latin-regular.svg#OpenSans') format('svg');*/
+/*}*/
 
 
 body{
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Product Sans', sans-serif;
 }
-
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{
+    font-family: "Product Sans";
+}
 .text-strong{
     font-weight: bold;
 }
+
 .bootstrap-tagsinput{
     width: 100% !important;
     line-height: 25px !important;
