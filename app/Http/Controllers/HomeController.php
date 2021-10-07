@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use App\Models\Course;
+use App\Models\Document;
+use App\Models\DocumentDisseminationLog;
+use App\Models\EmailContact;
 use App\Models\Employee;
 use App\Models\LeaveApplication;
 use App\Models\PermissionSlip;
 use App\Swep\Services\HomeService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,8 +73,36 @@ class HomeController extends Controller{
                 'all_ps' => $all_ps,
             ]);
         }
-    	return $this->home->view();
 
+        if(Auth::user()->dash == 'records'){
+
+            $sent_by_week = DB::table('rec_document_dissemination_logs')
+                ->select('sent_at', DB::raw("count('slug') as count"))
+                ->where('status','sent')
+                ->groupBy(DB::raw('week(sent_at)'))
+                ->orderBy("sent_at","asc")
+                ->get();
+            $emails_per_contact = DocumentDisseminationLog::with(['emailContact','employee'])
+                ->select('email_contact_id','employee_no',DB::raw('count(slug) as count'))
+                ->groupBy('email_contact_id','employee_no')
+                ->get();
+
+            $documents_per_week = Document::select('reference_no','date',DB::raw('count(slug) as  "count"'))
+                ->groupBy(DB::raw("week(date)"))
+                ->orderBy('date','asc')
+                ->get();
+
+
+            return view('dashboard.home.records_index')->with([
+                'all_documents' => Document::count(),
+                'all_emails_sent' => DocumentDisseminationLog::where('status','sent')->count(),
+                'all_contacts' => EmailContact::count(),
+                'sent_by_week' => $sent_by_week,
+                'emails_per_contact' => $emails_per_contact,
+                'documents_per_week' => $documents_per_week,
+            ]);
+        }
+    	return $this->home->view();
     }
     
 

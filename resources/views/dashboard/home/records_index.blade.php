@@ -1,0 +1,321 @@
+@extends('layouts.admin-master')
+
+@section('content')
+
+    <section class="content-header">
+        <h1>Dashboard
+
+
+
+        </h1>
+    </section>
+    <?php
+    $free = 0;
+    $total = 0;
+    if(PHP_OS == "WINNT"){
+        $free =disk_free_space("E:/home");
+        $total =disk_total_space("E:/home");
+    }else{
+        $free = disk_free_space("/home");
+        $total =disk_total_space("/home");
+    }
+
+    ?>
+
+
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>{{number_format($all_documents)}}</h3>
+                        <p>No. of Documents on record</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-briefcase"></i>
+                    </div>
+                    {{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>{{number_format($all_emails_sent)}}</h3>
+                        <p>No. of Emails Sent</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-envelope-o"></i>
+                    </div>
+                    {{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{number_format($all_contacts)}}</h3>
+
+                        <p>Contacts</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    {{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>{{number_format($sent_by_week->avg('count'))}}</h3>
+
+                        <p>Average Emails Sent per Week</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa  fa-calendar-check-o"></i>
+                    </div>
+                    {{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="panel">
+                    <div class="panel-body">
+                        <center><label>Documents Uploaded (Weekly)</label></center>
+                        <hr class="no-margin">
+                        <canvas id="documents_per_month" width="400" height="82"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="pull-right">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <center><label>Storage</label></center>
+                            <hr class="no-margin">
+                            <canvas id="storage_graph" width="230" height="50"></canvas>
+                            <br>
+                            <center>
+                                <label>{{__dataType::convert_bytes($free)}} of {{__dataType::convert_bytes($total)}}</label>
+                            </center>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <center><label>Emails per contact</label></center>
+                        <hr class="no-margin">
+                        <div class="col-md-4">
+
+                            <canvas id="documents_sent_graph" width="400" height="390"></canvas>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-bordered table-condensed" id="emails_per_contact_table">
+                                <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Applicants</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($emails_per_contact->count() > 0)
+                                    @foreach($emails_per_contact as $data)
+                                        <tr>
+                                            <td>
+                                                @if($data->employee_no != '')
+                                                    @if(!empty($data->employee))
+                                                        {{$data->employee->fullname}}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                    {{$data->employee->fullname}}
+                                                @elseif($data->email_contact_id != '')
+                                                    @if(!empty($data->emailContact))
+                                                        {{$data->emailContact->name}}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                {{number_format($data->count)}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+@endsection
+
+
+
+
+@section('scripts')
+    <script type="text/javascript">
+        $("document").ready(function () {
+
+            $("#emails_per_contact_table").DataTable({
+                "bLengthChange": false,
+            });
+
+            var storage_graph = new Chart($("#storage_graph"), {
+                type: 'doughnut',
+                data: {
+                    datasets: [
+                        {
+                            data: [
+                               {{$total-$free}},{{$free}}
+                            ],
+                            backgroundColor:[
+                                'rgb(232, 152, 5)',
+                                'rgb(68, 235, 193)',
+                            ],
+                        }
+                    ],
+                    labels:[
+                        'Used',
+                        'Free',
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        title: {
+                            display: false,
+                        }
+                    }
+                },
+            });
+
+
+            var documents_sent_graph = new Chart($("#documents_sent_graph"), {
+                type: 'pie',
+                data: {
+                    datasets: [
+                        {
+                            data: [
+                                @foreach($emails_per_contact as $data)
+                                    {{$data->count}},
+                                @endforeach
+                            ],
+                            backgroundColor:[
+                                @foreach($emails_per_contact as $data)
+                                    'rgb({{mt_rand(1,255)}},{{mt_rand(1,255)}},{{mt_rand(1,255)}})',
+                                @endforeach
+
+
+                            ],
+                        }
+                    ],
+                    labels:[
+                        @foreach($emails_per_contact as $data)
+                            @if($data->employee_no != '')
+                                @if(!empty($data->employee))
+                                    '{{$data->employee->fullname}}',
+                                @endif
+                                '{{$data->employee->fullname}}',
+                            @elseif($data->email_contact_id != '')
+                                @if(!empty($data->emailContact))
+                                    '{{$data->emailContact->name}}',
+                                @endif
+                            @endif
+                        @endforeach
+                    ]
+                },
+                options: {
+                    responsive: true,
+
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        title: {
+                            display: false,
+                        }
+                    }
+                },
+            });
+
+            var documents_per_month = new Chart($("#documents_per_month"), {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            data: [
+                                @foreach($documents_per_week as $data)
+                                    {{$data->count}},
+                                @endforeach
+                            ],
+                            borderColor : 'rgb(75, 192, 192)',
+                            fill: false,
+
+                        }
+                    ],
+                    labels:[
+                        @foreach($documents_per_week as $data)
+                            '{{date('M. d, Y',strtotime($data->date))}}',
+                        @endforeach
+                    ]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 20
+                            }
+                        }]
+                    },
+                    responsive: true,
+                    plugins: {
+                        zoom: {
+                            zoom: {
+                                wheel: {
+                                    enabled: true,
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'xy',
+                            }
+                        },
+                        legend: {
+                            display: false,
+                        },
+                        title: {
+                            display: false,
+                            text: 'Chart.js Pie Chart'
+                        }
+                    }
+                },
+            });
+
+        });
+
+    </script>
+
+@endsection

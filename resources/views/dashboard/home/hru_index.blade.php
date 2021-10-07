@@ -94,8 +94,8 @@
                                 </thead>
                                 <tbody>
                                     @if($per_course->count() > 0)
-                                        @foreach($per_course as $data)
-                                        <tr>
+                                        @foreach($per_course as $key=>$data)
+                                        <tr dataset-Index="{{$key}}" class="course_tr">
                                             <td>{{str_replace('BACHELOR OF SCIENCE IN','BS',$data->name)}}</td>
                                             <td class="text-center">{{$data->count}}</td>
                                         </tr>
@@ -157,7 +157,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Chart.js Pie Chart'
+                        text: 'Total Employees: {{$all_employees}} ',
                     }
                 }
             },
@@ -189,12 +189,12 @@
             },
             options: {
                 responsive: true,
-                legend: {
-                    display: false,
-                },
                 plugins: {
+                    legend: {
+                        display: false,
+                    },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Chart.js Pie Chart'
                     }
                 }
@@ -227,27 +227,40 @@
             },
             options: {
                 scales: {
-                 xAxes: [{
+                    xAxes: [{
+                        type: 'logarithmic',
                         ticks: {
-                            maxTicksLimit: 30
+                            autoSkip: true,
+                            maxTicksLimit: 20
                         }
                     }]
                 },
                 responsive: true,
-                legend: {
-                    display: false,
-                },
                 plugins: {
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true,
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'xy',
+                        }
+                    },
+                    legend: {
+                        display: false,
+                    },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Chart.js Pie Chart'
                     }
                 }
             },
         });
 
-
     })
+
 
 </script>
 
