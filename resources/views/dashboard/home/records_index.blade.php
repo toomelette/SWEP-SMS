@@ -69,7 +69,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>{{number_format($sent_by_week->avg('count'))}}</h3>
+                        <h3>{{number_format($avg_sent_by_week)}}</h3>
 
                         <p>Average Emails Sent per Week</p>
                     </div>
@@ -266,7 +266,7 @@
                         {
                             data: [
                                 @foreach($documents_per_week as $data)
-                                    {{$data->count}},
+                                    {{$data}},
                                 @endforeach
                             ],
                             borderColor : 'rgb(75, 192, 192)',
@@ -275,8 +275,8 @@
                         }
                     ],
                     labels:[
-                        @foreach($documents_per_week as $data)
-                            '{{date('M. d, Y',strtotime($data->date))}}',
+                        @foreach($documents_per_week as $key=>$data)
+                            '{{date('M. d, y',strtotime($key))}}',
                         @endforeach
                     ]
                 },

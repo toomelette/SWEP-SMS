@@ -76,30 +76,46 @@ class HomeController extends Controller{
 
         if(Auth::user()->dash == 'records'){
 
-            $sent_by_week = DB::table('rec_document_dissemination_logs')
-                ->select('sent_at', DB::raw("count('slug') as count"))
-                ->where('status','sent')
-                ->groupBy(DB::raw('week(sent_at)'))
-                ->orderBy("sent_at","asc")
-                ->get();
+            $sent_by_week = DocumentDisseminationLog::
+                select('sent_at')
+                ->get()
+                ->groupBy(function($date) {
+                    return Carbon::parse($date->sent_at)->format('W');
+                })->count();
+
+            $sent_all = DocumentDisseminationLog::
+            select('sent_at')
+                ->count();
+            $avg_sent_by_week = round($sent_all/$sent_by_week,0);
+
             $emails_per_contact = DocumentDisseminationLog::with(['emailContact','employee'])
                 ->select('email_contact_id','employee_no',DB::raw('count(slug) as count'))
                 ->groupBy('email_contact_id','employee_no')
                 ->get();
 
-            $documents_per_week = Document::select('reference_no','date',DB::raw('count(slug) as  "count"'))
-                ->groupBy(DB::raw("week(date)"))
+
+
+            $documents_per_week = Document::select('reference_no','date')
                 ->orderBy('date','asc')
-                ->get();
+                ->get()
+                ->groupBy(function($date) {
+                    return Carbon::parse($date->date)->format('W');
+                })->toArray();
+
+            $documents_per_week_arr = [];
+
+            foreach ($documents_per_week as $key=>$doc){
+                $documents_per_week_arr[date('Y-m-d',strtotime($doc[0]['date']))] = count($documents_per_week[$key]);
+            }
 
 
             return view('dashboard.home.records_index')->with([
                 'all_documents' => Document::count(),
                 'all_emails_sent' => DocumentDisseminationLog::where('status','sent')->count(),
                 'all_contacts' => EmailContact::count(),
-                'sent_by_week' => $sent_by_week,
+                'avg_sent_by_week' => $avg_sent_by_week,
                 'emails_per_contact' => $emails_per_contact,
-                'documents_per_week' => $documents_per_week,
+                'documents_per_week' => $documents_per_week_arr,
             ]);
         }
     	return $this->home->view();

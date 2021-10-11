@@ -24,7 +24,7 @@
 <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
-
+<link type="text/css" rel="stylesheet" href="{{ asset('css/product-sans.css') }}">
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 
 {{-- Charts --}}	
