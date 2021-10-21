@@ -15,7 +15,7 @@ class User extends Authenticatable{
 
 
 
-    use Notifiable, Sortable, LogsActivity, HasActivity;
+    use Notifiable, Sortable;
 
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
 
@@ -25,8 +25,6 @@ class User extends Authenticatable{
 
     protected $hidden = ['password', 'remember_token',];
 
-    protected static $logAttributes = ['*'];
-    protected static $logOnlyDirty = true;
 
 
 
