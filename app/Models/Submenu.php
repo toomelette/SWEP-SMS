@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class Submenu extends Model{
@@ -11,7 +12,7 @@ class Submenu extends Model{
 
 
 
-	use Sortable;
+	use Sortable, LogsActivity;
 
     protected $table = 'su_submenus';
 
@@ -21,7 +22,10 @@ class Submenu extends Model{
 
     public $timestamps = false;
 
-
+    protected static $logName = 'submenu';
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
 
 
 

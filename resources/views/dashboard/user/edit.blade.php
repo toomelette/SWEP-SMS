@@ -1,266 +1,121 @@
-@extends('layouts.admin-master')
+@extends('layouts.modal-content',['form_id'=>'edit_user_form', 'slug'=> $user->slug,])
 
-@section('content')
 
-<section class="content-header">
-    <h1>Update User</h1>
-    <div class="pull-right" style="margin-top: -25px;">
-      {!! __html::back_button(['dashboard.user.index', 'dashboard.user.show']) !!}
-    </div>
-</section>
+@section('modal-header')
+Edit
+@endsection
 
-<section class="content">
-            
-    <div class="box">
-        
-      <div class="box-header with-border">
-        <h3 class="box-title">Form</h3>
-        <div class="pull-right">
-            <code>Fields with asterisks(*) are required</code>
+@section('modal-body')
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            {!! __form::textbox(
+              '12 firstname', 'firstname', 'text', 'Firstname *', 'Firstname', $user->firstname, '', '', ''
+            ) !!}
+
+            {!! __form::textbox(
+                  '12 middlename', 'middlename', 'text', 'Middlename *', 'Middlename', $user->middlename, '', '', ''
+                ) !!}
+
+            {!! __form::textbox(
+              '12 lastname', 'lastname', 'text', 'Lastname *', 'Lastname', $user->lastname, '', '', ''
+            ) !!}
+
+
+
+            {!! __form::textbox(
+                  '12 email', 'email', 'email', 'Email *', 'Email', $user->email, '', '', ''
+                ) !!}
+
+            {!! __form::textbox(
+              '12 position', 'position', 'text', 'Position *', 'Position', $user->position, '', '', ''
+            ) !!}
         </div>
-      </div>
-      
-      <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.update', $user->slug) }}">
+    </div>
+    <div class="col-md-9">
+        @foreach($all_menus as $menu)
+            <div class="col-md-3">
+                @if($menu->route == 'dashboard.home')
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa {{$menu->icon}}"></i>
+                            {{$menu->name}}
+                        </div>
+                        <div class="panel-body" style="min-height: 210px">
+                            <div class="row">
+                                {!!
+                                    __form::select_static2('12', 'dash_type', 'Dashboard type',$user->dash,
+                                    [
+                                        'HRU Dashboard' => 'hru',
+                                        'RECORDS Dashboard' => 'records',
+                                    ]
+                                    , '', '', '', '')
+                                   !!}
 
-        <div class="box-body">
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa {{$menu->icon}}"></i>
+                            {{$menu->name}}
+                            <div class="pull-right">
+                                <button class="btn btn-xs btn-default clear_btn" type="button">Clear</button>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="min-height: 180px">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <select multiple="" name="submenus[{{$menu->menu_id}}][]" class="form-control select_multiple" size="6">
+                                        @if($menu->submenu->count() > 0)
+                                            @foreach($menu->submenu as $submenu)
+                                                <option value="{{$submenu->submenu_id}}" @if(isset($user_submenus_arr[$submenu->submenu_id])) selected @endif>
+                                                    {{$submenu->name}}
+                                                </option>
+                                            @endforeach
 
-          <div class="col-md-11">
-              
-              <input name="_method" value="PUT" type="hidden">
-
-              @csrf    
-
-              {!! __form::textbox_inline(
-                  'firstname', 'text', 'Firstname *', 'Firstname', old('firstname') ? old('firstname') : $user->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : $user->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : $user->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'email', 'email', 'Email *', 'Email', old('email') ? old('email') : $user->email, $errors->has('email'), $errors->first('email'), ''
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'position', 'text', 'Position *', 'Position / Plantilla', old('position') ? old('position') : $user->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'username', 'text', 'Username *', 'Username', old('username') ? old('username') : $user->username, $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
-              ) !!}
-
-          </div>
-
-
-           {{-- USER MENU DYNAMIC TABLE GRID --}}
-          <div class="col-md-12" style="padding-top:50px;">
-            <div class="box box-solid">
-              <div class="box-header with-border">
-                <h3 class="box-title">User Menus</h3>
-                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
-              </div>
-              
-              <div class="box-body no-padding">
-                
-                <table class="table table-bordered">
-
-                  <tr>
-                    <th>Menus *</th>
-                    <th>Menu Modules</th>
-                    <th style="width: 40px"></th>
-                  </tr>
-
-                  <tbody id="table_body">
-
-                    @if(old('menu'))
-                      
-                      @foreach(old('menu') as $key => $value)
-
-                        <tr>
-
-                          <td style="width:450px;">
-                            <select name="menu[]" id="menu" class="form-control menu" style="width: 90%;">
-                              <option value="">Select</option>
-                              @foreach($global_menus_all as $data) 
-                                  <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
-                              @endforeach
-                            </select>
-                            <br><small class="text-danger">{{ $errors->first('menu.'.$key) }}</small>
-                          </td>
-
-                          <td style="min-width:50px; min-width:50px; max-width:50px">
-                            <select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
-                                <option value="">Select</option>
-                                @foreach($global_submenus_all as $data)
-                                    @if(old('submenu') && $data->menu_id == old('menu.'.$key))
-                                        <option value="{{ $data->submenu_id }}" {!! in_array($data->submenu_id, old('submenu')) ? 'selected' : '' !!}>{{$data->name}}</option>
-                                    @else
-                                        <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                          </td>
-
-                          <td>
-                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                          </td>
-
-                        </tr>
-
-                      @endforeach
-
-                    @else
-
-                      @foreach($user->userMenu as $user_menu_data)
-
-                        <tr>
-
-                          <td style="width:450px;">
-                            <select name="menu[]" id="menu" class="form-control menu" style="width:90%;">
-                              <option value="">Select</option>
-                              @foreach($global_menus_all as $data) 
-                                <option value="{{ $data->menu_id }}" {!! $user_menu_data->menu_id == $data->menu_id ? 'selected' : '' !!}>{{ $data->name }}</option>
-                              @endforeach
-                            </select>
-                          </td>
-
-                          <td>
-                            <select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width:80%;">
-                              <option value="">Select</option>
-                              @foreach($global_submenus_all as $data)
-                                  <option value="{{ $data->submenu_id }}"  {!! in_array($data->submenu_id, $user_menu_data->userSubMenu->pluck('submenu_id')->toArray()) ? 'selected' : '' !!}>{{ $data->name }}</option>
-                              @endforeach
-                            </select>
-                          </td>
-
-                          <td>
-                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                          </td>
-
-                        </tr>
-
-                      @endforeach 
-
-                    @endif
-
-                  </tbody>
-                </table>
-               
-              </div>
-
+                                        @endif
+                                    </select>
+                                    <span class="help-block" style="font-size: 12px; font-family: 'Product Sans Light'">No module selected</span>
+                                </div>
+                            </div>
+                            <div class="progress xs">
+                                <div class="progress-bar bg-green" style="width: 0%;" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
-          </div>
-
-        </div>
-
-        <div class="box-footer">
-          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
-        </div>
-
-      </form>
-
+        @endforeach
     </div>
-
-</section>
-
+</div>
 @endsection
 
 
+@section('modal-footer')
+    <button type="submit" class="btn btn-primary">Update</button>
+@endsection
 
 @section('scripts')
-
-   <script type="text/javascript">    
-
-    {{-- ADD ROW --}}
-    $(document).ready(function() {
-      $("#add_row").on("click", function() {
-        $('select').select2('destroy');
-        var content ='<tr>' +
-                      '<td style="width:450px;">' +
-                        '<select name="menu[]" id="menu" class="form-control menu" style="width:90%;">' +
-                          '<option value="">Select</option>' +
-                          '@foreach($global_menus_all as $data)' +
-                            '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
-                          '@endforeach' +
-                        '</select>' +
-                      '</td>' +
-
-                      '<td>' +
-                        '<select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
-                          '<option value="">Select</option>' +
-                          '@foreach($global_submenus_all as $data)' +
-                              '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
-                          '@endforeach' +
-                        '</select>' +
-
-                      '</td>' +
-
-                      '<td>' +
-                          '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
-                      '</td>' +
-                    '</tr>';
-
-        $("#table_body").append($(content));
-
-        $('.menu').select2({
-          width:400,
-          dropdownParent: $('#table_body')
-        });
-
-        $('.submenu').select2({
-          width:400,
-          dropdownParent: $('#table_body'),
-          closeOnSelect: false,
-        });
-
-      });
-    });
-
-
-    {{-- AJAX --}}
-    $(document).ready(function() {
-      $(document).on("change", "#menu", function() {
-        var id = $(this).val();
-        var parent = $(this).closest('tr');
-        console.log(parent);
-        if(id) {
-          $.ajax({
-            headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-            url: "/api/submenu/select_submenu_byMenuId/" + id,
-            type: "GET",
-            dataType: "json",
-            success:function(data) {   
-                $(parent).find("#submenu").empty();
-                $.each(data, function(key, value) {
-                    $(parent).find("#submenu").append("<option value='" + value.submenu_id + "'>"+ value.name +"</option>");
-                });
-                $(parent).find("#submenu").append("<option value>Select</option>");
-            }
-          });
-        }else{
-          $(parent).find("#submenu").empty();
-        }
-      });
-    });
-
-
-    $('.menu').select2({
-      width:400,
-      dropdownParent: $('#table_body')
-    });
-
-
-    $('.submenu').select2({
-      width:400,
-      dropdownParent: $('#table_body'),
-      closeOnSelect: false,
-    });
-
-</script>
-    
+    <script>
+        $("#edit_user_form").submit(function (e) {
+            e.preventDefault();
+            uri = "{{route('dashboard.user.update', 'slug')}}";
+            uri = uri.replace('slug',"{{$user->slug}}");
+            form = $(this);
+            $.ajax({
+                url : uri,
+                data : form.serialize(),
+                type : 'PATCH',
+                success : function (response) {
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+        })
+    </script>
 @endsection

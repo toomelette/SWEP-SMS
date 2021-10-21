@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class FundSource extends Model{
@@ -12,7 +13,7 @@ class FundSource extends Model{
 
 
 
-	use Sortable;
+	use Sortable, LogsActivity;
 
     protected $table = 'acctg_fund_sources';
 
@@ -22,7 +23,10 @@ class FundSource extends Model{
 
 	public $timestamps = false;
 
-
+    protected static $logName = 'fund source';
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
 
 
 

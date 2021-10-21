@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Document extends Model{
 
 
-	use Sortable;
+	use Sortable, LogsActivity;
 
     protected $table = 'rec_documents';
 
@@ -17,6 +19,10 @@ class Document extends Model{
     public $sortable = ['reference_no', 'date', 'person_to', 'person_from', 'subject'];
 
 	public $timestamps = false;
+
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
 
 
 
@@ -62,5 +68,6 @@ class Document extends Model{
     public function documentDisseminationLogSendCopy(){
         return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->where('send_copy','=', 1);
     }
+
 
 }

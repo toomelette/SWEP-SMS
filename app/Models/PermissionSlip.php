@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class PermissionSlip extends Model{
 
-    use Sortable;
+    use Sortable, LogsActivity;
     
 	protected $table = 'hr_permission_slip';
 
@@ -18,6 +19,10 @@ class PermissionSlip extends Model{
 
 	public $timestamps = false;
 
+    protected static $logName = 'permission slip';
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
 
 
     protected $attributes = [

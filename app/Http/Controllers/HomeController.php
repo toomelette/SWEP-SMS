@@ -97,16 +97,20 @@ class HomeController extends Controller{
 
             $documents_per_week = Document::select('reference_no','date')
                 ->orderBy('date','asc')
-                ->get()
-                ->groupBy(function($date) {
-                    return Carbon::parse($date->date)->format('W');
-                })->toArray();
 
-            $documents_per_week_arr = [];
+                ->get();
 
-            foreach ($documents_per_week as $key=>$doc){
-                $documents_per_week_arr[date('Y-m-d',strtotime($doc[0]['date']))] = count($documents_per_week[$key]);
+            $documents_per_month_arr = [];
+
+            foreach ($documents_per_week as $doc){
+                if(isset($documents_per_month_arr[date('Ym',strtotime($doc->date)).'01'])){
+                    $documents_per_month_arr[date('Ym',strtotime($doc->date)).'01'] = $documents_per_month_arr[date('Ym',strtotime($doc->date)).'01'] + 1;
+                }else{
+                    $documents_per_month_arr[date('Ym',strtotime($doc->date)).'01'] = 1;
+                }
+
             }
+            ksort($documents_per_month_arr);
 
 
             return view('dashboard.home.records_index')->with([
@@ -115,7 +119,7 @@ class HomeController extends Controller{
                 'all_contacts' => EmailContact::count(),
                 'avg_sent_by_week' => $avg_sent_by_week,
                 'emails_per_contact' => $emails_per_contact,
-                'documents_per_week' => $documents_per_week_arr,
+                'documents_per_month' => $documents_per_month_arr,
             ]);
         }
     	return $this->home->view();

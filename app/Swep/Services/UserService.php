@@ -2,6 +2,9 @@
  
 namespace App\Swep\Services;
 
+use App\Models\Menu;
+use App\Models\UserMenu;
+use App\Models\UserSubmenu;
 use App\Swep\BaseClasses\BaseService;
 use App\Swep\Interfaces\UserInterface;
 use App\Swep\Interfaces\UserMenuInterface;
@@ -11,6 +14,7 @@ use App\Swep\Interfaces\SubmenuInterface;
 use App\Swep\Interfaces\EmployeeInterface;
 
 use Hash;
+use Illuminate\Foundation\Auth\User;
 
 class UserService extends BaseService{
 
@@ -127,41 +131,41 @@ class UserService extends BaseService{
 
     public function update($request, $slug){
 
-        $user = $this->user_repo->update($request, $slug);
+        $user = $this->user_repo->findBySlug($slug);
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->middlename = $request->middlename;
+        $user->email = $request->email;
+        $user->position = $request->position;
+        $user->dash = $request->dash_type;
+        $user->update();
+        $user->userMenu()->delete();
+        $user->userSubmenu()->delete();
 
-        if(!empty($request->menu)){
+        if(!empty($request->submenus)){
+            $data = [];
+            $submenu_data = [];
+            $user = User::where('slug',$slug)->first();
+            $user_id = $user->user_id;
+            foreach ($request->submenus as $menu_id=>$submenus){
+                array_push($data,[
+                    'menu_id' => $menu_id,
+                    'user_id' => $user_id,
+                ]);
 
-            $count_menu = count($request->menu);
-
-            for($i = 0; $i < $count_menu; $i++){
-
-                $menu = $this->menu_repo->findByMenuId($request->menu[$i]);
-
-                $user_menu = $this->user_menu_repo->store($user, $menu);
-
-                if(!empty($request->submenu)){
-
-                    foreach($request->submenu as $data){
-
-                        $submenu = $this->submenu_repo->findBySubmenuId($data);
-
-                        if($menu->menu_id === $submenu->menu_id){
-
-                            $this->user_submenu_repo->store($submenu, $user_menu);
-                        
-                        }
-
-                    }
-
+                foreach ($submenus as $submenu_id){
+                    array_push($submenu_data,[
+                        'user_id' => $user_id,
+                        'submenu_id' => $submenu_id,
+                    ]);
                 }
-
             }
-            
+            UserMenu::insert($data);
+            UserSubmenu::insert($submenu_data);
+
         }
 
-        $this->event->fire('user.update', $user);
-        return redirect()->route('dashboard.user.index');
-
+        return $user->only('slug');
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class Employee extends Model{
@@ -12,7 +13,7 @@ class Employee extends Model{
 
 
 
-	use Sortable;
+	use Sortable, LogsActivity;
 
     protected $table = 'hr_employees';
 
@@ -20,7 +21,10 @@ class Employee extends Model{
 
     public $timestamps = false;
 
-
+    protected static $logName = 'employee';
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
 
 
 

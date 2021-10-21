@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Swep\Services\DocumentService;
 use App\Http\Requests\Document\DocumentFormRequest;
 use App\Http\Requests\Document\DocumentFilterRequest;
 use App\Http\Requests\Document\DocumentDownloadRequest;
 use App\Http\Requests\Document\DocumentDisseminationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 
 class DocumentController extends Controller{
 
@@ -145,6 +148,12 @@ class DocumentController extends Controller{
     }
     
     public function report_generate(Request $request){
+
+        $activity = activity()
+            ->performedOn(new Document())
+            ->causedBy(Auth::user()->id)
+            ->withProperties(['attributes' => 'Generated report on Document Dissemination.'])
+            ->log('generated');
 
         return $this->document->report_generate($request);
     }

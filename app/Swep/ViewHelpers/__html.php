@@ -238,6 +238,51 @@ class __html{
 
     }
 
+    public static function blank_modal($id, $size, $padding = null){
+        if(is_numeric($size)){
+            return '<div class="modal fade" id="'.$id.'">
+				    <div class="modal-dialog" style="width:'.$size.'%; padding-top:'.$padding.'">
+				      <div class="modal-content">
+				        </div>
+				    </div>
+				  </div>';
+        }else{
+            return '<div class="modal fade" id="'.$id.'">
+				    <div class="modal-dialog modal-'.$size.'" style="padding-top:'.$padding.'">
+				      <div class="modal-content">
+				        </div>
+				    </div>
+				  </div>';
+        }
+
+    }
+
+    public static function modal_loader(){
+        return '<div style="display: none;">
+				    <div id="modal_loader">
+				      <center>
+				        <img style="width: 70px; margin: 40px 0;" src="../images/loader.gif">
+				      </center>
+				    </div>
+				  </div>';
+    }
+
+    public static function sidenav_labeler($acronym){
+        $labels = [
+            'SU' => 'SUPER USER',
+            'ACCTG' => 'ACCOUNTING',
+            'HR' => 'HUMAN RESOURCE',
+            'RECORDS' => 'RECORDS',
+        ];
+
+        if(isset($labels[$acronym])){
+            return $labels[$acronym];
+        }else{
+            return $acronym;
+        }
+
+    }
+
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Swep\Repositories;
  
+use App\Models\Submenu;
 use App\Swep\BaseClasses\BaseRepository;
 use App\Swep\Interfaces\UserSubmenuInterface;
 
@@ -56,15 +57,19 @@ class UserSubmenuRepository extends BaseRepository implements UserSubmenuInterfa
 
         $user_id = $this->auth->user()->user_id;
         $route_name = Route::currentRouteName();
+        if($route_name == 'dashboard.home'){
+            return 1;
+        }else{
+            $submenu_id = Submenu::where('route',$route_name)->first()->submenu_id;
 
-        $user_submenu = $this->cache->remember('nav:user_submenus:byUserId:' . $user_id .':byRoute:'. $route_name, 240, function() use($user_id, $route_name){
-            $usm = $this->user_submenu->where('route', $route_name)
-                                      ->where('user_id', $user_id)
-                                      ->exists();
+            $usm = $this->user_submenu->where('submenu_id', $submenu_id)
+                ->where('user_id', $user_id)
+                ->exists();
             return $usm;
-        });
+        }
 
-        return $user_submenu;
+
+
 
     }
 

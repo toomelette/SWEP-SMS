@@ -5,7 +5,7 @@ namespace App\Models;
 
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
-
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class DisbursementVoucher extends Model{
@@ -14,7 +14,12 @@ class DisbursementVoucher extends Model{
 
 
 
-    use Sortable;
+    use Sortable, LogsActivity;
+    protected static $logName = 'disbursement voucher';
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
+
 
 	protected $table = 'acctg_disbursement_vouchers';
 

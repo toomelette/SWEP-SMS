@@ -169,6 +169,30 @@ class __js{
 
     }
 
+    public static function dt_buttons(){
+        $a = '"';
+        return "{extend : 'excel' , text: '<i class=".$a."fa icon-excel2 fa-fw".$a."></i>Excel'},
+        {extend : 'copy' , text: '<i class=".$a."fa icon-copy2 fa-fw".$a."></i>Copy'},
+        {extend : 'pdf' , text: '<i class=".$a."fa icon-pdf2 fa-fw".$a."></i>PDF'}
+    ";
+    }
+
+    public static function show_hide_password(){
+        $a = "'";
+        return '$("body").on("click",".show_pass", function(){
+        t = $(this);
+        input = $(this).parent("span").siblings("input");
+        
+        if(input.attr("type")=="password"){
+          input.attr("type","text");
+          t.html("<i class='.$a.'fa fa-eye'.$a.'></i>");
+        }else{
+          input.attr("type","password");
+          t.html("<i class='.$a.'fa fa-eye-slash'.$a.'></i>");
+        }
+      })';
+    }
+
 
 
 

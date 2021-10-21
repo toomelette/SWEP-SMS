@@ -15,9 +15,10 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
 
         // USERMENU
-        View::composer('layouts.admin-sidenav', 'App\Swep\ViewComposers\UserMenuComposer');
+        View::composer(['layouts.admin-sidenav','dashboard.blank'], 'App\Swep\ViewComposers\UserMenuComposer');
 
-
+        //TREE
+        View::composer(['layouts.admin-sidenav','dashboard.blank'], 'App\Swep\ViewComposers\TreeComposer');
         // MENU
         View::composer(['dashboard.user.create', 
                         'dashboard.user.edit'], 'App\Swep\ViewComposers\MenuComposer');

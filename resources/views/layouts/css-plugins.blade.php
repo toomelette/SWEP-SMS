@@ -33,5 +33,9 @@
 {{-- DATERANGE PICKER --}}
 <link rel="stylesheet" href="{{asset('template/plugins/daterangepicker/daterangepicker.css')}}">
 
+
+{{-- SWAL 2--}}
+
+
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 

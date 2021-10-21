@@ -86,7 +86,7 @@
             <div class="col-md-10">
                 <div class="panel">
                     <div class="panel-body">
-                        <center><label>Documents Uploaded (Weekly)</label></center>
+                        <center><label>Documents Uploaded (Monthly)</label></center>
                         <hr class="no-margin">
                         <canvas id="documents_per_month" width="400" height="82"></canvas>
                     </div>
@@ -265,7 +265,7 @@
                     datasets: [
                         {
                             data: [
-                                @foreach($documents_per_week as $data)
+                                @foreach($documents_per_month as $data)
                                     {{$data}},
                                 @endforeach
                             ],
@@ -275,8 +275,8 @@
                         }
                     ],
                     labels:[
-                        @foreach($documents_per_week as $key=>$data)
-                            '{{date('M. d, y',strtotime($key))}}',
+                        @foreach($documents_per_month as $key=>$data)
+                            '{{date('F Y',strtotime($key))}}',
                         @endforeach
                     ]
                 },

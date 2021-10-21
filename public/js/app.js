@@ -27,6 +27,10 @@ $(document).ready(function($){
         return true;
     });
     $("form").find( ":input" ).prop( "disabled", false );
+
+    $(".tree_active").parents('.treeview').addClass('menu-open');
+    $(".tree_active").parents('li').addClass('active');
+    $(".tree_active").parents('.treeview-menu').slideDown();
 });
 
 
@@ -147,5 +151,105 @@ $(document).on('ready pjax:success', function() {
         });
     });
 
-
 });
+
+function style_datatable(target_table){
+    //Search Bar Styling
+    $(target_table+'_filter input').css("width","300px");
+    $(target_table+"_filter input").attr("placeholder","Press enter to search");
+    $(target_table+"_wrapper .dt-buttons").addClass('col-md-4');
+    $(target_table+"_wrapper .dataTables_length ").addClass('col-md-3');
+    $(".buttons-html5").each(function(index, el) {
+        $(this).addClass('btn-sm');
+    });
+}
+
+function loading_btn(target_form){
+    form_id = $(target_form[0]).attr('id');
+    button = $("#"+form_id+" button[type='submit']");
+    button_html = button.html();
+    icon = button.children('i');
+    old_icon_class = icon.attr('class');
+    icon.attr('old-class',old_icon_class);
+    icon.removeClass();
+    icon.addClass('fa fa-spinner fa-spin');
+    button.attr("disabled","disabled");
+}
+
+function errored(target_form, response){
+    form_id = $(target_form[0]).attr('id');
+    remove_loading_btn(target_form);
+    unmark_required(target_form);
+    mark_required(target_form,response);
+    notify("Please fill out required fields", "warning");
+}
+function remove_loading_btn(target_form){
+    form_id = $(target_form[0]).attr('id');
+    button = $("#"+form_id+" button[type='submit']");
+    button.removeAttr("disabled");
+
+    icon = button.children('i');
+    icon.removeClass();
+    icon.addClass(icon.attr('old-class'));
+}
+
+function unmark_required(target_form){
+    form_id = $(target_form[0]).attr('id');
+    $("#"+form_id+" .has-error:not(.except)").each(function(){
+        $(this).removeClass('has-error');
+        $(this).children("span").last().remove();
+    });
+}
+
+function mark_required(target_form, response){
+    form_id = $(target_form[0]).attr('id');
+    $.each(response.responseJSON.errors, function(i, item){
+        $("#"+form_id+" ."+i).addClass('has-error');
+        $("#"+form_id+" ."+i).append("<span class='help-block'> "+item+" </span>");
+    });
+}
+
+
+function wait_button(target_form){
+    button = $(target_form+" button[type='submit']");
+    button_html = button.html();
+
+    button.html("<i class='fa fa-spinner fa-spin'> </i> Please wait");
+    button.attr("disabled","disabled");
+    Pace.restart();
+}
+
+function unwait_button(target_form , type){
+    text = '';
+    switch(type){
+        case 'save' :
+            text = "<i class='fa fa-save'> </i> Save";
+            break;
+        default:
+            text = type;
+            break;
+    }
+    button = $(target_form+" button[type='submit']");
+    button.html(text);
+    button.removeAttr('disabled');
+}
+
+function notify(message, type){
+    $.notify({
+        // options
+        message: message
+    },{
+        // settings
+        type: type,
+        z_index: 5000,
+        delay: 3500,
+        placement: {
+            from: "top"
+        },
+        animate:{
+            enter: "animated bounceInDown",
+            exit: "animated zoomOutRight"
+        }
+    });
+}
+

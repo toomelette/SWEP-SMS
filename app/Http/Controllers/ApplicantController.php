@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Applicant;
 use App\Models\Course;
 use App\Models\DepartmentUnit;
+use App\Models\Document;
 use App\Swep\Helpers\__sanitize;
 use App\Swep\Services\ApplicantService;
 use App\Http\Requests\Applicant\ApplicantFormRequest;
 use App\Http\Requests\Applicant\ApplicantFilterRequest;
 use App\Http\Requests\Applicant\ApplicantReportRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class ApplicantController extends Controller{
@@ -103,8 +105,12 @@ class ApplicantController extends Controller{
 
 
 	public function reportGenerate(Request $request){
-        //ApplicantReportRequest;
-//return $request;
+        $activity = activity()
+            ->performedOn(new Applicant())
+            ->causedBy(Auth::user()->id)
+            ->withProperties(['attributes' => 'Generated report on Applicants.'])
+            ->log('generated');
+
         $applicants_db = Applicant::with(['course','departmentUnit','positionApplied'])->orderBy('lastname','asc');
         $filters = [];
         if($request->course != '' || !empty($request->course)){

@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
-
-
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class Plantilla extends Model{
     
 
-    use Sortable;
+    use Sortable, LogsActivity;
 
 	protected $table = 'hr_plantillas';
 
@@ -21,7 +20,10 @@ class Plantilla extends Model{
 
 	public $timestamps = false;
 
-
+    protected static $logName = 'plantilla';
+    protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated'];
+    protected static $logOnlyDirty = true;
 
 
 

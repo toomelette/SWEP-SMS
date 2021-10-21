@@ -11,17 +11,14 @@ Route::group(['as' => 'auth.'], function () {
 });
 
 
+/** HOME **/
+Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->middleware('check.user_status');
 
 
 /** Dashboard **/
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['check.user_status', 'check.user_route']], function () {
 
-
-	/** HOME **/	
-	Route::get('/home', 'HomeController@index')->name('home');
-
-
-	/** USER **/   
+	/** USER **/
 	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
 	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
 	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
@@ -29,6 +26,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/user/{slug}/sync_employee', 'UserController@syncEmployee')->name('user.sync_employee');
 	Route::patch('/user/sync_employee/{slug}', 'UserController@syncEmployeePost')->name('user.sync_employee_post');
 	Route::post('/user/unsync_employee/{slug}', 'UserController@unsyncEmployee')->name('user.unsync_employee');
+
 	Route::resource('user', 'UserController');
 
 
@@ -161,8 +159,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** Plantilla **/
 	Route::resource('plantilla', 'PlantillaController');
-	
-	
+
+
+    /** Activity Logs **/
+    Route::get('/activity_logs/fetch_properties', 'ActivityLogsController@fetch_properties')->name('activity_logs_fetch_properties');
+
+
 });
 
 
@@ -170,7 +172,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 
-
+Route::get('/dashboard/tree', function (){
+    return view('dashboard.blank');
+});
 
 Route::get('/file_explorer',function (){
 
@@ -180,6 +184,7 @@ Route::get('/file_explorer',function (){
 })->name('dashboard.documents.file_explorer.index');
 
 /** Test Route **/
+
 Route::get('/dashboard/test', function(){
 
  	//phpinfo();

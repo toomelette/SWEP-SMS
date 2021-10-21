@@ -57,3 +57,7 @@
 {{--<script type="text/javascript" src="{{asset('template/plugins/chartjs/dist/Chart.min.js')}}"></script>--}}
 <script type="text/javascript" src="{{asset('template/plugins/chartjs_copy/chart.min.js')}}"></script>
 {{--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>--}}
+
+
+{{-- SWAL 2 --}}
+<script type="text/javascript" src="{{asset('template/plugins/swal2/dist/sweetalert2.all.min.js')}}"></script>

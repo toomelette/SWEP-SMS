@@ -109,8 +109,7 @@ class UserRepository extends BaseRepository implements UserInterface {
         $user->user_updated = $this->auth->user()->user_id;
         $user->save();
 
-        $user->userMenu()->delete();
-        $user->userSubmenu()->delete();
+
 
         return $user;
 
@@ -249,11 +248,7 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 	public function findBySlug($slug){
-
-        $user = $this->cache->remember('users:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->first();
-        }); 
-        
+	    $user = $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->first();
         if(empty($user)){
             abort(404);
         }

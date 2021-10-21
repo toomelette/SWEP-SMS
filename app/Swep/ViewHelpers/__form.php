@@ -64,6 +64,26 @@ class __form{
                 
     }
 
+    public static function textbox_password_btn($class, $name, $label, $placeholder, $old_value, $id, $error_first, $extra_attr){
+        if($name == ""){
+            $name = "";
+        }else{
+            $name = 'name="'.$name.'" ';
+        }
+        return '<div class="col-md-'.$class.' form-group">
+                <label for="">'.$label.'</label>
+                <div class="input-group">
+                  <input type="password" '.$name.' placeholder="'.$placeholder.'" class="form-control" '.$extra_attr.'>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default show_pass" data-toggle="tooltip" title="Show/Hide Password" tabindex="-1">
+                      <i class="fa fa-eye-slash"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>';
+
+    }
+
 
     public static function select_static2($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr){
         

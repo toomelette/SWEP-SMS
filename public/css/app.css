@@ -24,6 +24,9 @@ input[data-transform=uppercase] {
     vertical-align: middle;
 }
 
+.has-error{
+    margin-bottom: 0px !important;
+}
 
 /*@font-face {*/
 /*  font-family: 'Open Sans';*/
@@ -37,7 +40,9 @@ input[data-transform=uppercase] {
 /*       url('/fonts/open-sans-v17-latin-regular.ttf') format('truetype'),*/
 /*       url('/fonts/open-sans-v17-latin-regular.svg#OpenSans') format('svg');*/
 /*}*/
-
+.swal2-popup{
+    font-size: 1.2rem !important;
+}
 
 body{
     /*font-family: 'Open Sans', sans-serif;*/
@@ -86,3 +91,75 @@ ol.example li.placeholder:before {
     /** Define arrowhead **/
 }
 
+.action{
+    width: 40px;
+}
+
+.action-8p{
+    width: 8%;
+}
+
+.w-6p{
+    width: 6%;
+}
+
+.w-8p{
+    width: 8%;
+}
+
+.w-10p{
+    width: 10%;
+}
+
+.w-12p{
+    width: 12%;
+}
+
+.action-10p{
+    width: 10%;
+}
+
+.action-12p{
+    width: 12%;
+}
+
+.action-60{
+    width: 60px !important;
+}
+
+.action-80{
+    width: 80px !important;
+}
+
+.action-100{
+    width: 100px !important;
+}
+
+.action-120{
+    width: 120px !important;
+}
+
+.action-140{
+    width: 140px !important;
+}
+
+.action-160{
+    width: 160px !important;
+}
+
+.action-180{
+    width: 180px !important;
+}
+
+.action-200{
+    width: 200px !important;
+}
+
+.action-3{
+    width: 120px !important;
+
+}
+
+.slimScrollBar{
+    background: white !important;
+}

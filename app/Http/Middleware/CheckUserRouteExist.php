@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Swep\Interfaces\UserMenuInterface;
 use App\Swep\Interfaces\UserSubmenuInterface;
+use Illuminate\Routing\Route;
 
 class CheckUserRouteExist{
 
@@ -28,7 +29,7 @@ class CheckUserRouteExist{
 
     public function handle($request, Closure $next){
 
-        if($this->user_menu_repo->isExist() || $this->user_submenu_repo->isExist()){
+        if($this->user_submenu_repo->isExist()){
 
             return $next($request);
 

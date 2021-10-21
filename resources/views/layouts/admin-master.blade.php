@@ -13,7 +13,7 @@
 
   </head>
 
-  <body class="hold-transition {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" >
+  <body class="hold-transition fixed {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" >
 
     <div id="loader"></div>
 
@@ -42,7 +42,7 @@
     @include('layouts.js-plugins')
 
     @yield('modals')
-
+      {!! __html::modal_loader() !!}
     @yield('scripts')
 
   </body>

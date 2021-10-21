@@ -5,7 +5,9 @@ namespace App\Models;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Activitylog\Traits\HasActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class User extends Authenticatable{
@@ -13,7 +15,7 @@ class User extends Authenticatable{
 
 
 
-    use Notifiable, Sortable;
+    use Notifiable, Sortable, LogsActivity, HasActivity;
 
     protected $dates = ['created_at', 'updated_at', 'last_login_time'];
 
@@ -23,7 +25,8 @@ class User extends Authenticatable{
 
     protected $hidden = ['password', 'remember_token',];
 
-
+    protected static $logAttributes = ['*'];
+    protected static $logOnlyDirty = true;
 
 
 
