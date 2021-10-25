@@ -6,6 +6,8 @@ use App\Http\Requests\User\UserEditFormRequest;
 use App\Models\Menu;
 use App\Models\User;
 use App\Models\UserSubmenu;
+use App\Swep\Helpers\Helper;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Swep\Services\UserService;
 use App\Http\Requests\User\UserFormRequest;
@@ -91,11 +93,14 @@ class UserController extends Controller{
                     return $data->lastname.', '.$data->firstname;
                 })
                 ->editColumn('is_online', function($data){
-                    if($data->is_online == 1){
-                        return '<span class="label bg-green col-md-12">ONLINE</span>';
-                    }else if($data->is_online == 0){
+                    if($data->last_activity == null){
                         return '<span class="label bg-gray col-md-12">OFFLINE</span>';
+                    }else{
+                        $last_activity = Carbon::parse($data->last_activity);
+                        return Helper::online_badge($last_activity);
                     }
+                    return $last_activity;
+
                 })
                 ->editColumn('is_active', function($data){
                     if($data->is_active == 1){

@@ -16,7 +16,7 @@ Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->mi
 
 
 /** Dashboard **/
-Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['check.user_status', 'check.user_route']], function () {
+Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['check.user_status', 'check.user_route', 'last_activity']], function () {
 
 	/** USER **/
 	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
