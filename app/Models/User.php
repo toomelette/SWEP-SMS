@@ -16,7 +16,7 @@ class User extends Authenticatable{
 
     use Notifiable, Sortable, HasActivity;
 
-    protected $dates = ['created_at', 'updated_at', 'last_login_time'];
+    protected $dates = ['created_at', 'updated_at'];
 
     public $sortable = ['username', 'firstname', 'is_online', 'is_active'];
 
@@ -25,6 +25,7 @@ class User extends Authenticatable{
     protected $hidden = ['password', 'remember_token',];
 
     protected static $logAttributes = ['*'];
+    protected static $ignoreChangedAttributes = ['updated_at','ip_updated','user_updated','last_login_time','is_online','last_activity'];
     protected static $logOnlyDirty = true;
 
 
@@ -42,7 +43,7 @@ class User extends Authenticatable{
         'firstname' => '', 
         'position' => '', 
         'is_online' => false, 
-        'is_active' => false,
+        'is_activated' => false,
         'color' => 'skin-green sidebar-mini', 
         'created_at' => null, 
         'updated_at' => null,

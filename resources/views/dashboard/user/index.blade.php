@@ -279,7 +279,7 @@
         { "data": "username" },
         { "data": "fullname" },
         { "data": "is_online" },
-        { "data": "is_active" },
+        { "data": "account_status" },
         { "data": "action" }
       ],
       "buttons": [

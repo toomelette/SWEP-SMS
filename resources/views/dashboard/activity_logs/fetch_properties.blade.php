@@ -111,3 +111,16 @@
     </div>
 @endif
 
+@if($activity->description == 'auth')
+
+    <div class="col-md-12">
+        @if(isset($activity->properties['attributes']))
+            <p>{{$activity->properties['attributes']}}</p>
+        @else
+            <p class="text-red">No log indicated</p>
+        @endif
+
+    </div>
+@endif
+
+

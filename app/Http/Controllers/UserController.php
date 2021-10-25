@@ -7,7 +7,6 @@ use App\Models\Menu;
 use App\Models\User;
 use App\Models\UserSubmenu;
 use App\Swep\Helpers\Helper;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Swep\Services\UserService;
 use App\Http\Requests\User\UserFormRequest;
@@ -22,16 +21,14 @@ use function foo\func;
 
 class UserController extends Controller{
 
-       
 
-    protected $user_service; 
+
+    protected $user_service;
 
 
 
     public function __construct(UserService $user_service){
-
         $this->user_service = $user_service;
-
     }
 
 
@@ -93,22 +90,14 @@ class UserController extends Controller{
                     return $data->lastname.', '.$data->firstname;
                 })
                 ->editColumn('is_online', function($data){
-                    if($data->last_activity == null){
-                        return '<span class="label bg-gray col-md-12">OFFLINE</span>';
-                    }else{
-                        $last_activity = Carbon::parse($data->last_activity);
-                        return Helper::online_badge($last_activity);
-                    }
-                    return $last_activity;
-
+                    return Helper::online_badge($data->last_activity);
                 })
-                ->editColumn('is_active', function($data){
-                    if($data->is_active == 1){
+                ->addColumn('account_status', function($data){
+                    if($data->is_activated == 1){
                         return '<span class="label bg-green col-md-12">ACTIVE</span>';
-                    }else if($data->is_active == 0){
+                    }else if($data->is_activated == 0){
                         return '<span class="label bg-red col-md-12">INACTIVE</span>';
                     }
-
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -121,7 +110,7 @@ class UserController extends Controller{
 
     }
 
-    
+
 
 
     public function create(){
@@ -130,7 +119,7 @@ class UserController extends Controller{
 
     }
 
-    
+
 
 
     public function store(UserFormRequest $request){
@@ -139,7 +128,7 @@ class UserController extends Controller{
 
     }
 
-    
+
 
 
     public function show($slug){
@@ -168,16 +157,16 @@ class UserController extends Controller{
 
     }
 
-    
+
 
 
     public function edit($slug){
         $all_menus = Menu::get();
         $user = User::where('slug',$slug)->first();
         $user_submenus_arr = [];
-            foreach ($user->userSubmenu as $submenu){
-                $user_submenus_arr[$submenu->submenu_id] = 1;
-            }
+        foreach ($user->userSubmenu as $submenu){
+            $user_submenus_arr[$submenu->submenu_id] = 1;
+        }
 
         return view('dashboard.user.edit')->with([
             'all_menus' => $all_menus,
@@ -188,23 +177,23 @@ class UserController extends Controller{
 
     }
 
-    
+
 
 
     public function update(UserEditFormRequest $request, $slug){
 
 
         return $this->user_service->update($request, $slug);
-        
+
     }
 
-    
+
 
 
     public function destroy($slug){
 
         return $this->user_service->delete($slug);
-        
+
     }
 
 
@@ -219,7 +208,7 @@ class UserController extends Controller{
         }else{
             abort(500,'Error Activating!');
         }
-        
+
     }
 
 
@@ -234,7 +223,7 @@ class UserController extends Controller{
         }else{
             abort(500,'Error deactivating!');
         }
-        
+
     }
 
 
@@ -243,7 +232,7 @@ class UserController extends Controller{
     public function resetPassword($slug){
 
         return $this->user_service->resetPassword($slug);
-        
+
     }
 
 
@@ -252,7 +241,7 @@ class UserController extends Controller{
     public function resetPasswordPost(UserResetPasswordRequest $request, $slug){
 
         return $this->user_service->resetPasswordPost($request, $slug);
-        
+
     }
 
 
@@ -261,7 +250,7 @@ class UserController extends Controller{
     public function syncEmployee($slug){
 
         return $this->user_service->syncEmployee($slug);
-        
+
     }
 
 
@@ -270,7 +259,7 @@ class UserController extends Controller{
     public function syncEmployeePost(UserSyncEmployeeRequest $request, $slug){
 
         return $this->user_service->syncEmployeePost($request, $slug);
-        
+
     }
 
 
@@ -279,7 +268,7 @@ class UserController extends Controller{
     public function unsyncEmployee($slug){
 
         return $this->user_service->unsyncEmployee($slug);
-        
+
     }
 
 

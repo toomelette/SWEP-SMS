@@ -39,19 +39,15 @@
 
           <div class="col-md-3">
             <b>Status:</b>
-            <p>
-              @if($user->is_online == false)
-                <span class="label bg-gray">OFFLINE</span>
-              @else
-                <span class="label bg-green">ONLINE</span>
-              @endif
-            </p>
+            <br>
+            {!! Helper::online_badge($user->last_activity, false) !!}
           </div>
 
           <div class="col-md-3">
             <b>Account:</b>
             <p>
-              @if($user->is_active == false)
+
+              @if($user->is_activated == false)
                 <span class="label bg-red">DEACTIVATED</span>
               @else
                 <span class="label bg-green">ACTIVE</span>

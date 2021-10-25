@@ -32,7 +32,7 @@ class CheckUserStatus{
 
         if($this->auth->guard()->check()){
 
-            if($this->auth->user()->is_active == false){
+            if($this->auth->user()->is_activated == false){
 
                 $this->auth->logout();
                 $this->session->flush();

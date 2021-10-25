@@ -227,40 +227,13 @@ class UserRepository extends BaseRepository implements UserInterface {
 
     }
 
-
-
-
-
-
-    public function logout($slug){
-
-        $user = $this->findBySlug($slug);
-        $user->is_online = 0;
-        $user->save();
-
-        return $user;
-
-    }
-
-
-
-
-
-
 	public function findBySlug($slug){
 	    $user = $this->user->where('slug', $slug)->with(['userMenu', 'userMenu.userSubMenu'])->first();
         if(empty($user)){
             abort(404);
         }
-
         return $user;
-
     }
-
-
-
-
-
 
 	public function search($model, $key){
 

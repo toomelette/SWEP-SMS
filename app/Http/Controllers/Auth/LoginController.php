@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Document;
+use App\Models\User;
 use App\Swep\Interfaces\UserInterface;
 
 use Auth;
@@ -74,19 +76,23 @@ class LoginController extends Controller{
 
         if($this->auth->guard()->attempt($this->credentials($request))){
 
-            if($this->auth->user()->is_active == false){
+            if($this->auth->user()->is_activated == false){
 
                 $this->session->flush();
                 $this->session->flash('AUTH_UNACTIVATED','Your account is currently UNACTIVATED! Please contact the designated IT Personel to activate your account.');
                 $this->auth->logout();
 
             }else{
+                $activity = activity()
+                    ->performedOn(new User())
+                    ->causedBy($this->auth->user()->id)
+                    ->withProperties(['attributes' => 'Logged in'])
+                    ->log('auth');
+//                $user = $this->user_repo->login($this->auth->user()->slug);
 
-                $user = $this->user_repo->login($this->auth->user()->slug);
-
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+//                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
+//                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
+//                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
 
                 $this->clearLoginAttempts($request);
                 return redirect()->intended('dashboard/home');
@@ -109,15 +115,21 @@ class LoginController extends Controller{
         
         if($request->isMethod('post')){
 
-            $user = $this->user_repo->logout($this->auth->user()->slug);
-            
+            $activity = activity()
+                ->performedOn(new User())
+                ->causedBy($this->auth->user()->id)
+                ->withProperties(['attributes' => 'Logged out'])
+                ->log('auth');
+
+
             $this->session->flush();
             $this->guard()->logout();
             $request->session()->invalidate();
 
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+//            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
+//            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
+//            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
+
 
             return redirect('/');
 

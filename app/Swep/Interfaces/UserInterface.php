@@ -18,7 +18,7 @@ interface UserInterface {
 
 	public function deactivate($slug);
 
-	public function logout($slug);
+
 
 	public function resetPassword($model, $request);
 
