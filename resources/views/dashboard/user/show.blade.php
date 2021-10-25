@@ -36,12 +36,7 @@
             <b>Position:</b>
             <p>{{$user->position}}</p>
           </div>
-
-          <div class="col-md-3">
-            <b>Status:</b>
-            <br>
-            {!! Helper::online_badge($user->last_activity, false) !!}
-          </div>
+          
 
           <div class="col-md-3">
             <b>Account:</b>
