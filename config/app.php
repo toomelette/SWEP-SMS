@@ -218,7 +218,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Carbon' => Carbon\Carbon::class,
         'Str' => 'Illuminate\Support\Str',
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+       // 'PDF' => Barryvdh\DomPDF\Facade::class,
 
         /** View Helper **/
         '__chart' => App\Swep\ViewHelpers\__chart::class,
