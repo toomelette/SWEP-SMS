@@ -67,6 +67,7 @@
             <th>@sortablelink('fullname', 'Fullname')</th>
             <th>@sortablelink('position', 'Position')</th>
             <th>@sortablelink('email', 'Email')</th>
+            <th>@sortablelink('biometric_user_id','Biometric UID')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($employees as $data) 
@@ -77,15 +78,17 @@
               <td id="mid-vert">{{ $data->fullname }}</td>
               <td id="mid-vert">{{ $data->position }}</td>
               <td style="width: 20%">{{ $data->email }}</td>
+              <td style="width: 10%">{{ $data->biometric_user_id }}</td>
               <td>
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
-                  <option data-type="1" data-url="{{ route('dashboard.employee.show', $data->slug) }}">Details</option>
-                  <option data-type="1" data-url="{{ route('dashboard.employee.service_record', $data->slug) }}">Service Record</option>
-                  <option data-type="1" data-url="{{ route('dashboard.employee.training', $data->slug) }}">Trainings</option>
-                  <option data-type="1" data-url="{{ route('dashboard.employee.matrix_show', $data->slug) }}">Matrix</option>
-                  <option data-type="1" data-url="{{ route('dashboard.employee.edit', $data->slug) }}">Edit</option>
-                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.employee.destroy', $data->slug) }}">Delete</option>
+                  <option data-type="1" data-url="{{ route('dashboard.employee.show', $data->slug) }}" value="0">Details</option>
+                  <option data-type="1" data-url="{{ route('dashboard.employee.service_record', $data->slug) }}" value="0">Service Record</option>
+                  <option data-type="1" data-url="{{ route('dashboard.employee.training', $data->slug) }}" value="0">Trainings</option>
+                  <option data-type="1" data-url="{{ route('dashboard.employee.matrix_show', $data->slug) }}" value="0">Matrix</option>
+                  <option class='bm_uid_btn' data-toggle="modal" data-target="#bm_uid_modal" value="{{$data->slug}}" data="{{$data->slug}}">Biometric User Id</option>
+                  <option data-type="1" data-url="{{ route('dashboard.employee.edit', $data->slug) }}" value="0">Edit</option>
+                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.employee.destroy', $data->slug) }}" value="0">Delete</option>
                 </select>
               </td>
 
@@ -123,6 +126,7 @@
 @section('modals')
 
   {!! __html::modal_delete('emp_delete') !!}
+  {!! __html::blank_modal('bm_uid_modal','sm') !!}
 
 @endsection 
 
@@ -143,7 +147,36 @@
     @if(Session::has('EMPLOYEE_DELETE_SUCCESS'))
       {!! __js::toast(Session::get('EMPLOYEE_DELETE_SUCCESS')) !!}
     @endif
+      modal_loader = $("#modal_loader").parent('div').html();
 
+    $("body").on('change','#action',function () {
+      btn = $(this);
+      if(btn.val() != 0){
+        slug = $(this).val();
+        $("#bm_uid_modal .modal-content").html(modal_loader);
+        $("#bm_uid_modal").modal('show');
+        $.ajax({
+          url : '{{route("dashboard.employee.edit_bm_uid")}}',
+          data : {slug : slug},
+          type: 'GET',
+          headers: {
+            {!! __html::token_header() !!}
+          },
+          success: function (res) {
+            $("#bm_uid_modal #modal_loader").fadeOut(function () {
+              $("#bm_uid_modal .modal-content").html(res);
+            });
+
+            btn.val('');
+          },
+          error: function (res) {
+            console.log(res);
+          }
+        })
+      }
+
+
+    })
   </script>
     
 @endsection

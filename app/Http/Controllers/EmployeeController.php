@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\Employee\BiometricUserIdFormRequest;
+use App\Models\Employee;
 use App\Swep\Services\EmployeeService;
 use App\Swep\Services\EmployeeTrainingService;
 use App\Swep\Services\EmployeeServiceRecordService;
@@ -21,6 +23,7 @@ use App\Http\Requests\EmployeeTraining\EmployeeTrainingPrintFilterForm;
 
 use App\Http\Requests\EmployeeMatrix\EmployeeMatrixFormRequest;
 use App\Http\Requests\EmployeeMatrix\EmployeeMatrixPrintRequest;
+use Illuminate\Http\Request;
 
 
 class EmployeeController extends Controller{
@@ -259,7 +262,26 @@ class EmployeeController extends Controller{
     }
 
 
+    public function edit_bm_uid(Request $request){
+        $employee = Employee::query()->where('slug','=', $request->slug)->first();
+        if(!empty($employee)){
+            return view('dashboard.employee.edit_bm_uid')->with([
+                'employee' => $employee,
+            ]);
+        }
+    }
 
+    public function update_bm_uid(BiometricUserIdFormRequest $request){
+        $employee = Employee::query()->where('slug','=', $request->slug)->first();
+        if(!empty($employee)){
+            $employee->biometric_user_id = $request->biometric_user_id;
+            if($employee->update()){
+                return $employee->only('slug','employee_no');
+            }
+            abort(503,'Error Saving');
+        }
+        abort(503,'Data not found');
+    }
 
     
 }

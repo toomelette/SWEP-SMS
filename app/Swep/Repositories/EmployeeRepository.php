@@ -39,26 +39,40 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $employee = $this->employee->newQuery();
 
-        $employees = $this->cache->remember('employees:fetch:' . $key, 240, function() use ($request, $entries){
+        if(isset($request->q)){
+            $this->search($employee, $request->q);
+        }
 
-            $employee = $this->employee->newQuery();
-            
-            if(isset($request->q)){
-                $this->search($employee, $request->q);
-            }
+        if(isset($request->d)){
+            $employee->whereDepartmentId($request->d);
+        }
 
-            if(isset($request->d)){
-                $employee->whereDepartmentId($request->d);
-            }
+        if(isset($request->a)){
+            $employee->whereIsActive($request->a);
+        }
 
-            if(isset($request->a)){
-                $employee->whereIsActive($request->a);
-            }
-
-            return $this->populate($employee, $entries);
-
-        });
+        return $this->populate($employee, $entries);
+//        $employees = $this->cache->remember('employees:fetch:' . $key, 240, function() use ($request, $entries){
+//
+//            $employee = $this->employee->newQuery();
+//
+//            if(isset($request->q)){
+//                $this->search($employee, $request->q);
+//            }
+//
+//            if(isset($request->d)){
+//                $employee->whereDepartmentId($request->d);
+//            }
+//
+//            if(isset($request->a)){
+//                $employee->whereIsActive($request->a);
+//            }
+//
+//            return $this->populate($employee, $entries);
+//
+//        });
 
         return $employees;
         
@@ -316,7 +330,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function populate($model, $entries){
 
-        return $model->select('employee_no', 'fullname', 'position', 'email' ,  'slug')
+        return $model->select('employee_no', 'fullname', 'position', 'email' ,  'slug','biometric_user_id')
                      ->sortable()
                      ->orderBy('updated_at', 'desc')
                      ->paginate($entries);

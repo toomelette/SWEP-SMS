@@ -21,6 +21,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 ], function () {
 
 	/** USER **/
+
 	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
 	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
 	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
@@ -84,6 +85,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
 
 	/** EMPLOYEE **/
+    Route::get('/employee/edit_bm_uid','EmployeeController@edit_bm_uid')->name('employee.edit_bm_uid');
+    Route::post('/employee/update_bm_uid','EmployeeController@update_bm_uid')->name('employee.update_bm_uid');
 	Route::get('/employee/print_pds/{slug}/{page}', 'EmployeeController@printPds')->name('employee.print_pds');
 	
 	Route::get('/employee/service_record/{slug}', 'EmployeeController@serviceRecord')->name('employee.service_record');

@@ -18,9 +18,9 @@ class AddColumnsToJoEmployees extends Migration
             $table->string('sex')->nullable(true);
             $table->date('birthday')->nullable(true);
             $table->string('civil_status')->nullable(true);
-            $table->string('address_province')->nullable(true);
-            $table->string('address_city')->nullable(true);
-            $table->string('address_brgy')->nullable(true);
+            $table->string('province')->nullable(true);
+            $table->string('city')->nullable(true);
+            $table->string('brgy')->nullable(true);
             $table->string('address_detailed')->nullable(true);
         });
     }
@@ -33,7 +33,7 @@ class AddColumnsToJoEmployees extends Migration
     public function down()
     {
         Schema::table('hr_jo_employees', function (Blueprint $table) {
-            $table->dropColumn(['name_ext','sex','birthday','address_province','address_city','address_brgy','address_detailed','civil_status']);
+            $table->dropColumn(['name_ext','sex','birthday','province','city','brgy','address_detailed','civil_status']);
         });
     }
 }
