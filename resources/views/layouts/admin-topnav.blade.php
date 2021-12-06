@@ -15,7 +15,7 @@
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        @if($_SERVER['SERVER_ADDR'] != '10.36.1.17')
+        @if($_SERVER['SERVER_ADDR'] != '10.36.1.14')
           <li style="width: 750px;padding-top: 12px"><p style="color: white; font-size: larger">DEVELOPMENT MODE</p></li>
         @endif
         <li class="dropdown user user-menu">
@@ -23,7 +23,6 @@
             <img src="{{asset('images/avatar.jpeg')}}" class="user-image" alt="User Image">
             @if(Auth::check())
               {!! strtoupper(Helper::getUserName()['firstname']) !!}
-              {{$_SERVER['SERVER_ADDR']}}
             @endif
           </a>
           <ul class="dropdown-menu">
