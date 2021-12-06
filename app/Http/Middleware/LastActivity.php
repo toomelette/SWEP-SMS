@@ -25,5 +25,6 @@ class LastActivity
         }
 
         return $next($request);
+
     }
 }

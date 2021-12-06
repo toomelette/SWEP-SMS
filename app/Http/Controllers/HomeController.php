@@ -35,9 +35,6 @@ class HomeController extends Controller{
     }
 
 
-
-
-
     public function index(){
         if(Auth::user()->dash == 'hru'){
             $per_course = DB::table("swep_afd.hr_courses")

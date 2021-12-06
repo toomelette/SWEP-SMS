@@ -38,4 +38,4 @@
 
 
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
-
+<link type="text/css" rel="stylesheet" href="{{ asset('css/animate.css') }}">

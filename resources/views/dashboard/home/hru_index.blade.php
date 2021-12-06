@@ -260,8 +260,6 @@
         });
 
     })
-
-
 </script>
 
 @endsection

@@ -60,8 +60,17 @@ class LoginController extends Controller{
     }
 
 
+    public function showLoginForm()
+    {
+        session(['link' => url()->previous()]);
 
+        return view('auth.login');
+    }
 
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect(session('link'));
+    }
 
 
     protected function login(Request $request){
@@ -95,7 +104,7 @@ class LoginController extends Controller{
 //                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
 
                 $this->clearLoginAttempts($request);
-                return redirect()->intended('dashboard/home');
+                return redirect(session('link'));
 
             }
         

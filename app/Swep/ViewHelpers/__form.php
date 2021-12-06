@@ -4,6 +4,7 @@ namespace App\Swep\ViewHelpers;
 
 use App\Swep\Helpers\__sanitize;
 use App\Swep\Helpers\__dataType;
+use Carbon\Carbon;
 
 
 class __form{
@@ -11,9 +12,13 @@ class __form{
 
 
     /** Default **/
-    public static function textbox($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
-
-       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+    public static function textbox($class, $key, $type, $label, $placeholder, $old_val, $error_has, $error_first, $extra_attr){
+        if(is_object($old_val)){
+            $old_value = $old_val->$key;
+        }else{
+            $old_value = $old_val;
+        }
+       return '<div class="form-group col-md-'. $class .' ">
                 <label for="'. $key .'">'. $label .'</label>
                 <input class="form-control" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                 '. self::error_message($error_has, $error_first) .'
@@ -48,19 +53,50 @@ class __form{
                 
     }
 
+    public static function a_select($length, $label, $name, $array , $value, $attr, $class = null ){
+        if($class != null){
+            $fg_class = "fg-".$class;
+            $input_class = "input-".$class;
+        }else{
+            $fg_class = '';
+            $input_class = '';
+        }
+
+        $options = '';
+        foreach ($array as $option => $val) {
+            if($value === $val){
+                $options = $options.'<option value="'.$val.'" selected>'.$option.'</option>';
+            }else{
+                $options = $options.'<option value="'.$val.'">'.$option.'</option>';
+            }
+        }
+
+        return '<div class="form-group col-md-'.$length.' '.$fg_class.'" id="fg-'.$name.'">
+        <label for="is_menu">'.$label.'</label>
+        <select name="'.$name.'" class="form-control '.$input_class.'" '.$attr.'">
+          <option value="">Select</option>
+          '.$options.'
+        </select>  
+      </div>';
+    }
 
 
-    public static function select_static($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr,$select_class = null){
-      
 
-     return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
-              <label for="'. $key .'">'. $label .'</label>
-              <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>
-                <option value="">Select</option>
-                '. self::static_options($array, $old_value) .'
-              </select>
-              '. self::error_message($error_has, $error_first) .'
-            </div>';
+    public static function select_static($class, $key, $label, $old_val, $array, $error_has, $error_first, $select2, $extra_attr,$select_class = null){
+        if(is_object($old_val)){
+            $old_value = $old_val->$key;
+        }else{
+            $old_value = $old_val;
+        }
+
+         return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
+                  <label for="'. $key .'">'. $label .'</label>
+                  <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>
+                    <option value="">Select</option>
+                    '. self::static_options($array, $old_value) .'
+                  </select>
+                  '. self::error_message($error_has, $error_first) .'
+                </div>';
                 
     }
 
@@ -85,8 +121,12 @@ class __form{
     }
 
 
-    public static function select_static2($class, $key, $label, $old_value, $array, $error_has, $error_first, $select2, $extra_attr){
-        
+    public static function select_static2($class, $key, $label, $old_val, $array, $error_has, $error_first, $select2, $extra_attr){
+        if(is_object($old_val)){
+            $old_value = $old_val->$key;
+        }else{
+            $old_value = $old_val;
+        }
       $select = '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
               <label for="'. $key .'">'. $label .'</label>
               <select name="'. $key .'" id="'. $key .'" class="form-control '. $select2 .'" '. $extra_attr .'>';
@@ -99,20 +139,74 @@ class __form{
 
       foreach ($array as $key => $value) {
         $s = '';
-        if($old_value == $value){
-          $s = "selected";
+        if(is_array($value)){
+            $select .= '<optgroup label="'.$key.'"></optgroup>';
+            foreach ($value as $disp => $option){
+                if($old_value == $option){
+                    $s = "selected";
+                }
+                $select .= '<option value="'.$option.'" '.$s.' >'.$disp.'</option>' ;
+            }
+        }else{
+            if($old_value == $value){
+                $s = "selected";
+            }
+            $select .= '<option value="'.$value.'" '.$s.' >'.$key.'</option>' ;
         }
-        $select .= '<option value="'.$value.'" '.$s.' >'.$key.'</option>' ;
       }
       
 
-      $select .= '</select>'. self::error_message($error_has, $error_first).'
-            </div>';
+      $select .= '</select></div>';
 
 
       
      return $select;
                 
+    }
+
+    public static function select_year($length, $label, $name, $array , $value, $attr, $class = null ){
+        if($class != null){
+            $fg_class = "fg-".$class;
+            $input_class = "input-".$class;
+        }else{
+            $fg_class = '';
+            $input_class = '';
+        }
+        $year_now =Carbon::now()->year;
+        $start_year = $year_now-8;
+        $end_year =$year_now+5;
+
+
+        while ($start_year <= $end_year) {
+            $arr[$start_year]= $start_year;
+
+            $start_year++;
+        }
+        //return print_r($arr);
+        $options = '';
+        foreach ($arr as $option => $val) {
+
+            if($value == ''){
+                if($val == $year_now){
+                    $options = $options.'<option value="'.$val.'" selected>'.$option.'</option>';
+                }
+            }
+            if($value === $val){
+                $options = $options.'<option value="'.$val.'" selected>'.$option.'</option>';
+            }else{
+                if($val != $year_now){
+                    $options = $options.'<option value="'.$val.'">'.$option.'</option>';
+                }
+            }
+        }
+
+        return '<div class="form-group col-md-'.$length.' '.$fg_class.'" id="fg-'.$name.'">
+        <label for="is_menu">'.$label.'</label>
+        <select name="'.$name.'" class="form-control '.$input_class.'" '.$attr.'">
+          <option value="">Select</option>
+          '.$options.'
+        </select>  
+      </div>';
     }
 
 
@@ -395,6 +489,23 @@ class __form{
       }
 
       return $string;
+
+    }
+
+    public static function textbox_icon($class, $key, $type, $label, $placeholder, $old_value, $id, $error_first, $extra_attr){
+
+        if($id == ""){
+            $id = "";
+        }else{
+            $id= 'id = "'.$id.'"';
+        }
+
+        return '<div class="form-group col-md-'. $class .'">
+              <label for="'. $key .'">'. $label .'</label>
+              <div class="input-group">  
+                <input class="form-control with-icon" '. $id .' name="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <span class="input-group-addon"><i class="fa '.$old_value.'"></i></span>
+              </div></div>';
 
     }
 

@@ -16,7 +16,9 @@ Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->mi
 
 
 /** Dashboard **/
-Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['check.user_status', 'check.user_route', 'last_activity']], function () {
+Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
+    'middleware' => ['check.user_status', 'check.user_route', 'last_activity']
+], function () {
 
 	/** USER **/
 	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
@@ -50,6 +52,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** MENU **/
 	Route::resource('menu', 'MenuController');
 
+    /** MENU **/
+    Route::get('/submenu/fetch','SubmenuController@fetch')->name('submenu.fetch');
+	Route::resource('submenu','SubmenuController');
 
 	/** SIGNATORIES **/
 	Route::resource('signatory', 'SignatoryController');
@@ -164,13 +169,33 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
     /** Activity Logs **/
     Route::get('/activity_logs/fetch_properties', 'ActivityLogsController@fetch_properties')->name('activity_logs_fetch_properties');
 
+    /** PAP **/
+    Route::resource('pap', 'PapController');
 
+    /** PAP  Parents**/
+    Route::resource('pap_parent', 'PapParentController');
+
+    /** Budget Proposal**/
+    Route::resource('budget_proposal', 'BudgetProposalController');
+
+    /** DTR **/
+    Route::get('/dtr/extract', 'DTRController@extract')->name('dtr.extract');
+    Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
+    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
+    Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
+    Route::resource('dtr', 'DTRController');
+
+    /** DTR **/
+    Route::resource('jo_employees','JOEmployeesController');
 });
 
 
 
 
 
+Route::get('/dtr', function (){
+    return redirect('/dashboard/dtr/my_dtr');
+});
 
 Route::get('/dashboard/tree', function (){
     return view('dashboard.blank');
@@ -187,7 +212,8 @@ Route::get('/file_explorer',function (){
 
 Route::get('/dashboard/test', function(){
 
- 	//phpinfo();
+//phpinfo();
+    return \App\Http\Requests\JoEmployees\JoEmployeesFormRequest::rules();
 
 	return dd(Illuminate\Support\Str::random(16));
 
@@ -222,6 +248,34 @@ Route::get('/dashboard/test', function(){
 
 	// });
 
+});
+
+Route::get('dashboard/prayer', function (){
+    $path = asset('json/quotes.json');
+    $content = json_decode(file_get_contents($path),true);
+
+    $today = Carbon::now()->format('Y-m-d');
+    $qod_db = \App\Models\QuoteOfTheDay::query()->where('date',$today)->first();
+    if(empty($qod_db)){
+        $random = rand(0,1643);
+        $qod = new \App\Models\QuoteOfTheDay();
+        $qod->quote = $random;
+        $qod->date = $today;
+        $qod->save();
+
+    }
+    $qod_db_2 = \App\Models\QuoteOfTheDay::query()->where('date',$today)->first();
+    return view('dashboard.prayer.index')->with([
+        'qod' => $content[$qod_db_2->quote],
+    ]);
+})->name('dashboard.prayer');
+
+Route::get('dashboard/zk_test',function (){
+
+    $zk = new \Rats\Zkteco\Lib\ZKTeco('10.36.1.20');
+    $zk->connect();
+    return $zk->getUser();
+    return $zk->serialNumber();
 });
 
 

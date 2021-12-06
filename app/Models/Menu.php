@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -10,7 +11,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Menu extends Model{
 
 
+    public static function boot()
+    {
+        static::creating(function ($menu){
+            $menu->user_created = Auth::user()->user_id;
+            $menu->ip_created = request()->ip();
+        });
 
+        static::updating(function ($menu){
+            $menu->user_updated = Auth::user()->user_id;
+            $menu->ip_updated = request()->ip();
+        });
+    }
 
 
     use Sortable, LogsActivity;
@@ -19,7 +31,7 @@ class Menu extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
     
-	public $timestamps = false;
+	public $timestamps = true;
 
     protected static $logName = 'menu';
     protected static $logAttributes = ['*'];

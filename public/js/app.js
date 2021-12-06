@@ -247,9 +247,84 @@ function notify(message, type){
             from: "top"
         },
         animate:{
-            enter: "animated bounceInDown",
+            enter: "animate__animated animate__bounceIn",
             exit: "animated zoomOutRight"
         }
     });
 }
 
+function load_modal2(btn){
+    $(btn.attr('data-target')+" .modal-content").html(modal_loader);
+}
+
+
+function populate_modal2(btn, response){
+    target_modal = btn.attr('data-target');
+    $(target_modal +" #modal_loader").fadeOut(function() {
+        $(target_modal +" .modal-content").html(response);
+        $('.datepicker').each(function(){
+            $(this).datepicker({
+                autoclose: true,
+                dateFormat: "mm/dd/yy",
+                orientation: "bottom"
+            });
+        });
+        $("ol.sortable").sortable();
+    });
+}
+
+function succeed(target_form, reset,modal){
+    form_id = $(target_form[0]).attr('id');
+    if(reset == true){
+        $("#"+form_id).get(0).reset();
+    }
+
+    if(modal == true){
+        $(form).parents('.modal').modal('hide');
+    }
+    unmark_required(target_form);
+    remove_loading_btn(target_form);
+}
+
+function delete_data(slug,url){
+    var btn = $("button[data='"+slug+"']");
+    btn.parents('#'+slug).addClass('warning');
+    url = url.replace('slug',slug);
+    Swal.fire({
+        title: 'Please confirm to delete permanently this data.',
+        showDenyButton: false,
+        showCancelButton: true,
+        confirmButtonText: '<i class="fa fa-trash"></i> DELETE',
+        confirmButtonColor: '#d73925',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url : url,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            success: function (res) {
+                if(res == 1){
+                    btn.parents('#'+slug).addClass('danger');
+                    btn.parents('#'+slug).addClass('animate__animated animate__zoomOutLeft');
+                    notify('Data deleted successfully','success');
+                    setTimeout(function () {
+                        btn.parents('#'+slug).parent('tbody').parent('table').DataTable().draw(false);
+                    },500);
+                }else{
+                    btn.parents('#'+slug).removeClass('warning');
+                    notify('Error deleting data.','danger');
+                }
+
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+            // Swal.fire('Saved!', '', 'success')
+        }else{
+            btn.parents('#'+slug).removeClass('warning');
+        }
+    })
+}

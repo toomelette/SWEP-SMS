@@ -160,7 +160,13 @@ class ApplicantController extends Controller{
         if($request->layout == 'by_course'){
             foreach ($applicants_db as $applicant_db){
                 $applicants[$applicant_db->course_id][$applicant_db->slug] = ['applicant_obj' => $applicant_db];
-                $applicants[$applicant_db->course_id]['label'] = $applicant_db->course->name;
+
+                if(!empty($applicant_db->course)){
+                    $applicants[$applicant_db->course_id]['label'] = $applicant_db->course->name;
+                }else{
+                    $applicants[$applicant_db->course_id]['label'] = 'COURSE MISSING';
+                }
+
             }
         }
 

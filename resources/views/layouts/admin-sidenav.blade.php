@@ -24,9 +24,12 @@
                 </a>
             </li>
         @if(count($tree) > 0)
+
             @foreach($tree as $category=>$menus)
-                @if(count($menus) > 1)
-                    <li class="header">{!! __html::sidenav_labeler($category) !!}</li>
+                @if(count($menus) > 0)
+                    @if($category != 'U')
+                        <li class="header">{!! __html::sidenav_labeler($category) !!}</li>
+                    @endif
                 @endif
                 @foreach($menus as $menu_id => $menu_content)
                     @if($menu_content['menu_obj']->is_menu == true)

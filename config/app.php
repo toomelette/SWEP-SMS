@@ -160,12 +160,13 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /** CUSTOM PROVIDERS **/
         App\Providers\ViewComposerServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        Rats\Zkteco\Providers\ZktecoServiceProvider::class,
     ],
 
     /*
@@ -217,6 +218,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Carbon' => Carbon\Carbon::class,
         'Str' => 'Illuminate\Support\Str',
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
         /** View Helper **/
         '__chart' => App\Swep\ViewHelpers\__chart::class,

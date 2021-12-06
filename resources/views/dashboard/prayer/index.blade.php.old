@@ -1,0 +1,39 @@
+@include('layouts.css-plugins')
+
+<script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+<script type="text/javascript" src="{{asset('template/plugins/moment/moment.js')}}"></script>
+<body>
+
+    <video width="1080" height="720" id="video" muted>
+        <source src="{{asset('videos/Imperata.mp4')}}" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        Your browser does not support the video tag.
+    </video>
+</body>
+<div>{{Carbon::now()->format('F d, Y')}}</div>
+<div id="seconds">{{Carbon::now()->format('h:i:s')}}</div>
+
+<body>
+
+    <script>
+        $(document).ready(function(){
+            const date = '{{Carbon::now()}}';
+            const myMomentObject = moment(date, 'YYYY-MM-DD HH:mm:ss');
+
+            var start = 0;
+            setInterval(function () {
+                const now = myMomentObject.add('seconds',1)
+                if(now.format('HH:mm:ss') == "08:25:00"){
+                    $("#video").get(0).play();
+                }
+                $("#seconds").html(now.format("hh:mm:ss"));
+            },1000);
+                    //     if(moment().format('H:mm:ss') == '15:39:35'){
+                    //         $("#video").get(0).play();
+                    //     }
+                    //     console.log(moment().format('H:mm:ss'));
+                    // },1000)
+        });
+    </script>
+</body>

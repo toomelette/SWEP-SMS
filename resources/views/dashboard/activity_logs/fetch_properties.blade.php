@@ -119,7 +119,6 @@
         @else
             <p class="text-red">No log indicated</p>
         @endif
-
     </div>
 @endif
 

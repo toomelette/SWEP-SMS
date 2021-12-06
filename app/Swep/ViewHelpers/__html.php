@@ -2,6 +2,8 @@
 
 namespace App\Swep\ViewHelpers;
 
+use App\Swep\Helpers\Helper;
+use Illuminate\Support\Carbon;
 use URL;
 use Input;
 
@@ -261,10 +263,40 @@ class __html{
         return '<div style="display: none;">
 				    <div id="modal_loader">
 				      <center>
-				        <img style="width: 70px; margin: 40px 0;" src="../images/loader.gif">
+				        <img style="width: 70px; margin: 40px 0;" src="../../images/loader.gif">
 				      </center>
 				    </div>
 				  </div>';
+    }
+    public static function dtrTime($time){
+        if($time == null || $time == ''){
+            return '-';
+        }else{
+            return Carbon::parse($time)->format('h:i');
+        }
+
+    }
+
+    public static function sex($sex){
+        if($sex == "MALE"){
+            return '<span class="label bg-green col-md-12"><i class="fa fa-male"></i> '.$sex.'</span>';
+        }elseif($sex == "FEMALE"){
+            return '<span class="label bg-maroon col-md-12"><i class="fa fa-female"></i> '.$sex.'</span>';
+        }else{
+            return $sex;
+        }
+    }
+
+    public static function dtr_type_badge($type){
+        $colors = [
+            0 => 'bg-purple',
+            2 => 'bg-teal',
+            3 => 'bg-blue',
+            1 => 'bg-green',
+            4 => 'bg-orange',
+            5 => 'bg-yellow',
+        ];
+        return '<span class="label '.$colors[$type].'">'.Helper::dtr_type($type).'</span>';
     }
 
     public static function sidenav_labeler($acronym){
@@ -273,6 +305,7 @@ class __html{
             'ACCTG' => 'ACCOUNTING',
             'HR' => 'HUMAN RESOURCE',
             'RECORDS' => 'RECORDS',
+            'PPU' => 'PPU'
         ];
 
         if(isset($labels[$acronym])){
@@ -283,7 +316,72 @@ class __html{
 
     }
 
+    public static function boolToCheck($bool){
+        if($bool == true){
+            return '<i class="fa fa-check text-green"></i>';
+        }else{
+            return '<i class="fa fa-times"></i>';
+        }
+    }
 
+    public static function token_header(){
+        $token = '"csrf-token"';
+        return "'X-CSRF-TOKEN': $('meta[name=".$token."]').attr('content'),";
+    }
 
+    public static function timestamp($obj, $class){
+
+        if(!empty($obj->updater)){
+            $updated_by  = $obj->updater->lastname.', '.Helper::acronym($obj->updater->firstname);
+            $updated_by_time = date("M. d, Y | h:i A",strtotime($obj->updated_at));
+        }else{
+            $updated_by  = 'N/A';
+            $updated_by_time = 'N/A';
+        }
+
+        if(!empty($obj->creator)){
+            $created_by  = $obj->creator->lastname.', '.Helper::acronym($obj->creator->firstname);
+            $created_by_time = date("M. d, Y | h:i A",strtotime($obj->updated_at));
+        }else{
+            $created_by  = 'N/A';
+            $created_by_time = 'N/A';
+        }
+
+        return '<div class="col-md-'.$class.'" style="font-size: 14px">
+			<div class="stamps">
+				<small class="no-margin">
+					Encoded by: 
+					<b>
+						'.$created_by.'
+					</b> 
+				</small>
+				<br>
+				<small class="no-margin">
+					Timestamp: 
+					<b>
+						'.date("M. d, Y | h:i A",strtotime($created_by_time)).'
+					</b> 
+				</small>
+			</div>
+		</div>
+		<div class="col-md-'.$class.'"  style="font-size: 14px">
+
+			<div class="stamps">
+				<small class="no-margin">
+					Last updated by: 
+					<b>
+						'.$updated_by.'
+					</b> 
+				</small>
+				<br>
+				<small class="no-margin">
+					Timestamp: 
+					<b>
+						'.$updated_by_time.'
+					</b> 
+				</small>
+			</div>
+		</div>';
+    }
 
 }

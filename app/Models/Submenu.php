@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -10,9 +12,20 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Submenu extends Model{
 	
 
+    public static function boot()
+    {
+        static::updating(function($submenu){
+            $submenu->user_updated = Auth::user()->user_id;
+            $submenu->ip_updated = request()->ip();
+        });
 
+        static::creating(function ($submenu){
+            $submenu->user_created = Auth::user()->user_id;
+            $submenu->ip_created = request()->ip();
+        });
+    }
 
-	use Sortable, LogsActivity;
+    use Sortable, LogsActivity;
 
     protected $table = 'su_submenus';
 
@@ -20,7 +33,7 @@ class Submenu extends Model{
 
     public $sortable = ['name', 'route', 'is_nav'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected static $logName = 'submenu';
     protected static $logAttributes = ['*'];

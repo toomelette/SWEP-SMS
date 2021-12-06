@@ -206,6 +206,10 @@ class Employee extends Model{
         return $this->hasMany('App\Models\DocumentDisseminationLog', 'employee_no', 'employee_no');
     }
 
+    public function dtr_records(){
+        return $this->hasMany('App\Models\DailyTimeRecord','biometric_user_id','biometric_user_id');
+    }
+
 
 
 

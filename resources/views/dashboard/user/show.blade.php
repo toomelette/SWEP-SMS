@@ -36,7 +36,7 @@
             <b>Position:</b>
             <p>{{$user->position}}</p>
           </div>
-          
+
 
           <div class="col-md-3">
             <b>Account:</b>

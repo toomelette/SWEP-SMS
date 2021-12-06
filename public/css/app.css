@@ -103,12 +103,27 @@ ol.example li.placeholder:before {
     width: 6%;
 }
 
+.w-1p{
+    width: 1% !important;
+}
+
+.w-2p{
+    width: 2% !important;
+}
+
 .w-8p{
     width: 8%;
 }
 
 .w-10p{
     width: 10%;
+}
+.w-15p{
+    width: 15%;
+}
+
+.w-30p{
+    width: 30%;
 }
 
 .w-12p{

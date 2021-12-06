@@ -1,13 +1,22 @@
 <?php
 
-  $gtChildren = count(optional(Auth::user()->employee)->employeeChildren) > 11;
-  $gtEligibility = count(optional(Auth::user()->employee)->employeeEligibility) > 10;
-  $gtExperience = count(optional(Auth::user()->employee)->employeeExperience) > 25;
-  $gtVoluntaryWork = count(optional(Auth::user()->employee)->employeeVoluntaryWork) > 7;
-  $gtTraining = count(optional(Auth::user()->employee)->employeeTraining) > 20;
-  $gtSpecialSkill = count(optional(Auth::user()->employee)->employeeSpecialSkill) > 7;
-  $gtRecognition = count(optional(Auth::user()->employee)->employeeRecognition) > 7;
-  $gtOrganization = count(optional(Auth::user()->employee)->employeeOrganization) > 7;
+//  $gtChildren = count(optional(Auth::user()->employee)->employeeChildren) > 11;
+//  $gtEligibility = count(optional(Auth::user()->employee)->employeeEligibility) > 10;
+//  $gtExperience = count(optional(Auth::user()->employee)->employeeExperience) > 25;
+//  $gtVoluntaryWork = count(optional(Auth::user()->employee)->employeeVoluntaryWork) > 7;
+//  $gtTraining = count(optional(Auth::user()->employee)->employeeTraining) > 20;
+//  $gtSpecialSkill = count(optional(Auth::user()->employee)->employeeSpecialSkill) > 7;
+//  $gtRecognition = count(optional(Auth::user()->employee)->employeeRecognition) > 7;
+//  $gtOrganization = count(optional(Auth::user()->employee)->employeeOrganization) > 7;
+
+$gtChildren = 0;
+$gtEligibility = 0;
+$gtExperience = 0;
+$gtVoluntaryWork = 0;
+$gtTraining = 0;
+$gtSpecialSkill = 0;
+$gtRecognition = 0;
+$gtOrganization = 0;
 
 ?>
 
