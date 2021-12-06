@@ -4,7 +4,7 @@
     <span class="logo-mini">A</span>
     <span class="logo-lg"><b>AFD</b></span>
   </a>
-  <nav class="navbar navbar-static-top" @if($_SERVER['SERVER_ADDR'] != '10.36.1.17')style="background-color: #054629" @endif>
+  <nav class="navbar navbar-static-top" @if($_SERVER['SERVER_ADDR'] != '10.36.1.14')style="background-color: #054629" @endif>
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
