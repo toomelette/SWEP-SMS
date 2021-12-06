@@ -129,13 +129,14 @@ class DTRController extends  Controller
     public function myDtr(){
         $employee = $this->getCurrentUserEmployeeObj();
         $dtr_by_year = [];
-        $dtr_records = $employee->dtr_records()->orderBy('date','desc')->get();
-        if($dtr_records->count() > 0){
-            foreach ($dtr_records as $dtr_record) {
-                $dtr_by_year[Carbon::parse($dtr_record->date)->format('Y')][Carbon::parse($dtr_record->date)->format('Y-m')] = null;
+        if(!empty($employee->dtr_records)){
+            $dtr_records = $employee->dtr_records()->orderBy('date','desc')->get();
+            if($dtr_records->count() > 0){
+                foreach ($dtr_records as $dtr_record) {
+                    $dtr_by_year[Carbon::parse($dtr_record->date)->format('Y')][Carbon::parse($dtr_record->date)->format('Y-m')] = null;
+                }
             }
         }
-
         return view('dashboard.dtr.my_dtr')->with([
             'employee' => $employee,
             'dtr_by_year' => $dtr_by_year,
@@ -152,7 +153,6 @@ class DTRController extends  Controller
                     $dtr_array[$dtr->date] = $dtr;
                 }
             }
-
             $holidays = $this->holidaysArray($request->month);
             //return $holidays;
             return view('dashboard.dtr.my_dtr_preview')->with([

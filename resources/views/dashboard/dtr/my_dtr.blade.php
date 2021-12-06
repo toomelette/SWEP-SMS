@@ -2,6 +2,13 @@
 
 @section('content')
 
+    @php
+        $bm_uid = 0;
+
+        if(!empty($employee->biometric_user_id)){
+            $bm_uid = $employee->biometric_user_id;
+        }
+    @endphp
     <section class="content-header">
         <h1>Daily Time Record</h1>
     </section>
@@ -115,7 +122,7 @@
         $('body').on('click','.month_btn',function () {
             btn = $(this);
             var month = $(this).attr('month');
-            var bm_u_id = "{{$employee->biometric_user_id}}";
+            var bm_u_id = "{{$bm_uid}}";
             load_modal2(btn);
             $.ajax({
                 url : '{{route("dashboard.dtr.fetch_by_user_and_month")}}',

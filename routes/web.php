@@ -272,10 +272,11 @@ Route::get('dashboard/prayer', function (){
 
 Route::get('dashboard/zk_test',function (){
 
-    $zk = new \Rats\Zkteco\Lib\ZKTeco('10.36.1.20');
+    $zk = new \Rats\Zkteco\Lib\ZKTeco('10.36.1.21');
     $zk->connect();
+
     return $zk->getUser();
-    return $zk->serialNumber();
+    //return $zk->serialNumber();
 });
 
 
