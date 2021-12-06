@@ -41,10 +41,16 @@ class JoEmployeesFormRequest extends FormRequest
                 Rule::unique('hr_jo_employees','biometric_user_id')->ignore($this->slug,'slug'),
                 Rule::unique('hr_employees','biometric_user_id'),
             ],
-            'province' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'brgy' => 'required|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'brgy' => 'nullable|string|max:255',
             'address_detailed' => 'nullable|string|max:255',
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users','username')->ignore($this->employee_no,'employee_no'),
+            ],
         ];
     }
 }

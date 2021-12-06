@@ -3,6 +3,7 @@
 
 namespace App\Swep\Helpers;
 use Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class Helper
 {
@@ -131,6 +132,38 @@ class Helper
             $acronym .= $w[0];
         }
         return $acronym;
+    }
+
+    public static function getUserName(){
+        $firstname = '';
+        $middlename = '';
+        $lastname = '';
+        $position = '';
+        if(Auth::user()->firstname == '' || Auth::user()->lastname == ''){
+            if(Auth::user()->joEmployee()->exists()){
+                $firstname = Auth::user()->joEmployee->firstname;
+                $lastname = Auth::user()->joEmployee->lastname;
+                $middlename = Auth::user()->joEmployee->middlename;
+                $position = Auth::user()->joEmployee->position;
+            }elseif(Auth::user()->employee()->exists()){
+                $firstname = Auth::user()->employee->firstname;
+                $lastname = Auth::user()->employee->lastname;
+                $middlename = Auth::user()->employee->middlename;
+                $position = Auth::user()->employee->position;
+            }
+        }else{
+            $firstname = Auth::user()->firstname;
+            $middlename = Auth::user()->middlename;
+            $lastname = Auth::user()->lastname;
+            $position = Auth::user()->position;
+        }
+
+        return [
+            'firstname' => $firstname,
+            'middlename' => $middlename,
+            'lastname' => $lastname,
+            'position' => $position,
+        ];
     }
 
 }

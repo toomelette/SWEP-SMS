@@ -13,7 +13,13 @@ Route::group(['as' => 'auth.'], function () {
 
 /** HOME **/
 Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->middleware('check.user_status');
-
+Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
+    'middleware' => ['check.user_status', 'last_activity']
+], function () {
+    Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
+    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
+    Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
+});
 
 /** Dashboard **/
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
@@ -183,9 +189,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     /** DTR **/
     Route::get('/dtr/extract', 'DTRController@extract')->name('dtr.extract');
-    Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
-    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
-    Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
+//    Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
+//    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
+
     Route::resource('dtr', 'DTRController');
 
     /** DTR **/
@@ -282,5 +288,12 @@ Route::get('dashboard/zk_test',function (){
     //return $zk->serialNumber();
 });
 
+
+Route::get('jo',function (){
+   return view('dashboard.public.jo_entry')->with([
+       'user_menus_records ' => '',
+
+   ]);
+});
 
 

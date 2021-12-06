@@ -7,7 +7,9 @@
       <div class="pull-left info">
         
         @if(Auth::check())
-          <p>{{ Auth::user()->firstname }}</p>
+              <p>
+                {!! strtoupper(Helper::getUserName()['firstname']) !!}
+            </p>
         @endif
 
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>

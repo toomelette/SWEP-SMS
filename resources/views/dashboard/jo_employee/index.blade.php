@@ -57,15 +57,15 @@
 
                         <div class="row">
                             {!! __form::textbox(
-                               '4 firstname', 'firstname', 'text', 'First name *', 'First name', '', 'firstname', '', ''
+                               '4 firstname', 'firstname', 'text', 'First name *', 'First name', '', 'firstname', '', '','basis'
                              ) !!}
 
                             {!! __form::textbox(
-                               '4 middlename', 'middlename', 'text', 'Middle name *', 'Middle name', '', 'middlename', '', ''
+                               '4 middlename', 'middlename', 'text', 'Middle name *', 'Middle name', '', 'middlename', '', '','basis'
                              ) !!}
 
                             {!! __form::textbox(
-                               '4 lastname', 'lastname', 'text', 'Last name *', 'Last name', '', 'lastname', '', ''
+                               '4 lastname', 'lastname', 'text', 'Last name *', 'Last name', '', 'lastname', '', '', 'basis'
                              ) !!}
                         </div>
                         <div class="row">
@@ -95,7 +95,7 @@
                              ) !!}
                         </div>
                         <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                            Employment Details
+                            Employment and Accounts
                         </p>
                         <div class="row">
                             {!! __form::textbox(
@@ -113,6 +113,10 @@
                         <div class="row">
                             {!! __form::textbox(
                                '4 biometric_user_id', 'biometric_user_id', 'text', 'Biometric User Id:*', 'Biometric User Id', '', 'biometric_user_id', '', ''
+                             ) !!}
+
+                            {!! __form::textbox(
+                               '4 username', 'username', 'text', 'SWEP Username:*', 'Username', '', 'username', '', ''
                              ) !!}
                         </div>
                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
@@ -356,6 +360,20 @@
                     console.log(res);
                 }
             })
+        })
+
+        $("#add_jo_employee_modal .basis").change(function () {
+            fname = $("#add_jo_employee_modal input[name='firstname']").val();
+            mname = $("#add_jo_employee_modal input[name='middlename']").val();
+            lname = $("#add_jo_employee_modal input[name='lastname']").val();
+            new_fname = fname.toUpperCase().slice(0,1);
+            new_mname = mname.toUpperCase().slice(0,1);
+            new_lname = lname.toUpperCase().slice(0,1);
+            concat = new_fname+new_mname+new_lname+'221';
+            if(fname != '' && lname != ''){
+                $("#add_jo_employee_modal input[name='employee_no']").val(concat);
+                console.log(concat);
+            }
         })
     </script>
 

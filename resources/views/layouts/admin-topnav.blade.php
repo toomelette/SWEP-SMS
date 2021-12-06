@@ -1,22 +1,29 @@
+
 <header class="main-header">
   <a href="#" class="logo">
     <span class="logo-mini">A</span>
     <span class="logo-lg"><b>AFD</b></span>
   </a>
-  <nav class="navbar navbar-static-top">
+  <nav class="navbar navbar-static-top" @if($_SERVER['SERVER_ADDR'] != '10.36.1.17')style="background-color: #054629" @endif>
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
+
+
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+        @if($_SERVER['SERVER_ADDR'] != '10.36.1.17')
+          <li style="width: 750px;padding-top: 12px"><p style="color: white; font-size: larger">DEVELOPMENT MODE</p></li>
+        @endif
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{asset('images/avatar.jpeg')}}" class="user-image" alt="User Image">
             @if(Auth::check())
-              {{ __sanitize::html_encode(Auth::user()->firstname) }}
+              {!! strtoupper(Helper::getUserName()['firstname']) !!}
+              {{$_SERVER['SERVER_ADDR']}}
             @endif
           </a>
           <ul class="dropdown-menu">
@@ -24,8 +31,8 @@
               <img src="{{asset('images/avatar.jpeg')}}" class="img-circle" alt="User Image">
               <p>
                 @if(Auth::check())
-                  {{ __sanitize::html_encode(Auth::user()->firstname) .' '. __sanitize::html_encode(Auth::user()->lastname) }}
-                  <small>{{ __sanitize::html_encode(Auth::user()->position) }}</small>
+                  {!! strtoupper(Helper::getUserName()['firstname']) !!}  {!! strtoupper(Helper::getUserName()['lastname']) !!}
+                  <small>{!! strtoupper(Helper::getUserName()['position']) !!}</small>
                 @endif
                 
               </p>

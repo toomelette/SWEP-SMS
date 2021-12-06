@@ -6,9 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\JoEmployees\JoEmployeesFormRequest;
 use App\Models\JoEmployees;
+use App\Models\User;
 use App\Swep\ViewHelpers\__html;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -56,7 +58,7 @@ class JOEmployeesController extends Controller
     }
 
     public function store(JoEmployeesFormRequest $request){
-
+        $password = Carbon::parse($request->birthday)->format('mdy');
         $jo = new JoEmployees;
         $jo->slug = Str::random(16);
         $jo->biometric_user_id = $request->biometric_user_id;
@@ -77,6 +79,16 @@ class JOEmployeesController extends Controller
         $jo->position = $request->position;
         $jo->province = $request->province;
         if($jo->save()){
+            $user = new User;
+            $user->slug = Str::random(16);
+            $user->id = rand(142332,999999);
+            $user->email = $request->email;
+            $user->username = $request->username;
+            $user->password = Hash::make($password);
+            $user->color = 'skin-green sidebar-mini';
+            $user->employee_no = $request->employee_no;
+            $user->save();
+
             return $jo->only('slug');
         }
         abort(500,'Error saving');

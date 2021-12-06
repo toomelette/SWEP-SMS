@@ -202,7 +202,7 @@ class UserController extends Controller{
     public function activate($slug){
 
         $user = User::where('slug',$slug)->first();
-        $user->is_active = 1;
+        $user->is_activated = 1;
         if($user->update()){
             return $user->only('slug');
         }else{
