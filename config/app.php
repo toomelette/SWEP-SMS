@@ -160,7 +160,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+//        Barryvdh\DomPDF\ServiceProvider::class,
 
         /** CUSTOM PROVIDERS **/
         App\Providers\ViewComposerServiceProvider::class,
