@@ -62,7 +62,7 @@ class JOEmployeesController extends Controller
         $jo = new JoEmployees;
         $jo->slug = Str::random(16);
         $jo->biometric_user_id = $request->biometric_user_id;
-        $jo->address_detailed = $request->address_detailed;
+        $jo->address_detailed = ucfirst($request->address_detailed);
         $jo->birthday = $request->birthday;
         $jo->sex = $request->sex;
         $jo->brgy = $request->brgy;
@@ -71,9 +71,9 @@ class JOEmployeesController extends Controller
         $jo->department_unit = $request->department_unit;
         $jo->email = $request->email;
         $jo->employee_no = $request->employee_no;
-        $jo->firstname = $request->firstname;
-        $jo->lastname = $request->lastname;
-        $jo->middlename = $request->middlename;
+        $jo->firstname = ucwords($request->firstname);
+        $jo->lastname = ucwords($request->lastname);
+        $jo->middlename = ucwords($request->middlename);
         $jo->name_ext = $request->name_ext;
         $jo->phone = $request->phone;
         $jo->position = $request->position;
@@ -110,7 +110,7 @@ class JOEmployeesController extends Controller
         if(!empty($jo)){
 
             $jo->biometric_user_id = $request->biometric_user_id;
-            $jo->address_detailed = $request->address_detailed;
+            $jo->address_detailed = ucfirst($request->address_detailed);
             $jo->birthday = $request->birthday;
             $jo->sex = $request->sex;
             $jo->brgy = $request->brgy;
@@ -119,9 +119,9 @@ class JOEmployeesController extends Controller
             $jo->department_unit = $request->department_unit;
             $jo->email = $request->email;
             $jo->employee_no = $request->employee_no;
-            $jo->firstname = $request->firstname;
-            $jo->lastname = $request->lastname;
-            $jo->middlename = $request->middlename;
+            $jo->firstname = ucwords($request->firstname);
+            $jo->lastname = ucwords($request->lastname);
+            $jo->middlename = ucwords($request->middlename);
             $jo->name_ext = $request->name_ext;
             $jo->phone = $request->phone;
             $jo->position = $request->position;
