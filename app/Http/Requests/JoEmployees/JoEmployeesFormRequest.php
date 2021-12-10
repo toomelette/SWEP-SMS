@@ -46,7 +46,7 @@ class JoEmployeesFormRequest extends FormRequest
             'brgy' => 'nullable|string|max:255',
             'address_detailed' => 'nullable|string|max:255',
             'username' => [
-                'required',
+                'sometimes',
                 'string',
                 'max:255',
                 Rule::unique('users','username')->ignore($this->employee_no,'employee_no'),

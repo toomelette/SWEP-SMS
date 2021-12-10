@@ -79,6 +79,12 @@
                                 </div>
                             @endif
                         @endforeach
+
+
+                    @else
+                        <div class="callout callout-success">
+                            <h4><i class="fa fa-info-circle"></i> No attendance record found.</h4>
+                        </div>
                     @endif
                 </div>
             </div>

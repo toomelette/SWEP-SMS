@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ChangePasswordFormRequest;
 use App\Http\Requests\User\UserEditFormRequest;
 use App\Models\Menu;
 use App\Models\User;
@@ -14,6 +15,7 @@ use App\Http\Requests\User\UserFilterRequest;
 use App\Http\Requests\User\UserResetPasswordRequest;
 use App\Http\Requests\User\UserSyncEmployeeRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
 use function foo\func;
@@ -36,7 +38,7 @@ class UserController extends Controller{
 
     public function index(UserFilterRequest $request){
         $menus = Menu::with('submenu')->get();
-        $users = User::with('userSubmenu');
+        $users = User::with(['userSubmenu','employeeUnion']);
         if(request()->ajax()){
 
             if($request->has('is_online') || $request->has('is_active')){
@@ -63,6 +65,10 @@ class UserController extends Controller{
                         $a = "Deactivate";
                         $stat = "active";
                     }
+
+                    $destroy_route = "'".route("dashboard.user.destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+
                     $button = '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm view_user_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#view_user_modal" title="View more" data-placement="left">
                                     <i class="fa fa-file-text"></i>
@@ -71,7 +77,7 @@ class UserController extends Controller{
                                 <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_user_btn" data-toggle="modal" data-target="#edit_user_modal" title="Edit" data-placement="top">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_user_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_user_btn" onclick="delete_data('.$slug.','.$destroy_route.')" data="'.$data->slug.'" data-toggle="tooltip" title="Delete" data-placement="top">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 <div class="btn-group">
@@ -87,6 +93,9 @@ class UserController extends Controller{
                     return $button;
                 })
                 ->addColumn('fullname', function ($data){
+                    if(!empty($data->employeeUnion)){
+                        return strtoupper($data->employeeUnion->lastname.', '.$data->employeeUnion->firstname);
+                    }
                     return $data->lastname.', '.$data->firstname;
                 })
                 ->editColumn('is_online', function($data){
@@ -119,7 +128,14 @@ class UserController extends Controller{
 
     }
 
-
+    public function changePassword(ChangePasswordFormRequest $request){
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        if($user->save()){
+            return $user->only('slug');
+        }
+        abort(503,'An error occurred');
+    }
 
 
     public function store(UserFormRequest $request){
@@ -192,7 +208,18 @@ class UserController extends Controller{
 
     public function destroy($slug){
 
-        return $this->user_service->delete($slug);
+        $user = User::query()->where('slug','=',$slug)->first();
+        if(!empty($user)){
+            if($user->delete()){
+                $user->userMenu()->delete();
+                $user->userSubmenu()->delete();
+                return 1;
+            }
+        }else{
+            abort(503,'Error deleting data');
+        }
+
+
 
     }
 

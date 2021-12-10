@@ -294,6 +294,8 @@
             jo_employees_tbl.search(this.value).draw();
           }
         });
+
+
         //store
         $("#add_jo_employee_form").submit(function (e) {
             e.preventDefault();

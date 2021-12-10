@@ -95,6 +95,25 @@ class Helper
         ];
     }
 
+    public static function holiday_types(){
+        return [
+            'Public holiday' => 'Public holiday',
+            'Regular holiday' => 'Regular holiday',
+            'Special Non-working holiday' => 'Special Non-working holiday',
+            'Observances' => 'Observances',
+            'Office declaration' => 'Office declaration',
+        ];
+    }
+
+    public static function implode_assoc($arr){
+        $string = '';
+
+        foreach ($arr as $data){
+            $string = $string.$data.',';
+        }
+        return $string;
+    }
+
     public static function getStingAfterChar($subject, $character){
         $whatIWant = substr($subject, strpos($subject, $character) + 1);
         return $whatIWant;
@@ -165,5 +184,7 @@ class Helper
             'position' => $position,
         ];
     }
+
+
 
 }

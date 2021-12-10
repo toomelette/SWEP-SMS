@@ -286,6 +286,11 @@ function succeed(target_form, reset,modal){
     remove_loading_btn(target_form);
 }
 
+function wait_this_button(btn) {
+    btn.children('i').remove();
+
+}
+
 function delete_data(slug,url){
     var btn = $("button[data='"+slug+"']");
     btn.parents('#'+slug).addClass('warning');

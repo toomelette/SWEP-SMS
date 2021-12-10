@@ -19,6 +19,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
     Route::post('/dtr/download','DTRController@download')->name('dtr.download');
     Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
+    Route::post('dashboard/changePass','UserController@changePassword')->name('all.changePass');
 });
 
 /** Dashboard **/
@@ -196,6 +197,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     /** DTR **/
     Route::resource('jo_employees','JOEmployeesController');
+
+    /** DTR **/
+    Route::get('holidays/fetch_google','HolidayController@fetchGoogleApi')->name('holidays.fetch_google');
+    Route::resource('holidays','HolidayController');
 });
 
 
@@ -222,9 +227,12 @@ Route::get('/file_explorer',function (){
 Route::get('/dashboard/test', function(){
 
 //phpinfo();
-    return \App\Http\Requests\JoEmployees\JoEmployeesFormRequest::rules();
-
-	return dd(Illuminate\Support\Str::random(16));
+    //return \App\Http\Requests\JoEmployees\JoEmployeesFormRequest::rules();
+    //return \App\Swep\Helpers\Helper::implode_assoc(\App\Swep\Helpers\Helper::holiday_types());
+	return dd([
+	    'slug' => Illuminate\Support\Str::random(16),
+        'small' => strtoupper(Illuminate\Support\Str::random(7)),
+    ]);
 
 	//return view('printables.employee.employee_matrix');
 

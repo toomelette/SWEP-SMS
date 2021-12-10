@@ -560,10 +560,10 @@
       }
     });
 
-    $("body").on("click", ".delete_user_btn", function(){
-      id = $(this).attr('data');
-      confirm("{{ route('dashboard.user.destroy', 'slug') }}",id);
-    })
+    {{--$("body").on("click", ".delete_user_btn", function(){--}}
+    {{--  id = $(this).attr('data');--}}
+    {{--  confirm("{{ route('dashboard.user.destroy', 'slug') }}",id);--}}
+    {{--})--}}
 
 
     $("body").on("click",".ac_dc", function () {

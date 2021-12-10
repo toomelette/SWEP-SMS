@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -81,7 +82,28 @@ class User extends Authenticatable{
         return $this->hasOne('App\Models\JoEmployees', 'employee_no', 'employee_no');
     }
     
+    public function employeeUnion(){
+        $employee = $this->hasOne('App\Models\Employee', 'employee_no', 'employee_no')
+            ->select(DB::raw('
+                firstname,
+                middlename,
+                lastname,
+                biometric_user_id,
+                employee_no,
+                date_of_birth as birthday
+            '));
+        $jo_emplyoee = $this->hasOne('App\Models\JoEmployees', 'employee_no', 'employee_no')
+            ->select(DB::raw('
+                firstname,
+                middlename,
+                lastname,
+                biometric_user_id,
+                employee_no,
+                birthday
+            '));
 
+        return $employee->union($jo_emplyoee->getQuery());
+    }
     
 
 

@@ -33,10 +33,12 @@
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
+<script type="text/javascript" src="{{asset('template/plugins/moment/moment.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('template/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
+<script type="text/javascript" src="{{asset('template/plugins/dt-moment/date-time-moment.js')}}"></script>
 {{-- Charts --}}
 <script type="text/javascript" src="{{ asset('template/bower_components/Flot/jquery.flot.js') }}"></script>
 
@@ -48,7 +50,7 @@
 
 <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js')}}"></script>
 
-<script type="text/javascript" src="{{asset('template/plugins/moment/moment.js')}}"></script>
+
 <script type="text/javascript" src="{{asset('template/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <script type="text/javascript" src="{{asset('template/plugins/jquery-sortable/source/js/jquery-sortable-min.js')}}"></script>
 

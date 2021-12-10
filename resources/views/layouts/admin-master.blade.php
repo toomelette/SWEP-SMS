@@ -25,6 +25,20 @@
 
       <div class="content-wrapper" >
 
+
+
+          @if(Hash::check(Carbon::parse(Auth::user()->employeeUnion->birthday)->format('mdy'), \Illuminate\Support\Facades\Auth::user()->password))
+          <div class="row">
+            <div class="col-md-12">
+              <a href="#" id="change_pass_href">
+              <div class="alert alert-warning alert-dismissible" style="margin: 1rem">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <p><b>Your account is at risk. </b> It seems like you haven't changed your password yet. Please change your SWEP Account Password by clicking here.</p>
+              </div>
+              </a>
+            </div>
+          </div>
+          @endif
         @yield('content')
 
       </div>
@@ -43,6 +57,71 @@
 
     @yield('modals')
       {!! __html::modal_loader() !!}
+
+    <div class="modal fade" id="change_pass_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form id="change_pass_form">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+              </div>
+              <div class="modal-body">
+                <div class="password_container">
+                  <div class="row">
+                    {!! __form::textbox_password_btn(
+                      '12 password', 'password', 'Password *', 'New Password', '', 'password', '', ''
+                    ) !!}
+                  </div>
+                  <div class="row">
+                    {!! __form::textbox_password_btn(
+                      '12 password_confirmation', 'password_confirmation', 'Confirm New Password *', 'Confirm Password', '', 'password_confirmation', '', ''
+                    ) !!}
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  {!! __form::textbox_password_btn(
+                    '12 user_password', 'user_password', 'Enter your old password to continue:', 'Enter your password', '', 'user_password', '', ''
+                  ) !!}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Confirm</button>
+              </div>
+            </form>
+        </div>
+      </div>
+
+    <script type="text/javascript">
+      $("#change_pass_href").click(function (e) {
+        e.preventDefault();
+        $("#change_pass_modal").modal('show');
+      })
+
+      $("#change_pass_form").submit(function (e) {
+        e.preventDefault();
+        form = $(this);
+        loading_btn(form);
+        $.ajax({
+            url : '{{route('dashboard.all.changePass')}}',
+            data : form.serialize(),
+            type: 'POST',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+               console.log(res);
+               succeed(form,true,true);
+            },
+            error: function (res) {
+                console.log(res);
+                errored(form,res);
+            }
+        })
+      })
+    </script>
+
     @yield('scripts')
 
   </body>
