@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\DemoCron;
 use App\Models\CronLogs;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -14,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\DemoCron::class,
     ];
 
     /**
@@ -29,12 +30,13 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
 //        $schedule->command('gj')->everyMinute();
-        $schedule->call(function (){
-            $cl = new CronLogs;
-            $cl->log = 'cron';
-            $cl->type = -1;
-            $cl->save();
-        })->everyMinute();
+//        $schedule->call(function (){
+//            $cl = new CronLogs;
+//            $cl->log = 'cron';
+//            $cl->type = -1;
+//            $cl->save();
+//        })->everyMinute();
+        $schedule->command('demo:cron')->everyMinute();
     }
 
     /**
@@ -45,7 +47,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }
