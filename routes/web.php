@@ -190,6 +190,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     /** DTR **/
     Route::get('/dtr/extract', 'DTRController@extract2')->name('dtr.extract');
+    Route::get('/dtr/reconstruct', 'DTRController@reconstruct')->name('dtr.reconstruct');
 //    Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
 //    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
 

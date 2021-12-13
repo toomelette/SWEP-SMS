@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\CronLogs;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,14 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+//        $schedule->command('gj')->everyMinute();
+        $schedule->call(function (){
+            $cl = new CronLogs;
+            $cl->log = 'cron';
+            $cl->type = -1;
+            $cl->save();
+        })->everyMinute();
     }
 
     /**
