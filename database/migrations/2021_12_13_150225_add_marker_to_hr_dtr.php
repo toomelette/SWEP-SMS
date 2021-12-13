@@ -14,7 +14,7 @@ class AddMarkerToHrDtr extends Migration
     public function up()
     {
         Schema::table('hr_dtr', function (Blueprint $table) {
-            $table->integer('processed');
+            $table->integer('processed')->nullable(true);
         });
     }
 
