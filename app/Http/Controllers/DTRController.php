@@ -45,9 +45,36 @@ class DTRController extends  Controller
         return view('dashboard.dtr.extract');
     }
 
+    private function pingAddress($ip) {
+        $pingresult = exec("/bin/ping -n 3 $ip", $outcome, $status);
+        if (0 == $status) {
+            $status = "alive";
+        } else {
+            $status = "dead";
+        }
+        echo "The IP address, $ip, is  ".$status;
+    }
+
+
+
+    public function extract2(){
+        //ini_set('max_execution_time','10');
+
+        $ip =   "10.36.1.21";
+        exec("ping -n 3 $ip", $output, $status);
+        print_r($output);
+
+        return 1;
+
+        $ip = '10.36.1.20';
+        $attendance = $this->fetchAttendance($ip);
+        return $attendance;
+
+    }
+
     public function store(Request $request){
 
-        return $this->calculateLateUndertime('permanent');
+        //return $this->calculateLateUndertime('permanent');
         $ip = $this->getDeviceIpById(request('device'));
         $attendance_from_device = $this->fetchAttendance($ip);
         $attendance_to_db = [];

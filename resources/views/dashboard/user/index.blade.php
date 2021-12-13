@@ -13,7 +13,11 @@
       <div class="box-header with-border">
         <h3 class="box-title">Users</h3>
         <div class="pull-right">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_user_modal"><i class="fa fa-plus"></i> New User</button>
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_user_employee_modal"><i class="fa fa-user"></i> New user from employee</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_user_modal"><i class="fa fa-plus"></i> New User</button>
+          </div>
+
         </div>
       </div>
 
@@ -219,21 +223,38 @@
     </div>
   </div>
 
+  <div class="modal fade" id="add_user_employee_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Make user from employee</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group col-md-12 employee_name ">
+              <label for="employee_name">Name of employee:*</label>
+              <input autocomplete="off" class="form-control " id="employee_name" name="employee_name" type="text" value="" placeholder="Name of employee"><ul class="typeahead dropdown-menu"></ul>
+              <span class="help-block"><i class="fa fa-info-circle"></i> Employees with linked SWEP accounts to their employee number may not be included in the search. </span>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {!! __html::blank_modal('view_user_modal','lg') !!}
 
   {!! __html::blank_modal('edit_user_modal',80) !!}
 
   {!! __html::blank_modal('reset_password_modal','sm') !!}
-
-
-
 @endsection
-
-
-
-
-
-
 @section('scripts')
   <script type="text/javascript">
     function dt_draw(){
@@ -344,7 +365,6 @@
       form = $(this);
       uri = "{{ route('dashboard.user.store') }}";
       loading_btn(form);
-      Pace.restart();
       $.ajax({
         url: uri,
         data: $(this).serialize(),
@@ -649,6 +669,14 @@
         }
       });
     })
+
+    $("#employee_name").typeahead({
+      ajax : "{{ route('dashboard.user.index') }}?typeahead=true",
+        onSelect:function (result) {
+          console.log(result);
+         // on_select_typeahead(result, '#add_bf_member_modal','add');
+        },
+    });
   </script>
 
 

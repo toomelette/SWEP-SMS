@@ -21,7 +21,6 @@ class __form{
        return '<div class="form-group col-md-'. $class .' ">
                 <label for="'. $key .'">'. $label .'</label>
                 <input class="form-control '.$self_class.'" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
-                '. self::error_message($error_has, $error_first) .'
               </div>';
 
     }

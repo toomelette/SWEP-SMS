@@ -189,7 +189,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('budget_proposal', 'BudgetProposalController');
 
     /** DTR **/
-    Route::get('/dtr/extract', 'DTRController@extract')->name('dtr.extract');
+    Route::get('/dtr/extract', 'DTRController@extract2')->name('dtr.extract');
 //    Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
 //    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
 

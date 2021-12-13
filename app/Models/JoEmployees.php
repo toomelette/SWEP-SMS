@@ -40,4 +40,7 @@ class JoEmployees extends Model
         return $this->hasOne("App\Models\User","user_id","user_updated");
     }
 
+    public function user() {
+        return $this->hasOne('App\Models\User','employee_no','employee_no');
+    }
 }

@@ -100,7 +100,7 @@ class Employee extends Model{
 
     /** RELATIONSHIPS **/
     public function user() {
-        return $this->belongsTo('App\Models\User','user_id','user_id');
+        return $this->hasOne('App\Models\User','employee_no','employee_no');
     }
 
     public function department(){
