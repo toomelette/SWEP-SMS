@@ -101,7 +101,7 @@ class DTRController extends  Controller
 
 
     public function reconstruct(){
-        $dtrs_raw = DTR::query()->where('processed','=',0)->get();
+        $dtrs_raw = DTR::query()->where('processed','!=',1)->get();
         $values = [
             0 => 'am_in',
             1 => 'am_out',
