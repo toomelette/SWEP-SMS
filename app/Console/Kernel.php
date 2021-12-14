@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\DemoCron::class,
+        Commands\ExtractBiometricData::class,
+        Commands\ReconstructDTR::class,
     ];
 
     /**
@@ -26,18 +28,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-
-//        $schedule->command('gj')->everyMinute();
-//        $schedule->call(function (){
-//            $cl = new CronLogs;
-//            $cl->log = 'cron';
-//            $cl->type = -1;
-//            $cl->save();
-//        })->everyMinute();
-        $schedule->command('demo:cron')->everyMinute();
+        $schedule->command('demo:cron')->ever();
+        $schedule->command('dtr:extract')->everyTenMinutes();
+        $schedule->command('dtr:reconstruct')->everyFifteenMinutes();
     }
+
 
     /**
      * Register the commands for the application.
