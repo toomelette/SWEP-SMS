@@ -135,6 +135,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <div class="icheck-primary pull-left">
+                            <input type="checkbox" id="create_account_check" name="create_account_check" checked/>
+                            <label for="create_account_check">Create SWEP Account</label>
+                        </div>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
                     </div>
                 </div>
@@ -375,6 +379,14 @@
             if(fname != '' && lname != ''){
                 $("#add_jo_employee_modal input[name='employee_no']").val(concat);
                 console.log(concat);
+            }
+        })
+
+        $("#create_account_check").change(function () {
+            if($(this).prop('checked') == true){
+                $("#add_jo_employee_form #username").removeAttr('disabled');
+            }else{
+                $("#add_jo_employee_form #username").attr('disabled','disabled');
             }
         })
     </script>

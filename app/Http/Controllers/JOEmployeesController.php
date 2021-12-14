@@ -58,6 +58,7 @@ class JOEmployeesController extends Controller
     }
 
     public function store(JoEmployeesFormRequest $request){
+
         $password = Carbon::parse($request->birthday)->format('mdy');
         $jo = new JoEmployees;
         $jo->slug = Str::random(16);
@@ -79,16 +80,18 @@ class JOEmployeesController extends Controller
         $jo->position = $request->position;
         $jo->province = $request->province;
         if($jo->save()){
-            $user = new User;
-            $user->slug = Str::random(16);
-            $user->id = rand(142332,999999);
-            $user->email = $request->email;
-            $user->username = $request->username;
-            $user->password = Hash::make($password);
-            $user->color = 'skin-green sidebar-mini';
-            $user->employee_no = $request->employee_no;
-            $user->save();
 
+            if($request->has('create_account_check')){
+                $user = new User;
+                $user->slug = Str::random(16);
+                $user->id = rand(142332,999999);
+                $user->email = $request->email;
+                $user->username = $request->username;
+                $user->password = Hash::make($password);
+                $user->color = 'skin-green sidebar-mini';
+                $user->employee_no = $request->employee_no;
+                $user->save();
+            }
             return $jo->only('slug');
         }
         abort(500,'Error saving');
