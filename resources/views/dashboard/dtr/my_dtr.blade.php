@@ -17,6 +17,15 @@
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Daily Time Record</h3>
+                @php
+                    $cl = \App\Models\CronLogs::query()->where('log','like','%Reconstructed%')->orderBy('created_at','desc')->first();
+                @endphp
+                <h4 class="box-title pull-right text-muted" style="font-size: 1.5rem">
+                    <i class="fa fa-clock-o"></i> Last updated :
+                    @if(!empty($cl))
+                        {{\Carbon\Carbon::parse($cl->created_at)->format('M. d, Y | H:i A')}}
+                    @endif
+                </h4>
             </div>
             <div class="box-body">
                 <div class="box-group" id="accordion">

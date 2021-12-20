@@ -10,6 +10,7 @@ use App\Models\Menu;
 use App\Models\User;
 use App\Models\UserSubmenu;
 use App\Swep\Helpers\Helper;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Swep\Services\UserService;
 use App\Http\Requests\User\UserFormRequest;
@@ -19,6 +20,7 @@ use App\Http\Requests\User\UserSyncEmployeeRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
 use function foo\func;
@@ -41,7 +43,7 @@ class UserController extends Controller{
 
     public function index(UserFilterRequest $request){
         $menus = Menu::with('submenu')->get();
-        $users = User::with(['userSubmenu','employeeUnion']);
+        $users = User::query()->with(['userSubmenu','employeeUnion']);
         if(request()->ajax()){
 
             if(request()->has('draw')){
@@ -143,7 +145,7 @@ class UserController extends Controller{
                     foreach ($all_employees as $employee){
                         $to_push = [
                             'id'=> $employee->slug ,
-                            'name' => strtoupper($employee->lastname.', '.$employee->firstname).' - '.$employee->type
+                            'name' => strtoupper($employee->lastname.', '.$employee->firstname).' - '.$employee->type,
                         ];
                         array_push($list,$to_push);
                     }
@@ -153,13 +155,34 @@ class UserController extends Controller{
                     ['id' => 'idd', 'name'=> 'name']
                 ];
             }
+
+            if(request()->has('afterTypeahead')){
+
+                $employee = $this->findEmployeeBySlug($request->id);
+
+                return view('dashboard.user.user_form')->with([
+                    'employee' => $employee,
+                ]);
+                return 1;
+            }
         }
         return view('dashboard.user.index')->with('menus', $menus);
-
-
     }
 
-
+    public  function findEmployeeBySlug($slug){
+        $employees = Employee::query()->select('*',DB::raw('date_of_birth as birthday'))->where('slug','=',$slug)->first();
+        if(!empty($employees)){
+            $employee = $employees;
+        }else{
+            $jo_employees  = JoEmployees::query()->where('slug','=',$slug)->first();
+            if(!empty($jo_employees)){
+                $employee = $jo_employees;
+            }else{
+                abort(500,'Data not found');
+            }
+        }
+        return $employee;
+    }
 
 
     public function create(){
@@ -179,9 +202,23 @@ class UserController extends Controller{
 
 
     public function store(UserFormRequest $request){
-
-        return $this->user_service->store($request);
-
+        if($request->create_from_employee == true){
+            $employee = $this->findEmployeeBySlug($request->slug);
+            if(!empty($employee)){
+                $user = new User;
+                $user->slug = Str::random(16);
+                $user->user_id = rand(1000000,9999999);
+                $user->username = $request->username;
+                $user->employee_no = $employee->employee_no;
+                $user->password = Hash::make(Carbon::parse($employee->birthday)->format('mdy'));
+                if($user->save()){
+                    return $user->only('slug');
+                }
+                abort(503,'Error creating account');
+            }
+        }else{
+            return $this->user_service->store($request);
+        }
     }
 
 

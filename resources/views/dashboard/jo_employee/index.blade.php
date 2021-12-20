@@ -24,6 +24,8 @@
                             <th >Civil Status</th>
                             <th >BM User Id</th>
                             <th class="action">Action</th>
+                            <th >Lastname</th>
+                            <th >Firstname</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -248,6 +250,8 @@
               { "data": "birthday_age" },
               { "data": "civil_status" },
               { "data": "biometric_user_id" },
+              { "data": "firstname" },
+              { "data": "lastname" },
             { "data": "action" }
           ],
           "buttons": [
@@ -265,10 +269,15 @@
               "class" : 'w-6p'
             },
             {
-              "targets" : 6,
+              "targets" : 8,
               "orderable" : false,
               "class" : 'action-10p'
             },
+            {
+              "targets" : [6,7],
+              "visible" : false,
+              "class" : 'action-10p'
+            }
           ],
           "responsive": false,
           "initComplete": function( settings, json ) {

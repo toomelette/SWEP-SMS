@@ -30,8 +30,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <a href="#" id="change_pass_href">
-                    <div class="alert alert-warning alert-dismissible" style="margin: 1rem">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <div class="alert alert-warning" style="margin: 1rem">
                       <p><b>Your account is at risk. </b> It seems like you haven't changed your password yet. Please change your SWEP Account Password by clicking here.</p>
                     </div>
                   </a>
@@ -96,6 +95,8 @@
       </div>
 
     <script type="text/javascript">
+      {!! __js::show_hide_password() !!}
+
       $("#change_pass_href").click(function (e) {
         e.preventDefault();
         $("#change_pass_modal").modal('show');

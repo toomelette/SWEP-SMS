@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,18 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable{
 
+    public static function boot()
+    {
+        static::creating(function ($user){
+            $user->user_created = Auth::user()->user_id;
+            $user->ip_created = request()->ip();
+        });
 
+        static::updating(function ($user){
+            $user->user_updated = Auth::user()->user_id;
+            $user->ip_updated = request()->ip();
+        });
+    }
 
 
     use Notifiable, Sortable, HasActivity;
@@ -21,7 +33,7 @@ class User extends Authenticatable{
 
     public $sortable = ['username', 'firstname', 'is_online', 'is_active'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $hidden = ['password', 'remember_token',];
 

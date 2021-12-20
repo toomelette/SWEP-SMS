@@ -79,14 +79,8 @@
 
       </div>
     </div>
-
-
-
-
     </div>
   </section>
-
-
 
 @endsection
 
@@ -238,13 +232,15 @@
               <span class="help-block"><i class="fa fa-info-circle"></i> Employees with linked SWEP accounts to their employee number may not be included in the search. </span>
             </div>
 
+
+          </div>
+
+          <div id="new_user_from_employee_form_containter">
+
           </div>
 
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+
       </div>
     </div>
   </div>
@@ -357,7 +353,7 @@
     });
 
     //Show/Hide Password
-    {!! __js::show_hide_password() !!}
+
 
     //Submit add user form
     $("#add_user_form").submit(function(e){
@@ -673,9 +669,28 @@
     $("#employee_name").typeahead({
       ajax : "{{ route('dashboard.user.index') }}?typeahead=true",
         onSelect:function (result) {
-          console.log(result);
-         // on_select_typeahead(result, '#add_bf_member_modal','add');
+          $("#add_user_employee_modal input[name='employee_slug']").val(result.value);
+          $.ajax({
+              url : "{{ route('dashboard.user.index') }}?afterTypeahead=true",
+              data : {id:result.value},
+              type: 'GET',
+              headers: {
+                  {!! __html::token_header() !!}
+              },
+              success: function (res) {
+                 $("#new_user_from_employee_form_containter").html(res);
+                 setTimeout(function () {
+                   $("#new_user_from_employee_form #username").focus();
+                 },100)
+              },
+              error: function (res) {
+                  console.log(res);
+              }
+          })
         },
+        lookup: function (i) {
+          console.log(i);
+        }
     });
   </script>
 

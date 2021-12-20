@@ -42,5 +42,12 @@ class ExtractBiometricData extends Command
         $ip = '10.36.1.22';
         $dtr_service->extract($ip);
 
+        $ip = '10.36.1.21';
+        $dtr_service->extract($ip);
+
+        $ip = '10.36.1.23';
+        $dtr_service->extract($ip);
+
+
     }
 }
