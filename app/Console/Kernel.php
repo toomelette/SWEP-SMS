@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\DemoCron::class,
         Commands\ExtractBiometricData::class,
         Commands\ReconstructDTR::class,
+        Commands\ComputeLateUndertime::class,
     ];
 
     /**
@@ -28,9 +29,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('demo:cron')->everyMinute();
         $schedule->command('dtr:extract')->everyTenMinutes();
-        $schedule->command('dtr:reconstruct')->everyFifteenMinutes();
+        $schedule->command('dtr:reconstruct')->everyTenMinutes();
+        $schedule->command('dtr:compute_late_undertime')->everyTenMinutes();
     }
 
 

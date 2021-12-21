@@ -212,14 +212,19 @@ Route::get('/dtr', function (){
     return redirect('/dashboard/dtr/my_dtr');
 });
 
+Route::get('/dashboard/compute', function (\App\Swep\Services\DTRService $service){
+
+    return $service->compute();
+
+
+});
+
 Route::get('/dashboard/tree', function (){
     return view('dashboard.blank');
 });
 
 Route::get('/file_explorer',function (){
 
-//    $files =scandir('E:/home/');
-//    dd($files);
    return view('dashboard.file_explorer.index');
 })->name('dashboard.documents.file_explorer.index');
 
@@ -227,44 +232,10 @@ Route::get('/file_explorer',function (){
 
 Route::get('/dashboard/test', function(){
 
-//phpinfo();
-    //return \App\Http\Requests\JoEmployees\JoEmployeesFormRequest::rules();
-    //return \App\Swep\Helpers\Helper::implode_assoc(\App\Swep\Helpers\Helper::holiday_types());
 	return dd([
 	    'slug' => Illuminate\Support\Str::random(16),
         'small' => strtoupper(Illuminate\Support\Str::random(7)),
     ]);
-
-	//return view('printables.employee.employee_matrix');
-
-	//dd(__dynamic::dates_between_dates('10/01/2018', '10/31/2018'));
-
-	// $list = App\Models\EmployeeTraining::where('slug', '')->get();
-
-	// foreach ($list as $data) {
-	// 	$tr = App\Models\EmployeeTraining::find($data->id);
-	// 	$tr->slug = Illuminate\Support\Str::random(16);
-	// 	$tr->save();
-	// }	
-
-	// $data = [
-
-	// 	'title' => 'Test title',
-	// 	'content' => 'Test Content'
-
-	// ];
-
-	// Mail::send('emails.test', $data, function ($message) {
-
-	//     $message->from('srawebportal@gmail.com', 'SRA WEB PORTAL');
-
-	//     $message->subject('Test Subject');
-
-	//     $message->attach('D:\swep_gad_storage\wew-82o3rBGh.pdf', ['name' => 'subject.pdf', 'mime' => 'application/pdf']);
-
-	//     $message->to('qpepper.main@gmail.com');
-
-	// });
 
 });
 

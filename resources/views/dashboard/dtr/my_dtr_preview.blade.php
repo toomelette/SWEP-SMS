@@ -16,16 +16,21 @@
     <table class="table table-bordered table-condensed">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>AM In</th>
-                <th>AM Out</th>
-                <th>PM In</th>
-                <th>PM Out</th>
-                <th>OT In</th>
-                <th>OT Out</th>
-                <th>Late</th>
-                <th>Undertime</th>
-                <th>Remarks</th>
+                <th rowspan="2" style="vertical-align : middle;text-align:center;">Date</th>
+                <th colspan="2" class="text-center">Morning</th>
+                <th colspan="2" class="text-center">Afternoon</th>
+                <th colspan="2" class="text-center">Overtime</th>
+                <th rowspan="2" style="vertical-align : middle;text-align:center;">Late</th>
+                <th rowspan="2" style="vertical-align : middle;text-align:center;">Undertime</th>
+                <th rowspan="2" style="vertical-align : middle;text-align:center;">Remarks</th>
+            </tr>
+            <tr>
+                <th class="text-center" style="min-width: 40px">IN</th>
+                <th class="text-center" style="min-width: 40px">OUT</th>
+                <th class="text-center" style="min-width: 40px">IN</th>
+                <th class="text-center" style="min-width: 40px">OUT</th>
+                <th class="text-center" style="min-width: 40px">IN</th>
+                <th class="text-center" style="min-width: 40px">OUT</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +41,7 @@
             @for($a = 1 ; $a <= $days_in_this_month; $a++)
                 @php($date = sprintf('%02d', $a))
                 @if(isset($dtr_array[$month.'-'.$date]))
-                    @php($late = $late + $dtr_array[$month.'-'.$date]->late)
+                    @php($late =  $late + $dtr_array[$month.'-'.$date]->late)
                     @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
                     <tr class="text-center">
                         <td>
@@ -48,8 +53,8 @@
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
-                        <td>{{$dtr_array[$month.'-'.$date]->late == 0 ? '' : $dtr_array[$month.'-'.$date]->late}}</td>
-                        <td>{{$dtr_array[$month.'-'.$date]->late == 0 ? '' : $dtr_array[$month.'-'.$date]->undertime}}</td>
+                        <td>{{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->late)}}</td>
+                        <td>{{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->undertime)}}</td>
                         <td class="text-left">
                             @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                 @php($saturdays++)
@@ -60,7 +65,7 @@
                                 SUNDAY
                             @endif
                             @if(isset($holidays[$month.'-'.$date]))
-                                <b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b>
+                                <b>{{$holidays[$month.'-'.$date]['type']}}</b>
                             @endif
                         </td>
                     </tr>
@@ -70,7 +75,7 @@
                             <td>
                                 {{$date}}
                             </td>
-                            <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b> (<i>{{$holidays[$month.'-'.$date]['name']}}</i>)</td>
+                            <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} </b> (<i>{{$holidays[$month.'-'.$date]['name']}}</i>)</td>
                         </tr>
                     @else
                         <tr class="text-center">
@@ -106,9 +111,9 @@
         <div class="col-md-6">
             <dl class="dl-horizontal">
                 <dt>Total Late:</dt>
-                <dd>{{number_format($late)}}</dd>
+                <dd>{{\App\Swep\Helpers\Helper::convertToHoursMins($late)}}</dd>
                 <dt>Total Undertime:</dt>
-                <dd>{{number_format($undertime)}}</dd>
+                <dd>{{\App\Swep\Helpers\Helper::convertToHoursMins($undertime)}}</dd>
             </dl>
         </div>
         <div class="col-md-6">

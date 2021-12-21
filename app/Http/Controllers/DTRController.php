@@ -30,39 +30,17 @@ class DTRController extends  Controller
     }
 
     public function extract(){
-        if(request()->ajax()){
-            if(request()->has('extract')){
-                $biometric_device = BiometricDevices::query()->find(request('device'));
+        $ip = '10.36.1.22';
+        $this->dtr_service->extract($ip);
 
-                $date = request('date_range');
-                $ip = $this->getDeviceIpById(request('device'));
+        $ip = '10.36.1.21';
+        $this->dtr_service->extract($ip);
 
-                $attendance = $this->fetchAttendance($ip);
-                $date_range = __sanitize::date_range(request('date_range'));
-                $new_attendance  = [];
-                foreach ($attendance as $data){
-                    if(Carbon::parse($data['timestamp'])->format('Ym') == Carbon::parse(request('date_range'))->format('Ym')){
-                        $new_attendance[$data['uid']] = $data;
-                    }
-                }
-                return view('dashboard.dtr.temp_table')->with([
-                    'attendance' => $new_attendance,
-                    'date_range' => $date_range,
-                    'device' => $biometric_device->id,
-                ]);
-            }
-        }
-        return view('dashboard.dtr.extract');
-    }
+        $ip = '10.36.1.23';
+        $this->dtr_service->extract($ip);
 
-    private function pingAddress($ip) {
-        $pingresult = exec("/bin/ping -n 3 $ip", $outcome, $status);
-        if (0 == $status) {
-            $status = "alive";
-        } else {
-            $status = "dead";
-        }
-        echo "The IP address, $ip, is  ".$status;
+        return 1;
+
     }
 
 
@@ -82,7 +60,6 @@ class DTRController extends  Controller
 
     public function store(Request $request){
 
-        //return $this->calculateLateUndertime('permanent');
         $ip = $this->getDeviceIpById(request('device'));
         $attendance_from_device = $this->fetchAttendance($ip);
         $attendance_to_db = [];

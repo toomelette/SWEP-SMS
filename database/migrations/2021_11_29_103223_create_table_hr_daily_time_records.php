@@ -25,8 +25,8 @@ class CreateTableHrDailyTimeRecords extends Migration
             $table->time('pm_out')->nullable(true);
             $table->time('ot_in')->nullable(true);
             $table->time('ot_out')->nullable(true);
-            $table->integer('late')->nullable(true);
-            $table->integer('undertime')->nullable(true);
+            $table->time('late')->nullable(true);
+            $table->time('undertime')->nullable(true);
             $table->integer('calculated')->nullable(true);
             $table->timestamps();
         });

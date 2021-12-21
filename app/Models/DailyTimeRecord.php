@@ -18,4 +18,6 @@ class DailyTimeRecord extends Model
         'ot_in' => null,
         'ot_out' => null,
     ];
+
+
 }
