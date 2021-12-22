@@ -5,6 +5,9 @@
 @endsection
 
 @section('modal-body')
+  <style>
+      .fc-basic-view .fc-body .fc-row{min-height:8em !important;}
+  </style>
     @php($days_in_this_month = \Carbon\Carbon::parse($month)->daysInMonth)
 {{--    {{print_r($dtr_array)}}--}}
     <form method="POST" action="{{route('dashboard.dtr.download')}}">

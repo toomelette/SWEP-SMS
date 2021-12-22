@@ -14,13 +14,15 @@ class TreeComposer
         $tree = [];
         $menus = Menu::with('submenu')->get();
 
-        $user_submenus = UserSubmenu::with('submenu')->where('user_id', Auth::user()->user_id)->get();
+        $user_submenus = UserSubmenu::with('submenu')->where('user_id', Auth::user()->user_id)
+            ->whereHas('submenu', function ($query) {
+            return $query->where('is_nav', '=', 1);
+        })->get();
 
 
         $dtr_menu = Menu::query()->where('slug','=','OjM6liSKVeDpwZQc')->first();
         $tree['HR']['GMPLGA']['menu_obj'] = $dtr_menu;
-        foreach ($dtr_menu->submenu->where('is_nav','=',1)->where('route','!=','dashboard.dtr.extract') as $submenu){
-
+        foreach ($dtr_menu->submenu->where('is_nav','=',1)->where('route','!=','dashboard.dtr.extract')->where('route','!=','dashboard.dtr.index') as $submenu){
             $tree['HR']['GMPLGA']['submenus'][$submenu->submenu_id] = $submenu;
         }
 
