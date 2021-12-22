@@ -12,7 +12,8 @@
     <section class="content-header">
         <h1>Daily Time Record</h1>
     </section>
-
+@endsection
+@section('content2')
     <section class="content">
         <div class="box box-success">
             <div class="box-header with-border">
@@ -23,7 +24,7 @@
                 <h4 class="box-title pull-right text-muted" style="font-size: 1.5rem">
                     <i class="fa fa-clock-o"></i> Last updated :
                     @if(!empty($cl))
-                        {{\Carbon\Carbon::parse($cl->created_at)->format('M. d, Y | H:i A')}}
+                        {{\Carbon\Carbon::parse($cl->created_at)->format('M. d, Y | h:i A')}}
                     @endif
                 </h4>
             </div>
@@ -49,7 +50,7 @@
                                                 @php(ksort($months))
                                                 <div class="row">
                                                 @foreach($months as $month => $null)
-                                                    <div class="col-md-1">
+                                                    <div class="col-md-{{$col}}">
                                                         <button type="button" class="btn btn-default col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
                                                             {{\Carbon\Carbon::parse($month)->format('F')}}
                                                         </button>

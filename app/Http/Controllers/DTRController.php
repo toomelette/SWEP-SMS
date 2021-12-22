@@ -14,12 +14,15 @@ use App\Models\JoEmployees;
 use App\Swep\Helpers\__sanitize;
 use App\Swep\Helpers\Helper;
 use App\Swep\Services\DTRService;
+use App\Swep\ViewHelpers\__html;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rats\Zkteco\Lib\ZKTeco;
+use Yajra\DataTables\Facades\DataTables;
 
 class DTRController extends  Controller
 {
@@ -28,21 +31,6 @@ class DTRController extends  Controller
     {
         $this->dtr_service = $dtr_service;
     }
-
-    public function extract(){
-        $ip = '10.36.1.22';
-        $this->dtr_service->extract($ip);
-
-        $ip = '10.36.1.21';
-        $this->dtr_service->extract($ip);
-
-        $ip = '10.36.1.23';
-        $this->dtr_service->extract($ip);
-
-        return 1;
-
-    }
-
 
 
     public function extract2(){
@@ -58,76 +46,95 @@ class DTRController extends  Controller
         return $this->dtr_service->reconstruct();
     }
 
-    public function store(Request $request){
+    public function index(Request $request){
+        if($request->ajax()){
 
-        $ip = $this->getDeviceIpById(request('device'));
-        $attendance_from_device = $this->fetchAttendance($ip);
-        $attendance_to_db = [];
-        $employees = Employee::query()->get();
-        $employees_array = [];
-        if(!empty($employees)){
-            foreach ($employees as $employee){
-                $appointment_status = '';
-                if($employee->appointment_status == 'P' || $employee->appointment_status == 'PERM'){
-                    $appointment_status = 'Permanent';
+
+            $first = Employee::query()->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"PERM" as type'), 'sex','employee_no']);
+
+            $union = JoEmployees::query()->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"JO" as type'), 'sex','employee_no'])
+                ->union($first);
+
+            $query = DB::table(DB::raw("({$union->toSql()}) as x"))
+                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', 'type', 'sex','employee_no'])
+                ->where('biometric_user_id','!=',0)
+                ->where(function ($query) {
+                });
+            if($request->has('order')){
+                if($request->columns[$request->order[0]['column']]['data'] == 'fullname'){
+                    $query = $query->orderBy('lastname',$request->order[0]['dir']);
                 }
-                $employees_array[$employee->biometric_user_id] = [
-                    'employee_no' => $employee->employee_no,
-                    'appointment_status' => $appointment_status,
-                ];
             }
+            return Datatables::of($query)
+                ->addColumn('fullname',function ($data){
+                    return strtoupper($data->lastname.', '.$data->firstname);
+                })->filterColumn('fullname', function($query, $keyword) {
+                    $sql = "CONCAT(x.firstname,'-',x.lastname)  like ?";
+                    $query->whereRaw($sql, ["%{$keyword}%"]);
+                })
+                ->addColumn('last_attendance',function ($data){
+                    return 1;
+                })
+                ->editColumn('sex',function ($data){
+                    return __html::sex($data->sex);
+                })
+                ->addColumn('action',function ($data){
+
+                    $destroy_route = "'".route("dashboard.menu.destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+                    return '<div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm show_dtr_btn"  data="'.$data->slug.'" data-toggle="modal" data-target="#show_dtr_modal" title="" data-placement="left" data-original-title="View more">
+                                    <i class="fa fa-list"></i>
+                                </button>
+                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="" data-placement="top" data-original-title="Edit">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </div>';
+                })
+                ->escapeColumns([])
+                ->setRowId('slug')
+                ->make(true);
+
+
         }
-
-        foreach ($request->uid_list as $uid){
-
-            $dtr_check = DailyTimeRecord::query()
-                ->where('date','=' ,Carbon::parse($attendance_from_device[$uid]['timestamp'])->format('Y-m-d'))
-                ->where('biometric_user_id' ,'=',$attendance_from_device[$uid]['id'])
-                ->first();
-
-            $values = Helper::BiometricValues();
-
-            $db_col = $values[$attendance_from_device[$uid]['type']];
-
-            if(empty($dtr_check)){
-                $dtr = new DailyTimeRecord;
-                $dtr->employee_no = 1;
-                $dtr->biometric_user_id = $attendance_from_device[$uid]['id'];
-                $dtr->biometric_uid = 3;
-                $dtr->$db_col = $attendance_from_device[$uid]['timestamp'];
-                $dtr->date = Carbon::now()->format('Y-m-d');
-                $dtr->calculated = 0;
-                $dtr->save();
-            }else{
-                $dtr_check->employee_no = 11;
-                $dtr_check->biometric_user_id = $attendance_from_device[$uid]['id'];
-                $dtr_check->biometric_uid = 13;
-                $dtr_check->$db_col = $attendance_from_device[$uid]['timestamp'];
-                $dtr_check->date = Carbon::now()->format('Y-m-d');
-                $dtr_check->calculated = 0;
-                $dtr_check->update();
-            }
-        }
-        return 500;
-
-        foreach ($request->uid_list as $uid){
-            $dtr_check = DTR::query()->where('uid','=',$uid)->first();
-            if(empty($dtr_check)){
-                $dtr = new DTR;
-                $dtr->uid = $uid;
-                $dtr->user = $attendance_from_device[$uid]['id'];
-                $dtr->state = $attendance_from_device[$uid]['state'];
-                $dtr->type = $attendance_from_device[$uid]['type'];
-                $dtr->timestamp = $attendance_from_device[$uid]['timestamp'];
-                $dtr->device = $request->device;
-                $dtr->save();
-            }
-        }
-        return 1;
-        return $attendance_to_db;
+        return view('dashboard.dtr.index');
     }
 
+    public function show($slug){
+        $p_employee = Employee::query()->where('slug','=',$slug)->first();
+        if(empty($p_employee)){
+            $jo_employee = JoEmployees::query()->where('slug','=',$slug)->first();
+            if(empty($jo_employee)){
+                abort(500,'Employee not found');
+            }else{
+                $employee = $jo_employee;
+            }
+        }else{
+            $employee = $p_employee;
+        }
 
+        $dtr_by_year = [];
+        if(!empty($employee->dtr_records)){
+            $dtr_records = $employee->dtr_records()->orderBy('date','desc')->get();
+            if($dtr_records->count() > 0){
+                foreach ($dtr_records as $dtr_record) {
+                    $dtr_by_year[Carbon::parse($dtr_record->date)->format('Y')][Carbon::parse($dtr_record->date)->format('Y-m')] = null;
+                }
+            }
+        }
+
+        $view = View::make('dashboard.dtr.my_dtr')->with([
+            'employee' => $employee,
+            'dtr_by_year' => $dtr_by_year,
+            'col' => 2,
+        ]);
+        $sections = $view->renderSections();
+        return view('dashboard.dtr.show')->with([
+            'section' => $sections['content2'],
+            'employee' => $employee,
+
+        ]);
+    }
     public function myDtr(){
         $employee = $this->getCurrentUserEmployeeObj();
         $dtr_by_year = [];
@@ -142,6 +149,7 @@ class DTRController extends  Controller
         return view('dashboard.dtr.my_dtr')->with([
             'employee' => $employee,
             'dtr_by_year' => $dtr_by_year,
+            'col' => 1,
         ]);
     }
 
@@ -155,7 +163,6 @@ class DTRController extends  Controller
                     $dtr_array[$dtr->date] = $dtr;
                 }
             }
-
             $first_day = $request->month.'-01';
             $first_day_next_month = Carbon::parse($first_day)->addMonth(1)->format('Y-m-d');
             $holidays = $this->holidaysArray($request->month);

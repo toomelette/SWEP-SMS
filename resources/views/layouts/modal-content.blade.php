@@ -15,8 +15,11 @@
                 @yield('modal-header')
             </h4>
         </div>
-
-        <div class="modal-body">
+        @php($style = '')
+        @isset($decolor)
+            @php($style = '#ecf0f5')
+        @endisset
+        <div class="modal-body"  style="background-color: {{$style}}">
             @yield('modal-body')
         </div>
 

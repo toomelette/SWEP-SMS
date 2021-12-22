@@ -41,7 +41,7 @@
 
 
         @yield('content')
-
+        @yield('content2')
       </div>
 
       <footer class="main-footer">
