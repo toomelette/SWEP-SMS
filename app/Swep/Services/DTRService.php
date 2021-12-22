@@ -21,7 +21,7 @@ class DTRService extends BaseService
     public function extract($ip){
         try{
             $attendances = $this->fetchAttendance($ip);
-            $serial_no = Helper::getStingAfterChar($this->getSerialNo($ip),'=');
+            $serial_no = $this->getSerialNo($ip);
 
             $attendances_array = [];
             foreach ($attendances as $attendance){
@@ -241,7 +241,7 @@ class DTRService extends BaseService
     private function getSerialNo($ip){
         $zk = new ZKTeco($ip);
         $zk->connect();
-        return $zk->serialNumber();
+        return  preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', Helper::getStingAfterChar($zk->serialNumber(),'='));
     }
 
 }

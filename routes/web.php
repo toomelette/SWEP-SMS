@@ -1,6 +1,10 @@
 <?php
 
 /** Auth **/
+
+use App\Swep\Helpers\Helper;
+use Rats\Zkteco\Lib\ZKTeco;
+
 Route::group(['as' => 'auth.'], function () {
 	
 	Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLogin');
@@ -233,7 +237,17 @@ Route::get('/file_explorer',function (){
 /** Test Route **/
 
 Route::get('/dashboard/test', function(){
+    $dtrs = \App\Models\DTR::query()->get();
+    foreach ($dtrs as $dtr){
+        $dtr->device = preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '',$dtr->device);
+        $dtr->update();
+    }
 
+    $dtr2 = \App\Models\DTR::query()->get();
+    dd($dtr2);
+    $zk = new ZKTeco('10.36.1.22');
+    $zk->connect();
+    return dd(preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', Helper::getStingAfterChar($zk->serialNumber(),'=')));
 	return dd([
 	    'slug' => Illuminate\Support\Str::random(16),
         'small' => strtoupper(Illuminate\Support\Str::random(7)),
