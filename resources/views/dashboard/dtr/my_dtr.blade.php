@@ -151,7 +151,16 @@
                 }
             })
         })
+
+        $("body").on("click",".fc-day-grid-event",function (e) {
+            e.preventDefault();
+            if($(this).attr('href') != 'undefined' && $(this).attr('href') !== false){
+                Swal.fire(
+                    'Details:',
+                    $(this).attr('href'),
+                    'info',
+                )
+            }
+        })
     </script>
-
-
 @endsection

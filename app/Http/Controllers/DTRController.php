@@ -85,19 +85,9 @@ class DTRController extends  Controller
                 ->where('biometric_user_id' ,'=',$attendance_from_device[$uid]['id'])
                 ->first();
 
-            $values = [
-                0 => 'am_in',
-                1 => 'pm_out',
-                2 => 'pm_in',
-                3 => 'pm_in',
-                4 => 'ot_in',
-                5 => 'ot_out',
-            ];
+            $values = Helper::BiometricValues();
 
             $db_col = $values[$attendance_from_device[$uid]['type']];
-
-
-
 
             if(empty($dtr_check)){
                 $dtr = new DailyTimeRecord;
@@ -165,12 +155,24 @@ class DTRController extends  Controller
                     $dtr_array[$dtr->date] = $dtr;
                 }
             }
+
+            $first_day = $request->month.'-01';
+            $first_day_next_month = Carbon::parse($first_day)->addMonth(1)->format('Y-m-d');
             $holidays = $this->holidaysArray($request->month);
-            //return $holidays;
+            $attendance_logs = DTR::query()
+                ->with('deviceDetails')
+                ->where('user','=',$request->bm_u_id)
+                ->whereBetween('timestamp',[$first_day,$first_day_next_month])
+                ->get();
+            $calendar_array = [];
+            $start_week_of_day_one = Carbon::parse($first_day)->startOfWeek()->subDay(1)->format('Y-m-d');
+            //return $first_day_day = Carbon::parse($first_day)->dayOfWeek;
             return view('dashboard.dtr.my_dtr_preview')->with([
                 'month' => $request->month,
                 'dtr_array' =>  $dtr_array,
                 'holidays' => $holidays,
+                'attendance_logs' => $attendance_logs,
+                'biometric_values' => $this->dtr_service->biometric_values(true),
             ]);
         }else{
             abort(404);

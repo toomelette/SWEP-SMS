@@ -194,6 +194,16 @@ class Helper
         return sprintf($format, $hours, $minutes);
     }
 
+    public static function biometricValuesColor($val){
+        $values = [
+            10 => '#0073b7',
+            20 => '#d76d00',
+            30 => '#00a65a',
+            40 => '#8eaa1d',
+            50 => '#7c54f5',
+            60 => '#4a24bf',
+        ];
 
-
+        return$values[$val];
+    }
 }

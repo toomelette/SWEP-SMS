@@ -203,8 +203,13 @@ class UserController extends Controller{
 
     public function store(UserFormRequest $request){
         if($request->create_from_employee == true){
+
             $employee = $this->findEmployeeBySlug($request->slug);
             if(!empty($employee)){
+                $users = User::query()->where('employee_no','=',$employee->employee_no)->first();
+                if(!empty($users)){
+                    abort(503,'This employee has a linked SWEP Account');
+                }
                 $user = new User;
                 $user->slug = Str::random(16);
                 $user->user_id = rand(1000000,9999999);

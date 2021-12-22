@@ -12,4 +12,8 @@ class DTR extends Model
     protected $table = 'hr_dtr';
     public $timestamps = true;
 
+    public function deviceDetails(){
+        return $this->belongsTo('App\Models\BiometricDevices','device','serial_no');
+    }
+
 }

@@ -119,12 +119,10 @@ class HomeController extends Controller{
                 'documents_per_month' => $documents_per_month_arr,
             ]);
         }
+
+        if(Auth::user()->dash == ''){
+            return redirect('/dashboard/dtr/my_dtr');
+        }
     	return $this->home->view();
     }
-    
-
-
-
-
-
 }

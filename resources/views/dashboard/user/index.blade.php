@@ -678,10 +678,14 @@
                   {!! __html::token_header() !!}
               },
               success: function (res) {
-                 $("#new_user_from_employee_form_containter").html(res);
-                 setTimeout(function () {
-                   $("#new_user_from_employee_form #username").focus();
-                 },100)
+                $("#new_user_from_employee_form_containter").html(res);
+                $("#new_user_from_employee_form_containter").slideDown(function () {
+                  setTimeout(function () {
+                    $("#new_user_from_employee_form #username").focus();
+                  },100)
+                },1000);
+
+
               },
               error: function (res) {
                   console.log(res);

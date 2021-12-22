@@ -39,7 +39,12 @@
             success: function (res) {
                console.log(res);
                succeed(form, true, false);
-
+               active = res.slug;
+               users_table.draw(false);
+               notify('User successfully created.','success');
+               $("#new_user_from_employee_form_containter").slideUp();
+               $("#employee_name").val('');
+               $("#employee_name").focus();
             },
             error: function (res) {
                 errored(form,res);

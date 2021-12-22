@@ -181,7 +181,11 @@ function errored(target_form, response){
     remove_loading_btn(target_form);
     unmark_required(target_form);
     mark_required(target_form,response);
-    notify("Please fill out required fields", "warning");
+    if(response.status == 503){
+        notify(response.responseJSON.message, "danger");
+    }else{
+        notify("Please fill out required fields", "warning");
+    }
 }
 function remove_loading_btn(target_form){
     form_id = $(target_form[0]).attr('id');

@@ -197,15 +197,26 @@ class DTRService extends BaseService
     }
 
 
-    private  function biometric_values(){
-        return [
-            10 => 'am_in',
-            20 => 'am_out',
-            30 => 'pm_in',
-            40 => 'pm_out',
-            50 => 'ot_in',
-            60 => 'ot_out',
-        ];
+    public  function biometric_values($displayMode = false){
+        if($displayMode == false){
+            return [
+                10 => 'am_in',
+                20 => 'am_out',
+                30 => 'pm_in',
+                40 => 'pm_out',
+                50 => 'ot_in',
+                60 => 'ot_out',
+            ];
+        }else{
+            return [
+                10 => 'Morning IN',
+                20 => 'Morning OUT',
+                30 => 'Afternoon IN',
+                40 => 'Afternoon OUT',
+                50 => 'Overtime IN',
+                60 => 'Overtime OUT',
+            ];
+        }
     }
     private function fetchAttendance($ip){
 
