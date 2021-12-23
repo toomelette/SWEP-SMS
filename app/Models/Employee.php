@@ -251,7 +251,9 @@ class Employee extends Model{
 
 
 
-
+    public function rawDtrRecords(){
+        return $this->hasMany('App\Models\DTR','user','biometric_user_id');
+    }
 
 
 

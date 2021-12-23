@@ -102,7 +102,8 @@ class User extends Authenticatable{
                 lastname,
                 biometric_user_id,
                 employee_no,
-                date_of_birth as birthday
+                date_of_birth as birthday,
+                "PERM" as type
             '));
         $jo_emplyoee = $this->hasOne('App\Models\JoEmployees', 'employee_no', 'employee_no')
             ->select(DB::raw('
@@ -111,7 +112,8 @@ class User extends Authenticatable{
                 lastname,
                 biometric_user_id,
                 employee_no,
-                birthday
+                birthday,
+                "JO" as type
             '));
 
         return $employee->union($jo_emplyoee->getQuery());

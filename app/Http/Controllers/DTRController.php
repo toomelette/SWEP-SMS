@@ -50,9 +50,9 @@ class DTRController extends  Controller
         if($request->ajax()){
 
 
-            $first = Employee::query()->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"PERM" as type'), 'sex','employee_no']);
+            $first = Employee::query()->with('rawDtrRecords')->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"PERM" as type'), 'sex','employee_no']);
 
-            $union = JoEmployees::query()->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"JO" as type'), 'sex','employee_no'])
+            $union = JoEmployees::query()->with('rawDtrRecords')->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"JO" as type'), 'sex','employee_no'])
                 ->union($first);
 
             $query = DB::table(DB::raw("({$union->toSql()}) as x"))
@@ -73,7 +73,10 @@ class DTRController extends  Controller
                     $query->whereRaw($sql, ["%{$keyword}%"]);
                 })
                 ->addColumn('last_attendance',function ($data){
-                    return 1;
+                    $dtr = DTR::query()->where('user','=',$data->biometric_user_id)->orderBy('timestamp','desc')->first();
+                    if(!empty($dtr)){
+                        return Carbon::parse($dtr->timestamp)->format('M. d, Y | h:i A') .' ----- '.$this->dtr_service->biometric_values(true)[$dtr->type];
+                    }
                 })
                 ->editColumn('sex',function ($data){
                     return __html::sex($data->sex);
@@ -155,6 +158,12 @@ class DTRController extends  Controller
 
     public function fetchByUserAndMonth(Request $request){
         if(request()->has('bm_u_id') || request()->has('month')){
+            if(!$request->ajax()){
+                if($request->bm_u_id != Auth::user()->employeeUnion->biometric_user_id){
+                    abort(404);
+                }
+            }
+
             $dtrs = DailyTimeRecord::query()->where('biometric_user_id','=',$request->bm_u_id)->
                 where('date','like',$request->month.'%')->orderBy('date','asc')->get();
             $dtr_array = [];

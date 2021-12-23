@@ -43,4 +43,8 @@ class JoEmployees extends Model
     public function user() {
         return $this->hasOne('App\Models\User','employee_no','employee_no');
     }
+
+    public function rawDtrRecords(){
+        return $this->hasMany('App\Models\DTR','user','biometric_user_id');
+    }
 }
