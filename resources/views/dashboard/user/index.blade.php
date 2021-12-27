@@ -497,22 +497,22 @@
     })
 
     $("body").on("click",".reset_password_btn", function(){
-      id = $(this).attr('data');
-      $("#reset_password_modal .modal-content").html(modal_loader);
-      uri = " {{ route('dashboard.user.reset_password', 'slug') }} ";
-      uri = uri.replace("slug",id);
-      $.ajax({
-        url: uri,
-        type: 'GET',
-        success: function(response){
-          $("#reset_password_modal #modal_loader").fadeOut(function() {
-            $("#reset_password_modal .modal-content").html(response);
-          });
-        },
-        error: function(response){
-          console.log(response);
+      Swal.fire({
+        title: 'Are you sure you want to reset the password?',
+        html: "Account: "+ $(this).attr('fullname')+"</br> The password will be changed to the user's birthday in <b>MMDDYY</b> format",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reset it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+          )
         }
-
       })
     })
 

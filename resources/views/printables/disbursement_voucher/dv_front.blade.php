@@ -32,6 +32,7 @@
   </style>
 
 </head>
+
 <body onload="window.print();" onafterprint="window.close()">
 
 
@@ -183,7 +184,7 @@
 
 
         {{-- EXPLANATION VALUE --}}
-        <div class="row" style="border-top:solid 1.4px; height:26em; overflow: hidden;">
+        <div class="row" style="border-top:solid 1.4px; min-height:24em; overflow: hidden;">
           
           <div class="col-sm-9" style="border-right:solid 1.4px; padding-left:20px; margin-bottom: -600px; padding-bottom: 600px;"> 
             <p style="font-family:Arial; font-size:16px; white-space: pre-wrap; white-space: -moz-pre-wrap;  white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{!! $disbursement_voucher->explanation !!}</p>

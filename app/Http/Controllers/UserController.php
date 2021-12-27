@@ -92,7 +92,7 @@ class UserController extends Controller{
                                   <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <li><a user="'.ucwords(strtolower($data->firstname)).'" href="#" data="'.$data->slug.'" name="'.strtoupper($data->firstname).' '.strtoupper($data->lastname).'" class="ac_dc" status="'.$stat.'" >'.$a.'</a>
                                     </li>
-                                    <li><a href="#" class="reset_password_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#reset_password_modal" >Change Username/Password</a></li>
+                                    <li><a href="#" class="reset_password_btn" data="'.$data->slug.'" fullname="'.strtoupper($data->firstname).' '.strtoupper($data->lastname).'">Reset Password</a></li>
                                   </ul>
                                 </div>
                                 </div>';
