@@ -35,9 +35,8 @@ class DTRController extends  Controller
 
     public function extract2(){
 
-        $ip = '10.36.1.22';
+        $ip = '10.36.1.23';
         return $this->dtr_service->extract($ip);
-
     }
 
 

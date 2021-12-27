@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\BiometricDevices;
 use App\Swep\Services\DTRService;
 use Illuminate\Console\Command;
 
@@ -39,13 +40,18 @@ class ExtractBiometricData extends Command
     protected $dtr_service;
     public function handle(DTRService $dtr_service)
     {
-        $ip = '10.36.1.22';
-        $dtr_service->extract($ip);
 
-        $ip = '10.36.1.21';
-        $dtr_service->extract($ip);
-
-        $ip = '10.36.1.23';
-        $dtr_service->extract($ip);
+        $bds = BiometricDevices::query()->where('status' ,'=',1)->get();
+        if(!empty($bds)){
+            foreach ($bds as $bd){
+                $ip = $bd->ip_address;
+                $dtr_service->extract($ip);
+            }
+        }
+//        $ip = '10.36.1.21';
+//        $dtr_service->extract($ip);
+//
+//        $ip = '10.36.1.23';
+//        $dtr_service->extract($ip);
     }
 }

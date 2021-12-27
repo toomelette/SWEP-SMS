@@ -21,6 +21,7 @@ class DTRService extends BaseService
     public function extract($ip){
         try{
             $attendances = $this->fetchAttendance($ip);
+            return $attendances;
             $serial_no = $this->getSerialNo($ip);
 
             $attendances_array = [];
@@ -44,7 +45,7 @@ class DTRService extends BaseService
                     $cl->save();
 
                     //CLEAR ZK TECO ATTENDANCE
-                    $this->clearAttendance($ip);
+                    //$this->clearAttendance($ip);
                     return 1;
                 }
                 return $attendances_array;
