@@ -20,20 +20,27 @@ class DTRService extends BaseService
 {
     public function extract($ip){
         try{
+            $last_uid = 0;
             $attendances = $this->fetchAttendance($ip);
-            return $attendances;
             $serial_no = $this->getSerialNo($ip);
+            $last_dtr_raw = DTR::query()->where('device' ,'=',$serial_no)->orderBy('uid','desc')->first();
+            if(!empty($last_dtr_raw)){
+                $last_uid = $last_dtr_raw->uid;
+            }
 
             $attendances_array = [];
-            foreach ($attendances as $attendance){
-                array_push($attendances_array,[
-                    'uid' => $attendance['uid'],
-                    'user' => $attendance['id'],
-                    'state' => $attendance['state'],
-                    'timestamp' => $attendance['timestamp'],
-                    'type' => $attendance['type'],
-                    'device' => $serial_no,
-                ]);
+            foreach ($attendances as $key => $attendance){
+                if($key > $last_uid){
+                    array_push($attendances_array,[
+                        'uid' => $attendance['uid'],
+                        'user' => $attendance['id'],
+                        'state' => $attendance['state'],
+                        'timestamp' => $attendance['timestamp'],
+                        'type' => $attendance['type'],
+                        'device' => $serial_no,
+                    ]);
+                }
+
             }
             if(count($attendances_array) > 0){
                 $a = DTR::insert($attendances_array);
@@ -46,7 +53,7 @@ class DTRService extends BaseService
 
                     //CLEAR ZK TECO ATTENDANCE
                     //$this->clearAttendance($ip);
-                    return 1;
+                    return $string;
                 }
                 return $attendances_array;
             }else{
@@ -61,7 +68,7 @@ class DTRService extends BaseService
             }
 
         }catch (\Exception $e){
-            $string = 'Error saving data from device: '.$ip;
+            $string = 'Error saving data from device: '.$ip.' | Device might be turned off.';
             $cl = new CronLogs;
             $cl->log = $string;
             $cl->type = 0;

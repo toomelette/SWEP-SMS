@@ -45,7 +45,11 @@ class ExtractBiometricData extends Command
         if(!empty($bds)){
             foreach ($bds as $bd){
                 $ip = $bd->ip_address;
-                $dtr_service->extract($ip);
+                try{
+                    $dtr_service->extract($ip);
+                }catch (\Exception $e){
+
+                }
             }
         }
 //        $ip = '10.36.1.21';
