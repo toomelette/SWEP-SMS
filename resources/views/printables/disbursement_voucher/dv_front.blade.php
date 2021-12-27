@@ -210,8 +210,11 @@
             <span style="border-right: solid 1.4px; border-bottom: solid 1.4px; padding:4px; font-weight:bold;">B</span>
             <p style="margin-left:40px; margin-top:-10px; font-weight:bold;">Approved for Payment</p>
             <p style="margin-left:200px; margin-top:1px; font-weight:bold;">
-{{--              {{ number_format($disbursement_voucher->amount, 2) }}--}}
-              <br>
+            @if(\Illuminate\Support\Facades\Auth::user()->username == 'salu9233' || \Illuminate\Support\Facades\Auth::user()->username == 'ppu.visayas')
+                <br>
+            @else
+                {{ number_format($disbursement_voucher->amount, 2) }}
+            @endif
             </p>
           </div>
 

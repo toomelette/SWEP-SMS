@@ -178,6 +178,11 @@
         $(document).ready(function(){
             var regions;
 
+            @if($request->has('q'))
+                search_for = '{{$request->q}}';
+            @else
+                search_for = '';
+            @endif
             default_region = 6;
 
             $.getJSON('{{asset("json/regions.json")}}', function(data){
@@ -283,7 +288,16 @@
           "initComplete": function( settings, json ) {
             $('#tbl_loader').fadeOut(function(){
               $("#jo_employees_table_container").fadeIn();
+                if(search_for != ''){
+                    jo_employees_tbl.search(search_for).draw();
+                    active = search_for;
+                    setTimeout(function(){
+                        active = '';
+                    },3000);
+                }
             });
+
+
           },
           "language":
                   {

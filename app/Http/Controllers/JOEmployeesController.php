@@ -16,8 +16,7 @@ use Yajra\DataTables\DataTables;
 
 class JOEmployeesController extends Controller
 {
-    public function index(){
-
+    public function index(Request $request){
         if(request()->ajax()){
             if(request()->has('draw')){
                 $jo_employees = JoEmployees::query();
@@ -54,7 +53,9 @@ class JOEmployeesController extends Controller
                     ->toJson();
             }
         }
-        return view('dashboard.jo_employee.index');
+        return view('dashboard.jo_employee.index')->with([
+            'request' => $request,
+        ]);
     }
 
     public function store(JoEmployeesFormRequest $request){

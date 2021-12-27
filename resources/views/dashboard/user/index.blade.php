@@ -497,9 +497,11 @@
     })
 
     $("body").on("click",".reset_password_btn", function(){
+      slug = $(this).attr('data');
+      fullname = $(this).attr('fullname');
       Swal.fire({
         title: 'Are you sure you want to reset the password?',
-        html: "Account: "+ $(this).attr('fullname')+"</br> The password will be changed to the user's birthday in <b>MMDDYY</b> format",
+        html: "Account: "+fullname+"</br> The password will be changed to the user's birthday in <b>MMDDYY</b> format",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -507,11 +509,30 @@
         confirmButtonText: 'Yes, reset it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-          )
+          url = "{{route('dashboard.user.reset_password','slug')}}"
+          url = url.replace("slug",slug);
+          $.ajax({
+              url : url,
+              type: 'GET',
+              headers: {
+                  {!! __html::token_header() !!}
+              },
+              success: function (res) {
+                 console.log(res);
+                 active = res.slug;
+                 users_table.draw(false);
+                Swal.fire(
+                        'Reset Successful!',
+                        'The password of '+fullname+" has been reset successfully.",
+                        'success'
+                )
+              },
+              error: function (res) {
+                  console.log(res);
+                  notify(res.responseJSON.message,'danger');
+              }
+          })
+
         }
       })
     })

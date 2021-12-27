@@ -45,7 +45,6 @@ class UserController extends Controller{
         $menus = Menu::with('submenu')->get();
         $users = User::query()->with(['userSubmenu','employeeUnion']);
         if(request()->ajax()){
-
             if(request()->has('draw')){
                 if($request->has('is_online') || $request->has('is_active')){
                     if($request->is_online == 'online'){
@@ -62,7 +61,7 @@ class UserController extends Controller{
                 }
 
                 $users->get();
-                $dt = DataTables::of($users)
+                $dt = DataTables::of($users->with(['employee','joEmployee','employeeUnion']))
                     ->addColumn('action', function($data){
                         if($data->is_activated == 0){
                             $a = "Activate";
@@ -71,10 +70,17 @@ class UserController extends Controller{
                             $a = "Deactivate";
                             $stat = "active";
                         }
-
                         $destroy_route = "'".route("dashboard.user.destroy","slug")."'";
                         $slug = "'".$data->slug."'";
-
+                        if(!empty($data->employeeUnion)){
+                            if($data->employeeUnion->type == 'PERM'){
+                                $view = '<li><a href="'.route('dashboard.employee.index').'?q='.$data->employeeUnion->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
+                            }else{
+                                $view = '<li><a href="'.route('dashboard.jo_employees.index').'?q='.$data->employeeUnion->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
+                            }
+                        }else{
+                            $view = '';
+                        }
                         $button = '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm view_user_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#view_user_modal" title="View more" data-placement="left">
                                     <i class="fa fa-file-text"></i>
@@ -93,6 +99,7 @@ class UserController extends Controller{
                                     <li><a user="'.ucwords(strtolower($data->firstname)).'" href="#" data="'.$data->slug.'" name="'.strtoupper($data->firstname).' '.strtoupper($data->lastname).'" class="ac_dc" status="'.$stat.'" >'.$a.'</a>
                                     </li>
                                     <li><a href="#" class="reset_password_btn" data="'.$data->slug.'" fullname="'.strtoupper($data->firstname).' '.strtoupper($data->lastname).'">Reset Password</a></li>
+                                    '.$view.'
                                   </ul>
                                 </div>
                                 </div>';
@@ -113,6 +120,19 @@ class UserController extends Controller{
                         }else if($data->is_activated == 0){
                             return '<span class="label bg-red col-md-12">DEACTIVATED</span>';
                         }
+                    })->filter(function($query) use($request){
+                        if(isset($request->search['value'])){
+                            $query->whereHas('employee',function($q) use($request){
+                                $q->where('lastname','like','%'.$request->search['value'].'%')
+                                ->orWhere('middlename','like','%'.$request->search['value'].'%')
+                                ->orWhere('firstname','like','%'.$request->search['value'].'%');
+                            })->orWhereHas('joEmployee',function($q) use($request){
+                                $q->where('lastname','like','%'.$request->search['value'].'%')
+                                ->orWhere('middlename','like','%'.$request->search['value'].'%')
+                                ->orWhere('firstname','like','%'.$request->search['value'].'%');
+                            })->orWhere('username','like','%'.$request->search['value'].'%');
+                        }
+
                     })
                     ->escapeColumns([])
                     ->setRowId('slug')
@@ -339,7 +359,19 @@ class UserController extends Controller{
 
 
     public function resetPassword($slug){
-
+        $user = User::query()->where('slug','=',$slug)->first();
+        if(!empty($user)){
+            if(!empty($user->employeeUnion)){
+                $new_pass = Hash::make(Carbon::parse($user->employeeUnion->birthday)->format('mdy'));
+                $user->password = $new_pass;
+                if($user->update()){
+                    return $user->only('slug');
+                }
+            }else{
+                abort(503,'This user is not linked to an employee and therefore cannot retrieve birthday');
+            }
+        }
+        abort(503,'User not found');
         return $this->user_service->resetPassword($slug);
 
     }
