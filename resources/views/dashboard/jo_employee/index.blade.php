@@ -299,7 +299,7 @@
             });
 
 
-          },h
+          },
           "language":
                   {
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
