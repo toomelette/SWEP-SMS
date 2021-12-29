@@ -168,7 +168,8 @@
 
         </div>
         <div>
-            <p style="font-size: 10px">2022/PPSPD/MIS</p>
+            <p style="font-size: 10px;float: left">2022/PPSPD/MIS | {{Auth::user()->username}} | {{request()->ip()}}</p>
+            <p style="font-size: 10px; float: right"></p>
         </div>
     </div>
     <div style="width: 46% ; float: right; margin-left: 20px">
@@ -313,7 +314,8 @@
 
         </div>
         <div>
-            <p style="font-size: 10px">2022/PPSPD/MIS</p>
+            <p style="font-size: 10px;float: left">2022/PPSPD/MIS | {{Auth::user()->username}} | {{request()->ip()}}</p>
+            <p style="font-size: 10px; float: right"></p>
         </div>
     </div>
 </div>

@@ -61,9 +61,13 @@ class DTRService extends BaseService
                     $last_uid_db->update();
                     //CLEAR ZK TECO ATTENDANCE
                     //$this->clearAttendance($ip);
-
+//                    $last_to_delete = $cl->id - 2000;
+//                    $cronlogs = CronLogs::query()->where('id','<',$last_to_delete);
+//                    $cronlogs->delete();
                     return $string;
                 }
+
+
                 return $attendances_array;
             }else{
                 $string = 'Copied '.count($attendances_array).' data from device: '.$ip.' | No new attendance';
