@@ -170,15 +170,18 @@
                 {
                     "data": "date",
                     "render": function(data, type, row) {
-                        return moment(data).format('MMM DD, YYYY');}
-                    },
+                        return moment(data).format('MMM DD, YYYY') + '<div class="table-subdetail">' +
+                             moment(data).format('dddd')+
+                            '</div>';
+                    }
+                },
                 { "data": "type" },
                 { "data": "action" }
             ],
             "buttons": [
                 {!! __js::dt_buttons() !!}
             ],
-            "columnDefs":[
+            "columnDefs":[downl
                 {
                     "targets" : 0,
                     "orderable" : false,

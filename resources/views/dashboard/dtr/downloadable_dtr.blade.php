@@ -31,7 +31,7 @@
         <p class="text-center"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center"><b>DAILY TIME RECORD</b></p>
 
-        <p class="small-margin">{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</p>
+        <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed" style="font-size: 11.5px">
             <thead>
@@ -152,10 +152,10 @@
                 <td>Total Sunday: {{number_format($sundays)}}</td>
             </tr>
         </table>
-        <br>
+
         <div>
             <p style="font-size: 12px">I hereby certify that the above records are true and correct</p>
-            <br>
+
             <div style="float: right; padding-right: 10px">
                 ___________________________
                 <p class="text-center" style="margin-top: 0">Signature of Employee</p>
@@ -167,13 +167,16 @@
             </div>
 
         </div>
+        <div>
+            <p style="font-size: 10px">2022/PPSPD/MIS</p>
+        </div>
     </div>
     <div style="width: 46% ; float: right; margin-left: 20px">
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
         <p class="text-center"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center"><b>DAILY TIME RECORD</b></p>
 
-        <p class="small-margin">{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</p>
+        <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed" style="font-size: 11.5px">
             <thead>
@@ -294,10 +297,10 @@
                 <td>Total Sunday: {{number_format($sundays)}}</td>
             </tr>
         </table>
-        <br>
+
         <div>
             <p style="font-size: 12px">I hereby certify that the above records are true and correct</p>
-            <br>
+
             <div style="float: right; padding-right: 10px">
                 ___________________________
                 <p class="text-center" style="margin-top: 0">Signature of Employee</p>
@@ -308,6 +311,9 @@
                 <p style="margin-top: 0; padding-left: 50px">Authorized Official</p>
             </div>
 
+        </div>
+        <div>
+            <p style="font-size: 10px">2022/PPSPD/MIS</p>
         </div>
     </div>
 </div>
