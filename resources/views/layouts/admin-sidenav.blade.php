@@ -19,7 +19,7 @@
 
 
       @if(Auth::check())
-            <li class="@if('dashboard.home' == Route::currentRouteName()) active @endif">
+            <li class="@if('dashboard.home' == Route::currentRouteName()) active @endif" >
                 <a href="{{route('dashboard.home')}}">
                     <i class="fa fa-home"></i>
                     <span>Home</span>
@@ -53,14 +53,13 @@
                                         @if(count($menu_content['submenus']) > 0)
                                             @foreach($menu_content['submenus'] as $submenu)
                                                 @if($submenu->is_nav == true)
+
                                                     <li class="{!! Route::currentRouteNamed($submenu->route) ? 'active tree_active' : '' !!}">
                                                         <a href="{{ route($submenu->route) }}"><i class="fa fa-caret-right"></i> {{ $submenu->nav_name }}</a>
                                                     </li>
                                                 @endif
                                             @endforeach
                                         @endif
-
-
                                     </ul>
 
                                 </li>

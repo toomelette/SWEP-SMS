@@ -35,11 +35,12 @@
 
 
 {{-- SWAL 2--}}
-
-
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 <link type="text/css" rel="stylesheet" href="{{ asset('css/animate.css') }}">
 
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/icheck-bootstrap-3.0.1/icheck-bootstrap.min.css') }}">
-
+{{-- Calendar--}}
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/fullcalendar/dist/fullcalendar.min.css')}}">
+
+{{-- INTROJS--}}
+<link type="text/css" rel="stylesheet" href="{{asset('template/plugins/intro.js-4.3.0/package/introjs.css')}}">

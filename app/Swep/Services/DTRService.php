@@ -4,6 +4,7 @@
 namespace App\Swep\Services;
 
 
+use App\Models\BiometricDevices;
 use App\Models\CronLogs;
 use App\Models\DailyTimeRecord;
 use App\Models\DTR;
@@ -20,12 +21,18 @@ class DTRService extends BaseService
 {
     public function extract($ip){
         try{
+
             $last_uid = 0;
             $attendances = $this->fetchAttendance($ip);
             $serial_no = $this->getSerialNo($ip);
-            $last_dtr_raw = DTR::query()->where('device' ,'=',$serial_no)->orderBy('uid','desc')->first();
-            if(!empty($last_dtr_raw)){
-                $last_uid = $last_dtr_raw->uid;
+            $last_uid_db = BiometricDevices::query()->where('serial_no','=',$serial_no)->first();
+            //$last_dtr_raw = DTR::query()->where('device' ,'=',$serial_no)->orderBy('uid','desc')->first();
+            if(!empty($last_uid_db)){
+                if($last_uid_db->last_uid == null){
+                    $last_uid = 0;
+                }else{
+                    $last_uid = $last_uid_db->last_uid;
+                }
             }
 
             $attendances_array = [];
@@ -40,7 +47,6 @@ class DTRService extends BaseService
                         'device' => $serial_no,
                     ]);
                 }
-
             }
             if(count($attendances_array) > 0){
                 $a = DTR::insert($attendances_array);
@@ -51,8 +57,11 @@ class DTRService extends BaseService
                     $cl->type = 1;
                     $cl->save();
 
+                    $last_uid_db->last_uid = array_key_last($attendances);
+                    $last_uid_db->update();
                     //CLEAR ZK TECO ATTENDANCE
                     //$this->clearAttendance($ip);
+
                     return $string;
                 }
                 return $attendances_array;

@@ -218,10 +218,12 @@ class DTRController extends  Controller
             'dtr_array' =>  $dtr_array,
             'holidays' => $holidays,
             'employee' => $employee,
+            'sup_name' => $request->sup_name,
         ];
 
+        //return $request;
         $pdf = PDF::loadView('dashboard.dtr.downloadable_dtr',$data)->setPaper('letter');
-        //return view('dashboard.dtr.downloadable_dtr',$data);
+//        return view('dashboard.dtr.downloadable_dtr',$data);
         return $pdf->download('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
 
     }

@@ -9,10 +9,7 @@
     <section class="content">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">List of Menus</h3>
-                <div class="pull-right">
-                        <button type="button" class="btn bg-green" data-toggle="modal" data-target="#add_menu_modal"><i class="fa fa-plus"></i> Add new</button>
-                </div>
+                <h3 class="box-title">List of Biometric Users</h3>
             </div>
             <div class="panel">
                 <div class="box-header with-border">

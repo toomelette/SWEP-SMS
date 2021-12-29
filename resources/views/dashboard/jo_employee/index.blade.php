@@ -255,9 +255,10 @@
               { "data": "birthday_age" },
               { "data": "civil_status" },
               { "data": "biometric_user_id" },
+              { "data": "action" },
               { "data": "firstname" },
               { "data": "lastname" },
-            { "data": "action" }
+
           ],
           "buttons": [
             {!! __js::dt_buttons() !!}
@@ -274,12 +275,12 @@
               "class" : 'w-6p'
             },
             {
-              "targets" : 8,
+              "targets" : 6,
               "orderable" : false,
               "class" : 'action-10p'
             },
             {
-              "targets" : [6,7],
+              "targets" : [7,8],
               "visible" : false,
               "class" : 'action-10p'
             }
@@ -298,7 +299,7 @@
             });
 
 
-          },
+          },h
           "language":
                   {
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",

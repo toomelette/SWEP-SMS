@@ -10,12 +10,14 @@
   </style>
     @php($days_in_this_month = \Carbon\Carbon::parse($month)->daysInMonth)
 {{--    {{print_r($dtr_array)}}--}}
-    <form method="POST" action="{{route('dashboard.dtr.download')}}">
+    <form method="POST" id="download_form" action="{{route('dashboard.dtr.download')}}">
         @csrf
+        <input value="" id="sup_name" name="sup_name" hidden>
         <input value="{{$month}}" name="month" hidden>
-        <button type="submit" class="btn btn-primary pull-right download_btn" style="margin-bottom: 1rem"><i class="fa fa-download"></i> Download PDF </button>
+
     </form>
 
+    <button type="submit" class="btn btn-primary pull-right download_btn" style="margin-bottom: 1rem"><i class="fa fa-download"></i> Download PDF </button>
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-clock-o"></i> DAILY TIME RECORD</a></li>
@@ -299,6 +301,47 @@
         $("#calendar .fc-header-toolbar").remove();
     },100);
 
+    $(".download_btn").click(function (e) {
+        let timerInterval
+        Swal.fire({
+            title: 'Downloading, please wait . . .',
+            html: 'This dialog will close in <b>3</b> seconds.',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Math.round(Swal.getTimerLeft()/1000);
+                }, 1000)
+                $("#download_form").submit();
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+               //console.log('I was closed by the timer')
+            }
+        })
+D
+
+        // e.preventDefault();
+        // Swal.fire({
+        //     title: "Enter your immediate supervisor's complete name:",
+        //     html: "<i class='fa fa-info'></i> You may leave this field blank.",
+        //     input: 'text',
+        //     showCancelButton: true
+        // }).then((result) => {
+        //     if (result.value) {
+        //         $("#sup_name").val(result.value);
+        //         $("#download_form").submit();
+        //         console.log("Result: " + result.value);
+        //     }
+        // });
+
+    })
 
 </script>
 @endsection

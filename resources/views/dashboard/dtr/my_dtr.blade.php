@@ -16,7 +16,7 @@
 @section('content2')
     <section class="content">
         <div class="box box-success">
-            <div class="box-header with-border">
+            <div class="box-header with-border" >
                 <h3 class="box-title">Daily Time Record</h3>
                 @php
                     $cl = \App\Models\CronLogs::query()->where('log','like','%Reconstructed%')->orderBy('created_at','desc')->first();
@@ -134,7 +134,11 @@
     </script>
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
+        $(document).ready(function () {
 
+
+
+        })
         $('body').on('click','.month_btn',function () {
             btn = $(this);
             var month = $(this).attr('month');

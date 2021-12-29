@@ -68,3 +68,6 @@
 
 {{--TYPEAHEAD--}}
 <script type="text/javascript" src="{{asset('template/plugins/typeahead/js/bootstrap-typeahead.min.js')}}"></script>
+
+{{--INTRO--}}
+<script type="text/javascript" src="{{asset('template/plugins/intro.js-4.3.0/package/intro.js')}}"></script>

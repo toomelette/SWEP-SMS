@@ -71,7 +71,7 @@
                     <div class="panel-body">
                         <center><label>Employees by Sex</label></center>
                         <hr class="no-margin">
-                        <canvas id="employee_by_gender" width="400" height="400"></canvas>
+                        <canvas id="employee_by_gender" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
