@@ -76,7 +76,7 @@
                                                 @php(ksort($months))
                                                 <div class="row">
                                                     @foreach($months as $month => $null)
-                                                        <div class="col-md-1">
+                                                        <div class="col-md-{{$col}}">
                                                             <button type="button" class="btn btn-default col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
                                                                 {{\Carbon\Carbon::parse($month)->format('F')}}
                                                             </button>

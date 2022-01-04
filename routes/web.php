@@ -237,13 +237,11 @@ Route::get('/file_explorer',function (){
 /** Test Route **/
 
 Route::get('/dashboard/test', function(){
-    $zk = new ZKTeco('10.36.1.21');
-    $zk->connect();
-    return $zk->restart();
+    $crons  = \App\Models\CronLogs::query()->get()->last();
+    $to_del = $crons->id - 2000;
+    $cl = \App\Models\CronLogs::query()->where('id','<' ,$to_del);
+    return $cl->delete();
 
-    $zk->setTime('2022-01-03 13:01:01');
-
-    return 1;
     return $zk->getAttendance();
     return count($zk->getUser());
 

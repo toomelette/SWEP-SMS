@@ -11,11 +11,13 @@ use App\Models\DTR;
 use App\Models\Employee;
 use App\Models\Holiday;
 use App\Models\JoEmployees;
+use App\Models\UserSubmenu;
 use App\Swep\Helpers\__sanitize;
 use App\Swep\Helpers\Helper;
 use App\Swep\Services\DTRService;
 use App\Swep\ViewHelpers\__html;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use PDF;
 use Carbon\Carbon;
@@ -156,11 +158,15 @@ class DTRController extends  Controller
     }
 
     public function fetchByUserAndMonth(Request $request){
+
         if(request()->has('bm_u_id') || request()->has('month')){
             if(!$request->ajax()){
                 if($request->bm_u_id != Auth::user()->employeeUnion->biometric_user_id){
                     abort(404);
                 }
+                $bm_u_id = Auth::user()->employeeUnion->biometric_user_id;
+            }else{
+                $bm_u_id = $request->bm_u_id;
             }
 
             $dtrs = DailyTimeRecord::query()->where('biometric_user_id','=',$request->bm_u_id)->
@@ -171,6 +177,16 @@ class DTRController extends  Controller
                     $dtr_array[$dtr->date] = $dtr;
                 }
             }
+
+            $perm_employee = Employee::query()->where('biometric_user_id','=',$bm_u_id)->first();
+            if(!empty($perm_employee)){
+                $employee = $perm_employee;
+            }else{
+                $jo_employee = JoEmployees::query()->where('biometric_user_id','=',$bm_u_id)->first();
+                if(!empty($jo_employee)){
+                    $employee = $jo_employee;
+                }
+            }
             $first_day = $request->month.'-01';
             $first_day_next_month = Carbon::parse($first_day)->addMonth(1)->format('Y-m-d');
             $holidays = $this->holidaysArray($request->month);
@@ -179,15 +195,14 @@ class DTRController extends  Controller
                 ->where('user','=',$request->bm_u_id)
                 ->whereBetween('timestamp',[$first_day,$first_day_next_month])
                 ->get();
-            $calendar_array = [];
-            $start_week_of_day_one = Carbon::parse($first_day)->startOfWeek()->subDay(1)->format('Y-m-d');
-            //return $first_day_day = Carbon::parse($first_day)->dayOfWeek;
             return view('dashboard.dtr.my_dtr_preview')->with([
                 'month' => $request->month,
                 'dtr_array' =>  $dtr_array,
                 'holidays' => $holidays,
                 'attendance_logs' => $attendance_logs,
                 'biometric_values' => $this->dtr_service->biometric_values(true),
+                'bm_u_id' => $request->bm_u_id,
+                'employee' => $employee,
             ]);
         }else{
             abort(404);
@@ -198,8 +213,22 @@ class DTRController extends  Controller
         if(!request()->has('month')){
             abort(404);
         }
+        $sm = UserSubmenu::query()->where('submenu_id','=','VODFKKM')->where('user_id','=',Auth::user()->user_id)->first();
+        if(empty($sm)){
+            $employee = $this->getCurrentUserEmployeeObj();
+        }else{
+            $perm_employee = Employee::query()->where('biometric_user_id','=',$request->bm_u_id)->first();
+            if(!empty($perm_employee)){
+                $employee = $perm_employee;
+            }else{
+                $jo_employee = JoEmployees::query()->where('biometric_user_id','=',$request->bm_u_id)->first();
+                if(!empty($jo_employee)){
+                    $employee = $jo_employee;
+                }
+            }
+        }
 
-        $employee = $this->getCurrentUserEmployeeObj();
+
         $dtrs = DailyTimeRecord::query()->where('biometric_user_id','=',$employee->biometric_user_id)->
         where('date','like',$request->month.'%')->orderBy('date','asc')->get();
 

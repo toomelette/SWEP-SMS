@@ -1,7 +1,7 @@
 @extends('layouts.modal-content')
 
 @section('modal-header')
-{{\Carbon\Carbon::parse($month)->format('F, Y')}}
+{{\Carbon\Carbon::parse($month)->format('F, Y')}} - {{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}
 @endsection
 
 @section('modal-body')
@@ -13,8 +13,8 @@
     <form method="POST" id="download_form" action="{{route('dashboard.dtr.download')}}">
         @csrf
         <input value="" id="sup_name" name="sup_name" hidden>
+        <input value="{{$bm_u_id}}" id="" name="bm_u_id" hidden>
         <input value="{{$month}}" name="month" hidden>
-
     </form>
 
     <button type="submit" class="btn btn-primary pull-right download_btn" style="margin-bottom: 1rem"><i class="fa fa-download"></i> Download PDF </button>
@@ -325,7 +325,6 @@
                //console.log('I was closed by the timer')
             }
         })
-D
 
         // e.preventDefault();
         // Swal.fire({
