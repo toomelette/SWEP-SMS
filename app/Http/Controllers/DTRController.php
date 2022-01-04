@@ -35,7 +35,7 @@ class DTRController extends  Controller
 
     public function extract2(){
 
-        $ip = '10.36.1.23';
+        $ip = '10.36.1.21';
         return $this->dtr_service->extract($ip);
     }
 
@@ -224,7 +224,8 @@ class DTRController extends  Controller
         //return $request;
         $pdf = PDF::loadView('dashboard.dtr.downloadable_dtr',$data)->setPaper('letter');
         //return view('dashboard.dtr.downloadable_dtr',$data);
-        return $pdf->download('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
+        //$pdf->adminPassword('123456');
+        return $pdf->stream('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
 
     }
 

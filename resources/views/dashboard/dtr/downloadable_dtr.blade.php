@@ -1,35 +1,63 @@
 @php($days_in_this_month = \Carbon\Carbon::parse($month)->daysInMonth)
-<style>
-    .table-bordered,.table-bordered th,.table-bordered td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-    .text-center{
-        text-align: center;
-    }
-    .text-right{
-        text-align: right;
-    }
+<head>
+    <style type="text/css">
+        @font-face {
+            font-family: 'HunDin';
+            src: url({{ storage_path('fonts/HunDin.ttf') }}) format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
 
-    .text-left{
-        text-align: left;
-    }
-    table{
-        font-family: "Helvetica";
-    }
-    p{
-        font-size: 14px;
-        font-family: "Helvetica";
-    }
-    .small-margin{
-        margin: 5px 0;
-    }
-</style>
+
+        @font-face {
+            font-family: 'OS-Condenesed-Bold';
+            src: url({{ storage_path('fonts/OpenSansCondensed-Bold.ttf') }}) format('truetype');
+            font-weight: 400;
+            font-style: normal;
+
+        }
+
+        @font-face {
+            font-family: 'OS-Condenesed-Light';
+            src: url({{ storage_path('fonts/OpenSansCondensed-Light.ttf') }}) format('truetype');
+            font-style: normal;
+        }
+
+        .table-bordered,.table-bordered th,.table-bordered td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+
+        .text-left{
+            text-align: left;
+        }
+        table td{
+            font-family: "HunDin";
+        }
+
+        thead{
+            font-family: "Helvetica";
+        }
+        p{
+            font-size: 14px;
+            font-family: "Helvetica";
+        }
+        .small-margin{
+            margin: 5px 0;
+        }
+    </style>
+</head>
 <div>
     <div style="width: 49%; float: left; border-right: 1px dashed black">
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
-        <p class="text-center"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
-        <p class="text-center"><b>DAILY TIME RECORD</b></p>
+        <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
+        <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
 
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
@@ -142,19 +170,19 @@
             @endfor
             </tbody>
         </table>
-        <table style="font-family: 'Helvetica'; font-size: 14px; margin-top: 20px;border: 0px; width: 100%">
+        <table style="font-family: 'Helvetica'; font-size: 14px; margin-top: 5px;margin-bottom: 0px;border: 0px; width: 100%">
             <tr>
-                <td>Total Late : {{\App\Swep\Helpers\Helper::convertToHoursMins($late)}}</td>
-                <td>Total Saturday: {{number_format($saturdays)}}</td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Late : <span style="font-family: 'HunDin'">{{\App\Swep\Helpers\Helper::convertToHoursMins($late)}}</span></td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Saturday: <span style="font-family: 'HunDin'">{{number_format($saturdays)}}</span></td>
             </tr>
             <tr>
-                <td>Total Undertime : {{\App\Swep\Helpers\Helper::convertToHoursMins($undertime)}}</td>
-                <td>Total Sunday: {{number_format($sundays)}}</td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Undertime : <span style="font-family: 'HunDin'">{{\App\Swep\Helpers\Helper::convertToHoursMins($undertime)}}</span></td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Sunday: <span style="font-family: 'HunDin'">{{number_format($sundays)}}</span></td>
             </tr>
         </table>
 
         <div>
-            <p style="font-size: 12px">I hereby certify that the above records are true and correct</p>
+            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 0px">I hereby certify that the above records are true and correct</p>
 
             <div style="float: right; padding-right: 10px">
                 ___________________________
@@ -169,13 +197,12 @@
         </div>
         <div>
             <p style="font-size: 10px;float: left">2022/PPSPD/MIS | {{Auth::user()->username}} | {{request()->ip()}}</p>
-            <p style="font-size: 10px; float: right"></p>
         </div>
     </div>
     <div style="width: 46% ; float: right; margin-left: 20px">
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
-        <p class="text-center"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
-        <p class="text-center"><b>DAILY TIME RECORD</b></p>
+        <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
+        <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
 
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
@@ -212,8 +239,8 @@
                     @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
                     <tr class="text-center">
                         <td @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6 || \Carbon\Carbon::parse($month.'-'.$date)->format('w') == 0)
-                                style="color: red"
-                            @endif>
+                            style="color: red"
+                                @endif>
                             {{$date}}
                         </td>
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}</td>
@@ -288,19 +315,19 @@
             @endfor
             </tbody>
         </table>
-        <table style="font-family: 'Helvetica'; font-size: 14px; margin-top: 20px;border: 0px; width: 100%">
+        <table style="font-family: 'Helvetica'; font-size: 14px; margin-top: 5px;margin-bottom: 0px;border: 0px; width: 100%">
             <tr>
-                <td>Total Late : {{\App\Swep\Helpers\Helper::convertToHoursMins($late)}}</td>
-                <td>Total Saturday: {{number_format($saturdays)}}</td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Late : <span style="font-family: 'HunDin'">{{\App\Swep\Helpers\Helper::convertToHoursMins($late)}}</span></td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Saturday: <span style="font-family: 'HunDin'">{{number_format($saturdays)}}</span></td>
             </tr>
             <tr>
-                <td>Total Undertime : {{\App\Swep\Helpers\Helper::convertToHoursMins($undertime)}}</td>
-                <td>Total Sunday: {{number_format($sundays)}}</td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Undertime : <span style="font-family: 'HunDin'">{{\App\Swep\Helpers\Helper::convertToHoursMins($undertime)}}</span></td>
+                <td style="font-family: 'OS-Condenesed-Bold';">Total Sunday: <span style="font-family: 'HunDin'">{{number_format($sundays)}}</span></td>
             </tr>
         </table>
 
         <div>
-            <p style="font-size: 12px">I hereby certify that the above records are true and correct</p>
+            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 0px">I hereby certify that the above records are true and correct</p>
 
             <div style="float: right; padding-right: 10px">
                 ___________________________
@@ -315,7 +342,6 @@
         </div>
         <div>
             <p style="font-size: 10px;float: left">2022/PPSPD/MIS | {{Auth::user()->username}} | {{request()->ip()}}</p>
-            <p style="font-size: 10px; float: right"></p>
         </div>
     </div>
 </div>

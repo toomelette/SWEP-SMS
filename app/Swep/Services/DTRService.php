@@ -48,6 +48,7 @@ class DTRService extends BaseService
                     ]);
                 }
             }
+
             if(count($attendances_array) > 0){
                 $a = DTR::insert($attendances_array);
                 if($a){
@@ -144,8 +145,7 @@ class DTRService extends BaseService
     public function compute(){
         $latest_time_in = SuSettings::query()->where('setting','=','permanent_latest_time_in')->first()->time_value;
         $earliest_time_out = SuSettings::query()->where('setting','=','permanent_earliest_time_out')->first()->time_value;
-        $late = 0;
-        $undertime = 0;
+
 
         $jo_latest_time_in = SuSettings::query()->where('setting','=','jo_latest_time_in')->first()->time_value;
         $jo_earliest_time_out = SuSettings::query()->where('setting','=','jo_earliest_time_out')->first()->time_value;
@@ -154,6 +154,8 @@ class DTRService extends BaseService
         $no_of_computed = 0;
         if(!empty($dtrs)){
             foreach ($dtrs as $dtr){
+                $late = 0;
+                $undertime = 0;
                 $no_of_computed++;
                 $p_employee = Employee::query()->select('lastname','firstname',DB::raw('"PERM" as type'))->where('employee_no', '=' ,$dtr->employee_no);
                 $jo_employee = JoEmployees::query()->select('lastname','firstname',DB::raw('"JO" as type'))->where('employee_no', '=' ,$dtr->employee_no);
@@ -177,6 +179,8 @@ class DTRService extends BaseService
                 if($dtr->am_in > $latest_time_in){
                     $diff = Carbon::parse($dtr->am_in)->diffInMinutes($latest_time_in);
                     $late = $late+$diff;
+
+
                 }
 
                 //PM IN

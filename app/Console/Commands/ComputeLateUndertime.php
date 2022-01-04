@@ -12,7 +12,7 @@ class ComputeLateUndertime extends Command
      *
      * @var string
      */
-    protected $signature = 'command:compute_late_undertime';
+    protected $signature = 'dtr:compute_late_undertime';
 
     /**
      * The console command description.
