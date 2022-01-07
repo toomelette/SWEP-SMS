@@ -23,19 +23,19 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-1 col-sm-2 col-lg-2">
-                                <label>Is menu:</label>
-                                <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_menu filters">
+                                <label>Sex:</label>
+                                <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_sex filters">
                                     <option value="">All</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
                                 </select>
                             </div>
                             <div class="col-md-1 col-sm-2 col-lg-2">
-                                <label>Is dropdown:</label>
-                                <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_dropdown filters">
+                                <label>Employment Status:</label>
+                                <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_status filters">
                                     <option value="">All</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="PERM">Permanent</option>
+                                    <option value="JO">Job Order</option>
                                 </select>
                             </div>
                         </div>
@@ -91,9 +91,9 @@
         }
 
         function filter_dt() {
-            is_online = $(".filter_status").val();
-            is_active = $(".filter_account").val();
-            users_table.ajax.url("{{ route('dashboard.user.index') }}" + "?is_online=" + is_online + "&is_active=" + is_active).load();
+            var sex = $(".filter_sex").val();
+            var status = $(".filter_status").val();
+            dtr_tbl.ajax.url("{{ route('dashboard.dtr.index') }}" + "?sex=" + sex + "&status=" + status).load();
 
             $(".filters").each(function (index, el) {
                 if ($(this).val() != '') {
@@ -107,7 +107,6 @@
         }
     </script>
     <script type="text/javascript">
-        
         //-----DATATABLES-----//
         modal_loader = $("#modal_loader").parent('div').html();
         //Initialize DataTable
@@ -175,6 +174,9 @@
           }
         });
 
+        $(".filters").change(function () {
+            filter_dt();
+        })
         $("body").on("click",'.show_dtr_btn',function () {
             btn = $(this);
             load_modal2(btn);

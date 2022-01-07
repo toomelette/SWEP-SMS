@@ -43,14 +43,13 @@
       </footer>
       
     </div>
-
+    @yield('modals')
     @include('layouts.js-plugins')
     
-    <script type="text/javascript">
-      
-      @yield('scripts')
 
-    </script>
+      
+    @yield('scripts')
+
     
 
   </body>

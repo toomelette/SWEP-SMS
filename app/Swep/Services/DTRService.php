@@ -21,12 +21,11 @@ class DTRService extends BaseService
 {
     public function extract($ip){
         try{
-
             $last_uid = 0;
             $attendances = $this->fetchAttendance($ip);
             $serial_no = $this->getSerialNo($ip);
             $last_uid_db = BiometricDevices::query()->where('serial_no','=',$serial_no)->first();
-            //$last_dtr_raw = DTR::query()->where('device' ,'=',$serial_no)->orderBy('uid','desc')->first();
+
             if(!empty($last_uid_db)){
                 if($last_uid_db->last_uid == null){
                     $last_uid = 0;
@@ -34,19 +33,21 @@ class DTRService extends BaseService
                     $last_uid = $last_uid_db->last_uid;
                 }
             }
+            if(count($attendances) > 0){
+                $last_from_device = array_key_last($attendances);
+            }
+
 
             $attendances_array = [];
-            foreach ($attendances as $key => $attendance){
-                if($key > $last_uid){
-                    array_push($attendances_array,[
-                        'uid' => $attendance['uid'],
-                        'user' => $attendance['id'],
-                        'state' => $attendance['state'],
-                        'timestamp' => $attendance['timestamp'],
-                        'type' => $attendance['type'],
-                        'device' => $serial_no,
-                    ]);
-                }
+            for ($x = $last_uid+1 ; $x <= $last_from_device ; $x++){
+                array_push($attendances_array,[
+                    'uid' => $attendances[$x]['uid'],
+                    'user' => $attendances[$x]['id'],
+                    'state' => $attendances[$x]['state'],
+                    'timestamp' => $attendances[$x]['timestamp'],
+                    'type' => $attendances[$x]['type'],
+                    'device' => $serial_no,
+                ]);
             }
 
             if(count($attendances_array) > 0){
@@ -58,25 +59,22 @@ class DTRService extends BaseService
                     $cl->type = 1;
                     $cl->save();
 
-                    $last_uid_db->last_uid = array_key_last($attendances);
+                    $last_uid_db->last_uid = $last_from_device;
                     $last_uid_db->update();
-                    //CLEAR ZK TECO ATTENDANCE
-                    //$this->clearAttendance($ip);
-//                    $last_to_delete = $cl->id - 2000;
-//                    $cronlogs = CronLogs::query()->where('id','<',$last_to_delete);
-//                    $cronlogs->delete();
                     return $string;
                 }
-
-
-                return $attendances_array;
-            }else{
-                $string = 'Copied '.count($attendances_array).' data from device: '.$ip.' | No new attendance';
+                $string = 'Error doing insert';
                 $cl = new CronLogs;
                 $cl->log = $string;
                 $cl->type = 1;
                 $cl->save();
-
+                return 'Error doing insert';
+            }else{
+                $string = 'From device: '.$ip.' | No new attendance';
+                $cl = new CronLogs;
+                $cl->log = $string;
+                $cl->type = 1;
+                $cl->save();
 
                 return 'No new attendance found';
             }
@@ -143,8 +141,8 @@ class DTRService extends BaseService
     }
 
     public function compute(){
-        $latest_time_in = SuSettings::query()->where('setting','=','permanent_latest_time_in')->first()->time_value;
-        $earliest_time_out = SuSettings::query()->where('setting','=','permanent_earliest_time_out')->first()->time_value;
+        $perm_latest_time_in = SuSettings::query()->where('setting','=','permanent_latest_time_in')->first()->time_value;
+        $perm_earliest_time_out = SuSettings::query()->where('setting','=','permanent_earliest_time_out')->first()->time_value;
 
 
         $jo_latest_time_in = SuSettings::query()->where('setting','=','jo_latest_time_in')->first()->time_value;
@@ -168,6 +166,7 @@ class DTRService extends BaseService
                 }
 
                 if($employee->type == 'PERM'){
+                    $latest_time_in = $perm_latest_time_in;
                     if($dtr->am_in == null || $dtr->am_in == '' || $dtr->am_in > $latest_time_in){
                         $earliest_time_out = '18:00';
                     }else{

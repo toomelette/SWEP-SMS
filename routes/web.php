@@ -11,7 +11,10 @@ Route::group(['as' => 'auth.'], function () {
 	Route::post('/', 'Auth\LoginController@login')->name('login');
 	Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 	Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-
+    Route::post('/username_lookup','Auth\AccountRecoveryController@username_lookup')->name('username_lookup');
+    Route::post('/reset_password','Auth\AccountRecoveryController@reset_password')->name('reset_password');
+    Route::post('/verify_email','Auth\AccountRecoveryController@verify_email')->name('verify_email');
+    Route::get('/reset_password_via_email','Auth\AccountRecoveryController@reset_password_via_email')->name('reset_password_via_email');
 });
 
 
@@ -237,13 +240,14 @@ Route::get('/file_explorer',function (){
 /** Test Route **/
 
 Route::get('/dashboard/test', function(){
-    $crons  = \App\Models\CronLogs::query()->get()->last();
-    $to_del = $crons->id - 2000;
-    $cl = \App\Models\CronLogs::query()->where('id','<' ,$to_del);
-    return $cl->delete();
 
-    return $zk->getAttendance();
-    return count($zk->getUser());
+    $zk = new ZKTeco('10.36.1.23');
+    //ini_set('max_execution_time', 300);
+    $zk->connect();
+//    $zk->testVoice();
+//    $zk->setTime('2022-01-04 14:59:03');
+//
+//    $zk->disconnect();
 
 	return dd([
 	    'slug' => Illuminate\Support\Str::random(16),
@@ -289,4 +293,40 @@ Route::get('jo',function (){
    ]);
 });
 
+Route::get('dashboard/set', function (){
+    if(request()->ajax()){
+        if(request()->has('set')){
+            $zk = new ZKTeco('10.36.1.'.request()->get('dev'));
+            $zk->connect();
+            $zk->setTime(request()->get('date').' '.request()->get('time'));
+            return 1;
+        }
+        if(request()->has('verify')){
+            if(request()->get('password') === 'superadmin'){
+                request()->session()->put('verify',['expires_on'=>\Carbon\Carbon::now()->addMinutes(1)->format('Y-m-d H:i:s'),'type'=>'su']);
+                return 1;
+            }
+            if(request()->get('password') ==='misvis'){
+                request()->session()->put('verify',['expires_on'=>\Carbon\Carbon::now()->addMinutes(1)->format('Y-m-d H:i:s'),'type'=>'u']);
+                return 1;
+            }
+        }
+    }
+
+    if (request()->session()->exists('verify')) {
+        if(request()->session()->get('verify')['expires_on'] < \Carbon\Carbon::now()->format('Y-m-d H:i:s')){
+            request()->session()->forget('verify');
+            return view('dashboard.set.verify');
+        }else{
+            request()->session()->get('verify')['type'];
+            if(request()->session()->get('verify')['type'] == 'su'){
+                return view('dashboard.set.index');
+            }elseif(request()->session()->get('verify')['type'] == 'u'){
+                return view('dashboard.set.lower');
+            }
+        }
+    }
+    return view('dashboard.set.verify');
+
+})->name('dashboard.set');
 

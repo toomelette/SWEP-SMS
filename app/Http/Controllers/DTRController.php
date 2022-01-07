@@ -51,16 +51,37 @@ class DTRController extends  Controller
         if($request->ajax()){
 
 
-            $first = Employee::query()->with('rawDtrRecords')->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"PERM" as type'), 'sex','employee_no']);
+            $first = Employee::query()->with('rawDtrRecords')
+                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"PERM" as type'), 'sex','employee_no']);
+//            if($request->has('sex')){
+//                $first = $first->where('sex','=','MALE');
+//            }
 
-            $union = JoEmployees::query()->with('rawDtrRecords')->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"JO" as type'), 'sex','employee_no'])
-                ->union($first);
+            $second = JoEmployees::query()->with('rawDtrRecords')
+                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"JO" as type'), 'sex','employee_no']);
+//            if($request->has('sex')){
+//                $second = $second->where('sex','=','MALE');
+//            }
+
+            $union = $second->union($first);
 
             $query = DB::table(DB::raw("({$union->toSql()}) as x"))
                 ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', 'type', 'sex','employee_no'])
-                ->where('biometric_user_id','!=',0)
-                ->where(function ($query) {
-                });
+                ->where('biometric_user_id','!=',0);
+//                ->where(function ($query) {
+//                });
+            if($request->has('sex')){
+                if($request->sex != ''){
+                    $query = $query->where('sex','=',$request->sex);
+                }
+            }
+
+            if($request->has('status')){
+                if($request->status != ''){
+                    $query = $query->where('type','=',$request->status);
+                }
+            }
+
             if($request->has('order')){
                 if($request->columns[$request->order[0]['column']]['data'] == 'fullname'){
                     $query = $query->orderBy('lastname',$request->order[0]['dir']);
@@ -86,13 +107,19 @@ class DTRController extends  Controller
 
                     $destroy_route = "'".route("dashboard.menu.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
+                    if($data->type == 'PERM'){
+                        $route = route('dashboard.employee.index')."?q=".$data->employee_no;
+                    }
+                    if($data->type == 'JO'){
+                        $route = route('dashboard.jo_employees.index')."?q=".$data->employee_no;
+                    }
                     return '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm show_dtr_btn"  data="'.$data->slug.'" data-toggle="modal" data-target="#show_dtr_modal" title="" data-placement="left" data-original-title="View more">
                                     <i class="fa fa-list"></i>
                                 </button>
-                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_menu_btn" data-toggle="modal" data-target="#edit_menu_modal" title="" data-placement="top" data-original-title="Edit">
-                                    <i class="fa fa-edit"></i>
-                                </button>
+                                <a type="button" href="'.$route.'" target="_blank" class="btn btn-default btn-sm" title="" data-placement="top" data-original-title="View Employee">
+                                    <i class="fa fa-user"></i>
+                                </a>
                             </div>';
                 })
                 ->escapeColumns([])
@@ -254,7 +281,7 @@ class DTRController extends  Controller
         $pdf = PDF::loadView('dashboard.dtr.downloadable_dtr',$data)->setPaper('letter');
         //return view('dashboard.dtr.downloadable_dtr',$data);
         //$pdf->adminPassword('123456');
-        return $pdf->stream('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
+        return $pdf->download('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
 
     }
 

@@ -21,7 +21,9 @@ class User extends Authenticatable{
         });
 
         static::updating(function ($user){
-            $user->user_updated = Auth::user()->user_id;
+            if(!empty(Auth::user()->user_id)){
+                $user->user_updated = Auth::user()->user_id;
+            }
             $user->ip_updated = request()->ip();
         });
     }
@@ -103,6 +105,7 @@ class User extends Authenticatable{
                 biometric_user_id,
                 employee_no,
                 date_of_birth as birthday,
+                email,
                 "PERM" as type
             '));
         $jo_emplyoee = $this->hasOne('App\Models\JoEmployees', 'employee_no', 'employee_no')
@@ -113,6 +116,7 @@ class User extends Authenticatable{
                 biometric_user_id,
                 employee_no,
                 birthday,
+                email,
                 "JO" as type
             '));
 

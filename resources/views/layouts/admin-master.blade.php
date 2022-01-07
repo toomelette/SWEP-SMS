@@ -27,7 +27,7 @@
 
           @if(!empty(Auth::user()->employeeUnion))
             @if(Hash::check(Carbon::parse(Auth::user()->employeeUnion->birthday)->format('mdy'), \Illuminate\Support\Facades\Auth::user()->password))
-              <div class="row">
+              <div class="row" id="change_pass_container">
                 <div class="col-md-12">
                   <a href="#" id="change_pass_href">
                     <div class="alert alert-warning" style="margin: 1rem">
@@ -116,6 +116,13 @@
             success: function (res) {
                console.log(res);
                succeed(form,true,true);
+              Swal.fire(
+                  'Good job!',
+                  'You have just made your account more secure by changing your password',
+                  'success'
+              );
+              $("#change_pass_container").slideUp();
+
             },
             error: function (res) {
                 console.log(res);

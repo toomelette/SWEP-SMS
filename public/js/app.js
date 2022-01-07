@@ -292,7 +292,6 @@ function succeed(target_form, reset,modal){
 
 function wait_this_button(btn) {
     btn.children('i').remove();
-
 }
 
 function delete_data(slug,url){
