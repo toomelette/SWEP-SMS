@@ -148,7 +148,9 @@ class DTRService extends BaseService
         $jo_latest_time_in = SuSettings::query()->where('setting','=','jo_latest_time_in')->first()->time_value;
         $jo_earliest_time_out = SuSettings::query()->where('setting','=','jo_earliest_time_out')->first()->time_value;
 
-        $dtrs = DailyTimeRecord::query()->where('calculated','=',null)->orWhere('calculated' , '=' ,0)->get();
+        $dtrs = DailyTimeRecord::query()->where('calculated','=',null)
+            ->orWhere('calculated' , '=' ,0)
+            ->get();
         $no_of_computed = 0;
         if(!empty($dtrs)){
             foreach ($dtrs as $dtr){
@@ -206,7 +208,6 @@ class DTRService extends BaseService
                 }
                 $dtr->late = $late;
                 $dtr->undertime = $undertime;
-
                 $dtr->save();
             }
             if($no_of_computed > 0){

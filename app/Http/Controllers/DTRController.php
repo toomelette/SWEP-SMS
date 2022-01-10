@@ -35,9 +35,15 @@ class DTRController extends  Controller
     }
 
 
-    public function extract2(){
+    public function extract2(Request $request){
+        if(!$request->has('ip')){
+            return 'IP NOT PROVIDED';
+        }
 
-        $ip = '10.36.1.21';
+        if($request->ip != '21' && $request->ip != '22' && $request->ip != '23'){
+            return 'INVALID IP';
+        }
+        $ip = '10.36.1.'.$request->ip;
         return $this->dtr_service->extract($ip);
     }
 

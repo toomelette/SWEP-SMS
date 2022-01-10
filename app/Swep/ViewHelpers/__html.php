@@ -272,7 +272,7 @@ class __html{
         if($time == null || $time == ''){
             return '-';
         }else{
-            return Carbon::parse($time)->format('h:i');
+            return Carbon::parse($time)->format('H:i');
         }
 
     }
