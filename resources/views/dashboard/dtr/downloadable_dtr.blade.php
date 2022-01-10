@@ -54,6 +54,10 @@
         .incomplete{
             color : #1e5ab3;
         }
+
+
+         .dtr-table tr  td { background: url("{{asset('images/wm.png')}}");}
+
     </style>
 </head>
 <div>
@@ -64,7 +68,7 @@
 
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
-        <table class="table table-bordered table-condensed" style="font-size: 11.5px">
+        <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
             <thead>
             <tr>
                 <th rowspan="2">Date</th>
@@ -231,7 +235,7 @@
 
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
-        <table class="table table-bordered table-condensed" style="font-size: 11.5px">
+        <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
             <thead>
             <tr>
                 <th rowspan="2">Date</th>

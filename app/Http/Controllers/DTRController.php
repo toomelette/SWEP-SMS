@@ -287,7 +287,7 @@ class DTRController extends  Controller
         $pdf = PDF::loadView('dashboard.dtr.downloadable_dtr',$data)->setPaper('letter');
         //return view('dashboard.dtr.downloadable_dtr',$data);
         //$pdf->adminPassword('123456');
-        return $pdf->download('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
+        return $pdf->stream('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
 
     }
 
