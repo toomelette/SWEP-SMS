@@ -81,7 +81,7 @@ class AccountRecoveryController extends Controller
         }
         //clean previous
         $clean_ev = SuEmailVerification::query()->where('user_slug','=',$user->slug)->where('type','=',null)->delete();
-
+        $email = $request->email;
         $slug = Str::random(99);
         $user_slug = $user->slug;
         $ev = new SuEmailVerification;
@@ -108,8 +108,8 @@ class AccountRecoveryController extends Controller
             ];
             // Send your message
             try{
-                Mail::send('mailables.verify_email',$data, function($message) {
-                    $message->to('gguance221@gmail.com', '')
+                Mail::send('mailables.verify_email',$data, function($message) use($email) {
+                    $message->to($email, '')
                         ->subject('SWEP Email Verification - '.strtoupper(Str::random(5)));
                     $message->from('sys.srawebportal@gmail.com','SWEP System');
                 });
