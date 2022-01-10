@@ -51,10 +51,18 @@
                     @php($saturdays= 0)
                     @php($sundays = 0)
                     @for($a = 1 ; $a <= $days_in_this_month; $a++)
+
                         @php($date = sprintf('%02d', $a))
                         @if(isset($dtr_array[$month.'-'.$date]))
                             @php($late =  $late + $dtr_array[$month.'-'.$date]->late)
                             @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
+                            @if($dtr_array[$month.'-'.$date]->calculated == -1)
+                                @php($italic_op = '<i style="color:#e6a800">')
+                                @php($italic_cl = '</i>')
+                            @else
+                                @php($italic_op = '')
+                                @php($italic_cl = '')
+                            @endif
                             <tr class="text-center">
                                 <td>
                                     {{$date}}
@@ -65,8 +73,16 @@
                                 <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
                                 <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
                                 <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
-                                <td>{{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->late)}}</td>
-                                <td>{{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->undertime)}}</td>
+                                <td>
+                                    {!! $italic_op !!}
+                                        {{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->late)}}
+                                    {!! $italic_cl !!}
+                                </td>
+                                <td>
+                                    {!! $italic_op !!}
+                                        {{$dtr_array[$month.'-'.$date]->undertime == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->undertime)}}
+                                    {!! $italic_cl !!}
+                                </td>
                                 <td class="text-left">
                                     @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                         @php($saturdays++)
@@ -78,6 +94,9 @@
                                     @endif
                                     @if(isset($holidays[$month.'-'.$date]))
                                         <b>{{$holidays[$month.'-'.$date]['type']}}</b>
+                                    @endif
+                                    @if($dtr_array[$month.'-'.$date]->calculated == -1)
+                                        <span class="text-danger">INC</span>
                                     @endif
                                 </td>
                             </tr>
@@ -111,6 +130,7 @@
                                             @php($sundays++)
                                             SUN
                                         @endif
+
                                     </td>
                                 </tr>
                             @endif
