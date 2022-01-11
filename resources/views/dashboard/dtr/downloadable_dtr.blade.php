@@ -142,9 +142,9 @@
                                 <b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b>
                             @endif
 
-                            @if($dtr_array[$month.'-'.$date]->calculated == -1)
-                                <span class="incomplete">INC</span>
-                            @endif
+{{--                            @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}
+{{--                                <span class="incomplete">INC</span>--}}
+{{--                            @endif--}}
                         </td>
                     </tr>
                 @else
@@ -309,9 +309,9 @@
                                 <b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b>
                             @endif
 
-                            @if($dtr_array[$month.'-'.$date]->calculated == -1)
-                                <span class="incomplete">INC</span>
-                            @endif
+{{--                            @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}
+{{--                                <span class="incomplete">INC</span>--}}
+{{--                            @endif--}}
                         </td>
                     </tr>
                 @else
