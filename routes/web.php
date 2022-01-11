@@ -211,6 +211,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** DTR **/
     Route::get('holidays/fetch_google','HolidayController@fetchGoogleApi')->name('holidays.fetch_google');
     Route::resource('holidays','HolidayController');
+
+    /** Biometric Devices **/
+    Route::get('biometric_devices','BiometricDevicesController@index')->name('biometric_devices.index');
+    Route::post('biometric_devices/extract','BiometricDevicesController@extract')->name('biometric_devices.extract');
+    Route::post('biometric_devices/restart','BiometricDevicesController@restart')->name('biometric_devices.restart');
+    Route::post('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.dashboard.biometric_devices.attendances');
+
+
 });
 
 
@@ -241,9 +249,9 @@ Route::get('/file_explorer',function (){
 
 Route::get('/dashboard/test', function(){
 
-    $zk = new ZKTeco('10.36.1.23');
-    //ini_set('max_execution_time', 300);
-    $zk->connect();
+//    $zk = new ZKTeco('10.36.1.23');
+//    //ini_set('max_execution_time', 300);
+//    $zk->connect();
 //    $zk->testVoice();
 //    $zk->setTime('2022-01-04 14:59:03');
 //

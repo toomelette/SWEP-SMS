@@ -56,7 +56,7 @@
         }
 
 
-         .dtr-table tr  td { background: url("{{asset('images/wm.png')}}");}
+         .dtr-table tr  td:nth-child(2),td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7) { background: url("{{asset('images/wm.png')}}");}
 
     </style>
 </head>
