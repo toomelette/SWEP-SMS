@@ -216,7 +216,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('biometric_devices','BiometricDevicesController@index')->name('biometric_devices.index');
     Route::post('biometric_devices/extract','BiometricDevicesController@extract')->name('biometric_devices.extract');
     Route::post('biometric_devices/restart','BiometricDevicesController@restart')->name('biometric_devices.restart');
-    Route::post('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.dashboard.biometric_devices.attendances');
+    Route::post('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.attendances');
 
 
 });

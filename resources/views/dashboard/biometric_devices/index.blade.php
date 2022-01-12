@@ -23,7 +23,7 @@
                             <h3 class="widget-user-username">{{$device->name}}</h3>
                             <h5 class="widget-user-desc">S/N: {{$device->serial_no}}</h5>
                             <div class="btn-group pull-right btn-group-sm" role="group" aria-label="...">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i> Logs</button>
+                                <button type="button" class="btn btn-default logs_btn" data="{{$device->id}}" data-target="#logs_modal" data-toggle="modal"><i class="fa fa-calendar"></i> Logs</button>
                                 <button type="button" class="btn btn-default restart_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i class="fa fa-refresh"></i> Restart</button>
                                 <button type="button" class="btn btn-default extract_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i class="fa fa-sign-out"></i>Extract</button>
                             </div>
@@ -49,7 +49,7 @@
 
 
 @section('modals')
-
+{!! \App\Swep\ViewHelpers\__html::blank_modal('logs_modal','60') !!}
 @endsection
 
 @section('scripts')
@@ -159,6 +159,27 @@
                     title: result.value,
                     icon : 'success',
                 })
+            }
+        })
+    })
+    
+    $(".logs_btn").click(function () {
+        btn = $(this);
+        load_modal2(btn);
+        $.ajax({
+            url : '{{route("dashboard.biometric_devices.attendances")}}',
+            data : {id:btn.attr('data')},
+            type: 'POST',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                populate_modal2(btn,res);
+               console.log(res);
+            },
+            error: function (res) {
+                notify('Bad request.','danger');
+                console.log(res);
             }
         })
     })

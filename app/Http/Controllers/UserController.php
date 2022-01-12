@@ -45,7 +45,9 @@ class UserController extends Controller{
         $menus = Menu::with('submenu')->get();
         $users = User::query()->with(['userSubmenu','employeeUnion']);
         if(request()->ajax()){
+
             if(request()->has('draw')){
+
                 if($request->has('is_online') || $request->has('is_active')){
                     if($request->is_online == 'online'){
                         $users = $users->where('is_online',true);
@@ -62,6 +64,22 @@ class UserController extends Controller{
 
                 $users->get();
                 $dt = DataTables::of($users->with(['employee','joEmployee','employeeUnion']))
+                    ->order(function ($query) use ($request){
+                        if($request->has('order')){
+                            if($request->order[0]['column'] == 2)
+                            $query->orderBy('last_activity',$request->order[0]['dir']);
+                        }
+
+                        if($request->has('order')){
+                            if($request->order[0]['column'] == 0)
+                                $query->orderBy('username',$request->order[0]['dir']);
+                        }
+
+                        if($request->has('order')){
+                            if($request->order[0]['column'] == 3)
+                                $query->orderBy('is_activated',$request->order[0]['dir']);
+                        }
+                    })
                     ->addColumn('action', function($data){
                         if($data->is_activated == 0){
                             $a = "Activate";

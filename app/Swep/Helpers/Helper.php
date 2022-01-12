@@ -48,12 +48,12 @@ class Helper
 
     public static function dtr_type($type){
         $types = [
-            0 => 'Check in',
-            2 => 'Break out',
-            3 => 'Break in',
-            1 => 'Check out',
-            4 => 'Overtime in',
-            5 => 'Overtime Out',
+            10 => 'Check in',
+            30 => 'Break out',
+            20 => 'Break in',
+            40 => 'Check out',
+            50 => 'Overtime in',
+            60 => 'Overtime Out',
         ];
         if(!is_int($type)){
             return 'Must be integer';

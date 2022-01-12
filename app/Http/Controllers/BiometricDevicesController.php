@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\BiometricDevices;
+use App\Models\Employee;
+use App\Models\JoEmployees;
 use App\Models\UserSubmenu;
 use App\Swep\Services\DTRService;
 use Illuminate\Http\Request;
@@ -63,5 +65,46 @@ class BiometricDevicesController extends Controller
 
         $serve = $DTRService->extract($ip_address);
         return $serve;
+    }
+    public function attendances(Request $request){
+        if (!$request->has('id')){
+            abort(503,'Missing parameters');
+        }
+
+        $device = BiometricDevices::query()->find($request->id);
+        if (empty($device)){
+            abort(503,"Device not found");
+        }
+        if($device->status != 1){
+            abort(503,'Device is not available.');
+        }
+        $ip_address = $device->ip_address;
+
+        $employees_arr = [];
+
+        $perm_e = Employee::query()->select('firstname','middlename','lastname','employee_no','biometric_user_id')->where('biometric_user_id', '!=' ,0);
+        $jo_e = JoEmployees::query()->select('firstname','middlename','lastname','employee_no','biometric_user_id')->where('biometric_user_id' ,'!=' ,0);
+
+        $union = $jo_e->union($perm_e)->get();
+
+        foreach ($union as $employee){
+            $employees_arr[$employee->biometric_user_id] = $employee;
+        }
+        try{
+            $zk = new ZKTeco($ip_address);
+            $zk->connect();
+            $attendances = $zk->getAttendance();
+//            return $attendances;
+            return view('dashboard.biometric_devices.logs')->with([
+                'attendances' => $attendances,
+                'device' => $device,
+                'employees_arr' => $employees_arr,
+            ]);
+        }catch (\Exception $e){
+            return $e->getMessage();
+        }
+
+
+        return $request;
     }
 }

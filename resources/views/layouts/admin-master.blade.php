@@ -96,7 +96,7 @@
 
     <script type="text/javascript">
       {!! __js::show_hide_password() !!}
-
+      modal_loader = $("#modal_loader").parent('div').html();
       $("#change_pass_href").click(function (e) {
         e.preventDefault();
         $("#change_pass_modal").modal('show');

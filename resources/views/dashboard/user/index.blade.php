@@ -305,12 +305,16 @@
       "columnDefs":[
         {
           "targets" : 0,
-          "orderable" : false,
+          "orderable" : true,
           "class" : 'w-10p'
         },
         {
-          "targets" : [2,3],
-          "orderable" : false,
+          "targets" : [3],
+          "orderable" : true,
+          "class" : 'w-6p'
+        },
+        {
+          "targets" : 2,
           "class" : 'w-6p'
         },
         {
@@ -318,7 +322,12 @@
           "orderable" : false,
           "class" : 'action-10p'
         },
+        {
+          "targets" : 1,
+          "orderable" : false,
+        },
       ],
+      'order': [[2,'desc']],
       "responsive": false,
       "initComplete": function( settings, json ) {
         $('#tbl_loader').fadeOut(function(){

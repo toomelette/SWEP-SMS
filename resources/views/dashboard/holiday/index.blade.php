@@ -181,7 +181,7 @@
             "buttons": [
                 {!! __js::dt_buttons() !!}
             ],
-            "columnDefs":[downl
+            "columnDefs":[
                 {
                     "targets" : 0,
                     "orderable" : false,
