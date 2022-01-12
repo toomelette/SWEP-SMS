@@ -41,6 +41,7 @@ class AddBiometricDevicesMenu extends Migration
                 'is_nav' => 0,
                 'route' => 'dashboard.biometric_devices.restart',
                 'name' => 'Biometric Device Restart',
+                'nav_name' => '',
             ],
             [
                 'slug' => 'GnnUpYzByq1GtbkS',
@@ -49,6 +50,7 @@ class AddBiometricDevicesMenu extends Migration
                 'is_nav' => 0,
                 'route' => 'dashboard.biometric_devices.attendances',
                 'name' => 'Biometric Device Attendances',
+                'nav_name' => '',
             ],
             [
                 'slug' => 'yVLRLRRq2rB3Tce2',
@@ -57,6 +59,7 @@ class AddBiometricDevicesMenu extends Migration
                 'is_nav' => 0,
                 'route' => 'dashboard.biometric_devices.extract',
                 'name' => 'Biometric Device Extract',
+                'nav_name' => '',
             ],
         ]);
     }
