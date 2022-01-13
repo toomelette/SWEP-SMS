@@ -5,8 +5,9 @@
 @endsection
 
 @section('modal-body')
-    <table class="table table-condensed table-striped" id="logs_table">
-        <thead>
+    <div id="logs_container" style="display: none">
+        <table class="table table-condensed table-striped" id="logs_table" style="width: 100%;">
+            <thead>
             <tr>
                 <th style="width: 10px">#</th>
                 <th>Name</th>
@@ -14,8 +15,8 @@
                 <th>Time</th>
                 <th>Type</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @if(count($attendances) > 0)
                 @foreach($attendances as $attendance)
                     <tr>
@@ -23,7 +24,7 @@
                         @if(isset($employees_arr[$attendance['id']]))
                             <td>{{strtoupper($employees_arr[$attendance['id']]->lastname)}}, {{strtoupper($employees_arr[$attendance['id']]->firstname)}}</td>
                         @else
-                            <td><i>Unknown</i></td>
+                            <td><i>{{$attendance['id']}}</i></td>
                         @endif
 
                         <td>{{$attendance['timestamp']}}</td>
@@ -33,8 +34,14 @@
                 @endforeach
             @endif
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+    <div id="tbl_loader_log">
+        <center>
+            <img style="width: 100px" src="{{asset('images/loader.gif')}}">
+        </center>
+    </div>
 @endsection
 
 @section('modal-footer')
@@ -63,7 +70,15 @@
             }
 
         ],
-        order: [[ 2, "desc" ],[ 3, "desc" ],[ 1, "asc" ]]
+        order: [[ 2, "desc" ],[ 3, "desc" ],[ 1, "asc" ]],
+        initComplete: function( settings, json ) {
+
+            setTimeout(function () {
+                $('#tbl_loader_log').fadeOut(function(){
+                    $("#logs_container").fadeIn();
+                });
+            },500)
+        },
     });
 </script>
 @endsection

@@ -145,7 +145,7 @@
               "class" : 'action-10p'
             },
           ],
-          "responsive": false,
+          "responsive": true,
           "initComplete": function( settings, json ) {
             $('#tbl_loader').fadeOut(function(){
               $("#dtr_table_container").fadeIn();

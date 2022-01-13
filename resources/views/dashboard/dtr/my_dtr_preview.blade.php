@@ -53,6 +53,11 @@
                     @for($a = 1 ; $a <= $days_in_this_month; $a++)
 
                         @php($date = sprintf('%02d', $a))
+                        @if($month.'-'.$date == \Carbon\Carbon::now()->format('Y-m-d'))
+                            @php($mark = 'info')
+                        @else
+                            @php($mark ='')
+                        @endif
                         @if(isset($dtr_array[$month.'-'.$date]))
                             @php($late =  $late + $dtr_array[$month.'-'.$date]->late)
                             @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
@@ -63,7 +68,8 @@
                                 @php($italic_op = '')
                                 @php($italic_cl = '')
                             @endif
-                            <tr class="text-center">
+
+                            <tr class="text-center {{$mark}}">
                                 <td>
                                     {{$date}}
                                 </td>
@@ -74,14 +80,19 @@
                                 <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
                                 <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
                                 <td>
-                                    {!! $italic_op !!}
+                                    @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
+                                        {!! $italic_op !!}
                                         {{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->late)}}
-                                    {!! $italic_cl !!}
+                                        {!! $italic_cl !!}
+                                    @endif
+
                                 </td>
                                 <td>
-                                    {!! $italic_op !!}
-                                        {{$dtr_array[$month.'-'.$date]->undertime == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->undertime)}}
-                                    {!! $italic_cl !!}
+                                    @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
+                                        {!! $italic_op !!}
+                                            {{$dtr_array[$month.'-'.$date]->undertime == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->undertime)}}
+                                        {!! $italic_cl !!}
+                                    @endif
                                 </td>
                                 <td class="text-left">
                                     @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
@@ -102,14 +113,14 @@
                             </tr>
                         @else
                             @if(isset($holidays[$month.'-'.$date]))
-                                <tr class="text-center">
+                                <tr class="text-center {{$mark}}">
                                     <td>
                                         {{$date}}
                                     </td>
                                     <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} </b> (<i>{{$holidays[$month.'-'.$date]['name']}}</i>)</td>
                                 </tr>
                             @else
-                                <tr class="text-center">
+                                <tr class="text-center {{$mark}}">
                                     <td>
                                         {{$date}}
                                     </td>
