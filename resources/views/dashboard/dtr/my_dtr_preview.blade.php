@@ -25,130 +25,133 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
-                <table class="table table-bordered table-condensed">
-                    <thead>
-                    <tr>
-                        <th rowspan="2" style="vertical-align : middle;text-align:center;">Date</th>
-                        <th colspan="2" class="text-center">Morning</th>
-                        <th colspan="2" class="text-center">Afternoon</th>
-                        <th colspan="2" class="text-center">Overtime</th>
-                        <th rowspan="2" style="vertical-align : middle;text-align:center;">Late</th>
-                        <th rowspan="2" style="vertical-align : middle;text-align:center;">Undertime</th>
-                        <th rowspan="2" style="vertical-align : middle;text-align:center;">Remarks</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center" style="min-width: 40px">IN</th>
-                        <th class="text-center" style="min-width: 40px">OUT</th>
-                        <th class="text-center" style="min-width: 40px">IN</th>
-                        <th class="text-center" style="min-width: 40px">OUT</th>
-                        <th class="text-center" style="min-width: 40px">IN</th>
-                        <th class="text-center" style="min-width: 40px">OUT</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @php($late = 0)
-                    @php($undertime = 0)
-                    @php($saturdays= 0)
-                    @php($sundays = 0)
-                    @for($a = 1 ; $a <= $days_in_this_month; $a++)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                        <tr>
+                            <th rowspan="2" style="vertical-align : middle;text-align:center;">Date</th>
+                            <th colspan="2" class="text-center">Morning</th>
+                            <th colspan="2" class="text-center">Afternoon</th>
+                            <th colspan="2" class="text-center">Overtime</th>
+                            <th rowspan="2" style="vertical-align : middle;text-align:center;">Late</th>
+                            <th rowspan="2" style="vertical-align : middle;text-align:center;">Undertime</th>
+                            <th rowspan="2" style="vertical-align : middle;text-align:center;">Remarks</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" style="min-width: 40px">IN</th>
+                            <th class="text-center" style="min-width: 40px">OUT</th>
+                            <th class="text-center" style="min-width: 40px">IN</th>
+                            <th class="text-center" style="min-width: 40px">OUT</th>
+                            <th class="text-center" style="min-width: 40px">IN</th>
+                            <th class="text-center" style="min-width: 40px">OUT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php($late = 0)
+                        @php($undertime = 0)
+                        @php($saturdays= 0)
+                        @php($sundays = 0)
+                        @for($a = 1 ; $a <= $days_in_this_month; $a++)
 
-                        @php($date = sprintf('%02d', $a))
-                        @if($month.'-'.$date == \Carbon\Carbon::now()->format('Y-m-d'))
-                            @php($mark = 'info')
-                        @else
-                            @php($mark ='')
-                        @endif
-                        @if(isset($dtr_array[$month.'-'.$date]))
-                            @php($late =  $late + $dtr_array[$month.'-'.$date]->late)
-                            @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
-                            @if($dtr_array[$month.'-'.$date]->calculated == -1)
-                                @php($italic_op = '<i style="color:#e6a800">')
-                                @php($italic_cl = '</i>')
+                            @php($date = sprintf('%02d', $a))
+                            @if($month.'-'.$date == \Carbon\Carbon::now()->format('Y-m-d'))
+                                @php($mark = 'info')
                             @else
-                                @php($italic_op = '')
-                                @php($italic_cl = '')
+                                @php($mark ='')
                             @endif
+                            @if(isset($dtr_array[$month.'-'.$date]))
+                                @php($late =  $late + $dtr_array[$month.'-'.$date]->late)
+                                @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
+                                @if($dtr_array[$month.'-'.$date]->calculated == -1)
+                                    @php($italic_op = '<i style="color:#e6a800">')
+                                    @php($italic_cl = '</i>')
+                                @else
+                                    @php($italic_op = '')
+                                    @php($italic_cl = '')
+                                @endif
 
-                            <tr class="text-center {{$mark}}">
-                                <td>
-                                    {{$date}}
-                                </td>
-                                <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}</td>
-                                <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}</td>
-                                <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}</td>
-                                <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
-                                <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
-                                <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
-                                <td>
-                                    @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
-                                        {!! $italic_op !!}
-                                        {{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->late)}}
-                                        {!! $italic_cl !!}
-                                    @endif
+                                <tr class="text-center {{$mark}}">
+                                    <td>
+                                        {{$date}}
+                                    </td>
+                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}</td>
+                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}</td>
+                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}</td>
+                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
+                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
+                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
+                                    <td>
+                                        @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
+                                            {!! $italic_op !!}
+                                            {{$dtr_array[$month.'-'.$date]->late == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->late)}}
+                                            {!! $italic_cl !!}
+                                        @endif
 
-                                </td>
-                                <td>
-                                    @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
-                                        {!! $italic_op !!}
+                                    </td>
+                                    <td>
+                                        @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
+                                            {!! $italic_op !!}
                                             {{$dtr_array[$month.'-'.$date]->undertime == 0 ? '' : \App\Swep\Helpers\Helper::convertToHoursMins($dtr_array[$month.'-'.$date]->undertime)}}
-                                        {!! $italic_cl !!}
-                                    @endif
-                                </td>
-                                <td class="text-left">
-                                    @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
-                                        @php($saturdays++)
-                                        SATURDAY
-                                    @endif
-                                    @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 0)
-                                        @php($sundays++)
-                                        SUNDAY
-                                    @endif
-                                    @if(isset($holidays[$month.'-'.$date]))
-                                        <b>{{$holidays[$month.'-'.$date]['type']}}</b>
-                                    @endif
-                                    @if($dtr_array[$month.'-'.$date]->calculated == -1)
-                                        <span class="text-danger">INC</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @else
-                            @if(isset($holidays[$month.'-'.$date]))
-                                <tr class="text-center {{$mark}}">
-                                    <td>
-                                        {{$date}}
+                                            {!! $italic_cl !!}
+                                        @endif
                                     </td>
-                                    <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} </b> (<i>{{$holidays[$month.'-'.$date]['name']}}</i>)</td>
-                                </tr>
-                            @else
-                                <tr class="text-center {{$mark}}">
-                                    <td>
-                                        {{$date}}
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                     <td class="text-left">
                                         @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                             @php($saturdays++)
-                                            SAT
+                                            SATURDAY
                                         @endif
                                         @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 0)
                                             @php($sundays++)
-                                            SUN
+                                            SUNDAY
                                         @endif
-
+                                        @if(isset($holidays[$month.'-'.$date]))
+                                            <b>{{$holidays[$month.'-'.$date]['type']}}</b>
+                                        @endif
+                                        @if($dtr_array[$month.'-'.$date]->calculated == -1)
+                                            <span class="text-danger">INC</span>
+                                        @endif
                                     </td>
                                 </tr>
+                            @else
+                                @if(isset($holidays[$month.'-'.$date]))
+                                    <tr class="text-center {{$mark}}">
+                                        <td>
+                                            {{$date}}
+                                        </td>
+                                        <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} </b> (<i>{{$holidays[$month.'-'.$date]['name']}}</i>)</td>
+                                    </tr>
+                                @else
+                                    <tr class="text-center {{$mark}}">
+                                        <td>
+                                            {{$date}}
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-left">
+                                            @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
+                                                @php($saturdays++)
+                                                SAT
+                                            @endif
+                                            @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 0)
+                                                @php($sundays++)
+                                                SUN
+                                            @endif
+
+                                        </td>
+                                    </tr>
+                                @endif
                             @endif
-                        @endif
-                    @endfor
-                    </tbody>
-                </table>
+                        @endfor
+                        </tbody>
+                    </table>
+                </div>
+
 
                 <div class="row">
                     <div class="col-md-6">

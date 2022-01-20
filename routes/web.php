@@ -216,7 +216,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('biometric_devices','BiometricDevicesController@index')->name('biometric_devices.index');
     Route::post('biometric_devices/extract','BiometricDevicesController@extract')->name('biometric_devices.extract');
     Route::post('biometric_devices/restart','BiometricDevicesController@restart')->name('biometric_devices.restart');
-    Route::post('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.attendances');
+    Route::get('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.attendances');
 
 
 });
@@ -309,6 +309,12 @@ Route::get('dashboard/set', function (){
             $zk->setTime(request()->get('date').' '.request()->get('time'));
             return 1;
         }
+        if (request()->has('reset')){
+            $zk = new ZKTeco('10.36.1.'.request()->get('dev'));
+            $zk->connect();
+            $zk->setTime(\Carbon\Carbon::now()->format('Y-m-d H:i:s'));
+            return 1;
+        }
         if(request()->has('verify')){
             if(request()->get('password') === 'superadmin'){
                 request()->session()->put('verify',['expires_on'=>\Carbon\Carbon::now()->addMinutes(1)->format('Y-m-d H:i:s'),'type'=>'su']);
@@ -334,6 +340,8 @@ Route::get('dashboard/set', function (){
             }
         }
     }
+
+
     return view('dashboard.set.verify');
 
 })->name('dashboard.set');

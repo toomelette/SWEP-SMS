@@ -9,30 +9,15 @@
         <table class="table table-condensed table-striped" id="logs_table" style="width: 100%;">
             <thead>
             <tr>
-                <th style="width: 10px">#</th>
+
                 <th>Name</th>
-                <th>Date</th>
+                <th>Action</th>
                 <th>Time</th>
                 <th>Type</th>
             </tr>
             </thead>
             <tbody>
-            @if(count($attendances) > 0)
-                @foreach($attendances as $attendance)
-                    <tr>
-                        <td>{{$attendance['uid']}}</td>
-                        @if(isset($employees_arr[$attendance['id']]))
-                            <td>{{strtoupper($employees_arr[$attendance['id']]->lastname)}}, {{strtoupper($employees_arr[$attendance['id']]->firstname)}}</td>
-                        @else
-                            <td><i>{{$attendance['id']}}</i></td>
-                        @endif
 
-                        <td>{{$attendance['timestamp']}}</td>
-                        <td>{{$attendance['timestamp']}}</td>
-                        <td>{{\App\Swep\Helpers\Helper::dtr_type($attendance['type'])}}</td>
-                    </tr>
-                @endforeach
-            @endif
 
             </tbody>
         </table>
@@ -50,36 +35,70 @@
 
 @section('scripts')
 <script type="text/javascript">
-    logs_tbl = $("#logs_table").DataTable({
-        columnDefs: [
-            {
-            targets: 2,
-            render: function (data, type, row) {//data
-                return moment(data).format('MMM. DD,YYYY');
-                },
-            },
-            {
-                targets: 3,
-                render: function (data, type, row) {//data
-                    return moment(data).format('hh:mm:ss');
-                },
-            },
-            {
-                targets: 0,
-                visible: false,
-            }
 
-        ],
-        order: [[ 2, "desc" ],[ 3, "desc" ],[ 1, "asc" ]],
-        initComplete: function( settings, json ) {
+    $(document).ready(function () {
+        //-----DATATABLES-----//
+        //Initialize DataTable
+        logs_active = '';
+        logs_tbl = $("#logs_table").DataTable({
+            'dom' : 'lBfrtip',
+            "processing": true,
+            "serverSide": true,
+            "ajax" : '{{route("dashboard.biometric_devices.attendances")}}?device={{$device->serial_no}}',
+            "columns": [
+                {data: 'fullname',name:'x.fullname'},
+                {data: 'type' },
+                {data: 'timestamp' },
+                {data: 'user' },
 
-            setTimeout(function () {
+            ],
+            "buttons": [
+                {!! __js::dt_buttons() !!}
+            ],
+            "columnDefs":[
+                {
+                    "targets" : 3,
+                    "visible" : false,
+                },
+                {
+                    targets: 2,
+                    render : function (row) {
+                        return moment(row).format("MMM. DD, YY | hh:mm A");;
+                    }
+                }
+            ],
+            "order":[[2,'desc']],
+            "responsive": false,
+            "initComplete": function( settings, json ) {
                 $('#tbl_loader_log').fadeOut(function(){
                     $("#logs_container").fadeIn();
                 });
-            },500)
-        },
-    });
+            },
+            "language":
+                {
+                    "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
+                },
+            "drawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="modal"]').tooltip();
+                if(logs_active != ''){
+                    $("#logs_table #"+logs_active).addClass('success');
+                }
+            }
+        });
+
+        style_datatable("#logs_table");
+
+        //Need to press enter to search
+        $('#logs_table_filter input').unbind();
+        $('#logs_table_filter input').bind('keyup', function (e) {
+            if (e.keyCode == 13) {
+                logs_tbl.search(this.value).draw();
+            }
+        });
+    })
+
+
 </script>
 @endsection
 

@@ -11,9 +11,9 @@
                                     <div class="form-group">
                                         <label>Select</label>
                                         <select class="form-control" name="dev" required>
-                                            <option>21</option>
-                                            <option>22</option>
-                                            <option selected>23</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                            <option selected value="23">23</option>
                                         </select>
                                     </div>
                                 </div>
@@ -29,7 +29,10 @@
                                         <input type="time" name="time" class="form-control" required>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <button type="button" id="reset_btn" class="btn btn-warning pull-left">Reset</button>
+                                </div>
+                                <div class="col-md-6">
                                     <button class="btn btn-primary pull-right" type="submit">GO</button>
                                 </div>
                             </div>
@@ -56,6 +59,25 @@
                if(res == 1){
                    alert('Success');
                }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+    })
+
+    $("#reset_btn").click(function () {
+        var dev = $("#set_form select[name='dev']").val();
+        $.ajax({
+            url : '{{route("dashboard.set")}}?reset=1&dev='+dev,
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                if(res == 1){
+                    alert('Success');
+                }
             },
             error: function (res) {
                 console.log(res);
