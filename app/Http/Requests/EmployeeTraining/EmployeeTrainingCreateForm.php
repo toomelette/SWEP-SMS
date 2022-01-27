@@ -24,8 +24,8 @@ class EmployeeTrainingCreateForm extends FormRequest{
 
             'title'=>'required|string|max:250',
             'type'=>'nullable|string|max:45',
-            'date_from'=>'nullable|date_format:"m/d/Y"',
-            'date_to'=>'nullable|date_format:"m/d/Y"',
+            'date_from'=>'nullable|date_format:"Y-m-d"',
+            'date_to'=>'nullable|date_format:"Y-m-d"',
             'hours'=>'required|int|max:100000',
             'conducted_by'=>'nullable|string|max:250',
             'venue'=>'nullable|string|max:250',

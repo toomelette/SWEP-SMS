@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Employee\BiometricUserIdFormRequest;
 use App\Models\Employee;
+use App\Models\EmployeeServiceRecord;
+use App\Models\EmployeeTraining;
 use App\Swep\Services\EmployeeService;
 use App\Swep\Services\EmployeeTrainingService;
 use App\Swep\Services\EmployeeServiceRecordService;
@@ -23,7 +25,10 @@ use App\Http\Requests\EmployeeTraining\EmployeeTrainingPrintFilterForm;
 
 use App\Http\Requests\EmployeeMatrix\EmployeeMatrixFormRequest;
 use App\Http\Requests\EmployeeMatrix\EmployeeMatrixPrintRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Yajra\DataTables\DataTables;
 
 
 class EmployeeController extends Controller{
@@ -45,13 +50,52 @@ class EmployeeController extends Controller{
         $this->employee_matrix = $employee_matrix;
 
     }
-	
+
 
 
 
     // Employee Master
 	public function index(EmployeeFilterRequest $request){
-
+        if($request->ajax() && $request->has('draw')){
+            $employees = Employee::query();
+            return DataTables::of($employees)
+                ->addColumn('action', function ($data){
+                    $destroy_route = "'".route("dashboard.employee.destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+                    $button = '<div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm view_employee_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#show_employee_modal" title="View more" data-placement="left">
+                                        <i class="fa fa-file-text"></i>
+                                    </button>
+                                   
+                                    <a  href="'. route('dashboard.employee.edit', $data->slug).'" type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_jo_employee_btn"  title="Edit" data-placement="top">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                   <div class="btn-group btn-group-sm" role="group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                          <li><a href="#" data-toggle="modal" data-target="#service_records_modal" class="service_records_btn" data="'.$data->slug.'">Service Records</a></li>
+                                          <li><a href="#" data-toggle="modal" data-target="#trainings_modal" class="trainings_btn" data="'.$data->slug.'">Trainings</a></li>
+                                          <li><a href="#" data-toggle="modal" data-target="#matrix_modal" class="matrix_btn" data="'.$data->slug.'">Matrix</a></li>
+                                          <li><a href="#" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'">Biometric User ID</a></li>
+                                        </ul>
+                                    </div>
+                                </div>';
+                    return $button;
+                })->editColumn('biometric_user_id',function ($data){
+                    if($data->biometric_user_id == 0){
+                        return 'N/A';
+                    }
+                    return $data->biometric_user_id;
+                })
+                ->setRowId('slug')
+                ->toJson();
+        }
+        return view('dashboard.employee.index');
     	return $this->employee->fetch($request);
     
     }
@@ -117,13 +161,59 @@ class EmployeeController extends Controller{
 
     }
 
-
+    private function findEmployeeBySlug($slug){
+        $employee = Employee::query()->where('slug','=',$slug)->first();
+        if(empty($employee)){
+            abort(503,'Employee not found.');
+        }
+        return $employee;
+    }
 
 
     // Service Record
     public function serviceRecord($slug){
+        if(request()->has('draw')){
+            $employee = $this->findEmployeeBySlug($slug);
+            $sr = EmployeeServiceRecord::query()->where('employee_no','=',$employee->employee_no);
+            
 
-        return $this->employee_sr->index($slug);
+            return DataTables::of($sr)
+                ->addColumn('action',function ($data){
+                    $destroy_route = "'".route("dashboard.employee.service_record_destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+
+                    return '<div class="btn-group btn-group-xs" role="toolbar" aria-label="...">
+                                <button type="button" class="btn btn-default edit_sr_btn" data-toggle="modal" data-target="#edit_sr_modal" data="'.$data->slug.'"><i class="fa fa-edit"></i></button>
+                                <button data="'.$data->slug.'" type="button" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </div>';
+                })
+                ->editColumn('salary',function ($data){
+                    return number_format($data->salary,2);
+                })
+                ->setRowId('slug')
+                ->toJson();
+        }
+
+        if(request()->has('add')){
+            $employee = $this->findEmployeeBySlug($slug);
+            return view('dashboard.employee.create_service_record')->with(['employee'=>$employee]);
+        }
+
+        if(request()->has('edit')){
+            $employee = $this->findEmployeeBySlug($slug);
+            $sr = EmployeeServiceRecord::query()->where('slug','=',\request('sr'))->first();
+            if(empty($sr)){
+                abort(503,'Service Record not found');
+            }
+            return view('dashboard.employee.edit_service')->with(
+                [
+                    'employee'=>$employee,
+                    'sr' => $sr,
+                ]
+            );
+        }
+        $employee = $this->findEmployeeBySlug($slug);
+        return view('dashboard.employee.service_record')->with(['employee'=>$employee]);
 
     }
 
@@ -131,27 +221,38 @@ class EmployeeController extends Controller{
 
 
     public function serviceRecordStore(EmployeeServiceRecordCreateForm $request, $slug){
+        //slug is for employee
+        $sr = $this->employee_sr->store($request, $slug);
+        if($sr){
+            return $sr->only('slug');
+        }
 
-        return $this->employee_sr->store($request, $slug);
+        abort(503, 'Error saving data.');
 
     }
 
 
 
 
-    public function serviceRecordUpdate(EmployeeServiceRecordEditForm $request, $emp_slug, $emp_sr_slug){
-        
-        return $this->employee_sr->update($request, $emp_slug, $emp_sr_slug); 
+    public function serviceRecordUpdate(EmployeeServiceRecordCreateForm $request, $slug){
+        //slug is for sr
+        $sr = $this->employee_sr->update($request, $slug);
+        if($sr){
+            return $sr->only('slug');
+        }
 
+        abort(503, 'Error saving data.');
     }
 
 
 
 
     public function serviceRecordDestroy($slug){
-        
-        return $this->employee_sr->destroy($slug);
-
+        $sr = $this->employee_sr->destroy($slug);
+        if($sr){
+            return 1;
+        }
+        abort(503,'Error deleting data.');
     }
 
 
@@ -168,6 +269,51 @@ class EmployeeController extends Controller{
     // Trainings
     public function training($slug){
 
+        if(request()->ajax() && request()->has('draw')){
+            $employee = $this->findEmployeeBySlug($slug);
+            $trainings = EmployeeTraining::query()->where('employee_no','=',$employee->employee_no);
+
+            return DataTables::of($trainings)
+                ->addColumn('action',function ($data){
+                    $destroy_route = "'".route("dashboard.employee.training_destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+
+                    return '<div class="btn-group btn-group-xs" role="toolbar" aria-label="...">
+                                <button type="button" class="btn btn-default edit_training_btn" data-toggle="modal" data-target="#edit_training_modal" data="'.$data->slug.'"><i class="fa fa-edit"></i></button>
+                                <button data="'.$data->slug.'" type="button" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </div>';
+                })->editColumn('date_to',function ($data){
+                    return Carbon::parse($data->date_to)->format('m/d/Y');
+                })
+                ->editColumn('date_from',function ($data){
+                    return Carbon::parse($data->date_from)->format('m/d/Y');
+                })
+                ->setRowId('slug')
+                ->toJson();
+        }
+
+        if(request()->ajax() && request()->has('add')){
+            $employee = $this->findEmployeeBySlug($slug);
+            return view('dashboard.employee.create_training')->with([
+                'employee' => $employee,
+            ]);
+        }
+
+        if(request()->ajax() && request()->has('edit')){
+            $employee = $this->findEmployeeBySlug($slug);
+            $training = EmployeeTraining::query()->where('slug','=',\request('training'))->first();
+            if(empty($training)){
+                abort(503, 'Training not found');
+            }
+            return view('dashboard.employee.edit_training')->with([
+                'employee' => $employee,
+                'training' => $training,
+            ]);
+        }
+        $employee = $this->findEmployeeBySlug($slug);
+        return view('dashboard.employee.training')->with([
+            'employee' => $employee,
+        ]);
         return $this->employee_trng->index($slug);
 
     }
@@ -177,33 +323,43 @@ class EmployeeController extends Controller{
 
     public function trainingStore(EmployeeTrainingCreateForm $request, $slug){
 
-        return $this->employee_trng->store($request, $slug);
+        $emp_trng = $this->employee_trng->store($request, $slug);
+        if($emp_trng){
+            return $emp_trng->only('slug');
+        }
 
+        abort(503,'Error saving data.');
     }
 
 
 
 
-    public function trainingUpdate(EmployeeTrainingEditForm $request, $emp_slug, $emp_trng_slug){
-        
-        return $this->employee_trng->update($request, $emp_slug, $emp_trng_slug); 
-
+    public function trainingUpdate(EmployeeTrainingCreateForm $request, $slug){
+        //slug is for training
+        $emp_trng = $this->employee_trng->update($request, $slug);
+        if($emp_trng){
+            return $emp_trng->only('slug');
+        }
+        abort(503, 'Error updating data.');
     }
 
 
 
 
     public function trainingDestroy($slug){
-        
-        return $this->employee_trng->destroy($slug);
 
+        $emp_trng = $this->employee_trng->destroy($slug);
+        if($emp_trng){
+            return 1;
+        }
+        abort(503,'Error deleting data.');
     }
 
 
 
 
     public function trainingPrint(EmployeeTrainingPrintFilterForm $request, $slug){
-        
+
         return $this->employee_trng->print($request, $slug);
 
     }
@@ -212,25 +368,41 @@ class EmployeeController extends Controller{
 
     // Matrix
     public function matrix($slug){
+        $employee = $this->findEmployeeBySlug($slug);
+        return view('dashboard.employee.edit_matrix')->with([
+           'employee'=>$employee,
+        ]);
 
-        return $this->employee_matrix->index($slug);
-
+//        return $this->employee_matrix->index($slug);
     }
 
 
 
 
     public function matrixUpdate(EmployeeMatrixFormRequest $request, $slug){
-        
-        return $this->employee_matrix->update($request, $slug);
+        $employee = $this->findEmployeeBySlug($slug);
+        $emp_matrix = $this->employee_matrix->update($request, $slug);
+        if($emp_matrix){
 
+            $view = View::make('dashboard.employee.matrix_show')->with([
+                'employee' => $employee,
+                'col' => 2,
+            ]);
+            $sections = $view->renderSections();
+            $modal_body = $sections['modal-body'];
+            return $modal_body;
+        }
+        abort(503,'Error saving data.');
     }
 
 
 
 
     public function matrixShow($slug){
-        
+        $employee = $this->findEmployeeBySlug($slug);
+        return view('dashboard.employee.matrix_show')->with([
+            'employee' => $employee,
+        ]);
         return $this->employee_matrix->show($slug);
 
     }
@@ -272,7 +444,9 @@ class EmployeeController extends Controller{
     }
 
     public function update_bm_uid(BiometricUserIdFormRequest $request){
-        $employee = Employee::query()->where('slug','=', $request->slug)->first();
+
+        $employee = $this->findEmployeeBySlug($request->employee);
+
         if(!empty($employee)){
             $employee->biometric_user_id = $request->biometric_user_id;
             if($employee->update()){

@@ -130,6 +130,35 @@
             }
         })
       })
+
+      $("#sidenav_selector").awselect({
+        background: "#535c61",
+        placeholder_color: "#ffffff",
+        active_background:"#21526e",
+        placeholder_active_color: "#fff",
+        option_color:"#fff",
+        immersive: true
+      });
+      $("#sidenav_selector").change(function () {
+        th = $(this);
+        th_selected = th.val();
+        $.ajax({
+            url : '{{route("dashboard.sidenav.change")}}',
+            data : {selected : th_selected},
+            type: 'POST',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+               if(res == 1){
+                 window.location.reload();
+               }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+      })
     </script>
 
     @yield('scripts')

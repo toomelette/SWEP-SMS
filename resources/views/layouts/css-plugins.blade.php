@@ -26,6 +26,8 @@
 <link type="text/css" rel="stylesheet" href="{{ asset('css/font.css') }}">
 <link type="text/css" rel="stylesheet" href="{{ asset('css/product-sans.css') }}">
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/datatables/responsive/responsive.dataTables.min.css') }}">
+
 
 {{-- Charts --}}	
 <link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">
@@ -44,3 +46,5 @@
 
 {{-- INTROJS--}}
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/intro.js-4.3.0/package/introjs.css')}}">
+
+<link type="text/css" rel="stylesheet" href="{{asset('template/plugins/awesome-select/package/css/awselect.min.css')}}">

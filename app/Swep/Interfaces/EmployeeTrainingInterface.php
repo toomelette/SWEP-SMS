@@ -12,7 +12,7 @@ interface EmployeeTrainingInterface {
 
 	public function store($request, $slug);
 	
-	public function update($request, $emp_slug, $emp_trng_slug);
+	public function update($request, $slug);
 	
 	public function destroy($slug);
 

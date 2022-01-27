@@ -43,8 +43,7 @@ class EmployeeServiceRecordService extends BaseService{
 
         $employee_sr = $this->employee_sr_repo->store($request, $slug);
 
-        $this->event->fire('employee_service_record.store', $employee_sr);
-        return redirect()->route('dashboard.employee.service_record', $slug);
+        return $employee_sr;
 
     }
 
@@ -53,10 +52,11 @@ class EmployeeServiceRecordService extends BaseService{
 
 
 
-    public function update($request, $emp_slug, $emp_sr_slug){
+    public function update($request, $slug){
 
-        $employee_sr = $this->employee_sr_repo->update($request, $emp_slug, $emp_sr_slug);
+        $employee_sr = $this->employee_sr_repo->update($request, $slug);
 
+        return $employee_sr;
         $this->event->fire('employee_service_record.update', $employee_sr);
         return redirect()->route('dashboard.employee.service_record', $emp_slug);
 
@@ -70,9 +70,9 @@ class EmployeeServiceRecordService extends BaseService{
     public function destroy($slug){
         
         $employee_sr = $this->employee_sr_repo->destroy($slug);
-
-        $this->event->fire('employee_service_record.destroy', $employee_sr);
-        return redirect()->back();
+        return $employee_sr;
+//        $this->event->fire('employee_service_record.destroy', $employee_sr);
+//        return redirect()->back();
 
     }
 

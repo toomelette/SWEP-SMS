@@ -116,23 +116,22 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
 
 
 
-    public function update($request, $emp_slug, $emp_trng_slug){
-        
-        $employee = $this->employee_repo->findBySlug($emp_slug);
-        $employee_trng = $this->findBySlug($emp_trng_slug);
-        $employee_trng->title = $request->e_title;
-        $employee_trng->type = $request->e_type;
-        $employee_trng->date_from = $this->__dataType->date_parse($request->e_date_from);
-        $employee_trng->date_to = $this->__dataType->date_parse($request->e_date_to);
-        $employee_trng->hours = $request->e_hours;
-        $employee_trng->conducted_by = $request->e_conducted_by;
-        $employee_trng->venue = $request->e_venue;
-        $employee_trng->remarks = $request->e_remarks;
-        $employee_trng->is_relevant = $this->__dataType->string_to_boolean($request->e_is_relevant);
+    public function update($request, $slug){
+
+        $employee_trng = $this->findBySlug($slug);
+        $employee_trng->title = $request->title;
+        $employee_trng->type = $request->type;
+        $employee_trng->date_from = $this->__dataType->date_parse($request->date_from);
+        $employee_trng->date_to = $this->__dataType->date_parse($request->date_to);
+        $employee_trng->hours = $request->hours;
+        $employee_trng->conducted_by = $request->conducted_by;
+        $employee_trng->venue = $request->venue;
+        $employee_trng->remarks = $request->remarks;
+        $employee_trng->is_relevant = $this->__dataType->string_to_boolean($request->is_relevant);
         $employee_trng->updated_at = $this->carbon->now();
         $employee_trng->ip_updated = request()->ip();
         $employee_trng->user_updated = $this->auth->user()->user_id;
-        $employee_trng->save();
+        $employee_trng->update();
 
         return $employee_trng;
 

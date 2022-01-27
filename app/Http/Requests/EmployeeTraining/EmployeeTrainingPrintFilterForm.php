@@ -23,8 +23,8 @@ class EmployeeTrainingPrintFilterForm extends FormRequest{
 
         return [
 
-            'df'=>'nullable|date_format:"m/d/Y"',
-            'dt'=>'nullable|date_format:"m/d/Y"',
+            'df'=>'nullable|date_format:"Y-m-d"',
+            'dt'=>'nullable|date_format:"Y-m-d"',
         
         ];
     

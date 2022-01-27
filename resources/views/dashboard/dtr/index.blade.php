@@ -44,26 +44,27 @@
             </div>
             <div class="box-body">
                 <div id="dtr_table_container" style="display: none">
+                    <div class="table-responsive" >
+                        <table class="table table-bordered table-striped table-hover" id="dtr_table" style="width: 100%">
+                            <thead>
+                            <tr class="bg-green">
+                                <th>Name</th>
+                                <th>BM Id</th>
+                                <th class="w-40">Employee No</th>
+                                <th class="th-10">Status</th>
+                                <th class="th-10">Sex</th>
+                                <th class="th-10">Last attendance</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-
-                    <table class="table table-bordered table-striped table-hover" id="dtr_table" style="width: 100% !important; font-size: 14px">
-                        <thead>
-                        <tr class="bg-green">
-                            <th>Name</th>
-                            <th>BM Id</th>
-                            <th class="w-40">Employee No</th>
-                            <th class="th-10">Status</th>
-                            <th class="th-10">Sex</th>
-                            <th class="th-10">Last attendance</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
+
             </div>
             <div id="tbl_loader">
                 <center>
@@ -71,7 +72,8 @@
                 </center>
             </div>
             <!-- /.box-body -->
-        </div>
+
+            </div>
         </div>
     </section>
 

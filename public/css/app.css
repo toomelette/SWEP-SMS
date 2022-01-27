@@ -1,4 +1,6 @@
-
+.treeview{
+    z-index: 3;
+}
 /* Loader */
 #loader{
     position:fixed;

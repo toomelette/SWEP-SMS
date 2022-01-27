@@ -194,10 +194,16 @@
             <div class="col-sm-2 no-padding">
               <div class="col-sm-12 no-padding">
                 <div class="col-sm-6">
-                  <span style="font-size:10px;">{{ $data->date_from }}</span>
+                  <span style="font-size:10px;">
+{{--                    {{ \Carbon\Carbon::parse($data->date_from)->format('m/d/Y') }}--}}
+                    {{$data->date_from}}
+                  </span>
                 </div>
                 <div class="col-sm-6">
-                  <span style="font-size:10px;">{{ $data->date_to }}</span>
+                  <span style="font-size:10px;">
+                    {{$data->date_to}}
+{{--                    {{ \Carbon\Carbon::parse($data->date_to)->format('m/d/Y') }}--}}
+                  </span>
                 </div>
               </div>
             </div>
@@ -536,10 +542,16 @@
               <div class="col-sm-2 no-padding">
                 <div class="col-sm-12 no-padding">
                   <div class="col-sm-6">
-                    <span style="font-size:10px;">{{ $data->date_from }}</span>
+                    <span style="font-size:10px;">
+{{--                      {{ \Carbon\Carbon::parse($data->date_from)->format('m/d/Y') }}--}}
+                      {{$data->date_from}}
+                    </span>
                   </div>
                   <div class="col-sm-6">
-                    <span style="font-size:10px;">{{ $data->date_to }}</span>
+                    <span style="font-size:10px;">
+{{--                      {{ \Carbon\Carbon::parse($data->date_to)->format('m/d/Y') }}--}}
+                      {{$data->date_to}}
+                    </span>
                   </div>
                 </div>
               </div>

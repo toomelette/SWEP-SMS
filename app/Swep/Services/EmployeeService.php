@@ -262,9 +262,8 @@ class EmployeeService extends BaseService{
     }
 
 
-
-
-
-
+    public function findEmployeeBySlug($slug){
+        return $slug;
+    }
 
 }

@@ -23,12 +23,13 @@ Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->mi
 
 
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
-    'middleware' => ['check.user_status', 'last_activity']
+    'middleware' => ['check.user_status', 'last_activity','sidenav_mw']
 ], function () {
     Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
     Route::post('/dtr/download','DTRController@download')->name('dtr.download');
     Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
     Route::post('dashboard/changePass','UserController@changePassword')->name('all.changePass');
+    Route::post('/change_side_nav','SidenavController@change')->name('sidenav.change');
 });
 
 /** Dashboard **/
@@ -107,13 +108,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 	
 	Route::get('/employee/service_record/{slug}', 'EmployeeController@serviceRecord')->name('employee.service_record');
 	Route::post('/employee/service_record/store/{slug}', 'EmployeeController@serviceRecordStore')->name('employee.service_record_store');
-	Route::put('/employee/service_record/update/{slug}/{emp_sr_slug}', 'EmployeeController@serviceRecordUpdate')->name('employee.service_record_update');
+	Route::put('/employee/service_record/update/{slug}', 'EmployeeController@serviceRecordUpdate')->name('employee.service_record_update');
 	Route::delete('/employee/service_record/destroy/{slug}', 'EmployeeController@serviceRecordDestroy')->name('employee.service_record_destroy');
 	Route::get('/employee/service_record/print/{slug}', 'EmployeeController@serviceRecordPrint')->name('employee.service_record_print');
 
 	Route::get('/employee/training/{slug}', 'EmployeeController@training')->name('employee.training');
 	Route::post('/employee/training/store/{slug}', 'EmployeeController@trainingStore')->name('employee.training_store');
-	Route::put('/employee/training/update/{slug}/{emp_trng_slug}', 'EmployeeController@trainingUpdate')->name('employee.training_update');
+	Route::put('/employee/training/update/{slug}', 'EmployeeController@trainingUpdate')->name('employee.training_update');
 	Route::delete('/employee/training/destroy/{slug}', 'EmployeeController@trainingDestroy')->name('employee.training_destroy');
 	Route::get('/employee/training/print/{slug}', 'EmployeeController@trainingPrint')->name('employee.training_print');
 

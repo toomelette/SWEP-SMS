@@ -284,7 +284,7 @@ function succeed(target_form, reset,modal){
     }
 
     if(modal == true){
-        $(form).parents('.modal').modal('hide');
+        $(target_form).parents('.modal').modal('hide');
     }
     unmark_required(target_form);
     remove_loading_btn(target_form);

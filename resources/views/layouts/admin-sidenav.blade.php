@@ -1,4 +1,18 @@
 <aside class="main-sidebar">
+    <style>
+        .front_face{
+            max-height: 50px;
+        }
+        .front_face .content{
+            padding-top: 0;
+        }
+        #awselect_sidenav_selector .icon{
+            top: 10px;
+        }
+        .awselect_bg{
+            z-index: 5;
+        }
+    </style>
   <section class="sidebar">
     <div class="user-panel">
       <div class="pull-left image">
@@ -15,7 +29,11 @@
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
+    <style>
+
+    </style>
     <ul class="sidebar-menu" data-widget="tree">
+
 
 
       @if(Auth::check())
@@ -25,47 +43,115 @@
                     <span>Home</span>
                 </a>
             </li>
+
+
         @if(count($tree) > 0)
+            @php($tree_copy = $tree)
+            @php(ksort($tree_copy))
+            @if(count($tree_copy) > 1)
+                    <li class="header">NAVIGATION:</li>
+                    <li class="">
+                        <div>
+                            <select class="form-control" id="sidenav_selector" name="abc" style="" data-placeholder="Select a navigation">
+                                @foreach($tree_copy as $category=>$menus)
+                                    @if($category == \Illuminate\Support\Facades\Auth::user()->sidenav)
+                                        <option value="{{$category}}" selected>{!! __html::sidenav_labeler($category) !!}</option>
+                                    @else
+                                        <option value="{{$category}}">{!! __html::sidenav_labeler($category) !!}</option>
+                                    @endif
+                                @endforeach
+                                @if(\Illuminate\Support\Facades\Auth::user()->sidenav == '')
+                                    <option value="" selected>ALL</option>
+                                @else
+                                    <option value="">ALL</option>
+                                @endif
+                            </select>
+                        </div>
+                    </li>
 
+
+            @endif
             @foreach($tree as $category=>$menus)
-                @if(count($menus) > 0)
-                    @if($category != 'U')
-                        <li class="header">{!! __html::sidenav_labeler($category) !!}</li>
-                    @endif
-                @endif
-                @foreach($menus as $menu_id => $menu_content)
-                    @if($menu_content['menu_obj']->is_menu == true)
-                        @if($menu_content['menu_obj']->is_dropdown == false)
-{{--                                <li class="{!! Route::currentRouteNamed($user_menu->route) ? 'active' : '' !!}">--}}
-{{--                                    <a href="{{ route($user_menu->route) }}">--}}
-{{--                                        <i class="fa {{ $user_menu->icon }}"></i> <span>{{ $user_menu->name }}</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-                        @else
-                                <li class="treeview ">
-                                    <a href="#">
-                                        <i class="fa {{$menu_content['menu_obj']->icon}}"></i> <span>{{$menu_content['menu_obj']->name}}</span>
-                                        <span class="pull-right-container">
-                                          <i class="fa fa-angle-left pull-right"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        @if(count($menu_content['submenus']) > 0)
-                                            @foreach($menu_content['submenus'] as $submenu)
-                                                @if($submenu->is_nav == true)
-
-                                                    <li class="{!! Route::currentRouteNamed($submenu->route) ? 'active tree_active' : '' !!}">
-                                                        <a href="{{ route($submenu->route) }}"><i class="fa fa-caret-right"></i> {{ $submenu->nav_name }}</a>
-                                                    </li>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </ul>
-
-                                </li>
+                @if(\Illuminate\Support\Facades\Auth::user()->sidenav == '')
+                        @if(count($menus) > 0)
+                            @if($category != 'U')
+                                <li class="header">{!! __html::sidenav_labeler($category) !!}</li>
+                            @endif
                         @endif
-                    @endif
-                @endforeach
+                        @foreach($menus as $menu_id => $menu_content)
+                            @if($menu_content['menu_obj']->is_menu == true)
+                                @if($menu_content['menu_obj']->is_dropdown == false)
+                                    {{--                                <li class="{!! Route::currentRouteNamed($user_menu->route) ? 'active' : '' !!}">--}}
+                                    {{--                                    <a href="{{ route($user_menu->route) }}">--}}
+                                    {{--                                        <i class="fa {{ $user_menu->icon }}"></i> <span>{{ $user_menu->name }}</span>--}}
+                                    {{--                                    </a>--}}
+                                    {{--                                </li>--}}
+                                @else
+                                    <li class="treeview ">
+                                        <a href="#">
+                                            <i class="fa {{$menu_content['menu_obj']->icon}}"></i> <span>{{$menu_content['menu_obj']->name}}</span>
+                                            <span class="pull-right-container">
+                                              <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            @if(count($menu_content['submenus']) > 0)
+                                                @foreach($menu_content['submenus'] as $submenu)
+                                                    @if($submenu->is_nav == true)
+
+                                                        <li class="{!! Route::currentRouteNamed($submenu->route) ? 'active tree_active' : '' !!}">
+                                                            <a href="{{ route($submenu->route) }}"><i class="fa fa-caret-right"></i> {{ $submenu->nav_name }}</a>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </ul>
+
+                                    </li>
+                                @endif
+                            @endif
+                        @endforeach
+
+                @elseif($category == \Illuminate\Support\Facades\Auth::user()->sidenav)
+                            @if(count($menus) > 0)
+                                @if($category != 'U')
+                                    <li class="header">{!! __html::sidenav_labeler($category) !!}</li>
+                                @endif
+                            @endif
+                            @foreach($menus as $menu_id => $menu_content)
+                                @if($menu_content['menu_obj']->is_menu == true)
+                                    @if($menu_content['menu_obj']->is_dropdown == false)
+                                        {{--                                <li class="{!! Route::currentRouteNamed($user_menu->route) ? 'active' : '' !!}">--}}
+                                        {{--                                    <a href="{{ route($user_menu->route) }}">--}}
+                                        {{--                                        <i class="fa {{ $user_menu->icon }}"></i> <span>{{ $user_menu->name }}</span>--}}
+                                        {{--                                    </a>--}}
+                                        {{--                                </li>--}}
+                                    @else
+                                        <li class="treeview ">
+                                            <a href="#">
+                                                <i class="fa {{$menu_content['menu_obj']->icon}}"></i> <span>{{$menu_content['menu_obj']->name}}</span>
+                                                <span class="pull-right-container">
+                                              <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                @if(count($menu_content['submenus']) > 0)
+                                                    @foreach($menu_content['submenus'] as $submenu)
+                                                        @if($submenu->is_nav == true)
+
+                                                            <li class="{!! Route::currentRouteNamed($submenu->route) ? 'active tree_active' : '' !!}">
+                                                                <a href="{{ route($submenu->route) }}"><i class="fa fa-caret-right"></i> {{ $submenu->nav_name }}</a>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+
+                                        </li>
+                                    @endif
+                                @endif
+                            @endforeach
+                @endif
             @endforeach
         @endif
       @endif

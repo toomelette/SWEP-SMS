@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'check.user_status' => \App\Http\Middleware\CheckUserStatus::class,
         'check.user_route' => \App\Http\Middleware\CheckUserRouteExist::class,
         'last_activity' => \App\Http\Middleware\LastActivity::class,
+        'sidenav_mw' => \App\Http\Middleware\sidenav_mw::class,
     ];
 }

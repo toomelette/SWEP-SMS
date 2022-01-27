@@ -38,6 +38,8 @@
 
 <script type="text/javascript" src="{{ asset('template/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{asset('template/plugins/datatables/responsive/dataTables.responsive.min.js')}}"></script>
+
 
 <script type="text/javascript" src="{{asset('template/plugins/dt-moment/date-time-moment.js')}}"></script>
 {{-- Charts --}}
@@ -71,3 +73,6 @@
 
 {{--INTRO--}}
 <script type="text/javascript" src="{{asset('template/plugins/intro.js-4.3.0/package/intro.js')}}"></script>
+
+
+<script type="text/javascript" src="{{asset('template/plugins/awesome-select/package/js/awselect.min.js')}}"></script>

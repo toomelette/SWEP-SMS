@@ -44,14 +44,18 @@ class EmployeeMatrixService extends BaseService{
 
         $employee = $this->employee_repo->findBySlug($slug);
 
-        if (!empty($employee->employeeMatrix)) {
+        if (!empty($employee->employeeMatrix())) {
             $employee->employeeMatrix()->delete();
+
         }
+
 
         $employee_matrix = $this->employee_matrix_repo->store($request, $employee->employee_no);
 
-        $this->event->fire('employee_matrix.update', $employee);    
-        return redirect()->back();
+        return $employee_matrix;
+
+//        $this->event->fire('employee_matrix.update', $employee);
+//        return redirect()->back();
 
     }
 

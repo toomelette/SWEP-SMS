@@ -107,9 +107,9 @@
                                         @if(isset($holidays[$month.'-'.$date]))
                                             <b>{{$holidays[$month.'-'.$date]['type']}}</b>
                                         @endif
-                                        @if($dtr_array[$month.'-'.$date]->calculated == -1)
-                                            <span class="text-danger">INC</span>
-                                        @endif
+{{--                                        @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}
+{{--                                            <span class="text-danger">INC</span>--}}
+{{--                                        @endif--}}
                                     </td>
                                 </tr>
                             @else

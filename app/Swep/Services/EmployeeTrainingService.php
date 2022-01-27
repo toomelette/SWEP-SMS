@@ -42,8 +42,7 @@ class EmployeeTrainingService extends BaseService{
 
         $employee_trng = $this->employee_trng_repo->store($request, $slug);
 
-        $this->event->fire('employee_training.store', $employee_trng);
-        return redirect()->route('dashboard.employee.training', $slug);
+        return $employee_trng;
 
     }
 
@@ -52,12 +51,12 @@ class EmployeeTrainingService extends BaseService{
 
 
 
-    public function update($request, $emp_slug, $emp_trng_slug){
+    public function update($request, $slug){
         
-        $employee_trng = $this->employee_trng_repo->update($request, $emp_slug, $emp_trng_slug);
-
-        $this->event->fire('employee_training.update', $employee_trng);
-        return redirect()->route('dashboard.employee.training', $emp_slug);
+        $employee_trng = $this->employee_trng_repo->update($request, $slug);
+        return $employee_trng;
+//        $this->event->fire('employee_training.update', $employee_trng);
+//        return redirect()->route('dashboard.employee.training', $emp_slug);
 
     }
 
@@ -70,8 +69,7 @@ class EmployeeTrainingService extends BaseService{
 
         $employee_trng = $this->employee_trng_repo->destroy($slug);
 
-        $this->event->fire('employee_training.destroy', $employee_trng);
-        return redirect()->back();
+        return $employee_trng;
 
     }
 
