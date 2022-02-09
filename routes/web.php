@@ -53,6 +53,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 	/** DISBURSEMENT VOUCHERS **/
 	Route::get('/disbursement_voucher/user_index', 'DisbursementVoucherController@userIndex')->name('disbursement_voucher.user_index');
 	Route::get('/disbursement_voucher/print/{slug}/{type}', 'DisbursementVoucherController@print')->name('disbursement_voucher.print');
+    Route::get('/disbursement_voucher/print_preview/{slug}', 'DisbursementVoucherController@printPreview')->name('disbursement_voucher.print_preview');
 	Route::patch('/disbursement_voucher/set_no/{slug}', 'DisbursementVoucherController@setNo')->name('disbursement_voucher.set_no_post');
 	Route::post('/disbursement_voucher/confirm_check/{slug}', 'DisbursementVoucherController@confirmCheck')->name('disbursement_voucher.confirm_check');
 	Route::get('/disbursement_voucher/{slug}/save_as', 'DisbursementVoucherController@saveAs')->name('disbursement_voucher.save_as');
@@ -218,7 +219,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('biometric_devices/extract','BiometricDevicesController@extract')->name('biometric_devices.extract');
     Route::post('biometric_devices/restart','BiometricDevicesController@restart')->name('biometric_devices.restart');
     Route::get('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.attendances');
-
+    Route::post('biometric_devices/clear_attendance','BiometricDevicesController@clear_attendance')->name('biometric_devices.clear_attendance');
 
 });
 
@@ -300,6 +301,12 @@ Route::get('jo',function (){
        'user_menus_records ' => '',
 
    ]);
+});
+
+Route::get('check_device',function (\App\Swep\Services\DTRService $DTRService){
+    $zk = new ZKTeco('10.36.1.22');
+    $zk->connect();
+    return $DTRService->clearAttendance('10.36.1.23');
 });
 
 Route::get('dashboard/set', function (){

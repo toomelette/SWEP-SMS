@@ -3,6 +3,7 @@
 namespace App\Swep\ViewHelpers;
 
 use App\Swep\Helpers\Helper;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Carbon;
 use URL;
 use Input;
@@ -240,16 +241,21 @@ class __html{
 
     }
 
-    public static function blank_modal($id, $size, $padding = null){
+    public static function blank_modal($id, $size, $padding = null,$static = false){
+        if($static === true){
+            $st = 'data-backdrop="static"';
+        }else{
+            $st = '';
+        }
         if(is_numeric($size)){
-            return '<div class="modal fade" id="'.$id.'">
+            return '<div class="modal fade" id="'.$id.'" '.$st.'>
 				    <div class="modal-dialog" style="width:'.$size.'%; padding-top:'.$padding.'">
 				      <div class="modal-content">
 				        </div>
 				    </div>
 				  </div>';
         }else{
-            return '<div class="modal fade" id="'.$id.'">
+            return '<div class="modal fade" id="'.$id.'" '.$st.'>
 				    <div class="modal-dialog modal-'.$size.'" style="padding-top:'.$padding.'">
 				      <div class="modal-content">
 				        </div>
@@ -257,6 +263,16 @@ class __html{
 				  </div>';
         }
 
+    }
+
+    public static function options_obj($obj,$label = null, $value = null){
+        $options = '';
+        if(!empty($obj)){
+            foreach ($obj as $data){
+                $options = $options.'<option value="'.$data->$value.'">'.$data->$label.'</option>';
+            }
+            return $options;
+        }
     }
 
     public static function modal_loader(){

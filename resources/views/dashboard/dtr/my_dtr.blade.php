@@ -51,8 +51,13 @@
                                                 <div class="row">
                                                 @foreach($months as $month => $null)
                                                     <div class="col-md-{{$col}}">
-                                                        <button type="button" class="btn btn-default col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
-                                                            {{\Carbon\Carbon::parse($month)->format('F')}}
+                                                        @if(\Carbon\Carbon::parse($month)->format('Y-m') == \Carbon\Carbon::now()->format('Y-m'))
+                                                            @php($class = 'btn-success')
+                                                        @else
+                                                            @php($class = 'btn-default')
+                                                        @endif
+                                                        <button type="button" class="btn {{$class}} col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
+                                                            {{strtoupper(\Carbon\Carbon::parse($month)->format('M'))}}
                                                         </button>
                                                     </div>
                                                 @endforeach

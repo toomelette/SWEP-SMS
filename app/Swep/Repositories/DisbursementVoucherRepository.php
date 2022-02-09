@@ -138,7 +138,6 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->certified_by_position =  $request->certified_by_position;
         $disbursement_voucher->approved_by = $request->approved_by;
         $disbursement_voucher->approved_by_position = $request->approved_by_position;
-        $disbursement_voucher->updated_at = $this->carbon->now();
         $disbursement_voucher->ip_updated = request()->ip();
         $disbursement_voucher->user_updated = $this->auth->user()->user_id;
         $disbursement_voucher->save();
@@ -170,7 +169,9 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
     public function setNo($request, $slug){
-
+        if($request->dv_no == null){
+            $request->dv_no  = '';
+        }
         $disbursement_voucher = $this->findBySlug($slug);
         $disbursement_voucher->dv_no = $request->dv_no;
         $disbursement_voucher->processed_at = $this->carbon->now();

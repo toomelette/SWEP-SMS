@@ -35,7 +35,7 @@
                                 <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_status filters">
                                     <option value="">All</option>
                                     <option value="PERM">Permanent</option>
-                                    <option value="JO">Job Order</option>
+                                    <option value="COS">Contract of Service</option>
                                 </select>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
             {
               "targets" : 6,
               "orderable" : false,
-              "class" : 'action-10p'
+              "class" : 'action2'
             },
           ],
           "responsive": true,

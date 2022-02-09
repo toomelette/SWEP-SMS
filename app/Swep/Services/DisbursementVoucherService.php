@@ -60,9 +60,9 @@ class DisbursementVoucherService extends BaseService{
     public function store($request){
 
         $disbursement_voucher = $this->dv_repo->store($request);
-
-        $this->event->fire('dv.store', $disbursement_voucher);
-        return redirect()->back();
+        return $disbursement_voucher;
+//        $this->event->fire('dv.store', $disbursement_voucher);
+//        return redirect()->back();
 
     }
 
@@ -74,9 +74,9 @@ class DisbursementVoucherService extends BaseService{
     public function update($request, $slug){
 
         $disbursement_voucher = $this->dv_repo->update($request, $slug);
-
-        $this->event->fire('dv.update', $disbursement_voucher);
-        return redirect()->back();
+        return $disbursement_voucher;
+//        $this->event->fire('dv.update', $disbursement_voucher);
+//        return redirect()->back();
 
     }
 
@@ -112,9 +112,9 @@ class DisbursementVoucherService extends BaseService{
     public function destroy($slug){
 
         $disbursement_voucher = $this->dv_repo->destroy($slug);
-
-        $this->event->fire('dv.destroy', $disbursement_voucher);
-        return redirect()->back();
+        return $disbursement_voucher;
+//        $this->event->fire('dv.destroy', $disbursement_voucher);
+//        return redirect()->back();
 
     }
 
@@ -144,9 +144,7 @@ class DisbursementVoucherService extends BaseService{
     public function setNo($request, $slug){
 
         $disbursement_voucher = $this->dv_repo->setNo($request, $slug);
-
-        $this->event->fire('dv.set_no', $disbursement_voucher);
-        return redirect()->back();
+        return $disbursement_voucher;
 
     }
 

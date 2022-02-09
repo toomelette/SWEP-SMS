@@ -91,7 +91,13 @@ class DisbursementVoucher extends Model{
         return $this->hasOne('App\Models\FundSource', 'fund_source_id', 'fund_source_id');
     }
 
+    public function creator(){
+        return $this->hasOne("App\Models\User","user_id","user_created");
+    }
 
+    public function updater(){
+        return $this->hasOne("App\Models\User","user_id","user_updated");
+    }
 
 
 

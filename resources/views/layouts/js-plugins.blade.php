@@ -76,3 +76,25 @@
 
 
 <script type="text/javascript" src="{{asset('template/plugins/awesome-select/package/js/awselect.min.js')}}"></script>
+
+{{--AUTONUM--}}
+<script type="text/javascript" src="{{asset('template/plugins/autonum/main.js')}}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        autonum_settings = {
+            currencySymbol : '',
+            decimalCharacter : '.',
+            digitGroupSeparator : ',',
+        };
+
+        $(".priceformat").each(function(){
+            new AutoNumeric(this, autonum_settings);
+        })
+
+
+
+    })
+
+
+</script>

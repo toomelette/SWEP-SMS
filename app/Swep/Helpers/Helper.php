@@ -206,4 +206,8 @@ class Helper
 
         return$values[$val];
     }
+
+    public static function sanitizeAutonum($num){
+        return str_replace(',','',$num);
+    }
 }

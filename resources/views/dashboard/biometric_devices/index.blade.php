@@ -23,6 +23,7 @@
                             <h3 class="widget-user-username">{{$device->name}}</h3>
                             <h5 class="widget-user-desc">S/N: {{$device->serial_no}}</h5>
                             <div class="btn-group pull-right btn-group-sm" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default clear_attendance_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b><br> <span class='text-danger text-strong'>THIS ACTION CANNOT BE UNDONE!</span> <br> <span class='text-info'>Please enter your password to continue:</span> "><i class="fa fa-eraser"></i> Clear Attendance</button>
                                 <button type="button" class="btn btn-default logs_btn" data="{{$device->id}}" data-target="#logs_modal" data-toggle="modal"><i class="fa fa-calendar"></i> Logs</button>
                                 <button type="button" class="btn btn-default restart_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i class="fa fa-refresh"></i> Restart</button>
                                 <button type="button" class="btn btn-default extract_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i class="fa fa-sign-out"></i>Extract</button>
@@ -191,5 +192,50 @@
             }
         })
     })
+
+    $(".clear_attendance_btn").click(function () {
+        btn = $(this);
+        var id = btn.attr('data');
+        Swal.fire({
+            title: 'Clear attendance from device?',
+            input: 'password',
+            html: btn.attr('text'),
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: '<i class="fa fa-eraser"></i> Clear Attendance',
+            showLoaderOnConfirm: true,
+            preConfirm: (password) => {
+                return $.ajax({
+                    url : '{{route('dashboard.biometric_devices.clear_attendance')}}',
+                    type: 'POST',
+                    data: {'id':id, 'password':password},
+                    headers: {
+                        {!! __html::token_header() !!}
+                    },
+                })
+                    .then(response => {
+                        return  response;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        Swal.showValidationMessage(
+                            'Error : '+ error.responseJSON.message,
+                        )
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(result);
+                Swal.fire({
+                    title: result.value,
+                    icon : 'success',
+                })
+            }
+        })
+    })
+
 </script>
 @endsection

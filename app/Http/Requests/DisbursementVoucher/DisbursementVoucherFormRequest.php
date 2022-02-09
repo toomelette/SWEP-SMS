@@ -33,10 +33,10 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'project_code'=>'nullable|string|max:45',
             'explanation'=>'required',
             'amount'=>'required|string|max:13',
-            'certified_by' => 'required|string|max:90',
-            'certified_by_position' => 'required|string|max:90',
-            'approved_by' => 'required|string|max:90',
-            'approved_by_position' => 'required|string|max:90',
+            'certified_by' => 'required|string|max:35',
+            'certified_by_position' => 'required|string|max:35',
+            'approved_by' => 'required|string|max:42',
+            'approved_by_position' => 'required|string|max:42',
 
         ];
 

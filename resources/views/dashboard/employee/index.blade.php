@@ -13,7 +13,7 @@
         </div>
         <div class="box-body">
             <div id="employees_table_container" style="display: none">
-                <table class="table table-bordered table-striped table-hover" id="employees_table" style="width: 100% !important">
+                <table class="table table-bordered table-striped table-hover" id="employees_table" style="width: 100%">
                     <thead>
                     <tr class="">
                         <th >Full Name</th>
@@ -180,10 +180,10 @@
           "targets" : 5,
           "orderable" : false,
           "searchable": false,
-          "class" : 'action-10p'
+          "class" : 'action4'
         },
       ],
-      "responsive": false,
+      "responsive": true,
       "initComplete": function( settings, json ) {
         $('#tbl_loader').fadeOut(function(){
           $("#employees_table_container").fadeIn();
@@ -301,6 +301,7 @@
         let employee = $(this).attr('data');
         Swal.fire({
             title: 'Enter Biometric User ID:',
+            html: 'Employee: <b>'+$(this).attr('employee')+'</b>',
             input: 'text',
             inputAttributes: {
                 autocapitalize: 'off',

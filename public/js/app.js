@@ -31,6 +31,8 @@ $(document).ready(function($){
     $(".tree_active").parents('.treeview').addClass('menu-open');
     $(".tree_active").parents('li').addClass('active');
     $(".tree_active").parents('.treeview-menu').slideDown();
+
+
 });
 
 

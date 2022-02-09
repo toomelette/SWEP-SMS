@@ -126,12 +126,20 @@ ol.example li.placeholder:before {
 .w-10p{
     width: 10%;
 }
+
+.act3{
+    width: 150px;
+}
+
 .w-15p{
     width: 15%;
 }
 
 .w-30p{
     width: 30%;
+}
+.w-40p{
+    width: 40%;
 }
 
 .w-12p{
@@ -186,3 +194,121 @@ ol.example li.placeholder:before {
 .slimScrollBar{
     background: white !important;
 }
+
+
+.col-sm-3half, .col-sm-8half, .col-sm-1half {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 768px) {
+    .action4{
+        width: 10%;
+    }
+}
+
+@media (min-width: 600px) {
+    .action4{
+        width: 100%;
+    }
+    .action2{
+          width: 100%;
+      }
+}
+
+
+
+@media (min-width: 895px) {
+    .action4{
+        width: 30%;
+    }
+    .action2{
+        width: 23%;
+    }
+}
+
+@media (min-width: 920px) {
+    .action4{
+        width: 23%;
+    }
+    .action2{
+        width: 19%;
+    }
+}
+
+@media (min-width: 980px) {
+    .action4{
+        width: 21%;
+    }
+    .action2{
+        width: 17%;
+    }
+}
+
+
+
+@media (min-width: 1055px) {
+    .action4{
+        width: 19%;
+    }
+    .action2{
+        width: 12%;
+    }
+}
+
+
+
+@media (min-width: 1140px) {
+    .action4{
+        width: 17%;
+    }
+    .action2{
+        width: 10%;
+    }
+}
+
+
+@media (min-width: 1250px) {
+    .action4{
+        width: 15%;
+    }
+    .action2{
+        width: 9%;
+    }
+}
+
+
+@media (min-width: 1400px) {
+    .action4{
+        width: 13%;
+    }
+    .action2{
+        width: 8%;
+    }
+}
+
+@media (min-width: 1530px) {
+    .action4{
+        width: 12%;
+    }
+    .action2{
+        width: 7%;
+    }
+}
+
+@media (min-width: 1760px) {
+    .action4{
+        width: 10%;
+    }
+    .action2{
+        width: 7%;
+    }
+}
+
+.bs-example{
+    padding: 10px;
+    border: 1px solid #c5c5c5;
+}
+

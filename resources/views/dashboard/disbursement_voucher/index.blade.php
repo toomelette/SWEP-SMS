@@ -1,244 +1,583 @@
-<?php
-
-  $table_sessions = [ 
-                      Session::get('DV_SET_NO_SUCCESS_SLUG'),
-                      Session::get('DV_CONFIRM_CHECK_SUCCESS_SLUG'),
-                    ];
-
-  $appended_requests = [
-                        'q'=> Request::get('q'), 
-                        'sort' => Request::get('sort'),
-                        'direction' => Request::get('direction'),
-                        'e' => Request::get('e'),
-
-                        'fs' => Request::get('fs'), 
-                        'pi' => Request::get('pi'),
-                        'dn' => Request::get('dn'),
-                        'dun' => Request::get('dun'),
-                        'pc' => Request::get('pc'),
-                        'df' => Request::get('df'),
-                        'dt' => Request::get('dt'),
-                      ];
-
-  $span_user_not_exist = '<span class="text-red"><b>User does not exist!</b></span>';
-  
-?>
-
-
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
-    
-  <section class="content-header">
-      <h1>Disbursement Voucher List</h1>
-  </section>
+    <style>
+        .select2-container{
+            width: 100% !important;
+        }
+    </style>
+    <section class="content-header">
+        <h1>Disbursement Vouchers</h1>
+    </section>
 
-  <section class="content">
-    
-    {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.disbursement_voucher.index') }}">
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">List of Disbursement Vouchers</h3>
+                <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add_dv_modal"><i class="fa fa-plus"></i> Create</button>
+            </div>
+            <div class="panel">
+                <div class="box-header with-border">
+                    <h4 class="box-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#advanced_filters" aria-expanded="true" class="">
+                            <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
+                    <div class="box-body">
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <button class="btn btn-xs btn-default pull-right" id="clear_filter">Clear filters</button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <form id="filter_form">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Department:</label>
+                                    <select name="department_name"  class="form-control dt_filter filter_sex filters select22">
+                                        <option value="">None</option>
+                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_departments_all,'name','name') !!}
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Unit:</label>
+                                    <select name="department_unit_name"  class="form-control dt_filter filter_sex filters select22">
+                                        <option value="">None</option>
+                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_department_units_all,'description','name') !!}
+                                    </select>
+                                </div>
 
-    {{-- Advance Filters --}}
-    {!! __html::filter_open() !!}
+                                <div class="col-md-2">
+                                    <label>Project Code:</label>
+                                    <select name="project_code"  class="form-control dt_filter filter_sex filters select22">
+                                        <option value="">None</option>
+                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_project_codes_all,'project_code','project_code') !!}
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Fund Source:</label>
+                                    <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">
+                                        <option value="">None</option>
+                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_fund_source_all,'description','fund_source_id') !!}
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Station:</label>
+                                    <select name="project_id"  class="form-control dt_filter filter_sex filters">
+                                        <option value="">None</option>
+                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_projects_all,'project_address','project_id') !!}
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label style="margin-bottom: 2px;">
+                                                Filter Date
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <input type="checkbox" name="filter_date" class="dt_filter" id="filter_date_checkbox">
+                                                </div>
+                                                <input name="date_range" type="text" class="form-control pull-right dt_filter" id="date_range" autocomplete="off" disabled>
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-      {!! __form::select_dynamic_for_filter(
-        '3', 'dn', 'Department', old('dn'), $global_departments_all, 'name', 'name', 'submit_dv_filter', 'select2', 'style="width:100%;"'
-      ) !!}
-
-      {!! __form::select_dynamic_for_filter(
-        '3', 'dun', 'Unit', old('dun'), $global_department_units_all, 'name', 'description', 'submit_dv_filter', 'select2', 'style="width:100%;"'
-      ) !!}
-
-      {!! __form::select_dynamic_for_filter(
-        '2', 'pc', 'Project Code', old('pc'), $global_project_codes_all, 'project_code', 'project_code', 'submit_dv_filter', 'select2', 'style="width:100%;"'
-      ) !!}
-
-      {!! __form::select_dynamic_for_filter(
-        '2', 'fs', 'Fund Source', old('fs'), $global_fund_source_all, 'fund_source_id', 'description', 'submit_dv_filter', '', ''
-      ) !!}
-
-      {!! __form::select_dynamic_for_filter(
-        '2', 'pi', 'Station', old('pi'), $global_projects_all, 'project_id', 'project_address', 'submit_dv_filter', '', ''
-      ) !!}
-
-      <div class="col-md-12 no-padding">
-        
-        <h5>Date Filter : </h5>
-
-        {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
-
-        {!! __form::datepicker('3', 'dt',  'To', old('dt'), '', '') !!}
-
-        <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
-
-      </div>
-
-    {!! __html::filter_close('submit_dv_filter') !!}
-
-
-    <div class="box" id="pjax-container" style="overflow-x:auto;">
-
-      {{-- Table Search --}}        
-      <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.disbursement_voucher.index')) !!}
-      </div>
-
-    {{-- Form End --}}  
-    </form>
-
-      {{-- Table Grid --}}        
-      <div class="box-body no-padding">
-        <table class="table table-hover">
-          <tr>
-            <th style="width:250px;">@sortablelink('payee', 'Payee')</th>
-            <th>@sortablelink('dv_no', 'DV No.')</th>
-            <th style="width:600px;">Explanation</th>
-            <th>@sortablelink('date', 'Date')</th>
-            <th>@sortablelink('amount', 'Amount')</th>
-            <th style="width: 150px">Action</th>
-          </tr>
-          @foreach($disbursement_vouchers as $data) 
-            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td id="mid-vert">{{ Str::limit($data->payee, 30)  }}</td>
-              <td id="mid-vert">
-                @if($data->dv_no == null)
-                  <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" class="text-red" style="text-decoration:underline;">
-                    <b>Not Set!</b>
-                  </a> 
-                @else
-                  <a href="#" id="dv_set_no_link" data-value="{{ $data->dv_no }}" data-url="{{ route('dashboard.disbursement_voucher.set_no_post', $data->slug) }}" style="text-decoration:underline;">
-                    <b>{{ $data->dv_no }}</b>
-                  </a>
-                @endif
-              </td>
-              <td id="mid-vert">{!! Str::limit(strip_tags($data->explanation), 75)  !!}</td>
-              <td id="mid-vert">{{ __dataType::date_parse($data->date, 'M d, Y') }}</td>
-              <td id="mid-vert">{{ number_format($data->amount, 2) }}</td>
-
-              <td id="mid-vert"> 
-                <select id="action" class="form-control input-md">
-                  <option value="">Select</option>
-                  <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.show', $data->slug) }}">Print</option>
-                  <option data-type="1" data-url="{{ route('dashboard.disbursement_voucher.edit', $data->slug) }}">Edit</option>
-                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.disbursement_voucher.destroy', $data->slug) }}">Delete</option>
-                </select>
-              </td>
-
-            </tr>
-            @endforeach
-        </table>
-      </div>
-
-      @if($disbursement_vouchers->isEmpty())
-        <div style="padding :5px;">
-          <center><h4>No Records found!</h4></center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div id="dvs_table_container" style="display: none">
+                    <table class="table table-bordered table-striped table-hover" id="dvs_table" style="width: 100%">
+                        <thead>
+                        <tr class="">
+                            <th >Payee</th>
+                            <th>DV No.</th>
+                            <th >Explanation</th>
+                            <th >Date</th>
+                            <th >Amount</th>
+                            <th class="action">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tbl_loader">
+                    <center>
+                        <img style="width: 100px" src="{{asset('images/loader.gif')}}">
+                    </center>
+                </div>
+            </div>
+            <!-- /.box-body -->
         </div>
-      @endif
+    </section>
+    {{--                DATALIST--}}
+    @php
+        $certified_bys = App\Models\DisbursementVoucher::select('certified_by')->groupBy('certified_by')->get();
+    @endphp
+    <datalist id="certified_list">
+        @if($certified_bys->count() > 0)
+            @foreach($certified_bys as $certified_by)
+                <option>{{$certified_by->certified_by}}</option>
+            @endforeach
+        @endif
+    </datalist>
 
-      <div class="box-footer">
-        {!! __html::table_counter($disbursement_vouchers) !!}
-        {!! $disbursement_vouchers->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
-      </div>
-
-    </div>
-
-  </section>
-
-  <form id="dv_confirm_check_form" method="POST" style="display: none;">
-    @csrf
-  </form>
+    @php
+        $certified_by_positions = App\Models\DisbursementVoucher::select('certified_by_position')->groupBy('certified_by_position')->get();
+    @endphp
+    <datalist id="certified_list_position">
+        @if($certified_by_positions->count() > 0)
+            @foreach($certified_by_positions as $certified_by_position)
+                <option>{{$certified_by_position->certified_by_position}}</option>
+            @endforeach
+        @endif
+    </datalist>
+    @php
+        $approved_bys = App\Models\DisbursementVoucher::select('approved_by')->where('approved_by','!=','-')->groupBy('approved_by')->get();
+    @endphp
+    <datalist id="approved_list">
+        @if($approved_bys->count() > 0)
+            @foreach($approved_bys as $approved_by)
+                <option>{{$approved_by->approved_by}}</option>
+            @endforeach
+        @endif
+    </datalist>
+    @php
+        $approved_by_positions = App\Models\DisbursementVoucher::select('approved_by_position')->where('approved_by_position','!=','-')->groupBy('approved_by_position')->get();
+    @endphp
+    <datalist id="approved_list_position">
+        @if($approved_by_positions->count() > 0)
+            @foreach($approved_by_positions as $approved_by_position)
+                <option>{{strtoupper($approved_by_position->approved_by_position)}}</option>
+            @endforeach
+        @endif
+    </datalist>
 
 @endsection
-
-
-
-
 
 
 @section('modals')
+{!! \App\Swep\ViewHelpers\__html::blank_modal('show_dv_modal','lg') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('print_dv_modal','50') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('edit_dv_modal','60','',true) !!}
 
-  {!! __html::modal_delete('dv_delete') !!}
+<div class="modal fade" id="add_dv_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 60%" role="document">
+        <div class="modal-content">
+            <form id="add_dv_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Create Disbursement Voucher</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        {!! __form::select_dynamic(
+                          '2 project_id', 'project_id', 'Station', '', $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
+                        ) !!}
 
-  {!! __html::modal(
-    'dv_confirm_check_failed', '<i class="fa fa-fw fa-ban"></i> Failed!', Session::get('SESSION_DV_CONFIRM_CHECK_FAILED')
-  ) !!}
+                        {!! __form::select_dynamic(
+                          '2 fund_source_id', 'fund_source_id', 'Fund Source', '', $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
+                        ) !!}
 
-  {{-- SET DV NO Modal --}}
-  <div class="modal fade" id="dv_set_no" data-backdrop="static">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <form id="dv_set_no_form" class="form-horizontal" method="POST" autocomplete="off">
-            @csrf
-            <p style="font-size: 17px;">Set DV No.</p><br>
+                        {!! __form::select_static(
+                          '2 mode_of_payment', 'mode_of_payment', 'Mode Of Payment', '', __static::dv_mode_of_payment(), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
+                        ) !!}
 
-            <input name="_method" value="PATCH" type="hidden">
+                        {!! __form::textbox(
+                          '6 payee', 'payee', 'text', 'Payee *', 'Payee', '', $errors->has('payee'), $errors->first('payee'), 'data-transform="uppercase"'
+                        ) !!}
+                    </div>
+                    <div class="row">
 
-            {!! __form::textbox_inline(
-                'dv_no', 'text', 'DV No.', 'DV No.', old('dv_no'), $errors->has('dv_no'), $errors->first('dv_no'), ''
-            ) !!}
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+                        {!! __form::textbox(
+                          '3 tin', 'tin', 'text', 'TIN/Employee No', 'TIN / Employee No', '', $errors->has('tin'), $errors->first('tin'), ''
+                        ) !!}
+
+                        {!! __form::textbox(
+                          '3 bur_no', 'bur_no', 'text', 'BUR No', 'BUR No', '', $errors->has('bur_no'), $errors->first('bur_no'), ''
+                        ) !!}
+
+                        {!! __form::textbox(
+                          '6 address', 'address', 'text', 'Address', 'Address', '', $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
+                        ) !!}
+                    </div>
+
+                    <div class="row">
+
+
+                        {!! __form::select_dynamic(
+                          '3 department_name', 'department_name', 'Department', '', $global_departments_all, 'name', 'name', $errors->has('department_name'), $errors->first('department_name'), 'select2', ''
+                        ) !!}
+
+                        {!! __form::select_dynamic(
+                          '3 department_unit_name', 'department_unit_name', 'Unit', '', $global_department_units_all, 'name', 'description', $errors->has('department_unit_name'), $errors->first('department_unit_name'), 'select2', ''
+                        ) !!}
+
+                        {!! __form::select_dynamic(
+                          '3 project_code', 'project_code', 'Project Code', '', $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2', ''
+                        ) !!}
+
+                        {!! __form::textbox_numeric(
+                          '3 amount', 'amount', 'text', 'Amount *', 'Amount', '', $errors->has('amount'), $errors->first('amount'), ''
+                        ) !!}
+                    </div>
+                    <div class="row">
+                        {!! __form::textarea(
+                          '12 explanation', 'explanation', 'Explanation *', '', $errors->has('explanation'), $errors->first('explanation'), ''
+                        ) !!}
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                Certified by
+                            </p>
+                            <div class="row">
+                                {!! __form::textbox(
+                                '6 certified_by', 'certified_by', 'text', 'Certified by:', 'Certified by', '', $errors->has('certified_by'), $errors->first('certified_by'), 'data-transform="uppercase" list="certified_list"'
+                                ) !!}
+
+                                {!! __form::textbox(
+                                  '6 certified_by_position', 'certified_by_position', 'text', 'Position', 'Position', '', $errors->has('certified_by_position'), $errors->first('certified_by_position'), 'data-transform="uppercase" list="certified_list_position"'
+                                ) !!}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                Approved by
+                            </p>
+                            <div class="row">
+                                {!! __form::textbox(
+                                    '6 approved_by', 'approved_by', 'text', 'Approved for payment by:', 'Approved by', '', $errors->has('approved_by'), $errors->first('approved_by'), 'data-transform="uppercase" list="approved_list"'
+                                ) !!}
+                                {!! __form::textbox(
+                                    '6 approved_by_position', 'approved_by_position', 'text', 'Position', 'Position', '', $errors->has('approved_by_position'), $errors->first('approved_by_position'), 'data-transform="uppercase" list="approved_list_position"'
+                                ) !!}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Create</button>
+                </div>
+            </div><!-- /.modal-content -->
         </form>
-      </div>
-    </div>
-  </div>
-
-@endsection 
-
-
-
-
-
-@section('scripts')
-
-  <script type="text/javascript">
-
-    {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! __js::modal_confirm_delete_caller('dv_delete') !!}
-
-    {{-- DV DELETE TOAST --}}
-    @if(Session::has('DV_DELETE_SUCCESS'))
-      {!! __js::toast(Session::get('DV_DELETE_SUCCESS')) !!}
-    @endif
-
-    {{-- DV SET NO TOAST --}}
-    @if(Session::has('DV_SET_NO_SUCCESS'))
-      {!! __js::toast(Session::get('DV_SET_NO_SUCCESS')) !!}
-    @endif
-
-    {{-- DV CONFIRM CHECK SUCCESS TOAST --}}
-    @if(Session::has('DV_CONFIRM_CHECK_SUCCESS'))
-      {!! __js::toast(Session::get('DV_CONFIRM_CHECK_SUCCESS')) !!}
-    @endif
-
-    {{-- CALL CONFIRM CHECK --}}
-    {!! __js::form_submitter_via_action('confirm_check', 'from_confirm_check') !!}
-
-    {{-- CALL CONFIRM CHECK FAILED MODAL --}}
-    @if(Session::has('DV_CONFIRM_CHECK_FAILED'))
-      $('#dv_confirm_check_failed').modal('show');
-    @endif
-
-    {{-- CALL DV SET NO MODAL --}}
-    $(document).on("click", "#dv_set_no_link", function () {
-        $("#dv_set_no").modal("show");
-        $("#dv_set_no_form").attr("action", $(this).data("url"));
-        $("#dv_set_no_form #dv_no").val($(this).data("value"));
-    });
-
-    {{-- SUBMIT DV CONFIRM CHECK FORM --}}
-    $(document).on("click", "#dv_confirm_check_link", function () {
-        $("#dv_confirm_check_form").attr("action", $(this).data("url"));
-        $("#dv_confirm_check_form").submit();
-    });
-
-  </script>
-    
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @endsection
+@section('scripts')
+    <script type="text/javascript">
+        function dt_draw() {
+            users_table.draw(false);
+        }
+
+        {{--function filter_dt() {--}}
+        {{--    is_online = $(".filter_status").val();--}}
+        {{--    is_active = $(".filter_account").val();--}}
+        {{--    users_table.ajax.url("{{ route('dashboard.user.index') }}" + "?is_online=" + is_online + "&is_active=" + is_active).load();--}}
+
+        {{--    $(".filters").each(function (index, el) {--}}
+        {{--        if ($(this).val() != '') {--}}
+        {{--            $(this).parent("div").addClass('has-success');--}}
+        {{--            $(this).siblings('label').addClass('text-green');--}}
+        {{--        } else {--}}
+        {{--            $(this).parent("div").removeClass('has-success');--}}
+        {{--            $(this).siblings('label').removeClass('text-green');--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
+
+        function filterDT(){
+            let data = $("#filter_form").serialize();
+            dvs_tbl.ajax.url("{{ route(\Illuminate\Support\Facades\Route::currentRouteName()) }}"+"?"+data).load();
+            
+            $(".dt_filter").each(function (index,el) {
+                if ($(this).val() != ''){
+                    $(this).parent("div").addClass('has-success');
+                    $(this).siblings('label').addClass('text-green');
+                } else {
+                    $(this).parent("div").removeClass('has-success');
+                    $(this).siblings('label').removeClass('text-green');
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+
+        //-----DATATABLES-----//
+        modal_loader = $("#modal_loader").parent('div').html();
+        //Initialize DataTable
+        var active = '';
+        dvs_tbl = $("#dvs_table").DataTable({
+          'dom' : 'lBfrtip',
+          "processing": true,
+          "serverSide": true,
+          "ajax" : '{{route(\Illuminate\Support\Facades\Route::currentRouteName())}}',
+          "columns": [
+            { "data": "payee" },
+            { "data": "dv_no" },
+            { "data": "explanation" },
+            { "data": "date" },
+            { "data": "amount" },
+            { "data": "action" }
+          ],
+          "buttons": [
+            {!! __js::dt_buttons() !!}
+          ],
+          "columnDefs":[
+            {
+              "targets" : 4,
+              "class" : 'text-right'
+            },
+
+            {
+              "targets" : 2,
+              "class" : 'w-40p'
+            },
+            {
+              "targets" : 5,
+              "orderable" : false,
+              "class" : 'action4'
+            },
+          ],
+          "responsive": false,
+          "initComplete": function( settings, json ) {
+            $('#tbl_loader').fadeOut(function(){
+              $("#dvs_table_container").fadeIn();
+            });
+          },
+          "language":
+                  {
+                    "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
+                  },
+          "drawCallback": function(settings){
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="modal"]').tooltip();
+            if(active != ''){
+              $("#dvs_table #"+active).addClass('success');
+            }
+          }
+        })
+
+        style_datatable("#dvs_table");
+
+        //Need to press enter to search
+        $('#dvs_table_filter input').unbind();
+        $('#dvs_table_filter input').bind('keyup', function (e) {
+          if (e.keyCode == 13) {
+            dvs_tbl.search(this.value).draw();
+          }
+        });
+
+        $(function () {
+            CKEDITOR.replace('editor');
+        });
+
+        $(document).ready(function () {
+            $("#date_range").attr('readonly','readonly');
+        })
+        {!! __js::ajax_select_to_select(
+          'department_name', 'department_unit_name', '/api/department_unit/select_departmentUnit_byDeptName/', 'name', 'description'
+        ) !!}
+
+        {!! __js::ajax_select_to_select(
+          'department_name', 'project_code', '/api/project_code/select_projectCode_byDeptName/', 'project_code', 'project_code'
+        ) !!}
+
+        $(".select2").select2({
+            dropdownParent: $('#add_dv_modal')
+        });
+
+
+
+        $("body").on("click",'.show_dv_btn',function () {
+            btn = $(this);
+            slug= btn.attr('data');
+            load_modal2(btn);
+            var uri = '{{route("dashboard.disbursement_voucher.show","slug")}}';
+            uri = uri.replace('slug',slug);
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    notify('Ajax error.','danger');
+                    console.log(res);
+                }
+            })
+        })
+
+        $("body").on("click",".print_dv_btn",function () {
+            btn = $(this);
+            load_modal2(btn);
+            var uri = '{{route("dashboard.disbursement_voucher.print_preview","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    notify('Ajax error.','danger');
+                    console.log(res);
+                }
+            })
+        })
+
+        $("#add_dv_form").submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            loading_btn(form);
+            $.ajax({
+                url : '{{route("dashboard.disbursement_voucher.store")}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   succeed(form, true,false);
+                   active = res.slug;
+                   dvs_tbl.draw(false);
+                   notify('Voucher successfully created','success');
+                },
+                error: function (res) {
+                    errored(form,res);
+                    console.log(res);
+                }
+            })
+        })
+        $("body").on("click",".edit_dv_btn",function () {
+            var btn = $(this);
+            load_modal2(btn);
+            uri = "{{route('dashboard.disbursement_voucher.edit','slug')}}";
+            uri = uri.replace('slug',btn.attr('data'));
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    notify('Ajax error.','danger');
+                    console.log(res);
+                }
+            })
+        })
+
+        $("body").on('click','.no_dv_set',function () {
+
+            let btn = $(this);
+            $("#dvs_table #"+btn.attr('data')).addClass('warning');
+            let dv = $(this).attr('data');
+            let uri = "{{route('dashboard.disbursement_voucher.set_no_post','slug')}}";
+            uri = uri.replace('slug',dv);
+            Swal.fire({
+                title: 'Set DV number:',
+                html: '',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                },
+                inputValue: btn.attr('placeholder'),
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                showLoaderOnConfirm: true,
+                preConfirm: (text) => {
+                    return $.ajax({
+                        url : uri,
+                        data : {'dv_no':text},
+                        type: 'PATCH',
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                        success: function (res) {
+                            active = res.slug;
+                            dvs_tbl.draw(false);
+                            notify('DV No was set successfully.','success');
+                        },
+                        error: function (res) {
+                            if(res.status == 422){
+                                var message = res.responseJSON.errors.dv_no;
+                            }else{
+                                var message = res.responseJSON.message;
+                            }
+                            Swal.showValidationMessage(
+                                'Request failed: ' + message
+                            );
+                        }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                        .catch(error => {
+
+                        })
+
+                },
+                allowOutsideClick: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    $("#dvs_table #"+btn.attr('data')).removeClass('warning');
+                }
+            })
+        })
+
+        $(".select22").select2();
+
+        $('#date_range').daterangepicker();
+
+        $("#filter_date_checkbox").change(function () {
+            let t = $(this);
+            if(t.prop('checked') == true){
+                $("#date_range").removeAttr('readonly');
+            }else{
+                $("#date_range").attr('readonly','readonly');
+            }
+        })
+
+        // $("#clear_filter").click(function () {
+        //     $("#filter_form").get(0).reset();
+        //     $(".dt_filter").each(function (index,el) {
+        //         $(this).change();
+        //         return false;
+        //     })
+        // })
+        $(".dt_filter").change(function () {
+            filterDT();
+        })
+    </script>
+
+
+@endsection
+

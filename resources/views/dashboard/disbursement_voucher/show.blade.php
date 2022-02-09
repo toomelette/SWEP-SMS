@@ -1,143 +1,88 @@
-@extends('layouts.admin-master')
+@extends('layouts.modal-content')
 
-@section('content')
+@section('modal-header')
+    {!! \Illuminate\Support\Str::limit(strip_tags($dv->explanation),60,'...') !!}
+@endsection
 
-<section class="content-header">
-    <h1>Voucher Details</h1>
-    <div class="pull-right" style="margin-top: -25px;">
-      {!! __html::back_button(['dashboard.disbursement_voucher.index', 'dashboard.disbursement_voucher.user_index']) !!}
+@section('modal-body')
+<p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+    Disbursement Voucher Details
+</p>
+<div class="well well-sm">
+    <dl class="dl-horizontal">
+        <dt>DV No:</dt>
+        <dd>{{ $dv->dv_no }}</dd>
+        <dt>Station:</dt>
+        <dd>{{ optional($dv->project)->project_address }}</dd>
+        <dt>Fund Source:</dt>
+        <dd>{{ optional($dv->fundSource)->description }}</dd>
+        <dt>Mode of Payment:</dt>
+        <dd>{{ $dv->mode_of_payment }}</dd>
+        <dt>Payee:</dt>
+        <dd>{{ $dv->payee }}</dd>
+        <dt>TIN:</dt>
+        <dd>{{ $dv->tin }}</dd>
+        <dt>BUR No.:</dt>
+        <dd>{{ $dv->bur_no }}</dd>
+        <dt>Address:</dt>
+        <dd>{{ $dv->address }}</dd>
+        <dt>Department:</dt>
+        <dd>{{ $dv->department_name }}</dd>
+        <dt>Unit:</dt>
+        <dd>{{ optional($dv->departmentUnit)->description }}</dd>
+        <dt>Project Code:</dt>
+        <dd>{{ $dv->project_code }}</dd>
+        <dt>Explanation:</dt>
+        <dd>
+            <div style="border:solid 1px; padding:10px;" class="clearfix">
+                {!! $dv->explanation !!}
+            </div>
+        </dd>
+        <dt>Amount:</dt>
+        <dd>{{ number_format($dv->amount, 2) }}</dd>
+    </dl>
+</div>
+
+<p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+    Certification and Approval
+</p>
+
+<div class="well well-sm">
+    <dl class="dl-horizontal">
+        <dt>Certified by:</dt>
+        <dd><b>{{ $dv->certified_by}}</b>, <i>{{ $dv->certified_by_position}}</i> </dd>
+        <dt>Approved by:</dt>
+        <dd><b>{{ $dv->approved_by}}</b> , <i>{{ $dv->approved_by_position}}</i> </dd>
+    </dl>
+</div>
+
+
+<p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+    Progress
+</p>
+
+<div class="well well-sm">
+    <dl class="dl-horizontal">
+        <dt>Filed:</dt>
+        <dd>{{ $dv->created_at != null ? __dataType::date_parse($dv->created_at, 'M d, Y h:i A') : '' }}</dd>
+        <dt>Processed:</dt>
+        <dd>{{ $dv->processed_at != null ? __dataType::date_parse($dv->processed_at, 'M d, Y h:i A') : '' }}</dd>
+        <dt>Completed:</dt>
+        <dd>{{ $dv->checked_at != null ? __dataType::date_parse($dv->checked_at, 'M d, Y h:i A') : '' }}</dd>
+    </dl>
+</div>
+@endsection
+
+@section('modal-footer')
+    <div class="row">
+        {!! \App\Swep\ViewHelpers\__html::timestamp($dv,'5') !!}
+        <div class="col-md-2">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
     </div>
-</section>
+@endsection
 
-<section class="content">
-
-    <div class="box">
-        
-      <div class="box-header with-border">
-        
-        <h3 class="box-title">Details</h3>
-
-        <div class="box-tools">
-          <a href="{{ route('dashboard.disbursement_voucher.print', [$disbursement_voucher->slug, 'front']) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Front</a>&nbsp;
-          <a href="{{ route('dashboard.disbursement_voucher.print', [$disbursement_voucher->slug, 'back']) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Back</a>
-          @if(Carbon::parse($disbursement_voucher->date)->diffInDays(Carbon::now()->format('Y-m-d')) < 5)
-            <a href="{{ route('dashboard.disbursement_voucher.edit', $disbursement_voucher->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
-          @endif
-        </div>
-
-      </div>
-      
-      <div class="box-body">
-
-
-        {{-- DV Info --}}
-        <div class="col-md-8">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Voucher Info</h3>
-            </div>
-            <div class="box-body">
-              <dl class="dl-horizontal">
-                <dt>DV No:</dt>
-                <dd>{{ $disbursement_voucher->dv_no }}</dd>
-                <dt>Station:</dt>
-                <dd>{{ optional($disbursement_voucher->project)->project_address }}</dd>
-                <dt>Fund Source:</dt>
-                <dd>{{ optional($disbursement_voucher->fundSource)->description }}</dd>
-                <dt>Mode of Payment:</dt>
-                <dd>{{ $disbursement_voucher->mode_of_payment }}</dd>
-                <dt>Payee:</dt>
-                <dd>{{ $disbursement_voucher->payee }}</dd>
-                <dt>TIN:</dt>
-                <dd>{{ $disbursement_voucher->tin }}</dd>
-                <dt>BUR No.:</dt>
-                <dd>{{ $disbursement_voucher->bur_no }}</dd>
-                <dt>Address:</dt>
-                <dd>{{ $disbursement_voucher->address }}</dd>
-                <dt>Department:</dt>
-                <dd>{{ $disbursement_voucher->department_name }}</dd>
-                <dt>Unit:</dt>
-                <dd>{{ optional($disbursement_voucher->departmentUnit)->description }}</dd>
-                <dt>Project Code:</dt>
-                <dd>{{ $disbursement_voucher->project_code }}</dd>
-                <dt>Explanation:</dt>
-                <dd>
-                  <div style="border:solid 1px; padding:10px;">
-                    {!! $disbursement_voucher->explanation !!}
-                  </div>
-                </dd>
-                <dt>Amount:</dt>
-                <dd>{{ number_format($disbursement_voucher->amount, 2) }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-        {{-- Progress --}}
-        <div class="col-md-4">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Progress</h3>
-            </div>
-            <div class="box-body">
-              <dl class="dl-horizontal">
-                <dt>Filed:</dt>
-                <dd>{{ $disbursement_voucher->created_at != null ? __dataType::date_parse($disbursement_voucher->created_at, 'M d, Y h:i A') : '' }}</dd>
-                <dt>Processed:</dt>
-                <dd>{{ $disbursement_voucher->processed_at != null ? __dataType::date_parse($disbursement_voucher->processed_at, 'M d, Y h:i A') : '' }}</dd>
-                <dt>Completed:</dt>
-                <dd>{{ $disbursement_voucher->checked_at != null ? __dataType::date_parse($disbursement_voucher->checked_at, 'M d, Y h:i A') : '' }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-
-
-
-        
-
-
-
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">User Modifications</h3>
-            </div>
-            <div class="box-body">
-
-              <dl class="dl-horizontal col-sm-6">
-                <dt>Date Created:</dt>
-                <dd>{{ __dataType::date_parse($disbursement_voucher->created_at, 'M d, Y h:i A') }}</dd>
-                <dt>IP Created:</dt>
-                <dd>{{ $disbursement_voucher->ip_created }}</dd>
-                <dt>User Created:</dt>
-                <dd>{{ $disbursement_voucher->user_created }}</dd>
-              </dl>
-
-              <dl class="dl-horizontal col-sm-6">
-                <dt>Date Updated:</dt>
-                <dd>{{ __dataType::date_parse($disbursement_voucher->updated_at, 'M d, Y h:i A') }}</dd>
-                <dt>IP Updated:</dt>
-                <dd>{{ $disbursement_voucher->ip_updated }}</dd>
-                <dt>User Updated:</dt>
-                <dd>{{ $disbursement_voucher->user_updated }}</dd>
-              </dl>
-
-            </div>
-          </div>
-        </div> 
-
-
-
-
-    </div>
-  </div>
-
-</section>
+@section('scripts')
 
 @endsection
 

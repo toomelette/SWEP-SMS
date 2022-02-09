@@ -320,7 +320,7 @@
         {
           "targets" : 4,
           "orderable" : false,
-          "class" : 'action-10p'
+          "class" : 'action4'
         },
         {
           "targets" : 1,

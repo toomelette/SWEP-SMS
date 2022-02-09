@@ -141,6 +141,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->ip_updated = request()->ip();
         $employee->user_created = $this->auth->user()->user_id;
         $employee->user_updated = $this->auth->user()->user_id;
+        $employee->biometric_user_id = 0;
         $employee->save();
 
         return $employee;

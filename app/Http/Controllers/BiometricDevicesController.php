@@ -14,6 +14,7 @@ use App\Swep\Services\DTRService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Rats\Zkteco\Lib\ZKTeco;
 use Yajra\DataTables\DataTables;
 use function foo\func;
@@ -127,5 +128,23 @@ class BiometricDevicesController extends Controller
             'employees_arr' => $employees_arr,
         ]);
 
+    }
+
+    public function clear_attendance(Request $request, DTRService $DTRService){
+        if($request->has('id') && $request->has('password')){
+            if(Hash::check($request->password , Auth::user()->password)){
+                $device = BiometricDevices::query()->find($request->id);
+                if(!empty($device)){
+                    $dtr_service = $DTRService->clearAttendance($device->ip_address);
+                    if($dtr_service){
+                        return 'Attendance cleared successfully.';
+                    }
+                    abort(503, 'Error clearing attendance.');
+                }
+                abort(503,'Device not found');
+            }
+            abort(503,'Incorrect Password');
+        }
+        abort(503,'Missing parameters');
     }
 }

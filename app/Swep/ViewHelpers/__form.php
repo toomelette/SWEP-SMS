@@ -27,11 +27,11 @@ class __form{
 
 
 
-    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr){
+    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr, $class_input=null){
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
-                <input class="form-control priceformat" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. __sanitize::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
+                <input class="form-control priceformat '.$class_input.'" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. __sanitize::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                   '. self::error_message($error_has, $error_first) .'
               </div>';
 

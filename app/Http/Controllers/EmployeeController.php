@@ -81,7 +81,7 @@ class EmployeeController extends Controller{
                                           <li><a href="#" data-toggle="modal" data-target="#service_records_modal" class="service_records_btn" data="'.$data->slug.'">Service Records</a></li>
                                           <li><a href="#" data-toggle="modal" data-target="#trainings_modal" class="trainings_btn" data="'.$data->slug.'">Trainings</a></li>
                                           <li><a href="#" data-toggle="modal" data-target="#matrix_modal" class="matrix_btn" data="'.$data->slug.'">Matrix</a></li>
-                                          <li><a href="#" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'">Biometric User ID</a></li>
+                                          <li><a href="#" employee="'.$data->lastname.', '.$data->firstname.'" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'">Biometric User ID</a></li>
                                         </ul>
                                     </div>
                                 </div>';
@@ -113,7 +113,7 @@ class EmployeeController extends Controller{
 
 
     public function store(EmployeeFormRequest $request){
-
+//        return  $request;
     	return $this->employee->store($request);
         
     }
@@ -148,8 +148,11 @@ class EmployeeController extends Controller{
 
     public function destroy($slug){
 
-    	return $this->employee->destroy($slug);
-
+    	$employee = $this->employee->destroy($slug);
+        if($employee){
+            return 1;
+        }
+        abort(503,'Error deleting data');
     }
 
 

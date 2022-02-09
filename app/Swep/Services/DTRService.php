@@ -14,6 +14,7 @@ use App\Models\SuSettings;
 use App\Swep\BaseClasses\BaseService;
 use App\Swep\Helpers\Helper;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Rats\Zkteco\Lib\ZKTeco;
 
@@ -80,7 +81,7 @@ class DTRService extends BaseService
             }
 
         }catch (\Exception $e){
-            $string = 'Error saving data from device: '.$ip.' | Device might be turned off.';
+            $string = 'Error saving data from device: '.$ip.' | '.$e->getMessage();
             $cl = new CronLogs;
             $cl->log = $string;
             $cl->type = 0;
@@ -256,11 +257,27 @@ class DTRService extends BaseService
     }
 
 
-    private function clearAttendance($ip){
+    public function clearAttendance($ip){
 
-        $zk = new ZKTeco($ip);
-        $zk->connect();
-        return $zk->clearAttendance();
+        try{
+            $zk = new ZKTeco($ip);
+            $zk->connect();
+            $serial_no = $this->getSerialNo($ip);
+            $dev = BiometricDevices::query()->where('serial_no','=',$serial_no)->first();
+            if(!empty($dev)){
+                $zk->clearAttendance();
+                $dev->last_uid = 0;
+                $dev->last_cleared = Carbon::now();
+                $dev->last_cleared_user = Auth::user()->user_id;
+                $dev->update();
+                return 1;
+            }
+
+        }
+        catch (\Exception $e){
+            return $e->getMessage();
+        }
+
     }
 
     private function getSerialNo($ip){
@@ -268,5 +285,6 @@ class DTRService extends BaseService
         $zk->connect();
         return  preg_replace('/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', Helper::getStingAfterChar($zk->serialNumber(),'='));
     }
+
 
 }

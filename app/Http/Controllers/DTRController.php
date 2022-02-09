@@ -64,7 +64,7 @@ class DTRController extends  Controller
 //            }
 
             $second = JoEmployees::query()->with('rawDtrRecords')
-                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"JO" as type'), 'sex','employee_no']);
+                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"COS" as type'), 'sex','employee_no']);
 //            if($request->has('sex')){
 //                $second = $second->where('sex','=','MALE');
 //            }
@@ -110,13 +110,12 @@ class DTRController extends  Controller
                     return __html::sex($data->sex);
                 })
                 ->addColumn('action',function ($data){
-
                     $destroy_route = "'".route("dashboard.menu.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
                     if($data->type == 'PERM'){
                         $route = route('dashboard.employee.index')."?q=".$data->employee_no;
                     }
-                    if($data->type == 'JO'){
+                    if($data->type == 'COS'){
                         $route = route('dashboard.jo_employees.index')."?q=".$data->employee_no;
                     }
                     return '<div class="btn-group">

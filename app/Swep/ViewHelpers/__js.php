@@ -72,7 +72,11 @@ class __js{
 
     }
 
-
+    public static function autonum($class = 'priceformat'){
+        return '$(".'.$class.'").each(function(){
+            new AutoNumeric(this, autonum_settings);
+        });';
+    }
 
 
     public static function ajax_select_to_select($id_from, $id_to, $route, $key, $value){
