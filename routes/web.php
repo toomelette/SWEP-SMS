@@ -304,9 +304,14 @@ Route::get('jo',function (){
 });
 
 Route::get('check_device',function (\App\Swep\Services\DTRService $DTRService){
-    $zk = new ZKTeco('10.36.1.22');
+    if(!request()->has('ip')){
+        return 'Missing IP';
+    }
+    $ip = request()->get('ip');
+    $zk = new ZKTeco($ip);
     $zk->connect();
-    return $DTRService->clearAttendance('10.36.1.23');
+    return $zk->getAttendance();
+//    return $DTRService->clearAttendance('10.36.1.23');
 });
 
 Route::get('dashboard/set', function (){

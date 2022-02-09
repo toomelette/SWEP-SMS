@@ -23,6 +23,7 @@ class DTRService extends BaseService
     public function extract($ip){
         try{
             $last_uid = 0;
+            $last_from_device = 0;
             $attendances = $this->fetchAttendance($ip);
             $serial_no = $this->getSerialNo($ip);
             $last_uid_db = BiometricDevices::query()->where('serial_no','=',$serial_no)->first();
@@ -41,14 +42,16 @@ class DTRService extends BaseService
 
             $attendances_array = [];
             for ($x = $last_uid+1 ; $x <= $last_from_device ; $x++){
-                array_push($attendances_array,[
-                    'uid' => $attendances[$x]['uid'],
-                    'user' => $attendances[$x]['id'],
-                    'state' => $attendances[$x]['state'],
-                    'timestamp' => $attendances[$x]['timestamp'],
-                    'type' => $attendances[$x]['type'],
-                    'device' => $serial_no,
-                ]);
+                if(isset($attendances[$x])){
+                    array_push($attendances_array,[
+                        'uid' => $attendances[$x]['uid'],
+                        'user' => $attendances[$x]['id'],
+                        'state' => $attendances[$x]['state'],
+                        'timestamp' => $attendances[$x]['timestamp'],
+                        'type' => $attendances[$x]['type'],
+                        'device' => $serial_no,
+                    ]);
+                }
             }
 
             if(count($attendances_array) > 0){
