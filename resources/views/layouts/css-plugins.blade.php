@@ -45,7 +45,7 @@
 <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/fullcalendar/dist/fullcalendar.min.css')}}">
 
 {{-- INTROJS--}}
-<link type="text/css" rel="stylesheet" href="{{asset('template/plugins/intro.js-4.3.0/package/introjs.css')}}">
+<link type="text/css" rel="stylesheet" href="{{asset('template/plugins/IntroJs/introjs.css')}}">
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/awesome-select/package/css/awselect.min.css')}}">
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}">

@@ -6,9 +6,9 @@ namespace App\Swep\Interfaces;
 
 interface DisbursementVoucherInterface {
 
-	public function fetch($request);
-
-	public function fetchByUser($request);
+//	public function fetch($request);
+//
+//	public function fetchByUser($request);
 
 	public function store($request);
 

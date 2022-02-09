@@ -14,7 +14,7 @@
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">List of Disbursement Vouchers</h3>
-                <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#add_dv_modal"><i class="fa fa-plus"></i> Create</button>
+                <button data-step="1" data-intro="Create Disbursement Voucher by using this button." class="btn btn-primary pull-right" data-toggle="modal" data-target="#add_dv_modal"><i class="fa fa-plus"></i> Create</button>
             </div>
             <div class="panel">
                 <div class="box-header with-border">
@@ -169,7 +169,7 @@
 {!! \App\Swep\ViewHelpers\__html::blank_modal('show_dv_modal','lg') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('print_dv_modal','50') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_dv_modal','60','',true) !!}
-
+{!! \App\Swep\ViewHelpers\__html::blank_modal('save_as_modal','60','',true) !!}
 <div class="modal fade" id="add_dv_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width: 60%" role="document">
         <div class="modal-content">
@@ -227,12 +227,12 @@
                         ) !!}
 
                         {!! __form::textbox_numeric(
-                          '3 amount', 'amount', 'text', 'Amount *', 'Amount', '', $errors->has('amount'), $errors->first('amount'), ''
+                          '3 amount', 'amount', 'text', 'Amount *', 'Amount', '', $errors->has('amount'), $errors->first('amount'), '', '','Total/Net of your computation'
                         ) !!}
                     </div>
                     <div class="row">
                         {!! __form::textarea(
-                          '12 explanation', 'explanation', 'Explanation *', '', $errors->has('explanation'), $errors->first('explanation'), ''
+                          '12 explanation', 'explanation', 'Explanation *', '', $errors->has('explanation'), $errors->first('explanation'), '',' Please put your computations below'
                         ) !!}
 
 
@@ -353,10 +353,15 @@
               "class" : 'action4'
             },
           ],
+            "order":[[3,'desc'],[0,'asc']],
           "responsive": false,
           "initComplete": function( settings, json ) {
             $('#tbl_loader').fadeOut(function(){
-              $("#dvs_table_container").fadeIn();
+              $("#dvs_table_container").fadeIn(function () {
+                  @if(request()->has('initiator') && request('initiator') == 'create')
+                    introJs().start();
+                  @endif
+              });
             });
           },
           "language":
@@ -566,16 +571,31 @@
             }
         })
 
-        // $("#clear_filter").click(function () {
-        //     $("#filter_form").get(0).reset();
-        //     $(".dt_filter").each(function (index,el) {
-        //         $(this).change();
-        //         return false;
-        //     })
-        // })
         $(".dt_filter").change(function () {
             filterDT();
         })
+        $("body").on("click",".save_as_btn", function () {
+            btn = $(this);
+            load_modal2(btn);
+            let uri = '{{route("dashboard.disbursement_voucher.save_as","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    notify('Ajax error.','danger');
+                    console.log(res);
+                }
+            })
+        })
+
+
     </script>
 
 

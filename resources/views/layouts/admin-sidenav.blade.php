@@ -100,7 +100,7 @@
                                                     @if($submenu->is_nav == true)
 
                                                         <li class="{!! Route::currentRouteNamed($submenu->route) ? 'active tree_active' : '' !!}">
-                                                            <a href="{{ route($submenu->route) }}"><i class="fa fa-caret-right"></i> {{ $submenu->nav_name }}</a>
+                                                            <a href="{{ route($submenu->route) }}"><i class="fa fa-caret-right"></i> {!!$submenu->nav_name!!}</a>
                                                         </li>
                                                     @endif
                                                 @endforeach

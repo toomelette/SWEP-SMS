@@ -2,7 +2,7 @@
 @extends('layouts.modal-content',['form_id'=>'edit_dv_form_'.$rand,'slug'=>$dv->slug])
 
 @section('modal-header')
-    {!! \Illuminate\Support\Str::limit(strip_tags($dv->explanation),50,'...')!!} - Edit
+    {!! \Illuminate\Support\Str::limit(strip_tags($dv->explanation),50,'...')!!} - {{$type}}
 @endsection
 
 @section('modal-body')
@@ -130,13 +130,19 @@
 
         e.preventDefault()
         var form = $(this);
-        var uri = '{{route("dashboard.disbursement_voucher.update","slug")}}';
-        uri = uri.replace("slug",form.attr('data'));
+        @if($type == 'Edit')
+            var uri = '{{route("dashboard.disbursement_voucher.update","slug")}}';
+            uri = uri.replace("slug",form.attr('data'));
+            @php($request_type = 'PUT')
+        @elseif($type == 'Save as')
+            var uri = '{{route("dashboard.disbursement_voucher.store")}}';
+            @php($request_type = 'POST')
+        @endif
         loading_btn(form);
         $.ajax({
             url : uri,
             data : form.serialize(),
-            type: 'PUT',
+            type: '{{$request_type}}',
             headers: {
                 {!! __html::token_header() !!}
             },

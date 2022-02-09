@@ -35,39 +35,39 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
 
-    public function fetch($request){
-
-        $key = str_slug($request->fullUrl(), '_');
-        $entries = isset($request->e) ? $request->e : 20;
-
-        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetch:'. $key, 240, function() use ($request, $entries){
-            $disbursement_voucher = $this->requestFilters($request);
-            return $this->populate($disbursement_voucher, $entries);
-        });
-
-        return $disbursement_vouchers;
-
-    }
-
-
+//    public function fetch($request){
+//
+//        $key = str_slug($request->fullUrl(), '_');
+//        $entries = isset($request->e) ? $request->e : 20;
+//
+//        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetch:'. $key, 240, function() use ($request, $entries){
+//            $disbursement_voucher = $this->requestFilters($request);
+//            return $this->populate($disbursement_voucher, $entries);
+//        });
+//
+//        return $disbursement_vouchers;
+//
+//    }
 
 
 
 
 
-    public function fetchByUser($request){
 
-        $key = str_slug($request->fullUrl(), '_');
-        $entries = isset($request->e) ? $request->e : 20;
 
-        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request, $entries){
-            $disbursement_voucher = $this->requestFilters($request);
-            return $this->populateByUser($disbursement_voucher, $this->auth->user()->user_id, $entries);
-        });
-
-        return $disbursement_vouchers;
-
-    }
+//    public function fetchByUser($request){
+//
+//        $key = str_slug($request->fullUrl(), '_');
+//        $entries = isset($request->e) ? $request->e : 20;
+//
+//        $disbursement_vouchers = $this->cache->remember('disbursement_vouchers:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request, $entries){
+//            $disbursement_voucher = $this->requestFilters($request);
+//            return $this->populateByUser($disbursement_voucher, $this->auth->user()->user_id, $entries);
+//        });
+//
+//        return $disbursement_vouchers;
+//
+//    }
 
 
 
@@ -169,7 +169,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
 
     public function setNo($request, $slug){
-        if($request->dv_no == null){
+        if($request->dv_no === null){
             $request->dv_no  = '';
         }
         $disbursement_voucher = $this->findBySlug($slug);
@@ -204,16 +204,15 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
     public function findBySlug($slug){
 
-        $disbursement_voucher = $this->cache->remember('disbursement_vouchers:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->disbursement_voucher->where('slug', $slug)
+
+        $disbursement_voucher = $this->disbursement_voucher->where('slug', $slug)
                                               ->with('project', 'fundSource')
                                               ->first();
-        });
+
         
         if(empty($disbursement_voucher)){
             abort(404);
         }
-
         return $disbursement_voucher;
 
     }

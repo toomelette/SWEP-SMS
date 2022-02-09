@@ -72,7 +72,8 @@
 <script type="text/javascript" src="{{asset('template/plugins/typeahead/js/bootstrap-typeahead.min.js')}}"></script>
 
 {{--INTRO--}}
-<script type="text/javascript" src="{{asset('template/plugins/intro.js-4.3.0/package/intro.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('template/plugins/IntroJs/introjs.js')}}"></script>
 
 
 <script type="text/javascript" src="{{asset('template/plugins/awesome-select/package/js/awselect.min.js')}}"></script>

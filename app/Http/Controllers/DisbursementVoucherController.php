@@ -92,7 +92,7 @@ class DisbursementVoucherController extends Controller{
                                       <span class="caret"></span></button>
                                       <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                         <li>
-                                            <a user="Gerald" href="#" data="4vv5obactx45Zxv1" name="GERALD GUANCE" class="ac_dc" status="active"> 
+                                            <a data="'.$data->slug.'" href="#"  class="save_as_btn" data-toggle="modal" data-target="#save_as_modal"> 
                                                 <span><i class="fa fa-plus"></i> Save as new </span>
                                             </a>
                                         </li>
@@ -191,6 +191,7 @@ class DisbursementVoucherController extends Controller{
         $dv = $this->findBySlug($slug);
         return view('dashboard.disbursement_voucher.edit')->with([
             'dv' => $dv,
+            'type' => 'Edit',
         ]);
         return $this->disbursement_voucher->edit($slug);
         
@@ -248,6 +249,11 @@ class DisbursementVoucherController extends Controller{
 
 
     public function saveAs($slug){
+        $dv = $this->findBySlug($slug);
+        return view('dashboard.disbursement_voucher.edit')->with([
+            'dv' => $dv,
+            'type' => 'Save as',
+        ]);
 
         return $this->disbursement_voucher->saveAs($slug);
         

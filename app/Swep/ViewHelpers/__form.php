@@ -12,14 +12,21 @@ class __form{
 
 
     /** Default **/
-    public static function textbox($class, $key, $type, $label, $placeholder, $old_val, $error_has, $error_first, $extra_attr,$self_class = null){
+    public static function textbox($class, $key, $type, $label, $placeholder, $old_val, $error_has, $error_first, $extra_attr,$self_class = null,$tooltip = null){
         if(is_object($old_val)){
             $old_value = $old_val->$key;
         }else{
             $old_value = $old_val;
         }
+
+        $tt = '';
+        if($tooltip != null){
+            $tt = '<i class="fa fa-question-circle" title="'.$tooltip.'"></i>';
+        }
+
+
        return '<div class="form-group col-md-'. $class .' ">
-                <label for="'. $key .'">'. $label .'</label>
+                <label for="'. $key .'">'. $label .'</label> '.$tt.'
                 <input class="form-control '.$self_class.'" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
               </div>';
 
@@ -27,10 +34,14 @@ class __form{
 
 
 
-    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr, $class_input=null){
+    public static function textbox_numeric($class, $key, $type, $label, $placeholder, $old_value, $error_has, $error_first, $extra_attr, $class_input=null,$tooltip = null){
+        $tt = '';
+        if($tooltip != null){
+            $tt = '<i class="fa fa-question-circle" title="'.$tooltip.'"></i>';
+        }
 
-       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
-                <label for="'. $key .'">'. $label .'</label>
+       return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'" >
+                <label for="'. $key .'" >'. $label .'</label> '.$tt.' 
                 <input class="form-control priceformat '.$class_input.'" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. __sanitize::html_attribute_encode($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
                   '. self::error_message($error_has, $error_first) .'
               </div>';
@@ -208,10 +219,14 @@ class __form{
     }
 
 
-    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr){
+    public static function textarea($class, $key, $label, $old_value, $error_has, $error_first, $extra_attr, $tooltip = null){
+        $tt = '';
+        if($tooltip != null){
+            $tt = '<i class="fa fa-question-circle" title="'.$tooltip.'"></i>';
+        }
 
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
-                <label for="'. $key .'">'. $label .'</label>
+                <label for="'. $key .'">'. $label .'</label> '.$tt.'
                 <textarea class="form-control" id="editor" name="'. $key .'" rows="5" '. $extra_attr .'>'. __sanitize::html_encode($old_value) .'</textarea>
                 '. self::error_message($error_has, $error_first) .'
               </div>';
