@@ -43,6 +43,7 @@
                                         @endif
                                     </a>
                                 </li>
+                                <li><a href="#">Last Cleared <span class="pull-right badge bg-purple">{{\Carbon\Carbon::parse($device->last_cleared)->format('M d, Y | H:i A')}}</span></a></li>
                             </ul>
                         </div>
                     </div>

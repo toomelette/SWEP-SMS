@@ -45,9 +45,7 @@ class UserController extends Controller{
         $menus = Menu::with('submenu')->get();
         $users = User::query()->with(['userSubmenu','employeeUnion']);
         if(request()->ajax()){
-
             if(request()->has('draw')){
-
                 if($request->has('is_online') || $request->has('is_active')){
                     if($request->is_online == 'online'){
                         $users = $users->where('is_online',true);

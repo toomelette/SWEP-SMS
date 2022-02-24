@@ -83,7 +83,7 @@
                                                     @foreach($months as $month => $null)
                                                         <div class="col-md-{{$col}}">
                                                             <button type="button" class="btn btn-default col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
-                                                                {{\Carbon\Carbon::parse($month)->format('F')}}
+                                                                {{strtoupper(\Carbon\Carbon::parse($month)->format('M'))}}
                                                             </button>
                                                         </div>
                                                     @endforeach

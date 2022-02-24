@@ -30,6 +30,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
     Route::post('dashboard/changePass','UserController@changePassword')->name('all.changePass');
     Route::post('/change_side_nav','SidenavController@change')->name('sidenav.change');
+
+    Route::get('/mis_requests/my_requests','MisRequestsController@myRequests')->name('mis_requests.my_requests');
+    Route::post('/mis_requests/store','MisRequestsController@store')->name('mis_requests.store');
+    Route::post('/mis_requests/cancel_request','MisRequestsController@cancelRequest')->name('mis_requests.cancel_request');
+    Route::get('/mis_requests/{slug}/print','MisRequestsController@printRequestForm')->name('mis_requests.print_request_form');
+    Route::post('/mis_requests/store_img','MisRequestsController@storeImg')->name('mis_requests.store_img');
 });
 
 /** Dashboard **/
@@ -221,6 +227,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.attendances');
     Route::post('biometric_devices/clear_attendance','BiometricDevicesController@clear_attendance')->name('biometric_devices.clear_attendance');
 
+    Route::get('mis_requests','MisRequestsController@index')->name('mis_requests.index');
+    Route::put('mis_requests/{request_slug}/update','MisRequestsController@update')->name('mis_requests.update');
+    Route::resource('mis_requests_status','MisRequestsStatusController');
 });
 
 
@@ -229,6 +238,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
 Route::get('/dtr', function (){
     return redirect('/dashboard/dtr/my_dtr');
+});
+Route::get('/assign',function (){
+    $users = \App\Models\User::query()->where('user_id','=','')->get();
+    foreach ($users as $user){
+        $user->user_id = rand(1111111,9999999);
+        $user->update();
+    }
+    return 1;
 });
 
 Route::get('/dashboard/compute', function (\App\Swep\Services\DTRService $service){

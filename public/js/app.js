@@ -293,7 +293,14 @@ function succeed(target_form, reset,modal){
 }
 
 function wait_this_button(btn) {
-    btn.children('i').remove();
+    prent = btn.children('i').parent();
+    btn.attr('old-i',prent.html());
+    btn.html('<i class="fa fa-spin fa-spinner"></i>');
+}
+
+function unwait_this_button(btn) {
+    prent = btn.children('i').parent();
+    btn.html(btn.attr('old-i'));
 }
 
 function delete_data(slug,url){
@@ -329,7 +336,8 @@ function delete_data(slug,url){
 
             },
             error: function (res) {
-                console.log(res);
+                notify(res.responseJSON.message,'danger');
+                btn.parents('#'+slug).removeClass('warning');
             }
         });
             // Swal.fire('Saved!', '', 'success')

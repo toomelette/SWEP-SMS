@@ -107,8 +107,9 @@ class __form{
                   </select>
                   '. self::error_message($error_has, $error_first) .'
                 </div>';
-                
+
     }
+
 
     public static function textbox_password_btn($class, $name, $label, $placeholder, $old_value, $id, $error_first, $extra_attr){
         if($name == ""){

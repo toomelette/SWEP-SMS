@@ -2,6 +2,7 @@
 
 
 namespace App\Swep\Helpers;
+use App\Models\MisRequestsNature;
 use Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -209,5 +210,17 @@ class Helper
 
     public static function sanitizeAutonum($num){
         return str_replace(',','',$num);
+    }
+
+    public static function mis_request_nature(){
+        $natures = MisRequestsNature::query()->get();
+        $array = [];
+        if(!empty($natures)){
+
+            foreach ($natures as $nature){
+                $array[$nature->group][$nature->nature_of_request] = $nature->slug;
+            }
+        }
+        return $array;
     }
 }

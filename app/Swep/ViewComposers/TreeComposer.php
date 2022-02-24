@@ -20,11 +20,24 @@ class TreeComposer
         })->get();
 
 
-        $dtr_menu = Menu::query()->where('slug','=','OjM6liSKVeDpwZQc')->first();
-        $tree['HR']['GMPLGA']['menu_obj'] = $dtr_menu;
-        foreach ($dtr_menu->submenu->where('is_nav','=',1)->where('route','!=','dashboard.dtr.extract')->where('route','!=','dashboard.dtr.index') as $submenu){
-            $tree['HR']['GMPLGA']['submenus'][$submenu->submenu_id] = $submenu;
+        $dtr_menus = Menu::query()
+            ->where('slug','=','OjM6liSKVeDpwZQc')
+            ->orWhere('slug','=','ptQX7MfbtJR2EtIf')
+            ->get();
+        foreach ($dtr_menus as $dtr_menu){
+            $tree[$dtr_menu->category][$dtr_menu->menu_id]['menu_obj'] = $dtr_menu;
+            foreach (
+                $dtr_menu->submenu->
+                where('is_nav','=',1)
+                    ->where('route','!=','dashboard.dtr.extract')
+                    ->where('route','!=','dashboard.dtr.index')
+                    ->where('route','!=','dashboard.mis_requests.index')
+                as $submenu){
+                $tree[$dtr_menu->category][$dtr_menu->menu_id]['submenus'][$submenu->submenu_id] = $submenu;
+            }
         }
+
+
 
 
         foreach ($user_submenus as $user_submenu){

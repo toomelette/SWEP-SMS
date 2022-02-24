@@ -76,6 +76,14 @@ class DisbursementVoucherController extends Controller{
             ->addColumn('action',function ($data){
                 $destroy_route = "'".route("dashboard.disbursement_voucher.destroy","slug")."'";
                 $slug = "'".$data->slug."'";
+                $del_btn = '<li>
+                                <a href="#" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class=" delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                    <span class="text-danger"><i class="fa fa-trash"></i> Delete </span>
+                                </a>
+                            </li>';
+                if($data->user_created != Auth::user()->user_id){
+                    $del_btn = '';
+                }
                 $button = '<div class="btn-group">
                                     <button type="button" class="btn btn-default btn-sm show_dv_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#show_dv_modal" title="View more" data-placement="left">
                                         <i class="fa fa-file-text"></i>
@@ -96,11 +104,7 @@ class DisbursementVoucherController extends Controller{
                                                 <span><i class="fa fa-plus"></i> Save as new </span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class=" delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">
-                                                <span class="text-danger"><i class="fa fa-trash"></i> Delete </span>
-                                            </a>
-                                        </li>
+                                           '.$del_btn.'
                                       </ul>
                                     </div>
                                 </div>';
@@ -214,6 +218,9 @@ class DisbursementVoucherController extends Controller{
 
         $dv = $this->disbursement_voucher->destroy($slug);
         if($dv){
+            if($dv->user_created != Auth::user()->user_id){
+                abort(503,'Not enough privileges to delete this voucher');
+            }
             return 1;
         }
         abort(503,'Error deleting data.');

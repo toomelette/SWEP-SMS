@@ -48,6 +48,8 @@ input[data-transform=uppercase] {
 /*       url('/fonts/open-sans-v17-latin-regular.ttf') format('truetype'),*/
 /*       url('/fonts/open-sans-v17-latin-regular.svg#OpenSans') format('svg');*/
 /*}*/
+
+
 .swal2-popup{
     font-size: 1.2rem !important;
 }

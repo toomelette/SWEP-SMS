@@ -91,8 +91,16 @@
         </tr>
         <tr style="height: 100px">
             <td colspan="9">
+                <div style=" width: 100%">
+                    <div style="width: 25%; float: left">
+                        <center>
+                            <img src="{{ asset('images/sra.png') }}" style="width:100px; float: right">
+                        </center>
+                    </div>
+
+                </div>
                 <div class="col-sm-4">
-                    <img src="{{ asset('images/sra.png') }}" style="width:100px; float: right">
+
                 </div>
                 <div class="col-sm-8" style="text-align: center; padding-right:125px;">
                     <span>Republic of the Philippines</span><br>
