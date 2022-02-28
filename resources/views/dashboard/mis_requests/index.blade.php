@@ -44,7 +44,7 @@
 
 @section('modals')
 {!! \App\Swep\ViewHelpers\__html::blank_modal('status_modal','lg') !!}
-
+{!! \App\Swep\ViewHelpers\__html::blank_modal('edit_request_modal','lg') !!}
 <div id="update_status_modal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -194,34 +194,33 @@
             })
         })
 
-        $("body").on("click",".recommendation_btn",function () {
-            let recommendation_old = '';
+        $("body").on("click",".update_status_btn",function () {
             let r = $(this).attr('slug');
-            let uri = "{{route('dashboard.mis_requests.update','slug')}}?recommend=true";
+            let uri = "{{route('dashboard.mis_requests.update','slug')}}?update_status=true";
             uri = uri.replace('slug',$(this).attr('data'));
             Swal.fire({
-                title: 'Recommendation:',
+                title: 'Update status',
                 html: 'Request no: <b>'+$(this).attr('request_no')+'</b>',
                 input: 'text',
                 inputAttributes: {
                     autocapitalize: 'off',
                 },
-                inputValue: recommendation_old,
+                inputValue: '',
                 showCancelButton: true,
                 confirmButtonText: 'Save',
                 showLoaderOnConfirm: true,
                 preConfirm: (text) => {
                     return $.ajax({
                         url : uri,
-                        data : {'recommendation':text , 'request_slug' : r},
+                        data : {'status':text , 'request_slug' : r},
                         type: 'PUT',
                         headers: {
                             {!! __html::token_header() !!}
                         },
                         success: function (res) {
                             active = res.slug;
-                            employees_tbl.draw(false);
-                            notify('Biometric User ID was successfully changed','success');
+                            requests_tbl.draw(false);
+                            notify('Status was successfully updated.','success');
                         },
                         error: function (res) {
                             if(res.status == 422){
@@ -240,11 +239,81 @@
                         return response.json()
                     })
                         .catch(error => {
-
                         })
-
                 },
                 allowOutsideClick: () => !Swal.isLoading()
+            })
+        });
+
+        $("body").on("click",".mark_as_done_btn",function () {
+            let r = $(this).attr('slug');
+            let uri = "{{route('dashboard.mis_requests.update','slug')}}?mark_as_done=true";
+            uri = uri.replace('slug',$(this).attr('data'));
+            Swal.fire({
+                title: 'Mark as completed?',
+                html: 'Request no: <b>'+$(this).attr('request_no')+'</b>',
+                // input: '',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                },
+                inputValue: '',
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-check"></i> Mark',
+                showLoaderOnConfirm: true,
+                preConfirm: (text) => {
+                    return $.ajax({
+                        url : uri,
+                        data : {},
+                        type: 'PUT',
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                        success: function (res) {
+                            active = res.slug;
+                            requests_tbl.draw(false);
+                            notify('Status was successfully updated.','success');
+                        },
+                        error: function (res) {
+                            if(res.status == 422){
+                                var message = res.responseJSON.errors.biometric_user_id;
+                            }else{
+                                var message = res.responseJSON.message;
+                            }
+                            Swal.showValidationMessage(
+                                'Request failed: ' + message
+                            );
+                        }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                        .catch(error => {
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        });
+
+        $("body").on("click",".edit_request_btn", function () {
+            let btn = $(this);
+            let uri = '{{route("dashboard.mis_requests.edit","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            load_modal2(btn);
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    notify('Ajax error.' ,'danger');
+                    console.log(res);
+                }
             })
         })
     </script>

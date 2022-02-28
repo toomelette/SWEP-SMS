@@ -81,7 +81,6 @@
 {{--AUTONUM--}}
 <script type="text/javascript" src="{{asset('template/plugins/autonum/main.js')}}"></script>
 
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
 
 <script type="text/javascript">

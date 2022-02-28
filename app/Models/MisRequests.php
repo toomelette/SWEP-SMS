@@ -31,4 +31,10 @@ class MisRequests extends Model
     public function updater(){
         return $this->hasOne("App\Models\User","user_id","user_updated");
     }
+
+    public function status(){
+        return $this->hasMany('App\Models\MisRequestsStatus','request_slug','slug')->orderBy('created_at','desc');
+    }
+
+
 }

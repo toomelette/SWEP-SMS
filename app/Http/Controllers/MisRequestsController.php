@@ -7,6 +7,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MisRequests\MisRequestsFormRequest;
 use App\Models\MisRequests;
 use App\Models\MisRequestsNature;
+use App\Models\MisRequestsStatus;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,19 +20,21 @@ class MisRequestsController extends Controller
 {
     public function myRequests(){
         if(\request()->ajax() && \request()->has('draw')){
-            $mis_requests = MisRequests::query()->where('user_created','=',Auth::user()->user_id);
+            $mis_requests = MisRequests::with('status')->where('user_created','=',Auth::user()->user_id);
             return DataTables::of($mis_requests)
                 ->addColumn('action',function ($data){
                     if($data->cancelled_at != null){
                         return '<p class="text-muted no-margin">Cancelled</p>';
                     }
                     return '<div class="btn-group">
-                            <button class="btn btn-default btn-sm print_request_btn" data="'.$data->slug.'" text="Request no: <b>'.$data->request_no.'</b>"><i class="fa fa-print"></i></button>
-                            <button class="btn btn-danger btn-sm cancel_request_btn" data="'.$data->slug.'" text="Request no: <b>'.$data->request_no.'</b>">Cancel</button>
+                            <button class="btn btn-default btn-sm print_request_btn" data="'.$data->slug.'" text="Request no: <b>'.$data->request_no.'</b>"><i class="fa fa-print"></i> Print</button>
                         </div>';
                 })
                 ->addColumn('status', function ($data){
-                    return '';
+                   $status = $data->status()->orderBy('created_at','desc')->first();
+                   if(!empty($status)){
+                       return $status->status;
+                   }
                 })
                 ->editColumn('created_at',function ($data){
                     return Carbon::parse($data->created_at)->format('M. d, Y | h:i A');
@@ -72,7 +76,7 @@ class MisRequestsController extends Controller
     }
 
     private  function findBySlug($slug){
-        $r = MisRequests::query()->where('slug','=',$slug)->first();
+        $r = MisRequests::with('status')->where('slug','=',$slug)->first();
         if(empty($r)){
             abort(503,'Service request not found.');
         }
@@ -108,7 +112,7 @@ class MisRequestsController extends Controller
                         LEFT JOIN users ON users.employee_no = x.employee_no
                         WHERE user_id != ""
                     ) as y
-                    RIGHT JOIN mis_requests ON mis_requests.user_created = y.user_id;');
+                    RIGHT JOIN mis_requests ON mis_requests.requisitioner = y.user_id;');
 
             return DataTables::of($table)
                 ->addColumn('action',function ($data){
@@ -116,24 +120,31 @@ class MisRequestsController extends Controller
                     return '<div class="btn-group">
                             <button class="btn btn-default btn-sm print_request_btn" data="'.$data->slug.'" text="Request no: <b>'.$data->request_no.'</b>"><i class="fa fa-print"></i></button>
                             <button class="btn btn-default btn-sm status_btn" data="'.$data->slug.'" text="Request no: <b>'.$data->request_no.'</b>" data-target="#status_modal" data-toggle="modal" title="Status" data-placement="top" ><i class="fa fa-refresh"></i></button>
+                            <button class="btn btn-default btn-sm edit_request_btn" data="'.$data->slug.'" data-target="#edit_request_modal" data-toggle="modal" ><i class="fa fa-edit"></i></button>
                             <div class="btn-group btn-group-sm" role="group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                  <li><a href="#" class="recommendation_btn" data="'.$data->slug.'">Recommendation</a></li>
-                                  <li><a href="#" data-toggle="modal" data-target="#trainings_modal" class="trainings_btn" data="'.$data->slug.'">Summary of Diagnosis</a></li>
+                                  <li><a href="#" default_text="'.$data->recommendations.'" class="update_status_btn" data="'.$data->slug.'" request_no="'.$data->request_no.'">Update Status</a></li>
+                                  <li><a href="#" data-toggle="modal" data-target="#trainings_modal" class="mark_as_done_btn" data="'.$data->slug.'" request_no="'.$data->request_no.'">Mark as completed</a></li>
                                 </ul>
                             </div>
                         </div>';
                 })
                 ->addColumn('status', function ($data){
-                    return 1;
+                    $status = MisRequestsStatus::query()->where('request_slug','=',$data->slug)->orderBy('created_at','desc')->first();
+                    if(!empty($status)){
+                        return $status->status;
+                    }
                 })
                 ->editColumn('created_at',function ($data){
                     return Carbon::parse($data->created_at)->format('M. d, Y | h:i A');
                 })
                 ->editColumn('fullname',function ($data){
+                    if($data->lastname == '' && $data->firstname == ''){
+                        return $data->requisitioner;
+                    }
                     return $data->lastname.', '.$data->firstname;
                 })
                 ->editColumn('nature_of_request',function ($data){
@@ -154,23 +165,97 @@ class MisRequestsController extends Controller
         return view('dashboard.mis_requests.index');
     }
 
-    public function update(Request $request,$request_slug){
-        if($request->recommend == true){
-            if($request_slug == ''){
-                abort(503,'Missing parameters');
+    private function findCreator($slug){
+        $r =  $this->findBySlug($slug);
+        if(!empty($r)){
+            $requisitioner = $r->requisitioner;
+            $user = User::query()->where('user_id','=',$requisitioner)->first();
+            if(!empty($user)){
+                if(!empty($user->employee)){
+                    return $user->lastname.', '.$user->firstname;
+                }
+                if(!empty($user->joEmployee)){
+                    return $user->lastname.', '.$user->firstname;
+                }
             }
-            if($request->recommendation == ''){
+            return $requisitioner;
+        }
+    }
+
+    public function update(Request $request,$slug){
+        if($request->has('update_status') && $request->update_status == true){
+            if($request->status == ''){
                 abort(503,'This field is required');
             }
-            $r = $this->findBySlug($request_slug);
-            $r->recommendations = $request->recommendation;
-            if($r->update()){
-                return $r->only('slug');
+            $ts = $this->touchStatus($request->status,$slug);
+            if($ts){
+                return [
+                    'slug' => $slug,
+                ];
             }
-            abort(503,'Error updating recommendation');
         }
 
+        if($request->has('mark_as_done') && $request->mark_as_done == true){
+            $r = $this->findBySlug($slug);
+            $r->completed_at = Carbon::now();
+            $r->user_completed = Auth::user()->user_id;
+            if($r->update()){
+                $this->touchStatus('Service request ticket was closed.',$slug);
+                return $r->only('slug');
+            }
+            abort(503,'Error marking as done.');
+        }
 
+        $r = $this->findBySlug($slug);
+        $r->recommendations = $request->recommendations;
+        $r->summary_of_diagnostics = $request->summary_of_diagnostics;
+        $r->returned = $request->returned;
+        $r->date_returned = $request->date_returned;
+        if($r->update()){
+            if(count($r->getChanges()) > 1){
+                $changes = $r->getChanges();
+                foreach ($changes as $field => $value){
+                    $new_key = str_replace('_',' ',$field);
+                    $new_key = ucwords($new_key);
+                    if($field != 'updated_at' && $field != 'user_updated' && $field != 'ip_updated'){
+                        $this->touchStatus($new_key.': '.$value,$slug);
+                    }
+                }
+            }
+            $return = [
+                'slug' => $slug,
+                'summary_of_diagnostics' => $r->summary_of_diagnostics,
+                'returned'=> $r->returned,
+                'date_returned' => $r->date_returned,
+                'recommendations' => $r->recommendations,
+                'status' => $r->status()->first()->status,
+            ];
+            return $return;
+
+        }
+        abort(503, 'Error updating data.');
+
+    }
+
+    private function touchStatus($status_text,$request_slug){
+        $mis_r_s = new MisRequestsStatus;
+        $mis_r_s->status = $status_text;
+        $mis_r_s->slug = Str::random(16);
+        $mis_r_s->request_slug = $request_slug;
+        $mis_r_s->user_created = Auth::user()->user_id;
+        $mis_r_s->ip_created = request()->ip();
+        if($mis_r_s->save()){
+            return $mis_r_s->only('slug');
+        }
+    }
+
+    public function edit($slug){
+        $r = $this->findBySlug($slug);
+        $requisitioner = $this->findCreator($slug);
+        return view('dashboard.mis_requests.edit')->with([
+            'r' => $r,
+            'requisitioner' => $requisitioner,
+        ]);
     }
 
 }
