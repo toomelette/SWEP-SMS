@@ -31,6 +31,20 @@ class MisRequestsStatusController extends Controller
         ]);
     }
 
+    public function indexOpen(Request $request){
+
+        if(!$request->has('slug') || $request->slug == ''){
+            abort(503,'Missing parameters');
+        }
+        $r = $this->findBySlug($request->slug);
+        if(Auth::user()->user_id != $r->user_created){
+            abort(503,'This request is not of your ownership');
+        }
+        return view('dashboard.mis_requests_status.index')->with([
+            'r' => $r,
+        ]);
+    }
+
     public function store(MisRequestsStatusFormRequest $request){
         if(!$request->has('request_slug') || $request->request_slug == ''){
             abort(503,'Missing parameters');

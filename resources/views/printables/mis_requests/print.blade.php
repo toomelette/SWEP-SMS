@@ -26,7 +26,7 @@
 
         }
 
-        td{
+        .bordered td{
             border: 1px solid black;
             padding-left: 2px;
         }
@@ -97,10 +97,10 @@
 
     <div style="width: 100%; overflow: auto">
         <div style="width: 49%; float: left">
-            <p class="no-margin" style="font-weight: bold; font-size: 18px; padding-top: 8px">ICT SERVICE REQUEST FORM</p>
+            <p class="no-margin" style="font-weight: bold; font-size: 20px; padding-top: 8px">ICT SERVICE REQUEST FORM</p>
         </div>
         <div style="width: 49%; float: right">
-            <table style="width: 100%;">
+            <table style="width: 100%;" class="bordered">
                 <tr>
 
                     <td>Request No.</td>
@@ -119,7 +119,7 @@
 
     </div>
     <br>
-        <table style="width: 100%;" class="details_table">
+        <table style="width: 100%;" class="details_table bordered" >
             <tr>
                 <td height="40">Nature of Request</td>
                 <td>{{$r->nature_of_request}}</td>
@@ -135,7 +135,7 @@
         </table>
 
     <br>
-    <table class="details_table" style="width: 100%">
+    <table class="details_table bordered" style="width: 100%">
         <tr>
             <td height="40">Summary of Diagnostics</td>
             <td></td>
@@ -146,7 +146,7 @@
         </tr>
     </table>
 <br>
-    <table style="width: 100%;" class="details_table">
+    <table style="width: 100%;" class="details_table bordered">
         <tr>
             <td height="40">Status</td>
             <td style="width: 30%"></td>
@@ -173,5 +173,15 @@
     </table>
 
 </div>
+    <table style="width: 100%; margin-top: 5px; font-size: 10px;">
+        <tr>
+            <td>
+                {{\Carbon\Carbon::now()->format('Y')}}/PPSPD/MIS | {{\Illuminate\Support\Facades\Auth::user()->username}} | {{\Illuminate\Support\Facades\Request::ip()}}
+            </td>
+            <td style="text-align: right">
+                rev 201710
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

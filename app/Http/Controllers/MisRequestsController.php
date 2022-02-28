@@ -27,6 +27,7 @@ class MisRequestsController extends Controller
                         return '<p class="text-muted no-margin">Cancelled</p>';
                     }
                     return '<div class="btn-group">
+                            <button class="btn btn-default btn-sm status_btn" data="'.$data->slug.'" data-toggle="modal" data-target="#status_modal"><i class="fa fa-refresh"></i> Status</button>
                             <button class="btn btn-default btn-sm print_request_btn" data="'.$data->slug.'" text="Request no: <b>'.$data->request_no.'</b>"><i class="fa fa-print"></i> Print</button>
                         </div>';
                 })

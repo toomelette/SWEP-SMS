@@ -48,6 +48,7 @@
 
 
 @section('modals')
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('status_modal','lg') !!}
     <div class="modal fade" id="new_request_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -284,6 +285,28 @@
             let uri = '{{route("dashboard.mis_requests.print_request_form","slug")}}';
             uri = uri.replace('slug', $(this).attr('data'));
             $("#print_frame").attr('src',uri);
+        })
+
+        $("body").on("click",".status_btn",function () {
+            btn = $(this);
+            let uri = '{{route("dashboard.mis_requests_status.index_open")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            load_modal2(btn);
+            $.ajax({
+                url : uri,
+                data :{slug:btn.attr('data')},
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                    notify('Ajax error.','danger');
+                }
+            })
         })
     </script>
 

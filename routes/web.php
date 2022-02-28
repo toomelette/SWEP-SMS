@@ -36,6 +36,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('/mis_requests/cancel_request','MisRequestsController@cancelRequest')->name('mis_requests.cancel_request');
     Route::get('/mis_requests/{slug}/print','MisRequestsController@printRequestForm')->name('mis_requests.print_request_form');
     Route::post('/mis_requests/store_img','MisRequestsController@storeImg')->name('mis_requests.store_img');
+    Route::get('/mis_requests_status/index_open','MisRequestsStatusController@indexOpen')->name('mis_requests_status.index_open');
 });
 
 /** Dashboard **/

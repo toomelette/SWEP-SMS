@@ -279,6 +279,12 @@ function populate_modal2(btn, response){
     });
 }
 
+function populate_modal2_error(response){
+    if(response.status == 503){
+        notify('Error: '+ response.responseJSON.message, 'danger');
+    }
+}
+
 function succeed(target_form, reset,modal){
     form_id = $(target_form[0]).attr('id');
     if(reset == true){
