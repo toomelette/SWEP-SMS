@@ -144,6 +144,10 @@ class MisRequestsController extends Controller
                 })
                 ->editColumn('fullname',function ($data){
                     if($data->lastname == '' && $data->firstname == ''){
+                        $user = User::query()->where('user_id','=',$data->requisitioner)->first();
+                        if(!empty($user)){
+                            return $user->lastname.', '.$user->firstname;
+                        }
                         return $data->requisitioner;
                     }
                     return $data->lastname.', '.$data->firstname;

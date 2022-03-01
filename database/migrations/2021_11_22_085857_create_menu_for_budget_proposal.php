@@ -19,7 +19,7 @@ class CreateMenuForBudgetProposal extends Migration
             'menu_id' => 'ZSIIXC',
             'category' => 'PPU',
             'name' => 'Budget Proposal',
-            'route' => 'dashboard.budget_proposal.*',
+            'route' => 'dashboard.recommended_budget.*',
             'icon' => 'fa-times',
             'is_menu' => 1,
             'is_dropdown' => 1,
@@ -36,7 +36,7 @@ class CreateMenuForBudgetProposal extends Migration
                 'is_nav' => 1,
                 'nav_name' =>'Prepare Budget Proposal',
                 'name' => 'Budget Proposal Create',
-                'route' => 'dashboard.budget_proposal.create',
+                'route' => 'dashboard.recommended_budget.create',
             ],
             [
                 'slug' => 'J6Q8ybK0HVFW7Gom',
@@ -45,7 +45,7 @@ class CreateMenuForBudgetProposal extends Migration
                 'is_nav' => 1,
                 'nav_name' =>'Prepare Budget Proposal Index',
                 'name' => 'Budget Proposal Index',
-                'route' => 'dashboard.budget_proposal.index',
+                'route' => 'dashboard.recommended_budget.index',
             ]
         ]);
     }

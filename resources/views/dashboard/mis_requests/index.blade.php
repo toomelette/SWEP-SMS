@@ -36,6 +36,9 @@
                 </div>
             </div>
         </div>
+
+        <iframe src="" id="print_frame" style="display: none"></iframe>
+
     </section>
 
 
@@ -315,6 +318,23 @@
                     console.log(res);
                 }
             })
+        })
+
+        $("#print_frame").on("load",function () {
+            $(this).get(0).contentWindow.print();
+            $(".print_request_btn").each(function () {
+                btn = $(this);
+                unwait_this_button(btn);
+            })
+        })
+
+        $("body").on("click",".print_request_btn",function () {
+
+            btn = $(this);
+            wait_this_button(btn);
+            let uri = '{{route("dashboard.mis_requests.print_request_form","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            $("#print_frame").attr('src',uri);
         })
     </script>
 

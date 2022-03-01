@@ -223,4 +223,19 @@ class Helper
         }
         return $array;
     }
+
+    public static function responsibilityCenters(){
+        $arr = [
+            'PPSPD' => 'PPSPD',
+            'AFD' => 'AFD',
+            'RDE' => 'RDE',
+            'REGULATION' => 'REGULATION',
+            'OB' => 'OB',
+            'OA' => 'OA',
+            'IAD'=>'IAD',
+            'LEGAL' => 'LEGAL',
+        ];
+        ksort($arr);
+        return $arr;
+    }
 }

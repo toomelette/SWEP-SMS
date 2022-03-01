@@ -203,8 +203,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** PAP  Parents**/
     Route::resource('pap_parent', 'PapParentController');
 
-    /** Budget Proposal**/
-    Route::resource('budget_proposal', 'BudgetProposalController');
+
 
     /** DTR **/
     Route::get('/dtr/extract', 'DTRController@extract2')->name('dtr.extract');
@@ -232,6 +231,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('mis_requests/{slug}/edit','MisRequestsController@edit')->name('mis_requests.edit');
     Route::put('mis_requests/{request_slug}/update','MisRequestsController@update')->name('mis_requests.update');
     Route::resource('mis_requests_status','MisRequestsStatusController');
+
+    /** Budget Proposal**/
+    Route::resource('budget_proposal', 'BudgetProposalController');
 });
 
 
