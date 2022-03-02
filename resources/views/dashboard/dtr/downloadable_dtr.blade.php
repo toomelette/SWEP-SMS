@@ -241,14 +241,14 @@
         </table>
 
         <div>
-            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 0px">I hereby certify that the above records are true and correct</p>
+            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 35px">I hereby certify that the above records are true and correct</p>
 
-            <div style="float: right; padding-right: 10px">
+            <div style="float: right; padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p class="text-center" style="margin-top: 0">Signature of Employee</p>
             </div>
             <br><br><br>
-            <div style="padding-right: 10px">
+            <div style="padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p style="margin-top: 0; padding-left: 50px">Authorized Official</p>
             </div>
@@ -406,14 +406,14 @@
         </table>
 
         <div>
-            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 0px">I hereby certify that the above records are true and correct</p>
+            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 35px">I hereby certify that the above records are true and correct</p>
 
-            <div style="float: right; padding-right: 10px">
+            <div style="float: right; padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p class="text-center" style="margin-top: 0">Signature of Employee</p>
             </div>
             <br><br><br>
-            <div style="padding-right: 10px">
+            <div style="padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p style="margin-top: 0; padding-left: 50px">Authorized Official</p>
             </div>
