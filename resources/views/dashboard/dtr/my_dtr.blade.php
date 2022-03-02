@@ -15,6 +15,7 @@
 @endsection
 @section('content2')
     <section class="content">
+        <button id="capture_btn">Print</button>
         <div class="box box-success">
             <div class="box-header with-border" >
                 <h3 class="box-title">Daily Time Record</h3>
@@ -105,6 +106,9 @@
             </div>
             <!-- /.box-body -->
         </div>
+        <div id="frameee">
+
+        </div>
     </section>
 
 
@@ -171,6 +175,12 @@
                     'info',
                 )
             }
+        })
+
+        $("#capture_btn").click(function () {
+            html2canvas(document.querySelector(".box-success")).then(canvas => {
+                $('#frameee').append(canvas);
+            });
         })
     </script>
 @endsection
