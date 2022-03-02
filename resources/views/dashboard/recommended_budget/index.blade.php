@@ -3,13 +3,13 @@
 @section('content')
 
     <section class="content-header">
-        <h1>Manage Programs/Activities/Projects</h1>
+        <h1>Budget Proposal</h1>
     </section>
 
     <section class="content">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">List of Job Order Employees</h3>
+                <h3 class="box-title">List of PAP</h3>
                 <button type="button" class="btn btn-success btn-sm pull-right"  data-target="#add_pap_modal" data-toggle="modal"><i class="fa fa-plus"></i> Add PAP</button>
             </div>
             <div class="box-body">
@@ -17,15 +17,14 @@
                     <table class="table table-bordered table-striped table-hover" id="rec_budget_table" style="width: 100% !important">
                         <thead>
                         <tr class="">
-                            <th class="th-20">Employee No.</th>
-                            <th >Full Name</th>
-                            <th >Sex</th>
-                            <th >Birthday | Age</th>
-                            <th >Civil Status</th>
-                            <th >BM User Id</th>
+                            <th class="th-20">PAP Code</th>
+                            <th >PAP Title</th>
+                            <th >PS</th>
+                            <th >CO</th>
+                            <th >MOOE</th>
+                            <th >% Share</th>
+                            <th >Details</th>
                             <th class="action">Action</th>
-                            <th >Lastname</th>
-                            <th >Firstname</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,23 +54,26 @@
                         <h4 class="modal-title" id="myModalLabel">Add PAP</h4>
                     </div>
                     <div class="modal-body">
-                        @if(request('resp_center') != '' && request('year') != '')
+                        @if(request('resp_center') != '' && request('fiscal_year') != '')
                             <div class="row">
                                 <div class="col-md-6">
                                     <b>Year:</b>
-                                    <p>{{request('year')}}</p>
+                                    <p>{{request('fiscal_year')}}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <b>Responsibility Center:</b>
                                     <p>{{request('resp_center')}}</p>
                                 </div>
+
+
                             </div>
                         @else
                             <div class="row">
+
                                 {!! __form::select_year(6, 'Year', 'year', [] , '', '') !!}
 
                                 {!!
-                                    __form::select_static2(6, 'dept', 'Responsibility Center: ',request('resp_center'),
+                                    __form::select_static2(6, 'resp_center', 'Responsibility Center: ',request('resp_center'),
                                     \App\Swep\Helpers\Helper::responsibilityCenters()
                                     , '', '', '', '')
                                    !!}
@@ -79,25 +81,47 @@
                         @endif
                         <div class="row">
                             {!! __form::textbox(
-                              '12 pap_title', 'pap_title', 'text', 'PAP Title *', 'PAP Title', '', 'pap_title', '', '',''
+                              '6 pap_code', 'pap_code', 'text', 'PAP Code: *', 'PAP Code', '', 'pap_code', '', '','', ''
                             ) !!}
-
-                            {!! __form::textarea('12 pap_desc', 'pap_desc', 'PAP Description: ', '', '', '', '', '') !!}
+                            {!!
+                                __form::select_static2('6 budget_type', 'budget_type', 'Budget Type: ','',
+                                \App\Swep\Helpers\Helper::budgetTypes()
+                                , '', '', '', '')
+                            !!}
                         </div>
                         <div class="row">
-                            {!! __form::textbox_numeric(
-                              '4 ps', 'ps', 'text', 'PS *', 'PS', '', $errors->has('amount'), $errors->first('amount'), '', '',''
+                            {!! __form::textbox(
+                              '12 pap_title', 'pap_title', 'text', 'PAP Title:*', 'PAP Title', '', 'pap_title', '', '','', ''
                             ) !!}
-                            {!! __form::textbox_numeric(
-                              '4 ps', 'co', 'text', 'Capital Outlay *', 'Capital Outlay', '', $errors->has('amount'), $errors->first('amount'), '', '',''
-                            ) !!}
-                            {!! __form::textbox_numeric(
-                              '4 ps', 'mooe', 'text', 'MOOE *', 'MOOE', '', $errors->has('amount'), $errors->first('amount'), '', '',''
+                        </div>
+
+                        <div class="row">
+                            {!! __form::textbox(
+                              '12 division', 'division', 'text', 'Division:*', 'Division', '', 'division', '', 'autocomplete="off"','', ''
                             ) !!}
                         </div>
                         <div class="row">
                             {!! __form::textbox(
-                              '4 pcent_share', 'pcent_share', 'number', 'Percent Share *', 'Percent Share', '', 'pcent_share', '', '',''
+                              '12 section', 'section', 'text', 'Section:', 'Section', '', 'section', '', 'autocomplete="off"','', ''
+                            ) !!}
+                        </div>
+                        <div class="row">
+                            {!! __form::textarea('12 pap_desc', 'pap_desc', 'PAP Description: ', '', '', '', '', '') !!}
+                        </div>
+                        <div class="row">
+                            {!! __form::textbox_numeric(
+                              '4 ps', 'ps', 'text', 'PS *', 'PS', '', $errors->has('amount'), $errors->first('amount'), 'autocomplete="off"', '',''
+                            ) !!}
+                            {!! __form::textbox_numeric(
+                              '4 ps', 'co', 'text', 'Capital Outlay *', 'Capital Outlay', '', $errors->has('amount'), $errors->first('amount'), 'autocomplete="off"', '',''
+                            ) !!}
+                            {!! __form::textbox_numeric(
+                              '4 ps', 'mooe', 'text', 'MOOE *', 'MOOE', '', $errors->has('amount'), $errors->first('amount'), 'autocomplete="off"', '',''
+                            ) !!}
+                        </div>
+                        <div class="row">
+                            {!! __form::textbox(
+                              '4 pcent_share', 'pcent_share', 'number', 'Percent Share *', 'Percent Share', '', 'pcent_share', '', 'step="0.01"'
                             ) !!}
                         </div>
                     </div>
@@ -144,30 +168,41 @@
           "serverSide": true,
           "ajax" : '{{route("dashboard.budget_proposal.index")}}',
           "columns": [
-            { "data": "username" },
-            { "data": "fullname" },
-            { "data": "is_online" },
-            { "data": "account_status" },
+            { "data": "pap_code" },
+            { "data": "pap_title" },
+
+            { "data": "ps" },
+            { "data": "co" },
+            { "data": "mooe" },
+              { "data": "pcent_share" },
+              { "data": "details" },
             { "data": "action" }
           ],
           "buttons": [
             {!! __js::dt_buttons() !!}
           ],
           "columnDefs":[
+              {
+                  "targets" : [0],
+                  "class" : 'w-8p'
+              },
+              {
+                  "targets" : [2,3,4],
+                  "class" : 'w-8p text-right'
+              },
+              {
+                  "targets" : 5,
+                  "class" : 'w-6p text-right'
+              },
             {
-              "targets" : 0,
+              "targets" : 6,
               "orderable" : false,
               "class" : 'w-10p'
             },
             {
-              "targets" : [2,3],
+              "targets" : 7,
               "orderable" : false,
-              "class" : 'w-6p'
-            },
-            {
-              "targets" : 4,
-              "orderable" : false,
-              "class" : 'action-10p'
+              "class" : 'action2'
             },
           ],
           "responsive": false,
@@ -204,8 +239,8 @@
             let form = $(this);
             loading_btn(form);
             let form_data = form.serialize();
-            @if(request('resp_center') != '' && request('year') != '')
-                  form_data = form_data+'&year={{request('year')}}&resp_center={{request('resp_center')}}';
+            @if(request('resp_center') != '' && request('fiscal_year') != '')
+                  form_data = form_data+'&fiscal_year={{request('fiscal_year')}}&resp_center={{request('resp_center')}}';
             @endif
             $.ajax({
                 url : '{{route("dashboard.budget_proposal.store")}}',
@@ -216,12 +251,35 @@
                 },
                 success: function (res) {
                    succeed(form,true,false);
+                   active = res.slug;
+                   pap_tbl.draw(false);
                 },
                 error: function (res) {
                     errored(form,res);
                 }
             })
         })
+
+        $("#division").typeahead({
+            ajax : "{{ route('dashboard.budget_proposal.index') }}?typeahead=true&for=division",
+            onSelect:function (result) {
+                console.log(result);
+            },
+            lookup: function (i) {
+                console.log(i);
+            }
+        });
+
+        $("#section").typeahead({
+            ajax : "{{ route('dashboard.budget_proposal.index') }}?typeahead=true&for=section",
+            onSelect:function (result) {
+                console.log(result);
+            },
+            lookup: function (i) {
+                console.log(i);
+            }
+        });
+
     </script>
 
 

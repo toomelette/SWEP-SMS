@@ -1,9 +1,31 @@
 @php($days_in_this_month = \Carbon\Carbon::parse($month)->daysInMonth)
 <head>
     <style type="text/css">
+        {{--@font-face {--}}
+        {{--    font-family: 'HunDin';--}}
+        {{--    src: url({{ storage_path('fonts/HunDin.ttf') }}) format('truetype');--}}
+        {{--    font-weight: 400;--}}
+        {{--    font-style: normal;--}}
+        {{--}--}}
+
+
+        {{--@font-face {--}}
+        {{--    font-family: 'OS-Condenesed-Bold';--}}
+        {{--    src: url({{ storage_path('fonts/OpenSansCondensed-Bold.ttf') }}) format('truetype');--}}
+        {{--    font-weight: 400;--}}
+        {{--    font-style: normal;--}}
+
+        {{--}--}}
+
+        {{--@font-face {--}}
+        {{--    font-family: 'OS-Condenesed-Light';--}}
+        {{--    src: url({{ storage_path('fonts/OpenSansCondensed-Light.ttf') }}) format('truetype');--}}
+        {{--    font-style: normal;--}}
+        {{--}--}}
+
         @font-face {
             font-family: 'HunDin';
-            src: url({{ storage_path('fonts/HunDin.ttf') }}) format('truetype');
+            src: url({{ asset('fonts/print/HunDin.ttf') }}) format('truetype');
             font-weight: 400;
             font-style: normal;
         }
@@ -11,7 +33,7 @@
 
         @font-face {
             font-family: 'OS-Condenesed-Bold';
-            src: url({{ storage_path('fonts/OpenSansCondensed-Bold.ttf') }}) format('truetype');
+            src: url({{ asset('fonts/print/OpenSansCondensed-Bold.ttf') }}) format('truetype');
             font-weight: 400;
             font-style: normal;
 
@@ -19,12 +41,12 @@
 
         @font-face {
             font-family: 'OS-Condenesed-Light';
-            src: url({{ storage_path('fonts/OpenSansCondensed-Light.ttf') }}) format('truetype');
+            src: url({{ asset('fonts/print/OpenSansCondensed-Light.ttf') }}) format('truetype');
             font-style: normal;
         }
 
         .table-bordered,.table-bordered th,.table-bordered td {
-            border: 1px solid black;
+            border: 1px solid grey;
             border-collapse: collapse;
         }
         .text-center{
@@ -39,13 +61,17 @@
         }
         table td{
             font-family: "HunDin";
+            padding: 4px 2px;
+
+            font-size: 12px;
+            font-weight: bold;
         }
 
         thead{
             font-family: "Helvetica";
         }
         p{
-            font-size: 14px;
+            font-size: 16px;
             font-family: "Helvetica";
         }
         .small-margin{
@@ -55,17 +81,26 @@
             color : #1e5ab3;
         }
 
-
-         .dtr-table tr  td:nth-child(2),td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7) { background: url("{{asset('images/wm.png')}}");}
+        @page {
+            size: A4 portrait;
+            margin: 2%;
+        }
+         {{--.dtr-table tr  td:nth-child(2),td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7) { background: url("{{asset('images/wm.png')}}");}--}}
 
     </style>
+
+    <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{asset('template/plugins/html2canvas/html2canvas.js')}}"></script>
 </head>
-<div>
-    <div style="width: 49%; float: left; border-right: 1px dashed black">
+<div >
+
+</div>
+<div id="both"  style=" width: 780px; overflow: auto;">
+    <div style="width: 48.5%; float: left; border-right: 1px dashed black">
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
         <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
-
+        <br>
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
@@ -211,14 +246,14 @@
         </table>
 
         <div>
-            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 0px">I hereby certify that the above records are true and correct</p>
+            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 35px">I hereby certify that the above records are true and correct</p>
 
-            <div style="float: right; padding-right: 10px">
+            <div style="float: right; padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p class="text-center" style="margin-top: 0">Signature of Employee</p>
             </div>
             <br><br><br>
-            <div style="padding-right: 10px">
+            <div style="padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p style="margin-top: 0; padding-left: 50px">Authorized Official</p>
             </div>
@@ -228,11 +263,11 @@
             <p style="font-size: 10px;float: left">2022/PPSPD/MIS | {{Auth::user()->username}} | {{request()->ip()}}</p>
         </div>
     </div>
-    <div style="width: 46% ; float: right; margin-left: 20px">
+    <div style="width: 46% ; float: right; margin-right: 20px; ">
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
         <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
-
+        <br>
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
@@ -376,14 +411,14 @@
         </table>
 
         <div>
-            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 0px">I hereby certify that the above records are true and correct</p>
+            <p style="font-size: 14px; font-family: 'OS-Condenesed-Bold'; margin-top: 35px">I hereby certify that the above records are true and correct</p>
 
-            <div style="float: right; padding-right: 10px">
+            <div style="float: right; padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p class="text-center" style="margin-top: 0">Signature of Employee</p>
             </div>
             <br><br><br>
-            <div style="padding-right: 10px">
+            <div style="padding-right: 10px; margin-top: 15px">
                 ___________________________
                 <p style="margin-top: 0; padding-left: 50px">Authorized Official</p>
             </div>
@@ -394,3 +429,27 @@
         </div>
     </div>
 </div>
+<button id="cap_btn">Caputre</button>
+<div id="frameee">
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        html2canvas(document.querySelector("#both"),{
+            scale: 3,
+        }).then(canvas => {
+            $('#frameee').append(canvas);
+            $("#both").remove();
+            $("#cap_btn").remove();
+            setTimeout(function () {
+                parent.loaded();
+            },1000);
+        });
+
+
+    })
+
+
+</script>

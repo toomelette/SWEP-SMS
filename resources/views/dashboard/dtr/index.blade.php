@@ -7,6 +7,7 @@
     </section>
 
     <section class="content">
+
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">List of Biometric Users</h3>

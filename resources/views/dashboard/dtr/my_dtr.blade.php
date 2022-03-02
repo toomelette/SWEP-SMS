@@ -105,6 +105,9 @@
             </div>
             <!-- /.box-body -->
         </div>
+        <div id="frameee">
+
+        </div>
     </section>
 
 
@@ -171,6 +174,12 @@
                     'info',
                 )
             }
+        })
+
+        $("#capture_btn").click(function () {
+            html2canvas(document.querySelector(".box-success")).then(canvas => {
+                $('#frameee').append(canvas);
+            });
         })
     </script>
 @endsection

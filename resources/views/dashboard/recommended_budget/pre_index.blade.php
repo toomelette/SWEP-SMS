@@ -13,7 +13,7 @@
 
                 <form action="{{route('dashboard.budget_proposal.index')}}" method="GET">
                     <div class="row">
-                        {!! __form::select_year(12, 'Year', 'year', [] , '', '') !!}
+                        {!! __form::select_year(12, 'Year', 'fiscal_year', [] , '', '') !!}
 
                         {!!
                             __form::select_static2(12, 'resp_center', 'Responsibility Center: ','',

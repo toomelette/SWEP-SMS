@@ -238,4 +238,10 @@ class Helper
         ksort($arr);
         return $arr;
     }
+    public static function budgetTypes(){
+        return [
+            'COB' => 'COB',
+            'SIDA' => 'SIDA',
+        ];
+    }
 }

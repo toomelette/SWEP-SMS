@@ -16,8 +16,8 @@
         <input value="{{$bm_u_id}}" id="" name="bm_u_id" hidden>
         <input value="{{$month}}" name="month" hidden>
     </form>
-
-    <button type="submit" class="btn btn-primary pull-right download_btn" style="margin-bottom: 1rem"><i class="fa fa-download"></i> Download PDF </button>
+    <button class="btn btn-primary pull-right" id="print_dtr_btn"><i class="fa fa-print"></i> Print</button>
+{{--    <button type="submit" class="btn btn-primary pull-right download_btn" style="margin-bottom: 1rem"><i class="fa fa-download"></i> Download PDF </button>--}}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-clock-o"></i> DAILY TIME RECORD</a></li>
@@ -183,10 +183,15 @@
             </div>
         </div>
     </div>
+    <div style="">
+
+    </div>
+
 
 @endsection
 
 @section('modal-footer')
+    <iframe id="print_frame" src="" class="pull-left"  width="1" height="1"></iframe>
     <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
 @endsection
 
@@ -375,7 +380,30 @@
         // });
 
     })
+    $('#print_dtr_btn').click(function () {
+        // let btn = $(this);
+        // btn.children('i').removeClass('fa-print');
+        // btn.children('i').addClass('fa-spinner fa-spin');
+        Swal.fire({
+            icon: 'info',
+            title: 'Please wait...',
+            html: '<div style="padding: 15px; font-size: larger"><i class="fa fa-spin fa-spinner"></i> Preparing your DTR. . .</div>',
+            showConfirmButton : false,
+        })
+
+
+
+        $("#print_frame").attr('src','{{route("dashboard.dtr.download")}}?month={{$month}}&bm_u_id={{$bm_u_id}}');
+
+    })
 
 </script>
+
+    <script type="text/javascript">
+        function loaded(){
+            Swal.close();
+            $('#print_frame').get(0).contentWindow.print();
+        }
+    </script>
 @endsection
 

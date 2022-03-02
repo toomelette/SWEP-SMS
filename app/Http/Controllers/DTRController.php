@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Rats\Zkteco\Lib\ZKTeco;
+use Spatie\Browsershot\Browsershot;
 use Yajra\DataTables\Facades\DataTables;
 
 class DTRController extends  Controller
@@ -242,14 +243,17 @@ class DTRController extends  Controller
     }
 
     public function download(Request $request){
+
         if(!request()->has('month')){
             abort(404);
         }
         $sm = UserSubmenu::query()->where('submenu_id','=','VODFKKM')->where('user_id','=',Auth::user()->user_id)->first();
+
         if(empty($sm)){
             $employee = $this->getCurrentUserEmployeeObj();
         }else{
             $perm_employee = Employee::query()->where('biometric_user_id','=',$request->bm_u_id)->first();
+
             if(!empty($perm_employee)){
                 $employee = $perm_employee;
             }else{
@@ -257,9 +261,9 @@ class DTRController extends  Controller
                 if(!empty($jo_employee)){
                     $employee = $jo_employee;
                 }
+
             }
         }
-
 
         $dtrs = DailyTimeRecord::query()->where('biometric_user_id','=',$employee->biometric_user_id)->
         where('date','like',$request->month.'%')->orderBy('date','asc')->get();
@@ -284,7 +288,7 @@ class DTRController extends  Controller
 
         //return $request;
         $pdf = PDF::loadView('dashboard.dtr.downloadable_dtr',$data)->setPaper('letter');
-        //return view('dashboard.dtr.downloadable_dtr',$data);
+        return view('dashboard.dtr.downloadable_dtr',$data);
         //$pdf->adminPassword('123456');
         return $pdf->download('DTR-'.$employee->lastname.'-'.Carbon::parse($request->month)->format("Y,F").'.pdf');
 

@@ -26,7 +26,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     'middleware' => ['check.user_status', 'last_activity','sidenav_mw']
 ], function () {
     Route::get('/dtr/my_dtr', 'DTRController@myDtr')->name('dtr.my_dtr');
-    Route::post('/dtr/download','DTRController@download')->name('dtr.download');
+    Route::get('/dtr/download','DTRController@download')->name('dtr.download');
     Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
     Route::post('dashboard/changePass','UserController@changePassword')->name('all.changePass');
     Route::post('/change_side_nav','SidenavController@change')->name('sidenav.change');

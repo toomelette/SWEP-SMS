@@ -80,7 +80,7 @@
 
 {{--AUTONUM--}}
 <script type="text/javascript" src="{{asset('template/plugins/autonum/main.js')}}"></script>
-
+<script type="text/javascript" src="{{asset('template/plugins/html2canvas/html2canvas.js')}}"></script>
 
 
 <script type="text/javascript">
