@@ -15,7 +15,6 @@
 @endsection
 @section('content2')
     <section class="content">
-        <button id="capture_btn">Print</button>
         <div class="box box-success">
             <div class="box-header with-border" >
                 <h3 class="box-title">Daily Time Record</h3>
