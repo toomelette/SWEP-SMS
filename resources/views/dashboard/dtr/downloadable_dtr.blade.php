@@ -61,7 +61,9 @@
         }
         table td{
             font-family: "HunDin";
-            padding: 3px;
+            padding: 4px 2px;
+
+            font-size: 12px;
             font-weight: bold;
         }
 
@@ -79,8 +81,11 @@
             color : #1e5ab3;
         }
 
-
-         .dtr-table tr  td:nth-child(2),td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7) { background: url("{{asset('images/wm.png')}}");}
+        @page {
+            size: A4 portrait;
+            margin: 2%;
+        }
+         {{--.dtr-table tr  td:nth-child(2),td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7) { background: url("{{asset('images/wm.png')}}");}--}}
 
     </style>
 
@@ -95,7 +100,7 @@
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
         <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
-
+        <br>
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
@@ -258,11 +263,11 @@
             <p style="font-size: 10px;float: left">2022/PPSPD/MIS | {{Auth::user()->username}} | {{request()->ip()}}</p>
         </div>
     </div>
-    <div style="width: 46% ; float: right; margin-left: 10px">
+    <div style="width: 46% ; float: right; margin-right: 20px; ">
         <p class="text-left small-margin" style="margin-right: 10px; font-style: italic; font-size: 10px"><b>CSC Form 48</b></p>
         <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
-
+        <br>
         <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
