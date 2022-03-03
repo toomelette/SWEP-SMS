@@ -401,7 +401,7 @@
         {!! __js::ajax_select_to_select(
           'department_name', 'project_code', '/api/project_code/select_projectCode_byDeptName/', 'project_code', 'project_code'
         ) !!}
-
+        {!! \App\Swep\ViewHelpers\__js::autonum() !!}
         $(".select2").select2({
             dropdownParent: $('#add_dv_modal')
         });

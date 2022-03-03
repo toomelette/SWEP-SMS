@@ -37,12 +37,12 @@ $(document).ready(function($){
 
 
 // Price Format
-$(".priceformat").priceFormat({
-    prefix: "",
-    thousandsSeparator: ",",
-    clearOnEmpty: true,
-    allowNegative: true
-});
+// $(".priceformat").priceFormat({
+//     prefix: "",
+//     thousandsSeparator: ",",
+//     clearOnEmpty: true,
+//     allowNegative: true
+// });
 
 
 // Input to Uppercase

@@ -84,20 +84,20 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+
         autonum_settings = {
             currencySymbol : '',
             decimalCharacter : '.',
             digitGroupSeparator : ',',
         };
 
-        $(".priceformat").each(function(){
-            new AutoNumeric(this, autonum_settings);
-        })
+        // $(".priceformat").each(function(){
+        //     new AutoNumeric(this, autonum_settings);
+        // })
 
 
 
-    })
+
 
 
 </script>

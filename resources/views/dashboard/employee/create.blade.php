@@ -2156,12 +2156,12 @@
         });
       });
       
-      $(".priceformat").priceFormat({
-        prefix: "",
-        thousandsSeparator: ",",
-        clearOnEmpty: true,
-        allowNegative: true
-      });
+      // $(".priceformat").priceFormat({
+      //   prefix: "",
+      //   thousandsSeparator: ",",
+      //   clearOnEmpty: true,
+      //   allowNegative: true
+      // });
 
       $(this).removeClass('datepicker');
 
@@ -2176,7 +2176,7 @@
 
     {{-- Voluntary Works ADD ROW --}}
     $(document).ready(function() {
-
+      {!! \App\Swep\ViewHelpers\__js::autonum() !!}
       $("#vw_add_row").on("click", function() {
       var i = $("#vw_table_body").children().length;
       var content ='<tr>' +
