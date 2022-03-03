@@ -22,7 +22,7 @@ class BudgetProposalController extends Controller
         if(request()->ajax() && $request->has('draw')){
             $rec_budget = RecommendedBudget::query();
             return DataTables::of($rec_budget)
-                ->editColumn('action',function ($data){
+                ->addColumn('action',function ($data){
                     return 1;
                 })
                 ->editColumn('pap_title',function ($data){

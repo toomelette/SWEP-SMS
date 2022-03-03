@@ -34,7 +34,7 @@ class EmployeeFormRequest extends FormRequest{
         $rules = [
             
             // Personal Info
-            'lastname'=>'nullable|string|max:90',
+            'lastname'=>'required|string|max:90',
             'firstname'=>'nullable|string|max:90',
             'middlename'=>'nullable|string|max:90',
             'name_ext'=>'nullable|string|max:11',

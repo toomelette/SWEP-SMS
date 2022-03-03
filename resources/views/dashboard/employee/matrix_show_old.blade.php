@@ -36,13 +36,9 @@
 </section>
 
 <section class="content">
-
     <div class="box">
-        
       <div class="box-header with-border">
-        
         <h3 class="box-title">Matrix Details</h3>
-
         <div class="box-tools">
           <a href="{{ route('dashboard.employee.matrix', $employee->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
           &nbsp;
