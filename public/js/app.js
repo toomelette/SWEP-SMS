@@ -20,20 +20,37 @@ $('select[multiple]').select2({
 });
 
 
+var autonum_settings = {
+    currencySymbol : ' ₱',
+    decimalCharacter : '.',
+    digitGroupSeparator : ',',
+};
+function autonum_init(){
+    $(".autonum").each(function(){
+        new AutoNumeric(this, autonum_settings);
+    });
+}
+function autonum_init_modal_new(btn){
+    setTimeout(function () {
+        $(btn.attr('data-target')+" .autonum").each(function(){
+            new AutoNumeric(this, autonum_settings);
+        });
+    },1000);
+}
+
 // Filter Form Submit Rule
 $(document).ready(function($){
+    autonum_init();
    $("#filter_form").submit(function() {
         $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
         return true;
     });
     $("form").find( ":input" ).prop( "disabled", false );
-
     $(".tree_active").parents('.treeview').addClass('menu-open');
     $(".tree_active").parents('li').addClass('active');
     $(".tree_active").parents('.treeview-menu').slideDown();
-
-
 });
+
 
 
 // Price Format
@@ -43,6 +60,7 @@ $(document).ready(function($){
 //     clearOnEmpty: true,
 //     allowNegative: true
 // });
+
 
 
 // Input to Uppercase
@@ -185,8 +203,11 @@ function errored(target_form, response){
     mark_required(target_form,response);
     if(response.status == 503){
         notify(response.responseJSON.message, "danger");
+    }else if(response.status == 422){
+
     }else{
-        notify("Please fill out required fields", "warning");
+
+        alert(response.responseJSON.message);
     }
 }
 function remove_loading_btn(target_form){
@@ -283,6 +304,7 @@ function populate_modal2_error(response){
     if(response.status == 503){
         notify('Error: '+ response.responseJSON.message, 'danger');
     }
+    alert(response.responseJSON.message);
 }
 
 function succeed(target_form, reset,modal){

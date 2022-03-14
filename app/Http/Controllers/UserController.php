@@ -123,7 +123,12 @@ class UserController extends Controller{
                     })
                     ->addColumn('fullname', function ($data){
                         if(!empty($data->employeeUnion)){
-                            return strtoupper($data->employeeUnion->lastname.', '.$data->employeeUnion->firstname);
+                            $default_pword = Carbon::parse($data->employeeUnion->birthday)->format('mdy');
+                            $add = '';
+                            if(!Hash::check($default_pword,$data->password)){
+                                $add = '<i class="fa fa-lock text-muted" title="The user has already changed its password."></i>';
+                            }
+                            return strtoupper($data->employeeUnion->lastname.', '.$data->employeeUnion->firstname) .' '.$add;
                         }
                         return $data->lastname.', '.$data->firstname;
                     })

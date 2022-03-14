@@ -3,6 +3,10 @@
           @if(isset($slug))
           data="{{$slug}}"
             @endif
+
+          @if(isset($uri))
+          uri="{{$uri}}"
+            @endif
     >
         @csrf
         @endisset

@@ -5,7 +5,6 @@
     <section class="content-header">
         <h1>Budget Proposal</h1>
     </section>
-
     <section class="content">
         <div class="box box-success">
             <div class="box-header with-border">
@@ -45,6 +44,8 @@
 
 
 @section('modals')
+
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_pap_modal','') !!}
     <div class="modal fade" id="add_pap_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -64,8 +65,6 @@
                                     <b>Responsibility Center:</b>
                                     <p>{{request('resp_center')}}</p>
                                 </div>
-
-
                             </div>
                         @else
                             <div class="row">
@@ -80,49 +79,82 @@
                             </div>
                         @endif
                         <div class="row">
-                            {!! __form::textbox(
-                              '6 pap_code', 'pap_code', 'text', 'PAP Code: *', 'PAP Code', '', 'pap_code', '', '','', ''
-                            ) !!}
-                            {!!
-                                __form::select_static2('6 budget_type', 'budget_type', 'Budget Type: ','',
-                                \App\Swep\Helpers\Helper::budgetTypes()
-                                , '', '', '', '')
-                            !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('pap_code',[
+                                'cols' => 6,
+                                'label' => 'PAP Code:',
+                            ]) !!}
+
+                            {!! \App\Swep\ViewHelpers\__form2::select('budget_type',[
+                                'cols' => 6,
+                                'label' => 'Budget Types:',
+                                'options' => [
+                                    'COB' => 'Corporate',
+                                    'SIDA' => 'SIDA',
+
+                                ],
+                            ]) !!}
+
                         </div>
                         <div class="row">
-                            {!! __form::textbox(
-                              '12 pap_title', 'pap_title', 'text', 'PAP Title:*', 'PAP Title', '', 'pap_title', '', '','', ''
-                            ) !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('pap_title',[
+                                'cols' => 12,
+                                'label' => 'PAP Title:',
+                            ]) !!}
+
                         </div>
 
                         <div class="row">
-                            {!! __form::textbox(
-                              '12 division', 'division', 'text', 'Division:*', 'Division', '', 'division', '', 'autocomplete="off"','', ''
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('division',[
+                                'cols' => 12,
+                                'label' => 'Division:*',
+                                'id' => 'division',
+                                'autocomplete' => 'off'
+                            ]) !!}
+                        </div>
+                        <div class="row">
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('section',[
+                                'cols' => 12,
+                                'label' => 'Section:',
+                                'id' => 'section',
+                                'autocomplete' => 'off',
+                            ]) !!}
+                        </div>
+                        <div class="row">
+                            {!! \App\Swep\ViewHelpers\__form2::textarea('pap_desc',[
+                                'cols' => 12,
+                                'label' => 'PAP Description:',
+                                'rows' => 3,
+                            ]) !!}
+                        </div>
+                        <div class="row">
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('ps',[
+                                'cols' => 4,
+                                'label' => 'PS:',
+                                'class' => 'autonum',
+                            ],
+                            0
+                            ) !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('co',[
+                                'cols' => 4,
+                                'label' => 'Capital Outlay:',
+                                'class' => 'autonum',
+                            ],
+                            0
+                            ) !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('mooe',[
+                                'cols' => 4,
+                                'label' => 'MOOE:',
+                                'class' => 'autonum',
+                            ],
+                            0
                             ) !!}
                         </div>
                         <div class="row">
-                            {!! __form::textbox(
-                              '12 section', 'section', 'text', 'Section:', 'Section', '', 'section', '', 'autocomplete="off"','', ''
-                            ) !!}
-                        </div>
-                        <div class="row">
-                            {!! __form::textarea('12 pap_desc', 'pap_desc', 'PAP Description: ', '', '', '', '', '') !!}
-                        </div>
-                        <div class="row">
-                            {!! __form::textbox_numeric(
-                              '4 ps', 'ps', 'text', 'PS *', 'PS', '', $errors->has('amount'), $errors->first('amount'), 'autocomplete="off"', '',''
-                            ) !!}
-                            {!! __form::textbox_numeric(
-                              '4 ps', 'co', 'text', 'Capital Outlay *', 'Capital Outlay', '', $errors->has('amount'), $errors->first('amount'), 'autocomplete="off"', '',''
-                            ) !!}
-                            {!! __form::textbox_numeric(
-                              '4 ps', 'mooe', 'text', 'MOOE *', 'MOOE', '', $errors->has('amount'), $errors->first('amount'), 'autocomplete="off"', '',''
-                            ) !!}
-                        </div>
-                        <div class="row">
-                            {!! __form::textbox(
-                              '4 pcent_share', 'pcent_share', 'number', 'Percent Share *', 'Percent Share', '', 'pcent_share', '', 'step="0.01"'
-                            ) !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('pcent_share',[
+                                'cols' => 4,
+                                'label' => 'Percent Share:',
+                                'type' => 'number',
+                            ]) !!}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -157,81 +189,98 @@
         }
     </script>
     <script type="text/javascript">
-        
+
         //-----DATATABLES-----//
         modal_loader = $("#modal_loader").parent('div').html();
         //Initialize DataTable
         active = '';
         pap_tbl = $("#rec_budget_table").DataTable({
-          'dom' : 'lBfrtip',
-          "processing": true,
-          "serverSide": true,
-          "ajax" : '{{route("dashboard.budget_proposal.index")}}',
-          "columns": [
-            { "data": "pap_code" },
-            { "data": "pap_title" },
+            "ajax" : '{{route("dashboard.budget_proposal.index")}}?{!! Request::getQueryString() !!}',
+            "columns": [
+                { "data": "pap_code" },
+                { "data": "pap_title" },
 
-            { "data": "ps" },
-            { "data": "co" },
-            { "data": "mooe" },
-              { "data": "pcent_share" },
-              { "data": "details" },
-            { "data": "action" }
-          ],
-          "buttons": [
-            {!! __js::dt_buttons() !!}
-          ],
-          "columnDefs":[
-              {
-                  "targets" : [0],
-                  "class" : 'w-8p'
-              },
-              {
-                  "targets" : [2,3,4],
-                  "class" : 'w-8p text-right'
-              },
-              {
-                  "targets" : 5,
-                  "class" : 'w-6p text-right'
-              },
-            {
-              "targets" : 6,
-              "orderable" : false,
-              "class" : 'w-10p'
+                { "data": "ps" },
+                { "data": "co" },
+                { "data": "mooe" },
+                { "data": "pcent_share" },
+                { "data": "details" },
+                { "data": "action" }
+            ],
+            "buttons": [
+                {!! __js::dt_buttons() !!}
+            ],
+            "columnDefs":[
+                {
+                    "targets" : [0],
+                    "class" : 'w-8p'
+                },
+                {
+                    "targets" : [2,3,4],
+                    "class" : 'w-8p text-right'
+                },
+                {
+                    "targets" : 5,
+                    "class" : 'w-6p text-right'
+                },
+                {
+                    "targets" : 6,
+                    "orderable" : false,
+                    "class" : 'w-10p'
+                },
+                {
+                    "targets" : 7,
+                    "orderable" : false,
+                    "class" : 'action2'
+                },
+            ],
+            "responsive": false,
+            'dom' : 'lBfrtip',
+            "processing": true,
+            "serverSide": true,
+            "initComplete": function( settings, json ) {
+                style_datatable("#"+settings.sTableId);
+                $('#tbl_loader').fadeOut(function(){
+                    $("#"+settings.sTableId+"_container").fadeIn();
+                });
+                //Need to press enter to search
+                $('#'+settings.sTableId+'_filter input').unbind();
+                $('#'+settings.sTableId+'_filter input').bind('keyup', function (e) {
+                    if (e.keyCode == 13) {
+                        pap_tbl.search(this.value).draw();
+                    }
+                });
             },
-            {
-              "targets" : 7,
-              "orderable" : false,
-              "class" : 'action2'
+            "language": {
+                "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
             },
-          ],
-          "responsive": false,
-          "initComplete": function( settings, json ) {
-            $('#tbl_loader').fadeOut(function(){
-              $("#rec_budget_table_container").fadeIn();
-            });
-          },
-          "language":
-                  {
-                    "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
-                  },
-          "drawCallback": function(settings){
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="modal"]').tooltip();
-            if(active != ''){
-              $("#rec_budget_table #"+active).addClass('success');
+            "drawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="modal"]').tooltip();
+                if(active != ''){
+                    $("#"+settings.sTableId+" #"+active).addClass('success');
+                }
             }
-          }
-        })
-        
-        style_datatable("#rec_budget_table");
-        
-        //Need to press enter to search
-        $('#rec_budget_table_filter input').unbind();
-        $('#rec_budget_table_filter input').bind('keyup', function (e) {
-          if (e.keyCode == 13) {
-            pap_tbl.search(this.value).draw();
-          }
+        });
+
+
+        $("#division").typeahead({
+            ajax : "{{ route('dashboard.budget_proposal.index') }}?typeahead=true&for=division",
+            onSelect:function (result) {
+            },
+            lookup: function (i) {
+
+            }
+        });
+
+        $("#section").typeahead({
+            ajax : "{{ route('dashboard.budget_proposal.index') }}?typeahead=true&for=section",
+            onSelect:function (result) {
+
+            },
+            lookup: function (i) {
+
+            }
         });
 
         $("#add_pap_form").submit(function (e) {
@@ -253,6 +302,7 @@
                    succeed(form,true,false);
                    active = res.slug;
                    pap_tbl.draw(false);
+                   notify('PAP successfully added.','success');
                 },
                 error: function (res) {
                     errored(form,res);
@@ -260,25 +310,28 @@
             })
         })
 
-        $("#division").typeahead({
-            ajax : "{{ route('dashboard.budget_proposal.index') }}?typeahead=true&for=division",
-            onSelect:function (result) {
-                console.log(result);
-            },
-            lookup: function (i) {
-                console.log(i);
-            }
-        });
+        $('body').on('click','.edit_pap_btn',function () {
+            btn = $(this);
+            load_modal2(btn);
+            uri = "{{route('dashboard.budget_proposal.edit','slug')}}";
+            uri = uri.replace('slug',btn.attr('data'));
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                    autonum_init_modal_new(btn);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                }
+            })
+        })
 
-        $("#section").typeahead({
-            ajax : "{{ route('dashboard.budget_proposal.index') }}?typeahead=true&for=section",
-            onSelect:function (result) {
-                console.log(result);
-            },
-            lookup: function (i) {
-                console.log(i);
-            }
-        });
+
 
     </script>
 

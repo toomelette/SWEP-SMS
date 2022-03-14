@@ -31,9 +31,23 @@
             <div class="box-body">
                 <div class="box-group" id="accordion">
 
+                    @foreach($dtr_by_year as $key => $months)
+                        @php(arsort($months))
+
+                        @php($must_be_last = \Illuminate\Support\Str::after(array_key_first($months),'-')*1)
+                        @for($x = 1 ; $x <= $must_be_last; $x++)
+                            @if(!isset($dtr_by_year[$key][$key.'-'.str_pad($x,2,'0',STR_PAD_LEFT)]))
+                                @php($dtr_by_year[$key][$key.'-'.str_pad($x,2,'0',STR_PAD_LEFT)] = '')
+                            @endif
+                        @endfor
+
+                    @endforeach
+
+
                     @if(count($dtr_by_year) > 0)
                         @php($num=0)
                         @foreach($dtr_by_year as $key => $months)
+                            @php(ksort($months))
                             @php($num++)
                             @if($num == 1)
                                 <div class="panel box box-primary">
@@ -50,13 +64,13 @@
                                                 @php(ksort($months))
                                                 <div class="row">
                                                 @foreach($months as $month => $null)
-                                                    <div class="col-md-{{$col}}">
+                                                    <div class="col-md-{{$col}} col-sm-2 col-lg-1">
                                                         @if(\Carbon\Carbon::parse($month)->format('Y-m') == \Carbon\Carbon::now()->format('Y-m'))
                                                             @php($class = 'btn-success')
                                                         @else
                                                             @php($class = 'btn-default')
                                                         @endif
-                                                        <button type="button" class="btn {{$class}} col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
+                                                        <button style="width: 100%; margin-bottom: 10px" type="button" class="btn {{$class}}  month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
                                                             {{strtoupper(\Carbon\Carbon::parse($month)->format('M'))}}
                                                         </button>
                                                     </div>
@@ -81,8 +95,8 @@
                                                 @php(ksort($months))
                                                 <div class="row">
                                                     @foreach($months as $month => $null)
-                                                        <div class="col-md-{{$col}}">
-                                                            <button type="button" class="btn btn-default col-md-12 month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
+                                                        <div class="col-md-{{$col}} col-sm-2 col-lg-1">
+                                                            <button type="button" style="width: 100%; margin-bottom: 10px" class="btn btn-default month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
                                                                 {{strtoupper(\Carbon\Carbon::parse($month)->format('M'))}}
                                                             </button>
                                                         </div>

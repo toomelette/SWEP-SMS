@@ -101,7 +101,7 @@
         <p class="text-center" style="margin: 5px"><b>SUGAR REGULATORY ADMINISTRATION</b></p>
         <p class="text-center" style="margin: 5px"><b>DAILY TIME RECORD</b></p>
         <br>
-        <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}</b></p>
+        <p class="small-margin" style="font-size: 16px"><b>{{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}} {{$employee->suffix}}</b></p>
         <p class="small-margin">For the month of <b>{{\Carbon\Carbon::parse($month)->format('F Y')}}</b> </p>
         <table class="table table-bordered table-condensed dtr-table" style="font-size: 11.5px">
             <thead>
