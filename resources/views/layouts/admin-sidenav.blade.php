@@ -14,6 +14,7 @@
             z-index: 5;
         }
     </style>
+
   <section class="sidebar">
     <div class="user-panel">
       <div class="pull-left image">

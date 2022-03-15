@@ -203,7 +203,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** PAP  Parents**/
     Route::resource('pap_parent', 'PapParentController');
 
-
+    Route::resource('ppmp', 'PPMPController');
 
     /** DTR **/
     Route::get('/dtr/extract', 'DTRController@extract2')->name('dtr.extract');
