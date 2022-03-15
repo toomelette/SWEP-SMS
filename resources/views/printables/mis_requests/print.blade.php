@@ -183,5 +183,8 @@
             </td>
         </tr>
     </table>
+<br>
+<hr style="border: 1px dashed grey" class="no-margin">
+<p class="no-margin" style="font-size: 8px"><i class="fa fa-scissors"></i> CUT HERE</p>
 </body>
 </html>

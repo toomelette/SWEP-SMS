@@ -273,6 +273,11 @@ class DTRService extends BaseService
                 $dev->last_cleared = Carbon::now();
                 $dev->last_cleared_user = Auth::user()->user_id;
                 $dev->update();
+
+                $cl = new CronLogs;
+                $cl->log = 'Device cleared: '.$ip;
+                $cl->type = 4;
+                $cl->save();
                 return 1;
             }
 

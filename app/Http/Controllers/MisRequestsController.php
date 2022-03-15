@@ -103,7 +103,7 @@ class MisRequestsController extends Controller
     public function index(){
         if(\request()->ajax() && \request()->has('draw')){
             $mis_requests = MisRequests::query();
-
+            $request = \request();
             $table = DB::select('SELECT * FROM (
                         SELECT x.lastname, x.firstname, x.employee_no, users.user_id FROM (
                             SELECT hr_employees.lastname, hr_employees.firstname, hr_employees.employee_no FROM hr_employees WHERE hr_employees.employee_no != \'\'
@@ -153,14 +153,18 @@ class MisRequestsController extends Controller
                     return $data->lastname.', '.$data->firstname;
                 })
                 ->editColumn('nature_of_request',function ($data){
+                    $success = '';
+                    if($data->completed_at != null){
+                        $success = '<span class="text-success pull-right"><i class="fa  fa-check-circle"></i></span>';
+                    }
                     if($data->request_details != ''){
-                        return '<div>'.$data->nature_of_request.'
+                        return '<div>'.$data->nature_of_request.' '.$success.'
                                 <div class="table-subdetail">
                                     '.$data->request_details.'
                                 </div>
                             </div>';
                     }
-                    return $data->nature_of_request;
+                    return $data->nature_of_request.$success;
                 })
 
                 ->escapeColumns([])

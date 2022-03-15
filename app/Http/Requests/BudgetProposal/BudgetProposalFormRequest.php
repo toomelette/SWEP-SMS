@@ -17,7 +17,12 @@ class BudgetProposalFormRequest extends FormRequest
     public function rules(){
         return [
             'pap_title' => 'required|string|max:20',
-            'pap_code' => 'required|string|max:20|unique:ppu_rec_budget,pap_code',
+            'pap_code' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('ppu_rec_budget','pap_code')->ignore($this->request->get('slug'),'slug'),
+            ],
             'pap_desc' => 'nullable|string|max:255',
             'budget_type' => [
                 'required',

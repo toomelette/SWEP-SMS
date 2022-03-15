@@ -58,7 +58,11 @@ use Illuminate\Support\Facades\Auth;
 class RecommendedBudget extends Model
 {
     public $table = 'ppu_rec_budget';
-
+    protected $attributes = [
+        'ps' => 0.00,
+        'co' => 0.00,
+        'mooe' => 0.00,
+    ];
     public static function boot()
     {
         static::creating(function ($a){

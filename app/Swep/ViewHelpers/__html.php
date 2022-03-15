@@ -286,7 +286,7 @@ class __html{
     }
     public static function dtrTime($time){
         if($time == null || $time == ''){
-            return '-';
+            return '';
         }else{
             return Carbon::parse($time)->format('H:i');
         }

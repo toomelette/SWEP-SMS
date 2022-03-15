@@ -20,10 +20,27 @@ class BudgetProposalController extends Controller
     public function index(Request $request){
 
         if(request()->ajax() && $request->has('draw')){
-            $rec_budget = RecommendedBudget::query();
+
+            $rec_budget = RecommendedBudget::query()
+                ->where('fiscal_year','=',$request->fiscal_year)
+                ->where('resp_center','=',$request->resp_center);
+
             return DataTables::of($rec_budget)
-                ->editColumn('action',function ($data){
-                    return 1;
+                ->addColumn('action',function ($data){
+                    $destroy_route = "'".route("dashboard.budget_proposal.destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+                    $button = '<div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm view_jo_employee_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#view_jo_employee_modal" title="View more" data-placement="left">
+                                        <i class="fa fa-file-text"></i>
+                                    </button>
+                                    <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_pap_btn" data-toggle="modal" data-target="#edit_pap_modal" title="Edit" data-placement="top">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>';
+                    return $button;
                 })
                 ->editColumn('pap_title',function ($data){
                     if($data->pap_desc == ''){
@@ -75,9 +92,7 @@ class BudgetProposalController extends Controller
             return $this->typeAhead($request);
         }
 
-        if($request->has('fiscal_year') && $request->has('resp_center')){
-
-
+        if($request->has('fiscal_year') && $request->has('resp_center') && $request->resp_center != null && $request->fiscal_year != null){
             return view('dashboard.recommended_budget.index')->with([
                 'request' => $request,
             ]);
@@ -139,5 +154,47 @@ class BudgetProposalController extends Controller
             return $bp->only('slug');
         }
 
+    }
+
+    private function findBySlug($slug){
+        $pap = RecommendedBudget::query()->where('slug','=',$slug)->first();
+        if(!empty($pap)){
+            return $pap;
+        }
+        abort(503,'PAP cannot be found.');
+    }
+    public function edit($slug){
+        $pap = $this->findBySlug($slug);
+        return view('dashboard.recommended_budget.edit')->with([
+            'pap' => $pap,
+        ]);
+    }
+
+    public function update(BudgetProposalFormRequest $request,$slug){
+        $pap = $this->findBySlug($slug);
+        $pap->pap_title = $request->pap_title;
+        $pap->budget_type = $request->budget_type;
+        $pap->pap_code = $request->pap_code;
+        $pap->pap_desc = $request->pap_desc;
+//        $pap->fiscal_year = $request->fiscal_year;
+//        $pap->resp_center = $request->resp_center;
+        $pap->pcent_share = $request->pcent_share;
+        $pap->ps = Helper::sanitizeAutonum($request->ps);
+        $pap->co = Helper::sanitizeAutonum($request->co);
+        $pap->mooe = Helper::sanitizeAutonum($request->mooe);
+        $pap->division = $request->division;
+        $pap->section = $request->section;
+        if($pap->update()){
+            return $pap->only('slug');
+        }
+        abort(503,'Error updating PAP');
+    }
+
+    public function destroy($slug){
+        $pap = $this->findBySlug($slug);
+        if($pap->delete()){
+            return 1;
+        }
+        abort(503, 'Error deleting PAP.');
     }
 }

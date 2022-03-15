@@ -24,8 +24,12 @@ class __form{
             $tt = '<i class="fa fa-question-circle" title="'.$tooltip.'"></i>';
         }
 
+        $error = '';
+        if($error_has != ''){
+            $error = 'has-error';
+        }
 
-       return '<div class="form-group col-md-'. $class .' ">
+       return '<div class="form-group col-md-'. $class .' '.$error.'">
                 <label for="'. $key .'">'. $label .'</label> '.$tt.'
                 <input class="form-control '.$self_class.'" id="'. $key .'" name="'. $key .'" type="'. $type .'" value="'. self::string_value($old_value) .'" placeholder="'. $placeholder .'" '. $extra_attr .'>
               </div>';
