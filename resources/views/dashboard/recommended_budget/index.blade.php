@@ -191,15 +191,14 @@
     <script type="text/javascript">
 
         //-----DATATABLES-----//
-        modal_loader = $("#modal_loader").parent('div').html();
+        var modal_loader = $("#modal_loader").parent('div').html();
         //Initialize DataTable
-        active = '';
+        var active = '';
         pap_tbl = $("#rec_budget_table").DataTable({
             "ajax" : '{{route("dashboard.budget_proposal.index")}}?{!! Request::getQueryString() !!}',
             "columns": [
                 { "data": "pap_code" },
                 { "data": "pap_title" },
-
                 { "data": "ps" },
                 { "data": "co" },
                 { "data": "mooe" },

@@ -234,6 +234,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     /** Budget Proposal**/
     Route::resource('budget_proposal', 'BudgetProposalController');
+
+    /** PPMP **/
+    Route::resource('ppmp', 'PPMPController');
 });
 
 

@@ -140,7 +140,7 @@ class MisRequestsController extends Controller
                     }
                 })
                 ->editColumn('created_at',function ($data){
-                    return Carbon::parse($data->created_at)->format('M. d, Y | h:i A');
+                    return Carbon::parse($data->created_at)->format("M. d, Y | h:i A");
                 })
                 ->editColumn('fullname',function ($data){
                     if($data->lastname == '' && $data->firstname == ''){

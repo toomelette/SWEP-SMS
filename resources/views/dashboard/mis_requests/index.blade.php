@@ -17,7 +17,7 @@
                     <table class="table table-bordered table-striped table-hover" id="requests_table" style="width: 100%">
                         <thead>
                         <tr class="">
-                            <th >Request No.</th>
+                            <th >Rqst #.</th>
                             <th >Requisitioner</th>
                             <th >Nature of Request</th>
                             <th >Created at</th>
@@ -119,6 +119,10 @@
                 {
                     "targets" : 0,
                     "class" : 'w-6p'
+                },
+                {
+                    "targets" : 3,
+                    "class" : 'w-10p'
                 },
                 {
                     "targets" : 5,

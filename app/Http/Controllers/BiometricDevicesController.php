@@ -123,11 +123,9 @@ class BiometricDevicesController extends Controller
         }
 
         return view('dashboard.biometric_devices.logs')->with([
-//                'attendances' => $attendances,
             'device' => $device,
             'employees_arr' => $employees_arr,
         ]);
-
     }
 
     public function clear_attendance(Request $request, DTRService $DTRService){
