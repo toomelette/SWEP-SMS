@@ -163,7 +163,7 @@ class DTRController extends  Controller
         $view = View::make('dashboard.dtr.my_dtr')->with([
             'employee' => $employee,
             'dtr_by_year' => $dtr_by_year,
-            'col' => 2,
+            'col' => 'col-md-3 col-sm-12 col-lg-2',
         ]);
         $sections = $view->renderSections();
         return view('dashboard.dtr.show')->with([
@@ -186,7 +186,7 @@ class DTRController extends  Controller
         return view('dashboard.dtr.my_dtr')->with([
             'employee' => $employee,
             'dtr_by_year' => $dtr_by_year,
-            'col' => 1,
+            'col' => 'col-md-1 col-sm-2 col-lg-1',
         ]);
     }
 

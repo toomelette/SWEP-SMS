@@ -13,14 +13,17 @@ class __form2
     public static function textbox($name,$options = [],$value = null){
         $n = new __form2;
         $n->set($options);
-
+        $r_o = '';
         if(is_object($value)){
             $value = $value->$name;
+        }
+        if($n->readonly == 'readonly'){
+            $r_o = 'readonly';
         }
 
         return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> 
-                <input class="form-control '.$n->class.'" id="'.$n->id.'" name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'">
+                <input class="form-control '.$n->class.'" id="'.$n->id.'" name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.'>
               </div>';
     }
 
@@ -129,6 +132,10 @@ class __form2
             $array['autocomplete'] = '';
         }
 
+        if(!isset($array['readonly'])){
+            $array['readonly'] = '';
+        }
+
         if($array['type'] == ''){
             $array['type'] = 'text';
         }
@@ -143,6 +150,7 @@ class __form2
         $this->placeholder = $array['placeholder'];
         $this->rows = $array['rows'];
         $this->autocomplete = $array['autocomplete'];
+        $this->readonly = $array['readonly'];
     }
     public function get($array){
         return $this->name.' Hello';

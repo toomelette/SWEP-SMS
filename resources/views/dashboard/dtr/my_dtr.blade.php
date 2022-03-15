@@ -64,7 +64,7 @@
                                                 @php(ksort($months))
                                                 <div class="row">
                                                 @foreach($months as $month => $null)
-                                                    <div class="col-md-{{$col}} col-sm-2 col-lg-1">
+                                                    <div class="{{$col}}">
                                                         @if(\Carbon\Carbon::parse($month)->format('Y-m') == \Carbon\Carbon::now()->format('Y-m'))
                                                             @php($class = 'btn-success')
                                                         @else
@@ -95,7 +95,7 @@
                                                 @php(ksort($months))
                                                 <div class="row">
                                                     @foreach($months as $month => $null)
-                                                        <div class="col-md-{{$col}} col-sm-2 col-lg-1">
+                                                        <div class="{{$col}}">
                                                             <button type="button" style="width: 100%; margin-bottom: 10px" class="btn btn-default month_btn" data-toggle="modal" data-target="#dtr_modal" month="{{$month}}">
                                                                 {{strtoupper(\Carbon\Carbon::parse($month)->format('M'))}}
                                                             </button>

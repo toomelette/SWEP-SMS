@@ -130,7 +130,7 @@
             </tr>
             <tr>
                 <td height="40">Requisitioner</td>
-                <td>{{$r->creator->firstname}} {{$r->creator->lastname}}</td>
+                <td>{{strtoupper($user->employeeUnion->firstname)}} {{strtoupper($user->employeeUnion->lastname)}} </td>
             </tr>
         </table>
 

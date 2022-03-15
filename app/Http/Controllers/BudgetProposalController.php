@@ -96,10 +96,11 @@ class BudgetProposalController extends Controller
             return view('dashboard.recommended_budget.index')->with([
                 'request' => $request,
             ]);
-
         }
 
-        return view('dashboard.recommended_budget.pre_index');
+        return view('dashboard.recommended_budget.pre_index')->with([
+            'action' => route('dashboard.budget_proposal.index'),
+        ]);
     }
 
     private  function typeAhead($request){

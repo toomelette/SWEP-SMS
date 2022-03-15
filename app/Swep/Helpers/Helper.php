@@ -3,6 +3,7 @@
 
 namespace App\Swep\Helpers;
 use App\Models\MisRequestsNature;
+use App\Models\RecommendedBudget;
 use Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -243,5 +244,54 @@ class Helper
             'COB' => 'COB',
             'SIDA' => 'SIDA',
         ];
+    }
+
+    public static function getPapCodes($fiscal_year,$resp_center){
+        $pap = RecommendedBudget::query()
+            ->where('fiscal_year','=',$fiscal_year)
+            ->where('resp_center','=',$resp_center)
+            ->get();
+        if(!empty($pap)){
+            return $pap;
+        }
+    }
+
+    public static function getPapCodesArray($fiscal_year,$resp_center,$group = false){
+        $paps = self::getPapCodes($fiscal_year,$resp_center);
+        $pap_codes_array = [];
+        if(!empty($paps)){
+            foreach ($paps as $pap) {
+                if($group == true){
+                    if($pap->division == ''){
+                        $pap->division = 'Others';
+                    }
+                    $pap_codes_array[$pap->division][$pap->pap_code] = $pap->pap_code.' - '.$pap->pap_title;
+                }else{
+                    $pap_codes_array[$pap->pap_code] = $pap->pap_code.' - '.$pap->pap_title;
+                }
+            }
+        }
+        return $pap_codes_array;
+    }
+
+    public static function modesOfProcurement(){
+        return [
+            'smallValueProcurement' => 'SMALL VALUE PROCUREMENT',
+            'bidding' => 'BIDDING',
+            'repeatOrder' => 'REPEAT ORDER',
+            'shopping' => 'SHOPPING',
+            'directContracting' => 'DIRECT CONTRACTING',
+        ];
+    }
+
+    public static function unitsOfMeasurementPPMP(){
+        return [
+            'pc' => 'PC',
+            'unit' => 'UNIT',
+        ];
+    }
+
+    public static function milestones(){
+        return ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     }
 }

@@ -94,9 +94,13 @@ class MisRequestsController extends Controller
     }
 
     public function printRequestForm($slug){
+
         $r = $this->findBySlug($slug);
+        $user = User::query()->where('user_id','=',$r->user_created)->first();
+
         return view('printables.mis_requests.print')->with([
             'r' => $r,
+            'user' => $user,
         ]);
     }
 
