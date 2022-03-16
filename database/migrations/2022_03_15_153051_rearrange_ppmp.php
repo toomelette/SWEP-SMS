@@ -22,7 +22,7 @@ class RearrangePpmp extends Migration
 
         \Illuminate\Support\Facades\DB::statement('ALTER TABLE `swep_afd`.`ppu_ppmp` 
             CHANGE COLUMN `qty_jan` `qty_jan` INT NULL ,
-            CHANGE COLUMN `qty_feb` `qty_feb` INT NULL ,
+            CHANGE COLUMN `qty_feb` `qty_feb` INT NULL ,i
             CHANGE COLUMN `qty_mar` `qty_mar` INT NULL ,
             CHANGE COLUMN `qty_apr` `qty_apr` INT NULL ,
             CHANGE COLUMN `qty_may` `qty_may` INT NULL ,

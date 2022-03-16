@@ -25,4 +25,8 @@ class PPMP extends Model
 
 
     protected $table = 'ppu_ppmp';
+
+    public function pap(){
+        return $this->belongsTo(RecommendedBudget::class, 'pap_code','pap_code');
+    }
 }

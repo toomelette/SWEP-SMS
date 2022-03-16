@@ -3,13 +3,13 @@
 @section('content')
 
     <section class="content-header">
-        <h1>Budget Proposal</h1>
+        <h1>Budget Proposal <span class="pull-right">{{request('fiscal_year')}} | {{request('resp_center')}}</span></h1>
     </section>
     <section class="content">
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">List of PAP</h3>
-                <button type="button" class="btn btn-success btn-sm pull-right"  data-target="#add_pap_modal" data-toggle="modal"><i class="fa fa-plus"></i> Add PAP</button>
+                <button type="button" class="btn btn-success btn-sm pull-right"  data-target="#add_pap_modal" data-toggle="modal"><i class="fa fa-plus"></i> Add PAP ({{request('fiscal_year')}} | {{request('resp_center')}})</button>
             </div>
             <div class="box-body">
                 <div id="rec_budget_table_container" style="display: none">
@@ -52,18 +52,18 @@
                 <form id="add_pap_form">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add PAP</h4>
+                        <h4 class="modal-title" id="myModalLabel">Add PAP - {{request('fiscal_year')}} | {{request('resp_center')}}</h4>
                     </div>
                     <div class="modal-body">
                         @if(request('resp_center') != '' && request('fiscal_year') != '')
                             <div class="row">
                                 <div class="col-md-6">
                                     <b>Year:</b>
-                                    <p>{{request('fiscal_year')}}</p>
+                                    <h3 style="margin-top: 0" class="text-green">{{request('fiscal_year')}}</h3>
                                 </div>
                                 <div class="col-md-6">
                                     <b>Responsibility Center:</b>
-                                    <p>{{request('resp_center')}}</p>
+                                    <h3 style="margin-top: 0" class="text-green">{{request('resp_center')}}</h3>
                                 </div>
                             </div>
                         @else
@@ -78,6 +78,7 @@
                                    !!}
                             </div>
                         @endif
+                        <hr style="border: 1px dashed #1b7e5a; margin-top: 3px;margin-bottom: 5px">
                         <div class="row">
                             {!! \App\Swep\ViewHelpers\__form2::textbox('pap_code',[
                                 'cols' => 6,
@@ -130,21 +131,24 @@
                             {!! \App\Swep\ViewHelpers\__form2::textbox('ps',[
                                 'cols' => 4,
                                 'label' => 'PS:',
-                                'class' => 'autonum',
+                                'class' => 'autonumber',
+                                'autocomplete' => 'off',
                             ],
                             0
                             ) !!}
                             {!! \App\Swep\ViewHelpers\__form2::textbox('co',[
                                 'cols' => 4,
                                 'label' => 'Capital Outlay:',
-                                'class' => 'autonum',
+                                'class' => 'autonumber',
+                                'autocomplete' => 'off',
                             ],
                             0
                             ) !!}
                             {!! \App\Swep\ViewHelpers\__form2::textbox('mooe',[
                                 'cols' => 4,
                                 'label' => 'MOOE:',
-                                'class' => 'autonum',
+                                'class' => 'autonumber',
+                                'autocomplete' => 'off',
                             ],
                             0
                             ) !!}
@@ -154,6 +158,7 @@
                                 'cols' => 4,
                                 'label' => 'Percent Share:',
                                 'type' => 'number',
+                                'step' => '0.01',
                             ]) !!}
                         </div>
                     </div>
@@ -196,6 +201,9 @@
         var active = '';
         pap_tbl = $("#rec_budget_table").DataTable({
             "ajax" : '{{route("dashboard.budget_proposal.index")}}?{!! Request::getQueryString() !!}',
+            'rowGroup': {
+                'dataSrc': 'division'
+            },
             "columns": [
                 { "data": "pap_code" },
                 { "data": "pap_title" },
@@ -230,7 +238,7 @@
                 {
                     "targets" : 7,
                     "orderable" : false,
-                    "class" : 'action2'
+                    "class" : 'action3'
                 },
             ],
             "responsive": false,
@@ -241,7 +249,11 @@
                 style_datatable("#"+settings.sTableId);
                 $('#tbl_loader').fadeOut(function(){
                     $("#"+settings.sTableId+"_container").fadeIn();
+                    if(find != ''){
+                        pap_tbl.search(find).draw();
+                    }
                 });
+
                 //Need to press enter to search
                 $('#'+settings.sTableId+'_filter input').unbind();
                 $('#'+settings.sTableId+'_filter input').bind('keyup', function (e) {
@@ -259,7 +271,8 @@
                 if(active != ''){
                     $("#"+settings.sTableId+" #"+active).addClass('success');
                 }
-            }
+            },
+
         });
 
 
@@ -302,6 +315,7 @@
                    active = res.slug;
                    pap_tbl.draw(false);
                    notify('PAP successfully added.','success');
+                    wipe_autonum();
                 },
                 error: function (res) {
                     errored(form,res);

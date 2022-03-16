@@ -166,6 +166,13 @@ ol.example li.placeholder:before {
     width: 12%;
 }
 
+.w-13p{
+    width: 13%;
+}
+
+.w-14p{
+    width: 14%;
+}
 .action-10p{
     width: 10%;
 }
@@ -236,6 +243,9 @@ ol.example li.placeholder:before {
     .action2{
           width: 100%;
       }
+    .action3{
+        width: 100%;
+    }
 }
 
 
@@ -247,6 +257,9 @@ ol.example li.placeholder:before {
     .action2{
         width: 23%;
     }
+    .action3{
+        width: 28%;
+    }
 }
 
 @media (min-width: 920px) {
@@ -256,6 +269,9 @@ ol.example li.placeholder:before {
     .action2{
         width: 19%;
     }
+    .action3{
+        width: 23%;
+    }
 }
 
 @media (min-width: 980px) {
@@ -264,6 +280,9 @@ ol.example li.placeholder:before {
     }
     .action2{
         width: 17%;
+    }
+    .action3{
+        width: 19%;
     }
 }
 
@@ -276,6 +295,9 @@ ol.example li.placeholder:before {
     .action2{
         width: 12%;
     }
+    .action3{
+        width: 17%;
+    }
 }
 
 
@@ -287,6 +309,9 @@ ol.example li.placeholder:before {
     .action2{
         width: 10%;
     }
+    .action3{
+        width: 15%;
+    }
 }
 
 
@@ -296,6 +321,9 @@ ol.example li.placeholder:before {
     }
     .action2{
         width: 9%;
+    }
+    .action3{
+        width: 13%;
     }
 }
 
@@ -307,6 +335,9 @@ ol.example li.placeholder:before {
     .action2{
         width: 8%;
     }
+    .action3{
+        width: 11%;
+    }
 }
 
 @media (min-width: 1530px) {
@@ -315,6 +346,9 @@ ol.example li.placeholder:before {
     }
     .action2{
         width: 7%;
+    }
+    .action3{
+        width: 10%;
     }
 }
 
@@ -325,10 +359,35 @@ ol.example li.placeholder:before {
     .action2{
         width: 7%;
     }
+    .action3{
+        width: 8%;
+    }
 }
 
 .bs-example{
     padding: 10px;
     border: 1px solid #c5c5c5;
 }
+.dtrg-group{
+    background-color: #f1edf2 !important;
 
+}
+
+.milestone,.milestone th,.milestone td {
+    border: 1px solid grey;
+}
+.no-style-input{
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+}
+.no-style-input:focus {
+    outline: none !important;
+    border:1px solid #0b93d5;
+    box-shadow: 0 0 10px #719ECE;
+}
+.no-style-input.has-error {
+    outline: none !important;
+    border:1px solid red;
+    box-shadow: 0 0 10px #dd514c;
+}

@@ -10,14 +10,14 @@ use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-
+use Yajra\DataTables\Html\Builder;
 class BudgetProposalController extends Controller
 {
     public function create(){
         return view('dashboard.recommended_budget.create');
     }
 
-    public function index(Request $request){
+    public function index(Request $request,Builder $builder){
 
         if(request()->ajax() && $request->has('draw')){
 
@@ -107,7 +107,8 @@ class BudgetProposalController extends Controller
 
         if($request->for == 'division'){
             $arr = [];
-            $bps = RecommendedBudget::query()->where('division','like','%'.$request->get('query').'%')->get();
+            $bps = RecommendedBudget::query()->groupBy('division')->where('division','like','%'.$request->get('query').'%')->get();
+
             if($bps->count() > 0) {
                 foreach ($bps as $bp){
                     array_push($arr,[
@@ -120,7 +121,7 @@ class BudgetProposalController extends Controller
         }
         if($request->for == 'section'){
             $arr = [];
-            $bps = RecommendedBudget::query()->where('section','like','%'.$request->get('query').'%')->get();
+            $bps = RecommendedBudget::query()->groupBy('section')->where('section','like','%'.$request->get('query').'%')->get();
             if($bps->count() > 0) {
                 foreach ($bps as $bp){
                     array_push($arr,[

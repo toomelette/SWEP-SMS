@@ -25,6 +25,10 @@ var autonum_settings = {
     decimalCharacter : '.',
     digitGroupSeparator : ',',
 };
+
+
+
+
 function autonum_init(){
     $(".autonum").each(function(){
         new AutoNumeric(this, autonum_settings);

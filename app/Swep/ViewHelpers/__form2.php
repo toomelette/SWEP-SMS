@@ -14,16 +14,20 @@ class __form2
         $n = new __form2;
         $n->set($options);
         $r_o = '';
+        $step = '';
         if(is_object($value)){
             $value = $value->$name;
         }
         if($n->readonly == 'readonly'){
             $r_o = 'readonly';
         }
+        if($n->step != ''){
+            $step = 'step="'.$n->step.'"';
+        }
 
         return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> 
-                <input class="form-control '.$n->class.'" id="'.$n->id.'" name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.'>
+                <input class="form-control '.$n->class.'" id="'.$n->id.'" name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.'>
               </div>';
     }
 
@@ -67,7 +71,7 @@ class __form2
 
         return '<div class="form-group col-md-'.$n->cols .' '.$name.'">
                   <label for="'. $name .'">'. $n->label .'</label>
-                  <select name="'. $name .'" id="'. $name .'" class="form-control" '. $n->extra_attr .'>
+                  <select name="'. $name .'" id="'. $n->id .'" class="form-control" '. $n->extra_attr .'>
                     <option value="">Select</option>
                     '.$opt_html.'
                   </select>
@@ -98,47 +102,26 @@ class __form2
 
 
     public function set($array){
-        if(!isset($array['class'])){
-            $array['class'] = '';
-        }
-        if(!isset($array['cols'])){
-            $array['cols'] = '';
-        }
-        if(!isset($array['label'])){
-            $array['label'] = '';
-        }
+
+        (!isset($array['class'])) ? $array['class']= '' : false;
+        (!isset($array['cols'])) ? $array['cols']= '' : false;
+        (!isset($array['label'])) ? $array['label']= '' : false;
         if(isset($array['placeholder'])){
             $array['placeholder'] = $array['placeholder'];
         }else{
             $array['placeholder'] =  str_replace(':','',$array['label']);
             $array['placeholder'] = str_replace('*','',$array['placeholder']);
         }
-        if(!isset($array['id'])){
-            $array['id'] = '';
-        } if(!isset($array['type'])){
-            $array['type'] = '';
-        } if(!isset($array['value'])){
-            $array['value'] = '';
-        } if(!isset($array['placeholder'])){
-            $array['placeholder'] = '';
-        }
-        if(!isset($array['extra_attr'])){
-            $array['extra_attr'] = '';
-        }
-        if(!isset($array['rows'])){
-            $array['rows'] = '';
-        }
-        if(!isset($array['autocomplete'])){
-            $array['autocomplete'] = '';
-        }
-
-        if(!isset($array['readonly'])){
-            $array['readonly'] = '';
-        }
-
-        if($array['type'] == ''){
-            $array['type'] = 'text';
-        }
+        (!isset($array['id'])) ? $array['id']= '' : false;
+        (!isset($array['type'])) ? $array['type']= '' : false;
+        (!isset($array['value'])) ? $array['value']= '' : false;
+        (!isset($array['placeholder'])) ? $array['placeholder']= '' : false;
+        (!isset($array['extra_attr'])) ? $array['extra_attr']= '' : false;
+        (!isset($array['rows'])) ? $array['rows']= '' : false;
+        (!isset($array['autocomplete'])) ? $array['autocomplete']= '' : false;
+        (!isset($array['step'])) ? $array['step']= '' : false;
+        (!isset($array['readonly'])) ? $array['readonly']= '' : false;
+        ($array['type'] == '') ?  $array['type'] = 'text' : false;
 
         $this->class = $array['class'];
         $this->cols = $array['cols'];
@@ -151,6 +134,7 @@ class __form2
         $this->rows = $array['rows'];
         $this->autocomplete = $array['autocomplete'];
         $this->readonly = $array['readonly'];
+        $this->step = $array['step'];
     }
     public function get($array){
         return $this->name.' Hello';

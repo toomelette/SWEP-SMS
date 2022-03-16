@@ -30,6 +30,8 @@
 <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>--}}
+<script type="text/javascript" src="{{asset('template/plugins/autoNumeric/autoNumeric.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
@@ -39,7 +41,7 @@
 <script type="text/javascript" src="{{ asset('template/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{asset('template/plugins/datatables/responsive/dataTables.responsive.min.js')}}"></script>
-
+<script type="text/javascript" src="{{asset('template/plugins/dataTables/RowGroup-1.1.1/js/dataTables.rowGroup.min.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('template/plugins/dt-moment/date-time-moment.js')}}"></script>
 {{-- Charts --}}
@@ -79,17 +81,18 @@
 <script type="text/javascript" src="{{asset('template/plugins/awesome-select/package/js/awselect.min.js')}}"></script>
 
 {{--AUTONUM--}}
-<script type="text/javascript" src="{{asset('template/plugins/autonum/main.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('template/plugins/autonum/main.js')}}"></script>--}}
+
 <script type="text/javascript" src="{{asset('template/plugins/html2canvas/html2canvas.js')}}"></script>
 
 
 <script type="text/javascript">
 
-        autonum_settings = {
-            currencySymbol : '',
-            decimalCharacter : '.',
-            digitGroupSeparator : ',',
-        };
+        // autonum_settings = {
+        //     currencySymbol : '',
+        //     decimalCharacter : '.',
+        //     digitGroupSeparator : ',',
+        // };
 
         // $(".priceformat").each(function(){
         //     new AutoNumeric(this, autonum_settings);

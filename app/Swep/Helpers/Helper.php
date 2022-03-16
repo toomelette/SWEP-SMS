@@ -294,4 +294,11 @@ class Helper
     public static function milestones(){
         return ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     }
+
+    public static function camelCaseToWords($word){
+        $pattern = '/(.*?[a-z]{1})([A-Z]{1}.*?)/';
+        $replace = '${1} ${2}';
+
+        return preg_replace($pattern, $replace, $word);
+    }
 }

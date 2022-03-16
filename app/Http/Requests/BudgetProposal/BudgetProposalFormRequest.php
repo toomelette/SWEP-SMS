@@ -16,7 +16,7 @@ class BudgetProposalFormRequest extends FormRequest
 
     public function rules(){
         return [
-            'pap_title' => 'required|string|max:20',
+            'pap_title' => 'required|string|max:255',
             'pap_code' => [
                 'required',
                 'string',

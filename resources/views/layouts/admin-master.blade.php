@@ -95,6 +95,16 @@
       </div>
 
     <script type="text/javascript">
+      const autonumericElement =  AutoNumeric.multiple('.autonumber');
+      var find = '';
+      @if(request()->has('find'))
+        find = '{{request('find')}}';
+      @endif
+      function wipe_autonum(){
+        $.each(autonumericElement,function (i,item) {
+          item.clear();
+        })
+      }
       {!! __js::show_hide_password() !!}
       modal_loader = $("#modal_loader").parent('div').html();
       $("#change_pass_href").click(function (e) {

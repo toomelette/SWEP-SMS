@@ -3,20 +3,21 @@
 @extends('layouts.modal-content',['form_id'=> 'edit_pap_form_'.$rand,'slug'=>$pap->slug, 'uri' => $uri])
 
 @section('modal-header')
-    {{$pap->pap_code}} - {{$pap->pap_title}}
+    {{$pap->pap_code}} - {{\Illuminate\Support\Str::limit($pap->pap_title,40,'...')}}
 @endsection
 
 @section('modal-body')
     <div class="row">
         <div class="col-md-6">
             <b>Year:</b>
-            <p>{{$pap->fiscal_year}}</p>
+            <h3 style="margin-top: 0" class="text-green">{{$pap->fiscal_year}}</h3>
         </div>
         <div class="col-md-6">
             <b>Responsibility Center:</b>
-            <p>{{$pap->resp_center}}</p>
+            <h3 style="margin-top: 0" class="text-green">{{$pap->resp_center}}</h3>
         </div>
     </div>
+    <hr style="border: 1px dashed #1b7e5a; margin-top: 3px;margin-bottom: 5px">
     <div style="display: none">
         <input name="slug" value="{{$pap->slug}}">
     </div>
@@ -82,21 +83,21 @@
         {!! \App\Swep\ViewHelpers\__form2::textbox('ps',[
             'cols' => 4,
             'label' => 'PS:',
-            'class' => 'autonum',
+            'class' => 'autonumber',
         ],
         $pap
         ) !!}
         {!! \App\Swep\ViewHelpers\__form2::textbox('co',[
             'cols' => 4,
             'label' => 'Capital Outlay:',
-            'class' => 'autonum',
+            'class' => 'autonumber',
         ],
         $pap
         ) !!}
         {!! \App\Swep\ViewHelpers\__form2::textbox('mooe',[
             'cols' => 4,
             'label' => 'MOOE:',
-            'class' => 'autonum',
+            'class' => 'autonumber',
         ],
         $pap
         ) !!}
@@ -120,6 +121,7 @@
 
 @section('scripts')
 <script type="text/javascript">
+    var autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber');
     $("#edit_pap_form_{{$rand}}").submit(function (e) {
         e.preventDefault();
         let form = $(this);
