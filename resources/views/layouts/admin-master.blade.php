@@ -169,6 +169,43 @@
             }
         })
       })
+
+      function searchSidenav() {
+        var input, filter, ul, li, a, i;
+        input = $("#mySearch");
+        filter = input.val().toUpperCase();
+        ul = $("#myMenu");
+        li = $("#myMenu li.treeview");
+        li.each(function () {
+          a = $(this).children('a');
+          console.log('')
+          searchText = a.attr('searchable');
+          if (searchText.toUpperCase().indexOf(filter) > -1) {
+            $(this).slideDown();
+          } else {
+            $(this).slideUp();
+          }
+        });
+        if(filter == ''){
+          $(".header-group").each(function () {
+            $('#sidenav_search_header').slideUp();
+            $(this).css('display','');
+            $("#myMenu .header-navigation").slideDown();
+            $("#myMenu .grouper").slideDown();
+            $("#home-nav").slideDown();
+          })
+        }else{
+          $(".header-group").each(function () {
+            $('#sidenav_search_header').slideDown();
+            $(this).css('display','none');
+            $("#myMenu .header-navigation").slideUp();
+            $("#myMenu .grouper").slideUp();
+            $("#home-nav").slideUp();
+          })
+        }
+
+      }
+
     </script>
 
     @yield('scripts')

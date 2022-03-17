@@ -34,12 +34,20 @@
     <style>
 
     </style>
-    <ul class="sidebar-menu" data-widget="tree">
-
+    <ul class="sidebar-menu" data-widget="tree" id="myMenu">
+        <div class="sidebar-form">
+            <div class="input-group">
+                <input id="mySearch" type="text" onkeyup="searchSidenav()" class="form-control" placeholder="Search menu...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
 
 
       @if(Auth::check())
-            <li class="@if('dashboard.home' == Route::currentRouteName()) active @endif" >
+            <li class="@if('dashboard.home' == Route::currentRouteName()) active @endif" id="home-nav" >
                 <a href="{{route('dashboard.home')}}">
                     <i class="fa fa-home"></i>
                     <span>Home</span>
@@ -51,8 +59,8 @@
             @php($tree_copy = $tree)
             @php(ksort($tree_copy))
             @if(count($tree_copy) > 1)
-                    <li class="header">NAVIGATION:</li>
-                    <li class="">
+                    <li class="header header-navigation">NAVIGATION:</li>
+                    <li class="grouper" style="height: 50px;">
                         <div>
                             <select class="form-control" id="sidenav_selector" name="abc" style="" data-placeholder="Select a navigation">
                                 @foreach($tree_copy as $category=>$menus)
@@ -73,11 +81,13 @@
 
 
             @endif
+
+                <li class="header" id="sidenav_search_header" style="display: none">SEARCH:</li>
             @foreach($tree as $category=>$menus)
                 @if(\Illuminate\Support\Facades\Auth::user()->sidenav == '')
                         @if(count($menus) > 0)
                             @if($category != 'U')
-                                <li class="header">{!! __html::sidenav_labeler($category) !!}</li>
+                                <li class="header header-group">{!! __html::sidenav_labeler($category) !!}</li>
                             @endif
                         @endif
                         @foreach($menus as $menu_id => $menu_content)
@@ -90,7 +100,7 @@
                                     {{--                                </li>--}}
                                 @else
                                     <li class="treeview ">
-                                        <a href="#">
+                                        <a href="#" searchable="{{$menu_content['menu_obj']->name}} {{$menu_content['menu_obj']->tags}} {{$menu_content['menu_obj']->category}} {!! \App\Swep\ViewHelpers\__html::sidenav_labeler($menu_content['menu_obj']->category) !!}">
                                             <i class="fa {{$menu_content['menu_obj']->icon}}"></i> <span>{{$menu_content['menu_obj']->name}}</span>
                                             <span class="pull-right-container">
                                               <i class="fa fa-angle-left pull-right"></i>

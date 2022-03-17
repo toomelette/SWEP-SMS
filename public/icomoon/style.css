@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?6mr1fz');
-  src:  url('fonts/icomoon.eot?6mr1fz#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?6mr1fz') format('truetype'),
-    url('fonts/icomoon.woff?6mr1fz') format('woff'),
-    url('fonts/icomoon.svg?6mr1fz#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?lzxhxc');
+  src:  url('fonts/icomoon.eot?lzxhxc#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?lzxhxc') format('truetype'),
+    url('fonts/icomoon.woff?lzxhxc') format('woff'),
+    url('fonts/icomoon.svg?lzxhxc#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,45 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-leave:before {
+  content: "\e906";
+}
+.icon-computer-repair:before {
+  content: "\e907";
+}
+.icon-peso:before {
+  content: "\e908";
+}
+.icon-applicants:before {
+  content: "\e909";
+}
+.icon-documents:before {
+  content: "\e90a";
+}
+.icon-employees:before {
+  content: "\e90b";
+}
+.icon-documents-folder:before {
+  content: "\e90c";
+}
+.icon-contact:before {
+  content: "\e90d";
+}
+.icon-departments:before {
+  content: "\e90e";
+}
+.icon-project-codes:before {
+  content: "\e90f";
+}
+.icon-signature:before {
+  content: "\e910";
+}
+.icon-procurement:before {
+  content: "\e904";
+}
+.icon-budgeting:before {
+  content: "\e905";
+}
 .icon-ico-holiday:before {
   content: "\e900";
 }
