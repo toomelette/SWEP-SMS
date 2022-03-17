@@ -140,7 +140,7 @@
                                         {{--                                </li>--}}
                                     @else
                                         <li class="treeview ">
-                                            <a href="#">
+                                            <a href="#" searchable="{{$menu_content['menu_obj']->name}} {{$menu_content['menu_obj']->tags}} {{$menu_content['menu_obj']->category}} {!! \App\Swep\ViewHelpers\__html::sidenav_labeler($menu_content['menu_obj']->category) !!}">
                                                 <i class="fa {{$menu_content['menu_obj']->icon}}"></i> <span>{{$menu_content['menu_obj']->name}}</span>
                                                 <span class="pull-right-container">
                                               <i class="fa fa-angle-left pull-right"></i>
