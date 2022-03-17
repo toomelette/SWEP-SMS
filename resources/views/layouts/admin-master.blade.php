@@ -178,7 +178,6 @@
         li = $("#myMenu li.treeview");
         li.each(function () {
           a = $(this).children('a');
-          console.log('')
           searchText = a.attr('searchable');
           if (searchText.toUpperCase().indexOf(filter) > -1) {
             $(this).slideDown();
