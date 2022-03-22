@@ -138,6 +138,7 @@
         });
 
         const autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber_{{$rand}}');
+
         var unit_cost_{{$rand}} = '{{$ppmp->unit_cost}}';
         var qty_{{$rand}} = '{{$ppmp->qty}}';
         $('body').on('change','.unit_cost_{{$rand}}',function () {

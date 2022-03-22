@@ -53,8 +53,14 @@
           '3 project_code', 'project_code', 'Project Code', $dv->project_code, $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2_'.$rand, ''
         ) !!}
 
-        {!! __form::textbox_numeric(
-          '3 amount', 'amount', 'text', 'Amount *', 'Amount', $dv->amount, $errors->has('amount'), $errors->first('amount'), '','autonum_'.$rand
+        {!! \App\Swep\ViewHelpers\__form2::textbox('amount',[
+            'cols' => 3,
+            'label' => 'Amount:',
+            'class' => 'autonumber_'.$rand.' amount'.$rand,
+            'autocomplete' => 'off',
+            'title' => 'Please put your computations below',
+        ],
+        $dv
         ) !!}
     </div>
     <div class="row">
@@ -102,7 +108,7 @@
 
 @section('scripts')
 <script type="text/javascript">
-
+    const autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber_{{$rand}}');
     $(document).ready(function () {
         $(function () {
             CKEDITOR.replace('editor_{{$rand}}');

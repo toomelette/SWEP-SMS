@@ -222,9 +222,13 @@
                           '3 project_code', 'project_code', 'Project Code', '', $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2', ''
                         ) !!}
 
-                        {!! __form::textbox_numeric(
-                          '3 amount', 'amount', 'text', 'Amount *', 'Amount', '', $errors->has('amount'), $errors->first('amount'), '', '','Total/Net of your computation'
-                        ) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('amount',[
+                            'cols' => 3,
+                            'label' => 'Amount:',
+                            'class' => 'autonumber amount',
+                            'autocomplete' => 'off',
+                            'title' => 'Please put your computations below',
+                        ]) !!}
                     </div>
                     <div class="row">
                         {!! __form::textarea(

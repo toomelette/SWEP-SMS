@@ -204,10 +204,10 @@
         }
 
       }
-
       function filterDT(datatable_object){
+
         let data = $("#filter_form").serialize();
-        datatable_object.ajax.url("{{ route(\Illuminate\Support\Facades\Route::currentRouteName()) }}"+"?"+data).load();
+        datatable_object.ajax.url("{{Request::url()}}"+"?"+data).load();
 
         $(".dt_filter").each(function (index,el) {
           if ($(this).val() != ''){

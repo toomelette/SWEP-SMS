@@ -22,9 +22,9 @@ class __form2
         $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
         $step = ($n->step != '') ? 'step="'.$n->step.'"' : '';
         $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
-
+        $title = ($n->title != '') ? '<i class="fa fa-question-circle" title="'.$n->title.'"></i>' : '';
         return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
-                <label for="'. $name .'">'.$n->label.'</label> 
+                <label for="'. $name .'">'.$n->label.'</label> '.$title.'
                 <input class="form-control '.$n->class.'" '.$id.' name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.'>
               </div>';
     }
@@ -157,6 +157,7 @@ class __form2
         (!isset($array['autocomplete'])) ? $array['autocomplete']= '' : false;
         (!isset($array['step'])) ? $array['step']= '' : false;
         (!isset($array['readonly'])) ? $array['readonly']= '' : false;
+        (!isset($array['title'])) ? $array['title']= '' : false;
         ($array['type'] == '') ?  $array['type'] = 'text' : false;
 
         $this->class = $array['class'];
@@ -171,6 +172,7 @@ class __form2
         $this->autocomplete = $array['autocomplete'];
         $this->readonly = $array['readonly'];
         $this->step = $array['step'];
+        $this->title = $array['title'];
     }
     public function get($array){
         return $this->name.' Hello';

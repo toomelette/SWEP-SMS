@@ -204,7 +204,6 @@ class DisbursementVoucherController extends Controller{
 
 
     public function update(DisbursementVoucherFormRequest $request, $slug){
-
         $dv = $this->disbursement_voucher->update($request, $slug);
         if($dv){
             return $dv;

@@ -385,8 +385,8 @@ Route::get('dashboard/set', function (){
 
 Route::get('/pdo',function(){
 
-    $db = DB::connection('sqlsrv')->table('dbo.EmpMaster')->first();
-
+    $db = \App\Models\SqlServer\EmpMaster::query()->where('EmpNo','=','0090-8')->first();
+    return dd($db);
     $serverName = "10.36.1.105\SRA";
 
     $connectionInfo = array("Database"=>"GASS","UID" => "sa", "PWD" => 'noliboy');

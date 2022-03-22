@@ -137,7 +137,6 @@ class EmployeeController extends Controller{
 
 
     public function edit($slug){
-
     	return $this->employee->edit($slug);
         
     }

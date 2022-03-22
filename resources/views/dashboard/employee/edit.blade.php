@@ -1,6 +1,6 @@
 <?php
   $medical_history_options = [
-    'Hypertension' , 
+    'Hypertension' ,
     'Vertigo/Chronic Headache',
     'Diabetes',
     'High Cholesterol',
@@ -28,7 +28,7 @@
 @extends('layouts.admin-master')
 
 @section('content')
-    
+
   <section class="content-header">
       <h1>Edit Employee</h1>
       <div class="pull-right" style="margin-top: -25px;">
@@ -39,12 +39,12 @@
   <section class="content">
 
     <div class="box">
-    
+
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
-        </div> 
+        </div>
       </div>
 
 
@@ -54,7 +54,7 @@
         <input name="_method" value="PUT" type="hidden">
 
         <div class="box-body">
-          
+
 
           @if($errors->all())
             {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', 'Please check if there are errors on other fields.') !!}
@@ -78,7 +78,7 @@
               {{-- Personal Info --}}
               <div class="tab-pane active" id="pi">
                 <div class="row">
-                  
+
 
 
 
@@ -86,11 +86,11 @@
                   {{-- Personal Info --}}
                   <div class="col-md-12">
                     <div class="box">
-                      
+
                       <div class="box-header with-border">
                         <h3 class="box-title">Personal Information</h3>
                       </div>
-                      
+
                       <div class="box-body">
 
                         {!! __form::textbox(
@@ -164,7 +164,7 @@
                         {!! __form::select_static(
                           '3', 'citizenship_type', 'Citizenship Type *', old('citizenship_type') ? old('citizenship_type') : $employee->citizenship_type, ['by birth' => 'BB', 'by naturalization' => 'BN'], $errors->has('citizenship_type'), $errors->first('citizenship_type'), '', ''
                         ) !!}
-                        
+
                         {!! __form::textbox(
                            '3', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country') ? old('dual_citizenship_country') : $employee->dual_citizenship_country, $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
                         ) !!}
@@ -242,7 +242,7 @@
                       </div>
                     </div>
                   </div>
-                  
+
 
                   <div class="col-md-6" style="padding-top: 30px;">
                     <div class="box">
@@ -348,7 +348,7 @@
 
                         {!! __form::textbox(
                            '6', 'mother_firstname', 'text', 'Firstname *', 'Firstname', old('mother_firstname') ? old('mother_firstname') : optional($employee->employeeFamilyDetail)->mother_firstname, $errors->has('mother_firstname'), $errors->first('mother_firstname'), 'data-transform="uppercase"'
-                        ) !!} 
+                        ) !!}
 
                         <div class="col-md-12"></div>
 
@@ -420,7 +420,7 @@
                         <h3 class="box-title">Children</h3>
                         <button id="children_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body no-padding">
 
                         <table class="table table-bordered">
@@ -445,7 +445,7 @@
                                     ) !!}
                                   </td>
 
-                                  <td> 
+                                  <td>
                                     {!! __form::datepicker_for_dt(
                                       'row_children['. $key .'][date_of_birth]', $value['date_of_birth'], $errors->first('row_children.'. $key .'.date_of_birth')
                                     ) !!}
@@ -454,7 +454,7 @@
                                   <td>
                                       <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
                                   </td>
- 
+
                                 </tr>
 
                               @endforeach
@@ -468,7 +468,7 @@
                                     {!! __form::textbox_for_dt('row_children['. $key .'][fullname]', 'Fullname', $data->fullname, '') !!}
                                   </td>
 
-                                  <td> 
+                                  <td>
                                     {!! __form::datepicker_for_dt('row_children['. $key .'][date_of_birth]', $data->date_of_birth, '') !!}
                                   </td>
 
@@ -500,11 +500,11 @@
 
                   <div class="col-md-12">
                     <div class="box">
-                      
+
                       <div class="box-header with-border">
                         <h3 class="box-title">Appointment Details</h3>
                       </div>
-                      
+
                       <div class="box-body">
 
                         {!! __form::textbox(
@@ -607,11 +607,11 @@
                   {{-- Personal ID's --}}
                   <div class="col-md-12">
                     <div class="box">
-                      
+
                       <div class="box-header with-border">
                         <h3 class="box-title">Personal ID's</h3>
                       </div>
-                      
+
                       <div class="box-body">
 
 
@@ -652,7 +652,7 @@
               {{-- Credentials --}}
               <div class="tab-pane" id="cre">
                 <div class="row">
-                  
+
 
                   <div class="col-md-12">
                     <div class="box">
@@ -661,7 +661,7 @@
                         <h3 class="box-title">Educational Background</h3>
                         <button id="eb_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body">
 
                         <table class="table table-bordered">
@@ -806,7 +806,7 @@
                         <h3 class="box-title">Eligibilities</h3>
                         <button id="eligibility_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body">
 
                         <table class="table table-bordered">
@@ -952,9 +952,9 @@
 
                       <div class="box-header with-border">
                         <h3 class="box-title">Work Experience</h3>
-                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>  
+                        <button id="we_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body">
 
                         <table class="table table-bordered">
@@ -1120,15 +1120,15 @@
 
                   {{-- Voluntary Work --}}
                   <div class="col-md-12">
-                    
+
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Voluntary Work</h3>
                         <button id="vw_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body no-padding">
-                        
+
                         <table class="table table-bordered">
 
                           <tr>
@@ -1246,11 +1246,11 @@
                             </tbody>
 
                         </table>
-                       
+
                       </div>
                     </div>
                   </div>
-                  
+
 
 
                   {{-- Recognitions --}}
@@ -1261,9 +1261,9 @@
                         <h3 class="box-title">Recognitions</h3>
                         <button id="recognition_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body no-padding">
-                        
+
                         <table class="table table-bordered">
 
                           <tr>
@@ -1318,7 +1318,7 @@
                             </tbody>
 
                         </table>
-                       
+
                       </div>
                     </div>
                   </div>
@@ -1326,15 +1326,15 @@
 
                   {{-- Organizations --}}
                   <div class="col-md-12" style="padding-top: 30px;">
-                      
+
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Organizations</h3>
                         <button id="org_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body no-padding">
-                        
+
                         <table class="table table-bordered">
 
                           <tr>
@@ -1387,7 +1387,7 @@
                             </tbody>
 
                         </table>
-                       
+
                       </div>
                     </div>
                   </div>
@@ -1396,15 +1396,15 @@
 
                   {{-- Special Skills --}}
                   <div class="col-md-12" style="padding-top: 30px;">
-                      
+
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">Special Skills</h3>
                         <button id="ss_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body no-padding">
-                        
+
                         <table class="table table-bordered">
 
                           <tr>
@@ -1457,7 +1457,7 @@
                             </tbody>
 
                         </table>
-                       
+
                       </div>
                     </div>
                   </div>
@@ -1465,15 +1465,15 @@
 
                   {{-- References --}}
                   <div class="col-md-12" style="padding-top:30px;">
-                
+
                     <div class="box">
                       <div class="box-header with-border">
                         <h3 class="box-title">References</h3>
                         <button id="reference_add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
                       </div>
-                      
+
                       <div class="box-body no-padding">
-                        
+
                         <table class="table table-bordered">
 
                           <tr>
@@ -1552,7 +1552,7 @@
                             </tbody>
 
                         </table>
-                       
+
                       </div>
                     </div>
                   </div>
@@ -1566,18 +1566,18 @@
               {{-- Questions --}}
               <div class="tab-pane" id="oq">
                 <div class="row">
-                  
+
                   <div class="col-md-12" style="padding-bottom: 10px;">
                     <h3>Please answer the following questions:</h3>
                   </div>
-                  
+
 
                   <div class="col-md-12">
-                      
+
                     <div class="col-md-12">
                       <p class="text-muted well well-sm no-shadow">
                         Are you related by consanguinity or affinity to the appointing or recommending authority, or to the
-                        chief of bureau or office or to the person who has immediate supervision over you in the Office, 
+                        chief of bureau or office or to the person who has immediate supervision over you in the Office,
                         Bureau or Department where you will be apppointed,
                       </p>
                     </div>
@@ -1764,7 +1764,7 @@
                     </div>
 
                     <div class="col-md-12"></div>
-                    
+
                     <div class="col-md-6">
                       <p style="margin-bottom:-10px; font-weight: bold;">c. Are you a solo parent?</p>
                       {!! __form::select_static(
@@ -1780,7 +1780,7 @@
                     </div>
 
                   </div>
-                  
+
 
                 </div>
               </div>
@@ -1789,7 +1789,7 @@
               {{-- Health Declaration --}}
               <div class="tab-pane" id="health_declaration">
                 <div class="row">
-                  
+
                   <div class="col-md-12" style="padding-bottom: 10px;">
                     <div class="col-md-12">
 
@@ -1799,11 +1799,11 @@
                       </p>
                     </div>
                   </div>
-                  
+
 
                   <div class="col-md-12">
 
-                    <div class="row"> 
+                    <div class="row">
                       <div class="col-md-12">
                         {!! __form::textbox(
                            '3', 'family_doctor', 'text', 'Family Doctor, if any', 'Family Doctor, if any', old('family_doctor') ? old('family_doctor') : optional($employee->employeeHealthDeclaration)->family_doctor, $errors->has('family_doctor'), $errors->first('family_doctor'), ''
@@ -1860,7 +1860,7 @@
 
 
                     <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;">
-                      
+
                     </div>
                     <div class="form-group col-md-12 ">
                       <label for="family_doctor">Medical history</label>
@@ -1883,7 +1883,7 @@
                             <option value="{{$option}}">{{$option}}</option>
                           @endif
                         @endforeach
-                        
+
                       </select>
 
                       <div class="row">
@@ -1912,7 +1912,7 @@
                     </div>
 
                     <div class="col-md-12" style="border-top:solid 2px; padding-bottom:15px; color:gray;">
-                      
+
                     </div>
 
                   </div>
@@ -1975,11 +1975,11 @@
                     <hr style="margin-bottom: 10px;margin-top: 0px;">
 
 
-                      
+
                     <div class="col-md-12">
                       <div class="col-md-6">
                         <p style="margin-bottom:-10px; font-weight: bold;">1. Do you take VITAMINS?</p>
-            
+
                         {!! __form::select_static2(
                           '6', 'taking_vitamins', '', old('taking_vitamins') ? old('taking_vitamins') : optional($employee->employeeHealthDeclaration)->taking_vitamins , ['YES' => 'true', 'NO' => 'false'], $errors->has('taking_vitamins'), $errors->first('taking_vitamins'), '', ''
                         ) !!}
@@ -2028,7 +2028,7 @@
 
 
                     <label style="padding-left: 30px;"><i>CURRENT MEDICAL CONDITION</i> </label>
-                    
+
                     <hr style="margin-bottom: 10px;margin-top: 0px;">
 
                     <div class="col-md-12">
@@ -2056,12 +2056,12 @@
                         {!! __form::select_static2(
                           '6',
                           'chronic_injuries',
-                          '', 
-                          old('chronic_injuries') ? old('chronic_injuries') : optional($employee->employeeHealthDeclaration)->chronic_injuries , 
-                          ['YES' => 'true', 'NO' => 'false'], 
-                          $errors->has('chronic_injuries'), 
-                          $errors->first('chronic_injuries'), 
-                          '', 
+                          '',
+                          old('chronic_injuries') ? old('chronic_injuries') : optional($employee->employeeHealthDeclaration)->chronic_injuries ,
+                          ['YES' => 'true', 'NO' => 'false'],
+                          $errors->has('chronic_injuries'),
+                          $errors->first('chronic_injuries'),
+                          '',
                           '') !!}
                       </div>
 
@@ -2073,7 +2073,7 @@
                     </div>
 
                   </div>
-                  
+
 
                 </div>
               </div>
@@ -2108,7 +2108,7 @@
     {!! __html::modal('employee', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('EMPLOYEE_CREATE_SUCCESS')) !!}
   @endif
 
-@endsection 
+@endsection
 
 
 
@@ -2132,7 +2132,7 @@
     {{-- Medical History --}}
     $(document).ready(function() {
 
-      
+
       $("#medical_history").change(function(){
         medical_history_typed = [];
 
@@ -2153,7 +2153,7 @@
           }else{
             $("#medical_history_table tbody").append("<tr><td>"+item+"</td><td><input class='form-control input-sm' id='med_"+item+"' name='medications[]' type='text' value='' placeholder='Medication'></td></tr>");
           }
-          
+
         })
         // console.log(medical_history_typed);
       });
@@ -2202,7 +2202,7 @@
             orientation: "bottom"
         });
       });
-      
+
       $(this).removeClass('datepicker');
 
       });
@@ -2289,7 +2289,7 @@
             orientation: "bottom"
         });
       });
-      
+
       $(this).removeClass('datepicker');
 
       });
@@ -2389,7 +2389,7 @@
             orientation: "bottom"
         });
       });
-      
+
       $(this).removeClass('datepicker');
 
       });
@@ -2482,13 +2482,13 @@
             orientation: "bottom"
         });
       });
-      
+
       $(this).removeClass('datepicker');
 
       });
     });
 
- 
+
 
 
 
@@ -2586,7 +2586,7 @@
             orientation: "bottom"
         });
       });
-      
+
       $(".priceformat").priceFormat({
         prefix: "",
         thousandsSeparator: ",",
@@ -2679,7 +2679,7 @@
             orientation: "bottom"
         });
       });
-      
+
       $(this).removeClass('datepicker');
 
       });
@@ -2822,7 +2822,7 @@
       if(i < 3){
         $("#reference_table_body").append($(content));
       }
-      
+
       });
 
     });
@@ -2835,7 +2835,7 @@
     $(document).on("change","#fill_perm" ,function(e) {
 
       if(this.checked) {
-        
+
         $('#perm_address_block').val($('#res_address_block').val());
         $('#perm_address_street').val($('#res_address_street').val());
         $('#perm_address_village').val($('#res_address_village').val());
@@ -2845,7 +2845,7 @@
         $('#perm_address_zipcode').val($('#res_address_zipcode').val());
 
       }else{
-        
+
         $('#perm_address_block').val('');
         $('#perm_address_street').val('');
         $('#perm_address_village').val('');
@@ -2860,6 +2860,6 @@
 
 
 
-  </script> 
-    
+  </script>
+
 @endsection

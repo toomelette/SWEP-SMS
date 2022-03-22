@@ -3,6 +3,7 @@
 namespace App\Swep\Repositories;
  
 use App\Swep\BaseClasses\BaseRepository;
+use App\Swep\Helpers\Helper;
 use App\Swep\Interfaces\DisbursementVoucherInterface;
 use App\Swep\Interfaces\SignatoryInterface;
 
@@ -95,7 +96,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->department_unit_name = $request->department_unit_name;
         $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
-        $disbursement_voucher->amount = $this->__dataType->string_to_num($request->amount);
+        $disbursement_voucher->amount = Helper::sanitizeAutonum($request->amount);
         $disbursement_voucher->certified_by = $request->certified_by;
         $disbursement_voucher->certified_by_position =  $request->certified_by_position;
         $disbursement_voucher->approved_by = $request->approved_by;
@@ -133,7 +134,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
         $disbursement_voucher->department_unit_name = $request->department_unit_name;
         $disbursement_voucher->project_code = $request->project_code;
         $disbursement_voucher->explanation = $request->explanation;
-        $disbursement_voucher->amount = $this->__dataType->string_to_num($request->amount);
+        $disbursement_voucher->amount = Helper::sanitizeAutonum($request->amount);
         $disbursement_voucher->certified_by = $request->certified_by;
         $disbursement_voucher->certified_by_position =  $request->certified_by_position;
         $disbursement_voucher->approved_by = $request->approved_by;
