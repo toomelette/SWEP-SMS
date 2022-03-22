@@ -383,3 +383,35 @@ Route::get('dashboard/set', function (){
 
 })->name('dashboard.set');
 
+Route::get('/pdo',function(){
+
+    $db = DB::connection('sqlsrv')->table('dbo.EmpMaster')->first();
+
+    $serverName = "10.36.1.105\SRA";
+
+    $connectionInfo = array("Database"=>"GASS","UID" => "sa", "PWD" => 'noliboy');
+    $conn = sqlsrv_connect($serverName, $connectionInfo);
+
+    if($conn){
+        echo "Connection established. <br>";
+        $tsql = "SELECT * FROM dbo.EmpMaster";
+
+        $stmt = sqlsrv_query( $conn, $tsql );
+
+        if( $stmt === false) {
+            die( print_r( sqlsrv_errors(), true) );
+        }
+
+        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+            echo $row['LastName'].", ".$row['FirstName']."<br />";
+        }
+
+        sqlsrv_free_stmt( $stmt);
+
+
+    }else{
+        echo "Connection failed: <br>";
+        die(print_r(sqlsrv_errors(), true));
+    }
+});
+

@@ -127,7 +127,7 @@ class Helper
         foreach ($d as $dept){
 
             foreach($dept->departmentUnit as $unit){
-                $department_array[$dept->name][$unit->description] = $unit->department_unit_id;
+                $department_array[$dept->name][$unit->department_unit_id] = $unit->description;
             }
 
 
@@ -140,8 +140,8 @@ class Helper
 
     public static function sexArray(){
         return [
-            'Female' => 'FEMALE',
-            'Male' => 'MALE',
+            'FEMALE' => 'Female',
+            'MALE' => 'Male',
         ];
     }
 

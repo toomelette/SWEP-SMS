@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,12 +33,12 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-        ],
-
+//        'sqlite' => [
+//            'driver' => 'sqlite',
+//            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+//            'prefix' => '',
+//        ],
+//
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -54,26 +54,43 @@ return [
             'engine' => null,
         ],
 
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],
+//        'pgsql' => [
+//            'driver' => 'pgsql',
+//            'host' => env('DB_HOST', '127.0.0.1'),
+//            'port' => env('DB_PORT', '5432'),
+//            'database' => env('DB_DATABASE', 'forge'),
+//            'username' => env('DB_USERNAME', 'forge'),
+//            'password' => env('DB_PASSWORD', ''),
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//            'schema' => 'public',
+//            'sslmode' => 'prefer',
+//        ],
 
+//        'sqlsrv' => [
+//            'driver' => 'sqlsrv',
+//            'host' => env('DB_HOST', 'localhost'),
+//            'port' => env('DB_PORT', '1433'),
+//            'url' => env('DATABASE_URL', 'localhost'),
+//            'database' => env('DB_DATABASE', 'forge'),
+//            'username' => env('DB_USERNAME', 'forge'),
+//            'password' => env('DB_PASSWORD', ''),
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//        ],
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => '10.36.1.105\SRA',
+//            'host' => env('DB_HOST_MSSQL_GAAS', 'localhost'),
+//            'port' => env('DB_PORT_MSSQL_GAAS', '1433'),
+//            'port' => '',
+//            'url' => env('DATABASE_URL', 'localhost'),
+//            'database' => env('DB_DATABASE_MSSQL_GAAS', 'forge'),
+            'database' => 'GASS',
+            'username' => 'sa',
+//            'username' => env('DB_USERNAME_MSSQL_GAAS', 'forge'),
+            'password' => 'noliboy',
+//            'password' => env('DB_PASSWORD_MSSQL_GAAS', ''),
             'charset' => 'utf8',
             'prefix' => '',
         ],

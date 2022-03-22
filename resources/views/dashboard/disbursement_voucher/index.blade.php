@@ -23,24 +23,20 @@
                             <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
                         </a>
                     </h4>
+                    <small id="filter-notifier" class="label bg-blue blink"></small>
                 </div>
                 <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
                     <div class="box-body">
-{{--                        <div class="row">--}}
-{{--                            <div class="col-md-12">--}}
-{{--                                <button class="btn btn-xs btn-default pull-right" id="clear_filter">Clear filters</button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
                         <form id="filter_form">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2 dt_filter-parent-div">
                                     <label>Department:</label>
                                     <select name="department_name"  class="form-control dt_filter filter_sex filters select22">
                                         <option value="">None</option>
                                         {!! \App\Swep\ViewHelpers\__html::options_obj($global_departments_all,'name','name') !!}
                                     </select>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 dt_filter-parent-div">
                                     <label>Unit:</label>
                                     <select name="department_unit_name"  class="form-control dt_filter filter_sex filters select22">
                                         <option value="">None</option>
@@ -48,21 +44,21 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-2 dt_filter-parent-div">
                                     <label>Project Code:</label>
                                     <select name="project_code"  class="form-control dt_filter filter_sex filters select22">
                                         <option value="">None</option>
                                         {!! \App\Swep\ViewHelpers\__html::options_obj($global_project_codes_all,'project_code','project_code') !!}
                                     </select>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-1 dt_filter-parent-div">
                                     <label>Fund Source:</label>
                                     <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">
                                         <option value="">None</option>
                                         {!! \App\Swep\ViewHelpers\__html::options_obj($global_fund_source_all,'description','fund_source_id') !!}
                                     </select>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 dt_filter-parent-div">
                                     <label>Station:</label>
                                     <select name="project_id"  class="form-control dt_filter filter_sex filters">
                                         <option value="">None</option>
@@ -71,12 +67,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <div class="form-group">
+                                        <div class="form-group ">
                                             <label style="margin-bottom: 2px;">
                                                 Filter Date
                                             </label>
                                             <div class="input-group">
-                                                <div class="input-group-addon">
+                                                <div class="input-group-addon dt_filter-parent-div">
                                                     <input type="checkbox" name="filter_date" class="dt_filter" id="filter_date_checkbox">
                                                 </div>
                                                 <input name="date_range" type="text" class="form-control pull-right dt_filter" id="date_range" autocomplete="off" disabled>
@@ -299,21 +295,6 @@
         {{--        }--}}
         {{--    });--}}
         {{--}--}}
-
-        function filterDT(){
-            let data = $("#filter_form").serialize();
-            dvs_tbl.ajax.url("{{ route(\Illuminate\Support\Facades\Route::currentRouteName()) }}"+"?"+data).load();
-            
-            $(".dt_filter").each(function (index,el) {
-                if ($(this).val() != ''){
-                    $(this).parent("div").addClass('has-success');
-                    $(this).siblings('label').addClass('text-green');
-                } else {
-                    $(this).parent("div").removeClass('has-success');
-                    $(this).siblings('label').removeClass('text-green');
-                }
-            })
-        }
     </script>
     <script type="text/javascript">
 
@@ -572,7 +553,7 @@
         })
 
         $(".dt_filter").change(function () {
-            filterDT();
+            filterDT(dvs_tbl);
         })
         $("body").on("click",".save_as_btn", function () {
             btn = $(this);

@@ -58,6 +58,12 @@ class EmployeeController extends Controller{
 	public function index(EmployeeFilterRequest $request){
         if($request->ajax() && $request->has('draw')){
             $employees = Employee::query();
+            if($request->has('is_active') && $request->is_active != ''){
+                $employees = $employees->where('is_active','=',$request->is_active);
+            }
+            if($request->has('sex') && $request->sex != ''){
+                $employees = $employees->where('sex','=',$request->sex);
+            }
             return DataTables::of($employees)
                 ->addColumn('action', function ($data){
                     $destroy_route = "'".route("dashboard.employee.destroy","slug")."'";

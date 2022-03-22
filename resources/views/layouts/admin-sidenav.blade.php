@@ -34,7 +34,7 @@
     <style>
 
     </style>
-    <ul class="sidebar-menu" data-widget="tree" id="myMenu">
+    <ul class="sidebar-menu" data-widget="tree" id="myMenu">em
         <div class="sidebar-form">
             <div class="input-group">
                 <input id="mySearch" type="text" onkeyup="searchSidenav()" class="form-control" placeholder="Search menu...">
@@ -82,7 +82,7 @@
 
             @endif
 
-                <li class="header" id="sidenav_search_header" style="display: none">SEARCH:</li>
+                <li class="header" id="sidenav_search_header" style="display: none; background-color: #024850; color: white"><i class="fa fa-search"></i> SEARCH:</li>
             @foreach($tree as $category=>$menus)
                 @if(\Illuminate\Support\Facades\Auth::user()->sidenav == '')
                         @if(count($menus) > 0)

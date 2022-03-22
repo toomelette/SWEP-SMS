@@ -205,6 +205,27 @@
 
       }
 
+      function filterDT(datatable_object){
+        let data = $("#filter_form").serialize();
+        datatable_object.ajax.url("{{ route(\Illuminate\Support\Facades\Route::currentRouteName()) }}"+"?"+data).load();
+
+        $(".dt_filter").each(function (index,el) {
+          if ($(this).val() != ''){
+            $(this).parent("div").addClass('has-success');
+            $(this).siblings('label').addClass('text-green');
+          } else {
+            $(this).parent("div").removeClass('has-success');
+            $(this).siblings('label').removeClass('text-green');
+          }
+        });
+        let withSuccess = $('.dt_filter-parent-div.has-success');
+        if(withSuccess.length > 0){
+          $("#filter-notifier").html(withSuccess.length+' filter(s) currently active');
+        }else{
+          $("#filter-notifier").html('');
+        }
+      }
+
     </script>
 
     @yield('scripts')

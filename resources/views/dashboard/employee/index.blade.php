@@ -12,6 +12,83 @@
             <h3 class="box-title">List of Permanent Employees</h3>
         </div>
         <div class="box-body">
+            <div class="panel">
+                <div class="box-header with-border">
+                    <h4 class="box-title">
+                        <a data-toggle="collapse" id="#a-advanced-filters" data-parent="#accordion" href="#advanced_filters" aria-expanded="true" class="">
+                            <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
+                        </a>
+
+                    </h4>
+                   <small id="filter-notifier" class="label bg-blue blink"></small>
+                </div>
+                <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
+                    <div class="box-body">
+                        <form id="filter_form">
+                            <div class="row">
+                                <div class="col-md-2 dt_filter-parent-div">
+                                    <label>Status:</label>
+                                    <select name="is_active"  class="form-control dt_filter filters">
+                                        <option value="">Don't filter</option>
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="INACTIVE">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 dt_filter-parent-div">
+                                    <label>Sex:</label>
+                                    <select name="sex"  class="form-control dt_filter filter_sex filters select22">
+                                        <option value="">Don't filter</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                    </select>
+                                </div>
+
+{{--                                <div class="col-md-2">--}}
+{{--                                    <label>Project Code:</label>--}}
+{{--                                    <select name="project_code"  class="form-control dt_filter filter_sex filters select22">--}}
+{{--                                        <option value="">None</option>--}}
+
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-1">--}}
+{{--                                    <label>Fund Source:</label>--}}
+{{--                                    <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">--}}
+{{--                                        <option value="">None</option>--}}
+
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-2">--}}
+{{--                                    <label>Station:</label>--}}
+{{--                                    <select name="project_id"  class="form-control dt_filter filter_sex filters">--}}
+{{--                                        <option value="">None</option>--}}
+
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-md-3">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label style="margin-bottom: 2px;">--}}
+{{--                                                Filter Date--}}
+{{--                                            </label>--}}
+{{--                                            <div class="input-group">--}}
+{{--                                                <div class="input-group-addon">--}}
+{{--                                                    <input type="checkbox" name="filter_date" class="dt_filter" id="filter_date_checkbox">--}}
+{{--                                                </div>--}}
+{{--                                                <input name="date_range" type="text" class="form-control pull-right dt_filter" id="date_range" autocomplete="off" disabled>--}}
+{{--                                                <div class="input-group-addon">--}}
+{{--                                                    <i class="fa fa-calendar"></i>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
             <div id="employees_table_container" style="display: none">
                 <table class="table table-bordered table-striped table-hover" id="employees_table" style="width: 100%">
                     <thead>
@@ -158,7 +235,7 @@
       'dom' : 'lBfrtip',
       "processing": true,
       "serverSide": true,
-      "ajax" : '',
+      "ajax" : '{{route('dashboard.employee.index')}}',
       "columns": [
         { "data": "fullname" },
         { "data": "employee_no" },
@@ -171,11 +248,6 @@
         {!! __js::dt_buttons() !!}
       ],
       "columnDefs":[
-        // {
-        //   "targets" : [2,3],
-        //   "orderable" : false,
-        //   "class" : 'w-6p'
-        // },
         {
           "targets" : 5,
           "orderable" : false,
@@ -185,9 +257,20 @@
       ],
       "responsive": true,
       "initComplete": function( settings, json ) {
-        $('#tbl_loader').fadeOut(function(){
-          $("#employees_table_container").fadeIn();
-        });
+
+          setTimeout(function () {
+              $("#filter_form select[name='is_active']").val('ACTIVE');
+              $("#filter_form select[name='is_active']").trigger('change');
+          },100);
+
+          setTimeout(function () {
+              $('a[href="#advanced_filters"]').trigger('click');
+          },1500);
+
+            $('#tbl_loader').fadeOut(function(){
+              $("#employees_table_container").fadeIn();
+
+            });
       },
       "language":
               {
@@ -348,7 +431,9 @@
         })
     })
 
-
+    $(".dt_filter").change(function () {
+        filterDT(employees_tbl);
+    })
 
 </script>
 @endsection

@@ -138,11 +138,11 @@
     <table class="details_table bordered" style="width: 100%">
         <tr>
             <td height="40">Summary of Diagnostics</td>
-            <td></td>
+            <td>{{$r->summary_of_diagnostics}}</td>
         </tr>
         <tr>
             <td height="40">Recommendations</td>
-            <td></td>
+            <td>{{$r->recommendations}}</td>
         </tr>
     </table>
 <br>
@@ -155,7 +155,7 @@
                 <span style="font-size: smaller">(if equipment)</span>
             </td>
             <td>
-
+                {{$r->returned}}
             </td>
         </tr>
         <tr>
@@ -167,7 +167,7 @@
                 Date Returned
             </td>
             <td>
-
+                {{Carbon::parse($r->date_returned)->format('F d, Y')}}
             </td>
         </tr>
     </table>

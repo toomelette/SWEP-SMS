@@ -9,85 +9,131 @@
     <input value="{{$jo->slug}}" name="slug" hidden>
 
     <div class="row">
-        {!! __form::textbox(
-           '4 firstname', 'firstname', 'text', 'First name *', 'First name', $jo, 'firstname', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('firstname',[
+            'label' => 'First Name:',
+            'class' => 'basis',
+            'cols' => 4,
+            'id' => 'firstname',
+        ],$jo) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('middlename',[
+            'label' => 'Middle Name:',
+            'class' => 'basis',
+            'cols' => 4,
+            'id' => 'middlename',
+        ],$jo) !!}
 
-        {!! __form::textbox(
-           '4 middlename', 'middlename', 'text', 'Middle name *', 'Middle name', $jo, 'middlename', '', ''
-         ) !!}
-
-        {!! __form::textbox(
-           '4 lastname', 'lastname', 'text', 'Last name *', 'Last name', $jo, 'lastname', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('lastname',[
+            'label' => 'Last Name:',
+            'class' => 'basis',
+            'cols' => 4,
+            'id' => 'lastname',
+        ],$jo) !!}
     </div>
     <div class="row">
-        {!! __form::select_static(
-            '4 name_ext', 'name_ext', 'Suffix', $jo, Helper::name_extensions(), '', '', '', ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::select('name_ext',[
+            'cols' => 4,
+            'label' => 'Suffix:',
+            'options' => Helper::name_extensions(),
+        ],$jo) !!}
 
-        {!! __form::select_static(
-            '4 sex', 'sex', 'Sex*', $jo, Helper::sexArray(), '', '', '', ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::select('sex',[
+            'cols' => 4,
+            'label' => 'Sex:',
+            'options' => Helper::sexArray(),
+        ],$jo) !!}
 
-        {!! __form::textbox(
-           '4 birthday', 'birthday', 'date', 'Birthday *', 'Birthday', $jo, 'birthday', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('birthday',[
+            'label' => 'Birthday:',
+            'cols' => 4,
+            'type' => 'date',
+        ],$jo) !!}
     </div>
     <div class="row">
-        {!! __form::select_static(
-            '4 civil_status', 'civil_status', 'Civil Status', $jo, Helper::civil_status(), '', '', '', ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::select('civil_status',[
+            'cols' => 4,
+            'label' => 'Civil Status:',
+            'options' => Helper::civil_status(),
+        ],$jo) !!}
 
-        {!! __form::textbox(
-           '4 email', 'email', 'text', 'Email Address *', 'Email address', $jo, 'email', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('email',[
+            'label' => 'Email Address:',
+            'cols' => 4,
+            'id' => 'email',
+        ],$jo) !!}
 
-        {!! __form::textbox(
-           '4 phone', 'phone', 'text', 'Contact no. *', 'Contact no', $jo, 'phone', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('phone',[
+            'label' => 'Contact no.:',
+            'cols' => 4,
+            'id' => 'phone',
+        ],$jo) !!}
     </div>
     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
         Employment Details
     </p>
     <div class="row">
-        {!! __form::textbox(
-           '4 employee_no', 'employee_no', 'text', 'Employee No *', 'Employee No.', $jo, 'employee_no', '', ''
-         ) !!}
-
-        {!! __form::select_static2(
-            '4 department_unit', 'department_unit', 'Department Unit', $jo, \App\Swep\Helpers\Helper::departmentUnitArrayForSelect(), '', '', '', ''
-        ) !!}
-
-        {!! __form::textbox(
-           '4 position', 'position', 'text', 'Position *', 'Position', $jo, 'position', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('employee_no',[
+            'label' => 'Employee No.:',
+            'cols' => 4,
+            'id' => 'employee_no',
+        ],$jo) !!}
+        {!! \App\Swep\ViewHelpers\__form2::select('department_unit',[
+            'cols' => 4,
+            'label' => 'Department Unit:',
+            'options' => Helper::departmentUnitArrayForSelect(),
+        ],$jo) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('position',[
+            'label' => 'Position:',
+            'cols' => 4,
+            'id' => 'position',
+        ],$jo) !!}
     </div>
     <div class="row">
-        {!! __form::textbox(
-           '4 biometric_user_id', 'biometric_user_id', 'text', 'Biometric User Id:*', 'Biometric User Id', $jo, 'biometric_user_id', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('biometric_user_id',[
+            'label' => 'Biometric User Id:',
+            'cols' => 4,
+            'id' => 'biometric_user_id',
+        ],$jo) !!}
+
     </div>
     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
         Address
     </p>
     <div class="row">
-        {!! __form::a_select('4 region', 'Region:*', 'region', [], '' , '') !!}
-        {!! __form::a_select('4 province', 'Province:*', 'province', [
-            $jo->province => $jo->province
-        ], $jo->province , '') !!}
+        {!! \App\Swep\ViewHelpers\__form2::a_select('region',[
+            'cols' => 4,
+            'label' => 'Region:',
+            'options' => [],
+        ]) !!}
 
-        {!! __form::a_select('4 city', 'Municipality/City:*', 'city', [
-            $jo->city => $jo->city
-        ], $jo->city , '') !!}
+        {!! \App\Swep\ViewHelpers\__form2::a_select('province',[
+            'cols' => 4,
+            'label' => 'Province:',
+            'options' => [
+                $jo->province => $jo->province,
+            ],
+        ],$jo->province) !!}
+
+        {!! \App\Swep\ViewHelpers\__form2::a_select('city',[
+            'cols' => 4,
+            'label' => 'Municipality/City:',
+            'options' => [
+                $jo->city => $jo->city,
+            ],
+        ],$jo->city) !!}
     </div>
     <div class="row">
-        {!! __form::a_select('4 brgy', 'Barangay:*', 'brgy', [
-            $jo->brgy => $jo->brgy
-        ], $jo->brgy , '') !!}
-        {!! __form::textbox(
-           '8 address_detailed', 'address_detailed', 'text', 'Detailed Address *', 'Detailed Address', $jo, 'address_detailed', '', ''
-         ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::a_select('brgy',[
+            'cols' => 4,
+            'label' => 'Barangay:',
+            'options' => [
+                $jo->brgy => $jo->brgy,
+            ],
+        ],$jo->brgy) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('address_detailed',[
+            'label' => 'Detailed Address:*',
+            'cols' => 8,
+            'id' => 'address_detailed',
+        ],$jo) !!}
     </div>
 @endsection
 
@@ -106,7 +152,7 @@
         $.each(data, function(i, item){
             e_selected = '';
             if(i == default_region){
-                e_selected = 'e_selected';
+                e_selected = 'selected="selected"';
             }
             $("#edit_jo_employee_form select[name='region']").append('<option value="'+i+'" '+e_selected+'>'+item.region_name+'</option>');
         })

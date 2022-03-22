@@ -18,16 +18,14 @@ class __form2
         if(is_object($value)){
             $value = $value->$name;
         }
-        if($n->readonly == 'readonly'){
-            $r_o = 'readonly';
-        }
-        if($n->step != ''){
-            $step = 'step="'.$n->step.'"';
-        }
+
+        $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
+        $step = ($n->step != '') ? 'step="'.$n->step.'"' : '';
+        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
 
         return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> 
-                <input class="form-control '.$n->class.'" id="'.$n->id.'" name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.'>
+                <input class="form-control '.$n->class.'" '.$id.' name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.'>
               </div>';
     }
 
@@ -44,7 +42,7 @@ class __form2
                 $value = Carbon::now()->format('Y');
             }
         }
-
+        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
         $opt_html = '';
         if(isset($options['options'])){
             if(is_array($options['options'])){
@@ -69,13 +67,65 @@ class __form2
             }
         }
 
+
+
         return '<div class="form-group col-md-'.$n->cols .' '.$name.'">
                   <label for="'. $name .'">'. $n->label .'</label>
-                  <select name="'. $name .'" id="'. $n->id .'" class="form-control" '. $n->extra_attr .'>
+                  <select name="'. $name .'" '. $id .' class="form-control" '. $n->extra_attr .'>
                     <option value="">Select</option>
                     '.$opt_html.'
                   </select>
                 </div>';
+    }
+
+    public static function a_select($name,$options = [],$value = null){
+        $n = new __form2;
+        $n->set($options);
+        $length = $n->cols;
+        $label = $n->label;
+        $array = (isset($options['options'])) ? $options['options'] : [];
+        $attr = $n->extra_attr;
+        $class = $n->class;
+        if($class != null){
+            $fg_class = "fg-".$class;
+            $input_class = "input-".$class;
+        }else{
+            $fg_class = '';
+            $input_class = '';
+        }
+
+        $options = '';
+        foreach ($array as $option => $val) {
+            if($value === $val){
+                $options = $options.'<option value="'.$val.'" selected>'.$option.'</option>';
+            }else{
+                $options = $options.'<option value="'.$val.'">'.$option.'</option>';
+            }
+        }
+
+        return '<div class="form-group col-md-'.$length.' '.$fg_class.'" id="fg-'.$name.'">
+        <label for="is_menu">'.$label.'</label>
+        <select name="'.$name.'" class="form-control '.$input_class.'" '.$attr.'">
+          <option value="">Select</option>
+          '.$options.'
+        </select>  
+      </div>';
+    }
+
+
+    public static function textarea($name, $options = [],$value = null){
+        if(is_object($value)){
+            $value = $value->$name;
+        }
+
+
+        $n = new __form2;
+        $n->set($options);
+        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+        return '<div class="form-group col-md-'. $n->cols .' '. $name .'">
+                <label for="'. $name .'">'. $n->label .'</label>
+                <textarea class="form-control '.$n->class.'" '.$id.' name="'. $name .'" rows="'.$n->rows.'" '. $n->extra_attr .'>'. __sanitize::html_encode($value) .'</textarea>
+              </div>';
     }
 
     private static function yearsArray(){
@@ -86,20 +136,6 @@ class __form2
         }
         return $years;
     }
-    public static function textarea($name, $options = [],$value = null){
-        if(is_object($value)){
-            $value = $value->$name;
-        }
-
-
-        $n = new __form2;
-        $n->set($options);
-        return '<div class="form-group col-md-'. $n->cols .' '. $name .'">
-                <label for="'. $name .'">'. $n->label .'</label>
-                <textarea class="form-control '.$n->class.'" id="'.$n->id.'" name="'. $name .'" rows="'.$n->rows.'" '. $n->extra_attr .'>'. __sanitize::html_encode($value) .'</textarea>
-              </div>';
-    }
-
 
     public function set($array){
 
