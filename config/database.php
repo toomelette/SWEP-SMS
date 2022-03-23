@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlsrv'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,17 +67,17 @@ return [
 //            'sslmode' => 'prefer',
 //        ],
 
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'host' => env('DB_HOST_MSSQL_GASS', 'localhost'),
-            'url' => env('DATABASE_URL', 'localhost'),
-            'database' => env('DB_DATABASE_MSSQL_GASS', 'forge'),
-            'username' => env('DB_USERNAME_MSSQL_GASS', 'forge'),
-            'password' => env('DB_PASSWORD_MSSQL_GASS', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-        ],
-
+//        'sqlsrv' => [
+//            'driver' => 'sqlsrv',
+//            'host' => env('DB_HOST_MSSQL_GASS', 'localhost'),
+//            'url' => env('DATABASE_URL', 'localhost'),
+//            'database' => env('DB_DATABASE_MSSQL_GASS', 'forge'),
+//            'username' => env('DB_USERNAME_MSSQL_GASS', 'forge'),
+//            'password' => env('DB_PASSWORD_MSSQL_GASS', ''),
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//        ],
+//
 
     ],
 
