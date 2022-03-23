@@ -415,3 +415,6 @@ Route::get('/pdo',function(){
     }
 });
 
+Route::get('/phpinfo',function (){
+    echo phpinfo();
+});
