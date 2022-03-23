@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MisRequests\MisRequestsFormRequest;
 use App\Models\MisRequests;
+use App\Models\MisRequestsEmailRecipients;
 use App\Models\MisRequestsNature;
 use App\Models\MisRequestsStatus;
+use App\Models\PPMP;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -75,8 +77,15 @@ class MisRequestsController extends Controller
                 'r' => $r,
                 'user' => $user,
             ];
-            $email = 'gguance221@gmail.com';
-            // Send your message
+
+            $email = [];
+            $recipients = MisRequestsEmailRecipients::query()->get();
+            if(!empty($recipients)){
+                foreach ($recipients as $recipient){
+                    array_push($email,$recipient->email);
+                }
+            }
+
             try{
                 Mail::send('mailables.mis_requests.inform',$data, function($message) use($email, $r) {
                     $message->to($email, '')
@@ -84,8 +93,8 @@ class MisRequestsController extends Controller
                     $message->from('sys.srawebportal@gmail.com','SWEP System');
                 });
             }catch (\Exception $e){
-                return $e->getMessage();
-                abort(503,'Error sending email verification');
+
+                abort(503,'Error sending email verification: '.$e->getMessage());
             }
 
             // Restore your original mailer
