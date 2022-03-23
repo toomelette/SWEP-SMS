@@ -107,7 +107,7 @@
                                     <dd class="text-green">{{ number_format($empMaster->FoodSubsi, 2) }}</dd>
 {{--                                    <dt>RA:</dt>--}}
 {{--                                    <dd class="text-green">{{ number_format($empMaster->RA, 2) }}</dd>--}}
-{{--                                    <dt>TA:</dt>--}}Dis
+{{--                                    <dt>TA:</dt>--}}
 {{--                                    <dd class="text-green">{{ number_format($empMaster->TA, 2) }}</dd>--}}
                                     <dt>Government Service:</dt>
                                     <dd>{{ __dataType::date_parse($employee->firstday_gov, 'M d, Y') }}</dd>

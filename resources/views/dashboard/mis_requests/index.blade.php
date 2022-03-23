@@ -135,6 +135,9 @@
             "initComplete": function( settings, json ) {
                 $('#tbl_loader').fadeOut(function(){
                     $("#requests_table_container").fadeIn();
+                    if(find != ''){
+                        requests_tbl.search(find).draw();
+                    }
                 });
             },
             "language":

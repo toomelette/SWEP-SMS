@@ -93,8 +93,8 @@ class AccountRecoveryController extends Controller
 
             // Setup your gmail mailer
             $transport = new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl');
-            $transport->setUsername('sys.srawebportal@gmail.com');
-            $transport->setPassword('swep@sra1036114');
+            $transport->setUsername(env('SWIFTMAILER_EMAIL',null));
+            $transport->setPassword(env('SWIFTMAILER_PASSWORD',null));
 
             // Any other mailer configuration stuff needed...
             $gmail = new \Swift_Mailer($transport);
@@ -106,6 +106,7 @@ class AccountRecoveryController extends Controller
                 'user_slug' => $user_slug,
                 'name' => $user->employeeUnion->firstname,
             ];
+
             // Send your message
             try{
                 Mail::send('mailables.verify_email',$data, function($message) use($email) {
@@ -117,8 +118,6 @@ class AccountRecoveryController extends Controller
                 $ev->delete();
                 abort(503,'Error sending email verification');
             }
-
-
 
             // Restore your original mailer
             Mail::setSwiftMailer($backup);

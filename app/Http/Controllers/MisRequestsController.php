@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -55,7 +56,44 @@ class MisRequestsController extends Controller
         $r->requisitioner = Auth::user()->user_id;
         $r->request_details = $request->details;
         if($r->save()){
+            $user = User::query()->where('user_id','=',$r->user_created)->first();
+
+            // Backup your default mailer
+            $backup = Mail::getSwiftMailer();
+
+            // Setup your gmail mailer
+            $transport = new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl');
+            $transport->setUsername(env('SWIFTMAILER_EMAIL',null));
+            $transport->setPassword(env('SWIFTMAILER_PASSWORD',null));
+
+            // Any other mailer configuration stuff needed...
+            $gmail = new \Swift_Mailer($transport);
+
+            // Set the mailer as gmail
+            Mail::setSwiftMailer($gmail);
+            $data = [
+                'r' => $r,
+                'user' => $user,
+            ];
+            $email = 'gguance221@gmail.com';
+            // Send your message
+            try{
+                Mail::send('mailables.mis_requests.inform',$data, function($message) use($email, $r) {
+                    $message->to($email, '')
+                        ->subject('MIS Service Request - '.$r->nature_of_request.' - '.strtoupper(Str::random(5)));
+                    $message->from('sys.srawebportal@gmail.com','SWEP System');
+                });
+            }catch (\Exception $e){
+                return $e->getMessage();
+                abort(503,'Error sending email verification');
+            }
+
+            // Restore your original mailer
+            Mail::setSwiftMailer($backup);
+
+
             return $r->only(['slug','request_no']);
+
         }
         abort(503,'Error creating request.');
     }
