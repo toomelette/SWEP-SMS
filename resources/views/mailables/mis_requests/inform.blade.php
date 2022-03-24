@@ -75,6 +75,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="td-style">
+                                    Created at:
+                                </td>
+                                <td class="td-style bold">
+                                    {{\Illuminate\Support\Carbon::parse($r->created_at)->format('F d, Y | h:i A')}}
+                                </td>
+                            </tr>
+                            <tr>
                                 <td colspan="2" style="padding-top: 20px">
                                     <a href="{{route('dashboard.mis_requests.index')}}?find={{$r->request_no}}">Click here for details.</a>
                                 </td>

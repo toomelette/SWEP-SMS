@@ -9,6 +9,7 @@ use App\Models\Document;
 use App\Models\DocumentDisseminationLog;
 use App\Models\EmailContact;
 use App\Models\Employee;
+use App\Models\JoEmployees;
 use App\Models\LeaveApplication;
 use App\Models\PermissionSlip;
 use App\Swep\Services\HomeService;
@@ -34,9 +35,57 @@ class HomeController extends Controller{
 
     }
 
+    private function birthdayCelebrantsView($this_month){
+
+        $perm = DB::table('hr_employees')
+            ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
+            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',$this_month)
+            ->where('is_active' ,'=','ACTIVE');
+        $jo = DB::table('hr_jo_employees')
+            ->select('lastname','firstname','middlename','birthday',DB::raw("LPAD(MONTH(birthday),2,'0') as month_bday"), DB::raw("'COS' as type"),'employee_no')
+            ->where(DB::raw("LPAD(MONTH(birthday),2,'0')") , '=',$this_month);
+        $union = $perm->union($jo)->orderBy('birthday','desc')->get();
+        $bday_celebrants = [];
+        $bday_celebrants['prev'] = [];
+        $bday_celebrants['upcoming'] = [];
+        $bday_celebrants['today'] = [];
+        foreach ($union as $emp) {
+            if(Carbon::parse($emp->birthday)->format('md') < Carbon::now()->format('md')){
+                $bday_celebrants['prev'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
+            }elseif(Carbon::parse($emp->birthday)->format('md') == Carbon::now()->format('md')){
+                $bday_celebrants['today'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
+            }else{
+                $bday_celebrants['upcoming'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
+            }
+        }
+        krsort($bday_celebrants['prev']);
+        ksort($bday_celebrants['upcoming']);
+        return view('dashboard.home.birthday_celebrants')->with([
+            'bday_celebrants' => $bday_celebrants,
+        ])->render();
+    }
 
     public function index(){
         if(Auth::user()->dash == 'hru'){
+            if(request()->ajax() && request()->has('bday')){
+                $new_next = str_pad(request('month')+1,2,0,STR_PAD_LEFT);
+                $new_prev = str_pad(request('month')-1,2,0,STR_PAD_LEFT);
+                if($new_next > 12){
+                    $new_next = '01';
+                }
+                if($new_prev < 1){
+                    $new_prev = 12;
+                }
+                return [
+                    'view' => $this->birthdayCelebrantsView(request('month')),
+                    'new_next' => $new_next,
+                    'new_prev' => $new_prev,
+                    'new_current' => str_pad(request('month'),2,0,STR_PAD_LEFT),
+                    'month_name' => Carbon::parse('2021'.str_pad(request('month'),2,0,STR_PAD_LEFT).'01')->format('F'),
+                ];
+            }
+
+//            return dd($bday_celebrants);
             $per_course = DB::table("swep_afd.hr_courses")
                 ->leftJoin("hr_applicants", function($join){
                     $join->on("hr_courses.course_id", "=", "hr_applicants.course_id");
@@ -55,10 +104,14 @@ class HomeController extends Controller{
 
             $all_leave_applications = LeaveApplication::count();
             $all_ps = PermissionSlip::count();
-            $male_employees = Employee::where('sex','MALE')->count();
-            $female_employees = Employee::where('sex','FEMALE')->count();
-            $all_employees = Employee::count();
+            $male_employees = Employee::where('sex','MALE')->where('is_active','ACTIVE')->count();
+            $female_employees = Employee::where('sex','FEMALE')->where('is_active','ACTIVE')->count();
+            $all_employees = Employee::where('is_active','ACTIVE')->count();
             $all_applicants = Applicant::count();
+
+            $male_jo_employees = JoEmployees::query()->where('sex','=','MALE')->count();
+            $female_jo_employees = JoEmployees::query()->where('sex','=','FEMALE')->count();
+            $all_jo_employees = JoEmployees::count();
             return view('dashboard.home.hru_index')->with([
                 'male_employees' => $male_employees,
                 'female_employees' => $female_employees,
@@ -68,6 +121,10 @@ class HomeController extends Controller{
                 'all_applicants' => $all_applicants,
                 'all_leave_applications' => $all_leave_applications,
                 'all_ps' => $all_ps,
+                'male_jo_employees' => $male_jo_employees,
+                'female_jo_employees' => $female_jo_employees,
+                'all_jo_employees' => $all_jo_employees,
+                'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('m')),
             ]);
         }
 
@@ -94,7 +151,6 @@ class HomeController extends Controller{
 
             $documents_per_week = Document::select('reference_no','date')
                 ->orderBy('date','asc')
-
                 ->get();
 
             $documents_per_month_arr = [];

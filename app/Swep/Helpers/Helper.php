@@ -4,6 +4,7 @@
 namespace App\Swep\Helpers;
 use App\Models\MisRequestsNature;
 use App\Models\RecommendedBudget;
+use App\Models\SuSettings;
 use Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -300,5 +301,17 @@ class Helper
         $replace = '${1} ${2}';
 
         return preg_replace($pattern, $replace, $word);
+    }
+
+    public static function sqlServerIsOn(){
+        $setting = SuSettings::query()->where('setting','=','sql_server')->first();
+        if(!empty($setting)){
+            if($setting->int_value === 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
     }
 }

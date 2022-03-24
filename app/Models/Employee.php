@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SqlServer\EmpMaster;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -255,6 +256,8 @@ class Employee extends Model{
         return $this->hasMany('App\Models\DTR','user','biometric_user_id');
     }
 
-
+    public function empMaster(){
+        return $this->hasOne(EmpMaster::class,'EmpNo','employee_no');
+    }
 
 }

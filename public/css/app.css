@@ -95,7 +95,7 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6{
 }
 
 .todo-list>li{
-    background-color: #a7e8cb !important;
+    /*background-color: #a7e8cb !important;*/
     padding: 3px 10px !important;
 }
 

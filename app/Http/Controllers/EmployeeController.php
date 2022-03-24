@@ -7,6 +7,8 @@ use App\Http\Requests\Employee\BiometricUserIdFormRequest;
 use App\Models\Employee;
 use App\Models\EmployeeServiceRecord;
 use App\Models\EmployeeTraining;
+use App\Models\SuSettings;
+use App\Swep\Helpers\Helper;
 use App\Swep\Services\EmployeeService;
 use App\Swep\Services\EmployeeTrainingService;
 use App\Swep\Services\EmployeeServiceRecordService;
@@ -56,8 +58,12 @@ class EmployeeController extends Controller{
 
     // Employee Master
 	public function index(EmployeeFilterRequest $request){
+        $sql_server_is_on = Helper::sqlServerIsOn();
         if($request->ajax() && $request->has('draw')){
             $employees = Employee::query();
+            if($sql_server_is_on === true){
+                $employees = $employees->with('empMaster');
+            }
             if($request->has('is_active') && $request->is_active != ''){
                 $employees = $employees->where('is_active','=',$request->is_active);
             }
@@ -97,7 +103,19 @@ class EmployeeController extends Controller{
                         return 'N/A';
                     }
                     return $data->biometric_user_id;
+                })->editColumn('position',function ($data) use($sql_server_is_on){
+                    if($sql_server_is_on === true){
+                        if(!empty($data->empMaster)){
+                            return $data->position.'<div class="table-subdetail">
+                                                    JG-Step: '.$data->empMaster->SalGrade.' - '.$data->empMaster->StepInc.'
+                                                        <span class="pull-right">Monthly Basic: '.number_format($data->empMaster->MonthlyBasic,2).'</span>
+                                                    </div>';
+                        }
+                        return $data->position.'<div class="table-subdetail" style="color: #d9534f !important;">No data available</div>';
+                    }
+                    return $data->position;
                 })
+                ->escapeColumns([])
                 ->setRowId('slug')
                 ->toJson();
         }

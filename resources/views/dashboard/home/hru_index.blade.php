@@ -12,10 +12,26 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>{{number_format($all_employees)}}</h3>
-                        <p>No. of Employees on record</p>
+                        <p>Active Regular Employees</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-users"></i>
+                    </div>
+{{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                </div>
+            </div>
+
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{number_format($all_jo_employees)}}</h3>
+
+                        <p>COS Personnel</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ioxhost"></i>
                     </div>
 {{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
                 </div>
@@ -29,22 +45,7 @@
                     <div class="icon">
                         <i class="fa fa-file-text-o"></i>
                     </div>
-{{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>{{number_format($all_leave_applications)}}</h3>
-
-                        <p>Leave Applications</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-ioxhost"></i>
-                    </div>
-{{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
+                    {{--                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>--}}
                 </div>
             </div>
             <!-- ./col -->
@@ -69,22 +70,49 @@
             <div class="col-md-3">
                 <div class="panel">
                     <div class="panel-body">
-                        <center><label>Employees by Sex</label></center>
+                        <center><label>Regular Employees by Sex</label></center>
                         <hr class="no-margin">
                         <canvas id="employee_by_gender" width="400" height="200"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-3">
+                <div class="panel">
+                    <div class="panel-body">
+                        <center><label>COS Personnel by Sex</label></center>
+                        <hr class="no-margin">
+                        <canvas id="jo_employee_by_gender" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <center><label><span for="month_name">{{Carbon::now()->format('F')}}</span> Birthday Celebrants</label>
+                            <div class="btn-group pull-right">
+                                <button type="button" data="{{str_pad(Carbon::now()->format('m')-1,2,0,STR_PAD_LEFT)}}" id="prev_btn" class="btn btn-default btn-xs nav_month_btn"><i class="fa fa-chevron-left"></i></button>
+                                <button type="button" data="{{str_pad(Carbon::now()->format('m')+1,2,0,STR_PAD_LEFT)}}" id="next_btn" class="btn btn-default btn-xs nav_month_btn"><i class="fa fa-chevron-right"></i></button>
+                            </div></center>
+
+                        <hr class="no-margin">
+                        <div style="height: 355px;overflow-x: hidden" id="bday_celebrants_container">
+                            {!! $bday_celebrants_view !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="panel">
                     <div class="panel-body">
                         <center><label>Applicants by Course</label></center>
                         <hr class="no-margin">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
 
-                            <canvas id="applicants_by_gender" width="400" height="390"></canvas>
+                            <canvas id="applicants_by_gender" width="300" height="390"></canvas>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <table class="table table-bordered table-condensed" id="per_course_table">
                                 <thead>
                                     <tr>
@@ -129,6 +157,30 @@
 
 @section('scripts')
 <script type="text/javascript">
+    
+    $(".nav_month_btn").click(function () {
+        let get_month = $(this).attr('data');
+        $.ajax({
+            url : '{{Request::url()}}?bday=true',
+            data : {month : get_month},
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                   $("#bday_celebrants_container").html(res.view);
+                   $("span[for='month_name']").html(res.month_name);
+                   $("#next_btn").removeAttr('disabled');
+                    $("#prev_btn").removeAttr('disabled');
+                   $("#next_btn").attr('data',res.new_next);
+                   $("#prev_btn").attr('data',res.new_prev);
+
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+    })
     $("document").ready(function () {
         var ctx = $("#employee_by_gender");
 
@@ -162,6 +214,41 @@
                 }
             },
         });
+
+        var jo_ctx = $("#jo_employee_by_gender");
+
+        var jo_employee_gender_chart = new Chart(jo_ctx, {
+            type: 'pie',
+            data: {
+                datasets: [
+                    {
+                        data: [{{$male_jo_employees}},{{$female_jo_employees}}],
+                        backgroundColor:[
+                            'rgb(50, 191, 83)',
+                            'rgb(255, 66, 164)',
+                        ],
+                    }
+                ],
+                labels:[
+                    'Male ('+{{$male_jo_employees}}+')',
+                    'Female ('+{{$female_jo_employees}}+')',
+                ]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Total COS: {{$all_jo_employees}} ',
+                    }
+                }
+            },
+        });
+
+
 
         var applicant_by_course = new Chart($("#applicants_by_gender"), {
             type: 'pie',
