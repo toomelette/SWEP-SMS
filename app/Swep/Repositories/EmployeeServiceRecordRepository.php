@@ -70,6 +70,11 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->gov_serve = $request->gov_serve;
         $employee_sr->psc_serve = $request->psc_serve;
         $employee_sr->lwp = $request->lwp;
+        if($request->upto_date == true){
+            $employee_sr->upto_date = 1;
+        }else{
+            $employee_sr->upto_date = 0;
+        }
         $employee_sr->spdate = $request->spdate;
         $employee_sr->status = $request->status;
         $employee_sr->remarks = $request->remarks;
@@ -110,6 +115,13 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->updated_at = $this->carbon->now();
         $employee_sr->ip_updated = request()->ip();
         $employee_sr->user_updated = $this->auth->user()->user_id;
+        if($request->upto_date == true){
+            $employee_sr->upto_date = 1;
+        }else{
+            $employee_sr->upto_date = 0;
+        }
+
+
         $employee_sr->update();
 
         return $employee_sr;

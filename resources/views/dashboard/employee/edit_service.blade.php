@@ -15,9 +15,15 @@
            '4 from_date', 'from_date', 'date', 'Date From *', 'Date From',($sr->from_date != '' ?  \Carbon\Carbon::parse($sr->from_date)->format('Y-m-d') : ''), $errors->has('from_date'), $errors->first('from_date'), ''
         ) !!}
 
-        {!! __form::textbox(
-           '4 to_date', 'to_date', 'date', 'Date To *', 'Date To', ($sr->to_date != '') ? \Carbon\Carbon::parse($sr->to_date)->format('Y-m-d') : '' , $errors->has('to_date'), $errors->first('to_date'), ''
-        ) !!}
+        <div class="form-group col-md-4 to_date ">
+            <label for="to_date">Date To *</label>
+            <input class="form-control " id="e_to_date" name="to_date" type="date" value="{{($sr->upto_date == 1)? '':\Illuminate\Support\Carbon::parse($sr->date_to)->format('Y-m-d')}}" placeholder="Date To" {{($sr->upto_date == 1)? 'disabled="disabled"':''}}>
+            <div class="checkbox no-margin">
+                <label>
+                    <input type="checkbox" name="upto_date" {{($sr->upto_date == 1)? 'checked':''}}> Upto present
+                </label>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -99,12 +105,23 @@
                 sr_active = res.slug;
                 service_records_tbl.draw(false);
                 notify("Data successfully updated.","success");
+                $("input[name='to_date']").removeAttr('disabled');
             },
             error: function (res) {
                 errored(form,res);
                 console.log(res);
             }
         })
+    })
+
+    $("input[name='upto_date']").change(function () {
+        let t = $(this);
+
+        if(t.prop('checked')){
+            t.parent('label').parent('div').siblings('#e_to_date').attr('disabled','disabled');
+        }else{
+            t.parent('label').parent('div').siblings('#e_to_date').removeAttr('disabled');
+        }
     })
 </script>
 @endsection

@@ -257,7 +257,7 @@ class EmployeeController extends Controller{
 
 
     public function serviceRecordStore(EmployeeServiceRecordCreateForm $request, $slug){
-        //slug is for employee
+
         $sr = $this->employee_sr->store($request, $slug);
         if($sr){
             return $sr->only('slug');

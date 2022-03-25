@@ -179,7 +179,7 @@
                 {{\Carbon\Carbon::now()->format('Y')}}/PPSPD/MIS | {{\Illuminate\Support\Facades\Auth::user()->username}} | {{\Illuminate\Support\Facades\Request::ip()}}
             </td>
             <td style="text-align: right">
-                rev 201710
+                rev 202203
             </td>
         </tr>
     </table>

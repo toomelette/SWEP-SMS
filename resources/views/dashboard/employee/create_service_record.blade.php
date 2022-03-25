@@ -16,9 +16,16 @@
                '4 from_date', 'from_date', 'date', 'Date From *', 'Date From', old('from_date'), $errors->has('from_date'), $errors->first('from_date'), ''
             ) !!}
 
-            {!! __form::textbox(
-               '4 to_date', 'to_date', 'date', 'Date To *', 'Date To', old('to_date'), $errors->has('to_date'), $errors->first('to_date'), ''
-            ) !!}
+            <div class="form-group col-md-4 to_date ">
+                <label for="to_date">Date To *</label>
+                <input class="form-control " id="to_date" name="to_date" type="date" value="" placeholder="Date To">
+                <div class="checkbox no-margin">
+                    <label>
+                        <input type="checkbox" name="upto_date"> Upto present
+                    </label>
+                </div>
+            </div>
+
         </div>
 
         <div class="row">
@@ -103,12 +110,23 @@
                 sr_active = res.slug;
                 service_records_tbl.draw(false);
                 notify("Data successfully saved.","success");
+                $("input[name='to_date']").removeAttr('disabled');
             },
             error: function (res) {
                 errored(form,res)
                 console.log(res);
             }
         })
+    })
+
+    $("input[name='upto_date']").change(function () {
+        let t = $(this);
+
+        if(t.prop('checked')){
+            t.parent('label').parent('div').siblings('#to_date').attr('disabled','disabled');
+        }else{
+            t.parent('label').parent('div').siblings('#to_date').removeAttr('disabled');
+        }
     })
 </script>
 @endsection
