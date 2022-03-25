@@ -222,6 +222,9 @@ class EmployeeController extends Controller{
                     }
                 })
                 ->editColumn('to_date',function ($data){
+                    if($data->upto_date == 1){
+                        return 'TO DATE';
+                    }
                     if($data->to_date != ''){
                         return Carbon::parse($data->to_date)->format('m/d/Y');
                     }
