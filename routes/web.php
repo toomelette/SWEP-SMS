@@ -423,7 +423,6 @@ Route::get('/fix_dates',function (Request $request){
 
     if(request('no')== 1){
         $srs = \App\Models\EmployeeServiceRecord::query()
-            ->where('to_date','=','')
             ->where('date_to','!=' ,'99/99/99')
             ->where('date_to','!=','00/00/00')
             ->where('date_to','!=','00/00/0000')
@@ -442,7 +441,6 @@ Route::get('/fix_dates',function (Request $request){
 
     if(request('no')== 2){
         $srs = \App\Models\EmployeeServiceRecord::query()
-            ->where('from_date','=','')
             ->where('date_from','!=' ,'99/99/99')
             ->where('date_from','!=','00/00/00')
             ->where('date_from','!=','00/00/0000')
