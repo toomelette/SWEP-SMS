@@ -60,8 +60,8 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->slug = $this->str->random(32);
         $employee_sr->employee_no = $employee->employee_no;
         $employee_sr->sequence_no = $request->sequence_no;
-        $employee_sr->date_from = $request->date_from;
-        $employee_sr->date_to = $request->date_to;
+        $employee_sr->from_date = $request->from_date;
+        $employee_sr->to_date = $request->to_date;
         $employee_sr->position = $request->position;
         $employee_sr->appointment_status = $request->appointment_status;
         $employee_sr->salary = $this->__dataType->string_to_num($request->salary);
@@ -94,8 +94,8 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
 
         $employee_sr = $this->findBySlug($slug);
         $employee_sr->sequence_no = $request->sequence_no;
-        $employee_sr->date_from = $request->date_from;
-        $employee_sr->date_to = $request->date_to;
+        $employee_sr->from_date = $request->from_date;
+        $employee_sr->to_date = $request->to_date;
         $employee_sr->position = $request->position;
         $employee_sr->appointment_status = $request->appointment_status;
         $employee_sr->salary = $this->__dataType->string_to_num($request->salary);

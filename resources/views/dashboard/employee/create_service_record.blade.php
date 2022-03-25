@@ -13,11 +13,11 @@
             ) !!}
 
             {!! __form::textbox(
-               '4 date_from', 'date_from', 'date', 'Date From *', 'Date From', old('date_from'), $errors->has('date_from'), $errors->first('date_from'), ''
+               '4 from_date', 'from_date', 'date', 'Date From *', 'Date From', old('from_date'), $errors->has('from_date'), $errors->first('from_date'), ''
             ) !!}
 
             {!! __form::textbox(
-               '4 date_to', 'date_to', 'date', 'Date To *', 'Date To', old('date_to'), $errors->has('date_to'), $errors->first('date_to'), ''
+               '4 to_date', 'to_date', 'date', 'Date To *', 'Date To', old('to_date'), $errors->has('to_date'), $errors->first('to_date'), ''
             ) !!}
         </div>
 

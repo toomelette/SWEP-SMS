@@ -20,7 +20,7 @@
   <style type="text/css">
 
     th{
-      -webkit-print-color-adjust: exact; 
+      -webkit-print-color-adjust: exact;
       background-color: #65D165 !important;
     }
 
@@ -46,11 +46,11 @@
     $total = ceil(count($employees) / 35);
     $start = 0;
     $end = 34;
-    
+
   ?>
 
   @for ($i = 0; $i < $total; $i++)
-  
+
     <?php
 
       if($i >= 1){
@@ -65,7 +65,7 @@
     <div class="wrapper" style="overflow:hidden !important;">
 
       <div class="row">
-        
+
         <div class="col-sm-1"></div>
 
         <div class="col-sm-12">
@@ -89,7 +89,7 @@
         <div class="col-sm-12" style="padding-bottom:10px;"></div>
 
         <div class="col-sm-12" style="text-align: center; padding-bottom:10px;">
-              
+
           <span style="font-weight: bold;">EMPLOYEE ALPHALIST</span><br>
           <span>As of {{ Carbon::now()->format('F Y') }}</span><br>
 
@@ -99,12 +99,12 @@
 
 
       <table style="border: 1px solid black; font-size: 9px;">
-        
+
         <tr>
           <th style="text-align:center;">Fullname</th>
           <th>Position</th>
           <th>Unit</th>
-          <th>Salary</th>      
+          <th>Salary</th>
           <th style="text-align:center; width:150px;"></th>
         </tr>
 
@@ -112,17 +112,23 @@
 
           @if($key >= $start && $key <= $end)
 
-            <?php 
+            <?php
 
-              $key = $key + 1; 
+              $key = $key + 1;
 
             ?>
 
-            <tr> 
+            <tr>
               <td>{!! $key .'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $data->fullname !!}</td>
               <td>{{ $data->position }}</td>
               <td>{{ empty($data->departmentUnit) ? '' : $data->departmentUnit->description }}</td>
-              <td>{{ number_format($data->monthly_basic, 2) }}</td>
+              <td style="text-align: right">
+                @if(\App\Swep\Helpers\Helper::sqlServerIsOn() === true)
+                  {{(!empty($data->empMaster)) ? number_format($data->empMaster->MonthlyBasic,2) : 'NO PAYROLL DATA'}}
+                @else
+                  {{$data->monthly_basic}}
+                @endif
+              </td>
               <td style="text-align:center;">
               </td>
             </tr>

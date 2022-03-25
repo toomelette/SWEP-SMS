@@ -216,6 +216,16 @@ class EmployeeController extends Controller{
                 ->editColumn('salary',function ($data){
                     return number_format($data->salary,2);
                 })
+                ->editColumn('from_date',function ($data){
+                    if($data->from_date != ''){
+                        return Carbon::parse($data->from_date)->format('m/d/Y');
+                    }
+                })
+                ->editColumn('to_date',function ($data){
+                    if($data->to_date != ''){
+                        return Carbon::parse($data->to_date)->format('m/d/Y');
+                    }
+                })
                 ->setRowId('slug')
                 ->toJson();
         }
@@ -461,7 +471,12 @@ class EmployeeController extends Controller{
 
 
     public function edit_bm_uid(Request $request){
-        $employee = Employee::query()->where('slug','=', $request->slug)->first();
+
+        $employee = $employee = Employee::query();
+        if(Helper::sqlServerIsOn() === true){
+            $employee = $employee->with('empMaster');
+        }
+        $employee = $employee->where('slug','=', $request->slug)->first();
         if(!empty($employee)){
             return view('dashboard.employee.edit_bm_uid')->with([
                 'employee' => $employee,

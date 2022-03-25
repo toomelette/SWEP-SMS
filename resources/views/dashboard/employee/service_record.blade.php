@@ -59,8 +59,8 @@
       "ajax" : uri,
       "columns": [
         { "data": "sequence_no" },
-        { "data": "date_from" },
-        { "data": "date_to" },
+        { "data": "from_date" },
+        { "data": "to_date" },
         { "data": "position" },
       { "data": "appointment_status" },
           { "data": "salary" },

@@ -407,7 +407,7 @@ Route::get('/pdo',function(){
         }
 
         sqlsrv_free_stmt( $stmt);
-
+        
 
     }else{
         echo "Connection failed: <br>";
@@ -417,4 +417,89 @@ Route::get('/pdo',function(){
 
 Route::get('/phpinfo',function (){
     echo phpinfo();
+});
+
+Route::get('/fix_dates',function (Request $request){
+
+    if(request('no')== 1){
+        $srs = \App\Models\EmployeeServiceRecord::query()
+            ->where('date_to','!=' ,'99/99/99')
+            ->where('date_to','!=','00/00/00')
+            ->where('date_to','!=','00/00/0000')
+            ->where('date_to','!=','')
+            ->get();
+        $ct = 0;
+        foreach ($srs as $sr){
+            if (DateTime::createFromFormat('m/d/Y', $sr->date_to) !== false && $sr->date_to != '99/99/99' && $sr->date_to != '//') {
+                $sr->to_date = \Illuminate\Support\Carbon::parse($sr->date_to)->format('Y-m-d');
+                $sr->update();
+            }
+        }
+
+        return 'COpied';
+    }
+
+    if(request('no')== 2){
+        $srs = \App\Models\EmployeeServiceRecord::query()
+            ->where('date_from','!=' ,'99/99/99')
+            ->where('date_from','!=','00/00/00')
+            ->where('date_from','!=','00/00/0000')
+            ->where('date_from','!=','')
+            ->get();
+        $ct = 0;
+        foreach ($srs as $sr){
+            if (DateTime::createFromFormat('m/d/Y', $sr->date_from) !== false && $sr->date_from != '99/99/99' && $sr->date_from != '//') {
+                $sr->from_date = \Illuminate\Support\Carbon::parse($sr->date_from)->format('Y-m-d');
+                $sr->update();
+            }
+        }
+
+        return 'COpied';
+    }
+    return 111;
+    foreach ($srs as $sr){
+//        if($sr->date_to == 'to date'){
+//            $sr->date_to = 'FORCHANGE';
+//            $sr->update();
+//            $ct++;
+//        }
+//        if ($sr->date_to == '99/99/99') {
+//            // it's a date
+//            $sr->date_to = 'FORCHANGE';
+//            $sr->update();
+//            $ct++;
+//        }
+//        if ($sr->date_to == '00/00/00') {
+//            // it's a date
+//            $sr->date_to = 'FORCHANGE';
+//            $sr->update();
+//            $ct++;
+//        }
+//        if ($sr->date_to == '00/00/0000') {
+//            // it's a date
+//            $sr->date_to = 'FORCHANGE';
+//            $sr->update();
+//            $ct++;
+//        }
+//        if (DateTime::createFromFormat('m/d/Y', $sr->date_to) === false) {
+//            // it's a date
+//            $sr->date_to = 'FORCHANGE';
+//            $sr->update();
+//            $ct++;
+//        }
+    }
+//    $srs = \App\Models\EmployeeServiceRecord::query()->where('date_to','=','FORCHANGE')->get();
+//    $ct = 0;
+//    foreach ($srs as $sr){
+//        $sr->date_to = '01/01/1900';
+//        $sr->update();
+//    }
+//
+//    $srs = \App\Models\EmployeeServiceRecord::query()->where('date_to','!=','1900-01-01')->where('date_to','LIKE','%/%')->get();
+//    $ct = 0;
+//    foreach ($srs as $sr){
+//        $sr->date_to = Carbon::parse($sr->date_to)->format('Y-m-d');
+//        $sr->update();
+//    }
+//    return $ct;
 });
