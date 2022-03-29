@@ -15,6 +15,7 @@ class User extends Authenticatable{
 
     public static function boot()
     {
+        parent::boot();
         static::creating(function ($user){
             $user->user_created = Auth::user()->user_id;
             $user->ip_created = request()->ip();

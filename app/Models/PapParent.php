@@ -13,6 +13,7 @@ class PapParent extends Model
 {
     public static function boot()
     {
+        parent::boot();
         static::creating(function ($pap_parent){
             $pap_parent->user_created = Auth::user()->user_id;
             $pap_parent->ip_created = request()->ip();

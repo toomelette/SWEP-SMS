@@ -42,6 +42,16 @@
                                         <option value="FEMALE">Female</option>
                                     </select>
                                 </div>
+                                <div class="col-md-2 dt_filter-parent-div">
+                                    <label>Location:</label>
+                                    <select name="locations"  class="form-control dt_filter filter_locations filters select22">
+                                        <option value="">Don't filter</option>
+                                        <option value="VISAYAS">VISAYAS</option>
+                                        <option value="LUZON/MINDANAO">LUZON/MINDANAO</option>
+                                        <option value="COS">COS</option>
+                                        <option value="RETIREE">RETIREE</option>
+                                    </select>
+                                </div>
 
 {{--                                <div class="col-md-2">--}}
 {{--                                    <label>Project Code:</label>--}}

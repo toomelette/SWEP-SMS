@@ -13,6 +13,7 @@ class Menu extends Model{
 
     public static function boot()
     {
+        parent::boot();
         static::creating(function ($menu){
             $menu->user_created = Auth::user()->user_id;
             $menu->ip_created = request()->ip();

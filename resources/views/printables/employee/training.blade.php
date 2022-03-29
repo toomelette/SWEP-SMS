@@ -116,23 +116,19 @@
             <th class="td-head-font" style="width:230px;">VENUE</th>
             <th class="td-head-font" style="width:300px;">REMARKS</th>
           </tr>
-
           @foreach ($employee_trainings as $key => $data)
             <tr>
               <td class="td-body-font">{{ $key + 1 }}</td>
               <td class="td-body-font">{{ $data->title }}</td>
               <td class="td-body-font">{{ __dataType::date_scope($data->date_from, $data->date_to) }}</td>
               <td class="td-body-font" style="text-align:center;">{{ $data->hours }}</td>
-              <td class="td-body-font">{{ $data->venue }}</td>
               <td class="td-body-font">{{ $data->conducted_by }}</td>
+              <td class="td-body-font">{{ $data->venue }}</td>
               <td class="td-body-font">{{ $data->remarks }}</td>
             </tr>
           @endforeach
       </table>
     </div>
-
-
-
   </div>
 
 

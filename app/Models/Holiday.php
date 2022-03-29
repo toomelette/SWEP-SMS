@@ -17,6 +17,7 @@ class Holiday extends Model
 
     public static function boot()
     {
+        parent::boot();
         static::creating(function ($data){
             $data->user_created = Auth::user()->user_id;
             $data->ip_created = request()->ip();

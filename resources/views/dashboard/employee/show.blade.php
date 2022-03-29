@@ -78,7 +78,7 @@
                     @if(!empty($empMaster))
                         <div class="col-md-6">
                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                Appointment Details <span class="pull-right text-danger"><i class="fa fa-info-circle"></i> Details in <span class="text-green text-strong">GREEN</span> are from NGAS data</span>
+                                Appointment Details
                             </p>
 
                             <div class="well well-sm">
@@ -136,7 +136,7 @@
                     @else
                         <div class="col-md-6">
                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                Appointment Details <span class="pull-right text-info"><i class="fa fa-info-circle"></i> NGAS data of this employee is not available</span>
+                                Appointment Details
                             </p>
 
                             <div class="well well-sm">

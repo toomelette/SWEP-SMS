@@ -584,7 +584,7 @@
                         ) !!}
 
                         {!! __form::datepicker(
-                          '3', 'adjustment_date',  'Adjustment Date', old('adjustment_date') ? old('adjustment_date') : $employee->adjustment_date, $errors->has('adjustment_date'), $errors->first('adjustment_date')
+                          '3', 'adjustment_date',  'Date of Last Promotion', old('adjustment_date') ? old('adjustment_date') : $employee->adjustment_date, $errors->has('adjustment_date'), $errors->first('adjustment_date')
                         ) !!}
 
                         <div class="col-md-12"></div>

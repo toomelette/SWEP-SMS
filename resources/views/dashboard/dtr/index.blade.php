@@ -52,7 +52,7 @@
                                 <th>Name</th>
                                 <th>BM Id</th>
                                 <th class="w-40">Employee No</th>
-                                <th class="th-10">Status</th>
+                                <th class="th-10">Locations</th>
                                 <th class="th-10">Sex</th>
                                 <th class="th-10">Last attendance</th>
                                 <th>Action</th>
@@ -123,7 +123,7 @@
             { "data": "fullname" },
             { "data": "biometric_user_id" },
             { "data": "employee_no" },
-            { "data": "type"},
+            { "data": "locations"},
             { "data": "sex" },
             { "data": "last_attendance" },
               { "data": "action" }

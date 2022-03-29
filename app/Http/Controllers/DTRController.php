@@ -58,49 +58,8 @@ class DTRController extends  Controller
         if($request->ajax()){
 
 
-            $first = Employee::query()->with('rawDtrRecords')
-                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"PERM" as type'), 'sex','employee_no']);
-//            if($request->has('sex')){
-//                $first = $first->where('sex','=','MALE');
-//            }
-
-            $second = JoEmployees::query()->with('rawDtrRecords')
-                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', DB::raw('"COS" as type'), 'sex','employee_no']);
-//            if($request->has('sex')){
-//                $second = $second->where('sex','=','MALE');
-//            }
-
-            $union = $second->union($first);
-
-            $query = DB::table(DB::raw("({$union->toSql()}) as x"))
-                ->select(['slug','lastname', 'firstname', 'middlename','biometric_user_id', 'type', 'sex','employee_no'])
-                ->where('biometric_user_id','!=',0);
-//                ->where(function ($query) {
-//                });
-            if($request->has('sex')){
-                if($request->sex != ''){
-                    $query = $query->where('sex','=',$request->sex);
-                }
-            }
-
-            if($request->has('status')){
-                if($request->status != ''){
-                    $query = $query->where('type','=',$request->status);
-                }
-            }
-
-            if($request->has('order')){
-                if($request->columns[$request->order[0]['column']]['data'] == 'fullname'){
-                    $query = $query->orderBy('lastname',$request->order[0]['dir']);
-                }
-            }
+            $query = Employee::query()->where('biometric_user_id','!=','');
             return Datatables::of($query)
-                ->addColumn('fullname',function ($data){
-                    return strtoupper($data->lastname.', '.$data->firstname);
-                })->filterColumn('fullname', function($query, $keyword) {
-                    $sql = "CONCAT(x.firstname,'-',x.lastname)  like ?";
-                    $query->whereRaw($sql, ["%{$keyword}%"]);
-                })
                 ->addColumn('last_attendance',function ($data){
                     $dtr = DTR::query()->where('user','=',$data->biometric_user_id)->orderBy('timestamp','desc')->first();
                     if(!empty($dtr)){
@@ -113,12 +72,9 @@ class DTRController extends  Controller
                 ->addColumn('action',function ($data){
                     $destroy_route = "'".route("dashboard.menu.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
-                    if($data->type == 'PERM'){
-                        $route = route('dashboard.employee.index')."?q=".$data->employee_no;
-                    }
-                    if($data->type == 'COS'){
-                        $route = route('dashboard.jo_employees.index')."?q=".$data->employee_no;
-                    }
+
+                    $route = route('dashboard.employee.index')."?q=".$data->employee_no;
+
                     return '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm show_dtr_btn"  data="'.$data->slug.'" data-toggle="modal" data-target="#show_dtr_modal" title="" data-placement="left" data-original-title="View more">
                                     <i class="fa fa-list"></i>

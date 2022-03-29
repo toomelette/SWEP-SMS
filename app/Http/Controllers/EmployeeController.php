@@ -70,6 +70,9 @@ class EmployeeController extends Controller{
             if($request->has('sex') && $request->sex != ''){
                 $employees = $employees->where('sex','=',$request->sex);
             }
+            if($request->has('locations') && $request->locations != ''){
+                $employees = $employees->where('locations','=',$request->locations);
+            }
             return DataTables::of($employees)
                 ->addColumn('action', function ($data){
                     $destroy_route = "'".route("dashboard.employee.destroy","slug")."'";

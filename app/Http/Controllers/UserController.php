@@ -54,14 +54,13 @@ class UserController extends Controller{
                     }
 
                     if($request->is_active == "active"){
-                        $users = $users->where('is_active',true);
+                        $users = $users->where('is_activated',true);
                     }elseif ($request->is_active == "inactive"){
-                        $users = $users->where('is_active',false);
+                        $users = $users->where('is_activated',false);
                     }
                 }
 
-                $users->get();
-                $dt = DataTables::of($users->with(['employee','joEmployee','employeeUnion']))
+                $dt = DataTables::of($users->with(['employee','employeeUnion']))
                     ->order(function ($query) use ($request){
                         if($request->has('order')){
                             if($request->order[0]['column'] == 2)
@@ -88,12 +87,8 @@ class UserController extends Controller{
                         }
                         $destroy_route = "'".route("dashboard.user.destroy","slug")."'";
                         $slug = "'".$data->slug."'";
-                        if(!empty($data->employeeUnion)){
-                            if($data->employeeUnion->type == 'PERM'){
-                                $view = '<li><a href="'.route('dashboard.employee.index').'?q='.$data->employeeUnion->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
-                            }else{
-                                $view = '<li><a href="'.route('dashboard.jo_employees.index').'?q='.$data->employeeUnion->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
-                            }
+                        if(!empty($data->employee)){
+                            $view = '<li><a href="'.route('dashboard.employee.index').'?q='.$data->employee->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
                         }else{
                             $view = '';
                         }
@@ -122,8 +117,8 @@ class UserController extends Controller{
                         return $button;
                     })
                     ->addColumn('fullname', function ($data){
-                        if(!empty($data->employeeUnion)){
-                            $default_pword = Carbon::parse($data->employeeUnion->birthday)->format('mdy');
+                        if(!empty($data->employee)){
+                            $default_pword = Carbon::parse($data->employee->date_of_birth)->format('mdy');
                             $add = '';
                             if(!Hash::check($default_pword,$data->password)){
                                 $add = '<i class="fa fa-lock text-muted" title="The user has already changed its password."></i>';
@@ -147,11 +142,8 @@ class UserController extends Controller{
                                 $q->where('lastname','like','%'.$request->search['value'].'%')
                                 ->orWhere('middlename','like','%'.$request->search['value'].'%')
                                 ->orWhere('firstname','like','%'.$request->search['value'].'%');
-                            })->orWhereHas('joEmployee',function($q) use($request){
-                                $q->where('lastname','like','%'.$request->search['value'].'%')
-                                ->orWhere('middlename','like','%'.$request->search['value'].'%')
-                                ->orWhere('firstname','like','%'.$request->search['value'].'%');
-                            })->orWhere('username','like','%'.$request->search['value'].'%');
+                            })
+                            ->orWhere('username','like','%'.$request->search['value'].'%');
                         }
 
                     })
@@ -165,28 +157,21 @@ class UserController extends Controller{
             if(request()->has('typeahead')){
                 $query = request('query');
                 $employees = Employee::query()
-                    ->select(['slug','firstname','middlename','lastname'])
+                    ->select(['slug','firstname','middlename','lastname','locations'])
                     ->addSelect(DB::raw('"PERM" as type'))
                     ->where('firstname','like','%'.$query.'%')
                     ->orWhere('middlename','like','%'.$query.'%')
                     ->orWhere('lastname','like','%'.$query.'%')
                     ->doesntHave('user');
-                $joEmployees = JoEmployees::query()
-                    ->select(['slug','firstname','middlename','lastname'])
-                    ->addSelect(DB::raw('"JO" as type'))
-                    ->where('firstname','like','%'.$query.'%')
-                    ->orWhere('middlename','like','%'.$query.'%')
-                    ->orWhere('lastname','like','%'.$query.'%')
-                    ->doesntHave('user');
 
-                $all_employees = $joEmployees->union($employees)->get();
+                $all_employees = $employees->get();
 
                 $list = [];
                 if(!empty($all_employees)){
                     foreach ($all_employees as $employee){
                         $to_push = [
                             'id'=> $employee->slug ,
-                            'name' => strtoupper($employee->lastname.', '.$employee->firstname).' - '.$employee->type,
+                            'name' => strtoupper($employee->lastname.', '.$employee->firstname).' - '.$employee->locations,
                         ];
                         array_push($list,$to_push);
                     }

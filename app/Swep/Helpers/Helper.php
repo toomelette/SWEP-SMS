@@ -162,12 +162,7 @@ class Helper
         $lastname = '';
         $position = '';
         if(Auth::user()->firstname == '' || Auth::user()->lastname == ''){
-            if(Auth::user()->joEmployee()->exists()){
-                $firstname = Auth::user()->joEmployee->firstname;
-                $lastname = Auth::user()->joEmployee->lastname;
-                $middlename = Auth::user()->joEmployee->middlename;
-                $position = Auth::user()->joEmployee->position;
-            }elseif(Auth::user()->employee()->exists()){
+            if(Auth::user()->employee()->exists()){
                 $firstname = Auth::user()->employee->firstname;
                 $lastname = Auth::user()->employee->lastname;
                 $middlename = Auth::user()->employee->middlename;

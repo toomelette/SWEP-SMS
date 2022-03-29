@@ -155,17 +155,17 @@ class MisRequestsController extends Controller
         if(\request()->ajax() && \request()->has('draw')){
             $mis_requests = MisRequests::query();
             $request = \request();
-            $table = DB::select('SELECT * FROM (
-                        SELECT x.lastname, x.firstname, x.employee_no, users.user_id FROM (
-                            SELECT hr_employees.lastname, hr_employees.firstname, hr_employees.employee_no FROM hr_employees WHERE hr_employees.employee_no != \'\'
-                            UNION
-                            SELECT hr_jo_employees.lastname, hr_jo_employees.firstname, hr_jo_employees.employee_no FROM hr_jo_employees
-                        ) as x
-                        LEFT JOIN users ON users.employee_no = x.employee_no
-                        WHERE user_id != ""
-                    ) as y
-                    RIGHT JOIN mis_requests ON mis_requests.requisitioner = y.user_id;');
-
+//            $table = DB::select('SELECT * FROM (
+//                        SELECT x.lastname, x.firstname, x.employee_no, users.user_id FROM (
+//                            SELECT hr_employees.lastname, hr_employees.firstname, hr_employees.employee_no FROM hr_employees WHERE hr_employees.employee_no != \'\'
+//                            UNION
+//                            SELECT hr_jo_employees.lastname, hr_jo_employees.firstname, hr_jo_employees.employee_no FROM hr_jo_employees
+//                        ) as x
+//                        LEFT JOIN users ON users.employee_no = x.employee_no
+//                        WHERE user_id != ""
+//                    ) as y
+//                    RIGHT JOIN mis_requests ON mis_requests.requisitioner = y.user_id;');
+            $table = MisRequests::query()->with(['user','user.employee']);
             return DataTables::of($table)
                 ->addColumn('action',function ($data){
 
@@ -193,7 +193,13 @@ class MisRequestsController extends Controller
                 ->editColumn('created_at',function ($data){
                     return Carbon::parse($data->created_at)->format("M. d, Y | h:i A");
                 })
-                ->editColumn('fullname',function ($data){
+                ->addColumn('fullname',function ($data){
+                    if(!empty($data->user)){
+                        if(!empty($data->user->employee)){
+                            return strtoupper($data->user->employee->lastname).', '.strtoupper($data->user->employee->firstname);
+                        }
+                    }
+                    return $data->requisitioner;
                     if($data->lastname == '' && $data->firstname == ''){
                         $user = User::query()->where('user_id','=',$data->requisitioner)->first();
                         if(!empty($user)){

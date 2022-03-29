@@ -13,6 +13,7 @@ class MisRequests extends Model
 
     public static function boot()
     {
+        parent::boot();
         static::creating(function ($menu){
             $menu->user_created = Auth::user()->user_id;
             $menu->ip_created = request()->ip();
@@ -34,6 +35,10 @@ class MisRequests extends Model
 
     public function status(){
         return $this->hasMany('App\Models\MisRequestsStatus','request_slug','slug')->orderBy('created_at','desc');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class,'requisitioner','user_id');
     }
 
 

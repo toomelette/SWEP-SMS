@@ -457,49 +457,61 @@ Route::get('/fix_dates',function (Request $request){
         return 'COpied';
     }
     return 111;
-    foreach ($srs as $sr){
-//        if($sr->date_to == 'to date'){
-//            $sr->date_to = 'FORCHANGE';
-//            $sr->update();
-//            $ct++;
-//        }
-//        if ($sr->date_to == '99/99/99') {
-//            // it's a date
-//            $sr->date_to = 'FORCHANGE';
-//            $sr->update();
-//            $ct++;
-//        }
-//        if ($sr->date_to == '00/00/00') {
-//            // it's a date
-//            $sr->date_to = 'FORCHANGE';
-//            $sr->update();
-//            $ct++;
-//        }
-//        if ($sr->date_to == '00/00/0000') {
-//            // it's a date
-//            $sr->date_to = 'FORCHANGE';
-//            $sr->update();
-//            $ct++;
-//        }
-//        if (DateTime::createFromFormat('m/d/Y', $sr->date_to) === false) {
-//            // it's a date
-//            $sr->date_to = 'FORCHANGE';
-//            $sr->update();
-//            $ct++;
-//        }
+});
+
+Route::get('/migrate_cos',function (){
+   $coss = \App\Models\JoEmployees::query()->get();
+   $employee = \App\Models\Employee::query();
+   $empsArr = [];
+   $addressesArr = [];
+   foreach ($coss as $cos){
+       $cosArr = [
+           'employee_no' => $cos->employee_no,
+           'firstname' => strtoupper($cos->firstname),
+           'middlename' => strtoupper($cos->middlename),
+           'lastname' => strtoupper($cos->lastname),
+           'biometric_user_id' => $cos->biometric_user_id,
+           'created_at' => $cos->created_at,
+           'updated_at' => $cos->updated_at,
+           'name_ext' => $cos->name_ext,
+           'sex' => $cos->sex,
+           'civil_status' => strtoupper($cos->civil_status),
+           'date_of_birth' => $cos->birthday,
+           'email' => $cos->email,
+           'cell_no' => $cos->phone,
+           'department_unit_id' => $cos->department_unit,
+           'position' => $cos->position,
+           'user_created' => $cos->user_created,
+           'user_updated' => $cos->user_updated,
+           'ip_created'=> $cos->ip_created,
+           'ip_updated' => $cos->ip_updated,
+           'slug' => $cos->slug,
+           'locations' => 'COS',
+           'is_active' => 'ACTIVE',
+           'fullname' => strtoupper($cos->lastname).', '.strtoupper($cos->firstname),
+       ];
+       $cos_add = [
+            'employee_no'=> $cos->employee_no,
+            'address_detailed' => $cos->address_detailed,
+            'res_address_barangay' => $cos->brgy,
+            'res_address_city' => $cos->city,
+            'res_address_province' => $cos->province,
+       ];
+       array_push($empsArr,$cosArr);
+       array_push($addressesArr,$cos_add);
+   }
+   $employee->insert($empsArr);
+//   \App\Models\EmployeeAddress::query()->insert($addressesArr);
+
+   return 1;
+});
+
+Route::get('/update_locations',function (){
+    $emps = \App\Models\Employee::query()->where('locations','=',null)->get();
+    foreach ($emps as $emp){
+        if(!empty($emp->empMaster)){
+            $emp->locations = $emp->empMaster->LOCATION;
+            $emp->update();
+        }
     }
-//    $srs = \App\Models\EmployeeServiceRecord::query()->where('date_to','=','FORCHANGE')->get();
-//    $ct = 0;
-//    foreach ($srs as $sr){
-//        $sr->date_to = '01/01/1900';
-//        $sr->update();
-//    }
-//
-//    $srs = \App\Models\EmployeeServiceRecord::query()->where('date_to','!=','1900-01-01')->where('date_to','LIKE','%/%')->get();
-//    $ct = 0;
-//    foreach ($srs as $sr){
-//        $sr->date_to = Carbon::parse($sr->date_to)->format('Y-m-d');
-//        $sr->update();
-//    }
-//    return $ct;
 });

@@ -14,6 +14,7 @@ class Submenu extends Model{
 
     public static function boot()
     {
+        parent::boot();
         static::updating(function($submenu){
             $submenu->user_updated = Auth::user()->user_id;
             $submenu->ip_updated = request()->ip();

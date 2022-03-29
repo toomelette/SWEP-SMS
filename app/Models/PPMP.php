@@ -12,6 +12,7 @@ class PPMP extends Model
 
     public static function boot()
     {
+        parent::boot();
         static::creating(function ($a){
             $a->user_created = Auth::user()->user_id;
 //            $a->ip_created = request()->ip();
