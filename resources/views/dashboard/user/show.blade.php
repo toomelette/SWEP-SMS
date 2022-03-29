@@ -1,7 +1,7 @@
 @extends('layouts.modal-content')
 
 @section('modal-header')
-{{$user->lastname}}, {{$user->firstname}}
+{{(!empty($user->employee) ? $user->employee->lastname : $user->lastname)}}, {{(!empty($user->employee) ? $user->employee->firstname : $user->firstname)}}
 @endsection
 
 @section('modal-body')

@@ -459,106 +459,182 @@ Route::get('/fix_dates',function (Request $request){
     return 111;
 });
 
-Route::get('/migrate_cos',function (){
-   $coss = \App\Models\JoEmployees::query()->get();
-   $employee = \App\Models\Employee::query();
-   $empsArr = [];
-   $addressesArr = [];
-   foreach ($coss as $cos){
-       $cosArr = [
-           'employee_no' => $cos->employee_no,
-           'firstname' => strtoupper($cos->firstname),
-           'middlename' => strtoupper($cos->middlename),
-           'lastname' => strtoupper($cos->lastname),
-           'biometric_user_id' => $cos->biometric_user_id,
-           'created_at' => $cos->created_at,
-           'updated_at' => $cos->updated_at,
-           'name_ext' => $cos->name_ext,
-           'sex' => $cos->sex,
-           'civil_status' => strtoupper($cos->civil_status),
-           'date_of_birth' => $cos->birthday,
-           'email' => $cos->email,
-           'cell_no' => $cos->phone,
-           'department_unit_id' => $cos->department_unit,
-           'position' => $cos->position,
-           'user_created' => $cos->user_created,
-           'user_updated' => $cos->user_updated,
-           'ip_created'=> $cos->ip_created,
-           'ip_updated' => $cos->ip_updated,
-           'slug' => $cos->slug,
-           'locations' => 'COS',
-           'is_active' => 'ACTIVE',
-           'fullname' => strtoupper($cos->lastname).', '.strtoupper($cos->firstname),
-       ];
-       $cos_add = [
-            'employee_no'=> $cos->employee_no,
-            'address_detailed' => $cos->address_detailed,
-            'res_address_barangay' => $cos->brgy,
-            'res_address_city' => $cos->city,
-            'res_address_province' => $cos->province,
-       ];
-       array_push($empsArr,$cosArr);
-       array_push($addressesArr,$cos_add);
-   }
-   $employee->insert($empsArr);
-//   \App\Models\EmployeeAddress::query()->insert($addressesArr);
+//Route::get('/migrate_cos',function (){
+//   $coss = \App\Models\JoEmployees::query()->get();
+//   $employee = \App\Models\Employee::query();
+//   $empsArr = [];
+//   $addressesArr = [];
+//   foreach ($coss as $cos){
+//       $cosArr = [
+//           'employee_no' => $cos->employee_no,
+//           'firstname' => strtoupper($cos->firstname),
+//           'middlename' => strtoupper($cos->middlename),
+//           'lastname' => strtoupper($cos->lastname),
+//           'biometric_user_id' => $cos->biometric_user_id,
+//           'created_at' => $cos->created_at,
+//           'updated_at' => $cos->updated_at,
+//           'name_ext' => $cos->name_ext,
+//           'sex' => $cos->sex,
+//           'civil_status' => strtoupper($cos->civil_status),
+//           'date_of_birth' => $cos->birthday,
+//           'email' => $cos->email,
+//           'cell_no' => $cos->phone,
+//           'department_unit_id' => $cos->department_unit,
+//           'position' => $cos->position,
+//           'user_created' => $cos->user_created,
+//           'user_updated' => $cos->user_updated,
+//           'ip_created'=> $cos->ip_created,
+//           'ip_updated' => $cos->ip_updated,
+//           'slug' => $cos->slug,
+//           'locations' => 'COS',
+//           'is_active' => 'ACTIVE',
+//           'fullname' => strtoupper($cos->lastname).', '.strtoupper($cos->firstname),
+//       ];
+//       $cos_add = [
+//            'employee_no'=> $cos->employee_no,
+//            'address_detailed' => $cos->address_detailed,
+//            'res_address_barangay' => $cos->brgy,
+//            'res_address_city' => $cos->city,
+//            'res_address_province' => $cos->province,
+//       ];
+//       array_push($empsArr,$cosArr);
+//       array_push($addressesArr,$cos_add);
+//   }
+//   $employee->insert($empsArr);
+////   \App\Models\EmployeeAddress::query()->insert($addressesArr);
+//
+//   return 1;
+//});
+//
+//Route::get('/update_locations',function (){
+//    $emps = \App\Models\Employee::query()->where('locations','=',null)->get();
+//    foreach ($emps as $emp){
+//        if(!empty($emp->empMaster)){
+//            $emp->locations = $emp->empMaster->LOCATION;
+//            $emp->update();
+//        }
+//    }
+//});
+//
+//Route::get('/update_emp_no',function (){
+//    $emps = \App\Models\Employee::query()->where('locations','=','COS')->get();
+//    foreach ($emps as $emp){
+//        $new_emp_no = str_replace('221','222',$emp->employee_no);
+//
+//        $emp->employeeAddress()->update([
+//            'employee_no' => $new_emp_no,
+//        ]);
+//        $emp->user()->update([
+//            'employee_no' => $new_emp_no,
+//        ]);
+//        $emp->dtr_records()->update([
+//            'employee_no' => $new_emp_no,
+//        ]);
+//
+//        $emp->documentDisseminationLog()->update([
+//            'employee_no' => $new_emp_no,
+//        ]);
+//        $emp->employee_no = $new_emp_no;
+//        $emp->update();
+//
+//    }
+//    return 1;
+//});
 
-   return 1;
-});
 
-Route::get('/update_locations',function (){
-    $emps = \App\Models\Employee::query()->where('locations','=',null)->get();
-    foreach ($emps as $emp){
-        if(!empty($emp->empMaster)){
-            $emp->locations = $emp->empMaster->LOCATION;
-            $emp->update();
+Route::get('/import_service_records',function (){
+    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('from_date','=',null)->get();
+    foreach ($dbs as $db){
+        if (DateTime::createFromFormat('m/d/Y', $db->date_from) !== false && $db->date_from != '99/99/99' && $db->date_from != '//') {
+            $db->from_date = \Illuminate\Support\Carbon::parse($db->date_from)->format('Y-m-d');
+            $db->update();
         }
     }
-});
 
-Route::get('/update_emp_no',function (){
-    $emps = \App\Models\Employee::query()->where('locations','=','COS')->get();
-    foreach ($emps as $emp){
-        $new_emp_no = str_replace('221','222',$emp->employee_no);
+    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('to_date','=',null)->get();
 
-        $emp->employeeAddress()->update([
-            'employee_no' => $new_emp_no,
-        ]);
-        $emp->user()->update([
-            'employee_no' => $new_emp_no,
-        ]);
-        $emp->dtr_records()->update([
-            'employee_no' => $new_emp_no,
-        ]);
-
-        $emp->documentDisseminationLog()->update([
-            'employee_no' => $new_emp_no,
-        ]);
-        $emp->employee_no = $new_emp_no;
-        $emp->update();
-
-//        return $emp->employeeFamilyDetail;
-//        return $emp->employeeOtherQuestion;
-//        return $emp->employeeHealthDeclaration;
-//        return $emp->empBeginningCredits;
-//        return $emp->employeeTraining;
-//        return $emp->employeeChildren;
-//        return $emp->employeeEducationalBackground;
-//        return $emp->employeeEligibility;
-//        return $emp->employeeExperience;
-//        return $emp->employeeOrganization;
-//        return $emp->employeeRecognition;
-//        return $emp->employeeReference;
-//        return $emp->employeeSpecialSkill;
-//        return $emp->employeeVoluntaryWork;
-//        return $emp->employeeMedicalHistories;
-//        return $emp->employeeServiceRecord;
-//        return $emp->employeeMatrix;
-//        return $emp->permissionSlip;
-//        return $emp->leaveCard;
-//        return $emp->documentDisseminationLog;
-//        return $emp->dtr_records;
-//        return $emp->rawDtrRecords;
+    foreach ($dbs as $db){
+        if (DateTime::createFromFormat('m/d/Y', $db->date_to) !== false && $db->date_to != '99/99/99' && $db->date_to != '99/99/9999' && $db->date_to != '//') {
+            $db->to_date = \Illuminate\Support\Carbon::parse($db->date_to)->format('Y-m-d');
+            $db->update();
+        }
     }
-    return 1;
+
+    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('gov_serve','!=',null)->where('gov_serve','!=','')->get();
+
+    foreach ($dbs as $db){
+        if (DateTime::createFromFormat('m/d/Y', $db->gov_serve) !== false && $db->gov_serve != '99/99/99' && $db->gov_serve != '99/99/9999' && $db->gov_serve != '//') {
+            $db->gov_serve = Carbon::parse($db->gov_serve)->format('Y-m-d');
+            $db->update();
+        }else{
+//            return $db;
+        }
+    }
+
+    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('psc_serve','!=',null)->where('psc_serve','!=','')->get();
+
+    foreach ($dbs as $db){
+        if (DateTime::createFromFormat('m/d/Y', $db->psc_serve) !== false && $db->psc_serve != '99/99/99' && $db->psc_serve != '99/99/9999' && $db->psc_serve != '//') {
+            $db->psc_serve = Carbon::parse($db->psc_serve)->format('Y-m-d');
+            $db->update();
+        }else{
+//            return $db;
+        }
+    }
+    $dbs = \App\Models\HrEmployeesSRTemp::query();
+    $dbs->update([
+        'remarks' => 'IMPORTED',
+    ]);
+
+    $arr = [];
+    $arr[0] = [];
+    $arr[1] = [];
+    $arr[2] = [];
+    $arr[3] = [];
+    $arr[4] = [];
+    $arr[5] = [];
+    $dbs = \App\Models\HrEmployeesSRTemp::query()->get();
+    $num = 0;
+    $key = 0;
+    foreach ($dbs as $db){
+        $num++;
+        switch ($num){
+            case $num > 4999 : $key = 5; break;
+            case $num > 3999 : $key = 4; break;
+            case $num > 2999 : $key = 3; break;
+            case $num > 1999 : $key = 2; break;
+            case $num > 999 : $key = 1; break;
+
+        }
+
+        array_push($arr[$key],[
+            'slug' => \Illuminate\Support\Str::random(16),
+            'employee_no' => $db->employee_no,
+            'sequence_no' => $db->sequence_no,
+            'date_from' => $db->date_from,
+            'from_date' => $db->from_date,
+            'date_to' => $db->date_to,
+            'to_date' => $db->to_date,
+            'upto_date' => $db->upto_date,
+            'position' => $db->position,
+            'appointment_status' => $db->appointment_status,
+            'salary' => $db->salary,
+            'mode_of_payment' => $db->mode_of_payment,
+            'station' => $db->station,
+            'gov_serve' => $db->gov_serve,
+            'psc_serve' => $db->psc_serve,
+            'lwp' => $db->lwp,
+            'spdate' => $db->spdate,
+            'status' => $db->status,
+            'remarks' => $db->remarks,
+            'user_created' => 'SYSTEM',
+        ]);
+    }
+
+    foreach ($arr as $ar){
+        $ins = \App\Models\EmployeeServiceRecord::query()->insert($ar);
+
+    }
+    return 'DONE';
+
 });

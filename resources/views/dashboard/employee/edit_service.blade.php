@@ -17,7 +17,13 @@
 
         <div class="form-group col-md-4 to_date ">
             <label for="to_date">Date To *</label>
-            <input class="form-control " id="e_to_date" name="to_date" type="date" value="{{($sr->upto_date == 1)? '':\Illuminate\Support\Carbon::parse($sr->to_date)->format('Y-m-d')}}" placeholder="Date To" {{($sr->upto_date == 1)? 'disabled="disabled"':''}}>
+            @php($value = '')
+            @if($sr->upto_date != 1)
+                @if($sr->to_date != '')
+                    @php($value = \Illuminate\Support\Carbon::parse($sr->to_date)->format('Y-m-d'))
+                @endif
+            @endif
+            <input class="form-control " id="e_to_date" name="to_date" type="date" value="{{$value}}" placeholder="Date To" {{($sr->upto_date == 1)? 'disabled="disabled"':''}}>
             <div class="checkbox no-margin">
                 <label>
                     <input type="checkbox" name="upto_date" {{($sr->upto_date == 1)? 'checked':''}}> Upto present
