@@ -515,3 +515,50 @@ Route::get('/update_locations',function (){
         }
     }
 });
+
+Route::get('/update_emp_no',function (){
+    $emps = \App\Models\Employee::query()->where('locations','=','COS')->get();
+    foreach ($emps as $emp){
+        $new_emp_no = str_replace('221','222',$emp->employee_no);
+
+        $emp->employeeAddress()->update([
+            'employee_no' => $new_emp_no,
+        ]);
+        $emp->user()->update([
+            'employee_no' => $new_emp_no,
+        ]);
+        $emp->dtr_records()->update([
+            'employee_no' => $new_emp_no,
+        ]);
+
+        $emp->documentDisseminationLog()->update([
+            'employee_no' => $new_emp_no,
+        ]);
+        $emp->employee_no = $new_emp_no;
+        $emp->update();
+
+//        return $emp->employeeFamilyDetail;
+//        return $emp->employeeOtherQuestion;
+//        return $emp->employeeHealthDeclaration;
+//        return $emp->empBeginningCredits;
+//        return $emp->employeeTraining;
+//        return $emp->employeeChildren;
+//        return $emp->employeeEducationalBackground;
+//        return $emp->employeeEligibility;
+//        return $emp->employeeExperience;
+//        return $emp->employeeOrganization;
+//        return $emp->employeeRecognition;
+//        return $emp->employeeReference;
+//        return $emp->employeeSpecialSkill;
+//        return $emp->employeeVoluntaryWork;
+//        return $emp->employeeMedicalHistories;
+//        return $emp->employeeServiceRecord;
+//        return $emp->employeeMatrix;
+//        return $emp->permissionSlip;
+//        return $emp->leaveCard;
+//        return $emp->documentDisseminationLog;
+//        return $emp->dtr_records;
+//        return $emp->rawDtrRecords;
+    }
+    return 1;
+});

@@ -101,7 +101,7 @@ class Employee extends Model{
 
     /** RELATIONSHIPS **/
     public function user() {
-        return $this->hasOne('App\Models\User','employee_no','employee_no');
+        return $this->hasOne(User::class,'employee_no','employee_no');
     }
 
     public function department(){
@@ -259,5 +259,6 @@ class Employee extends Model{
     public function empMaster(){
         return $this->hasOne(EmpMaster::class,'EmpNo','employee_no');
     }
+
 
 }

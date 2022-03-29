@@ -37,14 +37,17 @@ class HomeController extends Controller{
 
     private function birthdayCelebrantsView($this_month){
 
-        $perm = DB::table('hr_employees')
+//        $perm = DB::table('hr_employees')
+//            ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
+//            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',$this_month)
+//            ->where('is_active' ,'=','ACTIVE');
+//        $jo = DB::table('hr_jo_employees')
+//            ->select('lastname','firstname','middlename','birthday',DB::raw("LPAD(MONTH(birthday),2,'0') as month_bday"), DB::raw("'COS' as type"),'employee_no')
+//            ->where(DB::raw("LPAD(MONTH(birthday),2,'0')") , '=',$this_month);
+        $union = Employee::query()
             ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
             ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',$this_month)
-            ->where('is_active' ,'=','ACTIVE');
-        $jo = DB::table('hr_jo_employees')
-            ->select('lastname','firstname','middlename','birthday',DB::raw("LPAD(MONTH(birthday),2,'0') as month_bday"), DB::raw("'COS' as type"),'employee_no')
-            ->where(DB::raw("LPAD(MONTH(birthday),2,'0')") , '=',$this_month);
-        $union = $perm->union($jo)->orderBy('birthday','desc')->get();
+            ->where('is_active','=','ACTIVE')->get();
         $bday_celebrants = [];
         $bday_celebrants['prev'] = [];
         $bday_celebrants['upcoming'] = [];
