@@ -19,9 +19,10 @@
         <table class="table table-bordered table-striped table-hover training_{{$rand}}" id="training_table" style="width: 100% !important">
             <thead>
             <tr class="">
+                <th>Seq #</th>
                 <th>Title</th>
-                <th>Date From</th>
-                <th>Date To</th>
+                <th>Started</th>
+                <th>Ended</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -54,6 +55,7 @@
         "serverSide": true,
         "ajax" : uri,
         "columns": [
+            { "data": "sequence_no" },
             { "data": "title" },
             { "data": "date_from" },
             { "data": "date_to" },
@@ -64,12 +66,12 @@
         ],
         "columnDefs":[
             {
-                "targets" : 3,
+                "targets" : 4,
                 "orderable" : false,
                 "class" : 'action-10p'
             },
         ],
-        "order":[[0,'asc']],
+        "order":[[0,'desc']],
         "responsive": false,
         "initComplete": function( settings, json ) {
             $('#tbl_loader_training').fadeOut(function(){

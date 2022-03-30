@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'server5' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_SERVER5', '10.36.1.17'),
+            'port' => env('DB_PORT_SERVER5', '3306'),
+            'database' => env('DB_DATABASE_SERVER5', 'forge'),
+            'username' => env('DB_USERNAME_SERVER5', 'forge'),
+            'password' => env('DB_PASSWORD_SERVER5', ''),
+            'unix_socket' => env('DB_SOCKET_SERVER5', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
 //        'pgsql' => [
 //            'driver' => 'pgsql',
 //            'host' => env('DB_HOST', '127.0.0.1'),

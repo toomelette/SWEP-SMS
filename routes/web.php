@@ -638,3 +638,144 @@ Route::get('/import_service_records',function (){
     return 'DONE';
 
 });
+
+Route::get('/trainings',function (){
+    $grp = \App\Models\EmployeeTraining::query()
+        ->where('date_from','!=',null)
+        ->where('sequence_no','=',null)
+        ->groupBy('employee_no')
+        ->orderBy('id','asc')
+        ->get();
+
+    foreach ($grp as $emp){
+
+        $ts = \App\Models\EmployeeTraining::query()
+            ->where('employee_no','=',$emp->employee_no)
+            ->orderBy('date_from','asc')->get();
+        $sn = 10;
+        foreach ($ts as $t){
+            $t->sequence_no = $sn;
+            $t->update();
+            $sn = $sn+10;
+        }
+    }
+    $ts = \App\Models\EmployeeTraining::query()
+        ->where('date_from','!=',null)
+        ->where('date_to','!=',null)
+        ->get();
+    foreach ($ts as $t){
+        if($t->date_from != $t->date_to){
+            $t->detailed_period = \Illuminate\Support\Carbon::parse($t->date_from)->format('F d, Y').' - '.\Illuminate\Support\Carbon::parse($t->date_to)->format('F d, Y');
+            $t->update();
+        }else{
+            $t->detailed_period = \Illuminate\Support\Carbon::parse($t->date_from)->format('F d, Y');
+            $t->update();
+        }
+    }
+    return 1000;
+});
+
+Route::get('/trainings_t_to_t',function (){
+    $ts = \App\Models\HRTrainingsTemp::query()->get();
+    $arr[0] = [];
+    $arr[1] = [];
+    $arr[2] = [];
+    $arr[3] = [];
+    $arr[4] = [];
+    $arr[5] = [];
+    $num = 0;
+    foreach ($ts as $t){
+        $key = 0;
+        switch ($num){
+            case ($num < 1000): $key = 0;
+                break;
+            case ($num < 2000): $key = 1;
+                break;
+            case ($num < 3000): $key = 2;
+                break;
+            case ($num < 4000): $key = 3;
+                break;
+            case ($num < 5000): $key = 4;
+                break;
+            case ($num < 6000): $key = 5;
+                break;
+        }
+        $num++;
+        array_push($arr[$key],[
+            'employee_no' => $t->employee_no,
+            'slug' => \Illuminate\Support\Str::random(),
+            'sequence_no' => $t->sequence_no,
+            'title' => $t->title,
+            'type' => $t->type,
+            'date_from' => $t->date_from,
+            'date_to' => $t->date_to,
+            'detailed_period' => $t->period,
+            'hours' => $t->hours,
+            'conducted_by' => $t->conducted_by,
+            'venue' => $t->venue,
+            'user_created' => 'SYSTEM',
+        ]);
+    }
+    foreach ($arr as $ar){
+        \App\Models\EmployeeTraining::query()->insert($ar);
+    }
+    return 'DONE';
+});
+
+Route::get('/local_to_server',function (){
+    return 1;
+    $ts = \App\Models\HRTrainingsTemp::query()->get();
+    $arr[0] = [];
+    $arr[1] = [];
+    $arr[2] = [];
+    $arr[3] = [];
+    $arr[4] = [];
+    $arr[5] = [];
+    $num = 0;
+    foreach ($ts as $t){
+        $key = 0;
+        switch ($num){
+            case ($num < 1000): $key = 0;
+                break;
+            case ($num < 2000): $key = 1;
+                break;
+            case ($num < 3000): $key = 2;
+                break;
+            case ($num < 4000): $key = 3;
+                break;
+            case ($num < 5000): $key = 4;
+                break;
+            case ($num < 6000): $key = 5;
+                break;
+        }
+        $num++;
+        array_push($arr[$key],[
+            'id'=> $t->id,
+            'employee_no'=> $t->employee_no,
+            'slug'=> $t->slug,
+            'no'=> $t->no,
+            'sequence_no'=> $t->sequence_no,
+            'title'=> $t->title,
+            'period'=> $t->period,
+            'type'=> $t->type,
+            'date_from'=> $t->date_from,
+            'date_to'=> $t->date_to,
+            'date_from_month_only'=> $t->date_from_month_only,
+            'hours'=> $t->hours,
+            'conducted_by'=> $t->conducted_by,
+            'venue'=> $t->venue,
+            'remarks'=> $t->remarks,
+            'is_relevant'=> $t->is_relevant,
+            'created_at'=> $t->created_at,
+            'updated_at'=> $t->updated_at,
+            'ip_created'=> $t->ip_created,
+            'ip_updated'=> $t->ip_updated,
+            'user_created'=> $t->user_created,
+            'user_updated'=> $t->user_updated,
+        ]);
+    }
+    foreach ($arr as $ar){
+        \App\Models\HRTrainingsServer5::query()->insert($ar);
+    }
+    return 'DONE';
+});
