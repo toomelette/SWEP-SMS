@@ -162,6 +162,14 @@ ol.example li.placeholder:before {
     width: 40%;
 }
 
+.w-50p{
+    width: 50%;
+}
+
+.w-60p{
+    width: 60%;
+}
+
 .w-12p{
     width: 12%;
 }

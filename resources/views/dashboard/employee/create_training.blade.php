@@ -7,23 +7,37 @@
 
 @section('modal-body')
     <div class="row">
-        {!! __form::textbox(
-               '6 title', 'title', 'text', 'Title *', 'Title', old('title'), $errors->has('title'), $errors->first('title'), ''
-            ) !!}
-
+        {!! \App\Swep\ViewHelpers\__form2::textbox('sequence_no',[
+            'label' => 'Sequence no.:',
+            'type' => 'number',
+            'cols' => 6,
+        ]) !!}
         {!! __form::textbox(
            '6 type', 'type', 'text', 'Type of Seminar', 'Type of Seminar', old('type'), $errors->has('type'), $errors->first('type'), ''
         ) !!}
+    </div>
+    <div class="row">
+        {!! __form::textbox(
+               '12 title', 'title', 'text', 'Title *', 'Title', old('title'), $errors->has('title'), $errors->first('title'), ''
+            ) !!}
 
     </div>
     <div class="row">
         {!! __form::textbox(
-            '6 date_from', 'date_from', 'date', 'Date From', 'Date From','', '', '', ''
+            '6 date_from', 'date_from', 'date', 'Started:', 'Date From','', '', '', ''
          ) !!}
 
         {!! __form::textbox(
-          '6 date_to', 'date_to', 'date', 'Date To', 'Date To', '', '', '', ''
+          '6 date_to', 'date_to', 'date', 'Ended:', 'Date To', '', '', '', ''
        ) !!}
+    </div>
+
+    <div class="row">
+        {!! \App\Swep\ViewHelpers\__form2::textbox('detailed_period',[
+            'cols' => 12,
+            'label' => 'Detailed Period:',
+            'placeholder' => 'E.g.: Feb 1,3,4,7 2015',
+        ]) !!}
     </div>
 
     <div class="row">

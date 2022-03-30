@@ -31,7 +31,7 @@ class EmployeeTrainingCreateForm extends FormRequest{
             'venue'=>'nullable|string|max:250',
             'remarks'=>'nullable|string|max:250',
             'is_relevant'=>'nullable|string|max:11',
-
+            'sequence_no' => 'required|int',
         ];
 
     }

@@ -52,48 +52,6 @@
                                         <option value="RETIREE">RETIREE</option>
                                     </select>
                                 </div>
-
-{{--                                <div class="col-md-2">--}}
-{{--                                    <label>Project Code:</label>--}}
-{{--                                    <select name="project_code"  class="form-control dt_filter filter_sex filters select22">--}}
-{{--                                        <option value="">None</option>--}}
-
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-1">--}}
-{{--                                    <label>Fund Source:</label>--}}
-{{--                                    <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">--}}
-{{--                                        <option value="">None</option>--}}
-
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-2">--}}
-{{--                                    <label>Station:</label>--}}
-{{--                                    <select name="project_id"  class="form-control dt_filter filter_sex filters">--}}
-{{--                                        <option value="">None</option>--}}
-
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-md-3">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label style="margin-bottom: 2px;">--}}
-{{--                                                Filter Date--}}
-{{--                                            </label>--}}
-{{--                                            <div class="input-group">--}}
-{{--                                                <div class="input-group-addon">--}}
-{{--                                                    <input type="checkbox" name="filter_date" class="dt_filter" id="filter_date_checkbox">--}}
-{{--                                                </div>--}}
-{{--                                                <input name="date_range" type="text" class="form-control pull-right dt_filter" id="date_range" autocomplete="off" disabled>--}}
-{{--                                                <div class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-calendar"></i>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
                         </form>
                     </div>
                 </div>
@@ -131,7 +89,7 @@
 @section('modals')
 {!! \App\Swep\ViewHelpers\__html::blank_modal('show_employee_modal','75') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('service_records_modal','lg') !!}
-{!! \App\Swep\ViewHelpers\__html::blank_modal('trainings_modal','lg') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('trainings_modal','80') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('matrix_modal','lg') !!}
 
 
@@ -279,6 +237,12 @@
 
             $('#tbl_loader').fadeOut(function(){
               $("#employees_table_container").fadeIn();
+                if(find != ''){
+                    employees_tbl.search(find).draw();
+                    setTimeout(function(){
+                        active = '';
+                    },3000);
+                }
 
             });
       },

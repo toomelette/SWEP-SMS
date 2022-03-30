@@ -23,6 +23,7 @@
                 <th>Title</th>
                 <th>Started</th>
                 <th>Ended</th>
+                <th>Detailed Period</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -59,6 +60,7 @@
             { "data": "title" },
             { "data": "date_from" },
             { "data": "date_to" },
+            { "data": "detailed_period" },
             { "data": "action" }
         ],
         "buttons": [
@@ -66,9 +68,25 @@
         ],
         "columnDefs":[
             {
+                "targets" : 0,
+                "class" : 'w-6p'
+            },
+            {
+                "targets" : 1,
+                "class" : 'w-50p'
+            },
+            {
+                "targets" : [2,3],
+                "class" : 'w-8p'
+            },
+            {
                 "targets" : 4,
+                "class" : 'w-20p'
+            },
+            {
+                "targets" : 5,
                 "orderable" : false,
-                "class" : 'action-10p'
+                "class" : 'action-8p'
             },
         ],
         "order":[[0,'desc']],

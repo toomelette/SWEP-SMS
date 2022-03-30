@@ -106,47 +106,65 @@
             <div class="col-md-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <center><label>Applicants by Course</label></center>
-                        <hr class="no-margin">
-                        <div class="col-md-3">
+                        <center><label><span for="month_name_adj">{{Carbon::now()->format('F Y')}}</span> | Step Increment Adjustments</label>
+                            <div class="btn-group pull-right">
+                                <button type="button" data="{{\Illuminate\Support\Carbon::now()->startOfMonth()->subMonth(1)->format('Y-m')}}-01" id="prev_btn_step" class="btn btn-default btn-xs nav_month_btn_step"><i class="fa fa-chevron-left"></i></button>
+                                <button type="button" data="{{\Illuminate\Support\Carbon::now()->startOfMonth()->addMonth(1)->format('Y-m')}}-01" id="next_btn_step" class="btn btn-default btn-xs nav_month_btn_step"><i class="fa fa-chevron-right"></i></button>
+                            </div></center>
 
-                            <canvas id="applicants_by_gender" width="300" height="390"></canvas>
-                        </div>
-                        <div class="col-md-9">
-                            <table class="table table-bordered table-condensed" id="per_course_table">
-                                <thead>
-                                    <tr>
-                                        <th>Course</th>
-                                        <th>Applicants</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if($per_course->count() > 0)
-                                        @foreach($per_course as $key=>$data)
-                                        <tr dataset-Index="{{$key}}" class="course_tr">
-                                            <td>{{str_replace('BACHELOR OF SCIENCE IN','BS',$data->name)}}</td>
-                                            <td class="text-center">{{$data->count}}</td>
-                                        </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <center><label>Applicants by Date</label></center>
                         <hr class="no-margin">
-                        <canvas id="applicants_by_date" width="400" height="80"></canvas>
+                        <div style="height: 355px;overflow-x: hidden; padding-top: 15px" id="adjustments_container" >
+                            {!! $step_increments_view !!}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+{{--        <div class="row">--}}
+{{--            <div class="col-md-12">--}}
+{{--                <div class="panel">--}}
+{{--                    <div class="panel-body">--}}
+{{--                        <center><label>Applicants by Course</label></center>--}}
+{{--                        <hr class="no-margin">--}}
+{{--                        <div class="col-md-3">--}}
+
+{{--                            <canvas id="applicants_by_gender" width="300" height="390"></canvas>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-9">--}}
+{{--                            <table class="table table-bordered table-condensed" id="per_course_table">--}}
+{{--                                <thead>--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Course</th>--}}
+{{--                                        <th>Applicants</th>--}}
+{{--                                    </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                    @if($per_course->count() > 0)--}}
+{{--                                        @foreach($per_course as $key=>$data)--}}
+{{--                                        <tr dataset-Index="{{$key}}" class="course_tr">--}}
+{{--                                            <td>{{str_replace('BACHELOR OF SCIENCE IN','BS',$data->name)}}</td>--}}
+{{--                                            <td class="text-center">{{$data->count}}</td>--}}
+{{--                                        </tr>--}}
+{{--                                        @endforeach--}}
+{{--                                    @endif--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="row">--}}
+{{--            <div class="col-md-12">--}}
+{{--                <div class="panel">--}}
+{{--                    <div class="panel-body">--}}
+{{--                        <center><label>Applicants by Date</label></center>--}}
+{{--                        <hr class="no-margin">--}}
+{{--                        <canvas id="applicants_by_date" width="400" height="80"></canvas>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </section>
 
 @endsection
@@ -174,6 +192,27 @@
                     $("#prev_btn").removeAttr('disabled');
                    $("#next_btn").attr('data',res.new_next);
                    $("#prev_btn").attr('data',res.new_prev);
+
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+    })
+    $(".nav_month_btn_step").click(function () {
+        let get_date = $(this).attr('data');
+        $.ajax({
+            url : '{{Request::url()}}?step=true',
+            data : {date : get_date},
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                $("#adjustments_container").html(res.view);
+                $("span[for='month_name_adj']").html(res.month_name);
+                $("#next_btn_step").attr('data',res.new_next);
+                $("#prev_btn_step").attr('data',res.new_prev);
 
             },
             error: function (res) {

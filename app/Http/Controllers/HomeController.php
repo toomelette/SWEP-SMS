@@ -67,9 +67,31 @@ class HomeController extends Controller{
             'bday_celebrants' => $bday_celebrants,
         ])->render();
     }
+    private  function stepIncrements($month,$year = null){
+        if($year == ''){
+            $year = Carbon::now()->format('Y');
+        }
+        $emps = Employee::query()->where('adjustment_date','!=',null)
+            ->where('is_active','=','ACTIVE')
+            ->whereMonth('adjustment_date','=',$month)
+            ->get();
+        $employees_with_adjustments = [];
+        foreach ($emps as $emp){
+            $diff = ($year)-(Carbon::parse($emp->adjustment_date)->format('Y'));
+            if($diff%3 == 0){
+                $employees_with_adjustments[$emp->slug] = $emp;
+            }
+        }
 
+        return view('dashboard.home.step_increments')->with([
+            'employees_with_adjustments' => $employees_with_adjustments,
+            'year_step' => $year
+        ])->render();
+    }
     public function index(){
         if(Auth::user()->dash == 'hru'){
+
+
             if(request()->ajax() && request()->has('bday')){
                 $new_next = str_pad(request('month')+1,2,0,STR_PAD_LEFT);
                 $new_prev = str_pad(request('month')-1,2,0,STR_PAD_LEFT);
@@ -88,7 +110,18 @@ class HomeController extends Controller{
                 ];
             }
 
-//            return dd($bday_celebrants);
+            if(request()->ajax() && request()->has('step')){
+                $new_next = Carbon::parse(request('date'))->addMonth(1)->format('Y-m-d');
+                $new_prev = Carbon::parse(request('date'))->subMonth(1)->format('Y-m-d');
+                return [
+                    'view' =>  $this->stepIncrements(Carbon::parse(request('date'))->format('m'),Carbon::parse(request('date'))->format('Y')),
+                    'new_next' => $new_next,
+                    'new_prev' => $new_prev,
+                    'month_name' => Carbon::parse(request('date'))->format('F Y'),
+                ];
+            }
+
+
             $per_course = DB::table("swep_afd.hr_courses")
                 ->leftJoin("hr_applicants", function($join){
                     $join->on("hr_courses.course_id", "=", "hr_applicants.course_id");
@@ -128,6 +161,7 @@ class HomeController extends Controller{
                 'female_jo_employees' => $female_jo_employees,
                 'all_jo_employees' => $all_jo_employees,
                 'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('m')),
+                'step_increments_view' => $this->stepIncrements(Carbon::now()->format('m'),Carbon::now()->format('Y')),
             ]);
         }
 
