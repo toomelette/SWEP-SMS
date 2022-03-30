@@ -722,3 +722,74 @@ Route::get('/trainings_t_to_t',function (){
     return 'DONE';
 });
 
+Route::get('/checking',function (){
+    $sqlsrv_emps_arr = [];
+    $emps_arr = [];
+    $sqlsrv_emps = \App\Models\SqlServer\EmpMaster::query()->get();
+    foreach ($sqlsrv_emps as $sqlsrv_emp){
+        array_push($sqlsrv_emps_arr,$sqlsrv_emp->EmpNo);
+    }
+    $emps = \App\Models\Employee::query()->get();
+    foreach ($emps as $emp){
+        array_push($emps_arr,$emp->employee_no);
+    }
+    $diff = array_diff($sqlsrv_emps_arr,$emps_arr);
+
+    foreach ($diff as $diff_emp_no){
+        $sql_srv_e = \App\Models\SqlServer\EmpMaster::query()->where('EmpNo','=',$diff_emp_no)->first();
+        $e = \App\Models\Employee::query()->where('lastname','=',$sql_srv_e->LastName)
+            ->where('firstname','=',$sql_srv_e->FirstName)->first();
+        if(!empty($e)){
+
+            $e->user()->update(['employee_no' => $sql_srv_e->EmpNo]);
+            $e->employeeTraining()->update(['employee_no' => $sql_srv_e->EmpNo]);
+            $e->dtr_records()->update(['employee_no' => $sql_srv_e->EmpNo]);
+            $e->documentDisseminationLog()->update(['employee_no' => $sql_srv_e->EmpNo]);
+            $e->employee_no = $sql_srv_e->EmpNo;
+            $e->update();
+            return $e;
+        }else{
+            $e = new \App\Models\Employee;
+            $e->employee_no = $sql_srv_e->EmpNo;
+            $e->lastname = $sql_srv_e->LastName;
+            $e->slug = \Illuminate\Support\Str::random();
+            $e->firstname = $sql_srv_e->FirstName;
+            $e->middlename = $sql_srv_e->MiddleName;
+            $e->department_id = $sql_srv_e->Division;
+            $e->department_unit_id = $sql_srv_e->Dept;
+            $e->fullname = $sql_srv_e->EmpName;
+            $e->date_of_birth = Carbon::parse($sql_srv_e->DOB)->format('Y-m-d');
+            $e->place_of_birth = $sql_srv_e->POB;
+            $e->sex = $sql_srv_e->Gender;
+            $e->civil_status = $sql_srv_e->CivilStat;
+            $e->blood_type = $sql_srv_e->BloodType;
+            $e->gsis = $sql_srv_e->GSIS;
+            $e->philhealth = $sql_srv_e->PHIC;
+            $e->tin = $sql_srv_e->TIN;
+            $e->hdmf = $sql_srv_e->HDMF;
+            $e->hdmfpremiums = $sql_srv_e->HDMFPREMIUMS;
+            $e->appointment_status = $sql_srv_e->ApptStat;
+            $e->position = $sql_srv_e->Position;
+            $e->item_no = $sql_srv_e->ItemNo;
+            $e->salary_grade = $sql_srv_e->SalGrade;
+            $e->step_inc = $sql_srv_e->StepInc;
+            $e->monthly_basic = $sql_srv_e->MonthlyBasic;
+            $e->aca = $sql_srv_e->ACA;
+            $e->pera = $sql_srv_e->PERA;
+            $e->food_subsidy = $sql_srv_e->FoodSubsi;
+            $e->ra = $sql_srv_e->RA;
+            $e->ta= $sql_srv_e->TA;
+            $e->firstday_gov = $sql_srv_e->GovServ;
+            $e->firstday_sra = $sql_srv_e->FirstDay;
+            $e->appointment_date = $sql_srv_e->ApptDate;
+            $e->adjustment_date = $sql_srv_e->AdjDate;
+            $e->is_active = $sql_srv_e->ACTIVE;
+            $e->user_created = 'SYSTEM';
+            $e->locations = $sql_srv_e->LOCATION;
+            $e->save();
+
+        }
+    }
+
+});
+
