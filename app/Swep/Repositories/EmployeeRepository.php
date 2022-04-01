@@ -207,6 +207,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->updated_at = $this->carbon->now();
         $employee->ip_updated = request()->ip();
         $employee->user_updated = $this->auth->user()->user_id;
+        $employee->locations = $request->locations;
         $employee->save();
 
         $this->destroyDependencies($employee);
@@ -240,8 +241,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function findBySlug($slug){
 
-        $employee = $this->cache->remember('employees:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->employee->where('slug', $slug)
+        $employee =  $this->employee->where('slug', $slug)
                                   ->with('employeeAddress',
                                          'employeeFamilyDetail',
                                          'employeeOtherQuestion',
@@ -260,7 +260,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
                                          'permissionSlip',
                                          'leaveCard')
                                     ->first();
-        });
+
         
         if(empty($employee)){
             abort(404);
@@ -344,7 +344,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function getRequestFullname($request){
 
-       return $request->firstname . " " . substr($request->middlename , 0, 1) . ". " . $request->lastname;
+       return $request->lastname .', '.$request->firstname . " " . substr($request->middlename , 0, 1) . ". " ;
 
     }
 

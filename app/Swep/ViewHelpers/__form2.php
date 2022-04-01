@@ -54,14 +54,14 @@ class __form2
                             if($value == $key2){
                                 $sel = 'selected';
                             }
-                            $opt_html = $opt_html.'<option value="'.$key2.' " '.$sel.'>'.$option2.'</option>';
+                            $opt_html = $opt_html.'<option value="'.$key2.'" '.$sel.'>'.$option2.'</option>';
                         }
                     }else{
                         $sel = '';
                         if($value == $key){
                             $sel = 'selected';
                         }
-                        $opt_html = $opt_html.'<option value="'.$key.' " '.$sel.'>'.$option.'</option>';
+                        $opt_html = $opt_html.'<option value="'.$key.'" '.$sel.'>'.$option.'</option>';
                     }
                 }
             }

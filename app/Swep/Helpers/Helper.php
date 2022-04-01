@@ -2,6 +2,7 @@
 
 
 namespace App\Swep\Helpers;
+use App\Models\Department;
 use App\Models\MisRequestsNature;
 use App\Models\RecommendedBudget;
 use App\Models\SuSettings;
@@ -308,5 +309,16 @@ class Helper
             }
         }
         return false;
+    }
+
+    public static function departmentsArray(){
+        $depts = Department::query()->orderBy('department_id','asc')->get();
+        $deptsArr = [];
+        if(!empty($depts)){
+            foreach ($depts as $dept){
+                $deptsArr[$dept->department_id] = $dept->name;
+            }
+        }
+        return $deptsArr;
     }
 }

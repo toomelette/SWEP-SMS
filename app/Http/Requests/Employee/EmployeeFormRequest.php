@@ -123,7 +123,7 @@ class EmployeeFormRequest extends FormRequest{
             'adjustment_date' => 'nullable|date_format:"m/d/Y"',
             'project_id' => 'nullable|string|max:11',
             'is_active' => 'nullable|string|max:11',
-
+            'locations' => 'required|string',
 
             // Questions
             'q_34_a'=>'nullable|string|max:11',

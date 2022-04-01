@@ -7,25 +7,39 @@
 
 @section('modal-body')
      <div class="row">
-          {!! __form::textbox(
-                 '6 title', 'title', 'text', 'Title *', 'Title', $training->title, '', '', ''
-              ) !!}
-
+          {!! \App\Swep\ViewHelpers\__form2::textbox('sequence_no',[
+            'label' => 'Sequence no.:',
+            'type' => 'number',
+            'cols' => 6,
+        ], $training) !!}
           {!! __form::textbox(
              '6 type', 'type', 'text', 'Type of Seminar', 'Type of Seminar', $training->type, '', '', ''
           ) !!}
+     </div>
+     <div class="row">
+          {!! __form::textbox(
+                 '12 title', 'title', 'text', 'Title *', 'Title', $training->title, '', '', ''
+              ) !!}
 
      </div>
      <div class="row">
 
           {!! __form::textbox(
-             '6 date_from', 'date_from', 'date', 'Date From', 'Date From', \Carbon\Carbon::parse($training->date_from)->format('Y-m-d'), '', '', ''
+             '6 date_from', 'date_from', 'date', 'Date From', 'Date From', ($training->date_from == ''?'':\Carbon\Carbon::parse($training->date_from)->format('Y-m-d')), '', '', ''
           ) !!}
 
           {!! __form::textbox(
-            '6 date_to', 'date_to', 'date', 'Date To', 'Date To', \Carbon\Carbon::parse($training->date_from)->format('Y-m-d'), '', '', ''
+            '6 date_to', 'date_to', 'date', 'Date To', 'Date To', ($training->date_to == ''?'':\Carbon\Carbon::parse($training->date_to)->format('Y-m-d')), '', '', ''
          ) !!}
 
+     </div>
+
+     <div class="row">
+          {!! \App\Swep\ViewHelpers\__form2::textbox('detailed_period',[
+              'cols' => 12,
+              'label' => 'Detailed Period:',
+              'placeholder' => 'E.g.: Feb 1,3,4,7 2015',
+          ], $training) !!}
      </div>
 
      <div class="row">

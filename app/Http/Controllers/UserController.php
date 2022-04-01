@@ -88,7 +88,7 @@ class UserController extends Controller{
                         $destroy_route = "'".route("dashboard.user.destroy","slug")."'";
                         $slug = "'".$data->slug."'";
                         if(!empty($data->employee)){
-                            $view = '<li><a href="'.route('dashboard.employee.index').'?q='.$data->employee->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
+                            $view = '<li><a href="'.route('dashboard.employee.index').'?find='.$data->employee->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
                         }else{
                             $view = '';
                         }

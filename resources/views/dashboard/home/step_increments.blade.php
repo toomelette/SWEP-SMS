@@ -20,11 +20,7 @@
                     <td>{{$employee->salary_grade}}</td>
                     <td>{{$employee->step_inc}}</td>
                     <td>
-                        @if(($year_step - Carbon::parse($employee->adjustment_date)->format('Y'))/3 > 8)
-                            8 (max)
-                        @else
-                            {{($year_step - Carbon::parse($employee->adjustment_date)->format('Y'))/3}}
-                        @endif
+                        {{$employee->step_inc+1}}
                     </td>
                     <td style="width: 50px">
                         <a href="{{route('dashboard.employee.index')}}?find={{$employee->employee_no}}" target="_blank">
@@ -32,9 +28,8 @@
                         </a>
                     </td>
                 </tr>
-
         @endforeach
     </table>
 @else
-    <h3 class="text-center text-info" style="padding-top: 140px"><i class="fa fa-info-circle"></i> No Employee with adjustments for this month</h3>
+    <h3 class="text-center text-info" style="padding: 20px"><i class="fa fa-info-circle"></i> No Employee with adjustments for this month</h3>
 @endif

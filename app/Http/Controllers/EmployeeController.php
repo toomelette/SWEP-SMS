@@ -325,10 +325,10 @@ class EmployeeController extends Controller{
                                 <button data="'.$data->slug.'" type="button" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                             </div>';
                 })->editColumn('date_to',function ($data){
-                    return Carbon::parse($data->date_to)->format('m/d/Y');
+                    return ($data->date_to != '' ? Carbon::parse($data->date_to)->format('m/d/Y') : '');
                 })
                 ->editColumn('date_from',function ($data){
-                    return Carbon::parse($data->date_from)->format('m/d/Y');
+                    return ($data->date_from != '' ? Carbon::parse($data->date_from)->format('m/d/Y') : '');
                 })
                 ->setRowId('slug')
                 ->toJson();

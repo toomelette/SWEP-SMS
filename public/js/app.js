@@ -265,7 +265,7 @@ function unwait_button(target_form , type){
     button.removeAttr('disabled');
 }
 
-function notify(message, type){
+function notify(message, type = 'success'){
     $.notify({
         // options
         message: message

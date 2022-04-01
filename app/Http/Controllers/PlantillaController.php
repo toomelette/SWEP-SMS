@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\DepartmentTree;
+use App\Models\HRPayPlanitilla;
+use App\Node;
 use App\Swep\Services\PlantillaService;
 use App\Http\Requests\Plantilla\PlantillaFormRequest;
 use App\Http\Requests\Plantilla\PlantillaFilterRequest;
@@ -77,6 +80,32 @@ class PlantillaController extends Controller{
 
     }
 
+    public function print(){
+
+        
+        $pls = HRPayPlanitilla::query()
+            ->orderBy('control_no','asc')
+            ->orderBy('department_header','asc')
+            ->orderBy('division_header','asc')
+            ->orderBy('section_header','asc')
+            ->orderBy('item_no','asc')
+            ->get();
+        $plsArr = [];
+        foreach ($pls as $pl){
+            if($pl->section == 'NONE' && $pl->division== 'NONE'){
+                $plsArr[$pl->department][$pl->item_no]= $pl;
+            }elseif($pl->division != 'NONE' && $pl->section == 'NONE'){
+                $plsArr[$pl->department][$pl->division][$pl->item_no] = $pl;
+            }else{
+                $plsArr[$pl->department][$pl->division][$pl->section][$pl->item_no] = $pl;
+            }
+
+        }
+//        dd($plsArr) ;
+        return view('printables.plantilla.print')->with([
+            'pls' => $plsArr,
+        ]);
+    }
 
 
     

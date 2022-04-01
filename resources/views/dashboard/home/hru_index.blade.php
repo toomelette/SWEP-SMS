@@ -113,11 +113,62 @@
                             </div></center>
 
                         <hr class="no-margin">
-                        <div style="height: 355px;overflow-x: hidden; padding-top: 15px" id="adjustments_container" >
+                        <div style="max-height: 355px;overflow-x: hidden; padding-top: 15px" id="adjustments_container" >
                             {!! $step_increments_view !!}
                         </div>
                     </div>
                 </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <center><label><span for="month_name_adj">{{Carbon::now()->format('Y')}}</span> | Employees' Loyalty</label>
+                        <hr class="no-margin">
+                        <div style="max-height: 355px;overflow-x: hidden; padding-top: 15px" id="adjustments_container" >
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    @php($counter = 0)
+                                    @php(krsort($loyaltys))
+                                    @foreach($loyaltys as $years_in_service => $employees)
+                                        <li class="{{($counter == 0) ? 'active' : ''}}"><a href="#tab_{{$counter}}" data-toggle="tab">{{$years_in_service}} years</a></li>
+                                        @php($counter++)
+                                    @endforeach
+                                </ul>
+                                <div class="tab-content">
+                                    @php($counter = 0)
+                                    @foreach($loyaltys as $years_in_service => $employees)
+                                        <div class="tab-pane {{($counter == 0) ? 'active' : ''}}" id="tab_{{$counter}}">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name of Employee</th>
+                                                    <th>First day in government</th>
+                                                    <th>Years in govt. service</th>
+                                                </tr>
+                                                </thead>
+                                                @foreach($employees as $employee)
+                                                    <tr>
+                                                        <td>{{$employee->lastname}},{{$employee->firstname}}</td>
+                                                        <td>{{\Illuminate\Support\Carbon::parse($employee->firstday_gov)->format('F d, Y')}}</td>
+                                                        <td>{{$employee->years_in_gov}} years</td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                        @php($counter++)
+                                    @endforeach
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 {{--        <div class="row">--}}

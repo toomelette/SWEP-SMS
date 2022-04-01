@@ -22,6 +22,8 @@ Route::group(['as' => 'auth.'], function () {
 Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->middleware('check.user_status');
 
 
+Route::get('/dashboard/plantilla/print','PlantillaController@print')->name('plantilla.print');
+
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     'middleware' => ['check.user_status', 'last_activity','sidenav_mw']
 ], function () {
@@ -191,6 +193,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
 
 	/** Plantilla **/
+
 	Route::resource('plantilla', 'PlantillaController');
 
 
@@ -723,6 +726,7 @@ Route::get('/trainings_t_to_t',function (){
 });
 
 Route::get('/checking',function (){
+    return 1;
     $sqlsrv_emps_arr = [];
     $emps_arr = [];
     $sqlsrv_emps = \App\Models\SqlServer\EmpMaster::query()->get();
@@ -790,6 +794,101 @@ Route::get('/checking',function (){
 
         }
     }
-
 });
+
+Route::get('/copy_depts',function (){
+//   $depts = DB::connection('sqlsrv')->table('dbo.RespCtr')->get();
+//
+//   $arr = [];
+//   foreach ($depts as $dept){
+//       array_push($arr,[
+//           'slug' => \Illuminate\Support\Str::random(),
+//           'department_id' => $dept->RSCode,
+//            'department_name' => $dept->DEPTNAME,
+//           'user_created' => 'SYSTEM',
+//       ]);
+//   }
+//    \App\Models\Department::query()->insert($arr);
+});
+
+Route::get('/copy_dept_units',function (){
+//    $dus = DB::connection('sqlsrv')->table('dbo.Depts')->get();
+//    $arr = [];
+//    foreach ($dus as $du){
+//        array_push($arr,[
+//            'slug' => \Illuminate\Support\Str::random(),
+//            'department_id' => $du->DeptID,
+//            'department_unit_id' => $du->DeptUnit,
+//            'department_unit_name' => $du->LongName,
+//            'department_no' => $du->DEPTNO,
+//            'user_created' => 'SYSTEM',
+//        ]);
+//    }
+//    \App\Models\DepartmentUnit::query()->insert($arr);
+});
+
+Route::get('/import_plantilla',function (){
+   $sqlsrv = DB::connection('sqlsrv')->table('dbo.PayPLANTILLA')->get();
+   $plantillaArr = [];
+   foreach ($sqlsrv as $item){
+       $arr = [
+           'location' => $item->Location,
+           'item_no' => $item->ItemNo,
+           'department_header' => $item->DeptHeader,
+           'department' => $item->Dept,
+           'division_header' => $item->DivisionHeader,
+           'division' => $item->Division,
+           'section_header' => $item->SectionHeader,
+           'section' => $item->Sectionss,
+           'position' => $item->Position,
+           'employee_name' => $item->EmpName,
+           'job_grade' => $item->JobGrade,
+           'step_inc' => $item->StepInc,
+           'actual_salary' => $item->ActualSalary,
+           'actual_salary_gcg' => $item->ActualSalaryGCG,
+           'eligibility' => $item->Eligibility,
+           'educ_att' => $item->EducAttain,
+           'appointment_status' => $item->ApptStat,
+           'appointment_date' => $item->ApptDate,
+           'last_promotion' => $item->LastPromote,
+           'seq_groupings' => $item->SeqGroupings,
+           'div_groupings' => $item->DivGroupings,
+           'original_job_grade' => $item->OriginalJG,
+           'original_job_grade_si' => $item->OriginalSI,
+           'original_salary_grade' => $item->OriginalSG,
+           'original_salary_grade_si' => $item->OriginalSGSI,
+           'control_no' => $item->CONTROLNO,
+           'user_created' => 'SYSTEM',
+       ];
+        array_push($plantillaArr,$arr);
+   }
+    \App\Models\HRPayPlanitilla::query()->insert($plantillaArr);
+});
+
+Route::get('/get_emp_no',function (){
+    $pls = \App\Models\HRPayPlanitilla::query()->get();
+    foreach ($pls as $pl){
+        if($pl->employee_name != null){
+            $cut = substr($pl->employee_name,0,15);
+            $emp = \App\Models\Employee::query()->where(DB::raw('CONCAT(lastname,", ",firstname)'),'like','%'.$cut.'%')->first();
+            if(!empty($emp)){
+                $pl->employee_no = $emp->employee_no;
+                $pl->update();
+            }
+        }
+    }
+
+    $pls = \App\Models\HRPayPlanitilla::query()->where('employee_no','=',null)->get();
+    foreach ($pls as $pl){
+        if($pl->employee_name != null){
+            $cut = substr($pl->employee_name,0,11);
+            $emp = \App\Models\Employee::query()->where(DB::raw('CONCAT(lastname,", ",firstname)'),'like','%'.$cut.'%')->first();
+            if(!empty($emp)){
+                $pl->employee_no = $emp->employee_no;
+                $pl->update();
+            }
+        }
+    }
+});
+
 

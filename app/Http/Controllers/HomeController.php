@@ -121,7 +121,18 @@ class HomeController extends Controller{
                 ];
             }
 
-
+            $loyaltys = Employee::query()
+                    ->select('slug','employee_no','lastname','firstname','firstday_gov',DB::raw('YEAR(firstday_gov) as firstday_gov_year'),DB::raw('YEAR(firstday_gov) as firstday_gov_year'),DB::raw(Carbon::now()->format("Y").' - YEAR(firstday_gov) as years_in_gov'))
+                    ->where(DB::raw('('.Carbon::now()->format("Y").' - YEAR(firstday_gov)) % 5'),'=',0)
+                    ->where(DB::raw(Carbon::now()->format("Y").' - YEAR(firstday_gov)'),'>',9)
+                    ->where('locations','!=', 'COS')
+                    ->where('locations','!=','RETIREE')
+                    ->where('is_active','!=','INACTIVE')
+                    ->get();
+            $loyaltysArr = [];
+            foreach ($loyaltys as $loyalty) {
+                $loyaltysArr[$loyalty->years_in_gov][$loyalty->slug] = $loyalty;
+            }
             $per_course = DB::table("swep_afd.hr_courses")
                 ->leftJoin("hr_applicants", function($join){
                     $join->on("hr_courses.course_id", "=", "hr_applicants.course_id");
@@ -162,6 +173,7 @@ class HomeController extends Controller{
                 'all_jo_employees' => $all_jo_employees,
                 'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('m')),
                 'step_increments_view' => $this->stepIncrements(Carbon::now()->format('m'),Carbon::now()->format('Y')),
+                'loyaltys' => $loyaltysArr
             ]);
         }
 

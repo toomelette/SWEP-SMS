@@ -3,13 +3,31 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 
+/**
+ * @property mixed name
+ * @property mixed department_id
+ * @property mixed slug
+ */
 class Department extends Model{
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($a){
+            $a->user_created = Auth::user()->user_id;
+            $a->ip_created = request()->ip();
+        });
 
+        static::updating(function ($a){
+            $a->user_updated = Auth::user()->user_id;
+            $a->ip_updated = request()->ip();
+        });
+    }
 
     use Sortable, LogsActivity;
 
@@ -17,9 +35,9 @@ class Department extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
 
-    public $sortable = ['name'];
+//    public $sortable = ['name'];
 
-	public $timestamps = false;
+	public $timestamps = true;
 
     protected static $logName = 'department';
     protected static $logAttributes = ['*'];
@@ -27,23 +45,20 @@ class Department extends Model{
     protected static $logOnlyDirty = true;
 
 
-
-    protected $attributes = [
-
-        'slug' => '',
-        'department_id' => '',
-        'name' => '',
-        'created_at' => null, 
-        'updated_at' => null,
-        'ip_created' => '',
-        'ip_updated' => '',
-        'user_created' => '',
-        'user_updated' => '',
-
-    ];
-
-
-
+//
+//    protected $attributes = [
+//
+//        'slug' => '',
+//        'department_id' => '',
+//        'name' => '',
+//        'created_at' => null,
+//        'updated_at' => null,
+//        'ip_created' => '',
+//        'ip_updated' => '',
+//        'user_created' => '',
+//        'user_updated' => '',
+//
+//    ];
 
 
     /** RELATIONSHIPS **/
@@ -61,7 +76,9 @@ class Department extends Model{
         return $this->hasMany('App\Models\DepartmentUnit','department_id','department_id');
     }
 
-
+    public function departmentUnits(){
+        return $this->hasMany(DepartmentUnit::class,'department_id','department_id');
+    }
 
 
 

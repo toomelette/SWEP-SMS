@@ -1,72 +1,60 @@
-@extends('layouts.admin-master')
+@php($rand = \Illuminate\Support\Str::random())
+@extends('layouts.modal-content',['form_id'=>'edit_unit_form_'.$rand , 'slug' => $du->slug])
 
-@section('content')
-    
-  <section class="content-header">
-      <h1>Edit Department Unit</h1>
-      <div class="pull-right" style="margin-top: -25px;">
-        {!! __html::back_button(['dashboard.department_unit.index']) !!}
-      </div>
-  </section>
-
-  <section class="content">
-
-    <div class="box">
-    
-      <div class="box-header with-border">
-        <h3 class="box-title">Form</h3>
-        <div class="pull-right">
-            <code>Fields with asterisks(*) are required</code>
-        </div> 
-      </div>
-      
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.department_unit.update', $department_unit->slug) }}">
-
-        <div class="box-body">
-     
-          @csrf    
-
-          <input name="_method" value="PUT" type="hidden">
-          
-          {!! __form::select_dynamic(
-            '4', 'department_id', 'Department *', old('department_id') ? old('department_id') : $department_unit->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), 'select2', ''
-          ) !!}
-
-          <input type="hidden" name="department_name" id="department_name" value="{{ old('department_name') ? old('department_name') : $department_unit->department_name }}">
-
-          {!! __form::textbox(
-             '4', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $department_unit->name, $errors->has('name'), $errors->first('name'), ''
-          ) !!}
-
-          {!! __form::textbox(
-             '4', 'description', 'text', 'Description *', 'Description', old('description') ? old('description') : $department_unit->description , $errors->has('description'), $errors->first('description'), ''
-          ) !!}
-
-        </div>
-
-        <div class="box-footer">
-          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
-        </div>
-
-      </form>
-
-    </div>
-
-  </section>
-
+@section('modal-header')
+    {{$du->name}} - Edit
 @endsection
 
+@section('modal-body')
+    <input name="slug" value="{{$du->slug}}" hidden>
+    <div class="row">
+        {!! \App\Swep\ViewHelpers\__form2::select('department_id',[
+            'label' => 'Department: *',
+            'cols' => 12,
+            'options' => Helper::departmentsArray(),
+          ],$du) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('name',[
+          'label' => 'Name: *',
+          'cols' => 12,
+        ],$du) !!}
 
+        {!! \App\Swep\ViewHelpers\__form2::textbox('description',[
+          'label' => 'Description: *',
+          'cols' => 12,
+        ],$du) !!}
+    </div>
+@endsection
 
+@section('modal-footer')
+    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
+@endsection
 
 @section('scripts')
-
-  <script type="text/javascript">
-
-    {!! __js::ajax_select_to_input(
-      'department_id', 'department_name', '/api/department/textbox_department_ByDepartmentId/', 'name'
-    ) !!}
-
-  </script> 
-    
+    <script type="text/javascript">
+        $("#edit_unit_form_{{$rand}}").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            let uri = '{{route("dashboard.department_unit.update","slug")}}';
+            uri = uri.replace('slug',form.attr('data'));
+            loading_btn(form);
+            $.ajax({
+                url : uri,
+                data : form.serialize(),
+                type: 'PATCH',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   succeed(form,true,true);
+                   active = res.slug;
+                   du_tbl.draw(false);
+                   notify('Department Unit successfully updated.');
+                },
+                error: function (res) {
+                    errored(form,res);
+                }
+            })
+        })
+    </script>
 @endsection
+

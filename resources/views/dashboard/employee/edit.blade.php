@@ -597,6 +597,10 @@
                           '3', 'is_active', 'Status *', old('is_active') ? old('is_active') : $employee->is_active, ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'INACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
                         ) !!}
 
+                        {!! __form::select_static(
+                          '3', 'locations', 'Groupings *', old('locations') ? old('locations') : $employee->locations, ['VISAYAS' => 'VISAYAS', 'LUZON/MINDANAO' => 'LUZON/MINDANAO', 'COS'=>'COS','RETIREE' => 'RETIREE'], $errors->has('locations'), $errors->first('locations'), '', ''
+                        ) !!}
+
                       </div>
                     </div>
                   </div>

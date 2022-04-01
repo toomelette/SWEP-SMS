@@ -3,14 +3,40 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+/**
+ * @property mixed description
+ * @property mixed id
+ * @property mixed slug
+ * @property mixed department_id
+ * @property mixed name
+ * @property mixed department_no
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property mixed user_created
+ * @property mixed user_updated
+ * @property mixed ip_created
+ * @property mixed ip_updated
+ */
 
 class DepartmentUnit extends Model{
 
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($a){
+            $a->user_created = Auth::user()->user_id;
+            $a->ip_created = request()->ip();
+        });
 
+        static::updating(function ($a){
+            $a->user_updated = Auth::user()->user_id;
+            $a->ip_updated = request()->ip();
+        });
+    }
 
     use Sortable, LogsActivity;
 
@@ -18,7 +44,6 @@ class DepartmentUnit extends Model{
 
     protected $dates = ['created_at', 'updated_at'];
 
-    public $sortable = ['department_name','name', 'description'];
 
 	public $timestamps = false;
 
@@ -30,31 +55,9 @@ class DepartmentUnit extends Model{
 
 
 
-    protected $attributes = [
-
-        'slug' => '',
-        'department_unit_id' => '',
-        'department_id' => '',
-        'department_name' => '',
-        'name' => '',
-        'description' => '',
-        'created_at' => null, 
-        'updated_at' => null,
-        'ip_created' => '',
-        'ip_updated' => '',
-        'user_created' => '',
-        'user_updated' => '',
-
-    ];
-
-
-
-
-
-
     /** RELATIONSHIPS **/
 	public function department() {
-      return $this->belongsTo('App\Models\Department','department_id','department_id');
+      return $this->belongsTo(Department::class,'department_id','department_id');
     }
 
 
@@ -66,7 +69,7 @@ class DepartmentUnit extends Model{
     public function applicant() {
         return $this->hasMany('App\Models\Applicant','department_unit_id','department_unit_id');
     }
-    
+
 
 
 
