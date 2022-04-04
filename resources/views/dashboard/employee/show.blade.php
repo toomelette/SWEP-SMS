@@ -71,68 +71,72 @@
                         </div>
                     </div>
 
-                    @php
-                        $empMaster = \App\Models\SqlServer\EmpMaster::query()->where('EmpNo','=',$employee->employee_no)->first();
-                    @endphp
 
-                    @if(!empty($empMaster))
-                        <div class="col-md-6">
-                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                Appointment Details
-                            </p>
 
-                            <div class="well well-sm">
-                                <dl class="dl-horizontal">
-                                    <dt>Employee No:</dt>
-                                    <dd class="text-green">{{ $empMaster->EmpNo }}</dd>
-                                    <dt>Status:</dt>
-                                    <dd>{{ $employee->is_active }}</dd>
-                                    <dt>Position:</dt>
-                                    <dd class="text-green">{{ $empMaster->Position }}</dd>
-                                    <dt>Job Grade:</dt>
-                                    <dd class="text-green">{{ $empMaster->SalGrade }}</dd>
-                                    <dt>Step Increment:</dt>
-                                    <dd class="text-green">{{ $empMaster->StepInc }}</dd>
-                                    <dt>Appointment Status:</dt>
-                                    <dd class="text-green">{{ $empMaster->ApptStat }}</dd>
-                                    <dt>Item No:</dt>
-                                    <dd class="text-green">{{ $empMaster->ItemNo }}</dd>
-                                    <dt>Monthly Basic:</dt>
-                                    <dd class="text-green">{{ number_format($empMaster->MonthlyBasic, 2) }}</dd>
-{{--                                    <dt>ACA:</dt>--}}
-{{--                                    <dd class="text-green">{{ number_format($empMaster->ACA, 2) }}</dd>--}}
-{{--                                    <dt>PERA:</dt>--}}
-{{--                                    <dd class="text-green">{{ number_format($empMaster->PERA, 2) }}</dd>--}}
-                                    <dt>Food Subsidy:</dt>
-                                    <dd class="text-green">{{ number_format($empMaster->FoodSubsi, 2) }}</dd>
-{{--                                    <dt>RA:</dt>--}}
-{{--                                    <dd class="text-green">{{ number_format($empMaster->RA, 2) }}</dd>--}}
-{{--                                    <dt>TA:</dt>--}}
-{{--                                    <dd class="text-green">{{ number_format($empMaster->TA, 2) }}</dd>--}}
-                                    <dt>Government Service:</dt>
-                                    <dd>{{ __dataType::date_parse($employee->firstday_gov, 'M d, Y') }}</dd>
-                                    <dt>First Day:</dt>
-                                    <dd>{{ __dataType::date_parse($employee->firstday_sra, 'M d, Y') }}</dd>
-                                    <dt>Last Promotion:</dt>
-                                    <dd>{{ __dataType::date_parse($employee->appointment_date, 'M d, Y') }}</dd>
-                                    <dt>Adjustment Date:</dt>
-                                    <dd>{{ __dataType::date_parse($employee->adjustment_date, 'M d, Y') }}</dd>
+                    @if(\App\Swep\Helpers\Helper::sqlServerIsOn() == true)
+                        @php
+                            $empMaster = \App\Models\SqlServer\EmpMaster::query()->where('EmpNo','=',$employee->employee_no)->first();
+                        @endphp
+                        @if(!empty($empMaster))
 
-{{--                                    <dt>Allowance 1:</dt>--}}
-{{--                                    <dd class="text-green">{{ number_format($empMaster->Allow1, 2) }}</dd>--}}
+                            <div class="col-md-6">
+                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                    Appointment Details
+                                </p>
 
-{{--                                    <dt>Allowance 2:</dt>--}}
-{{--                                    <dd class="text-green">{{ number_format($empMaster->Allow2, 2) }}</dd>--}}
+                                <div class="well well-sm">
+                                    <dl class="dl-horizontal">
+                                        <dt>Employee No:</dt>
+                                        <dd class="text-green">{{ $empMaster->EmpNo }}</dd>
+                                        <dt>Status:</dt>
+                                        <dd>{{ $employee->is_active }}</dd>
+                                        <dt>Position:</dt>
+                                        <dd class="text-green">{{ $empMaster->Position }}</dd>
+                                        <dt>Job Grade:</dt>
+                                        <dd class="text-green">{{ $empMaster->SalGrade }}</dd>
+                                        <dt>Step Increment:</dt>
+                                        <dd class="text-green">{{ $empMaster->StepInc }}</dd>
+                                        <dt>Appointment Status:</dt>
+                                        <dd class="text-green">{{ $empMaster->ApptStat }}</dd>
+                                        <dt>Item No:</dt>
+                                        <dd class="text-green">{{ $empMaster->ItemNo }}</dd>
+                                        <dt>Monthly Basic:</dt>
+                                        <dd class="text-green">{{ number_format($empMaster->MonthlyBasic, 2) }}</dd>
+    {{--                                    <dt>ACA:</dt>--}}
+    {{--                                    <dd class="text-green">{{ number_format($empMaster->ACA, 2) }}</dd>--}}
+    {{--                                    <dt>PERA:</dt>--}}
+    {{--                                    <dd class="text-green">{{ number_format($empMaster->PERA, 2) }}</dd>--}}
+                                        <dt>Food Subsidy:</dt>
+                                        <dd class="text-green">{{ number_format($empMaster->FoodSubsi, 2) }}</dd>
+    {{--                                    <dt>RA:</dt>--}}
+    {{--                                    <dd class="text-green">{{ number_format($empMaster->RA, 2) }}</dd>--}}
+    {{--                                    <dt>TA:</dt>--}}
+    {{--                                    <dd class="text-green">{{ number_format($empMaster->TA, 2) }}</dd>--}}
+                                        <dt>Government Service:</dt>
+                                        <dd>{{ __dataType::date_parse($employee->firstday_gov, 'M d, Y') }}</dd>
+                                        <dt>First Day:</dt>
+                                        <dd>{{ __dataType::date_parse($employee->firstday_sra, 'M d, Y') }}</dd>
+                                        <dt>Last Promotion:</dt>
+                                        <dd>{{ __dataType::date_parse($employee->appointment_date, 'M d, Y') }}</dd>
+                                        <dt>Adjustment Date:</dt>
+                                        <dd>{{ __dataType::date_parse($employee->adjustment_date, 'M d, Y') }}</dd>
 
-                                    <dt>HDMF Premium:</dt>
-                                    @if(!empty($empMaster))
-                                        <dd  class="text-green">{{ number_format($empMaster->HDMFPREMIUMS, 2) }}</dd>
-                                    @else
-                                        <dd>{{ number_format($employee->hdmfpremiums, 2) }}</dd>
-                                    @endif
-                                </dl>
+    {{--                                    <dt>Allowance 1:</dt>--}}
+    {{--                                    <dd class="text-green">{{ number_format($empMaster->Allow1, 2) }}</dd>--}}
+
+    {{--                                    <dt>Allowance 2:</dt>--}}
+    {{--                                    <dd class="text-green">{{ number_format($empMaster->Allow2, 2) }}</dd>--}}
+
+                                        <dt>HDMF Premium:</dt>
+                                        @if(!empty($empMaster))
+                                            <dd  class="text-green">{{ number_format($empMaster->HDMFPREMIUMS, 2) }}</dd>
+                                        @else
+                                            <dd>{{ number_format($employee->hdmfpremiums, 2) }}</dd>
+                                        @endif
+                                    </dl>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     @else
                         <div class="col-md-6">
                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
