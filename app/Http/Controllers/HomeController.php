@@ -128,11 +128,14 @@ class HomeController extends Controller{
                     ->where('locations','!=', 'COS')
                     ->where('locations','!=','RETIREE')
                     ->where('is_active','!=','INACTIVE')
+                    ->orderBy('firstday_gov','desc')
                     ->get();
             $loyaltysArr = [];
             foreach ($loyaltys as $loyalty) {
-                $loyaltysArr[$loyalty->years_in_gov][$loyalty->slug] = $loyalty;
+                $loyaltysArr[$loyalty->slug] = $loyalty;
             }
+
+
             $per_course = DB::table("swep_afd.hr_courses")
                 ->leftJoin("hr_applicants", function($join){
                     $join->on("hr_courses.course_id", "=", "hr_applicants.course_id");
@@ -156,9 +159,9 @@ class HomeController extends Controller{
             $all_employees = Employee::where('is_active','ACTIVE')->count();
             $all_applicants = Applicant::count();
 
-            $male_jo_employees = JoEmployees::query()->where('sex','=','MALE')->count();
-            $female_jo_employees = JoEmployees::query()->where('sex','=','FEMALE')->count();
-            $all_jo_employees = JoEmployees::count();
+            $male_jo_employees = Employee::query()->where('locations','=','COS')->where('sex','=','MALE')->count();
+            $female_jo_employees = Employee::query()->where('locations','=','COS')->where('sex','=','FEMALE')->count();
+            $all_jo_employees = Employee::query()->where('locations','=','COS')->count();
             return view('dashboard.home.hru_index')->with([
                 'male_employees' => $male_employees,
                 'female_employees' => $female_employees,
@@ -173,7 +176,7 @@ class HomeController extends Controller{
                 'all_jo_employees' => $all_jo_employees,
                 'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('m')),
                 'step_increments_view' => $this->stepIncrements(Carbon::now()->format('m'),Carbon::now()->format('Y')),
-                'loyaltys' => $loyaltysArr
+                'loyaltys' => $loyaltys,
             ]);
         }
 
