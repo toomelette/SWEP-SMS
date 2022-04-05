@@ -357,7 +357,7 @@ class __html{
 
         if(!empty($obj->creator)){
             $created_by  = $obj->creator->lastname.', '.Helper::acronym($obj->creator->firstname);
-            $created_by_time = date("M. d, Y | h:i A",strtotime($obj->updated_at));
+            $created_by_time = date("M. d, Y | h:i A",strtotime($obj->created_at));
         }else{
             $created_by  = 'N/A';
             $created_by_time = 'N/A';
@@ -375,7 +375,7 @@ class __html{
 				<small class="no-margin">
 					Timestamp: 
 					<b>
-						'.date("M. d, Y | h:i A",strtotime($created_by_time)).'
+						'.$created_by_time.'
 					</b> 
 				</small>
 			</div>

@@ -23,7 +23,7 @@
                 <br>
                 <div class="bs-example">
                     <div class="embed-responsive embed-responsive-16by9" style="height: 1019.938px;">
-                        <iframe id="print_f_frame" class="embed-responsive-item" src="{{route('dashboard.disbursement_voucher.print',[$dv->slug, "front"])}}"></iframe>
+                        <iframe id="print_f_frame" class="embed-responsive-item" src="{{route('dashboard.disbursement_voucher.print',[$dv->slug, "fb"])}}"></iframe>
                     </div>
                 </div>
 

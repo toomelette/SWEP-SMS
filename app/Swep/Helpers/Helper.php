@@ -311,6 +311,18 @@ class Helper
         return false;
     }
 
+    public static function dtrMenuOn(){
+        $setting = SuSettings::query()->where('setting','=','dtr_menu')->first();
+        if(!empty($setting)){
+            if($setting->int_value === 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
+
     public static function departmentsArray(){
         $depts = Department::query()->orderBy('department_id','asc')->get();
         $deptsArr = [];

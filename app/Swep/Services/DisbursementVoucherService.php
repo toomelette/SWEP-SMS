@@ -129,6 +129,8 @@ class DisbursementVoucherService extends BaseService{
 
         if($type == 'front'){
             return view('printables.disbursement_voucher.dv_front')->with('disbursement_voucher', $disbursement_voucher);
+        }elseif($type == 'fb'){
+            return view('printables.disbursement_voucher.dv_front_and_back')->with('disbursement_voucher', $disbursement_voucher);;
         }elseif($type == 'back'){
             return view('printables.disbursement_voucher.dv_back');
         }

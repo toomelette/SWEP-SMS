@@ -6,6 +6,7 @@ namespace App\Swep\ViewComposers;
 
 use App\Models\Menu;
 use App\Models\UserSubmenu;
+use App\Swep\Helpers\Helper;
 use Illuminate\Support\Facades\Auth;
 
 class TreeComposer
@@ -20,10 +21,13 @@ class TreeComposer
         })->get();
 
 
-        $dtr_menus = Menu::query()
-            ->where('slug','=','OjM6liSKVeDpwZQc')
-            ->orWhere('slug','=','ptQX7MfbtJR2EtIf')
+        $dtr_menus = Menu::query();
+        if(Helper::dtrMenuOn() == true){
+            $dtr_menus = $dtr_menus->where('slug','=','OjM6liSKVeDpwZQc');
+        }
+        $dtr_menus = $dtr_menus->orWhere('slug','=','ptQX7MfbtJR2EtIf')
             ->get();
+
         foreach ($dtr_menus as $dtr_menu){
             $tree[$dtr_menu->category][$dtr_menu->menu_id]['menu_obj'] = $dtr_menu;
             foreach (
