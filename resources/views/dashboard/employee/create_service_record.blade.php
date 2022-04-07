@@ -94,7 +94,7 @@
 <script type="text/javascript">
     $("#create_sr_form_{{$rand}}").submit(function (e) {
         e.preventDefault();
-        uri = '{{route("dashboard.employee.service_record_store","slug")}}';
+        uri = '{{route(\Illuminate\Support\Facades\Request::route()->getName().'_store',"slug")}}';
         uri = uri.replace('slug','{{$employee->slug}}');
         var form = $(this);
         loading_btn(form);

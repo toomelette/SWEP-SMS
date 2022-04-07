@@ -42,6 +42,8 @@ class __form2
                 $value = Carbon::now()->format('Y');
             }
         }
+        $r_o = '';
+        $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
         $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
         $opt_html = '';
         if(isset($options['options'])){
@@ -71,7 +73,7 @@ class __form2
 
         return '<div class="form-group col-md-'.$n->cols .' '.$name.'">
                   <label for="'. $name .'">'. $n->label .'</label>
-                  <select name="'. $name .'" '. $id .' class="form-control" '. $n->extra_attr .'>
+                  <select name="'. $name .'" '. $id .' class="form-control" '. $n->extra_attr .' '.$r_o.'>
                     <option value="">Select</option>
                     '.$opt_html.'
                   </select>

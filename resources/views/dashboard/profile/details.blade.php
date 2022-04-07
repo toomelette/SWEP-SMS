@@ -1,674 +1,563 @@
-<?php
-
-//  $gtChildren = count(optional(Auth::user()->employee)->employeeChildren) > 11;
-//  $gtEligibility = count(optional(Auth::user()->employee)->employeeEligibility) > 10;
-//  $gtExperience = count(optional(Auth::user()->employee)->employeeExperience) > 25;
-//  $gtVoluntaryWork = count(optional(Auth::user()->employee)->employeeVoluntaryWork) > 7;
-//  $gtTraining = count(optional(Auth::user()->employee)->employeeTraining) > 20;
-//  $gtSpecialSkill = count(optional(Auth::user()->employee)->employeeSpecialSkill) > 7;
-//  $gtRecognition = count(optional(Auth::user()->employee)->employeeRecognition) > 7;
-//  $gtOrganization = count(optional(Auth::user()->employee)->employeeOrganization) > 7;
-
-$gtChildren = 0;
-$gtEligibility = 0;
-$gtExperience = 0;
-$gtVoluntaryWork = 0;
-$gtTraining = 0;
-$gtSpecialSkill = 0;
-$gtRecognition = 0;
-$gtOrganization = 0;
-
-?>
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
+    <style>
+        .pad5{
+            padding: 5px;
+        }
 
-<section class="content-header">
-    <h1>Profile</h1>
-</section>
+        .pad5 span{
+            font-weight: bold;
+        }
+    </style>
 
-<section class="content">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box box-widget widget-user">
 
-  <div class="row">
-
-    <div class="col-md-3">
-
-      <div class="box box-default">
-        <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="{{asset('images/avatar.jpeg')}}" alt="User profile picture">
-
-          <h3 class="profile-username text-center">{{ Auth::check() ? Auth::user()->fullname : '' }}</h3>
-
-          <p class="text-muted text-center">{{ Auth::check() ? Auth::user()->position : '' }}</p>
-
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="col-md-9">
-
-      <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">User Details</h3>
-        </div>
-
-        <div class="box-body">
-
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#ui" data-toggle="tab">User Info</a></li>
-               <li><a href="#pi" data-toggle="tab">Personal Info</a></li>
-            </ul>
-
-            <div class="tab-content">
-
-
-
-              {{-- User Info --}}
-              <div class="tab-pane active" id="ui">
-                <h4>User Info</h4>
-                <hr>
-
-                <strong><i class="fa fa-user margin-r-5"></i> Firstname</strong>
-                <p class="text-muted">{{ Auth::user()->firstname }}</p>
-
-                <strong><i class="fa fa-user margin-r-5"></i> Middlename</strong>
-                <p class="text-muted">{{ Auth::user()->middlename }}</p>
-
-                <strong><i class="fa fa-user margin-r-5"></i> Lastname</strong>
-                <p class="text-muted">{{ Auth::user()->lastname }}</p>
-
-                <strong><i class="fa fa-male margin-r-5"></i> Position</strong>
-                <p class="text-muted">{{ Auth::user()->position }}</p>
-
-                <strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
-                <p class="text-muted">{{ Auth::user()->email }}</p>
-
-                <hr>
-
-                {{-- Account Settings --}}
-
-                <h4>Account Settings</h4>
-                <hr>
-
-                {!! __html::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'You will be logout from the system after you save changes.') !!}   
-
-
-                {{-- USERNAME SETTINGS --}}
-
-                <div class="panel box box-default">
-                  <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#username_bar">
-                    <h4 class="box-title">
-                      <span>
-                        Username
-                      </span>
-                    </h4>
-                  </div>
-                  <div id="username_bar" class="panel-collapse collapse {{ $errors->has('username') ? 'in' : '' }}">
-                    <div class="box-body">
-
-                      <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_username', Auth::user()->slug) }}">
-
-                        @csrf
-
-                        <input name="_method" value="PATCH" type="hidden">
-
-                        {!! __form::textbox_inline(
-                            'username', 'text', 'Username', 'Username', old('username') ? old('username') : Auth::user()->username, $errors->has('username') || Session::has('PROFILE_USERNAME_EXIST'), $errors->first('username'), ''
-                        ) !!}
-
-                        <div class="form-group">
-                          <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Save Changes</button>
-                          </div>
-                        </div>
-
-                      </form>
-
+                    <div class="widget-user-header bg-aqua-active">
+                        <h3 class="widget-user-username">
+                            {{(!empty($user->employee) ? $user->employee->lastname : $user->lastname)}},
+                            {{(!empty($user->employee) ? $user->employee->firstname : $user->firstname)}}
+                        </h3>
+                        <h5 class="widget-user-desc">
+                            {{(!empty($user->employee) ? $user->employee->position : $user->position)}}
+                        </h5>
                     </div>
-                  </div>
-                </div>
-
-
-                {{-- PASSWORD SETTINGS --}}
-
-                <div class="panel box box-default">
-                  <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#password_bar">
-                    <h4 class="box-title">
-                      <span>
-                        Password
-                      </span>
-                    </h4>
-                  </div>
-                  <div id="password_bar" class="panel-collapse collapse {{ Session::has('PROFILE_OLD_PASSWORD_FAIL') || $errors->has('password') ? 'in' : '' }}">
-                    <div class="box-body">
-
-                      @if(Session::has('PROFILE_OLD_PASSWORD_FAIL'))
-                        {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Alert!', Session::get('PROFILE_OLD_PASSWORD_FAIL')) !!}
-                      @endif
-
-                      <form class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_password', Auth::user()->slug) }}">
-
-                        @csrf
-
-                        <input name="_method" value="PATCH" type="hidden">
-
-                        {!! __form::password_inline(
-                            'old_password', 'Old Password', 'Old Password', $errors->has('old_password') || Session::has('PROFILE_OLD_PASSWORD_FAIL'), $errors->first('old_password'), ''
-                        ) !!}
-
-                        {!! __form::password_inline(
-                            'password', 'New Password', 'New Password', $errors->has('password'), $errors->first('password'), ''
-                        ) !!}
-
-                        {!! __form::password_inline(
-                            'password_confirmation', 'Confirm New Password', 'Confirm New Password', '', '', ''
-                        ) !!}
-
-                        <div class="form-group">
-                          <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Save Changes</button>
-                          </div>
-                        </div>
-                      
-                      </form>
-
+                    <div class="widget-user-image">
+                        <img class="img-circle" src="{{asset('images/avatar.jpeg')}}" alt="User Avatar">
                     </div>
-                  </div>
-                </div>
-
-
-                {{-- COLOR SETTINGS --}}
-
-                <div class="panel box box-default">
-                  <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#color_scheme_bar">
-                    <h4 class="box-title">
-                      <span>
-                        Color Scheme
-                      </span>
-                    </h4>
-                  </div>
-                  <div id="color_scheme_bar" class="panel-collapse collapse {{ $errors->has('color') ? 'in' : '' }}">
-                    <div class="box-body">
-
-                      <form id="profile_update_account_color" method="POST" autocomplete="off" action="{{ route('dashboard.profile.update_account_color', Auth::user()->slug) }}">
-
-                        @csrf
-
-                        <input name="_method" value="PATCH" type="hidden">
-
-                        {!! __form::select_static(
-                          '4', 'color', 'Color Scheme', old('color') ? old('color') : Auth::user()->color, __static::user_colors(), $errors->has('color'), $errors->first('color'), '', ''
-                        ) !!}
-
-                        <div class="form-group">
-                          <div style="margin-top:24px;" class="col-sm-8">
-                            <button type="submit" class="btn btn-default">Save Changes</button>
-                          </div>
-                        </div>
-
-                      </form>
-
-                    </div>
-                  </div>
-                </div>
-
-
-                {{-- Activity --}}
-                <hr>
-                <h4>Activity</h4>
-                <hr>
-
-                <strong><i class="fa fa-clock-o "></i> Last Login Time</strong>
-                <p class="text-muted">{{ __dataType::date_parse(Auth::user()->last_login_time, 'M d, Y h:i A') }}</p>
-            
-                <strong><i class="fa  fa-desktop margin-r-5"></i> Last Login Machine</strong>
-                <p class="text-muted">{{ Auth::user()->last_login_machine }}</p>
-               
-
-                <strong><i class="fa  fa-asterisk margin-r-5"></i> Last Login Local IP</strong>
-                <p class="text-muted">{{ Auth::user()->last_login_ip }}</p>
-              </div>
-
-
-
-
-
-
-              <div class="tab-pane" id="pi">
-                <div class="row">
-
-                  @if(empty(Auth::user()->employee))
-                    <div class="col-md-12" style="padding:20px; text-align:center;">  
-                      <span style="font-size:20px; color:red;" >You are not Syncronize to any employee!</span>
-                    </div>
-
-                  @else
-                    
-
-
-                    {{-- Print PDS --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#pds_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Print your Personal Data Sheet
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="pds_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            {!! __html::alert('warning', '<i class="icon fa fa-info"></i> Note!', 'Before you print your PDS, please be reminded to set the <b>LAYOUT</b> to <b>PORTRAIT</b>, <b>PAPER SIZE</b> to <b>LEGAL</b>, and <b>SCALE</b> to <b>100%</b>.') !!} 
-
-                            <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p1' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 1</a>&nbsp;
-                            <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p2' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 2</a>&nbsp;
-                            <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p3' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 3</a>&nbsp;
-                            <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p4' ]) }}" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i> Print Page 4</a>&nbsp;
-
-                            @if($gtChildren || $gtEligibility || $gtExperience || $gtVoluntaryWork || $gtTraining || $gtSpecialSkill || $gtRecognition || $gtOrganization)
-                              <a href="{{ route('dashboard.profile.print_pds', [ optional(Auth::user()->employee)->slug, 'p5' ]) }}" target="_blank" class="btn btn-sm btn-default">
-                                <i class="fa fa-print"></i> Print PDS Extra Page
-                              </a>&nbsp;
-                            @endif
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-
-                    {{-- Personal Info --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#pi_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Personal Info
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="pi_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            <dl class="dl-horizontal">
-                              <dt>Fullname:</dt>
-                              <dd>{{ Auth::user()->employee->fullname }}</dd>
-                              <dt>Date of Birth:</dt>
-                              <dd>{{ __dataType::date_parse(Auth::user()->employee->date_of_birth, 'M d, Y') }}</dd>
-                              <dt>Place of Birth:</dt>
-                              <dd>{{ Auth::user()->employee->place_of_birth }}</dd>
-                              <dt>Sex:</dt>
-                              <dd>{{ Auth::user()->employee->sex }}</dd>
-                              <dt>Civil Status:</dt>
-                              <dd>{{ Auth::user()->employee->civil_status }}</dd>
-                              <dt>Height:</dt>
-                              <dd>{{ Auth::user()->employee->height }}</dd>
-                              <dt>Weight:</dt>
-                              <dd>{{ Auth::user()->employee->weight }}</dd>
-                              <dt>Blood Type:</dt>
-                              <dd>{{ Auth::user()->employee->blood_type }}</dd>
-                              <dt>Tel No:</dt>
-                              <dd>{{ Auth::user()->employee->tel_no }}</dd>
-                              <dt>Cell No:</dt>
-                              <dd>{{ Auth::user()->employee->cell_no }}</dd>
-                              <dt>Email Address:</dt>
-                              <dd>{{ Auth::user()->employee->email }}</dd>
-                              <dt>Citizenship:</dt>
-                              <dd>{{ Auth::user()->employee->citizenship }}</dd>
-                              <dt>Residential Address:</dt>
-                              <dd>{{ optional(Auth::user()->employee->employeeAddress)->fullResAddress }}</dd>
-                              <dt>Permanent Address:</dt>
-                              <dd>{{  optional(Auth::user()->employee->employeeAddress)->fullPermAddress }}</dd>
-                            </dl>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                    {{-- Appointment Details --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#ad_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Appointment Details
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="ad_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            <dl class="dl-horizontal">
-                              <dt>Employee No:</dt>
-                              <dd>{{ Auth::user()->employee->employee_no }}</dd>
-                              <dt>Status:</dt>
-                              <dd>{{ Auth::user()->employee->is_active }}</dd>
-                              <dt>Position:</dt>
-                              <dd>{{ Auth::user()->employee->position }}</dd>
-                              <dt>Salary Grade:</dt>
-                              <dd>{{ Auth::user()->employee->salary_grade }}</dd>
-                              <dt>Appointment Status:</dt>
-                              <dd>{{ Auth::user()->employee->appointment_status }}</dd>
-                              <dt>Monthly Basic:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->monthly_basic, 2) }}</dd>
-                              <dt>ACA:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->aca, 2) }}</dd>
-                              <dt>PERA:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->pera, 2) }}</dd>
-                              <dt>Food Subsidy:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->food_subsidy, 2) }}</dd>
-                              <dt>RA:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->ra, 2) }}</dd>
-                              <dt>TA:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->ta, 2) }}</dd>
-                              <dt>Government Service:</dt>
-                              <dd>{{ __dataType::date_parse(Auth::user()->employee->firstday_gov, 'M d, Y') }}</dd>
-                              <dt>First Day:</dt>
-                              <dd>{{ __dataType::date_parse(Auth::user()->employee->firstday_sra, 'M d, Y') }}</dd>
-                              <dt>Appointment Date:</dt>
-                              <dd>{{ __dataType::date_parse(Auth::user()->employee->appointment_date, 'M d, Y') }}</dd>
-                              <dt>Adjustment Date:</dt>
-                              <dd>{{ __dataType::date_parse(Auth::user()->employee->adjustment_date, 'M d, Y') }}</dd>
-                            </dl>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                    {{-- Personal ID's --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#pid_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Personal ID's
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="pid_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            <dl class="dl-horizontal">
-                              <dt>GSIS:</dt>
-                              <dd>{{ Auth::user()->employee->gsis }}</dd>
-                              <dt>SSS:</dt>
-                              <dd>{{ Auth::user()->employee->sss }}</dd>
-                              <dt>PHILHEALTH:</dt>
-                              <dd>{{ Auth::user()->employee->philhealth }}</dd>
-                              <dt>TIN:</dt>
-                              <dd>{{ Auth::user()->employee->tin }}</dd>
-                              <dt>HDMF:</dt>
-                              <dd>{{ Auth::user()->employee->hdmf }}</dd>
-                              <dt>GSIS:</dt>
-                              <dd>{{ Auth::user()->employee->gsis }}</dd>
-                              <dt>HDMF Premium:</dt>
-                              <dd>{{ number_format(Auth::user()->employee->hdmfpremiums, 2) }}</dd>
-                            </dl>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                    {{-- Family Info --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#fi_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Family Info
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="fi_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            <dl class="dl-horizontal">
-                              <dt>Fathers Name</dt>
-                              <dd>{{ optional(Auth::user()->employee->employeeFamilyDetail)->father_firstname . " " . substr(optional(Auth::user()->employee->employeeFamilyDetail)->father_middlename , 0, 1) . ". " . optional(Auth::user()->employee->employeeFamilyDetail)->father_lastname }}</dd>
-                              <dt>Mothers Name:</dt>
-                              <dd>{{ optional(Auth::user()->employee->employeeFamilyDetail)->mother_firstname . " " . substr(optional(Auth::user()->employee->employeeFamilyDetail)->mother_middlename , 0, 1) . ". " . optional(Auth::user()->employee->employeeFamilyDetail)->mother_lastname }}</dd>
-                              <dt>Spouse Name:</dt>
-                              <dd>{{ optional(Auth::user()->employee->employeeFamilyDetail)->spouse_firstname . " " . substr(optional(Auth::user()->employee->employeeFamilyDetail)->spouse_middlename , 0, 1) . ". " . optional(Auth::user()->employee->employeeFamilyDetail)->spouse_lastname }}</dd>
-                            </dl>
-                            <span style="font-size:17px;">Children:</span>
-                            <div class="box-body" style="overflow-x:auto;">
-
-                              <table class="table table-bordered">
-
-                                <tr>
-                                  <th>Name</th>
-                                  <th>Date of Birth</th>
-                                </tr>
-                                @foreach(Auth::user()->employee->employeeChildren as $data)
-                                  <tr>
-                                    <td>{{ $data->fullname }}</td>
-                                    <td>{{ __dataType::date_parse($data->date_of_birth, 'M d, Y') }}</td>
-                                  </tr>
-                                @endforeach
-
-                              </table>
-
-                              @if(Auth::user()->employee->employeeChildren->isEmpty())
-                                <div style="padding :5px;">
-                                  <center><h4>No Records found!</h4></center>
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{$user->username}}</h5>
+                                    <span class="description-text">USERNAME</span>
                                 </div>
-                              @endif
+
+                            </div>
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{$user->employee_no}}</h5>
+                                    <span class="description-text">EMPLOYEE NO</span>
+                                </div>
 
                             </div>
 
-                          </div>
+                            <div class="col-sm-4">
+                                <div class="description-block">
+                                    <h5 class="description-header">{{(!empty($user->employee) ? $user->employee->biometric_user_id : '')}}</h5>
+                                    <span class="description-text">BIOMETRIC USER ID</span>
+                                </div>
+
+                            </div>
+
                         </div>
-                      </div>
-                    </div>
+                        <ul class="nav nav-stacked">
+                            <li class="bg-orange pad5">
+                                    <center>Account details</center>
+                            </li>
+                            <li class="pad5">First name <span class="pull-right">{{(!empty($user->employee) ? $user->employee->firstname : $user->firstname)}}</span></li>
+                            <li class="pad5">Middle name <span class="pull-right">{{(!empty($user->employee) ? $user->employee->middlename : $user->middlename)}}</span></li>
+                            <li class="pad5">Last name <span class="pull-right">{{(!empty($user->employee) ? $user->employee->lastname : $user->lastname)}}</span></li>
+                            <li class="pad5">Birthday <span class="pull-right">{{(!empty($user->employee) ? Carbon::parse($user->employee->date_of_birth)->format('F d, Y') :'N/A')}}</span></li>
+                            <li class="pad5">Age <span class="pull-right">{{(!empty($user->employee) ? Carbon::parse($user->employee->date_of_birth)->age :'N/A')}} years old</span></li>
+                            <li class="pad5">Sex <span class="pull-right">{{(!empty($user->employee) ? $user->employee->sex:'N/A')}}</span></li>
+                            <li class="pad5">Email address <span class="pull-right">{{(!empty($user->employee) ? $user->employee->email:'N/A')}}</span></li>
 
-
-
-
-                    {{-- Educ Background --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#eb_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Educational Background
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="eb_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            <table class="table table-bordered">
-                              <tr>
-                                <th>Level</th>
-                                <th>Name of School</th>
-                                <th>Course</th>
-                                <th>Graduate Year</th>
-                              </tr>
-                              @foreach(Auth::user()->employee->employeeEducationalBackground as $data) 
-                                <tr>
-                                  <td>{{ $data->level }}</td>
-                                  <td>{{ $data->school_name }}</td>
-                                  <td>{{ $data->course }}</td>
-                                  <td>{{ $data->graduate_year }}</td>
-                                </tr>
-                              @endforeach
-                            </table>
-
-                            @if(Auth::user()->employee->employeeEducationalBackground->isEmpty())
-                              <div style="padding :5px;">
-                                <center><h4>No Records found!</h4></center>
-                              </div>
-                            @endif
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-
-                    {{-- Trainings --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#trng_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Trainings
-                            </span>
-                          </h4>
-                        </div>
-                        <div id="trng_bar" class="panel-collapse collapse">
-                          <div class="box-body">
-
-                            <table class="table table-bordered">
-                              <tr>
-                                <th>Topics</th>
-                                <th>Conducted by</th>
-                                <th>Date</th>
-                                <th>Venue</th>
-                              </tr>
-                              @foreach(Auth::user()->employee->employeeTraining as $data) 
-                                <tr>
-                                  <td>{{ $data->title }}</td>
-                                  <td>{{ $data->conducted_by }}</td>
-                                  <td>
-                                    @if(__dataType::date_parse($data->date_from, 'M') == __dataType::date_parse($data->date_to, 'M'))
-                                      
-                                      {{ __dataType::date_parse($data->date_from, 'M d') .' - '. __dataType::date_parse($data->date_to, 'd, Y') }}  
-
-                                    @else
-
-                                      {{ __dataType::date_parse($data->date_from, 'M d, Y') .' - '. __dataType::date_parse($data->date_to, 'M d, Y') }}
-
+                            <li class="bg-green" style="padding: 5px">
+                                <center>Employement Details</center>
+                                <li class="pad5">Location <span class="pull-right">{{(!empty($user->employee) ? $user->employee->locations : $user->locations)}}</span></li>
+                                @if(!empty($user->employee))
+                                    @if($user->employee->locations != 'RETIREE' && $user->employee->locations != 'COS')
+                                        <li class="pad5">Position <span class="pull-right">{{$user->employee->position}}</span></li>
+                                        <li class="pad5">Job Grade <span class="pull-right">{{$user->employee->salary_grade}}</span></li>
+                                        <li class="pad5">Step <span class="pull-right">{{$user->employee->step_inc}}</span></li>
+                                        <li class="pad5">Monthly basic <span class="pull-right">{{number_format($user->employee->monthly_basic,2)}}</span></li>
+                                        @if($user->employee->ra != 0.00)
+                                            <li class="pad5">Representation Allowance <span class="pull-right">{{number_format($user->employee->ra,2)}}</span></li>
+                                        @endif
+                                        @if($user->employee->ta != 0.00)
+                                            <li class="pad5">Transportation Allowance <span class="pull-right">{{number_format($user->employee->ta,2)}}</span></li>
+                                        @endif
+                                        <li class="pad5">First day in Government <span class="pull-right">{{Carbon::parse($user->employee->firstday_gov)->format('F d, Y')}}</span></li>
+                                        <li class="pad5">First day in SRA <span class="pull-right">{{Carbon::parse($user->employee->firstday_sra)->format('F d, Y')}}</span></li>
+                                        <li class="pad5">Date of last promotion <span class="pull-right">{{Carbon::parse($user->employee->adjustment_date)->format('F d, Y')}}</span></li>
                                     @endif
-                                  </td>
-                                  <td>{{ $data->venue }}</td>
-                                </tr>
-                              @endforeach
-                            </table>
+                                    @if($user->employee->locations == 'COS')
+                                        <li class="pad5">Position <span class="pull-right">{{$user->employee->position}}</span></li>
+                                        <li class="pad5">Monthly basic <span class="pull-right">{{number_format($user->employee->monthly_basic,2)}}</span></li>
+                                        @endif
+                                @endif
+                            </li>
 
-                            @if(Auth::user()->employee->employeeTraining->isEmpty())
-                              <div style="padding :5px;">
-                                <center><h4>No Records found!</h4></center>
-                              </div>
-                            @endif
+                            <li class="bg-blue pad5">
+                                <center>Activity</center>
+                            </li>
+                            <li class="pad5">Last activity on <span class="pull-right">{{$user->last_activity_machine}}</span></li>
+                            <li class="pad5">Last login IP <span class="pull-right">{{$user->last_login_ip}}</span></li>
+                        </ul>
 
-                          </div>
-                        </div>
-                      </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        @if(!empty(\Illuminate\Support\Facades\Auth::user()->employee))
+                            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Family Information</a></li>
+                            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Service Records</a></li>
+                            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Trainings/Seminars</a></li>
+                        @endif
+                    </ul>
+                    <div class="tab-content">
+                        @if(!empty(\Illuminate\Support\Facades\Auth::user()->employee))
+                            <div class="tab-pane active" id="tab_1">
+
+                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
+                                    Father's Information
+                                    <span class="pull-right">
+                                    <button class="btn btn-xs btn-success" id="enable_family_btn">Enable editing</button>
+                                </span>
+                                </p>
+                                <form id="family_form">
+                                    <fieldset id="family_fieldset">
+
+                                        @php($family_detail = \Illuminate\Support\Facades\Auth::user()->employee->employeeFamilyDetail)
+                                        <div class="row">
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('father_firstname',[
+                                                'cols' => 3,
+                                                'label' => "Father's First name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('father_middlename',[
+                                                'cols' => 3,
+                                                'label' => "Father's Middle name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('father_lastname',[
+                                                'cols' => 3,
+                                                'label' => "Father's Last name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::select('father_name_ext',[
+                                                'cols' => 3,
+                                                'label' => "Father's name extension:",
+                                                'options' => \App\Swep\Helpers\Helper::name_extensions(),
+                                            ],
+                                            $family_detail) !!}
+                                        </div>
+                                        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                            Mother's Information
+                                        </p>
+                                        <div class="row">
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('mother_firstname',[
+                                                'cols' => 3,
+                                                'label' => "Mother's First name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('mother_middlename',[
+                                                'cols' => 3,
+                                                'label' => "Mother's Middle name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('mother_lastname',[
+                                                'cols' => 3,
+                                                'label' => "Mother's Last name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::select('mother_name_ext',[
+                                                'cols' => 3,
+                                                'label' => "Mother's name extension:",
+                                                'options' => \App\Swep\Helpers\Helper::name_extensions(),
+                                            ],
+                                            $family_detail) !!}
+                                        </div>
+
+                                        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                            Spouse's Information
+                                        </p>
+
+                                        <div class="row">
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_firstname',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's First name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_middlename',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Middle name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_lastname',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Last name:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::select('spouse_name_ext',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's name extension:",
+                                                'options' => \App\Swep\Helpers\Helper::name_extensions(),
+                                            ],
+                                            $family_detail) !!}
+                                        </div>
+                                        <div class="row">
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_birthdate',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Birthday:",
+                                                'type' => 'date',
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_occupation',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Occupation:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_employer',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Employer:",
+                                            ],
+                                            $family_detail) !!}
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_business_address',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Business Address:",
+                                            ],
+                                            $family_detail) !!}
+                                        </div>
+                                        <div class="row">
+                                            {!! \App\Swep\ViewHelpers\__form2::textbox('spouse_tel_no',[
+                                                'cols' => 3,
+                                                'label' => "Spouse's Phone Number:",
+                                            ],
+                                            $family_detail) !!}
+                                        </div>
+
+                                        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                            Children Information
+                                        </p>
+                                        <button id="add_child_btn" class="btn btn-xs btn-info pull-right" style="margin-bottom: 5px"><i class="fa fa-plus"></i> Add child</button>
+                                        @php($children = \Illuminate\Support\Facades\Auth::user()->employee->employeeChildren)
+                                        @if(!empty($children))
+                                            @if($children->count() > 0)
+                                                <table id="children_table" style="width: 100%" class="table table-bordered">
+                                                    @foreach($children as $child)
+                                                        <tr>
+                                                            <td>
+                                                                <div class="row">
+                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox('fullname[]',[
+                                                                        'cols' => 3,
+                                                                        'label' => "Fullname:",
+                                                                    ],
+                                                                    $child->fullname) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_birth[]',[
+                                                                        'cols' => 3,
+                                                                        'label' => "Birthday:",
+                                                                        'type' => 'date',
+                                                                    ],
+                                                                    Carbon::parse($child->date_of_birth)->format('Y-m-d')) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox('school_company[]',[
+                                                                        'cols' => 3,
+                                                                        'label' => "School/Company:",
+                                                                    ],
+                                                                    $child->school_company) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::select('civil_status[]',[
+                                                                        'cols' => 3,
+                                                                        'label' => "Civil Status:",
+                                                                        'options' => \App\Swep\Helpers\Helper::civil_status(),
+                                                                    ],
+                                                                    $child->civil_status) !!}
+                                                                </div>
+                                                            </td>
+                                                            <td style="width: 50px; vertical-align: middle">
+                                                                <button class="btn btn-danger btn-sm remove_child_btn"><i class="fa fa-times"></i> </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </table>
+                                            @endif
+                                        @endif
+
+                                        <div class="row" id="save_family_btn_container" style="display: none">
+                                            <div class="col-md-12">
+                                                <button class="btn btn-sm btn-primary pull-right"><i class="fa fa-check"></i> Save</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="tab_2">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button data-toggle="modal" data-target="#add_sr_modal" id="add_sr_btn" class="btn btn-primary btn-sm pull-right" style="margin-bottom: 10px"><i class="fa fa-plus"></i> Add Service Record</button>
+                                    </div>
+                                </div>
+                                <div id="service_records_table_container" style="display: none">
+                                    <table class="table table-bordered table-striped table-hover" id="service_records_table" style="width: 100% !important">
+                                        <thead>
+                                        <tr class="">
+                                            <th >Seq #</th>
+                                            <th>Date From</th>
+                                            <th>Date To</th>
+                                            <th>Position</th>
+                                            <th>Appt. Status</th>
+                                            <th>Salary</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="tbl_loader_2">
+                                    <center>
+                                        <img style="width: 100px" src="{{asset('images/loader.gif')}}">
+                                    </center>
+                                </div>
+                            </div>
+                        @endif
 
 
 
-
-
-                    {{-- Eligibilities --}}
-                    <div class="col-md-12">
-                      <div class="panel box box-default">
-                        <div class="box-header with-border" data-toggle="collapse" data-parent="#accordion" href="#elig_bar">
-                          <h4 class="box-title">
-                            <span>
-                              Eligibilities
-                            </span>
-                          </h4>
+                        <div class="tab-pane" id="tab_3">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also the leap into electronic typesetting,
+                            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                            sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                            like Aldus PageMaker including versions of Lorem Ipsum.
                         </div>
-                        <div id="elig_bar" class="panel-collapse collapse">
-                          <div class="box-body">
 
-                            <table class="table table-bordered">
-                              <tr>
-                                <th>Eligibility</th>
-                                <th>Level</th>
-                                <th>Rating</th>
-                              </tr>
-                              @foreach(Auth::user()->employee->employeeEligibility as $data)
-                                <tr>
-                                  <td>{{ $data->eligibility }}</td>
-                                  <td>{{ $data->level }}</td>
-                                  <td>{{ $data->rating }}</td>
-                                </tr>
-                              @endforeach
-                            </table>
-
-                            @if(Auth::user()->employee->employeeEligibility->isEmpty())
-                              <div style="padding :5px;">
-                                <center><h4>No Records found!</h4></center>
-                              </div>
-                            @endif
-
-                          </div>
-                        </div>
-                      </div>
                     </div>
-
-
-
-                  @endif
-
-
 
                 </div>
-              </div>
-
-
-
-
-
             </div>
-          </div>
         </div>
-      </div>
+    </section>
 
-    </div>
-
-  </div>
-
-</section>
+<div id="temp_child" style="display: none">
+    <table>
+        <tr>
+            <td>
+                <div class="row">
+                    {!! \App\Swep\ViewHelpers\__form2::textbox("fullname[]",[
+                        "cols" => 3,
+                        "label" => "Fullname:",
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox("date_of_birth[]",[
+                        "cols" => 3,
+                        "label" => "Birthday:",
+                        "type" => "date",
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox("school_company[]",[
+                        "cols" => 3,
+                        "label" => "School/Company:",
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::select("civil_status[]",[
+                        "cols" => 3,
+                        "label" => "Civil Status:",
+                        "options" => \App\Swep\Helpers\Helper::civil_status(),
+                    ]) !!}
+                </div>
+            </td>
+            <td style="width: 50px; vertical-align: middle">
+                <button class="btn btn-danger btn-sm remove_child_btn"><i class="fa fa-times"></i> </button>
+            </td>
+        </tr>
+    </table>
+</div>
 
 @endsection
 
 
-
-
-
+@section('modals')
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('add_sr_modal','') !!}
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_sr_modal','') !!}
+@endsection
 
 @section('scripts')
+    <script type="text/javascript">
+        function dt_draw() {
+            users_table.draw(false);
+        }
 
-  <script type="text/javascript">
-    
-    {!! __js::show_password('old_password', 'show_old_password') !!}
-    {!! __js::show_password('password', 'show_password') !!}
-    {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
+        function filter_dt() {
+            is_online = $(".filter_status").val();
+            is_active = $(".filter_account").val();
+            users_table.ajax.url("{{ route('dashboard.user.index') }}" + "?is_online=" + is_online + "&is_active=" + is_active).load();
 
-    {{-- PROFILE ACCOUNT COLOR SUCCESS --}}
-    @if(Session::has('PROFILE_UPDATE_COLOR_SUCCESS'))
-      {!! __js::toast(Session::get('PROFILE_UPDATE_COLOR_SUCCESS')) !!}
-    @endif
+            $(".filters").each(function (index, el) {
+                if ($(this).val() != '') {
+                    $(this).parent("div").addClass('has-success');
+                    $(this).siblings('label').addClass('text-green');
+                } else {
+                    $(this).parent("div").removeClass('has-success');
+                    $(this).siblings('label').removeClass('text-green');
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $("#enable_family_btn").click(function () {
+            let attr = $("#family_fieldset").attr('disabled');
 
-  </script>
-  
+            if (typeof attr !== typeof undefined && attr !== false) {
+                $("#family_fieldset").removeAttr('disabled');
+                $(this).html('Cancel');
+                $("#save_family_btn_container").slideDown();
+            }else{
+                $("#family_fieldset").attr('disabled','disabled');
+                $(this).html('Enable editing');
+                $("#save_family_btn_container").slideUp();
+            }
+        })
+
+        $("#family_form").submit(function (e) {
+           e.preventDefault();
+           let form = $(this);
+           $.ajax({
+               url : '{{route("dashboard.profile.save_family_info")}}',
+               data : form.serialize(),
+               type: 'POST',
+               headers: {
+                   {!! __html::token_header() !!}
+               },
+               success: function (res) {
+                  if(res == 1){
+                      notify('Family information were saved successfully.','info')
+                      $("#enable_family_btn").trigger('click');
+                  }
+               },
+               error: function (res) {
+                   errored(form,res);
+               }
+           })
+        });
+        
+        $("body").on("click",".remove_child_btn",function () {
+            $(this).parents('tr').remove();
+        })
+        $("#add_child_btn").click(function () {
+
+            let new_child_tr = $("#temp_child tbody").html();
+            console.log(new_child_tr);
+            $("#children_table tbody").append(new_child_tr);
+        })
+
+
+        modal_loader = $("#modal_loader").parent('div').html();
+        //Initialize DataTable
+        sr_active = '';
+        uri = "{{route('dashboard.profile.service_record','slug')}}";
+        uri = uri.replace('slug','{{\Illuminate\Support\Facades\Auth::user()->employee->slug}}');
+        service_records_tbl = $("#service_records_table").DataTable({
+            'dom' : 'lBfrtip',
+            "processing": true,
+            "serverSide": true,
+            "ajax" : uri,
+            "columns": [
+                { "data": "sequence_no" },
+                { "data": "from_date" },
+                { "data": "to_date" },
+                { "data": "position" },
+                { "data": "appointment_status" },
+                { "data": "salary" },
+                { "data": "action" }
+            ],
+            "buttons": [
+                {!! __js::dt_buttons() !!}
+            ],
+            "columnDefs":[
+                {
+                    "targets" : 5,
+                    "class" : 'text-right'
+                },
+                {
+                    "targets" : 6,
+                    "orderable" : false,
+                    "class" : 'action-10p'
+                },
+            ],
+            "order":[[0,'desc']],
+            "responsive": false,
+            "initComplete": function( settings, json ) {
+                $('#tbl_loader_2').fadeOut(function(){
+                    $("#service_records_table_container").fadeIn();
+                    style_datatable("#service_records_table");
+
+                    //Need to press enter to search
+                    $('#service_records_table_filter input').unbind();
+                    $('#service_records_table_filter input').bind('keyup', function (e) {
+                        if (e.keyCode == 13) {
+                            service_records_tbl.search(this.value).draw();
+                        }
+                    });
+                });
+            },
+            "language":
+                {
+                    "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
+                },
+            "drawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="modal"]').tooltip();
+                if(sr_active != ''){
+                    $("#service_records_table #"+sr_active).addClass('success');
+                }
+            }
+        })
+
+
+
+
+        $("#add_sr_btn").click(function () {
+            btn = $(this);
+            load_modal2(btn);
+            uri = "{{route('dashboard.profile.service_record','slug')}}";
+            uri = uri.replace('slug','{{\Illuminate\Support\Facades\Auth::user()->employee->slug}}');
+
+            $.ajax({
+                url : uri,
+                data : {add: 1},
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+
+                },
+                error: function (res) {
+                    notify('Ajax error.','danger');
+                    console.log(res);
+                }
+            })
+        })
+
+        $("body").on('click','.edit_sr_btn',function () {
+            btn = $(this);
+            load_modal2(btn);
+            var uri = "{{route('dashboard.profile.service_record','slug')}}";
+            uri  = uri.replace("slug",btn.attr('data'));
+            $.ajax({
+                url : uri,
+                data : {edit : 1, sr : btn.attr('data')},
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                }
+            })
+        })
+
+
+
+    </script>
 @endsection

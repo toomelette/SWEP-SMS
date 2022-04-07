@@ -97,7 +97,7 @@
         e.preventDefault();
         let form = $(this);
         loading_btn(form);
-        var uri = '{{route("dashboard.employee.service_record_update","slug")}}';
+        var uri = '{{route(\Illuminate\Support\Facades\Request::route()->getName().'_update',"slug")}}';
         uri = uri.replace("slug","{{$sr->slug}}");
         $.ajax({
             url : uri,

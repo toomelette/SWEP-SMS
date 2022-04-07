@@ -204,11 +204,12 @@ class EmployeeController extends Controller{
         if(request()->has('draw')){
             $employee = $this->findEmployeeBySlug($slug);
             $sr = EmployeeServiceRecord::query()->where('employee_no','=',$employee->employee_no);
-            
+
+            $rt = \Illuminate\Support\Facades\Request::route()->getName().'_destroy';
 
             return DataTables::of($sr)
-                ->addColumn('action',function ($data){
-                    $destroy_route = "'".route("dashboard.employee.service_record_destroy","slug")."'";
+                ->addColumn('action',function ($data) use ($rt){
+                    $destroy_route = "'".route($rt,"slug")."'";
                     $slug = "'".$data->slug."'";
 
                     return '<div class="btn-group btn-group-xs" role="toolbar" aria-label="...">

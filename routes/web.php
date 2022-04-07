@@ -39,6 +39,18 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/mis_requests/{slug}/print','MisRequestsController@printRequestForm')->name('mis_requests.print_request_form');
     Route::post('/mis_requests/store_img','MisRequestsController@storeImg')->name('mis_requests.store_img');
     Route::get('/mis_requests_status/index_open','MisRequestsStatusController@indexOpen')->name('mis_requests_status.index_open');
+
+    /** PROFILE **/
+    Route::get('/profile', 'ProfileController@details')->name('profile.details');
+    Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
+    Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
+    Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
+    Route::get('/profile/print_pds/{slug}/{page}', 'ProfileController@printPds')->name('profile.print_pds');
+    Route::post('/profile/save_family_info','ProfileController@saveFamilyInfo')->name('profile.save_family_info');
+    Route::get('/profile/service_record','ProfileController@serviceRecord')->name('profile.service_record');
+    Route::post('/profile/service_record_store','ProfileController@serviceRecordStore')->name('profile.service_record_store');
+    Route::delete('/profile/service_record/destroy/{slug}','ProfileController@serviceRecordDestroy')->name('profile.service_record_destroy');
+    Route::put('/profile/service_record_update/{slug}','ProfileController@serviceRecordUpdate')->name('profile.service_record_update');
 });
 
 /** Dashboard **/
@@ -69,12 +81,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 	Route::resource('disbursement_voucher', 'DisbursementVoucherController');
 
 
-	/** PROFILE **/
-	Route::get('/profile', 'ProfileController@details')->name('profile.details');
-	Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
-	Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
-	Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
-	Route::get('/profile/print_pds/{slug}/{page}', 'ProfileController@printPds')->name('profile.print_pds');
+
 
 
 	/** MENU **/
@@ -890,5 +897,4 @@ Route::get('/get_emp_no',function (){
         }
     }
 });
-
 

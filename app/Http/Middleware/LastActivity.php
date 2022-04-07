@@ -3,6 +3,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Swep\Helpers\Helper;
 use Carbon\Carbon;
 use Closure;
 use Auth;
@@ -23,6 +24,7 @@ class LastActivity
             $user->last_activity = Carbon::now();
             $user->last_login_ip = Request::ip();
             $user->timestamps = false;
+            $user->last_activity_machine = Helper::deviceInfo()->platform .' | '.Helper::deviceInfo()->browser;
             $user->save();
         }
 

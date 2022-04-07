@@ -80,7 +80,7 @@
           "class" : 'action-10p'
         },
       ],
-        "order":[[0,'asc']],
+        "order":[[0,'desc']],
       "responsive": false,
       "initComplete": function( settings, json ) {
         $('#tbl_loader_2').fadeOut(function(){

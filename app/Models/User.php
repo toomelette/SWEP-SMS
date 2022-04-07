@@ -90,7 +90,7 @@ class User extends Authenticatable{
 
 
     public function employee(){
-        return $this->hasOne('App\Models\Employee', 'employee_no', 'employee_no');
+        return $this->hasOne(Employee::class, 'employee_no', 'employee_no');
     }
 
     public function joEmployee(){

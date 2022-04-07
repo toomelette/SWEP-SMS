@@ -88,6 +88,7 @@
 
 @section('modals')
 {!! \App\Swep\ViewHelpers\__html::blank_modal('show_employee_modal','75') !!}
+
 {!! \App\Swep\ViewHelpers\__html::blank_modal('service_records_modal','lg') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('trainings_modal','80') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('matrix_modal','lg') !!}
