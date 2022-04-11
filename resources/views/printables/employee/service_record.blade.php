@@ -46,8 +46,8 @@
   </style>
 
 </head>
-<body onload="window.print();" onafterprint="window.close()">
-
+{{--<body onload="window.print();" onafterprint="window.close()">--}}
+<body>
   <div class="wrapper" style="overflow:hidden !important;">
 
     {{-- HEADER --}}
@@ -381,14 +381,6 @@
     @endif
 
   </div>
-
-
-
-
-
-
-
-
 
 
 

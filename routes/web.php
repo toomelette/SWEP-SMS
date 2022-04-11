@@ -909,7 +909,12 @@ Route::get('/get_emp_no',function (){
     }
 });
 
-Route::get('/test_str', function (){
-
-    return \Illuminate\Support\Str::random();
+Route::get('/sys_remarks', function (){
+    $emps = \App\Models\EmployeeServiceRecord::query()->where('remarks','=','IMPORTED')->get();
+    foreach ($emps as $emp){
+        $emp->system_remarks = 'IMPORTED';
+        $emp->remarks = null;
+        $emp->update();
+    }
+    return 'done';
 });

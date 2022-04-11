@@ -22,13 +22,13 @@
 @extends('layouts.admin-master')
 
 @section('content')
-    
+
   <section class="content-header">
       <h1>Leave Application List</h1>
   </section>
 
   <section class="content">
-    
+
 
     {{-- Form Start --}}
     <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.leave_application.index') }}">
@@ -38,14 +38,14 @@
     {!! __html::filter_open() !!}
 
       <div class="col-md-12">
-          
+
         {!! __form::select_static_for_filter('3', 't', 'Type of Leave', old('t'), __static::leave_types(), 'submit_la_filter', '', '') !!}
 
       </div>
 
 
       <div class="col-md-12 no-padding">
-        
+
         <h5>Date of Filing Filter : </h5>
 
         {!! __form::datepicker('3', 'df',  'From', old('df'), '', '') !!}
@@ -55,22 +55,22 @@
         <button type="submit" class="btn btn-primary" style="margin:25px;">Filter Date <i class="fa fa-fw fa-arrow-circle-right"></i></button>
 
       </div>
-        
+
     {!! __html::filter_close('submit_la_filter') !!}
 
 
 
     <div class="box" id="pjax-container" style="overflow-x:auto;">
 
-      {{-- Table Search --}}        
+      {{-- Table Search --}}
       <div class="box-header with-border">
         {!! __html::table_search(route('dashboard.leave_application.index')) !!}
       </div>
 
-    {{-- Form End --}}  
+    {{-- Form End --}}
     </form>
 
-      {{-- Table Grid --}}        
+      {{-- Table Grid --}}
       <div class="box-body no-padding">
         <table class="table table-hover">
           <tr>
@@ -80,7 +80,7 @@
             <th>@sortablelink('date_of_filing', 'Date of Filing')</th>
             <th style="width: 150px">Action</th>
           </tr>
-          @foreach($leave_applications as $data) 
+          @foreach($leave_applications as $data)
             <tr>
               <td id="mid-vert">{!! empty($data->user) ? $span_user_not_exist : Str::limit($data->user->fullnameShort, 25) !!}</td>
               <td id="mid-vert">{{ $data->firstname .' '. substr($data->middlename , 0, 1) .'. '.  $data->lastname}}</td>
@@ -92,7 +92,7 @@
                 @endforeach
               </td>
               <td id="mid-vert">{{ __dataType::date_parse($data->date_of_filing, 'M d, Y') }}</td>
-              <td id="mid-vert"> 
+              <td id="mid-vert">
                 <select id="action" class="form-control input-md">
                   <option value="">Select</option>
                   <option data-type="1" data-url="{{ route('dashboard.leave_application.show', $data->slug) }}">Print</option>
