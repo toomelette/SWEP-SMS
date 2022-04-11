@@ -909,3 +909,16 @@ Route::get('/get_emp_no',function (){
     }
 });
 
+Route::get('/test_sqlsrv', function (){
+    echo phpinfo();
+    $host ="10.36.1.105";
+    $username ="sa";
+    $password ="noliboy";
+    $database ="GASS";
+
+    mssql_connect($host, $username, $password);
+    mssql_select_db($database);
+
+    return 1;
+   // return DB::connection('sqlsrv')->table('dbo.EmpMaster')->get();
+});

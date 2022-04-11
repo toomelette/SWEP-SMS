@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Activitylog\Traits\HasActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 
@@ -30,7 +29,7 @@ class User extends Authenticatable{
     }
 
 
-    use Notifiable, Sortable, HasActivity;
+    use Notifiable, Sortable, LogsActivity;
 
     protected $dates = ['created_at', 'updated_at'];
 
