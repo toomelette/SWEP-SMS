@@ -3,6 +3,7 @@
 namespace App\Swep\Repositories;
  
 use App\Swep\BaseClasses\BaseRepository;
+use App\Swep\Helpers\Helper;
 use App\Swep\Interfaces\EmployeeServiceRecordInterface;
 use App\Swep\Interfaces\EmployeeInterface;
 
@@ -64,7 +65,7 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->to_date = $request->to_date;
         $employee_sr->position = $request->position;
         $employee_sr->appointment_status = $request->appointment_status;
-        $employee_sr->salary = $this->__dataType->string_to_num($request->salary);
+        $employee_sr->salary = Helper::sanitizeAutonum($request->salary);
         $employee_sr->mode_of_payment = $request->mode_of_payment;
         $employee_sr->station = $request->station;
         $employee_sr->gov_serve = $request->gov_serve;
@@ -103,7 +104,7 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
         $employee_sr->to_date = $request->to_date;
         $employee_sr->position = $request->position;
         $employee_sr->appointment_status = $request->appointment_status;
-        $employee_sr->salary = $this->__dataType->string_to_num($request->salary);
+        $employee_sr->salary = Helper::sanitizeAutonum($request->salary);
         $employee_sr->mode_of_payment = $request->mode_of_payment;
         $employee_sr->station = $request->station;
         $employee_sr->gov_serve = $request->gov_serve;

@@ -132,6 +132,7 @@ class EmployeeTrainingRepository extends BaseRepository implements EmployeeTrain
     public function update($request, $slug){
 
         $employee_trng = $this->findBySlug($slug);
+        $employee_trng->sequence_no = $request->sequence_no;
         $employee_trng->title = $request->title;
         $employee_trng->type = $request->type;
         $employee_trng->date_from = $this->__dataType->date_parse($request->date_from);

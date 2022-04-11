@@ -18,6 +18,14 @@ class __form2
         if(is_object($value)){
             $value = $value->$name;
         }
+        $ext = '';
+        if($n->is_multiple == 1){
+            $ext = '[]';
+        }
+
+        if($n->type == 'date'){
+            $value = ($value != '') ? Carbon::parse($value)->format('Y-m-d') : '';
+        }
 
         $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
         $step = ($n->step != '') ? 'step="'.$n->step.'"' : '';
@@ -25,7 +33,7 @@ class __form2
         $title = ($n->title != '') ? '<i class="fa fa-question-circle" title="'.$n->title.'"></i>' : '';
         return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> '.$title.'
-                <input class="form-control '.$n->class.'" '.$id.' name="'. $name .'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.'>
+                <input class="form-control '.$n->class.'" '.$id.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
               </div>';
     }
 
@@ -36,8 +44,22 @@ class __form2
         if(is_object($value)){
             $value = $value->$name;
         }
+
+        $ext = '';
+        if($n->is_multiple == 1){
+            $ext = '[]';
+        }
+
         if ($options['options'] == 'year'){
-            $options['options'] = self::yearsArray();
+            $past = 8;
+            $future = 10;
+            if(isset($options['past'])){
+                $past = $options['past'];
+            }
+            if(isset($options['future'])){
+                $future = $options['future'];
+            }
+            $options['options'] = self::yearsArray($past, $future);
             if($value == ''){
                 $value = Carbon::now()->format('Y');
             }
@@ -73,7 +95,7 @@ class __form2
 
         return '<div class="form-group col-md-'.$n->cols .' '.$name.'">
                   <label for="'. $name .'">'. $n->label .'</label>
-                  <select name="'. $name .'" '. $id .' class="form-control" '. $n->extra_attr .' '.$r_o.'>
+                  <select name="'. $name .$ext.'" '. $id .' class="form-control" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
                     <option value="">Select</option>
                     '.$opt_html.'
                   </select>
@@ -130,10 +152,10 @@ class __form2
               </div>';
     }
 
-    private static function yearsArray(){
+    private static function yearsArray($past = 8, $future = 10){
         $years = [];
         $now_year = Carbon::now()->format('Y');
-        for ( $x = $now_year - 8 ; $x <= $now_year + 10; $x++){
+        for ( $x = $now_year - $past ; $x <= $now_year + $future; $x++){
             $years[$x] = $x;
         }
         return $years;
@@ -160,6 +182,8 @@ class __form2
         (!isset($array['step'])) ? $array['step']= '' : false;
         (!isset($array['readonly'])) ? $array['readonly']= '' : false;
         (!isset($array['title'])) ? $array['title']= '' : false;
+        (!isset($array['is_multiple'])) ? $array['is_multiple']= '' : false;
+        (!isset($array['required'])) ? $array['required']= '' : false;
         ($array['type'] == '') ?  $array['type'] = 'text' : false;
 
         $this->class = $array['class'];
@@ -175,6 +199,8 @@ class __form2
         $this->readonly = $array['readonly'];
         $this->step = $array['step'];
         $this->title = $array['title'];
+        $this->is_multiple = $array['is_multiple'];
+        $this->required = $array['required'];
     }
     public function get($array){
         return $this->name.' Hello';

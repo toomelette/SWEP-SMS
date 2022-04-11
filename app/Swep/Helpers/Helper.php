@@ -207,6 +207,7 @@ class Helper
     }
 
     public static function sanitizeAutonum($num){
+        $num = str_replace('₱','',$num);
         return str_replace(',','',$num);
     }
 
@@ -394,5 +395,15 @@ class Helper
         $dev->browser = ucfirst($bname);
 
         return $dev;
+    }
+
+    public static function educationalLevels(){
+        return [
+            'ELEMENTARY' => 'ELEMENTARY',
+            'SECONDARY' => 'SECONDARY',
+            'VOCATIONAL/TRADE COURSE' => 'VOCATIONAL/TRADE COURSE',
+            'COLLEGE' => 'COLLEGE',
+            'GRADUATE STUDIES' => 'GRADUATE STUDIES',
+        ];
     }
 }

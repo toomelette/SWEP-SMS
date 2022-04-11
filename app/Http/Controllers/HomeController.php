@@ -76,9 +76,10 @@ class HomeController extends Controller{
             ->whereMonth('adjustment_date','=',$month)
             ->get();
         $employees_with_adjustments = [];
+
         foreach ($emps as $emp){
             $diff = ($year)-(Carbon::parse($emp->adjustment_date)->format('Y'));
-            if($diff%3 == 0){
+            if($diff%3 == 0 && Carbon::now()->format('Y') != Carbon::parse($emp->adjustment_date)->format('Y')){
                 $employees_with_adjustments[$emp->slug] = $emp;
             }
         }

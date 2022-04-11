@@ -325,12 +325,14 @@ function succeed(target_form, reset,modal){
 }
 
 function wait_this_button(btn) {
+    btn.attr('disabled','disabled');
     prent = btn.children('i').parent();
     btn.attr('old-i',prent.html());
     btn.html('<i class="fa fa-spin fa-spinner"></i>');
 }
 
 function unwait_this_button(btn) {
+    btn.removeAttr('disabled');
     prent = btn.children('i').parent();
     btn.html(btn.attr('old-i'));
 }

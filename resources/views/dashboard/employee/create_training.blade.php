@@ -73,7 +73,7 @@
 <script type="text/javascript">
     $("#create_training_form_{{$rand}}").submit(function (e) {
         e.preventDefault();
-        uri = '{{route("dashboard.employee.training_store","slug")}}';
+        uri = '{{route(\Illuminate\Support\Facades\Request::route()->getName()."_store","slug")}}';
         uri = uri.replace('slug','{{$employee->slug}}');
         var form = $(this);
         loading_btn(form);

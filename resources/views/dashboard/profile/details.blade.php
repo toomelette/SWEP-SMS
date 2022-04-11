@@ -91,14 +91,12 @@
                                         @endif
                                 @endif
                             </li>
-
                             <li class="bg-blue pad5">
                                 <center>Activity</center>
                             </li>
                             <li class="pad5">Last activity on <span class="pull-right">{{$user->last_activity_machine}}</span></li>
                             <li class="pad5">Last login IP <span class="pull-right">{{$user->last_login_ip}}</span></li>
                         </ul>
-
                     </div>
                 </div>
             </div>
@@ -106,23 +104,25 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         @if(!empty(\Illuminate\Support\Facades\Auth::user()->employee))
-                            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Family Information</a></li>
-                            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Service Records</a></li>
-                            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">Trainings/Seminars</a></li>
+                            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true"><i class="fa icon-family"></i> Family Information</a></li>
+                            <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false"><i class="fa icon-service-record"></i> Service Records</a></li>
+                            <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false"><i class="fa icon-seminar"></i> Trainings/Seminars</a></li>
+                            <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false"><i class="fa icon-seminar"></i> Credentials</a></li>
                         @endif
                     </ul>
                     <div class="tab-content">
                         @if(!empty(\Illuminate\Support\Facades\Auth::user()->employee))
+                            @php($emp = \Illuminate\Support\Facades\Auth::user()->employee)
                             <div class="tab-pane active" id="tab_1">
 
                                 <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
                                     Father's Information
                                     <span class="pull-right">
-                                    <button class="btn btn-xs btn-success" id="enable_family_btn">Enable editing</button>
+                                    <button class="btn btn-xs btn-success" id="enable_family_btn" type="button">Enable editing</button>
                                 </span>
                                 </p>
                                 <form id="family_form">
-                                    <fieldset id="family_fieldset">
+                                    <fieldset id="family_fieldset" disabled="disabled">
 
                                         @php($family_detail = \Illuminate\Support\Facades\Auth::user()->employee->employeeFamilyDetail)
                                         <div class="row">
@@ -236,52 +236,82 @@
                                         <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
                                             Children Information
                                         </p>
-                                        <button id="add_child_btn" class="btn btn-xs btn-info pull-right" style="margin-bottom: 5px"><i class="fa fa-plus"></i> Add child</button>
+                                        <button id="add_child_btn" type="button" class="btn btn-xs btn-info pull-right" style="margin-bottom: 5px"><i class="fa fa-plus"></i> Add child</button>
                                         @php($children = \Illuminate\Support\Facades\Auth::user()->employee->employeeChildren)
-                                        @if(!empty($children))
-                                            @if($children->count() > 0)
-                                                <table id="children_table" style="width: 100%" class="table table-bordered">
-                                                    @foreach($children as $child)
+
+                                        <table id="children_table" style="width: 100%" class="table table-bordered">
+                                            <tbody>
+                                                @if(!empty($children))
+                                                    @if($children->count() > 0)
+                                                        @foreach($children as $child)
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="row">
+                                                                        {!! \App\Swep\ViewHelpers\__form2::textbox('fullname[]',[
+                                                                            'cols' => 3,
+                                                                            'label' => "Fullname:",
+                                                                        ],
+                                                                        $child->fullname) !!}
+                                                                        {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_birth[]',[
+                                                                            'cols' => 3,
+                                                                            'label' => "Birthday:",
+                                                                            'type' => 'date',
+                                                                        ],
+                                                                        Carbon::parse($child->date_of_birth)->format('Y-m-d')) !!}
+                                                                        {!! \App\Swep\ViewHelpers\__form2::textbox('school_company[]',[
+                                                                            'cols' => 3,
+                                                                            'label' => "School/Company:",
+                                                                        ],
+                                                                        $child->school_company) !!}
+                                                                        {!! \App\Swep\ViewHelpers\__form2::select('civil_status[]',[
+                                                                            'cols' => 3,
+                                                                            'label' => "Civil Status:",
+                                                                            'options' => \App\Swep\Helpers\Helper::civil_status(),
+                                                                        ],
+                                                                        $child->civil_status) !!}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="width: 50px; vertical-align: middle">
+                                                                    <button class="btn btn-danger btn-sm remove_child_btn"><i class="fa fa-times"></i> </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
                                                         <tr>
                                                             <td>
                                                                 <div class="row">
-                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox('fullname[]',[
-                                                                        'cols' => 3,
-                                                                        'label' => "Fullname:",
-                                                                    ],
-                                                                    $child->fullname) !!}
-                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_birth[]',[
-                                                                        'cols' => 3,
-                                                                        'label' => "Birthday:",
-                                                                        'type' => 'date',
-                                                                    ],
-                                                                    Carbon::parse($child->date_of_birth)->format('Y-m-d')) !!}
-                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox('school_company[]',[
-                                                                        'cols' => 3,
-                                                                        'label' => "School/Company:",
-                                                                    ],
-                                                                    $child->school_company) !!}
-                                                                    {!! \App\Swep\ViewHelpers\__form2::select('civil_status[]',[
-                                                                        'cols' => 3,
-                                                                        'label' => "Civil Status:",
-                                                                        'options' => \App\Swep\Helpers\Helper::civil_status(),
-                                                                    ],
-                                                                    $child->civil_status) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox("fullname[]",[
+                                                                        "cols" => 3,
+                                                                        "label" => "Fullname:",
+                                                                    ]) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox("date_of_birth[]",[
+                                                                        "cols" => 3,
+                                                                        "label" => "Birthday:",
+                                                                        "type" => "date",
+                                                                    ]) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::textbox("school_company[]",[
+                                                                        "cols" => 3,
+                                                                        "label" => "School/Company:",
+                                                                    ]) !!}
+                                                                    {!! \App\Swep\ViewHelpers\__form2::select("civil_status[]",[
+                                                                        "cols" => 3,
+                                                                        "label" => "Civil Status:",
+                                                                        "options" => \App\Swep\Helpers\Helper::civil_status(),
+                                                                    ]) !!}
                                                                 </div>
                                                             </td>
                                                             <td style="width: 50px; vertical-align: middle">
                                                                 <button class="btn btn-danger btn-sm remove_child_btn"><i class="fa fa-times"></i> </button>
                                                             </td>
                                                         </tr>
-                                                    @endforeach
-
-                                                </table>
-                                            @endif
-                                        @endif
+                                                    @endif
+                                                @endif
+                                            </tbody>
+                                        </table>
 
                                         <div class="row" id="save_family_btn_container" style="display: none">
                                             <div class="col-md-12">
-                                                <button class="btn btn-sm btn-primary pull-right"><i class="fa fa-check"></i> Save</button>
+                                                <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-check"></i> Save</button>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -316,19 +346,140 @@
                                     </center>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="tab_3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn-group pull-right btn-group-sm" role="group" aria-label="...">
+                                            <button class="btn btn-primary pull-right btn-sm" data-toggle="modal" id="add_training_btn" data-target="#add_training_modal"><i class="fa fa-plus"></i> Add Training/Seminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div id="training_table_container" style="display: none">
+                                    <table class="table table-bordered table-striped table-hover training" id="training_table" style="width: 100% !important">
+                                        <thead>
+                                        <tr class="">
+                                            <th>Seq #</th>
+                                            <th>Title</th>
+                                            <th>Started</th>
+                                            <th>Ended</th>
+                                            <th>Detailed Period</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="tbl_loader_training">
+                                    <center>
+                                        <img style="width: 100px" src="{{asset('images/loader.gif')}}">
+                                    </center>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab_4">
+                                <label>Credentials:</label>
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#tab_educ" data-toggle="tab">Educational Background</a></li>
+                                        <li><a href="#tab_elig" data-toggle="tab">Eligibilities</a></li>
+                                        <li><a href="#tab_we" data-toggle="tab">Work Experience</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane active" id="tab_educ">
+                                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
+                                                Educational Background
+                                                <span class="pull-right">
+                                                    <button class="btn btn-xs btn-success" id="add_school_btn" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                </span>
+                                            </p>
+                                            <form id="educ_bg_form">
+                                                <table class="table table-bordered table-striped" id="educational_background_table">
+                                                    <tbody>
+                                                    @if(!empty($emp->employeeEducationalBackground))
+                                                        @if($emp->employeeEducationalBackground()->count() > 0)
+                                                            @foreach($emp->employeeEducationalBackground as $educ_bg)
+                                                                @include('ajax.employee.add_school',['data' => $educ_bg])
+                                                            @endforeach
+                                                        @else
+                                                            @include('ajax.employee.add_school')
+                                                        @endif
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Educational Background</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="tab-pane" id="tab_elig">
+                                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
+                                                Eligibilities
+                                                <span class="pull-right">
+                                                    <button class="btn btn-xs btn-success" id="add_elig_btn" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                </span>
+                                            </p>
+                                            <form id="elig_form">
+                                                <table class="table table-bordered table-striped" id="elig_table">
+                                                    <tbody>
+                                                        @if(!empty($emp->employeeEligibility))
+                                                            @if($emp->employeeEligibility->count() > 0)
+                                                                @foreach($emp->employeeEligibility as $elig)
+                                                                    @include('ajax.employee.add_eligibility',['data' => $elig])
+                                                                @endforeach
+                                                            @else
+                                                                @include('ajax.employee.add_eligibility')
+                                                            @endif
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Eligibilities</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="tab-pane" id="tab_we">
+                                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
+                                                Work Experience
+                                                <span class="pull-right">
+                                                    <button class="btn btn-xs btn-success" id="add_we_btn" type="button"><i class="fa fa-plus"></i> Add</button>
+                                                </span>
+                                            </p>
+                                            <form id="we_form">
+                                                <table class="table table-bordered table-striped" id="we_table">
+                                                    <tbody>
+                                                    @if(!empty($emp->employeeExperience))
+                                                        @if($emp->employeeExperience->count() > 0)
+                                                            @foreach($emp->employeeExperience as $we)
+                                                                @include('ajax.employee.add_work_experience',['data' => $we])
+                                                            @endforeach
+                                                        @else
+                                                            @include('ajax.employee.add_work_experience')
+                                                        @endif
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Work Experience</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                </div>
+                            </div>
+
                         @endif
 
 
 
-                        <div class="tab-pane" id="tab_3">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            It has survived not only five centuries, but also the leap into electronic typesetting,
-                            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                            sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                            like Aldus PageMaker including versions of Lorem Ipsum.
-                        </div>
 
                     </div>
 
@@ -375,6 +526,9 @@
 @section('modals')
     {!! \App\Swep\ViewHelpers\__html::blank_modal('add_sr_modal','') !!}
     {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_sr_modal','') !!}
+
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('add_training_modal','') !!}
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_training_modal','') !!}
 @endsection
 
 @section('scripts')
@@ -417,6 +571,7 @@
         $("#family_form").submit(function (e) {
            e.preventDefault();
            let form = $(this);
+           loading_btn(form);
            $.ajax({
                url : '{{route("dashboard.profile.save_family_info")}}',
                data : form.serialize(),
@@ -429,6 +584,7 @@
                       notify('Family information were saved successfully.','info')
                       $("#enable_family_btn").trigger('click');
                   }
+                  remove_loading_btn(form);
                },
                error: function (res) {
                    errored(form,res);
@@ -450,8 +606,7 @@
         modal_loader = $("#modal_loader").parent('div').html();
         //Initialize DataTable
         sr_active = '';
-        uri = "{{route('dashboard.profile.service_record','slug')}}";
-        uri = uri.replace('slug','{{\Illuminate\Support\Facades\Auth::user()->employee->slug}}');
+        uri = "{{route('dashboard.profile.service_record')}}";
         service_records_tbl = $("#service_records_table").DataTable({
             'dom' : 'lBfrtip',
             "processing": true,
@@ -510,6 +665,76 @@
         })
 
 
+        trainings_active = '';
+        uri = "{{route('dashboard.profile.training')}}";
+        trainings_tbl = $("#training_table").DataTable({
+            'dom' : 'lBfrtip',
+            "processing": true,
+            "serverSide": true,
+            "ajax" : uri,
+            "columns": [
+                { "data": "sequence_no" },
+                { "data": "title" },
+                { "data": "date_from" },
+                { "data": "date_to" },
+                { "data": "detailed_period" },
+                { "data": "action" }
+            ],
+            "buttons": [
+                {!! __js::dt_buttons() !!}
+            ],
+            "columnDefs":[
+                {
+                    "targets" : 0,
+                    "class" : 'w-6p'
+                },
+                {
+                    "targets" : 1,
+                    "class" : 'w-50p'
+                },
+                {
+                    "targets" : [2,3],
+                    "class" : 'w-8p'
+                },
+                {
+                    "targets" : 4,
+                    "class" : 'w-20p'
+                },
+                {
+                    "targets" : 5,
+                    "orderable" : false,
+                    "class" : 'action-8p'
+                },
+            ],
+            "order":[[0,'desc']],
+            "responsive": false,
+            "initComplete": function( settings, json ) {
+                $('#tbl_loader_training').fadeOut(function(){
+                    $("#training_table_container").fadeIn();
+                    style_datatable("#training_table");
+
+                    //Need to press enter to search
+                    $('#training_table_filter input').unbind();
+                    $('#training_table_filter input').bind('keyup', function (e) {
+                        if (e.keyCode == 13) {
+                            trainings_tbl.search(this.value).draw();
+                        }
+                    });
+                });
+            },
+            "language":
+                {
+                    "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
+                },
+            "drawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="modal"]').tooltip();
+                if(trainings_active != ''){
+                    $("#training_table #"+trainings_active).addClass('success');
+                }
+            }
+        })
+
 
 
         $("#add_sr_btn").click(function () {
@@ -539,8 +764,7 @@
         $("body").on('click','.edit_sr_btn',function () {
             btn = $(this);
             load_modal2(btn);
-            var uri = "{{route('dashboard.profile.service_record','slug')}}";
-            uri  = uri.replace("slug",btn.attr('data'));
+            var uri = "{{route('dashboard.profile.service_record')}}";
             $.ajax({
                 url : uri,
                 data : {edit : 1, sr : btn.attr('data')},
@@ -557,7 +781,177 @@
             })
         })
 
+        $("#add_training_btn").click(function () {
+            btn = $(this);
+            load_modal2(btn);
+            uri = "{{route('dashboard.profile.training')}}";
+            $.ajax({
+                url : uri,
+                data : {add: 2},
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+
+                },
+                error: function (res) {
+                    notify('Ajax error.','danger');
+                    console.log(res);
+                }
+            })
+        });
+
+        $("body").on('click','.edit_training_btn',function () {
+            btn = $(this);
+            load_modal2(btn);
+            var uri = "{{route('dashboard.profile.training')}}";
+            $.ajax({
+                url : uri,
+                data : {edit : 1, training : btn.attr('data')},
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    notify("Ajax error.","danger");
+                    console.log(res);
+                }
+            })
+        })
+
+        $("#add_school_btn").click(function () {
+            btn = $(this);
+            wait_this_button(btn);
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","educational_background")}}',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   $("#educational_background_table tbody").append(res);
+                   unwait_this_button(btn);
+                },
+                error: function (res) {
+                    notify('Error fetching data.','danger');
+                }
+            })
+        })
+        
+        $("#educ_bg_form").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            loading_btn(form);
+            $.ajax({
+                url : '{{route("dashboard.profile.educ_bg_store")}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   notify('Educational background successfully updated.');
+                   remove_loading_btn(form);
+                },
+                error: function (res) {
+                    errored(form,res)
+                }
+            })
+        })
 
 
+        $("#add_elig_btn").click(function () {
+            btn = $(this);
+            wait_this_button(btn);
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","eligibility")}}',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#elig_table tbody").append(res);
+                    unwait_this_button(btn);
+                },
+                error: function (res) {
+                    notify('Error fetching data.','danger');
+                }
+            })
+        })
+
+        $("#elig_form").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            loading_btn(form);
+            $.ajax({
+                url : '{{route("dashboard.profile.eligibility_store")}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    notify('Eligibilities successfully updated.');
+                   remove_loading_btn(form);
+                },
+                error: function (res) {
+                    errored(form,res);
+                }
+            })
+        })
+
+        $("#add_we_btn").click(function () {
+            btn = $(this);
+            wait_this_button(btn);
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","work_experience")}}',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#we_table tbody").append(res.view);
+                    $(".we_salary"+res.rand).each(function () {
+                        new AutoNumeric(this,autonum_settings);
+                    })
+                    unwait_this_button(btn);
+                },
+                error: function (res) {
+                    notify('Error fetching data.','danger');
+                }
+            })
+        })
+
+        $(".we_salary").each(function () {
+            new AutoNumeric(this,autonum_settings);
+        })
+
+        $("#we_form").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            loading_btn(form);
+            $.ajax({
+                url : '{{route("dashboard.profile.work_experience_store")}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    notify('Work experience successfully updated.');
+                    remove_loading_btn(form);
+
+
+                },
+                error: function (res) {
+                    errored(form,res);
+                }
+            })
+        })
     </script>
 @endsection

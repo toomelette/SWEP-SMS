@@ -318,7 +318,7 @@ class EmployeeController extends Controller{
 
             return DataTables::of($trainings)
                 ->addColumn('action',function ($data){
-                    $destroy_route = "'".route("dashboard.employee.training_destroy","slug")."'";
+                    $destroy_route = "'".route(\Illuminate\Support\Facades\Request::route()->getName()."_destroy","slug")."'";
                     $slug = "'".$data->slug."'";
 
                     return '<div class="btn-group btn-group-xs" role="toolbar" aria-label="...">

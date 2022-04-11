@@ -94,6 +94,15 @@
         "initComplete": function( settings, json ) {
             $('#tbl_loader_training').fadeOut(function(){
                 $("#training_table_container").fadeIn();
+                style_datatable("#training_table");
+
+                //Need to press enter to search
+                $('#training_table_filter input').unbind();
+                $('#training_table_filter input').bind('keyup', function (e) {
+                    if (e.keyCode == 13) {
+                        trainings_tbl.search(this.value).draw();
+                    }
+                });
             });
         },
         "language":
@@ -109,15 +118,7 @@
         }
     })
 
-    style_datatable("#training_table");
 
-    //Need to press enter to search
-    $('#training_table_filter input').unbind();
-    $('#training_table_filter input').bind('keyup', function (e) {
-        if (e.keyCode == 13) {
-            trainings_tbl.search(this.value).draw();
-        }
-    });
 
     $("#add_training_btn_{{$rand}}").click(function () {
         btn = $(this);

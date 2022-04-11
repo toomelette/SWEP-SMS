@@ -7,13 +7,16 @@
 
 @section('modal-body')
     <div class="row">
-        {!! __form::textbox(
-           '4 sequence_no', 'sequence_no', 'text', 'Seq No. *', 'Seq No.', $sr->sequence_no, $errors->has('sequence_no'), $errors->first('sequence_no'), ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('sequence_no',[
+            'label' => 'Seq No.:*',
+            'cols' => 4,
+        ],$sr) !!}
 
-        {!! __form::textbox(
-           '4 from_date', 'from_date', 'date', 'Date From *', 'Date From',($sr->from_date != '' ?  \Carbon\Carbon::parse($sr->from_date)->format('Y-m-d') : ''), $errors->has('from_date'), $errors->first('from_date'), ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('from_date',[
+            'label' => 'Date From:*',
+            'cols' => 4,
+            'type' => 'date',
+        ],$sr) !!}
 
         <div class="form-group col-md-4 to_date ">
             <label for="to_date">Date To *</label>
@@ -33,57 +36,70 @@
     </div>
 
     <div class="row">
-        {!! __form::textbox(
-           '6 position', 'position', 'text', 'Position *', 'Position', $sr->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('position',[
+            'label' => 'Position:*',
+            'cols' => 6,
+        ],$sr) !!}
 
-        {!! __form::textbox(
-           '6 appointment_status', 'appointment_status', 'text', 'Appointment Status *', 'Appointment Status', $sr->appointment_status, $errors->has('appointment_status'), $errors->first('appointment_status'), 'data-transform="uppercase"'
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('appointment_status',[
+           'label' => 'Appointment Status:*',
+           'cols' => 6,
+        ],$sr) !!}
     </div>
 
     <div class="row">
-        {!! __form::textbox_numeric(
-          '8 salary', 'salary', 'text', 'Salary *', 'Salary', $sr->salary, $errors->has('salary'), $errors->first('salary'), ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('salary',[
+           'label' => 'Salary:*',
+           'cols' => 6,
+           'class' => 'autonum_'.$rand,
+        ],$sr) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('mode_of_payment',[
+           'label' => 'Mode of Payment:*',
+           'cols' => 6,
+        ],$sr) !!}
 
-        {!! __form::textbox(
-           '4 mode_of_payment', 'mode_of_payment', 'text', 'Mode of Payment *', 'Mode of Payment', $sr->mode_of_payment, $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), ''
-        ) !!}
     </div>
 
     <div class="row">
-        {!! __form::textbox(
-           '4 station', 'station', 'text', 'Station *', 'Station', $sr->station, $errors->has('station'), $errors->first('station'), ''
-        ) !!}
 
-        {!! __form::textbox(
-           '4 gov_serve', 'gov_serve', 'text', 'Government Serve', 'Government Serve', $sr->gov_serve, $errors->has('gov_serve'), $errors->first('gov_serve'), ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('station',[
+           'label' => 'Station:*',
+           'cols' => 4,
+        ],$sr) !!}
 
-        {!! __form::textbox(
-           '4 psc_serve', 'psc_serve', 'text', 'PSC Serve', 'PSC Serve', $sr->psc_serve, $errors->has('psc_serve'), $errors->first('psc_serve'), ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('gov_serve',[
+           'label' => 'Government Serve:*',
+           'cols' => 4,
+        ],$sr) !!}
+
+        {!! \App\Swep\ViewHelpers\__form2::textbox('psc_serve',[
+           'label' => 'PSC Serve:*',
+           'cols' => 4,
+        ],$sr) !!}
+
     </div>
 
     <div class="row">
-        {!! __form::textbox(
-           '4 lwp', 'lwp', 'text', 'LWP', 'LWP', $sr->lwp, $errors->has('lwp'), $errors->first('lwp'), ''
-        ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('lwp',[
+           'label' => 'LWP:*',
+           'cols' => 4,
+        ],$sr) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('spdate',[
+           'label' => 'SP Date:*',
+           'cols' => 4,
+        ],$sr) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('status',[
+           'label' => 'Status:*',
+           'cols' => 4,
+        ],$sr) !!}
 
-        {!! __form::textbox(
-           '4 spdate', 'spdate', 'text', 'SP Date', 'SP Date', $sr->spdate, $errors->has('spdate'), $errors->first('spdate'), ''
-        ) !!}
-
-        {!! __form::textbox(
-           '4 status', 'status', 'text', 'Status', 'Status', $sr->status, $errors->has('status'), $errors->first('status'), ''
-        ) !!}
     </div>
 
     <div class="row">
-        {!! __form::textbox(
-          '12 remarks', 'remarks', 'text', 'Remarks', 'Remarks', $sr->remarks, $errors->has('remarks'), $errors->first('remarks'), ''
-       ) !!}
+        {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[
+           'label' => 'Remarks:*',
+           'cols' => 12,
+        ],$sr) !!}
     </div>
 @endsection
 
@@ -128,6 +144,10 @@
         }else{
             t.parent('label').parent('div').siblings('#e_to_date').removeAttr('disabled');
         }
+    })
+
+    $(".autonum_{{$rand}}").each(function () {
+        new AutoNumeric(this,autonum_settings);
     })
 </script>
 @endsection

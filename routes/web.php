@@ -47,10 +47,21 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
     Route::get('/profile/print_pds/{slug}/{page}', 'ProfileController@printPds')->name('profile.print_pds');
     Route::post('/profile/save_family_info','ProfileController@saveFamilyInfo')->name('profile.save_family_info');
+
     Route::get('/profile/service_record','ProfileController@serviceRecord')->name('profile.service_record');
     Route::post('/profile/service_record_store','ProfileController@serviceRecordStore')->name('profile.service_record_store');
-    Route::delete('/profile/service_record/destroy/{slug}','ProfileController@serviceRecordDestroy')->name('profile.service_record_destroy');
     Route::put('/profile/service_record_update/{slug}','ProfileController@serviceRecordUpdate')->name('profile.service_record_update');
+    Route::delete('/profile/service_record/destroy/{slug}','ProfileController@serviceRecordDestroy')->name('profile.service_record_destroy');
+
+    Route::get('/profile/training','ProfileController@training')->name('profile.training');
+    Route::post('/profile/training_store','ProfileController@trainingStore')->name('profile.training_store');
+    Route::put('/profile/training_update/{slug}','ProfileController@trainingUpdate')->name('profile.training_update');
+    Route::delete('/profile/training_destroy/{slug}','ProfileController@trainingDestroy')->name('profile.training_destroy');
+
+    Route::get('/ajax/{for}','AjaxController@get')->name('ajax.get');
+    Route::post('/profile/educ_bg_store','ProfileController@educationalBackgroundStore')->name('profile.educ_bg_store');
+    Route::post('/profile/eligibility_store','ProfileController@eligibilityStore')->name('profile.eligibility_store');
+    Route::post('/profile/work_experience_store','ProfileController@workExperienceStore')->name('profile.work_experience_store');
 });
 
 /** Dashboard **/
