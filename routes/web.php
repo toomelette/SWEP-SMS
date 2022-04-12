@@ -62,6 +62,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('/profile/educ_bg_store','ProfileController@educationalBackgroundStore')->name('profile.educ_bg_store');
     Route::post('/profile/eligibility_store','ProfileController@eligibilityStore')->name('profile.eligibility_store');
     Route::post('/profile/work_experience_store','ProfileController@workExperienceStore')->name('profile.work_experience_store');
+
+    Route::post('/profile/select_theme','ProfileController@selectTheme')->name('profile.select_theme');
 });
 
 /** Dashboard **/

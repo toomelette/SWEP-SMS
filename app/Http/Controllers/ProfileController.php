@@ -20,6 +20,7 @@ use App\Swep\Services\ProfileService;
 use App\Http\Requests\Profile\ProfileUpdateAccountUsernameRequest;
 use App\Http\Requests\Profile\ProfileUpdateAccountPasswordRequest;
 use App\Http\Requests\Profile\ProfileUpdateAccountColorRequest;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -314,5 +315,16 @@ class ProfileController extends Controller{
         }else{
             abort(200,'Done without making changes.');
         }
+    }
+
+    public function selectTheme(Request $request){
+
+        $id =  Auth::user()->id;
+        $u = User::find($id);
+        $u->color = $request->theme;
+        if($u->save()){
+            return array_search($request->theme , Helper::user_colors());
+        }
+        abort(503, 'Error saving theme.');
     }
 }

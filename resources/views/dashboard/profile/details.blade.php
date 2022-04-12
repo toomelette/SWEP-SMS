@@ -9,6 +9,32 @@
         .pad5 span{
             font-weight: bold;
         }
+
+        .scrolling-wrapper {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            padding-top: 15px;
+            padding-left: 15px;
+
+        }
+
+        .scrolling-card {
+            display: inline-block;
+        }
+
+        .scrolling-li{
+            padding: 10px;
+
+        }
+        .scrolling-li:hover {
+            cursor: pointer;
+            box-shadow: 5px 10px 18px #888888;
+            -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: scale(1.1, 1.1);
+        }
+
+
     </style>
 
     <section class="content">
@@ -104,16 +130,48 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         @if(!empty(\Illuminate\Support\Facades\Auth::user()->employee))
-                            <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true"><i class="fa icon-family"></i> Family Information</a></li>
+                            <li class="active"><a href="#tab_acc" data-toggle="tab" aria-expanded="true"><i class="fa fa-wrench"></i> Account Settings</a></li>
+                            <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="true"><i class="fa icon-family"></i> Family Information</a></li>
                             <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false"><i class="fa icon-service-record"></i> Service Records</a></li>
                             <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false"><i class="fa icon-seminar"></i> Trainings/Seminars</a></li>
                             <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false"><i class="fa icon-seminar"></i> Credentials</a></li>
                         @endif
                     </ul>
                     <div class="tab-content">
+                        <div class="tab-pane active" id="tab_acc">
+                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                Select theme:
+                            </p>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="scrolling-wrapper">
+                                        @foreach(\App\Swep\Helpers\Helper::user_colors() as $display => $code)
+                                            <div class="scrolling-card" data="sidebar-mini skin-blue">
+                                                <ul class="mailbox-attachments clearfix">
+                                                    <li for="{{$display}}" class="scrolling-li {{($code == \Illuminate\Support\Facades\Auth::user()->color) ? 'bg-success' : ''}}" data="{{$code}}" >
+                                                        <span class="mailbox-attachment-icon has-img">
+                                                            <img src="{{asset('swep/skins/')}}/{{$code}}.jpg" style="vertical-align: middle"></span>
+                                                        <div class="mailbox-attachment-info">
+                                                            <a href="#" class="mailbox-attachment-name">
+                                                                {{$display}}
+                                                                <span class="pull-right check text-green" >
+                                                                    <i class="{{($code == \Illuminate\Support\Facades\Auth::user()->color) ? 'fa fa-check' : ''}} iconer" for="{{$display}}"></i>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
                         @if(!empty(\Illuminate\Support\Facades\Auth::user()->employee))
                             @php($emp = \Illuminate\Support\Facades\Auth::user()->employee)
-                            <div class="tab-pane active" id="tab_1">
+                            <div class="tab-pane" id="tab_1">
 
                                 <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
                                     Father's Information
@@ -950,6 +1008,39 @@
                 },
                 error: function (res) {
                     errored(form,res);
+                }
+            })
+        })
+
+        $(".scrolling-li").click(function () {
+            let li = $(this);
+            let theme = li.attr('data');
+            let before = $('body').attr("theme");
+            let cur_theme = '{{Auth::user()->color}}';
+            $.ajax({
+                url : '{{route("dashboard.profile.select_theme")}}',
+                data : {theme : theme},
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   console.log(res);
+                   $("body").removeClass(before);
+                   $("body").addClass(theme);
+                   $("body").attr("theme",theme);
+
+                   $(".scrolling-li").each(function () {
+                       $(this).removeClass('bg-success');
+                   })
+                    $(".iconer").each(function () {
+                        $(this).removeClass('fa fa-check');
+                    })
+                    $(".scrolling-li[for='"+res+"']").addClass('bg-success');
+                    $("i[for='"+res+"']").addClass('fa fa-check');
+                },
+                error: function (res) {
+                    console.log(res);
                 }
             })
         })

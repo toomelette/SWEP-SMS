@@ -13,7 +13,7 @@
 
   </head>
 
-  <body class="hold-transition fixed {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" >
+  <body class="hold-transition fixed {!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}" theme="{!! Auth::check() ? __sanitize::html_encode(Auth::user()->color) : '' !!}">
 
     <div id="loader"></div>
 

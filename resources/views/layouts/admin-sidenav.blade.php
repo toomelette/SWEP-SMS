@@ -34,7 +34,7 @@
     <style>
 
     </style>
-    <ul class="sidebar-menu" data-widget="tree" id="myMenu">em
+    <ul class="sidebar-menu" data-widget="tree" id="myMenu">
         <div class="sidebar-form">
             <div class="input-group">
                 <input id="mySearch" type="text" onkeyup="searchSidenav()" class="form-control" placeholder="Search menu...">
