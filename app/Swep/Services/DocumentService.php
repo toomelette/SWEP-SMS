@@ -90,7 +90,7 @@ class DocumentService extends BaseService{
         }
 
         $document = $this->document_repo->store($request, $filename);
-        $this->event->fire('document.store', $document);        
+        $this->event->dispatch('document.store', $document);
         return redirect()->back();
 
     }
@@ -207,7 +207,7 @@ class DocumentService extends BaseService{
 
         }
         $this->document_repo->update($request, $filename, $document);
-        $this->event->fire('document.update', $document);
+        $this->event->dispatch('document.update', $document);
         return redirect()->route('dashboard.document.index');
 
     }
@@ -238,7 +238,7 @@ class DocumentService extends BaseService{
 
         $this->document_repo->destroy($document);
 
-        $this->event->fire('document.destroy', $document);
+        $this->event->dispatch('document.destroy', $document);
         return redirect()->back();
 
     }
@@ -513,7 +513,7 @@ class DocumentService extends BaseService{
         // }   
 
 
-        $this->event->fire('document.dissemination', $document);
+        $this->event->dispatch('document.dissemination', $document);
         return redirect()->back();
 
     }

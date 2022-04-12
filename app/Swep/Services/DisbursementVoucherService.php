@@ -61,7 +61,7 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = $this->dv_repo->store($request);
         return $disbursement_voucher;
-//        $this->event->fire('dv.store', $disbursement_voucher);
+//        $this->event->dispatch('dv.store', $disbursement_voucher);
 //        return redirect()->back();
 
     }
@@ -75,7 +75,7 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = $this->dv_repo->update($request, $slug);
         return $disbursement_voucher;
-//        $this->event->fire('dv.update', $disbursement_voucher);
+//        $this->event->dispatch('dv.update', $disbursement_voucher);
 //        return redirect()->back();
 
     }
@@ -113,7 +113,7 @@ class DisbursementVoucherService extends BaseService{
 
         $disbursement_voucher = $this->dv_repo->destroy($slug);
         return $disbursement_voucher;
-//        $this->event->fire('dv.destroy', $disbursement_voucher);
+//        $this->event->dispatch('dv.destroy', $disbursement_voucher);
 //        return redirect()->back();
 
     }
@@ -163,7 +163,7 @@ class DisbursementVoucherService extends BaseService{
 
             $this->dv_repo->confirmCheck($disbursement_voucher);
 
-            $this->event->fire('dv.confirm_check', $disbursement_voucher);
+            $this->event->dispatch('dv.confirm_check', $disbursement_voucher);
             return redirect()->back();
 
         }

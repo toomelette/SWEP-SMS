@@ -51,7 +51,7 @@ class PermissionSlipService extends BaseService{
 
         $permission_slip = $this->ps_repo->store($request);
 
-        $this->event->fire('ps.store');
+        $this->event->dispatch('ps.store');
         return redirect()->back();
 
     }
@@ -89,7 +89,7 @@ class PermissionSlipService extends BaseService{
 
         $permission_slip = $this->ps_repo->update($request, $slug);
 
-        $this->event->fire('ps.update', $permission_slip);
+        $this->event->dispatch('ps.update', $permission_slip);
         return redirect()->route('dashboard.permission_slip.index');
 
     }
@@ -103,7 +103,7 @@ class PermissionSlipService extends BaseService{
 
         $permission_slip = $this->ps_repo->destroy($slug);
 
-        $this->event->fire('ps.destroy', $permission_slip);
+        $this->event->dispatch('ps.destroy', $permission_slip);
         return redirect()->back();
 
     }

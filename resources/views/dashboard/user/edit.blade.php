@@ -33,7 +33,14 @@ Edit
         </div>
     </div>
     <div class="col-md-9">
+        @php($count = 0)
+
+
         @foreach($all_menus as $menu)
+            @if($count%4 == 0)
+                <div class="row">
+            @endif
+            @php($count++)
             <div class="col-md-3">
                 @if($menu->route == 'dashboard.home')
                     <div class="panel panel-default">
@@ -87,8 +94,13 @@ Edit
                         </div>
                     </div>
                 @endif
+
             </div>
+            @if($count%4 == 0)
+                </div>
+            @endif
         @endforeach
+
     </div>
 </div>
 @endsection

@@ -36,7 +36,7 @@ class ProfileService extends BaseService{
         $this->session->flush();
         $this->auth->logout();
 
-        $this->event->fire('profile.update_account_username', $user);
+        $this->event->dispatch('profile.update_account_username', $user);
         return redirect('/');
 
     }
@@ -55,7 +55,7 @@ class ProfileService extends BaseService{
             $this->session->flush();
             $this->auth->logout();
 
-            $this->event->fire('profile.update_account_password', $user);
+            $this->event->dispatch('profile.update_account_password', $user);
             return redirect('/');
 
         }
@@ -74,7 +74,7 @@ class ProfileService extends BaseService{
 
         $user = $this->profile_repo->updateColor($request, $slug);
 
-        $this->event->fire('profile.update_account_color', $user);
+        $this->event->dispatch('profile.update_account_color', $user);
         return redirect()->back();
 
     }

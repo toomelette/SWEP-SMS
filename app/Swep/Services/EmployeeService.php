@@ -55,7 +55,7 @@ class EmployeeService extends BaseService{
         $employee = $this->employee_repo->store($request);
         $this->fillDependencies($request, $employee);
 
-        $this->event->fire('employee.store', $employee);
+        $this->event->dispatch('employee.store', $employee);
         return redirect()->back();
 
     }
@@ -95,7 +95,7 @@ class EmployeeService extends BaseService{
 
         $this->fillDependencies($request, $employee);
 
-        $this->event->fire('employee.update', $employee);
+        $this->event->dispatch('employee.update', $employee);
         return redirect()->route('dashboard.employee.index');
 
     }
@@ -109,7 +109,7 @@ class EmployeeService extends BaseService{
 
         $employee = $this->employee_repo->destroy($slug);
         return $employee;
-//        $this->event->fire('employee.destroy', $employee);
+//        $this->event->dispatch('employee.destroy', $employee);
 //        return redirect()->back();
 
     }

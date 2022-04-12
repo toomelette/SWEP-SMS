@@ -256,7 +256,7 @@ class UserController extends Controller{
 
 
     public function show($slug){
-        $user = User::where('slug',$slug)->first();
+        $user = User::query()->with('actions')->where('slug',$slug)->first();
 
         $user_submenus = UserSubmenu::with('submenu')->where('user_id', $user->user_id)->get();
         $tree = [];
@@ -285,7 +285,7 @@ class UserController extends Controller{
 
 
     public function edit($slug){
-        $all_menus = Menu::get();
+        $all_menus = Menu::query()->orderBy('name','asc')->get();
         $user = User::where('slug',$slug)->first();
         $user_submenus_arr = [];
         foreach ($user->userSubmenu as $submenu){
@@ -297,6 +297,8 @@ class UserController extends Controller{
             'user' => $user,
             'user_submenus_arr' => $user_submenus_arr,
         ]);
+
+
         return $this->user_service->edit($slug);
 
     }

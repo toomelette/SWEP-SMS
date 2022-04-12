@@ -45,7 +45,7 @@ class EmailContactService extends BaseService{
 
         $email_contact = $this->email_contact_repo->store($request);
 
-        $this->event->fire('email_contact.store', $email_contact);        
+        $this->event->dispatch('email_contact.store', $email_contact);
         return redirect()->back();
 
     }
@@ -69,7 +69,7 @@ class EmailContactService extends BaseService{
 
     	$email_contact = $this->email_contact_repo->update($request, $slug);
 
-        $this->event->fire('email_contact.update', $email_contact);
+        $this->event->dispatch('email_contact.update', $email_contact);
         return redirect()->route('dashboard.email_contact.index');
 
     }
@@ -82,7 +82,7 @@ class EmailContactService extends BaseService{
 
     	$email_contact = $this->email_contact_repo->destroy($slug);
 
-        $this->event->fire('email_contact.destroy', $email_contact);
+        $this->event->dispatch('email_contact.destroy', $email_contact);
         return redirect()->back();
 
     }

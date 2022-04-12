@@ -112,7 +112,7 @@ class LeaveCardService extends BaseService{
 
         $leave_card = $this->leave_card_repo->store($request, $year, $month, $days, $hrs, $mins, $credits);
 
-        $this->event->fire('leave_card.store', $leave_card);
+        $this->event->dispatch('leave_card.store', $leave_card);
         return redirect()->back();
 
     }
@@ -206,7 +206,7 @@ class LeaveCardService extends BaseService{
 
         $leave_card = $this->leave_card_repo->update($request, $year, $month, $days, $hrs, $mins, $credits, $slug);
 
-        $this->event->fire('leave_card.update', $leave_card);
+        $this->event->dispatch('leave_card.update', $leave_card);
         return redirect()->route('dashboard.leave_card.index');
 
     }
@@ -232,7 +232,7 @@ class LeaveCardService extends BaseService{
 
         $leave_card = $this->leave_card_repo->destroy($slug);
 
-        $this->event->fire('leave_card.destroy', $leave_card );
+        $this->event->dispatch('leave_card.destroy', $leave_card );
         return redirect()->back();
 
     }

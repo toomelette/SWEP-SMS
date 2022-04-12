@@ -45,7 +45,7 @@ class FundSourceService extends BaseService{
 
         $fund_source = $this->fund_source_repo->store($request);
 
-        $this->event->fire('fund_source.store');
+        $this->event->dispatch('fund_source.store');
         return redirect()->back();
 
     }
@@ -71,7 +71,7 @@ class FundSourceService extends BaseService{
 
         $fund_source = $this->fund_source_repo->update($request, $slug);
 
-        $this->event->fire('fund_source.update', $fund_source);
+        $this->event->dispatch('fund_source.update', $fund_source);
         return redirect()->route('dashboard.fund_source.index');
 
     }
@@ -85,7 +85,7 @@ class FundSourceService extends BaseService{
 
         $fund_source = $this->fund_source_repo->destroy($slug);
 
-        $this->event->fire('fund_source.destroy', $fund_source);
+        $this->event->dispatch('fund_source.destroy', $fund_source);
         return redirect()->back();
 
     }

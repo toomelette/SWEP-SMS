@@ -43,7 +43,7 @@ class SignatoryService extends BaseService{
 
         $signatory = $this->signatory_repo->store($request);
 
-        $this->event->fire('signatory.store');
+        $this->event->dispatch('signatory.store');
         return redirect()->back();
 
     }
@@ -69,7 +69,7 @@ class SignatoryService extends BaseService{
 
         $signatory = $this->signatory_repo->update($request, $slug);
 
-        $this->event->fire('signatory.update', $signatory);
+        $this->event->dispatch('signatory.update', $signatory);
         return redirect()->route('dashboard.signatory.index');
 
     }
@@ -83,7 +83,7 @@ class SignatoryService extends BaseService{
 
         $signatory = $this->signatory_repo->destroy($slug);
 
-        $this->event->fire('signatory.destroy', $signatory);
+        $this->event->dispatch('signatory.destroy', $signatory);
         return redirect()->back();
 
     }
