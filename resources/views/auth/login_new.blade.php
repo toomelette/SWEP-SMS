@@ -1,14 +1,12 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SRA Web Portal - AFD</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 
-    @include('layouts.css-plugins')
+    <link type="text/css" rel="stylesheet" href="{{asset('template/bower_components/font-awesome/css/font-awesome.min.css')}}">
+    <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
     <style>
+
         @charset "utf-8";
 
         * {
@@ -415,103 +413,94 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-green layout-top-nav">
-<div class="wrapper">
-    <header class="main-header">
+<body>
+<div class="limiter" id="login">
+    <div class="container-login100" style="background-image:url(https://i.ytimg.com/vi/fNzq5YasHX8/maxresdefault.jpg)">
+        <div class="container">
+            <div class="row">
 
-    </header>
-    <div class="content-wrapper">
-        <div class="limiter" id="login">
-            <div class="container-login100" style="background-image:url(https://i.ytimg.com/vi/fNzq5YasHX8/maxresdefault.jpg)">
-                <div class="container">
-                    <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-5 col-md-offset-3">
+                    <div class="login_topimg"> </div>
+                    <div class="wrap-login100">
+                        @if(Session::has('AUTH_AUTHENTICATED'))
+                            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_AUTHENTICATED')) !!}
+                        @endif
 
-                        <div class="col-md-6"></div>
-                        <div class="col-md-5 col-md-offset-3">
-                            <div class="login_topimg"> </div>
-                            <div class="wrap-login100">
-                                @if(Session::has('AUTH_AUTHENTICATED'))
-                                    {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_AUTHENTICATED')) !!}
-                                @endif
+                        @if(Session::has('AUTH_UNACTIVATED'))
+                            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_UNACTIVATED')) !!}
+                        @endif
 
-                                @if(Session::has('AUTH_UNACTIVATED'))
-                                    {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('AUTH_UNACTIVATED')) !!}
-                                @endif
+                        @if(Session::has('CHECK_UNAUTHENTICATED'))
+                            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_UNAUTHENTICATED')) !!}
+                        @endif
 
-                                @if(Session::has('CHECK_UNAUTHENTICATED'))
-                                    {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_UNAUTHENTICATED')) !!}
-                                @endif
+                        @if(Session::has('CHECK_NOT_LOGGED_IN'))
+                            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_LOGGED_IN')) !!}
+                        @endif
 
-                                @if(Session::has('CHECK_NOT_LOGGED_IN'))
-                                    {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_LOGGED_IN')) !!}
-                                @endif
+                        @if(Session::has('CHECK_NOT_ACTIVE'))
+                            {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
+                        @endif
 
-                                @if(Session::has('CHECK_NOT_ACTIVE'))
-                                    {!! __html::alert('danger', '<i class="icon fa fa-ban"></i> Oops!', Session::get('CHECK_NOT_ACTIVE')) !!}
-                                @endif
+                        @if(Session::has('PROFILE_UPDATE_USERNAME_SUCCESS'))
+                            {!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_USERNAME_SUCCESS')) !!}
+                        @endif
 
-                                @if(Session::has('PROFILE_UPDATE_USERNAME_SUCCESS'))
-                                    {!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_USERNAME_SUCCESS')) !!}
-                                @endif
+                        @if(Session::has('PROFILE_UPDATE_PASSWORD_SUCCESS'))
+                            {!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_PASSWORD_SUCCESS')) !!}
+                        @endif
 
-                                @if(Session::has('PROFILE_UPDATE_PASSWORD_SUCCESS'))
-                                    {!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PROFILE_UPDATE_PASSWORD_SUCCESS')) !!}
-                                @endif
+                        @if(Session::has('PASSWORD_RESET_SUCCESS'))
+                            {!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PASSWORD_RESET_SUCCESS')) !!}
+                        @endif
 
-                                @if(Session::has('PASSWORD_RESET_SUCCESS'))
-                                    {!! __html::alert('success', '<i class="icon fa fa-check"></i> Success!', Session::get('PASSWORD_RESET_SUCCESS')) !!}
-                                @endif
-
-                                @if(Session::has('PASSWORD_RESET_FAILED'))
-                                    {!! __html::alert('danger', '<i class="icon fa fa-times"></i> Success!', Session::get('PASSWORD_RESET_FAILED')) !!}
-                                @endif
-                                <form class="login100-form validate-form" action="{{ route('auth.login') }}" method="POST">
-                                    @csrf
-                                    <span class="login100-form-title "> SWEP </span>
-                                    <span class="login100-form-subtitle m-b-16"> SRA - Web Protal | Login </span>
-                                    @if ($errors->has('username'))
-                                        <span class="help-block" style="color: darkred"> {{ $errors->first('username') }}</span>
-                                    @endif
-                                    <div class="wrap-input100 validate-input m-b-16" data-validate="Valid email is required: ex@abc.xyz">
-                                        <input class="input100" type="text" name="username" id="username" placeholder="Username" type="text" value="{{ __sanitize::html_attribute_encode(old('username')) }}">
-                                        <span class="focus-input100"></span>
-                                        <span class="symbol-input100">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </span>
-                                    </div>
-                                    @if ($errors->has('password'))
-                                        <span class="help-block" style="color: darkred">{{ $errors->first('password') }}</span>
-                                    @endif
-                                    <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
-                                        <input class="input100" type="password" name="password" id="password" placeholder="Password">
-                                        <span class="focus-input100"></span>
-                                            <span class="symbol-input100">
-                                                <span class="glyphicon glyphicon-lock"></span>
-                                            </span>
-                                    </div>
-
-
-
-
-                                    <div class="flex-sb-m w-full p-b-30">
-
-                                        <div><a href="#" class="txt1" data-toggle="modal" data-target="#reset_modal">Forgot username/password? Click here</a> </div>
-                                    </div>
-                                    <div class="container-login100-form-btn p-t-25">
-                                        <button class="login100-form-btn" type="submit"> Login </button>
-                                    </div>
-                                </form>
+                        @if(Session::has('PASSWORD_RESET_FAILED'))
+                            {!! __html::alert('danger', '<i class="icon fa fa-times"></i> Success!', Session::get('PASSWORD_RESET_FAILED')) !!}
+                        @endif
+                        <form class="login100-form validate-form" action="{{ route('auth.login') }}" method="POST">
+                            @csrf
+                            <span class="login100-form-title "> Login </span>
+                            <span class="login100-form-subtitle m-b-16"> to your account </span>
+                            <div class="wrap-input100 validate-input m-b-16" data-validate="Valid email is required: ex@abc.xyz">
+                                <input class="input100" type="text" name="username" id="username" placeholder="Username" type="text" value="{{ __sanitize::html_attribute_encode(old('username')) }}">
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
                             </div>
-                        </div>
+
+                            <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
+                                <input class="input100" type="password" name="password" id="password" placeholder="Password">
+                                <span class="focus-input100"></span>
+
+                                <span class="symbol-input100">
+                                    <span class="glyphicon glyphicon-lock"></span>
+                                </span>
+                            </div>
+
+                            @if ($errors->has('username'))
+                                <span class="help-block" style="color: darkred"> {{ $errors->first('username') }}</span>
+                            @endif
+
+                            @if ($errors->has('password'))
+                                <span class="help-block" style="color: darkred">{{ $errors->first('password') }}</span>
+                            @endif
+                            <div class="flex-sb-m w-full p-b-30">
+
+                                <div><a href="#" class="txt1" data-toggle="modal" data-target="#reset_modal">Forgot username/password? Click here</a> </div>
+                            </div>
+                            <div class="container-login100-form-btn p-t-25">
+                                <button class="login100-form-btn" type="submit"> Login </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </div>
+
 <div class="modal fade" id="reset_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" style="width: 20%" role="document">
         <div class="modal-content">
@@ -559,7 +548,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-search"></i> Search</button>
-                                    </div>
+                                    </div>p
                                 </div>
                             </form>
                         </div>
@@ -570,121 +559,8 @@
         </div>
     </div>
 </div>
-@include('layouts.js-plugins')
-
-
-
-<script type="text/javascript">
-    $("#search_username_form").submit(function (e) {
-        e.preventDefault();
-        form = $(this);
-        loading_btn(form);
-        $.ajax({
-            url : '{{route("auth.username_lookup")}}',
-            data : form.serialize(),
-            type: 'POST',
-            headers: {
-                {!! __html::token_header() !!}
-            },
-            success: function (res) {
-                Swal.fire({
-                    title: 'User found!',
-                    icon: 'success',
-                    html:
-                        'Name: <b>'+res.fullname+'</b><br>' +
-                        'Username: <b>'+res.username+'</b>',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText:
-                        '<i class="fa fa-check"></i> Done',
-                    confirmButtonAriaLabel: 'Thumbs up, great!',
-                    cancelButtonText:
-                        '<i class="fa fa-thumbs-down"></i>',
-                    cancelButtonAriaLabel: 'Thumbs down'
-                });
-                form.get(0).reset();
-                remove_loading_btn(form);
-            },
-            error: function (res) {
-                errored(form,res);
-            }
-        })
-    })
-
-    $('#reset_modal').on('shown.bs.modal', function() {
-        $(document).off('focusin.modal');
-    });
-
-
-    $("#reset_password_form").submit(function (e) {
-        e.preventDefault();
-        form = $(this);
-        loading_btn(form);
-        $.ajax({
-            url : '{{route("auth.reset_password")}}',
-            data : form.serialize(),
-            type: 'POST',
-            headers: {
-                {!! __html::token_header() !!}
-            },
-            success: function (res) {
-                remove_loading_btn(form);
-                Swal.fire({
-                    title: 'Verify your email address',
-                    input: 'text',
-                    html: 'Please enter your email address below: <br> <b>'+res.email+'</b>',
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Verify',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (email) => {
-                        return $.ajax({
-                            url : '{{route('auth.verify_email')}}',
-                            type: 'POST',
-                            data: {'email':email,'slug':res.slug},
-                            headers: {
-                                {!! __html::token_header() !!}
-                            },
-                        })
-                            .then(response => {
-                                return  response;
-                            })
-                            .catch(error => {
-                                console.log(error);
-                                Swal.showValidationMessage(
-                                    'Error : '+ error.responseJSON.message,
-                                )
-                            })
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: 'A link was sent to your email. Please check your spam messages also.',
-                            icon : 'success',
-                        })
-                    }
-                })
-            },
-            error: function (res) {
-                console.log(res);
-                if(res.status == 503){
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: res.responseJSON.message,
-                    })
-                }
-                errored(form,res);
-            }
-        })
-    })
-</script>
-
-
-
 </body>
+<script>
+
+</script>
 </html>
