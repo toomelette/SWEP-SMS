@@ -25,7 +25,7 @@ $max = 2;
 
                         <div class="box-header with-border">
                             <div class="user-block">
-                                <span class="username" style="margin-left: 0"><a href="#">{{$announcement->title}}</a></span>
+                                <span class="username" style="margin-left: 0"><a href="#" data-widget="collapse">{{$announcement->title}}</a></span>
                                 <span class="description" style="margin-left: 0">
                                     Posted:
                                     {{\Illuminate\Support\Carbon::parse($announcement->created_at)->format('F d, Y | h:i A')}}

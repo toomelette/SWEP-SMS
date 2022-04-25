@@ -234,9 +234,9 @@ class HomeController extends Controller{
             ]);
         }
 
-        if(Auth::user()->dash == ''){
-            return redirect('/dashboard/dtr/my_dtr');
-        }
+//        if(Auth::user()->dash == ''){
+//            return redirect('/dashboard/dtr/my_dtr');
+//        }
     	return $this->home->view();
     }
 }
