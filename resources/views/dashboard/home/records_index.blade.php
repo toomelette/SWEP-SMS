@@ -23,7 +23,7 @@
     ?>
 
     <section class="content">
-        @include('dashboard.home.announcement')
+
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
@@ -82,6 +82,8 @@
             <!-- ./col -->
         </div>
 
+        @include('dashboard.home.announcement')
+        
         <div class="row">
             <div class="col-md-10">
                 <div class="panel">

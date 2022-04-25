@@ -59,7 +59,6 @@ class NewsController extends Controller
 
     public function store(NewsFormRequest $request){
         $ct = 0;
-
         $news = new News;
         $news->slug = Str::random();
         $news->title = $request->title;
@@ -70,7 +69,7 @@ class NewsController extends Controller
         $news->is_active = 1;
         if($news->save()){
         $attachmentsArray = [];
-            if(count($request->file('doc_file')) > 0 ){
+            if(!empty($request->doc_file)){
                 foreach ($request->file('doc_file') as $file){
                     $original_ext = $file->getClientOriginalExtension();
                     $original_file_name_only = str_replace('.'.$original_ext,'',$file->getClientOriginalName());

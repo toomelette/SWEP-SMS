@@ -5,17 +5,18 @@ $announcements = \App\Models\News::query()
             ->orderBy('created_at','desc')
             ->get();
 $ct = 0;
+$max = 2;
 @endphp
 
 @if($announcements->count() > 0)
         <div class="panel" >
             <div class="panel-body">
                 <label><span><i class="fa fa-bell-o"></i> Bulletin:</span></label>
-                <hr class="no-margin">
-                <div style="overflow-x: hidden" >
+                <hr class="no-margin" style="margin-bottom: 10px !important;">
+                <div style="overflow-x: hidden; max-height: 350px" >
                     @foreach($announcements as $announcement)
                         @php($ct++)
-                    <div class="box box-widget {{($ct > 1) ? 'collapsed-box' : ''}}" style="border: 1px solid #d7d7d7"
+                    <div class="box box-widget {{($ct > 0) ? 'collapsed-box' : ''}}" style="border: 1px solid #d7d7d7"
                          @if(\Illuminate\Support\Facades\Request::get('initiator') == $announcement->slug)
                          data-step="1"
                             data-intro="{{$announcement->title}}"
@@ -26,10 +27,12 @@ $ct = 0;
                             <div class="user-block">
                                 <span class="username" style="margin-left: 0"><a href="#">{{$announcement->title}}</a></span>
                                 <span class="description" style="margin-left: 0">
+                                    Posted:
                                     {{\Illuminate\Support\Carbon::parse($announcement->created_at)->format('F d, Y | h:i A')}}
                                     -
                                     Expires on: {{\Illuminate\Support\Carbon::parse($announcement->expires_on)->format('F d, Y | h:i A')}}
                                 </span>
+                                <span class="text-info small">{{$announcement->author}} {{($announcement->author_position != '')? ' - '.$announcement->author_position : ''}}</span>
                             </div>
 
                             <div class="box-tools">
@@ -39,7 +42,7 @@ $ct = 0;
 
                         </div>
 
-                        <div class="box-body" {{($ct > 1) ? 'style=display:none' : ''}}>
+                        <div class="box-body" {{($ct > 0) ? 'style=display:none' : ''}}>
                             <p>{!! $announcement->details !!}</p>
 
                             @if($announcement->attachments->count() > 0)
@@ -70,6 +73,7 @@ $ct = 0;
 
                                 </div>
                             @endif
+
                         </div>
 
                     </div>

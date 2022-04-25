@@ -7,7 +7,7 @@
     </section>
 
     <section class="content">
-        @include('dashboard.home.announcement')
+
 
         <div class="row">
             <div class="col-lg-3 col-xs-6">
@@ -104,6 +104,8 @@
                 </div>
             </div>
         </div>
+        @include('dashboard.home.announcement')
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel">

@@ -7,7 +7,7 @@
 </section>
 
 <section class="content">
-  @include('dashboard.home.announcement')
+
 
   <div class="row">
 
@@ -65,7 +65,7 @@
 
   </div>
 
-
+  @include('dashboard.home.announcement')
 
   <div class="row">
     {!! __chart::div_flot_bar('6', 'emp_by_dept_bar' ,'Employee by Department') !!}

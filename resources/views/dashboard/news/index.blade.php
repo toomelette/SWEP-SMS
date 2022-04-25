@@ -252,6 +252,7 @@
             { "data": "attachments" },
             { "data": "action" }
         ],
+        "order" : [[2,'desc']],
         "buttons": [
             {!! __js::dt_buttons() !!}
         ],
