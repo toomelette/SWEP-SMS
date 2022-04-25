@@ -55,7 +55,7 @@ $ct = 0;
                                                 <div class="mailbox-attachment-info">
                                                     <a href="{{route('dashboard.news.view_doc',$attachment->id)}}" target="_blank" class="mailbox-attachment-name">
                                                         <i class="fa fa-paperclip"></i>
-                                                        {{$attachment->file}}
+                                                        {{\Illuminate\Support\Str::limit($attachment->file,40,'...')}}
                                                     </a>
                                                     <span class="mailbox-attachment-size">
 

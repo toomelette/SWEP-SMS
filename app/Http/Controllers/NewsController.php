@@ -75,8 +75,9 @@ class NewsController extends Controller
                     $original_ext = $file->getClientOriginalExtension();
                     $original_file_name_only = str_replace('.'.$original_ext,'',$file->getClientOriginalName());
                     $new_file_name_full = $original_file_name_only.'-'.Str::random(10).'.'.$original_ext;
-                    Storage::disk('local')->putFileAs('news/',$file,$new_file_name_full);
+                    //Storage::disk('local')->putFileAs('news/',$file,$new_file_name_full);
 
+                    $file->storeAs('news/',$new_file_name_full);
                     $arr = [
                         'news' => $news->slug,
                         'file' => $new_file_name_full,
