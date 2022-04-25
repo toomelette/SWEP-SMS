@@ -22,8 +22,8 @@
 
     ?>
 
-
     <section class="content">
+        @include('dashboard.home.announcement')
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
@@ -315,6 +315,12 @@
             });
 
         });
+
+        $(document).ready(function () {
+            @if(request()->has('initiator') && request('initiator') != '')
+            introJs().start();
+            @endif
+        })
 
     </script>
 

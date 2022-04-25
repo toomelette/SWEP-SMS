@@ -283,7 +283,7 @@ class __form{
        return '<div class="form-group col-md-'. $class .' '. self::error_response($error_has) .'">
                 <label for="'. $key .'">'. $label .'</label>
                 <div class="file-loading">
-                  <input class="file" name="'. $key .'" id="'. $key .'" type="file" '. $extra_attr .'>
+                  <input class="file" name="'. $key .'" id="'. $key .'" type="file" '. $extra_attr .' multiple >
                 </div>
                 '. self::error_message($error_has, $error_first) .'
               </div>';

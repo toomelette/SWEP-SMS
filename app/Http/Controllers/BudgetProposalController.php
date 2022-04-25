@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\BudgetProposal\BudgetProposalFormRequest;
-use App\Models\RecommendedBudget;
+use App\Models\PPU\RecommendedBudget;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -14,16 +14,14 @@ use Yajra\DataTables\Html\Builder;
 class BudgetProposalController extends Controller
 {
     public function create(){
-        return view('dashboard.recommended_budget.create');
+        return view('ppu.recommended_budget.create');
     }
 
     public function index(Request $request,Builder $builder){
 
         if(request()->ajax() && $request->has('draw')){
 
-            $rec_budget = RecommendedBudget::query()
-                ->where('fiscal_year','=',$request->fiscal_year)
-                ->where('resp_center','=',$request->resp_center);
+            $rec_budget = RecommendedBudget::query();
 
             return DataTables::of($rec_budget)
                 ->addColumn('action',function ($data){
@@ -93,12 +91,14 @@ class BudgetProposalController extends Controller
         }
 
         if($request->has('fiscal_year') && $request->has('resp_center') && $request->resp_center != null && $request->fiscal_year != null){
-            return view('dashboard.recommended_budget.index')->with([
+            return view('ppu.recommended_budget.index')->with([
                 'request' => $request,
             ]);
         }
-
-        return view('dashboard.recommended_budget.pre_index')->with([
+        return view('ppu.recommended_budget.index')->with([
+            'request' => $request,
+        ]);
+        return view('ppu.recommended_budget.pre_index')->with([
             'action' => route('dashboard.budget_proposal.index'),
         ]);
     }
@@ -135,9 +135,9 @@ class BudgetProposalController extends Controller
     }
 
     public function store(BudgetProposalFormRequest $request){
-        if(!$request->has('fiscal_year') || !$request->has('resp_center') || $request->fiscal_year == '' || $request->resp_center == ''){
-            abort(503,'No year and responsibility center assigned.');
-        }
+        $year = $request->year;
+        $resp_center = $request->resp_center;
+        abort(500,substr($request->year,2,4).'-'.$resp_center.'-');
         $bp  = new RecommendedBudget;
         $bp->slug = Str::random(16);
         $bp->pap_title = $request->pap_title;
@@ -155,7 +155,6 @@ class BudgetProposalController extends Controller
         if($bp->save()){
             return $bp->only('slug');
         }
-
     }
 
     private function findBySlug($slug){
@@ -167,7 +166,7 @@ class BudgetProposalController extends Controller
     }
     public function edit($slug){
         $pap = $this->findBySlug($slug);
-        return view('dashboard.recommended_budget.edit')->with([
+        return view('ppu.recommended_budget.edit')->with([
             'pap' => $pap,
         ]);
     }

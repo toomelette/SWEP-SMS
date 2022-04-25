@@ -4,7 +4,7 @@
 namespace App\Swep\Helpers;
 use App\Models\Department;
 use App\Models\MisRequestsNature;
-use App\Models\RecommendedBudget;
+use App\Models\PPU\RecommendedBudget;
 use App\Models\SuSettings;
 use Carbon;
 use Illuminate\Support\Facades\Auth;

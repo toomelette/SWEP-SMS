@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'mysql_ppu' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_PPU', '127.0.0.1'),
+            'port' => env('DB_PORT_PPU', '3306'),
+            'database' => env('DB_DATABASE_PPU', 'forge'),
+            'username' => env('DB_USERNAME_PPU', 'forge'),
+            'password' => env('DB_PASSWORD_PPU', ''),
+            'unix_socket' => env('DB_SOCKET_PPU', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
         'server5' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_SERVER5', '10.36.1.17'),

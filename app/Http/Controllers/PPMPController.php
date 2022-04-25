@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\PPMP\PPMPFormRequest;
 use App\Models\PapParent;
-use App\Models\PPMP;
+use App\Models\PPU\PPMP;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,6 +16,7 @@ use Yajra\DataTables\DataTables;
 class PPMPController extends Controller
 {
     public function index(Request $request){
+
         if($request->ajax() && $request->has('draw')){
             $ppmps = PPMP::query()->with('pap');
             return DataTables::of($ppmps)
@@ -76,17 +77,18 @@ class PPMPController extends Controller
                 ->make(true);
         }
         if($request->has('fiscal_year') && $request->has('resp_center') && $request->resp_center != null && $request->fiscal_year != null){
-            return view('dashboard.ppmp.index')->with([
+
+            return view('ppu.ppmp.index')->with([
                 'request' => $request,
             ]);
         }
 
 
-        return view('dashboard.recommended_budget.pre_index')->with([
+        return view('ppu.recommended_budget.pre_index')->with([
             'action' => route('dashboard.ppmp.index'),
         ]);
 
-        return view('dashboard.ppmp.index');
+        return view('ppu.ppmp.index');
     }
 
     public function store(PPMPFormRequest $request){
@@ -134,7 +136,7 @@ class PPMPController extends Controller
     }
     public function edit($slug){
         $ppmp = $this->findBySlug($slug);
-        return view('dashboard.ppmp.edit')->with([
+        return view('ppu.ppmp.edit')->with([
             'ppmp' => $ppmp,
         ]);
     }

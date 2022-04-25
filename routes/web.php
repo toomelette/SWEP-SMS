@@ -64,6 +64,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('/profile/work_experience_store','ProfileController@workExperienceStore')->name('profile.work_experience_store');
 
     Route::post('/profile/select_theme','ProfileController@selectTheme')->name('profile.select_theme');
+
+    Route::get('/view_doc/{id}','NewsController@viewDoc')->name('news.view_doc');
 });
 
 /** Dashboard **/
@@ -240,6 +242,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('jo_employees','JOEmployeesController');
 
     /** DTR **/
+    Route::resource('news','NewsController');
+
+    /** DTR **/
     Route::get('holidays/fetch_google','HolidayController@fetchGoogleApi')->name('holidays.fetch_google');
     Route::resource('holidays','HolidayController');
 
@@ -260,6 +265,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     /** PPMP **/
     Route::resource('ppmp', 'PPMPController');
+
+    /** PPDO **/
+    Route::resource('ppdo', 'PPU\PPDOController');
 });
 
 
@@ -481,88 +489,6 @@ Route::get('/fix_dates',function (Request $request){
     }
     return 111;
 });
-
-//Route::get('/migrate_cos',function (){
-//   $coss = \App\Models\JoEmployees::query()->get();
-//   $employee = \App\Models\Employee::query();
-//   $empsArr = [];
-//   $addressesArr = [];
-//   foreach ($coss as $cos){
-//       $cosArr = [
-//           'employee_no' => $cos->employee_no,
-//           'firstname' => strtoupper($cos->firstname),
-//           'middlename' => strtoupper($cos->middlename),
-//           'lastname' => strtoupper($cos->lastname),
-//           'biometric_user_id' => $cos->biometric_user_id,
-//           'created_at' => $cos->created_at,
-//           'updated_at' => $cos->updated_at,
-//           'name_ext' => $cos->name_ext,
-//           'sex' => $cos->sex,
-//           'civil_status' => strtoupper($cos->civil_status),
-//           'date_of_birth' => $cos->birthday,
-//           'email' => $cos->email,
-//           'cell_no' => $cos->phone,
-//           'department_unit_id' => $cos->department_unit,
-//           'position' => $cos->position,
-//           'user_created' => $cos->user_created,
-//           'user_updated' => $cos->user_updated,
-//           'ip_created'=> $cos->ip_created,
-//           'ip_updated' => $cos->ip_updated,
-//           'slug' => $cos->slug,
-//           'locations' => 'COS',
-//           'is_active' => 'ACTIVE',
-//           'fullname' => strtoupper($cos->lastname).', '.strtoupper($cos->firstname),
-//       ];
-//       $cos_add = [
-//            'employee_no'=> $cos->employee_no,
-//            'address_detailed' => $cos->address_detailed,
-//            'res_address_barangay' => $cos->brgy,
-//            'res_address_city' => $cos->city,
-//            'res_address_province' => $cos->province,
-//       ];
-//       array_push($empsArr,$cosArr);
-//       array_push($addressesArr,$cos_add);
-//   }
-//   $employee->insert($empsArr);
-////   \App\Models\EmployeeAddress::query()->insert($addressesArr);
-//
-//   return 1;
-//});
-//
-//Route::get('/update_locations',function (){
-//    $emps = \App\Models\Employee::query()->where('locations','=',null)->get();
-//    foreach ($emps as $emp){
-//        if(!empty($emp->empMaster)){
-//            $emp->locations = $emp->empMaster->LOCATION;
-//            $emp->update();
-//        }
-//    }
-//});
-//
-//Route::get('/update_emp_no',function (){
-//    $emps = \App\Models\Employee::query()->where('locations','=','COS')->get();
-//    foreach ($emps as $emp){
-//        $new_emp_no = str_replace('221','222',$emp->employee_no);
-//
-//        $emp->employeeAddress()->update([
-//            'employee_no' => $new_emp_no,
-//        ]);
-//        $emp->user()->update([
-//            'employee_no' => $new_emp_no,
-//        ]);
-//        $emp->dtr_records()->update([
-//            'employee_no' => $new_emp_no,
-//        ]);
-//
-//        $emp->documentDisseminationLog()->update([
-//            'employee_no' => $new_emp_no,
-//        ]);
-//        $emp->employee_no = $new_emp_no;
-//        $emp->update();
-//
-//    }
-//    return 1;
-//});
 
 
 Route::get('/import_service_records',function (){
@@ -911,12 +837,26 @@ Route::get('/get_emp_no',function (){
     }
 });
 
-Route::get('/sys_remarks', function (){
-    $emps = \App\Models\EmployeeServiceRecord::query()->where('remarks','=','IMPORTED')->get();
-    foreach ($emps as $emp){
-        $emp->system_remarks = 'IMPORTED';
-        $emp->remarks = null;
-        $emp->update();
+//Route::get('/sys_remarks', function (){
+//    $emps = \App\Models\EmployeeServiceRecord::query()->where('remarks','=','IMPORTED')->get();
+//    foreach ($emps as $emp){
+//        $emp->system_remarks = 'IMPORTED';
+//        $emp->remarks = null;
+//        $emp->update();
+//    }
+//    return 'done';
+//});
+
+Route::get('/item_employees',function (){
+    $emps = \App\Models\Employee::query()->where('item_no','!=',0)->where('item_no','!=',null)->get();
+    $itemsArr  = [];
+    foreach ($emps as $emp) {
+        array_push($itemsArr,[
+            'item_no' => $emp->item_no,
+            'employee_no' => $emp->employee_no,
+            'appointment_date' => $emp->appointment_date,
+        ]);
     }
-    return 'done';
+    \App\Models\HrPayPlantillaEmployees::insert($itemsArr);
+    return 'dione';
 });

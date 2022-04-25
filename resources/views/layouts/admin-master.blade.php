@@ -38,7 +38,7 @@
               </div>
             @endif
           @endif
-
+            @include('dashboard.home.announcement_banner')
 
         @yield('content')
         @yield('content2')
@@ -225,6 +225,24 @@
           $("#filter-notifier").html('');
         }
       }
+
+      $("body").on("click",".close_bulletin_btn",function () {
+        let btn = $(this);
+        $.ajax({
+            url : '{{route("dashboard.ajax.get","close_bulletin")}}',
+            data: {last_slug: btn.attr('data')},
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+               btn.parent('div').remove();
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+      })
 
     </script>
 

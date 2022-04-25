@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models;
+namespace App\Models\PPU;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,7 @@ class PPMP extends Model
         });
     }
 
-
+    protected $connection = 'mysql_ppu';
     protected $table = 'ppu_ppmp';
 
     public function pap(){

@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class AjaxController extends Controller
@@ -25,6 +28,13 @@ class AjaxController extends Controller
                             ])->render(),
                 'rand' => $rand,
             ];
+        }
+
+        if($for == 'close_bulletin'){
+            $last_slug = request('last_slug');
+            Session::put('last_slug',$last_slug);
+
+            return Session::get('last_slug');
         }
     }
 }

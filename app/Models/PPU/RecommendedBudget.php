@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models;
+namespace App\Models\PPU;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -57,6 +57,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class RecommendedBudget extends Model
 {
+    protected $connection = 'mysql_ppu';
     public $table = 'ppu_rec_budget';
     protected $attributes = [
         'ps' => 0.00,

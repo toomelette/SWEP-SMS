@@ -7,7 +7,7 @@
 </section>
 
 <section class="content">
-
+  @include('dashboard.home.announcement')
 
   <div class="row">
 
@@ -122,6 +122,12 @@
 
 
     });
+
+    $(document).ready(function () {
+      @if(request()->has('initiator') && request('initiator') != '')
+        introJs().start();
+      @endif
+    })
 
 </script>
 

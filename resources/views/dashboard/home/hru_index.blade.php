@@ -7,6 +7,8 @@
     </section>
 
     <section class="content">
+        @include('dashboard.home.announcement')
+
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <div class="small-box bg-aqua">
@@ -126,7 +128,7 @@
             <div class="col-md-12">
                 <div class="panel">
                     <div class="panel-body">
-                        <center><label><span for="month_name_adj">{{Carbon::now()->format('Y')}}</span> | Employees' Milestone</label>
+                        <center><label><span for="">{{Carbon::now()->format('Y')}}</span> | Employees' Milestone</label>
                         <hr class="no-margin">
                         <div style="max-height: 355px;overflow-x: hidden; padding-top: 15px" id="" >
                             <div class="nav-tabs-custom">
@@ -422,6 +424,12 @@
             },
         });
 
+    })
+
+    $(document).ready(function () {
+        @if(request()->has('initiator') && request('initiator') != '')
+        introJs().start();
+        @endif
     })
 </script>
 

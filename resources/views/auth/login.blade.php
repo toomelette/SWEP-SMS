@@ -616,7 +616,6 @@
         $(document).off('focusin.modal');
     });
 
-
     $("#reset_password_form").submit(function (e) {
         e.preventDefault();
         form = $(this);

@@ -69,25 +69,26 @@
                         @else
                             <div class="row">
 
-                                {!! __form::select_year(6, 'Year', 'year', [] , '', '') !!}
+                                {!! \App\Swep\ViewHelpers\__form2::select('year',[
+                                    'label' => 'Fiscal Year:',
+                                    'cols' => 6,
+                                    'options' => 'year',
+                                ]) !!}
 
                                 {!!
                                     __form::select_static2(6, 'resp_center', 'Responsibility Center: ',request('resp_center'),
-                                    \App\Swep\Helpers\Helper::responsibilityCenters()
+                                    \App\Swep\Helpers\PPUHelpers::respCentersArray()
                                     , '', '', '', '')
                                    !!}
                             </div>
                         @endif
-                        <hr style="border: 1px dashed #1b7e5a; margin-top: 3px;margin-bottom: 5px">
+
                         <div class="row">
-                            {!! \App\Swep\ViewHelpers\__form2::textbox('pap_code',[
-                                'cols' => 6,
-                                'label' => 'PAP Code:',
-                            ]) !!}
+
 
                             {!! \App\Swep\ViewHelpers\__form2::select('budget_type',[
                                 'cols' => 6,
-                                'label' => 'Budget Types:',
+                                'label' => 'Budget Type:',
                                 'options' => [
                                     'COB' => 'Corporate',
                                     'SIDA' => 'SIDA',
@@ -104,22 +105,6 @@
 
                         </div>
 
-                        <div class="row">
-                            {!! \App\Swep\ViewHelpers\__form2::textbox('division',[
-                                'cols' => 12,
-                                'label' => 'Division:*',
-                                'id' => 'division',
-                                'autocomplete' => 'off'
-                            ]) !!}
-                        </div>
-                        <div class="row">
-                            {!! \App\Swep\ViewHelpers\__form2::textbox('section',[
-                                'cols' => 12,
-                                'label' => 'Section:',
-                                'id' => 'section',
-                                'autocomplete' => 'off',
-                            ]) !!}
-                        </div>
                         <div class="row">
                             {!! \App\Swep\ViewHelpers\__form2::textarea('pap_desc',[
                                 'cols' => 12,
@@ -200,7 +185,7 @@
         //Initialize DataTable
         var active = '';
         pap_tbl = $("#rec_budget_table").DataTable({
-            "ajax" : '{{route("dashboard.budget_proposal.index")}}?{!! Request::getQueryString() !!}',
+            "ajax" : '{{\Illuminate\Support\Facades\Request::url()}}',
             'rowGroup': {
                 'dataSrc': 'division'
             },

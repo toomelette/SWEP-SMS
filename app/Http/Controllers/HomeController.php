@@ -11,6 +11,7 @@ use App\Models\EmailContact;
 use App\Models\Employee;
 use App\Models\JoEmployees;
 use App\Models\LeaveApplication;
+use App\Models\News;
 use App\Models\PermissionSlip;
 use App\Swep\Services\HomeService;
 use Carbon\Carbon;
@@ -90,9 +91,13 @@ class HomeController extends Controller{
         ])->render();
     }
     public function index(){
+//        $announcements = News::query()
+//            ->where('expires_on','>',Carbon::now()->format('Y-m-d H:i:s'))
+//            ->where('is_active','=',1)
+//            ->orderBy('created_at','asc')
+//            ->get();
+
         if(Auth::user()->dash == 'hru'){
-
-
             if(request()->ajax() && request()->has('bday')){
                 $new_next = str_pad(request('month')+1,2,0,STR_PAD_LEFT);
                 $new_prev = str_pad(request('month')-1,2,0,STR_PAD_LEFT);

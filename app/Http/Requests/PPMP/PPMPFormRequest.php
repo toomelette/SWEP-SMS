@@ -20,11 +20,11 @@ class PPMPFormRequest extends FormRequest
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('ppu_ppmp','ppmp_code')->ignore($this->request->get('slug'),'slug'),
+                Rule::unique('mysql_ppu.ppu_ppmp','ppmp_code')->ignore($this->request->get('slug'),'slug'),
             ],
             'pap_code' => [
                 'required',
-                Rule::exists('ppu_rec_budget','pap_code'),
+                Rule::exists('mysql_ppu.ppu_rec_budget','pap_code'),
             ],
             'mode_of_proc' => [
                 'required',

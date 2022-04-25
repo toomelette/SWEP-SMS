@@ -37,7 +37,11 @@ class __html{
 			    
     }
 
-
+    public static function line($text = ''){
+        return '<p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                '.$text.'
+                            </p>';
+    }
 
     public static function modal_delete($id){
 

@@ -14,6 +14,7 @@
     </section>
 @endsection
 @section('content2')
+
     <section class="content">
         <div class="box box-success">
             <div class="box-header with-border" >

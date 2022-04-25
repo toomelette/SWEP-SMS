@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Plantilla;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlantillaFormRequest extends FormRequest{
    
@@ -22,11 +23,20 @@ class PlantillaFormRequest extends FormRequest{
     public function rules(){
 
         return [
-
-            'department_unit_id' => 'required|max:11|string',
-            'name' => 'required|max:255|string',
-            'is_vacant' => 'required|max:11|string',
-
+            'item_no' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('hr_pay_plantilla','item_no')->ignore($this->request->get('id'),'item_no'),
+            ],
+            'position' => 'required|string|max:255',
+            'original_job_grade' => 'required|int|max:50',
+            'original_job_grade_si' => 'required|int|max:8',
+            'employee_no' => [
+                'nullable',
+                'string',
+                Rule::exists('hr_employees','employee_no'),
+            ]
         ];
     
     }
