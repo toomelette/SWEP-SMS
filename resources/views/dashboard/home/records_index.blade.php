@@ -83,7 +83,7 @@
         </div>
 
         @include('dashboard.home.announcement')
-        
+
         <div class="row">
             <div class="col-md-10">
                 <div class="panel">
@@ -320,7 +320,10 @@
 
         $(document).ready(function () {
             @if(request()->has('initiator') && request('initiator') != '')
-            introJs().start();
+            $("#hide_show_{{request('initiator')}}").trigger('click');
+            setTimeout(function () {
+                introJs().start();
+            },500);
             @endif
         })
 

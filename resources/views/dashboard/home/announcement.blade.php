@@ -36,7 +36,7 @@ $max = 2;
                             </div>
 
                             <div class="box-tools">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"> </i> Hide/Show
+                                <button type="button" id="hide_show_{{$announcement->slug}}" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"> </i> Hide/Show
                                 </button>
                             </div>
 
