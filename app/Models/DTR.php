@@ -47,4 +47,8 @@ class DTR extends Model
     public function permanentEmployees(){
         return $this->hasOne('App\Models\Employee','biometric_user_id','user');
     }
+
+    public function employee(){
+        return $this->hasOne(Employee::class,'biometric_user_id','user');
+    }
 }

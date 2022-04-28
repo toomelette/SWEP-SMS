@@ -74,28 +74,23 @@ class BiometricDevicesController extends Controller
     }
     public function attendances(Request $request){
         if($request->has('draw')){
+
             if ($request->has('device')){
-                $e = Employee::query()->select('lastname','firstname','biometric_user_id',DB::raw('CONCAT(lastname,", ",firstname) as fullname'));
-                $j = JoEmployees::query()->select('lastname','firstname','biometric_user_id',DB::raw('CONCAT(lastname,", ",firstname) as fullname'));
-                $union = $e->union($j);
-//                $dtrs = DTR::query()->join()               ;
-//                ->select(['x.*', 'hr_dtr.*'])
+                $dtrs = DTR::query()->with(['employee']);
 
-                $q = DB::table('hr_dtr')->where('device','=',$request->device);
-                $q->leftJoin(DB::raw("({$union->toSql()}) as x") ,'x.biometric_user_id','=', 'hr_dtr.user');
-
-//                 $y = DB::table(DB::raw("({$q->toSql()}) as y"))->toSql();
-                return DataTables::of($q)
+                $dt = DataTables::of($dtrs)
                     ->editColumn('fullname',function($data){
-                        if($data->fullname == ''){
+                        if(empty($data->employee)){
                             return $data->user;
                         }
-                        return strtoupper($data->fullname);
+                        return strtoupper($data->employee->lastname).', '.strtoupper($data->employee->firstname);
                     })
                     ->editColumn('type',function ($data){
                         return Helper::dtr_type($data->type);
                     })
                     ->toJson();
+
+                return $dt;
             }
         }
 
