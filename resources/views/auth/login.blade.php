@@ -422,7 +422,7 @@
     </header>
     <div class="content-wrapper">
         <div class="limiter" id="login">
-            <div class="container-login100" style="background-image:url(https://i.ytimg.com/vi/fNzq5YasHX8/maxresdefault.jpg)">
+            <div class="container-login100" style="background-image:url({{asset('images/sugar.jpg')}})">
                 <div class="container">
                     <div class="row">
 

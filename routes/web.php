@@ -369,50 +369,7 @@ Route::get('check_device',function (\App\Swep\Services\DTRService $DTRService){
 //    return $DTRService->clearAttendance('10.36.1.23');
 });
 
-Route::get('dashboard/set', function (){
-    if(request()->ajax()){
-        if(request()->has('set')){
-            $zk = new ZKTeco('10.36.1.'.request()->get('dev'));
-            $zk->connect();
-            $zk->setTime(request()->get('date').' '.request()->get('time'));
-            return 1;
-        }
-        if (request()->has('reset')){
-            $zk = new ZKTeco('10.36.1.'.request()->get('dev'));
-            $zk->connect();
-            $zk->setTime(\Carbon\Carbon::now()->format('Y-m-d H:i:s'));
-            return 1;
-        }
-        if(request()->has('verify')){
-            if(request()->get('password') === 'superadmin'){
-                request()->session()->put('verify',['expires_on'=>\Carbon\Carbon::now()->addMinutes(1)->format('Y-m-d H:i:s'),'type'=>'su']);
-                return 1;
-            }
-            if(request()->get('password') ==='misvis'){
-                request()->session()->put('verify',['expires_on'=>\Carbon\Carbon::now()->addMinutes(1)->format('Y-m-d H:i:s'),'type'=>'u']);
-                return 1;
-            }
-        }
-    }
-
-    if (request()->session()->exists('verify')) {
-        if(request()->session()->get('verify')['expires_on'] < \Carbon\Carbon::now()->format('Y-m-d H:i:s')){
-            request()->session()->forget('verify');
-            return view('dashboard.set.verify');
-        }else{
-            request()->session()->get('verify')['type'];
-            if(request()->session()->get('verify')['type'] == 'su'){
-                return view('dashboard.set.index');
-            }elseif(request()->session()->get('verify')['type'] == 'u'){
-                return view('dashboard.set.lower');
-            }
-        }
-    }
-
-
-    return view('dashboard.set.verify');
-
-})->name('dashboard.set');
+Route::get('dashboard/set', 'Pub\SetController@index')->name('dashboard.set');
 
 Route::get('/pdo',function(){
 
