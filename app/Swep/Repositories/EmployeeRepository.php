@@ -142,6 +142,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
         $employee->user_created = $this->auth->user()->user_id;
         $employee->user_updated = $this->auth->user()->user_id;
         $employee->biometric_user_id = 0;
+        $employee->locations = $request->locations;
         $employee->save();
 
         return $employee;
@@ -277,9 +278,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function findByUserId($user_id){
 
-        $employee = $this->cache->remember('employees:findByUserId:' . $user_id, 240, function() use ($user_id){
-            return $this->employee->where('user_id', $user_id)->first();
-        });
+        $employee =  $this->employee->where('user_id', $user_id)->first();
 
         if(empty($employee)){
             abort(404);
@@ -296,9 +295,8 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function findByEmployeeNo($employee_no){
 
-        $employee = $this->cache->remember('employees:findByEmployeeNo:' . $employee_no, 240, function() use ($employee_no){
-            return $this->employee->where('employee_no', $employee_no)->first();
-        });
+        $employee = $this->employee->where('employee_no', $employee_no)->first();
+
 
         if(empty($employee)){
             abort(404);
@@ -371,9 +369,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function getBySlug($slug){
 
-        $employee = $this->cache->remember('employees:getbySlug:'. $key .'', 240, function() use ($key){
-            return $this->employee->where('slug', $key)->get();
-        });
+        $employee = $this->employee->where('slug', $slug)->get();
 
         return $employee;
 

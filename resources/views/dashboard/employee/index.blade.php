@@ -30,8 +30,7 @@
                                     <label>Status:</label>
                                     <select name="is_active"  class="form-control dt_filter filters">
                                         <option value="">Don't filter</option>
-                                        <option value="ACTIVE">Active</option>
-                                        <option value="INACTIVE">Inactive</option>
+                                        {!! \App\Swep\Helpers\Helper::populateOptionsFromObject(\App\Models\SuOptions::employeeStatus(),'option','value') !!}
                                     </select>
                                 </div>
                                 <div class="col-md-2 dt_filter-parent-div">
@@ -46,10 +45,7 @@
                                     <label>Location:</label>
                                     <select name="locations"  class="form-control dt_filter filter_locations filters select22">
                                         <option value="">Don't filter</option>
-                                        <option value="VISAYAS">VISAYAS</option>
-                                        <option value="LUZON/MINDANAO">LUZON/MINDANAO</option>
-                                        <option value="COS">COS</option>
-                                        <option value="RETIREE">RETIREE</option>
+                                        {!! \App\Swep\Helpers\Helper::populateOptionsFromObject(\App\Models\SuOptions::employeeGroupings(),'option','value') !!}
                                     </select>
                                 </div>
                         </form>

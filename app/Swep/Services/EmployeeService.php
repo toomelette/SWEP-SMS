@@ -55,7 +55,7 @@ class EmployeeService extends BaseService{
         $employee = $this->employee_repo->store($request);
         $this->fillDependencies($request, $employee);
 
-        $this->event->dispatch('employee.store', $employee);
+        //$this->event->dispatch('employee.store', $employee);
         return redirect()->back();
 
     }
@@ -92,10 +92,9 @@ class EmployeeService extends BaseService{
         $employee = $this->employee_repo->update($request, $slug);
 
 
-
         $this->fillDependencies($request, $employee);
 
-        $this->event->dispatch('employee.update', $employee);
+//        $this->event->dispatch('employee.update', $employee);
         return redirect()->route('dashboard.employee.index');
 
     }
@@ -182,10 +181,11 @@ class EmployeeService extends BaseService{
 
         // Employee Family Details, Address, Other Questions, Health Declaration
         $this->employee_repo->storeFamilyDetails($request, $employee);
+
         $this->employee_repo->storeAddress($request, $employee);
         $this->employee_repo->storeQuestions($request, $employee);
         $this->employee_repo->storeHealthDeclaration($request, $employee);
-        
+
         // Employee Children
         if(!empty($request->row_children)){
             foreach ($request->row_children as $row) {

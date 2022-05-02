@@ -542,7 +542,11 @@
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'is_active', 'Status *', old('is_active'), ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'ACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
+                          '3', 'is_active', 'Status *', old('is_active'), \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeStatus(),'option','value'), $errors->has('is_active'), $errors->first('is_active'), '', ''
+                        ) !!}
+
+                        {!! __form::select_static(
+                          '3', 'locations', 'Groupings *', old('locations'), \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value'), $errors->has('locations'), $errors->first('locations'), '', ''
                         ) !!}
 
                       </div>

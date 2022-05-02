@@ -28,7 +28,6 @@
 @extends('layouts.admin-master')
 
 @section('content')
-
   <section class="content-header">
       <h1>Edit Employee</h1>
       <div class="pull-right" style="margin-top: -25px;">
@@ -594,11 +593,11 @@
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'is_active', 'Status *', old('is_active') ? old('is_active') : $employee->is_active, ['ACTIVE' => 'ACTIVE', 'INACTIVE' => 'INACTIVE'], $errors->has('is_active'), $errors->first('is_active'), '', ''
+                          '3', 'is_active', 'Status *', old('is_active') ? old('is_active') : $employee->is_active, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeStatus(),'option','value'), $errors->has('is_active'), $errors->first('is_active'), '', ''
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'locations', 'Groupings *', old('locations') ? old('locations') : $employee->locations, ['VISAYAS' => 'VISAYAS', 'LUZON/MINDANAO' => 'LUZON/MINDANAO', 'COS'=>'COS','RETIREE' => 'RETIREE'], $errors->has('locations'), $errors->first('locations'), '', ''
+                          '3', 'locations', 'Groupings *', old('locations') ? old('locations') : $employee->locations, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value'), $errors->has('locations'), $errors->first('locations'), '', ''
                         ) !!}
 
                       </div>

@@ -428,4 +428,39 @@ class Helper
             'GRADUATE STUDIES' => 'GRADUATE STUDIES',
         ];
     }
+
+
+    public static function populateOptionsFromObject($object,$option_key,$value_key,$selected = null){
+        $opt = '';
+        $array = $object->toArray();
+        if(count($array) > 0){
+            foreach ($array as $key => $item){
+                if($item[$value_key] == $selected){
+                    $s = 'selected';
+                }else{
+                    $s = '';
+                }
+                $opt = $opt.'<option value="'.$item[$value_key].'" '.$s.'>'.$item[$option_key].'</option>';
+            }
+        }else{
+
+        }
+        return $opt;
+    }
+
+    public static function populateOptionsFromObjectAsArray($object,$option_key,$value_key,$selected = null){
+        $opt = '';
+        $array = $object->toArray();
+        $new_arr = [];
+        if(count($array) > 0){
+            foreach ($array as $key => $item){
+                $new_arr[$item[$option_key]] = $item[$value_key];
+//                array_push($new_arr,[]);
+            }
+        }else{
+
+        }
+        return $new_arr;
+    }
+
 }

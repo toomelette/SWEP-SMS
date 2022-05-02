@@ -794,15 +794,12 @@ Route::get('/get_emp_no',function (){
     }
 });
 
-//Route::get('/sys_remarks', function (){
-//    $emps = \App\Models\EmployeeServiceRecord::query()->where('remarks','=','IMPORTED')->get();
-//    foreach ($emps as $emp){
-//        $emp->system_remarks = 'IMPORTED';
-//        $emp->remarks = null;
-//        $emp->update();
-//    }
-//    return 'done';
-//});
+Route::get('/opts', function (){
+    $s = \App\Models\SuOptions::employeeStatus();
+
+    return Helper::populateOptionsFromObjectAsArray($s,'option','value');
+  return 1;
+});
 
 Route::get('/item_employees',function (){
     $emps = \App\Models\Employee::query()->where('item_no','!=',0)->where('item_no','!=',null)->get();
