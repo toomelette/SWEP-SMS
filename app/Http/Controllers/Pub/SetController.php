@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pub;
 
 
 use App\Http\Controllers\Controller;
+use Rats\Zkteco\Lib\ZKTeco;
 
 class SetController extends Controller
 {
