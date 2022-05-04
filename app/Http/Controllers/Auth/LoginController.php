@@ -62,6 +62,7 @@ class LoginController extends Controller{
 
     public function showLoginForm()
     {
+
         session(['link' => url()->previous()]);
 
         return view('auth.login');
@@ -74,7 +75,6 @@ class LoginController extends Controller{
 
 
     protected function login(Request $request){
-
         $this->validateLogin($request);
 
         if ($this->hasTooManyLoginAttempts($request)) {
@@ -84,7 +84,6 @@ class LoginController extends Controller{
 
 
         if($this->auth->guard()->attempt($this->credentials($request))){
-
             if($this->auth->user()->is_activated == false){
 
                 $this->session->flush();
@@ -92,20 +91,18 @@ class LoginController extends Controller{
                 $this->auth->logout();
 
             }else{
+                $portal = $request->portal;
+                $user = User::query()->where('user_id','=',Auth::user()->user_id)->first();
+                $user->portal = $request->portal;
+                $user->update();
                 $activity = activity()
                     ->performedOn(new User())
                     ->causedBy($this->auth->user()->id)
                     ->withProperties(['attributes' => 'Logged in'])
                     ->log('auth');
-//                $user = $this->user_repo->login($this->auth->user()->slug);
-
-//                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-//                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-//                $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
 
                 $this->clearLoginAttempts($request);
-                return redirect(session('link'));
-
+                return redirect(session('_previous')['url']);
             }
         
         }
@@ -135,12 +132,8 @@ class LoginController extends Controller{
             $this->guard()->logout();
             $request->session()->invalidate();
 
-//            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:fetch:*');
-//            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:findBySlug:'. $user->slug .'');
-//            $this->__cache->deletePattern(''. config('app.name') .'_cache:users:getByIsOnline:'. $user->is_online .'');
-
-
-            return redirect('/');
+            return redirect('http://'.$_SERVER['SERVER_NAME'].'/');
+            return redirect('/?portal='.$request->portal);
 
         }
         

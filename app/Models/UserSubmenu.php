@@ -32,7 +32,7 @@ class UserSubmenu extends Model{
 
 
     public function submenu(){
-        return $this->belongsTo('App\Models\Submenu','submenu_id','submenu_id');
+        return $this->belongsTo(Submenu::class,'submenu_id','submenu_id');
     }
 
 

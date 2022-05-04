@@ -13,13 +13,19 @@ class TreeComposer
 {
     public function compose($view){
         $tree = [];
-        $menus = Menu::with('submenu')->get();
+        $menus = Menu::with('submenu')->where('portal','=',Auth::user()->portal)->get();
 
         $user_submenus = UserSubmenu::with('submenu')->where('user_id', Auth::user()->user_id)
             ->whereHas('submenu', function ($query) {
-            return $query->where('is_nav', '=', 1);
-        })->get();
+                return $query->where('is_nav', '=', 1);
+            });
+        if(Auth::user()->portal != ''){
+            $user_submenus = $user_submenus->whereHas('submenu.menu', function ($query) {
+                return $query->where('portal', '=', Auth::user()->portal);
+            });
+        }
 
+        $user_submenus = $user_submenus->get();
 
         $dtr_menus = Menu::query();
         if(Helper::dtrMenuOn() == true){

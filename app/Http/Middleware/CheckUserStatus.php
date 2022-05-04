@@ -29,7 +29,6 @@ class CheckUserStatus{
 
 
     public function handle($request, Closure $next){
-
         if($this->auth->guard()->check()){
 
             if($this->auth->user()->is_activated == false){
@@ -41,13 +40,15 @@ class CheckUserStatus{
 
             }
 
+
+
             return $next($request);
 
         }
 
         $this->session->flush();
         $this->session->flash('CHECK_UNAUTHENTICATED', 'Please Sign in to start your session.');
-        return redirect('/'); 
+        return redirect('/');
     
     }
 

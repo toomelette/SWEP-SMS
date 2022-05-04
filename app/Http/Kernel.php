@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
 
         'api' => [
@@ -61,6 +62,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
         /** Custom MIDDLEWARE **/
+        'get_portal' => \App\Http\Middleware\getPortal::class,
         'check.user_status' => \App\Http\Middleware\CheckUserStatus::class,
         'check.user_route' => \App\Http\Middleware\CheckUserRouteExist::class,
         'last_activity' => \App\Http\Middleware\LastActivity::class,

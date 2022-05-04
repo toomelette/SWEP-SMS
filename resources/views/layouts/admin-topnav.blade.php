@@ -43,7 +43,7 @@
               <div class="pull-right">
                 <a  href="{{ route('auth.logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" class="btn btn-default btn-flat">Sign out</a>
               </div>
-              <form id="frm-logout" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+              <form id="frm-logout" action="{{ route('auth.logout') }}?portal={{\Illuminate\Support\Facades\Auth::user()->portal}}" method="POST" style="display: none;">
                 {{ csrf_field() }}
               </form>
             </li>
