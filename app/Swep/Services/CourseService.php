@@ -45,7 +45,7 @@ class CourseService extends BaseService{
 
         $course = $this->course_repo->store($request);
 
-        $this->event->dispatch('course.store');
+//        $this->event->dispatch('course.store');
         return redirect()->back();
 
     }
@@ -69,7 +69,7 @@ class CourseService extends BaseService{
 
         $course = $this->course_repo->update($request, $slug);
 
-        $this->event->dispatch('course.update', $course);
+//        $this->event->dispatch('course.update', $course);
         return redirect()->route('dashboard.course.index');
 
     }
@@ -82,7 +82,7 @@ class CourseService extends BaseService{
 
         $course = $this->course_repo->destroy($slug);
 
-        $this->event->dispatch('course.destroy', $course );
+//        $this->event->dispatch('course.destroy', $course );
         return redirect()->back();
 
     }

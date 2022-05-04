@@ -34,7 +34,17 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $plantilla = $this->plantilla->newQuery();
 
+        if(isset($request->q)){
+            $this->search($plantilla, $request->q);
+        }
+
+        if (isset($request->du)) {
+            $plantilla->whereDepartmentUnitId($request->du);
+        }
+
+        return $this->populate($plantilla, $entries);
         $plantillas = $this->cache->remember('plantillas:fetch:' . $key, 240, function() use ($request, $entries){
 
             $plantilla = $this->plantilla->newQuery();
@@ -121,7 +131,7 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
 
 
     public function findBySlug($slug){
-
+        return $this->plantilla->where('slug', $slug)->first();
         $plantilla = $this->cache->remember('plantillas:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->plantilla->where('slug', $slug)->first();
         });
@@ -191,7 +201,7 @@ class PlantillaRepository extends BaseRepository implements PlantillaInterface {
 
 
     public function getAll(){
-
+        return $this->plantilla->select('plantilla_id', 'name')->get();
         $plantilla = $this->cache->remember('plantillas:getAll', 240, function(){
             return $this->plantilla->select('plantilla_id', 'name')->get();
         });

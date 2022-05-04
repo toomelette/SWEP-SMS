@@ -36,6 +36,22 @@ class UserRepository extends BaseRepository implements UserInterface {
 	
 		$key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $user = $this->user->newQuery();
+
+        if(isset($request->q)){
+            $this->search($user, $request->q);
+        }
+
+        if(isset($request->ol)){
+            $this->isOnline($user, $this->__dataType->string_to_boolean($request->ol));
+        }
+
+        if(isset($request->a)){
+            $this->isActive($user, $this->__dataType->string_to_boolean($request->a));
+        }
+
+        return $this->populate($user, $entries);
+
 
         $users = $this->cache->remember('users:fetch:' . $key, 240, function() use ($request, $entries){
 
@@ -308,6 +324,7 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
     public function getByIsOnline($status){
+        return $this->user->where('is_online', $status)->get();
 
         $users = $this->cache->remember('users:getByIsOnline:'. $status .'', 240, function() use ($status){
             return $this->user->where('is_online', $status)->get();

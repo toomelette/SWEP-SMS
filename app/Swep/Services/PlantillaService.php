@@ -45,7 +45,7 @@ class PlantillaService extends BaseService{
 
         $plantilla = $this->plantilla_repo->store($request);
 
-        $this->event->dispatch('plantilla.store');
+//        $this->event->dispatch('plantilla.store');
         return redirect()->back();
 
     }
@@ -69,7 +69,7 @@ class PlantillaService extends BaseService{
 
         $plantilla = $this->plantilla_repo->update($request, $slug);
 
-        $this->event->dispatch('plantilla.update', $plantilla);
+//        $this->event->dispatch('plantilla.update', $plantilla);
         return redirect()->route('dashboard.plantilla.index');
 
     }
@@ -82,7 +82,7 @@ class PlantillaService extends BaseService{
 
         $plantilla = $this->plantilla_repo->destroy($slug);
 
-        $this->event->dispatch('plantilla.destroy', $plantilla );
+//        $this->event->dispatch('plantilla.destroy', $plantilla );
         return redirect()->back();
 
     }

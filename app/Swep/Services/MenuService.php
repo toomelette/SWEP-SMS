@@ -57,7 +57,7 @@ class MenuService extends BaseService{
             }
         }
         
-        $this->event->dispatch('menu.store');
+//        $this->event->dispatch('menu.store');
         return redirect()->back();
 
     }
@@ -83,7 +83,7 @@ class MenuService extends BaseService{
 
         $menu = $this->menu_repo->update($request, $slug);
 
-        $this->event->dispatch('menu.update', $menu);
+//        $this->event->dispatch('menu.update', $menu);
         return redirect()->route('dashboard.menu.index');
 
     }
@@ -97,7 +97,7 @@ class MenuService extends BaseService{
 
         $menu = $this->menu_repo->destroy($slug);
 
-        $this->event->dispatch('menu.destroy', $menu);
+//        $this->event->dispatch('menu.destroy', $menu);
         return redirect()->back();
 
     }

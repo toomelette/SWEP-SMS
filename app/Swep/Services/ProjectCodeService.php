@@ -42,7 +42,7 @@ class ProjectCodeService extends BaseService{
 
         $project_code = $this->project_code_repo->store($request);
 
-        $this->event->dispatch('project_code.store', $project_code);
+//        $this->event->dispatch('project_code.store', $project_code);
         return redirect()->back();
 
     }
@@ -68,7 +68,7 @@ class ProjectCodeService extends BaseService{
 
         $project_code = $this->project_code_repo->update($request, $slug);
 
-        $this->event->dispatch('project_code.update', $project_code);
+//        $this->event->dispatch('project_code.update', $project_code);
         return redirect()->route('dashboard.project_code.index');
 
     }
@@ -82,7 +82,7 @@ class ProjectCodeService extends BaseService{
 
         $project_code = $this->project_code_repo->destroy($slug);
         
-        $this->event->dispatch('project_code.destroy', $project_code);
+//        $this->event->dispatch('project_code.destroy', $project_code);
         return redirect()->back();
 
     }

@@ -351,7 +351,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
     public function getAll(){
-
+        return $this->employee->select('slug', 'employee_no', 'fullname', 'email')
+            ->where('is_active', 'ACTIVE')
+            ->orderBy('lastname', 'ASC')
+            ->get();
         $employees = $this->cache->remember('employees:getAll', 240, function(){
             return $this->employee->select('slug', 'employee_no', 'fullname', 'email')
                                   ->where('is_active', 'ACTIVE')
@@ -382,6 +385,14 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
     public function getByIsActive($status){
 
+        $employee = $this->employee->newQuery();
+
+        return $employee->select('employee_no', 'fullname', 'position', 'department_id', 'department_unit_id', 'monthly_basic')
+            ->where('is_active', $status)
+            ->with('leaveCard', 'department')
+            ->orderBy('lastname', 'ASC')
+            ->get();
+
         $employees = $this->cache->remember('employees:getByIsActive:' . $status, 240, function() use ($status){
 
             $employee = $this->employee->newQuery();
@@ -404,7 +415,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
     public function getBySex($sex){
-
+        return $this->employee->where('is_active', 'ACTIVE')
+            ->where('sex', $sex)
+            ->get();
         $employees = $this->cache->remember('employees:getBySex:' . $sex, 240, function() use ($sex){
 
             return $this->employee->where('is_active', 'ACTIVE')
@@ -423,7 +436,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeInterface {
 
 
     public function getByDepartmentId($dept){
-
+        return $this->employee->where('is_active', 'ACTIVE')
+            ->where('department_id', $dept)
+            ->get();
         $employees = $this->cache->remember('employees:getByDepartmentId:' . $dept, 240, function() use ($dept){
 
             return $this->employee->where('is_active', 'ACTIVE')

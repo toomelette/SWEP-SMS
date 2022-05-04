@@ -36,6 +36,15 @@ class CourseRepository extends BaseRepository implements CourseInterface {
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
 
+        $course = $this->course->newQuery();
+
+        if(isset($request->q)){
+            $this->search($course, $request->q);
+        }
+
+        return $this->populate($course, $entries);
+        return $this->populate($course, $entries);
+
         $courses = $this->cache->remember('courses:fetch:' . $key, 240, function() use ($request, $entries){
 
             $course = $this->course->newQuery();
@@ -45,7 +54,7 @@ class CourseRepository extends BaseRepository implements CourseInterface {
             }
 
             return $this->populate($course, $entries);
-
+            return $this->populate($course, $entries);
         });
 
         return $courses;
@@ -116,7 +125,7 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
     public function findBySlug($slug){
-
+        return $this->course->where('slug', $slug)->first();
         $course = $this->cache->remember('courses:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->course->where('slug', $slug)->first();
         });
@@ -135,7 +144,7 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
     public function findByCourseId($id){
-
+        return $this->course->where('course_id', $id)->first();
         $course = $this->cache->remember('courses:findByCourseId:' . $id, 240, function() use ($id){
             return $this->course->where('course_id', $id)->first();
         });
@@ -206,7 +215,7 @@ class CourseRepository extends BaseRepository implements CourseInterface {
 
 
     public function getAll(){
-
+        return $this->course->select('name', 'course_id')->get();
         $courses = $this->cache->remember('courses:getAll', 240, function(){
             return $this->course->select('name', 'course_id')->get();
         });

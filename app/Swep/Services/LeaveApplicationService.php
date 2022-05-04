@@ -57,7 +57,7 @@ class LeaveApplicationService extends BaseService{
 
         $leave_application = $this->leave_application_repo->store($request);
 
-        $this->event->dispatch('la.store', $leave_application);
+//        $this->event->dispatch('la.store', $leave_application);
         return redirect()->back();
 
     }
@@ -83,7 +83,7 @@ class LeaveApplicationService extends BaseService{
 
         $leave_application = $this->leave_application_repo->update($request, $slug);
 
-        $this->event->dispatch('la.update', $leave_application);
+//        $this->event->dispatch('la.update', $leave_application);
         return redirect()->back();
 
     }
@@ -107,7 +107,7 @@ class LeaveApplicationService extends BaseService{
 
         $leave_application = $this->leave_application_repo->destroy($slug);
 
-        $this->event->dispatch('la.destroy', $leave_application );
+//        $this->event->dispatch('la.destroy', $leave_application );
         return redirect()->back();
 
     }

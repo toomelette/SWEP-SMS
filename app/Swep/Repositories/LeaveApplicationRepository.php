@@ -38,7 +38,8 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
-
+        $leave_application = $this->requestFilter($request);
+        return $this->populate($leave_application, $entries);
         $leave_applications = $this->cache->remember('leave_applications:fetch:' . $key, 240, function() use ($request, $entries){
             $leave_application = $this->requestFilter($request);
             return $this->populate($leave_application, $entries);
@@ -57,7 +58,8 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
     public function fetchByUser($request){
 
         $key = str_slug($request->fullUrl(), '_');
-
+        $leave_application = $this->requestFilter($request);
+        return $this->populateByUser($leave_application, $this->auth->user()->user_id);
         $leave_applications = $this->cache->remember('leave_applications:fetchByUser:'. $this->auth->user()->user_id .':' . $key, 240, function() use ($request){
             $leave_application = $this->requestFilter($request);
             return $this->populateByUser($leave_application, $this->auth->user()->user_id);
@@ -178,7 +180,7 @@ class LeaveApplicationRepository extends BaseRepository implements LeaveApplicat
 
 
     public function findBySlug($slug){
-
+        return $this->leave_application->where('slug', $slug)->first();
         $leave_application = $this->cache->remember('leave_applications:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->leave_application->where('slug', $slug)->first();
         });

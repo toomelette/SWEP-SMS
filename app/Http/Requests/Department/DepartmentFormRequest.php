@@ -32,7 +32,7 @@ class DepartmentFormRequest extends FormRequest{
                 'string',
                 Rule::unique('su_departments','department_id')->ignore($this->slug ,'slug'),
             ],
-            'nameH' => 'required|max:255|string',
+            'name' => 'required|max:255|string',
         ];
 
     }

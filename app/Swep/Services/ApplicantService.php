@@ -54,7 +54,7 @@ class ApplicantService extends BaseService{
         $applicant = $this->applicant_repo->store($request);
         $this->fillDependencies($request, $applicant);
 
-        $this->event->dispatch('applicant.store', $applicant);
+//        $this->event->dispatch('applicant.store', $applicant);
         return redirect()->back();
 
     }
@@ -92,7 +92,7 @@ class ApplicantService extends BaseService{
         $applicant = $this->applicant_repo->update($request, $slug);
         $this->fillDependencies($request, $applicant);
 
-        $this->event->dispatch('applicant.update', $applicant);
+//        $this->event->dispatch('applicant.update', $applicant);
         return redirect()->route('dashboard.applicant.index');
 
     }
@@ -105,7 +105,7 @@ class ApplicantService extends BaseService{
 
         $applicant = $this->applicant_repo->destroy($slug);
 
-        $this->event->dispatch('applicant.destroy', $applicant );
+//        $this->event->dispatch('applicant.destroy', $applicant );
         return redirect()->back();
 
     }
@@ -187,7 +187,7 @@ class ApplicantService extends BaseService{
 
         $applicant = $this->applicant_repo->addToShortList($slug);
 
-        $this->event->dispatch('applicant.add_to_shortist', $applicant);
+//        $this->event->dispatch('applicant.add_to_shortist', $applicant);
         return redirect()->back();
 
     }
@@ -200,7 +200,7 @@ class ApplicantService extends BaseService{
 
         $applicant = $this->applicant_repo->removeToShortList($slug);
 
-        $this->event->dispatch('applicant.remove_to_shortist', $applicant);
+//        $this->event->dispatch('applicant.remove_to_shortist', $applicant);
         return redirect()->back();
 
     }

@@ -36,6 +36,33 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
 
+        $df = $this->__dataType->date_parse($request->df);
+        $dt = $this->__dataType->date_parse($request->dt);
+
+        $document = $this->document->newQuery();
+
+        $parsed_date = $this->__dataType->date_parse($request->d);
+
+        if(isset($request->q)){
+            $this->search($document, $request->q);
+        }
+
+        if(isset($request->fc)){
+            $document->where('folder_code', $request->fc)
+                ->orWhere('folder_code2', $request->fc);
+        }
+
+        if(isset($request->dct)){
+            $document->whereType($request->dct);
+        }
+
+        if(isset($request->df) || isset($request->dt)){
+            $document->whereBetween('date', [$df, $dt]);
+        }
+
+        return $this->populate($document, $entries);
+
+
         $documents = $this->cache->remember('documents:fetch:' . $key, 240, function() use ($request, $entries){
 
             $df = $this->__dataType->date_parse($request->df);
@@ -79,6 +106,23 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
     public function fetchByFolderCode($folder_code, $request){
 
         $key = str_slug($request->fullUrl(), '_');
+        $document = $this->document->newQuery();
+        $document = $document->select('subject','person_to','reference_no', 'slug', 'updated_at');
+
+        $document =  $document->where('subject','LIKE','%'.$request->q.'%');
+
+
+        $document = $document->where(function($query) use ($folder_code){
+            $query->where('folder_code', $folder_code)
+                ->orwhere('folder_code2', $folder_code);
+        });
+
+
+        $document = $document
+            ->sortable()
+            ->orderBy('updated_at', 'desc')
+            ->paginate(20);
+        return $document;
 
         $documents = $this->cache->remember('documents:fetchByFolderCode:' . $key, 240, function() use ($folder_code, $request){
 
@@ -186,6 +230,10 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
 
     public function findBySlug($slug){
+        return $this->document->where('slug', $slug)
+            ->with('documentDisseminationLog',
+                'documentDisseminationLog.employee')
+            ->first();
 
         $document = $this->cache->remember('documents:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->document->where('slug', $slug)

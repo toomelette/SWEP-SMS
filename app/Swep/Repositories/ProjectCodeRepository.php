@@ -34,7 +34,13 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $project_code = $this->project_code->newQuery();
 
+        if(isset($request->q)){
+            $this->search($project_code, $request->q);
+        }
+
+        return $this->populate($project_code, $entries);
         $project_codes = $this->cache->remember('project_codes:fetch:' . $key, 240, function() use ($request, $entries){
 
             $project_code = $this->project_code->newQuery();
@@ -128,7 +134,7 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
     public function findBySlug($slug){
-
+        return $this->project_code->where('slug', $slug)->first();
         $project_code = $this->cache->remember('project_codes:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->project_code->where('slug', $slug)->first();
         });
@@ -201,7 +207,7 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
     public function getAll(){
-
+        return $this->project_code->select('project_code')->get();
         $project_codes = $this->cache->remember('project_codes:getAll', 240, function(){
             return $this->project_code->select('project_code')->get();
         });
@@ -216,7 +222,9 @@ class ProjectCodeRepository extends BaseRepository implements ProjectCodeInterfa
 
 
     public function getByDepartmentName($dept_name){
-
+        return $this->project_code->select('project_code')
+            ->where('department_name', $dept_name)
+            ->get();
         $project_code = $this->cache->remember('project_codes:getByDepartmentName:'. $dept_name .'', 240, function() use ($dept_name){
                 
             return $this->project_code->select('project_code')

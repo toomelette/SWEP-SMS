@@ -48,7 +48,7 @@ class DocumentFolderService extends BaseService{
 
     	$doc_folder = $this->doc_folder_repo->store($request);
 
-        $this->event->dispatch('document_folder.store');
+//        $this->event->dispatch('document_folder.store');
         return redirect()->back();
 
     }
@@ -72,7 +72,7 @@ class DocumentFolderService extends BaseService{
 
     	$doc_folder = $this->doc_folder_repo->update($request, $slug);
 
-        $this->event->dispatch('document_folder.update', $doc_folder);
+//        $this->event->dispatch('document_folder.update', $doc_folder);
         return redirect()->route('dashboard.document_folder.index');
 
     }
@@ -85,7 +85,7 @@ class DocumentFolderService extends BaseService{
 
     	$doc_folder = $this->doc_folder_repo->destroy($slug);
 
-        $this->event->dispatch('document_folder.destroy', $doc_folder);
+//        $this->event->dispatch('document_folder.destroy', $doc_folder);
         return redirect()->back();
 
     }

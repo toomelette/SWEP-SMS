@@ -35,7 +35,13 @@ class EmailContactRepository extends BaseRepository implements EmailContactInter
 
        $key = str_slug($request->fullUrl(), '_');
        $entries = isset($request->e) ? $request->e : 20;
+        $email_contact = $this->email_contact->newQuery();
 
+        if(isset($request->q)){
+            $this->search($email_contact, $request->q);
+        }
+
+        return $this->populate($email_contact, $entries);
         $email_contacts = $this->cache->remember('email_contacts:fetch:' . $key, 240, function() use ($request, $entries){
 
             $email_contact = $this->email_contact->newQuery();
@@ -117,7 +123,7 @@ class EmailContactRepository extends BaseRepository implements EmailContactInter
 
 
     public function findBySlug($slug){
-
+        return $this->email_contact->where('slug', $slug)->first();
         $email_contact = $this->cache->remember('email_contacts:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->email_contact->where('slug', $slug)->first();
         });
@@ -136,7 +142,7 @@ class EmailContactRepository extends BaseRepository implements EmailContactInter
 
 
     public function findByEmailContactId($id){
-
+        return $this->email_contact->where('email_contact_id', $id)->first();
         $email_contact = $this->cache->remember('email_contacts:findByEmailContactId:' . $id, 240, function() use ($id){
             return $this->email_contact->where('email_contact_id', $id)->first();
         });
@@ -184,7 +190,7 @@ class EmailContactRepository extends BaseRepository implements EmailContactInter
 
 
     public function getAll(){
-
+        return $this->email_contact->select('email_contact_id', 'name', 'email')->get();
         $email_contacts = $this->cache->remember('email_contacts:getAll', 240, function(){
             return $this->email_contact->select('email_contact_id', 'name', 'email')->get();
         });

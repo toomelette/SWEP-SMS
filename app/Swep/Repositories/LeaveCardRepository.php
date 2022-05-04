@@ -36,7 +36,33 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $df = $this->__dataType->date_parse($request->df);
+        $dt = $this->__dataType->date_parse($request->dt);
 
+        $leave_card = $this->leave_card->newQuery();
+
+        if(isset($request->q)){
+            $this->search($leave_card, $request->q);
+        }
+
+        if(isset($request->emp)){
+            $leave_card->whereEmployeeNo($request->emp);
+        }
+
+        if(isset($request->doc_t)){
+            $leave_card->whereDocType($request->doc_t);
+        }
+
+        if(isset($request->leave_t)){
+            $leave_card->whereLeaveType($request->leave_t);
+        }
+
+        if(isset($request->df) || isset($request->dt)){
+            $leave_card->whereBetween('date', [$df, $dt])
+                ->orwhereBetween('date_from', [$df, $dt]);
+        }
+
+        return $this->populate($leave_card, $entries);
         $leave_cards = $this->cache->remember('leave_cards:fetch:' . $key, 240, function() use ($request, $entries){
 
             $df = $this->__dataType->date_parse($request->df);
@@ -166,7 +192,7 @@ class LeaveCardRepository extends BaseRepository implements LeaveCardInterface {
 
 
     public function findBySlug($slug){
-
+        return $this->leave_card->where('slug', $slug)->first();
         $leave_card = $this->cache->remember('leave_cards:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->leave_card->where('slug', $slug)->first();
         });

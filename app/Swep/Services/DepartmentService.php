@@ -45,7 +45,7 @@ class DepartmentService extends BaseService{
 
         $department = $this->department_repo->store($request);
 
-        $this->event->dispatch('department.store');
+//        $this->event->dispatch('department.store');
         return redirect()->back();
 
     }
@@ -69,7 +69,7 @@ class DepartmentService extends BaseService{
 
         $department = $this->department_repo->update($request, $slug);
 
-        $this->event->dispatch('department.update', $department);
+//        $this->event->dispatch('department.update', $department);
         return redirect()->route('dashboard.department.index');
 
     }
@@ -82,7 +82,7 @@ class DepartmentService extends BaseService{
 
         $department = $this->department_repo->destroy($slug);
 
-        $this->event->dispatch('department.destroy', $department );
+//        $this->event->dispatch('department.destroy', $department );
         return redirect()->back();
 
     }

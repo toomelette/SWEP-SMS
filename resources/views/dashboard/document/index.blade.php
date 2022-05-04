@@ -26,7 +26,7 @@
 @extends('layouts.admin-master')
 
 @section('content')
-    
+
   <section class="content-header">
 
     <h1>

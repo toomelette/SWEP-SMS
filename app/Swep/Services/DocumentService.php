@@ -4,6 +4,7 @@ namespace App\Swep\Services;
 
 use File;
 use Hash;
+use Illuminate\Support\Facades\Session;
 use ZipArchive;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -90,7 +91,7 @@ class DocumentService extends BaseService{
         }
 
         $document = $this->document_repo->store($request, $filename);
-        $this->event->dispatch('document.store', $document);
+        //$this->event->dispatch('document.store', $document);
         return redirect()->back();
 
     }
@@ -207,7 +208,8 @@ class DocumentService extends BaseService{
 
         }
         $this->document_repo->update($request, $filename, $document);
-        $this->event->dispatch('document.update', $document);
+        //$this->event->dispatch('document.update', $document);
+
         return redirect()->route('dashboard.document.index');
 
     }
@@ -238,7 +240,8 @@ class DocumentService extends BaseService{
 
         $this->document_repo->destroy($document);
 
-        $this->event->dispatch('document.destroy', $document);
+        //$this->event->dispatch('document.destroy', $document);
+
         return redirect()->back();
 
     }
@@ -513,7 +516,7 @@ class DocumentService extends BaseService{
         // }   
 
 
-        $this->event->dispatch('document.dissemination', $document);
+       // $this->event->dispatch('document.dissemination', $document);
         return redirect()->back();
 
     }

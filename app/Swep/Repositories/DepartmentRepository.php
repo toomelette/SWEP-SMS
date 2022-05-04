@@ -35,6 +35,13 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $department = $this->department->newQuery();
+
+        if(isset($request->q)){
+            $this->search($department, $request->q);
+        }
+
+        return $this->populate($department, $entries);
 
         $departments = $this->cache->remember('departments:fetch:' . $key, 240, function() use ($request, $entries){
 
@@ -114,6 +121,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
     public function findBySlug($slug){
 
+        return $this->department->where('slug', $slug)->first();
         $department = $this->cache->remember('departments:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->department->where('slug', $slug)->first();
         });
@@ -132,7 +140,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
     public function findByDepartmentId($dept_id){
-
+        return $this->department->where('department_id', $dept_id)->first();
         $department = $this->cache->remember('departments:findByDepartmentId:' . $dept_id, 240, function() use ($dept_id){
             return $this->department->where('department_id', $dept_id)->first();
         });
@@ -202,7 +210,7 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
 
     public function getAll(){
-
+        return $this->department->select('name', 'department_id')->get();
         $departments = $this->cache->remember('departments:getAll', 240, function(){
             return $this->department->select('name', 'department_id')->get();
         });
@@ -218,6 +226,9 @@ class DepartmentRepository extends BaseRepository implements DepartmentInterface
 
     public function getByDepartmentId($dept_id){
 
+        return $this->department->select('name')
+            ->where('department_id', $dept_id)
+            ->get();
         $department_name = $this->cache->remember('departments:getByDepartmentId:'. $dept_id .'', 240, function() use ($dept_id){
 
             return $this->department->select('name')

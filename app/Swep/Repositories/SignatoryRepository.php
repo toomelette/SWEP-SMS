@@ -34,7 +34,13 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
+        $signatory = $this->signatory->newQuery();
 
+        if(isset($request->q)){
+            $this->search($signatory, $request->q);
+        }
+
+        return $this->populate($signatory, $entries);
         $signatories = $this->cache->remember('signatories:fetch:' . $key, 240, function() use ($request, $entries){
 
             $signatory = $this->signatory->newQuery();
@@ -120,7 +126,7 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
 
     public function findBySlug($slug){
-
+        return $this->signatory->where('slug', $slug)->first();
         $signatory = $this->cache->remember('signatories:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->signatory->where('slug', $slug)->first();
         });
@@ -139,7 +145,7 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
 
     public function findByType($type){
-
+        return $this->signatory->where('type', $type)->first();
         $signatory = $this->cache->remember('signatories:findByType:' . $type, 240, function() use ($type){
             return $this->signatory->where('type', $type)->first();
         }); 
@@ -211,7 +217,7 @@ class SignatoryRepository extends BaseRepository implements SignatoryInterface {
 
 
     public function getAll(){
-
+        return $this->signatory->select('employee_name', 'employee_position', 'type')->get();
         $signatories = $this->cache->remember('signatories:getAll', 240, function(){
             return $this->signatory->select('employee_name', 'employee_position', 'type')->get();
         });

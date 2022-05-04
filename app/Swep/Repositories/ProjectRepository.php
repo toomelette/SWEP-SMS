@@ -32,7 +32,7 @@ class ProjectRepository extends BaseRepository implements ProjectInterface {
 
 
     public function getAll(){
-
+        return $this->project->select('project_id', 'project_address')->get();
         $projects = $this->cache->remember('projects:getAll', 240, function(){
             return $this->project->select('project_id', 'project_address')->get();
         });

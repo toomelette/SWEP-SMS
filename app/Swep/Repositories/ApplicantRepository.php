@@ -42,6 +42,30 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
 
+        $applicant = $this->applicant->newQuery();
+
+        if(isset($request->q)){
+            $this->search($applicant, $request->q);
+        }
+
+        if(isset($request->c)){
+            $applicant->whereCourseId($request->c);
+        }
+
+        if(isset($request->p)){
+            $applicant->wherePlantillaId($request->p);
+        }
+
+        if(isset($request->g)){
+            $applicant->whereGender($request->g);
+        }
+
+        if(isset($request->du)){
+            $applicant->whereDepartmentUnit_id($request->du);
+        }
+
+        return $this->populate($applicant, $entries);
+
         $applicants = $this->cache->remember('applicants:fetch:' . $key, 240, function() use ($request, $entries){
 
             $applicant = $this->applicant->newQuery();
@@ -183,7 +207,7 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
     public function findBySlug($slug){
-
+        return $this->applicant->where('slug', $slug)->first();
         $applicant = $this->cache->remember('applicants:findBySlug:' . $slug, 240, function() use ($slug){
             return $this->applicant->where('slug', $slug)->first();
         });
@@ -302,6 +326,13 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
     public function getByCourseId($course_id){
 
+        return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
+            ->with('course', 'departmentUnit')
+            ->orderBy('received_at', 'asc')
+            ->where('course_id', $course_id)
+            ->get();
+
+
         $applicants = $this->cache->remember('applicants:getByCourseId:'. $course_id .'', 240, function() use ($course_id){
 
             return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
@@ -322,6 +353,12 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
     public function getByCourseIdShortlist($course_id){
+        return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
+            ->with('course', 'departmentUnit')
+            ->where('course_id', $course_id)
+            ->where('is_on_short_list', 1)
+            ->orderBy('lastname', 'asc')
+            ->get();
 
         $applicants = $this->cache->remember('applicants:getByCourseIdShortlist:'. $course_id .'', 240, function() use ($course_id){
 
@@ -345,6 +382,12 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
     public function getByDeptUnitId($dept_unit_id){
 
+        return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
+            ->with('course', 'departmentUnit')
+            ->orderBy('received_at', 'asc')
+            ->where('department_unit_id', $dept_unit_id)
+            ->get();
+
         $applicants = $this->cache->remember('applicants:getByDeptUnitId:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
                 
             return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at', 'course_id', 'applicant_id')
@@ -365,6 +408,12 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
 
 
     public function getByDeptUnitIdShortlist($dept_unit_id){
+        return $this->applicant->select('fullname', 'address', 'civil_status', 'gender', 'date_of_birth', 'contact_no', 'school', 'remarks', 'received_at',  'course_id', 'applicant_id')
+            ->with('course', 'departmentUnit')
+            ->where('department_unit_id', $dept_unit_id)
+            ->where('is_on_short_list', 1)
+            ->orderBy('lastname', 'asc')
+            ->get();
 
         $applicants = $this->cache->remember('applicants:getByDeptUnitIdShortlist:'. $dept_unit_id .'', 240, function() use ($dept_unit_id){
                 
