@@ -18,6 +18,11 @@
         @if($_SERVER['SERVER_ADDR'] != '10.36.1.14')
           <li style="width: 750px;padding-top: 12px"><p style="color: white; font-size: larger">DEVELOPMENT MODE</p></li>
         @endif
+          <li class="dropdown tasks-menu">
+            <a href="http://{{$_SERVER['SERVER_NAME']}}/" >
+              <i class="fa fa-home"></i> Lobby Page
+            </a>
+          </li>
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{asset('images/avatar.jpeg')}}" class="user-image" alt="User Image">
@@ -36,6 +41,7 @@
                 
               </p>
             </li>
+
             <li class="user-footer">
               <div class="pull-left">
                 <a href="{{ route('dashboard.profile.details') }}" class="btn btn-default btn-flat">Profile</a>
