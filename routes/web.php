@@ -814,3 +814,80 @@ Route::get('/item_employees',function (){
     \App\Models\HrPayPlantillaEmployees::insert($itemsArr);
     return 'dione';
 });
+
+Route::get('/sdd',function (){
+   $employees = \App\Models\Employee::query()->get();
+   $arr = [];
+    $arr2 = [];
+//   $arr = [
+//       '21-30' => [],
+//       '31-40' => [],
+//       '41-50' => [],
+//       '51-60' => [],
+//       '61+' => [],
+//   ];
+    $q = $query = \App\Models\Employee::query()->groupBy('position')->where(function ($query){
+        $query->where('is_active','=','ACTIVE');
+        $query->orWhere('is_active','=','SUSPENDED');
+    })
+    ->where(function ($query){
+        $query->where('locations','=','VISAYAS');
+        $query->orWhere('locations','=','LUZON/MINDANAO');
+    })->get()->toArray();
+    foreach ($q as $a){
+        array_push($arr2,$a['position']);
+    }
+
+   $query = \App\Models\Employee::query()
+       ->with('employeeChildren')
+       ->where(function ($query){
+           $query->where('is_active','=','ACTIVE');
+           $query->orWhere('is_active','=','SUSPENDED');
+       })
+        ->where(function ($query){
+            $query->where('locations','=','VISAYAS');
+            $query->orWhere('locations','=','LUZON/MINDANAO');
+        })
+       ->whereHas('employeeTraining')
+
+//       ->where('sex','=','MALE')
+       ->get();
+    foreach ($query as $emp){
+//        $arr[$emp->sex][$emp->position]['21-30'] = null;
+//        $arr[$emp->sex][$emp->position]['31-40'] = null;
+//        $arr[$emp->sex][$emp->position]['41-50'] = null;
+//        $arr[$emp->sex][$emp->position]['51-60'] = null;
+//        $arr[$emp->sex][$emp->position]['61+'] = null;
+        $age = \Illuminate\Support\Carbon::parse($emp->date_of_birth)->age;
+
+            switch ($age){
+                case ($age >= 21 && $age <= 30):
+                    $arr[$emp->sex]['21-30'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    break;
+                case ($age >= 31 && $age <= 40):
+                    $arr[$emp->sex]['31-40'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    break;
+                case ($age >= 41 && $age <= 50):
+                    $arr[$emp->sex]['41-50'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    break;
+                case ($age >= 51 && $age <= 60):
+                    $arr[$emp->sex]['51-60'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    break;
+                case ($age >= 61):
+                    $arr[$emp->sex]['61+'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    break;
+            }
+
+    }
+    ksort($arr['FEMALE']);
+    foreach ($arr['FEMALE'] as $l => $ar){
+        ksort($arr['FEMALE'][$l]);
+//        echo $l.'<br>';
+    }
+    ksort($arr['MALE']);
+    foreach ($arr['MALE'] as $l => $ar){
+        ksort($arr['MALE'][$l]);
+//        echo $l.'<br>';
+    }
+    dd($arr);
+});

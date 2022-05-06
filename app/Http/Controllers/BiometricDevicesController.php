@@ -76,7 +76,8 @@ class BiometricDevicesController extends Controller
         if($request->has('draw')){
 
             if ($request->has('device')){
-                $dtrs = DTR::query()->with(['employee']);
+//                return $request;
+                $dtrs = DTR::query()->with(['employee'])->where('device','=',$request->device);
 
                 $dt = DataTables::of($dtrs)
                     ->editColumn('fullname',function($data){

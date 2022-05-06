@@ -46,7 +46,7 @@
             "serverSide": true,
             "ajax" : '{{route("dashboard.biometric_devices.attendances")}}?device={{$device->serial_no}}',
             "columns": [
-                {data: 'fullname',name:'x.fullname'},
+                {data: 'fullname',name:'employee.fullname'},
                 {data: 'type' },
                 {data: 'timestamp' },
                 {data: 'user' },
