@@ -15,14 +15,15 @@
 
     <style type="text/css">
         body{
-
         @if($request->font != null)
                font-family: {{$request->font}};
         @endif
         }
         table tr th,td {
+            vertical-align: top;
         @if($request->font_size != null)
                font-size: {{$request->font_size}};
+
         @endif
         }
     </style>

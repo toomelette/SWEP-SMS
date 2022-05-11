@@ -34,6 +34,7 @@
                                             'position' => 'By position',
                                             'locations' => 'By location',
                                             'salary_grade' => 'By salary grade',
+                                            'civil_status' => 'By civil status',
                                         ],
                                         'class' => 'input-sm',
                                     ]) !!}
@@ -71,6 +72,13 @@
                                                     'MALE' => 'MALE',
                                                     'FEMALE' => 'FEMALE',
                                                 ],
+                                                'class' => 'input-sm',
+                                            ]) !!}
+
+                                            {!! \App\Swep\ViewHelpers\__form2::select('civil_status',[
+                                                'label' => 'Civil Status:',
+                                                'cols' => 6,
+                                                'options' => \App\Swep\Helpers\Helper::civil_status(),
                                                 'class' => 'input-sm',
                                             ]) !!}
                                         </div>
@@ -136,7 +144,7 @@
                                                 <ol class="for_sort sortable todo-list">
                                                     @if(count(\App\Http\Controllers\EmployeeController::allColumnsForReport()) > 0)
                                                         @foreach(\App\Http\Controllers\EmployeeController::allColumnsForReport() as $column_name => $display_name)
-                                                            <li>
+                                                            <li class="ui-sortable">
                                                                 <div class="checkbox" style="margin: 0">
                                                                     <label>
                                                                         <input {{($display_name['checked'] == 1)? 'checked=""' : ''}} type="checkbox" name="columns[]" value="{{$column_name}}"> {{$display_name['name']}}

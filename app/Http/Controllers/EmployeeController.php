@@ -517,9 +517,14 @@ class EmployeeController extends Controller{
         }
         if($request->order_column != null){
             if($request->direction == null){
-                abort(501,'Missing parameters. <b class="text-danger">DIRECTION</b> field is required if Column field has value.');
+                abort(501,'Missing parameter(s). <b class="text-danger">DIRECTION</b> field is required if Column field has value.');
             }
             $employees = $employees->orderBy($request->order_column,$request->direction);
+        }
+
+        if($request->civil_status != null){
+            $employees = $employees->where('civil_status','=',$request->civil_status);
+            array_push($filters,'CIVIL STAT: '.$request->civil_status);
         }
         $employees = $employees->get();
         $employee_arr = [];
@@ -554,7 +559,9 @@ class EmployeeController extends Controller{
             $employee_arr[$t][$employee->employee_no] = $employee;
         }
 
-
+        if(count($employee_arr) < 1){
+            abort(505,'Try different filter criteria.');
+        }
         ksort($employee_arr);
         return view('printables.employee.report')->with([
             'employees' => $employee_arr,
@@ -602,6 +609,10 @@ class EmployeeController extends Controller{
             ],
             'step_inc' => [
                 'name' => 'SI',
+                'checked' => 0,
+            ],
+            'civil_status' => [
+                'name' => 'Civil Status',
                 'checked' => 0,
             ],
             'is_active' => [

@@ -2,7 +2,7 @@
     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-top: 5px">
         Today:
     </p>
-    <ul class="todo-list ui-sortable">
+    <ul class="todo-list ">
         @foreach($bday_celebrants['today'] as $celebrants)
             @foreach($celebrants as $celebrant)
                 <li>
@@ -19,7 +19,7 @@
     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-top: 5px">
         Upcoming:
     </p>
-    <ul class="todo-list ui-sortable">
+    <ul class="todo-list">
         @foreach($bday_celebrants['upcoming'] as $celebrants)
             @foreach($celebrants as $celebrant)
                 <li>
@@ -36,7 +36,7 @@
     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-top: 5px">
         More this month:
     </p>
-    <ul class="todo-list ui-sortable">
+    <ul class="todo-list">
         @foreach($bday_celebrants['prev'] as $celebrants)
             @foreach($celebrants as $celebrant)
                 <li>
