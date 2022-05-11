@@ -95,7 +95,7 @@ class __form2
 
         return '<div class="form-group col-md-'.$n->cols .' '.$name.'">
                   <label for="'. $name .'">'. $n->label .'</label>
-                  <select name="'. $name .$ext.'" '. $id .' class="form-control" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
+                  <select name="'. $name .$ext.'" '. $id .' class="form-control '.$n->class.'" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
                     <option value="">Select</option>
                     '.$opt_html.'
                   </select>

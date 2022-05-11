@@ -470,12 +470,6 @@ class EmployeeController extends Controller{
 
 
 
-    public function reportGenerate(EmployeeReportRequest $request){
-        
-        return $this->employee->reportGenerate($request);
-
-    }
-
 
     public function edit_bm_uid(Request $request){
 
@@ -504,6 +498,148 @@ class EmployeeController extends Controller{
         }
         abort(503,'Data not found');
     }
+
+    public function reportGenerate(EmployeeReportRequest $request){
+        $type = $request->type;
+        $employees = Employee::with(['employeeTraining','employeeServiceRecord','employeeEducationalBackground','employeeEligibility','employeeChildren']);
+        $filters = [];
+        if($request->status != null){
+            $employees = $employees->where('is_active','=',$request->status);
+            array_push($filters,'STATUS: '.$request->status);
+        }
+        if($request->locations != null){
+            $employees = $employees->where('locations','=',$request->locations);
+            array_push($filters,'LOCATION: '.$request->locations);
+        }
+        if($request->sex != null){
+            $employees = $employees->where('sex','=',$request->sex);
+            array_push($filters,'SEX: '.$request->sex);
+        }
+        if($request->order_column != null){
+            if($request->direction == null){
+                abort(501,'Missing parameters. <b class="text-danger">DIRECTION</b> field is required if Column field has value.');
+            }
+            $employees = $employees->orderBy($request->order_column,$request->direction);
+        }
+        $employees = $employees->get();
+        $employee_arr = [];
+        $type = null;
+
+        switch ($request->type){
+            case 'unit':
+                $type = 'department_unit_id';
+                break;
+            case 'address':
+                $type = 'employeeAddress';
+                break;
+            default:
+                $type = $request->type;
+                break;
+        }
+
+
+        $selected_columns = $request->columns;
+        foreach ($employees as $employee){
+            $t = $employee->$type;
+            if($type == 'employeeAddress'){
+                if(!empty($employee->employeeAddress)){
+                    $t = $employee->employeeAddress->res_address_city;
+                }
+            }
+            if($type == 'department_unit_id'){
+                if(!empty($employee->departmentUnit)){
+                    $t = $employee->departmentUnit->description;
+                }
+            }
+            $employee_arr[$t][$employee->employee_no] = $employee;
+        }
+
+
+        ksort($employee_arr);
+        return view('printables.employee.report')->with([
+            'employees' => $employee_arr,
+            'selected_columns' => $selected_columns,
+            'all_columns' => $this->allColumnsForReport(),
+            'filters_text' => implode(' | ',$filters),
+            'request' => $request,
+        ]);
+
+    }
+
+    public function allColumnsForReport(){
+        return [
+            'sex' => [
+                'name' => 'Sex',
+                'checked' => 1,
+            ],
+            'date_of_birth' => [
+                'name' => 'Birthday',
+                'checked' => 0,
+            ],
+            'age' => [
+                'name' => 'Age',
+                'checked' => 0,
+            ],
+            'employee_no' => [
+                'name' => 'Emp. No.',
+                'checked' => 1,
+            ],
+            'item_no' => [
+                'name' => 'Item No.',
+                'checked' => 0,
+            ],
+            'position' => [
+                'name' => 'Position',
+                'checked' => 1,
+            ],
+            'monthly_basic' => [
+                'name' => 'Monthly Basic',
+                'checked' => 1,
+            ],
+            'salary_grade' => [
+                'name' => 'SG',
+                'checked' => 0,
+            ],
+            'step_inc' => [
+                'name' => 'SI',
+                'checked' => 0,
+            ],
+            'is_active' => [
+                'name' => 'Status',
+                'checked' => 1,
+            ],
+            'email' => [
+                'name' => 'Email address',
+                'checked' => 0,
+            ],
+            'locations' => [
+                'name' => 'Location',
+                'checked' => 1,
+            ],
+            'trainings' => [
+                'name' => 'Trainings',
+                'checked' => 0,
+            ],
+            'service_records' => [
+                'name' => 'Service Records',
+                'checked' => 0,
+            ],
+            'eligibility' => [
+                'name' => 'Eligibility',
+                'checked' => 0,
+            ],
+            'educational_background' => [
+                'name' => 'Educational Background',
+                'checked' => 0,
+            ],
+            'no_children' => [
+                'name' => '# of children',
+                'checked' => 0,
+            ],
+        ];
+    }
+
+
 
     
 }

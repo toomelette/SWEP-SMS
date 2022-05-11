@@ -69,7 +69,7 @@
               <li><a href="#cre" data-toggle="tab">Credentials</a></li>
               <li><a href="#or" data-toggle="tab">Other Records</a></li>
               <li><a href="#oq" data-toggle="tab">Other Questions</a></li>
-              <li><a href="#health_declaration" data-toggle="tab">Health Declaration <span class="label label-success">NEW</span></a></li>
+              <li><a href="#health_declaration" data-toggle="tab">201 File <span class="label label-success">NEW</span></a></li>
             </ul>
 
             <div class="tab-content">

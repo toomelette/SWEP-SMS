@@ -110,7 +110,7 @@ class Employee extends Model{
     }
 
     public function departmentUnit(){
-        return $this->belongsTo('App\Models\DepartmentUnit', 'department_unit_id', 'department_unit_id');
+        return $this->belongsTo(DepartmentUnit::class, 'department_unit_id', 'department_unit_id');
     }
 
     public function project(){
@@ -144,7 +144,7 @@ class Employee extends Model{
 
 
     public function employeeTraining(){
-        return $this->hasMany('App\Models\EmployeeTraining', 'employee_no', 'employee_no');
+        return $this->hasMany('App\Models\EmployeeTraining', 'employee_no', 'employee_no')->orderBy('sequence_no','desc');
     }
 
     public function employeeChildren(){
@@ -152,8 +152,9 @@ class Employee extends Model{
     } 
 
     public function employeeEducationalBackground(){
-        return $this->hasMany('App\Models\EmployeeEducationalBackground', 'employee_no', 'employee_no');
+        return $this->hasMany(EmployeeEducationalBackground::class, 'employee_no', 'employee_no');
     }
+
 
     public function employeeEligibility(){
         return $this->hasMany('App\Models\EmployeeEligibility', 'employee_no', 'employee_no');
@@ -189,7 +190,7 @@ class Employee extends Model{
 
 
     public function employeeServiceRecord(){
-        return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no');
+        return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no')->orderBy('sequence_no','desc');
     }
 
     public function employeeMatrix(){

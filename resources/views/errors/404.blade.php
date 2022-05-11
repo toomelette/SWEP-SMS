@@ -22,6 +22,7 @@
             <p>
               We could not find the page you were looking for.
               Meanwhile, you may return to Home Page.
+              {{ $exception->getMessage()}}
             </p>
             <a class="btn btn-sm btn-warning" href="{{ URL::previous() }}">Go Back!</a>
           </div>

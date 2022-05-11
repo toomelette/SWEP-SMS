@@ -54,7 +54,7 @@ class EmployeeService extends BaseService{
 
         $employee = $this->employee_repo->store($request);
         $this->fillDependencies($request, $employee);
-
+        return $employee->only('slug');
         //$this->event->dispatch('employee.store', $employee);
         return redirect()->back();
 

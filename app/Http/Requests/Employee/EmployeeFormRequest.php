@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EmployeeFormRequest extends FormRequest{
 
@@ -35,13 +36,13 @@ class EmployeeFormRequest extends FormRequest{
             
             // Personal Info
             'lastname'=>'required|string|max:90',
-            'firstname'=>'nullable|string|max:90',
+            'firstname'=>'required|string|max:90',
             'middlename'=>'nullable|string|max:90',
             'name_ext'=>'nullable|string|max:11',
-            'date_of_birth' => 'nullable|date_format:"m/d/Y"',
+            'date_of_birth' => 'required|date_format:"m/d/Y"',
             'place_of_birth'=>'nullable|string|max:255',
-            'sex'=>'nullable|string|max:20',
-            'civil_status'=>'nullable|string|max:45',
+            'sex'=>'required|string|max:20',
+            'civil_status'=>'required|string|max:45',
             'height'=>'nullable|string|max:20',
             'weight'=>'nullable|string|max:20',
             'blood_type'=>'nullable|string|max:11',
@@ -103,8 +104,13 @@ class EmployeeFormRequest extends FormRequest{
 
 
             // Appointment Status
-            'employee_no'=>'required|string|max:20',
-            'position'=>'nullable|string|max:90',
+            'employee_no'=> [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('hr_employees','employee_no'),
+            ],
+            'position'=>'required|string|max:90',
             'item_no'=>'nullable|int|max:10000',
             'appointment_status'=>'nullable|string|max:45',
             'salary_grade'=>'nullable|int',
@@ -122,7 +128,7 @@ class EmployeeFormRequest extends FormRequest{
             'appointment_date' => 'nullable|date_format:"m/d/Y"',
             'adjustment_date' => 'nullable|date_format:"m/d/Y"',
             'project_id' => 'nullable|string|max:11',
-            'is_active' => 'nullable|string|max:11',
+            'is_active' => 'required|string|max:11',
             'locations' => 'required|string',
 
             // Questions

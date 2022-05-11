@@ -121,6 +121,19 @@ class Helper
         ];
     }
 
+    public static function blood_types(){
+        return [
+            'A+' => 'A+',
+            'A-' => 'A-',
+            'B+' => 'B+',
+            'B-' => 'B-',
+            'O+' => 'O+',
+            'O-' => 'O-',
+            'AB+' => 'AB+',
+            'AB-' => 'AB-',
+        ];
+    }
+
     public static function holiday_types(){
         return [
             'Public holiday' => 'Public holiday',
@@ -462,5 +475,7 @@ class Helper
         }
         return $new_arr;
     }
+
+
 
 }
