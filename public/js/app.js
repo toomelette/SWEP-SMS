@@ -314,7 +314,12 @@ function populate_modal2_error(response){
     if(response.status == 503){
         notify('Error: '+ response.responseJSON.message, 'danger');
     }
-    alert(response.responseJSON.message);
+    else if(response.status == 405){
+        notify('Error: Request denied. Not enough privilege.', 'danger');
+    }else{
+        alert(response.responseJSON.message);
+    }
+
 }
 
 function succeed(target_form, reset,modal){

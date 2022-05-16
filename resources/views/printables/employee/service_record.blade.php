@@ -20,19 +20,19 @@
   <style type="text/css">
 
     .box-d-grey{
-      -webkit-print-color-adjust: exact; 
+      -webkit-print-color-adjust: exact;
       background-color: #a7aaab !important;
     }
 
     .box-l-grey{
-      -webkit-print-color-adjust: exact; 
+      -webkit-print-color-adjust: exact;
       background-color: #e8e8e8 !important;
     }
 
     .title-l{
-      -webkit-print-color-adjust: exact; 
+      -webkit-print-color-adjust: exact;
       color: #ffffff !important;
-      font-style:italic; 
+      font-style:italic;
       font-size: 13px;
       font-weight: bold;
     }
@@ -46,8 +46,8 @@
   </style>
 
 </head>
-{{--<body onload="window.print();" onafterprint="window.close()">--}}
-<body>
+<body onload="window.print();" onafterprint="window.close()">
+{{--<body>--}}
   <div class="wrapper" style="overflow:hidden !important;">
 
     {{-- HEADER --}}
@@ -176,7 +176,7 @@
               <span style="font-size:12px;">Cause</span>
             </div>
           </div>
-        </div>        
+        </div>
 
         <div class="col-sm-1 no-padding" style="border-left:solid 1px; height: 2.93em; text-align: center;">
           <span style="font-size:11px; font-weight:bold;">REMARKS</span>
@@ -261,7 +261,7 @@
     @endforeach
 
 
-    <div style="border-bottom:solid 1px;"></div>  
+    <div style="border-bottom:solid 1px;"></div>
 
 
     @if(count($employee_service_records) <= 20)
@@ -600,7 +600,7 @@
         @endif
       @endforeach
 
-      <div style="border-bottom:solid 1px;"></div>  
+      <div style="border-bottom:solid 1px;"></div>
 
         <div class="row" style="margin-top: 10px;">
         <div class="col-sm-12">

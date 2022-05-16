@@ -34,8 +34,7 @@ class CheckUserRouteExist{
             return $next($request);
 
         }
-
-        return abort(404);
+        return abort(405);
     
     }
 

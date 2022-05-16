@@ -97,6 +97,10 @@
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_sr_modal','') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_training_modal','') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_matrix_modal','40') !!}
+
+{!! \App\Swep\ViewHelpers\__html::blank_modal('file201_modal','lg') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('add_file201_modal','') !!}
+
 {{-- Print Modal --}}
 <div class="modal fade" id="print_sr_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -406,5 +410,23 @@
         filterDT(employees_tbl);
     })
 
+    $("body").on("click",".file201_btn",function () {
+        let btn = $(this);
+        load_modal2(btn);
+        $.ajax({
+            url : btn.attr('uri'),
+            data : {employee : btn.attr('data')},
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+               populate_modal2(btn,res);
+            },
+            error: function (res) {
+                populate_modal2_error(res);
+            }
+        })
+    })
 </script>
 @endsection

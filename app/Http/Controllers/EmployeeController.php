@@ -58,26 +58,35 @@ class EmployeeController extends Controller{
 
     // Employee Master
 	public function index(EmployeeFilterRequest $request){
-        $sql_server_is_on = Helper::sqlServerIsOn();
+
         if($request->ajax() && $request->has('draw')){
-            $employees = Employee::query();
-            if($sql_server_is_on === true){
-                $employees = $employees->with('empMaster');
-            }
-            if($request->has('is_active') && $request->is_active != ''){
-                $employees = $employees->where('is_active','=',$request->is_active);
-            }
-            if($request->has('sex') && $request->sex != ''){
-                $employees = $employees->where('sex','=',$request->sex);
-            }
-            if($request->has('locations') && $request->locations != ''){
-                $employees = $employees->where('locations','=',$request->locations);
-            }
-            return DataTables::of($employees)
-                ->addColumn('action', function ($data){
-                    $destroy_route = "'".route("dashboard.employee.destroy","slug")."'";
-                    $slug = "'".$data->slug."'";
-                    $button = '<div class="btn-group">
+            return $this->dataTable($request);
+        }
+        return view('dashboard.employee.index');
+    	return $this->employee->fetch($request);
+    
+    }
+
+    private function dataTable($request){
+        $sql_server_is_on = Helper::sqlServerIsOn();
+        $employees = Employee::query();
+        if($sql_server_is_on === true){
+            $employees = $employees->with('empMaster');
+        }
+        if($request->has('is_active') && $request->is_active != ''){
+            $employees = $employees->where('is_active','=',$request->is_active);
+        }
+        if($request->has('sex') && $request->sex != ''){
+            $employees = $employees->where('sex','=',$request->sex);
+        }
+        if($request->has('locations') && $request->locations != ''){
+            $employees = $employees->where('locations','=',$request->locations);
+        }
+        return DataTables::of($employees)
+            ->addColumn('action', function ($data){
+                $destroy_route = "'".route("dashboard.employee.destroy","slug")."'";
+                $slug = "'".$data->slug."'";
+                $button = '<div class="btn-group">
                                     <button type="button" class="btn btn-default btn-sm view_employee_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#show_employee_modal" title="View more" data-placement="left">
                                         <i class="fa fa-file-text"></i>
                                     </button>
@@ -96,37 +105,33 @@ class EmployeeController extends Controller{
                                           <li><a href="#" data-toggle="modal" data-target="#service_records_modal" class="service_records_btn" data="'.$data->slug.'">Service Records</a></li>
                                           <li><a href="#" data-toggle="modal" data-target="#trainings_modal" class="trainings_btn" data="'.$data->slug.'">Trainings</a></li>
                                           <li><a href="#" data-toggle="modal" data-target="#matrix_modal" class="matrix_btn" data="'.$data->slug.'">Matrix</a></li>
-                                          <li><a href="#" employee="'.$data->lastname.', '.$data->firstname.'" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'">Biometric User ID</a></li>
+                                          <li><a href="#" uri="'.route('dashboard.file201.index').'"  data-toggle="modal" data-target="#file201_modal" class="file201_btn" data="'.$data->slug.'">201 File</a></li>
+                                          <li><a href="#"  employee="'.$data->lastname.', '.$data->firstname.'" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'">Biometric User ID</a></li>
                                         </ul>
                                     </div>
                                 </div>';
-                    return $button;
-                })->editColumn('biometric_user_id',function ($data){
-                    if($data->biometric_user_id == 0){
-                        return 'N/A';
-                    }
-                    return $data->biometric_user_id;
-                })->editColumn('position',function ($data) use($sql_server_is_on){
-                    if($sql_server_is_on === true){
-                        if(!empty($data->empMaster)){
-                            return $data->position.'<div class="table-subdetail">
+                return $button;
+            })->editColumn('biometric_user_id',function ($data){
+                if($data->biometric_user_id == 0){
+                    return 'N/A';
+                }
+                return $data->biometric_user_id;
+            })->editColumn('position',function ($data) use($sql_server_is_on){
+                if($sql_server_is_on === true){
+                    if(!empty($data->empMaster)){
+                        return $data->position.'<div class="table-subdetail">
                                                     JG-Step: '.$data->empMaster->SalGrade.' - '.$data->empMaster->StepInc.'
                                                         <span class="pull-right">Monthly Basic: '.number_format($data->empMaster->MonthlyBasic,2).'</span>
                                                     </div>';
-                        }
-                        return $data->position.'<div class="table-subdetail" style="color: #d9534f !important;">No data available</div>';
                     }
-                    return $data->position;
-                })
-                ->escapeColumns([])
-                ->setRowId('slug')
-                ->toJson();
-        }
-        return view('dashboard.employee.index');
-    	return $this->employee->fetch($request);
-    
+                    return $data->position.'<div class="table-subdetail" style="color: #d9534f !important;">No data available</div>';
+                }
+                return $data->position;
+            })
+            ->escapeColumns([])
+            ->setRowId('slug')
+            ->toJson();
     }
-
     
 
 
@@ -190,7 +195,7 @@ class EmployeeController extends Controller{
 
     }
 
-    private function findEmployeeBySlug($slug){
+    public function findEmployeeBySlug($slug){
         $employee = Employee::query()->where('slug','=',$slug)->first();
         if(empty($employee)){
             abort(503,'Employee not found.');
@@ -264,14 +269,11 @@ class EmployeeController extends Controller{
 
 
     public function serviceRecordStore(EmployeeServiceRecordCreateForm $request, $slug){
-
         $sr = $this->employee_sr->store($request, $slug);
         if($sr){
             return $sr->only('slug');
         }
-
         abort(503, 'Error saving data.');
-
     }
 
 
@@ -302,9 +304,15 @@ class EmployeeController extends Controller{
 
 
     public function serviceRecordPrint($slug){
-        
-        return $this->employee_sr->print($slug);
-
+        $employee =  $this->findEmployeeBySlug($slug);
+        $srArr = [];
+        foreach ($employee->employeeServiceRecord as $sr){
+            array_push($srArr,$sr);
+        }
+        return view('printables.employee.service_record')->with([
+            'employee' => $employee,
+            'employee_service_records' => $srArr,
+        ]);
     }
 
 

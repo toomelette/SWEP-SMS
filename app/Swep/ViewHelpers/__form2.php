@@ -161,6 +161,19 @@ class __form2
         return $years;
     }
 
+    public static function file($name, $options = [], $value = null){
+        $n = new __form2;
+        $n->set($options);
+        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+
+        return '<div class="form-group col-md-'. $n->cols .'">
+                <label for="'. $n->for .'">'. $n->label .'</label>
+                <div class="file-loading">
+                  <input class="file" name="'. $name .'" '.$id.' type="file" '. $n->extra_attr .' multiple >
+                </div>
+              </div>';
+    }
+
     public function set($array){
 
         (!isset($array['class'])) ? $array['class']= '' : false;
@@ -184,6 +197,7 @@ class __form2
         (!isset($array['title'])) ? $array['title']= '' : false;
         (!isset($array['is_multiple'])) ? $array['is_multiple']= '' : false;
         (!isset($array['required'])) ? $array['required']= '' : false;
+        (!isset($array['for'])) ? $array['for']= '' : false;
         ($array['type'] == '') ?  $array['type'] = 'text' : false;
 
         $this->class = $array['class'];
@@ -201,6 +215,7 @@ class __form2
         $this->title = $array['title'];
         $this->is_multiple = $array['is_multiple'];
         $this->required = $array['required'];
+        $this->for = $array['for'];
     }
     public function get($array){
         return $this->name.' Hello';

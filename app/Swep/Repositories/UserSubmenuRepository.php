@@ -53,15 +53,22 @@ class UserSubmenuRepository extends BaseRepository implements UserSubmenuInterfa
 
 
 
-    public function isExist() {
-
+    public function isExist($rt = null) {
+        if($rt == null){
+            $route_name = Route::currentRouteName();
+        }else{
+            $route_name = $rt;
+        }
         $user_id = $this->auth->user()->user_id;
-        $route_name = Route::currentRouteName();
+
         if($route_name == 'dashboard.home'){
             return 1;
         }else{
-            $submenu_id = Submenu::where('route',$route_name)->first()->submenu_id;
-
+            $submenu_id = Submenu::where('route',$route_name)->first();
+            if(empty($submenu_id)){
+                abort(504,'Submenu does not exist.');
+            }
+            $submenu_id = $submenu_id->submenu_id;
             $usm = $this->user_submenu->where('submenu_id', $submenu_id)
                 ->where('user_id', $user_id)
                 ->exists();

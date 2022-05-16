@@ -66,6 +66,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('/profile/select_theme','ProfileController@selectTheme')->name('profile.select_theme');
 
     Route::get('/view_doc/{id}','NewsController@viewDoc')->name('news.view_doc');
+    Route::get('/view_document/{id}/{type}','ViewDocument@index')->name('view_document.index');
 });
 
 /** Dashboard **/
@@ -159,6 +160,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 	Route::get('/employee/report_generate', 'EmployeeController@reportGenerate')->name('employee.report_generate');
 	Route::resource('employee', 'EmployeeController');
 
+	Route::resource('file201','File201Controller');
 
 	/** DOCUMENTS **/
 	Route::get('/document/report', 'DocumentController@report')->name('document.report');
