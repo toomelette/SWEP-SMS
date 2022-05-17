@@ -291,11 +291,16 @@ class UserController extends Controller{
         foreach ($user->userSubmenu as $submenu){
             $user_submenus_arr[$submenu->submenu_id] = 1;
         }
-
+        $by_category = [];
+        foreach ($all_menus as $menu){
+            $by_category[$menu->category][$menu->slug] = $menu;
+        }
+        ksort($by_category);
         return view('dashboard.user.edit')->with([
             'all_menus' => $all_menus,
             'user' => $user,
             'user_submenus_arr' => $user_submenus_arr,
+            'by_category' => $by_category,
         ]);
 
 

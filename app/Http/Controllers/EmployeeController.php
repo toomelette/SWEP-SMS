@@ -91,7 +91,7 @@ class EmployeeController extends Controller{
                                         <i class="fa fa-file-text"></i>
                                     </button>
                                    
-                                    <a  href="'. route('dashboard.employee.edit', $data->slug).'" type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_jo_employee_btn"  title="Edit" data-placement="top">
+                                    <a  href="'. route('dashboard.employee.edit', $data->slug).'" for="linkToEdit" type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_jo_employee_btn"  title="Edit" data-placement="top">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">

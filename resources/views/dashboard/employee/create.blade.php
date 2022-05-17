@@ -1720,22 +1720,7 @@
 
 
 @section('scripts')
-  <script type="text/javascript">
-    function markTabs(form){
-      let tabs = form.find('.nav-tabs').children('li');
-      tabs.each(function () {
-        $(this).removeClass('tab-error');
-        let a = $(this).children('a');
-        a.html(a.html().replace(' <i class="fa fa-exclamation-circle"></i>',''));
-        let id = $(this).children('a').attr('href');
-        let no_of_errors = $(id +' .has-error').length;
-        if(no_of_errors > 0){
-          $(this).addClass('tab-error');
-          a.html(a.html()+' <i class="fa fa-exclamation-circle"></i>');
-        }
-      })
-    }
-  </script>
+
   <script type="text/javascript">
 
     @if(Session::has('EMPLOYEE_CREATE_SUCCESS'))

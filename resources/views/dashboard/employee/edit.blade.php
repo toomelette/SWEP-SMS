@@ -47,11 +47,10 @@
       </div>
 
 
-      <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.employee.update', $employee->slug) }}">
+      <form id="edit_employee_form" autocomplete="off">
 
         @csrf
-        <input name="_method" value="PUT" type="hidden">
-
+        <input name="slug" value="{{$employee->slug}}" type="hidden">
         <div class="box-body">
 
 
@@ -69,7 +68,7 @@
               <li><a href="#cre" data-toggle="tab">Credentials</a></li>
               <li><a href="#or" data-toggle="tab">Other Records</a></li>
               <li><a href="#oq" data-toggle="tab">Other Questions</a></li>
-              <li><a href="#health_declaration" data-toggle="tab">201 File <span class="label label-success">NEW</span></a></li>
+{{--              <li><a href="#health_declaration" data-toggle="tab">201 File <span class="label label-success">NEW</span></a></li>--}}
             </ul>
 
             <div class="tab-content">
@@ -93,97 +92,97 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                           '3', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : $employee->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
+                           '3 lastname', 'lastname', 'text', 'Lastname *', 'Lastname', old('lastname') ? old('lastname') : $employee->lastname, $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname') ? old('firstname') : $employee->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
+                           '3 firstname', 'firstname', 'text', 'Firstname *', 'Firstname', old('firstname') ? old('firstname') : $employee->firstname, $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : $employee->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
+                           '3 middlename', 'middlename', 'text', 'Middlename *', 'Middlename', old('middlename') ? old('middlename') : $employee->middlename, $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'name_ext', 'text', 'Name Extension', 'Name Extension', old('name_ext') ? old('name_ext') : $employee->name_ext, $errors->has('name_ext'), $errors->first('name_ext'), 'data-transform="uppercase"'
+                           '3 name_ext', 'name_ext', 'text', 'Name Extension', 'Name Extension', old('name_ext') ? old('name_ext') : $employee->name_ext, $errors->has('name_ext'), $errors->first('name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::datepicker(
-                          '3', 'date_of_birth',  'Date of Birth *', old('date_of_birth') ? old('date_of_birth') : $employee->date_of_birth, $errors->has('date_of_birth'), $errors->first('date_of_birth')
+                          '3 date_of_birth', 'date_of_birth',  'Date of Birth *', old('date_of_birth') ? old('date_of_birth') : $employee->date_of_birth, $errors->has('date_of_birth'), $errors->first('date_of_birth')
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'place_of_birth', 'text', 'Place of Birth *', 'Place of Birth', old('place_of_birth') ? old('place_of_birth') : $employee->place_of_birth, $errors->has('place_of_birth'), $errors->first('place_of_birth'), 'data-transform="uppercase"'
+                           '6 place_of_birth', 'place_of_birth', 'text', 'Place of Birth *', 'Place of Birth', old('place_of_birth') ? old('place_of_birth') : $employee->place_of_birth, $errors->has('place_of_birth'), $errors->first('place_of_birth'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'sex', 'Sex *', old('sex') ? old('sex') : $employee->sex, ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
+                          '3 sex', 'sex', 'Sex *', old('sex') ? old('sex') : $employee->sex, ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'], $errors->has('sex'), $errors->first('sex'), '', ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::select_static(
-                          '3', 'civil_status', 'Civil Status *', old('civil_status') ? old('civil_status') : $employee->civil_status, __static::civil_status(), $errors->has('civil_status'), $errors->first('civil_status'), '', ''
+                          '3 civil_status', 'civil_status', 'Civil Status *', old('civil_status') ? old('civil_status') : $employee->civil_status, __static::civil_status(), $errors->has('civil_status'), $errors->first('civil_status'), '', ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'height', 'text', 'Height', 'Height', old('height') ? old('height') : $employee->height, $errors->has('height'), $errors->first('height'), ''
+                           '3 height', 'height', 'text', 'Height', 'Height', old('height') ? old('height') : $employee->height, $errors->has('height'), $errors->first('height'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'weight', 'text', 'Weight', 'Weight', old('weight') ? old('weight') : $employee->weight, $errors->has('weight'), $errors->first('weight'), ''
+                           '3 weight', 'weight', 'text', 'Weight', 'Weight', old('weight') ? old('weight') : $employee->weight, $errors->has('weight'), $errors->first('weight'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'blood_type', 'text', 'Blood Type *', 'Blood Type', old('blood_type') ? old('blood_type') : $employee->blood_type, $errors->has('blood_type'), $errors->first('blood_type'), 'data-transform="uppercase"'
+                           '3 blood_type', 'blood_type', 'text', 'Blood Type *', 'Blood Type', old('blood_type') ? old('blood_type') : $employee->blood_type, $errors->has('blood_type'), $errors->first('blood_type'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '3', 'tel_no', 'text', 'Telephone No.', 'Telephone No.', old('tel_no') ? old('tel_no') : $employee->tel_no, $errors->has('tel_no'), $errors->first('tel_no'), ''
+                           '3 tel_no', 'tel_no', 'text', 'Telephone No.', 'Telephone No.', old('tel_no') ? old('tel_no') : $employee->tel_no, $errors->has('tel_no'), $errors->first('tel_no'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'cell_no', 'text', 'Cellphone No. *', 'Cellphone No.', old('cell_no') ? old('cell_no') : $employee->cell_no, $errors->has('cell_no'), $errors->first('cell_no'), ''
+                           '3 cell_no', 'cell_no', 'text', 'Cellphone No. *', 'Cellphone No.', old('cell_no') ? old('cell_no') : $employee->cell_no, $errors->has('cell_no'), $errors->first('cell_no'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'email', 'text', 'Email Address', 'Email Address', old('email') ? old('email') : $employee->email, $errors->has('email'), $errors->first('email'), ''
+                           '3 email', 'email', 'text', 'Email Address', 'Email Address', old('email') ? old('email') : $employee->email, $errors->has('email'), $errors->first('email'), ''
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'citizenship', 'Citizenship *', old('citizenship') ? old('citizenship') : $employee->citizenship, ['Filipino' => 'Filipino', 'Dual Citizenship' => 'Dual Citizenship'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
+                          '3 citizenship', 'citizenship', 'Citizenship *', old('citizenship') ? old('citizenship') : $employee->citizenship, ['Filipino' => 'Filipino', 'Dual Citizenship' => 'Dual Citizenship'], $errors->has('citizenship'), $errors->first('citizenship'), '', ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::select_static(
-                          '3', 'citizenship_type', 'Citizenship Type *', old('citizenship_type') ? old('citizenship_type') : $employee->citizenship_type, ['by birth' => 'BB', 'by naturalization' => 'BN'], $errors->has('citizenship_type'), $errors->first('citizenship_type'), '', ''
+                          '3 citizenship_type', 'citizenship_type', 'Citizenship Type *', old('citizenship_type') ? old('citizenship_type') : $employee->citizenship_type, ['by birth' => 'BB', 'by naturalization' => 'BN'], $errors->has('citizenship_type'), $errors->first('citizenship_type'), '', ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country') ? old('dual_citizenship_country') : $employee->dual_citizenship_country, $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
+                           '3 dual_citizenship_country', 'dual_citizenship_country', 'text', 'If (Dual Citizenship) Pls. Indicate Country', 'Specify', old('dual_citizenship_country') ? old('dual_citizenship_country') : $employee->dual_citizenship_country, $errors->has('dual_citizenship_country'), $errors->first('dual_citizenship_country'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'agency_no', 'text', 'Agency Employee No.', 'Agency Employee No.', old('agency_no') ? old('agency_no') : $employee->agency_no, $errors->has('agency_no'), $errors->first('agency_no'), ''
+                           '3 agency_no', 'agency_no', 'text', 'Agency Employee No.', 'Agency Employee No.', old('agency_no') ? old('agency_no') : $employee->agency_no, $errors->has('agency_no'), $errors->first('agency_no'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id') ? old('gov_id') : $employee->gov_id, $errors->has('gov_id'), $errors->first('gov_id'), ''
+                           '3 gov_id', 'gov_id', 'text', 'Government Issued ID', '(i.e. Passport, GSIS, SSS, PRC, etc.)', old('gov_id') ? old('gov_id') : $employee->gov_id, $errors->has('gov_id'), $errors->first('gov_id'), ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '3', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no') ? old('license_passport_no') : $employee->license_passport_no, $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
+                           '3 license_passport_no', 'license_passport_no', 'text', 'ID / License / Passport No.:', 'PLEASE INDICATE ID Number', old('license_passport_no') ? old('license_passport_no') : $employee->license_passport_no, $errors->has('license_passport_no'), $errors->first('license_passport_no'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'id_date_issue', 'text', 'Date / Place of Issuance', 'Date / Place of Issuance', old('id_date_issue') ? old('id_date_issue') : $employee->id_date_issue, $errors->has('id_date_issue'), $errors->first('id_date_issue'), ''
+                           '3 id_date_issue', 'id_date_issue', 'text', 'Date / Place of Issuance', 'Date / Place of Issuance', old('id_date_issue') ? old('id_date_issue') : $employee->id_date_issue, $errors->has('id_date_issue'), $errors->first('id_date_issue'), ''
                         ) !!}
 
                       </div>
@@ -205,37 +204,37 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                           '6', 'res_address_block', 'text', 'Block', 'Block', old('res_address_block') ? old('res_address_block') : optional($employee->employeeAddress)->res_address_block , $errors->has('res_address_block'), $errors->first('res_address_block'), 'data-transform="uppercase"'
+                           '6 res_address_block', 'res_address_block', 'text', 'Block', 'Block', old('res_address_block') ? old('res_address_block') : optional($employee->employeeAddress)->res_address_block , $errors->has('res_address_block'), $errors->first('res_address_block'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'res_address_street', 'text', 'Street', 'Street', old('res_address_street') ? old('res_address_street') : optional($employee->employeeAddress)->res_address_street, $errors->has('res_address_street'), $errors->first('res_address_street'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        <div class="col-md-12"></div>
-
-                        {!! __form::textbox(
-                           '6', 'res_address_village', 'text', 'Village', 'Village', old('res_address_village') ? old('res_address_village') : optional($employee->employeeAddress)->res_address_village, $errors->has('res_address_village'), $errors->first('res_address_village'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        {!! __form::textbox(
-                           '6', 'res_address_barangay', 'text', 'Barangay *', 'Barangay', old('res_address_barangay') ? old('res_address_barangay') : optional($employee->employeeAddress)->res_address_barangay, $errors->has('res_address_barangay'), $errors->first('res_address_barangay'), 'data-transform="uppercase"'
+                           '6 res_address_street', 'res_address_street', 'text', 'Street', 'Street', old('res_address_street') ? old('res_address_street') : optional($employee->employeeAddress)->res_address_street, $errors->has('res_address_street'), $errors->first('res_address_street'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '6', 'res_address_city', 'text', 'City *', 'City', old('res_address_city') ? old('res_address_city') : optional($employee->employeeAddress)->res_address_city, $errors->has('res_address_city'), $errors->first('res_address_city'), 'data-transform="uppercase"'
+                           '6 res_address_village', 'res_address_village', 'text', 'Village', 'Village', old('res_address_village') ? old('res_address_village') : optional($employee->employeeAddress)->res_address_village, $errors->has('res_address_village'), $errors->first('res_address_village'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'res_address_province', 'text', 'Province *', 'Province', old('res_address_province') ? old('res_address_province') : optional($employee->employeeAddress)->res_address_province, $errors->has('res_address_province'), $errors->first('res_address_province'), 'data-transform="uppercase"'
+                           '6 res_address_barangay', 'res_address_barangay', 'text', 'Barangay *', 'Barangay', old('res_address_barangay') ? old('res_address_barangay') : optional($employee->employeeAddress)->res_address_barangay, $errors->has('res_address_barangay'), $errors->first('res_address_barangay'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '6', 'res_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('res_address_zipcode') ? old('res_address_zipcode') : optional($employee->employeeAddress)->res_address_zipcode, $errors->has('res_address_zipcode'), $errors->first('res_address_zipcode'), 'data-transform="uppercase"'
+                           '6 res_address_city', 'res_address_city', 'text', 'City *', 'City', old('res_address_city') ? old('res_address_city') : optional($employee->employeeAddress)->res_address_city, $errors->has('res_address_city'), $errors->first('res_address_city'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        {!! __form::textbox(
+                           '6 res_address_province', 'res_address_province', 'text', 'Province *', 'Province', old('res_address_province') ? old('res_address_province') : optional($employee->employeeAddress)->res_address_province, $errors->has('res_address_province'), $errors->first('res_address_province'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! __form::textbox(
+                           '6 res_address_zipcode', 'res_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('res_address_zipcode') ? old('res_address_zipcode') : optional($employee->employeeAddress)->res_address_zipcode, $errors->has('res_address_zipcode'), $errors->first('res_address_zipcode'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -259,37 +258,37 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                           '6', 'perm_address_block', 'text', 'Block', 'Block', old('perm_address_block') ? old('perm_address_block') : optional($employee->employeeAddress)->perm_address_block, $errors->has('perm_address_block'), $errors->first('perm_address_block'), 'data-transform="uppercase"'
+                           '6 perm_address_block', 'perm_address_block', 'text', 'Block', 'Block', old('perm_address_block') ? old('perm_address_block') : optional($employee->employeeAddress)->perm_address_block, $errors->has('perm_address_block'), $errors->first('perm_address_block'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'perm_address_street', 'text', 'Street', 'Street', old('perm_address_street') ? old('perm_address_street') : optional($employee->employeeAddress)->perm_address_street, $errors->has('perm_address_street'), $errors->first('perm_address_street'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        <div class="col-md-12"></div>
-
-                        {!! __form::textbox(
-                           '6', 'perm_address_village', 'text', 'Village', 'Village', old('perm_address_village') ? old('perm_address_village') : optional($employee->employeeAddress)->perm_address_village, $errors->has('perm_address_village'), $errors->first('perm_address_village'), 'data-transform="uppercase"'
-                        ) !!}
-
-                        {!! __form::textbox(
-                           '6', 'perm_address_barangay', 'text', 'Barangay *', 'Barangay', old('perm_address_barangay') ? old('perm_address_barangay') : optional($employee->employeeAddress)->perm_address_barangay, $errors->has('perm_address_barangay'), $errors->first('perm_address_barangay'), 'data-transform="uppercase"'
+                           '6 perm_address_street', 'perm_address_street', 'text', 'Street', 'Street', old('perm_address_street') ? old('perm_address_street') : optional($employee->employeeAddress)->perm_address_street, $errors->has('perm_address_street'), $errors->first('perm_address_street'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '6', 'perm_address_city', 'text', 'City *', 'City', old('perm_address_city') ? old('perm_address_city') : optional($employee->employeeAddress)->perm_address_city, $errors->has('perm_address_city'), $errors->first('perm_address_city'), 'data-transform="uppercase"'
+                           '6 perm_address_village', 'perm_address_village', 'text', 'Village', 'Village', old('perm_address_village') ? old('perm_address_village') : optional($employee->employeeAddress)->perm_address_village, $errors->has('perm_address_village'), $errors->first('perm_address_village'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'perm_address_province', 'text', 'Province *', 'Province', old('perm_address_province') ? old('perm_address_province') : optional($employee->employeeAddress)->perm_address_province, $errors->has('perm_address_province'), $errors->first('perm_address_province'), 'data-transform="uppercase"'
+                           '6 perm_address_barangay', 'perm_address_barangay', 'text', 'Barangay *', 'Barangay', old('perm_address_barangay') ? old('perm_address_barangay') : optional($employee->employeeAddress)->perm_address_barangay, $errors->has('perm_address_barangay'), $errors->first('perm_address_barangay'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '6', 'perm_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('perm_address_zipcode') ? old('perm_address_zipcode') : optional($employee->employeeAddress)->perm_address_zipcode, $errors->has('perm_address_zipcode'), $errors->first('perm_address_zipcode'), 'data-transform="uppercase"'
+                           '6 perm_address_city', 'perm_address_city', 'text', 'City *', 'City', old('perm_address_city') ? old('perm_address_city') : optional($employee->employeeAddress)->perm_address_city, $errors->has('perm_address_city'), $errors->first('perm_address_city'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        {!! __form::textbox(
+                           '6 perm_address_province', 'perm_address_province', 'text', 'Province *', 'Province', old('perm_address_province') ? old('perm_address_province') : optional($employee->employeeAddress)->perm_address_province, $errors->has('perm_address_province'), $errors->first('perm_address_province'), 'data-transform="uppercase"'
+                        ) !!}
+
+                        <div class="col-md-12"></div>
+
+                        {!! __form::textbox(
+                           '6 perm_address_zipcode', 'perm_address_zipcode', 'text', 'Zipcode *', 'Zipcode', old('perm_address_zipcode') ? old('perm_address_zipcode') : optional($employee->employeeAddress)->perm_address_zipcode, $errors->has('perm_address_zipcode'), $errors->first('perm_address_zipcode'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -312,21 +311,21 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                           '6', 'father_lastname', 'text', 'Lastname *', 'Lastname', old('father_lastname') ? old('father_lastname') : optional($employee->employeeFamilyDetail)->father_lastname, $errors->has('father_lastname'), $errors->first('father_lastname'), 'data-transform="uppercase"'
+                           '6 father_lastname', 'father_lastname', 'text', 'Lastname *', 'Lastname', old('father_lastname') ? old('father_lastname') : optional($employee->employeeFamilyDetail)->father_lastname, $errors->has('father_lastname'), $errors->first('father_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'father_firstname', 'text', 'Firstname *', 'Firstname', old('father_firstname') ? old('father_firstname') : optional($employee->employeeFamilyDetail)->father_firstname, $errors->has('father_firstname'), $errors->first('father_firstname'), 'data-transform="uppercase"'
+                           '6 father_firstname', 'father_firstname', 'text', 'Firstname *', 'Firstname', old('father_firstname') ? old('father_firstname') : optional($employee->employeeFamilyDetail)->father_firstname, $errors->has('father_firstname'), $errors->first('father_firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '6', 'father_middlename', 'text', 'Middlename *', 'Middlename', old('father_middlename') ? old('father_middlename') : optional($employee->employeeFamilyDetail)->father_middlename, $errors->has('father_middlename'), $errors->first('father_middlename'), 'data-transform="uppercase"'
+                           '6 father_middlename', 'father_middlename', 'text', 'Middlename *', 'Middlename', old('father_middlename') ? old('father_middlename') : optional($employee->employeeFamilyDetail)->father_middlename, $errors->has('father_middlename'), $errors->first('father_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'father_name_ext', 'text', 'Name Extension', 'Name Extension', old('father_name_ext') ? old('father_name_ext') : optional($employee->employeeFamilyDetail)->father_name_ext, $errors->has('father_name_ext'), $errors->first('father_name_ext'), 'data-transform="uppercase"'
+                           '6 father_name_ext', 'father_name_ext', 'text', 'Name Extension', 'Name Extension', old('father_name_ext') ? old('father_name_ext') : optional($employee->employeeFamilyDetail)->father_name_ext, $errors->has('father_name_ext'), $errors->first('father_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -342,21 +341,21 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                           '6', 'mother_lastname', 'text', 'Lastname *', 'Lastname', old('mother_lastname') ? old('mother_lastname') : optional($employee->employeeFamilyDetail)->mother_lastname, $errors->has('mother_lastname'), $errors->first('mother_lastname'), 'data-transform="uppercase"'
+                           '6 mother_lastname', 'mother_lastname', 'text', 'Lastname *', 'Lastname', old('mother_lastname') ? old('mother_lastname') : optional($employee->employeeFamilyDetail)->mother_lastname, $errors->has('mother_lastname'), $errors->first('mother_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'mother_firstname', 'text', 'Firstname *', 'Firstname', old('mother_firstname') ? old('mother_firstname') : optional($employee->employeeFamilyDetail)->mother_firstname, $errors->has('mother_firstname'), $errors->first('mother_firstname'), 'data-transform="uppercase"'
+                           '6 mother_firstname', 'mother_firstname', 'text', 'Firstname *', 'Firstname', old('mother_firstname') ? old('mother_firstname') : optional($employee->employeeFamilyDetail)->mother_firstname, $errors->has('mother_firstname'), $errors->first('mother_firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '6', 'mother_middlename', 'text', 'Middlename *', 'Middlename', old('mother_middlename') ? old('mother_middlename') : optional($employee->employeeFamilyDetail)->mother_middlename, $errors->has('mother_middlename'), $errors->first('mother_middlename'), 'data-transform="uppercase"'
+                           '6 mother_middlename', 'mother_middlename', 'text', 'Middlename *', 'Middlename', old('mother_middlename') ? old('mother_middlename') : optional($employee->employeeFamilyDetail)->mother_middlename, $errors->has('mother_middlename'), $errors->first('mother_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '6', 'mother_name_ext', 'text', 'Name Extension', 'Name Extension', old('mother_name_ext') ? old('mother_name_ext') : optional($employee->employeeFamilyDetail)->mother_name_ext, $errors->has('mother_name_ext'), $errors->first('mother_name_ext'), 'data-transform="uppercase"'
+                           '6 mother_name_ext', 'mother_name_ext', 'text', 'Name Extension', 'Name Extension', old('mother_name_ext') ? old('mother_name_ext') : optional($employee->employeeFamilyDetail)->mother_name_ext, $errors->has('mother_name_ext'), $errors->first('mother_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -372,37 +371,37 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                           '3', 'spouse_lastname', 'text', 'Lastname', 'Lastname', old('spouse_lastname') ? old('spouse_lastname') : optional($employee->employeeFamilyDetail)->spouse_lastname, $errors->has('spouse_lastname'), $errors->first('spouse_lastname'), 'data-transform="uppercase"'
+                           '3 spouse_lastname', 'spouse_lastname', 'text', 'Lastname', 'Lastname', old('spouse_lastname') ? old('spouse_lastname') : optional($employee->employeeFamilyDetail)->spouse_lastname, $errors->has('spouse_lastname'), $errors->first('spouse_lastname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'spouse_firstname', 'text', 'Firstname', 'Firstname', old('spouse_firstname') ? old('spouse_firstname') : optional($employee->employeeFamilyDetail)->spouse_firstname, $errors->has('spouse_firstname'), $errors->first('spouse_firstname'), 'data-transform="uppercase"'
+                           '3 spouse_firstname', 'spouse_firstname', 'text', 'Firstname', 'Firstname', old('spouse_firstname') ? old('spouse_firstname') : optional($employee->employeeFamilyDetail)->spouse_firstname, $errors->has('spouse_firstname'), $errors->first('spouse_firstname'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'spouse_middlename', 'text', 'Middlename', 'Middlename', old('spouse_middlename') ? old('spouse_middlename') : optional($employee->employeeFamilyDetail)->spouse_middlename, $errors->has('spouse_middlename'), $errors->first('spouse_middlename'), 'data-transform="uppercase"'
+                           '3 spouse_middlename', 'spouse_middlename', 'text', 'Middlename', 'Middlename', old('spouse_middlename') ? old('spouse_middlename') : optional($employee->employeeFamilyDetail)->spouse_middlename, $errors->has('spouse_middlename'), $errors->first('spouse_middlename'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'spouse_name_ext', 'text', 'Name Extension', 'Name Extension', old('spouse_name_ext') ? old('spouse_name_ext') : optional($employee->employeeFamilyDetail)->spouse_name_ext, $errors->has('spouse_name_ext'), $errors->first('spouse_name_ext'), 'data-transform="uppercase"'
+                           '3 spouse_name_ext', 'spouse_name_ext', 'text', 'Name Extension', 'Name Extension', old('spouse_name_ext') ? old('spouse_name_ext') : optional($employee->employeeFamilyDetail)->spouse_name_ext, $errors->has('spouse_name_ext'), $errors->first('spouse_name_ext'), 'data-transform="uppercase"'
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                           '3', 'spouse_occupation', 'text', 'Occupation', 'Occupation', old('spouse_occupation') ? old('spouse_occupation') : optional($employee->employeeFamilyDetail)->spouse_occupation, $errors->has('spouse_occupation'), $errors->first('spouse_occupation'), 'data-transform="uppercase"'
+                           '3 spouse_occupation', 'spouse_occupation', 'text', 'Occupation', 'Occupation', old('spouse_occupation') ? old('spouse_occupation') : optional($employee->employeeFamilyDetail)->spouse_occupation, $errors->has('spouse_occupation'), $errors->first('spouse_occupation'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'spouse_employer', 'text', 'Employer / Business Name', 'Employer / Business Name', old('spouse_employer') ? old('spouse_employer') : optional($employee->employeeFamilyDetail)->spouse_employer, $errors->has('spouse_employer'), $errors->first('spouse_employer'), 'data-transform="uppercase"'
+                           '3 spouse_employer', 'spouse_employer', 'text', 'Employer / Business Name', 'Employer / Business Name', old('spouse_employer') ? old('spouse_employer') : optional($employee->employeeFamilyDetail)->spouse_employer, $errors->has('spouse_employer'), $errors->first('spouse_employer'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'spouse_business_address', 'text', 'Business Address', 'Business Address', old('spouse_business_address') ? old('spouse_business_address') : optional($employee->employeeFamilyDetail)->spouse_business_address, $errors->has('spouse_business_address'), $errors->first('spouse_business_address'), 'data-transform="uppercase"'
+                           '3 spouse_business_address', 'spouse_business_address', 'text', 'Business Address', 'Business Address', old('spouse_business_address') ? old('spouse_business_address') : optional($employee->employeeFamilyDetail)->spouse_business_address, $errors->has('spouse_business_address'), $errors->first('spouse_business_address'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'spouse_tel_no', 'text', 'Telephone No.', 'Telephone No.', old('spouse_tel_no') ? old('spouse_tel_no') : optional($employee->employeeFamilyDetail)->spouse_tel_no, $errors->has('spouse_tel_no'), $errors->first('spouse_tel_no'), 'data-transform="uppercase"'
+                           '3 spouse_tel_no', 'spouse_tel_no', 'text', 'Telephone No.', 'Telephone No.', old('spouse_tel_no') ? old('spouse_tel_no') : optional($employee->employeeFamilyDetail)->spouse_tel_no, $errors->has('spouse_tel_no'), $errors->first('spouse_tel_no'), 'data-transform="uppercase"'
                         ) !!}
 
                       </div>
@@ -507,97 +506,97 @@
                       <div class="box-body">
 
                         {!! __form::textbox(
-                          '3', 'employee_no', 'text', 'Employee No. *', 'Employee No.', old('employee_no') ? old('employee_no') : $employee->employee_no, $errors->has('employee_no'), $errors->first('employee_no'), ''
+                          '3 employee_no', 'employee_no', 'text', 'Employee No. *', 'Employee No.', old('employee_no') ? old('employee_no') : $employee->employee_no, $errors->has('employee_no'), $errors->first('employee_no'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                          '3', 'position', 'text', 'Position *', 'Position', old('position') ? old('position') : $employee->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
+                          '3 position', 'position', 'text', 'Position *', 'Position', old('position') ? old('position') : $employee->position, $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
                         ) !!}
 
                         {!! __form::textbox(
-                          '3', 'item_no', 'text', 'Item No.', 'Item No.', old('item_no') ? old('item_no') : $employee->item_no, $errors->has('item_no'), $errors->first('item_no'), ''
+                          '3 item_no', 'item_no', 'text', 'Item No.', 'Item No.', old('item_no') ? old('item_no') : $employee->item_no, $errors->has('item_no'), $errors->first('item_no'), ''
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'appointment_status', 'Appointment Status *', old('appointment_status') ? old('appointment_status') : $employee->appointment_status, ['Permanent' => 'PERM', 'Job Order / Contract of Service' => 'COS'], $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
+                          '3 appointment_status', 'appointment_status', 'Appointment Status *', old('appointment_status') ? old('appointment_status') : $employee->appointment_status, ['Permanent' => 'PERM', 'Job Order / Contract of Service' => 'COS'], $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox(
-                          '3', 'salary_grade', 'text', 'Salary Grade', 'Salary Grade', old('salary_grade') ? old('salary_grade') : $employee->salary_grade, $errors->has('salary_grade'), $errors->first('salary_grade'), ''
+                          '3 salary_grade', 'salary_grade', 'text', 'Salary Grade', 'Salary Grade', old('salary_grade') ? old('salary_grade') : $employee->salary_grade, $errors->has('salary_grade'), $errors->first('salary_grade'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                          '3', 'step_inc', 'text', 'Step Increment', 'Step Increment', old('step_inc') ? old('step_inc') : $employee->step_inc, $errors->has('step_inc'), $errors->first('step_inc'), ''
+                          '3 step_inc', 'step_inc', 'text', 'Step Increment', 'Step Increment', old('step_inc') ? old('step_inc') : $employee->step_inc, $errors->has('step_inc'), $errors->first('step_inc'), ''
                         ) !!}
 
                         {!! __form::select_dynamic(
-                          '3', 'department_id', 'Department *', old('department_id') ? old('department_id') : $employee->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), '', ''
+                          '3 department_id', 'department_id', 'Department *', old('department_id') ? old('department_id') : $employee->department_id, $global_departments_all, 'department_id', 'name', $errors->has('department_id'), $errors->first('department_id'), '', ''
                         ) !!}
 
                         {!! __form::select_dynamic(
-                          '3', 'department_unit_id', 'Unit *', old('department_unit_id') ? old('department_unit_id') : $employee->department_unit_id, $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), '', ''
+                          '3 department_unit_id', 'department_unit_id', 'Unit *', old('department_unit_id') ? old('department_unit_id') : $employee->department_unit_id, $global_department_units_all, 'department_unit_id', 'description', $errors->has('department_unit_id'), $errors->first('department_unit_id'), '', ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox_numeric(
-                          '3', 'monthly_basic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthly_basic') ? old('monthly_basic') : $employee->monthly_basic, $errors->has('monthly_basic'), $errors->first('monthly_basic'), ''
+                          '3 monthly_basic', 'monthly_basic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthly_basic') ? old('monthly_basic') : $employee->monthly_basic, $errors->has('monthly_basic'), $errors->first('monthly_basic'), ''
                         ) !!}
 
                         {!! __form::textbox_numeric(
-                          '3', 'aca', 'text', 'ACA', 'ACA', old('aca') ? old('aca') : $employee->aca, $errors->has('aca'), $errors->first('aca'), ''
+                          '3 aca', 'aca', 'text', 'ACA', 'ACA', old('aca') ? old('aca') : $employee->aca, $errors->has('aca'), $errors->first('aca'), ''
                         ) !!}
 
                         {!! __form::textbox_numeric(
-                          '3', 'pera', 'text', 'PERA', 'PERA', old('pera') ? old('pera') : $employee->pera, $errors->has('pera'), $errors->first('pera'), ''
+                          '3 pera', 'pera', 'text', 'PERA', 'PERA', old('pera') ? old('pera') : $employee->pera, $errors->has('pera'), $errors->first('pera'), ''
                         ) !!}
 
                         {!! __form::textbox_numeric(
-                          '3', 'food_subsidy', 'text', 'Food Subsidy', 'Food Subsidy', old('food_subsidy') ? old('food_subsidy') : $employee->food_subsidy, $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
+                          '3 food_subsidy', 'food_subsidy', 'text', 'Food Subsidy', 'Food Subsidy', old('food_subsidy') ? old('food_subsidy') : $employee->food_subsidy, $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::textbox_numeric(
-                          '3', 'ra', 'text', 'RA', 'RA', old('ra') ? old('ra') : $employee->ra, $errors->has('ra'), $errors->first('ra'), ''
+                          '3 ra', 'ra', 'text', 'RA', 'RA', old('ra') ? old('ra') : $employee->ra, $errors->has('ra'), $errors->first('ra'), ''
                         ) !!}
 
                         {!! __form::textbox_numeric(
-                          '3', 'ta', 'text', 'TA', 'TA', old('ta') ? old('ta') : $employee->ta, $errors->has('ta'), $errors->first('ta'), ''
+                          '3 ta', 'ta', 'text', 'TA', 'TA', old('ta') ? old('ta') : $employee->ta, $errors->has('ta'), $errors->first('ta'), ''
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::datepicker(
-                          '3', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov') ? old('firstday_gov') : $employee->firstday_gov, $errors->has('firstday_gov'), $errors->first('firstday_gov')
+                          '3 firstday_gov', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov') ? old('firstday_gov') : $employee->firstday_gov, $errors->has('firstday_gov'), $errors->first('firstday_gov')
                         ) !!}
 
                         {!! __form::datepicker(
-                          '3', 'firstday_sra',  'First Day in SRA *', old('firstday_sra') ? old('firstday_sra') : $employee->firstday_sra, $errors->has('firstday_sra'), $errors->first('firstday_sra')
+                          '3 firstday_sra', 'firstday_sra',  'First Day in SRA *', old('firstday_sra') ? old('firstday_sra') : $employee->firstday_sra, $errors->has('firstday_sra'), $errors->first('firstday_sra')
                         ) !!}
 
                         {!! __form::datepicker(
-                          '3', 'appointment_date',  'Appointment Date', old('appointment_date') ? old('appointment_date') : $employee->appointment_date, $errors->has('appointment_date'), $errors->first('appointment_date')
+                          '3 appointment_date', 'appointment_date',  'Appointment Date', old('appointment_date') ? old('appointment_date') : $employee->appointment_date, $errors->has('appointment_date'), $errors->first('appointment_date')
                         ) !!}
 
                         {!! __form::datepicker(
-                          '3', 'adjustment_date',  'Date of Last Promotion', old('adjustment_date') ? old('adjustment_date') : $employee->adjustment_date, $errors->has('adjustment_date'), $errors->first('adjustment_date')
+                          '3 adjustment_date', 'adjustment_date',  'Date of Last Promotion', old('adjustment_date') ? old('adjustment_date') : $employee->adjustment_date, $errors->has('adjustment_date'), $errors->first('adjustment_date')
                         ) !!}
 
                         <div class="col-md-12"></div>
 
                         {!! __form::select_dynamic(
-                          '3', 'project_id', 'Station *', old('project_id') ? old('project_id') : $employee->project_id, $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
+                          '3 project_id', 'project_id', 'Station *', old('project_id') ? old('project_id') : $employee->project_id, $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'is_active', 'Status *', old('is_active') ? old('is_active') : $employee->is_active, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeStatus(),'option','value'), $errors->has('is_active'), $errors->first('is_active'), '', ''
+                          '3 is_active', 'is_active', 'Status *', old('is_active') ? old('is_active') : $employee->is_active, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeStatus(),'option','value'), $errors->has('is_active'), $errors->first('is_active'), '', ''
                         ) !!}
 
                         {!! __form::select_static(
-                          '3', 'locations', 'Groupings *', old('locations') ? old('locations') : $employee->locations, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value'), $errors->has('locations'), $errors->first('locations'), '', ''
+                          '3 locations', 'locations', 'Groupings *', old('locations') ? old('locations') : $employee->locations, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value'), $errors->has('locations'), $errors->first('locations'), '', ''
                         ) !!}
 
                       </div>
@@ -619,27 +618,27 @@
 
 
                         {!! __form::textbox(
-                           '3', 'gsis', 'text', 'GSIS', 'GSIS', old('gsis') ? old('gsis') : $employee->gsis, $errors->has('gsis'), $errors->first('gsis'), ''
+                           '3 gsis', 'gsis', 'text', 'GSIS', 'GSIS', old('gsis') ? old('gsis') : $employee->gsis, $errors->has('gsis'), $errors->first('gsis'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'philhealth', 'text', 'PHILHEALTH', 'PHILHEALTH', old('philhealth') ? old('philhealth') : $employee->philhealth, $errors->has('philhealth'), $errors->first('philhealth'), ''
+                           '3 philhealth', 'philhealth', 'text', 'PHILHEALTH', 'PHILHEALTH', old('philhealth') ? old('philhealth') : $employee->philhealth, $errors->has('philhealth'), $errors->first('philhealth'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'tin', 'text', 'TIN', 'TIN', old('tin') ? old('tin') : $employee->tin, $errors->has('tin'), $errors->first('tin'), ''
+                           '3 tin', 'tin', 'text', 'TIN', 'TIN', old('tin') ? old('tin') : $employee->tin, $errors->has('tin'), $errors->first('tin'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'sss', 'text', 'SSS', 'SSS', old('sss') ? old('sss') : $employee->sss, $errors->has('sss'), $errors->first('sss'), ''
+                           '3 sss', 'sss', 'text', 'SSS', 'SSS', old('sss') ? old('sss') : $employee->sss, $errors->has('sss'), $errors->first('sss'), ''
                         ) !!}
 
                         {!! __form::textbox(
-                           '3', 'hdmf', 'text', 'HDMF', 'HDMF', old('hdmf') ? old('hdmf') : $employee->hdmf, $errors->has('hdmf'), $errors->first('hdmf'), ''
+                           '3 hdmf', 'hdmf', 'text', 'HDMF', 'HDMF', old('hdmf') ? old('hdmf') : $employee->hdmf, $errors->has('hdmf'), $errors->first('hdmf'), ''
                         ) !!}
 
                         {!! __form::textbox_numeric(
-                          '3', 'hdmfpremiums', 'text', 'HDMF Premiums', 'HDMF Premiums', old('hdmfpremiums') ? old('hdmfpremiums') : $employee->hdmfpremiums, $errors->has('hdmfpremiums'), $errors->first('hdmfpremiums'), ''
+                          '3 hdmfpremiums', 'hdmfpremiums', 'text', 'HDMF Premiums', 'HDMF Premiums', old('hdmfpremiums') ? old('hdmfpremiums') : $employee->hdmfpremiums, $errors->has('hdmfpremiums'), $errors->first('hdmfpremiums'), ''
                         ) !!}
 
 
@@ -2088,8 +2087,8 @@
         </div>
 
         <div class="box-footer">
-          <button type="submit" class="btn btn-default">
-            Save <i class="fa fa-fw fa-save"></i>
+          <button type="submit" class="btn btn-primary pull-right">
+            <i class="fa fa-check"></i> Save
           </button>
         </div>
 
@@ -2129,7 +2128,36 @@
     {!! __js::ajax_select_to_select(
       'department_id', 'department_unit_id', '/api/department_unit/select_departmentUnit_byDeptId/', 'department_unit_id', 'description'
     ) !!}
-
+    @if(\Illuminate\Support\Facades\Request::get("page") != null)
+      const page = '{{\Illuminate\Support\Facades\Request::get("page")}}';
+    @else
+      const page = 0;
+    @endif
+    $("#edit_employee_form").submit(function (e) {
+      e.preventDefault();
+      let form = $(this);
+      loading_btn(form);
+      $.ajax({
+        url : '{{ route('dashboard.employee.update', $employee->slug) }}',
+        data : form.serialize(),
+        type: 'PUT',
+        headers: {
+          {!! __html::token_header() !!}
+        },
+        success: function (res) {
+          unmark_required(form)
+          form.get(0).reset();
+          remove_loading_btn(form);
+          markTabs(form);
+          window.location.replace('{{route("dashboard.employee.index")}}?toPage='+page+'&mark='+res.slug);
+        },
+        error: function (res) {
+          errored(form,res);
+          notify('Please fill out the required fields.','warning');
+          markTabs(form);
+        }
+      })
+    })
 
 
     {{-- Medical History --}}

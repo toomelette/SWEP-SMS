@@ -13,17 +13,17 @@
         </div>
         <div class="box-body">
             <div class="panel">
-                <div class="box-header with-border">
-                    <h4 class="box-title">
-                        <a data-toggle="collapse" id="#a-advanced-filters" data-parent="#accordion" href="#advanced_filters" aria-expanded="true" class="">
-                            <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
-                        </a>
+                <div class="box box-sm box-default box-solid collapsed-box">
+                    <div class="box-header with-border">
+                        <p class="no-margin"><i class="fa fa-filter"></i> Advanced Filters <small id="filter-notifier" class="label bg-blue blink"></small></p>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool advanced_filters_toggler" data-widget="collapse"><i class="fa fa-plus"></i>
+                            </button>
+                        </div>
 
-                    </h4>
-                   <small id="filter-notifier" class="label bg-blue blink"></small>
-                </div>
-                <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
-                    <div class="box-body">
+                    </div>
+
+                    <div class="box-body" style="display: none">
                         <form id="filter_form">
                             <div class="row">
                                 <div class="col-md-2 dt_filter-parent-div">
@@ -48,8 +48,10 @@
                                         {!! \App\Swep\Helpers\Helper::populateOptionsFromObject(\App\Models\SuOptions::employeeGroupings(),'option','value') !!}
                                     </select>
                                 </div>
+                            </div>
                         </form>
                     </div>
+
                 </div>
             </div>
             <br>
@@ -233,8 +235,9 @@
           },100);
 
           setTimeout(function () {
-              $('a[href="#advanced_filters"]').trigger('click');
-          },1500);
+              // $('a[href="#advanced_filters"]').trigger('click');
+              $('.advanced_filters_toggler').trigger('click');
+          },1000);
 
             $('#tbl_loader').fadeOut(function(){
               $("#employees_table_container").fadeIn();
@@ -246,18 +249,32 @@
                 }
 
             });
+          @if(\Illuminate\Support\Facades\Request::get('toPage') != null && \Illuminate\Support\Facades\Request::get('mark') != null)
+          setTimeout(function () {
+              employees_tbl.page({{\Illuminate\Support\Facades\Request::get('toPage')}}).draw('page');
+              active = '{{\Illuminate\Support\Facades\Request::get("mark")}}';
+              notify('Employee successfully updated.');
+              window.history.pushState({}, document.title, "/dashboard/employee");
+          },700);
+          @endif
       },
       "language":
               {
                 "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
               },
-      "drawCallback": function(settings){
-        $('[data-toggle="tooltip"]').tooltip();
-        $('[data-toggle="modal"]').tooltip();
-        if(active != ''){
-          $("#employees_table #"+active).addClass('success');
+        "drawCallback": function(settings){
+            console.log(employees_tbl.page.info().page);
+            $("#employees_table a[for='linkToEdit']").each(function () {
+                let orig_uri = $(this).attr('href');
+                $(this).attr('href',orig_uri+'?page='+employees_tbl.page.info().page);
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="modal"]').tooltip();
+            if(active != ''){
+                $("#employees_table #"+active).addClass('success');
+            }
         }
-      }
     })
 
     style_datatable("#employees_table");
@@ -428,5 +445,8 @@
             }
         })
     })
+
+    // window.history.pushState({}, document.title, "/dashboard/employee");
+
 </script>
 @endsection

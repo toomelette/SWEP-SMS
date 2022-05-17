@@ -108,7 +108,7 @@ class EmployeeFormRequest extends FormRequest{
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('hr_employees','employee_no'),
+                Rule::unique('hr_employees','employee_no')->ignore($this->slug,'slug'),
             ],
             'position'=>'required|string|max:90',
             'item_no'=>'nullable|int|max:10000',

@@ -95,6 +95,7 @@ class EmployeeService extends BaseService{
         $this->fillDependencies($request, $employee);
 
 //        $this->event->dispatch('employee.update', $employee);
+        return $employee->only('slug');
         return redirect()->route('dashboard.employee.index');
 
     }
