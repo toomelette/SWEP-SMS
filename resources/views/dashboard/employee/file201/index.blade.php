@@ -2,7 +2,7 @@
 @extends('layouts.modal-content')
 
 @section('modal-header')
-    {{$employee->lastname}}, {{$employee->firstname}} - 201 File
+    <i class="fa fa-folder"></i> {{$employee->lastname}}, {{$employee->firstname}} - 201 File
 @endsection
 
 @section('modal-body')
@@ -26,7 +26,7 @@
             </tbody>
         </table>
     </div>
-    <div id="tbl_loader_2">
+    <div id="tbl_loader_file201">
         <center>
             <img style="width: 100px" src="{{asset('images/loader.gif')}}">
         </center>
@@ -83,7 +83,7 @@
             "order":[[0,'desc']],
             "responsive": false,
             "initComplete": function( settings, json ) {
-                $('#tbl_loader_2').fadeOut(function(){
+                $('#tbl_loader_file201').fadeOut(function(){
                     $("#file201_table_container").fadeIn();
                 });
             },

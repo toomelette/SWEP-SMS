@@ -2,7 +2,7 @@
 
 @php($sr = \Illuminate\Support\Str::random(15))
 @section('modal-header')
-    {{$employee->lastname}}, {{$employee->firstname}} - Service Records
+    <i class="fa icon-service-record"></i> {{$employee->lastname}}, {{$employee->firstname}} - Service Records
 @endsection
 
 @section('modal-body')

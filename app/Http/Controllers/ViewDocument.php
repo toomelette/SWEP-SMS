@@ -28,6 +28,9 @@ class ViewDocument extends Controller
                 abort(405);
             }
             $attachment = EmployeeFile201::query()->where('slug','=',$id)->first();
+            if(empty($attachment)){
+                abort(504,'Attachment not available. The file maybe moved or deleted.');
+            }
             $n = new File201Controller;
             $path = $n->path.$attachment->employee_no.'/';
             $filename = $attachment->filename;

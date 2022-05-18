@@ -2,7 +2,7 @@
 @extends('layouts.modal-content')
 
 @section('modal-header')
-    {{$employee->lastname}}, {{$employee->firstname}} - Trainings
+    <i class="fa icon-seminar"></i> {{$employee->lastname}}, {{$employee->firstname}} - Trainings
 @endsection
 
 @section('modal-body')

@@ -27,7 +27,7 @@ $total_score = optional($employee->employeeMatrix)->educ_bachelors_degree +
 @extends('layouts.modal-content')
 
 @section('modal-header')
-    {{$employee->lastname}}, {{$employee->firstname}} - Matrix
+    <i class="fa fa-dashboard"></i> {{$employee->lastname}}, {{$employee->firstname}} - Matrix
 @endsection
 
 @section('modal-body')
