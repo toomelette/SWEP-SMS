@@ -28,6 +28,10 @@ class CreateHrEmployeesFile201Table extends Migration
             $table->string('ip_created')->nullable(true);
             $table->string('ip_updated')->nullable(true);
         });
+
+        DB::statement('ALTER TABLE `swep_afd`.`hr_employee_file201` 
+            ADD COLUMN `file_ext` VARCHAR(45) NULL AFTER `filename`;
+        ');
     }
 
     /**

@@ -106,6 +106,26 @@
                 file_201_tbl.search(this.value).draw();
             }
         });
+
+        $("body").on("click",'#file_201_table_{{$rand}} .edit_file201_btn',function () {
+            let btn = $(this);
+            let uri = btn.attr('uri');
+            load_modal2(btn);
+            $.ajax({
+                url : uri,
+                // data : 'GET',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                   populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                }
+            })
+        })
     </script>
 @endsection
 

@@ -102,6 +102,7 @@
 
 {!! \App\Swep\ViewHelpers\__html::blank_modal('file201_modal','lg') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('add_file201_modal','') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('edit_file201_modal','') !!}
 
 {{-- Print Modal --}}
 <div class="modal fade" id="print_sr_modal" tabindex="-1" role="dialog">
