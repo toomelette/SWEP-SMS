@@ -33,10 +33,10 @@
 
   <style type="text/css">
 
-    table, th, td {
-      border: 1px solid black;
-      padding:5px;
-    }
+    /*table, th, td {*/
+    /*  border: 1px solid black;*/
+    /*  padding:5px;*/
+    /*}*/
 
     @media print {
         .footer {
@@ -44,30 +44,43 @@
         }
     }
 
+
+
   </style>
 
 </head>
+{{--<body>--}}
 <body onload="window.print();" onafterprint="window.close()">
 
   <div class="wrapper">
-
-    <div class="row">
-      <div class="col-sm-6">
+    <div style="width: 100%; overflow: auto">
+      <div style="width: 50%; float: left">
         <p style="font-size: 17px;">SUGAR REGULATORY ADMINISTRATION</p>
       </div>
-      <div class="col-sm-6">
-        <span style="margin-left:450px;">Page 1 of 1</span>
-      </div>
-      <div class="col-sm-12">
-        <p style="font-size: 15px; font-weight:bold;">SUMMARY OF PERMISSION SLIPS (WITH FILED PS)</p>
-      </div>
-      <div class="col-sm-12" style="margin-top: -5px;">
-        <p style="font-size: 15px; font-weight:bold;">{{ $department->name }}</p>
-      </div>
-      <div class="col-sm-12" style="margin-top: -10px;">
-        <p style="font-size: 12px;">Period Covered {{ $df_header . '  To  ' . $dt_header }}</p>
+      <div style="width: 49%; float: right">
+        <p style="font-size: 14px;" class="text-right">Page 1 of 1</p>
       </div>
     </div>
+    <p style="font-size: 15px; font-weight:bold;">SUMMARY OF PERMISSION SLIPS (WITH FILED PS)</p>
+    <p style="font-size: 15px; font-weight:bold;">{{ $department->name }}</p>
+    <p style="font-size: 12px;">Period Covered {{ $df_header . '  To  ' . $dt_header }}</p>
+{{--    <div class="row">--}}
+{{--      <div class="col-sm-6">--}}
+{{--        <p style="font-size: 17px;">SUGAR REGULATORY ADMINISTRATION</p>--}}
+{{--      </div>--}}
+{{--      <div class="col-sm-6">--}}
+{{--        <span style="margin-left:450px;">Page 1 of 1</span>--}}
+{{--      </div>--}}
+{{--      <div class="col-sm-12">--}}
+{{--        <p style="font-size: 15px; font-weight:bold;">SUMMARY OF PERMISSION SLIPS (WITH FILED PS)</p>--}}
+{{--      </div>--}}
+{{--      <div class="col-sm-12" style="margin-top: -5px;">--}}
+{{--        <p style="font-size: 15px; font-weight:bold;">{{ $department->name }}</p>--}}
+{{--      </div>--}}
+{{--      <div class="col-sm-12" style="margin-top: -10px;">--}}
+{{--        <p style="font-size: 12px;">Period Covered {{ $df_header . '  To  ' . $dt_header }}</p>--}}
+{{--      </div>--}}
+{{--    </div>--}}
 
 
 

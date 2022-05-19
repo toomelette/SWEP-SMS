@@ -235,8 +235,9 @@ class PermissionSlipRepository extends BaseRepository implements PermissionSlipI
                         ->where('is_active', 'ACTIVE')
                         ->with('permissionSlip')
                         ->whereHas('permissionSlip', function ($model) use ($df, $dt) {
-                                                        $model->whereBetween('date', [$df, $dt]);
-                                                    })
+                            $model->whereBetween('date', [$df, $dt]);
+                        })
+                        ->orderBy('lastname','asc')
                         ->get();
 
     }
