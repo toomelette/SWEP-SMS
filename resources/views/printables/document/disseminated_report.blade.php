@@ -11,7 +11,7 @@
 
 		<link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
 
-		<link rel="stylesheet" href="{{ asset('css/print.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/print.css') }}?s={{\Illuminate\Support\Str::random()}}">
 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
 

@@ -20,7 +20,7 @@
 
   <link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
 
-  <link rel="stylesheet" href="{{ asset('css/print.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/print.css') }}?s={{\Illuminate\Support\Str::random()}}">
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
 

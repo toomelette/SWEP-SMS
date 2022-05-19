@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/print.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/print.css') }}?s={{\Illuminate\Support\Str::random()}}">
 
 
     <style type="text/css">
@@ -167,7 +167,7 @@
                 Date Returned
             </td>
             <td>
-                {{Carbon::parse($r->date_returned)->format('F d, Y')}}
+                {{($r->date_returned == null )? '' : Carbon::parse($r->date_returned)->format('F d, Y')}}
             </td>
         </tr>
     </table>
