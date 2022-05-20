@@ -229,7 +229,7 @@
       ],
       "responsive": true,
       "initComplete": function( settings, json ) {
-
+            // console.log(settings);
           setTimeout(function () {
               $("#filter_form select[name='is_active']").val('ACTIVE');
               $("#filter_form select[name='is_active']").trigger('change');
@@ -247,6 +247,7 @@
                     setTimeout(function(){
                         active = '';
                     },3000);
+                    window.history.pushState({}, document.title, "/dashboard/employee");
                 }
 
             });
@@ -264,7 +265,7 @@
                 "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
               },
         "drawCallback": function(settings){
-            console.log(employees_tbl.page.info().page);
+            // console.log(employees_tbl.page.info().page);
             $("#employees_table a[for='linkToEdit']").each(function () {
                 let orig_uri = $(this).attr('href');
                 $(this).attr('href',orig_uri+'?page='+employees_tbl.page.info().page);

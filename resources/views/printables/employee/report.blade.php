@@ -63,7 +63,7 @@
 
              <div {!! ($request->separate_page_per_table == 'separate_page_per_table') ? 'style="break-after: page"' : '' !!}>
                  <p class="text-strong">{{strtoupper($k)}}</p>
-                 <table>
+                 <table class="print-table">
                      <thead>
                      <tr>
                          <th>#</th>

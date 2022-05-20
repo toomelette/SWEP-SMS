@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
 
   <style type="text/css">
-    
+
     .arrow {
       position: absolute;
       overflow: hidden;
@@ -43,7 +43,7 @@
     <div class="col-sm-12" style="margin-top:40px;">
       <center>
         <h5>DISBURSEMENT VOUCHER (DV)</h5>
-        <span style="font-style:italic; font-size: 10px;">INSTRUCTIONS</span> 
+        <span style="font-style:italic; font-size: 10px;">INSTRUCTIONS</span>
       </center>
     </div>
     <div class="col-sm-12" style="margin-top:10px;"></div>
@@ -103,7 +103,7 @@
                 <div style="border-left: 2px solid; width: 22px; border-bottom: 2px solid; height: 25px; margin-left:98px; margin-top:-47px;">
                   <div class="arrow" style="margin-top: 20px; margin-left: 12px;"></div>
                 </div>
-                <div class="row"> 
+                <div class="row">
                   <p style="margin-left:145px; margin-top:-11px; font-size:10px;">
                     Serial number<br>
                     (one series each year)<br>
@@ -156,7 +156,7 @@
               <span style="float:right; font-size:10px;">7.</span>
             </div>
             <div class="col-sm-10">
-              <p style="font-size:10px;"><strong>Responsibility Center (Office/Unit/Project and <br> 
+              <p style="font-size:10px;"><strong>Responsibility Center (Office/Unit/Project and <br>
               Code)</strong> - the office/unit/project and code assigned<br>
               to the cost center where the disbursement shall<br>
               be charged.</p>
@@ -230,7 +230,7 @@
     </div>
 
   </div>
-  
+
 </body>
 
 </html>
