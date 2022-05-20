@@ -92,8 +92,10 @@
                     <div class="panel-body">
                         <center><label><span for="month_name">{{Carbon::now()->format('F')}}</span> Birthday Celebrants</label>
                             <div class="btn-group pull-right">
-                                <button type="button" data="{{str_pad(Carbon::now()->format('m')-1,2,0,STR_PAD_LEFT)}}" id="prev_btn" class="btn btn-default btn-xs nav_month_btn"><i class="fa fa-chevron-left"></i></button>
-                                <button type="button" data="{{str_pad(Carbon::now()->format('m')+1,2,0,STR_PAD_LEFT)}}" id="next_btn" class="btn btn-default btn-xs nav_month_btn"><i class="fa fa-chevron-right"></i></button>
+{{--                                {{str_pad(Carbon::now()->format('m')-1,2,0,STR_PAD_LEFT)}}--}}
+{{--                                {{str_pad(Carbon::now()->format('m')+1,2,0,STR_PAD_LEFT)}}--}}
+                                <button type="button" data="{{\Illuminate\Support\Carbon::now()->subMonth(1)->firstOfMonth()->format('Y-m-d')}}" id="prev_btn" class="btn btn-default btn-xs nav_month_btn"><i class="fa fa-chevron-left"></i></button>
+                                <button type="button" data="{{\Illuminate\Support\Carbon::now()->addMonth(1)->firstOfMonth()->format('Y-m-d')}}" id="next_btn" class="btn btn-default btn-xs nav_month_btn"><i class="fa fa-chevron-right"></i></button>
                             </div></center>
 
                         <hr class="no-margin">
@@ -141,6 +143,7 @@
                                                 <th>Name of Employee</th>
                                                 <th>First day in government</th>
                                                 <th>Years in govt. service</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                             @foreach($loyaltys as $employee)
@@ -148,6 +151,7 @@
                                                     <td class="text-strong">{{$employee->lastname}}, {{$employee->firstname}}</td>
                                                     <td>{{\Illuminate\Support\Carbon::parse($employee->firstday_gov)->format('F d, Y')}}</td>
                                                     <td>{{$employee->years_in_gov}} years</td>
+                                                    <td style="width: 50px;"><a href="{{route('dashboard.employee.index')}}?find={{$employee->employee_no}}" target="_blank"><button class="btn btn-xs">View Employee</button></a></td>
                                                 </tr>
                                             @endforeach
                                         </table>

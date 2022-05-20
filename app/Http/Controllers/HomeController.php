@@ -15,6 +15,7 @@ use App\Models\News;
 use App\Models\PermissionSlip;
 use App\Swep\Services\HomeService;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,22 +39,17 @@ class HomeController extends Controller{
 
     private function birthdayCelebrantsView($this_month){
 
-//        $perm = DB::table('hr_employees')
-//            ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
-//            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',$this_month)
-//            ->where('is_active' ,'=','ACTIVE');
-//        $jo = DB::table('hr_jo_employees')
-//            ->select('lastname','firstname','middlename','birthday',DB::raw("LPAD(MONTH(birthday),2,'0') as month_bday"), DB::raw("'COS' as type"),'employee_no')
-//            ->where(DB::raw("LPAD(MONTH(birthday),2,'0')") , '=',$this_month);
         $union = Employee::query()
             ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
-            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',$this_month)
+            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',Carbon::parse($this_month)->format('m'))
             ->where('is_active','=','ACTIVE')->get();
+
         $bday_celebrants = [];
         $bday_celebrants['prev'] = [];
         $bday_celebrants['upcoming'] = [];
         $bday_celebrants['today'] = [];
         foreach ($union as $emp) {
+
             if(Carbon::parse($emp->birthday)->format('md') < Carbon::now()->format('md')){
                 $bday_celebrants['prev'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
             }elseif(Carbon::parse($emp->birthday)->format('md') == Carbon::now()->format('md')){
@@ -66,6 +62,7 @@ class HomeController extends Controller{
         ksort($bday_celebrants['upcoming']);
         return view('dashboard.home.birthday_celebrants')->with([
             'bday_celebrants' => $bday_celebrants,
+            'requested_month' => $this_month,
         ])->render();
     }
     private  function stepIncrements($month,$year = null){
@@ -74,7 +71,10 @@ class HomeController extends Controller{
         }
         $emps = Employee::query()->where('adjustment_date','!=',null)
             ->where('is_active','=','ACTIVE')
+            ->where('locations','=','LUZON/MINDANAO')
+            ->orWhere('locations','=','VISAYAS')
             ->whereMonth('adjustment_date','=',$month)
+            ->orderBy('lastname','asc')
             ->get();
         $employees_with_adjustments = [];
 
@@ -90,29 +90,17 @@ class HomeController extends Controller{
             'year_step' => $year
         ])->render();
     }
-    public function index(){
-//        $announcements = News::query()
-//            ->where('expires_on','>',Carbon::now()->format('Y-m-d H:i:s'))
-//            ->where('is_active','=',1)
-//            ->orderBy('created_at','asc')
-//            ->get();
+    public function index(Request $request){
 
         if(Auth::user()->dash == 'hru'){
             if(request()->ajax() && request()->has('bday')){
-                $new_next = str_pad(request('month')+1,2,0,STR_PAD_LEFT);
-                $new_prev = str_pad(request('month')-1,2,0,STR_PAD_LEFT);
-                if($new_next > 12){
-                    $new_next = '01';
-                }
-                if($new_prev < 1){
-                    $new_prev = 12;
-                }
+
                 return [
                     'view' => $this->birthdayCelebrantsView(request('month')),
-                    'new_next' => $new_next,
-                    'new_prev' => $new_prev,
+                    'new_next' => Carbon::parse($request->month)->addMonth(1)->firstOfMonth()->format('Y-m-d'),
+                    'new_prev' => Carbon::parse($request->month)->subMonth(1)->format('Y-m-d'),
                     'new_current' => str_pad(request('month'),2,0,STR_PAD_LEFT),
-                    'month_name' => Carbon::parse('2021'.str_pad(request('month'),2,0,STR_PAD_LEFT).'01')->format('F'),
+                    'month_name' =>Carbon::parse($request->month)->firstOfMonth()->format('F Y'),
                 ];
             }
 
@@ -180,7 +168,7 @@ class HomeController extends Controller{
                 'male_jo_employees' => $male_jo_employees,
                 'female_jo_employees' => $female_jo_employees,
                 'all_jo_employees' => $all_jo_employees,
-                'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('m')),
+                'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('Y-m-d')),
                 'step_increments_view' => $this->stepIncrements(Carbon::now()->format('m'),Carbon::now()->format('Y')),
                 'loyaltys' => $loyaltys,
             ]);

@@ -9,7 +9,7 @@
 <section class="content">
     <div class="box box-success">
         <div class="box-header with-border">
-            <h3 class="box-title">List of Permanent Employees</h3>
+            <h3 class="box-title">List of Employees</h3>
         </div>
         <div class="box-body">
             <div class="panel">
