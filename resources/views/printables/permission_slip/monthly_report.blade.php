@@ -49,8 +49,8 @@
   </style>
 
 </head>
-{{--<body>--}}
-<body onload="window.print();" onafterprint="window.close()">
+<body>
+{{--<body onload="window.print();" onafterprint="window.close()">--}}
 
   <div class="wrapper">
     <div style="width: 100%; overflow: auto">
@@ -86,7 +86,7 @@
 
 
 
-    <table style="border: 1px solid black; font-size: 9px;">
+    <table style="border: 1px solid black; font-size: 14px;" class="tbl-bordered tbl-padded">
       
 
 
@@ -109,7 +109,7 @@
 
         <tr>
 
-          <td>{{ $data_emp->fullname }}</td>
+          <td style="width: 150px">{{ $data_emp->fullname }}</td>
 
           @foreach ($days as $data_days)
 
