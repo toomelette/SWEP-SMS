@@ -49,8 +49,8 @@
   </style>
 
 </head>
-<body>
-{{--<body onload="window.print();" onafterprint="window.close()">--}}
+{{--<body>--}}
+<body onload="window.print();" onafterprint="window.close()">
 
   <div class="wrapper">
     <div style="width: 100%; overflow: auto">
