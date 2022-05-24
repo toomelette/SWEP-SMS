@@ -37,59 +37,7 @@ class HomeController extends Controller{
 
     }
 
-    private function birthdayCelebrantsView($this_month){
 
-        $union = Employee::query()
-            ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
-            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',Carbon::parse($this_month)->format('m'))
-            ->where('is_active','=','ACTIVE')->get();
-
-        $bday_celebrants = [];
-        $bday_celebrants['prev'] = [];
-        $bday_celebrants['upcoming'] = [];
-        $bday_celebrants['today'] = [];
-        foreach ($union as $emp) {
-
-            if(Carbon::parse($emp->birthday)->format('md') < Carbon::now()->format('md')){
-                $bday_celebrants['prev'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
-            }elseif(Carbon::parse($emp->birthday)->format('md') == Carbon::now()->format('md')){
-                $bday_celebrants['today'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
-            }else{
-                $bday_celebrants['upcoming'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
-            }
-        }
-        krsort($bday_celebrants['prev']);
-        ksort($bday_celebrants['upcoming']);
-        return view('dashboard.home.birthday_celebrants')->with([
-            'bday_celebrants' => $bday_celebrants,
-            'requested_month' => $this_month,
-        ])->render();
-    }
-    private  function stepIncrements($month,$year = null){
-        if($year == ''){
-            $year = Carbon::now()->format('Y');
-        }
-        $emps = Employee::query()->where('adjustment_date','!=',null)
-            ->where('is_active','=','ACTIVE')
-            ->where('locations','=','LUZON/MINDANAO')
-            ->orWhere('locations','=','VISAYAS')
-            ->whereMonth('adjustment_date','=',$month)
-            ->orderBy('lastname','asc')
-            ->get();
-        $employees_with_adjustments = [];
-
-        foreach ($emps as $emp){
-            $diff = ($year)-(Carbon::parse($emp->adjustment_date)->format('Y'));
-            if($diff%3 == 0 && Carbon::now()->format('Y') != Carbon::parse($emp->adjustment_date)->format('Y')){
-                $employees_with_adjustments[$emp->slug] = $emp;
-            }
-        }
-
-        return view('dashboard.home.step_increments')->with([
-            'employees_with_adjustments' => $employees_with_adjustments,
-            'year_step' => $year
-        ])->render();
-    }
     public function index(Request $request){
 
         if(Auth::user()->dash == 'hru'){
@@ -115,19 +63,7 @@ class HomeController extends Controller{
                 ];
             }
 
-            $loyaltys = Employee::query()
-                    ->select('slug','employee_no','lastname','firstname','firstday_gov',DB::raw('YEAR(firstday_gov) as firstday_gov_year'),DB::raw('YEAR(firstday_gov) as firstday_gov_year'),DB::raw(Carbon::now()->format("Y").' - YEAR(firstday_gov) as years_in_gov'))
-                    ->where(DB::raw('('.Carbon::now()->format("Y").' - YEAR(firstday_gov)) % 5'),'=',0)
-                    ->where(DB::raw(Carbon::now()->format("Y").' - YEAR(firstday_gov)'),'>',9)
-                    ->where('locations','!=', 'COS')
-                    ->where('locations','!=','RETIREE')
-                    ->where('is_active','!=','INACTIVE')
-                    ->orderBy('firstday_gov','desc')
-                    ->get();
-            $loyaltysArr = [];
-            foreach ($loyaltys as $loyalty) {
-                $loyaltysArr[$loyalty->slug] = $loyalty;
-            }
+
 
 
             $per_course = DB::table("swep_afd.hr_courses")
@@ -170,7 +106,7 @@ class HomeController extends Controller{
                 'all_jo_employees' => $all_jo_employees,
                 'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('Y-m-d')),
                 'step_increments_view' => $this->stepIncrements(Carbon::now()->format('m'),Carbon::now()->format('Y')),
-                'loyaltys' => $loyaltys,
+                'loyaltys' => $this->milestones(),
             ]);
         }
 
@@ -183,9 +119,7 @@ class HomeController extends Controller{
                     return Carbon::parse($date->sent_at)->format('W');
                 })->count();
 
-            $sent_all = DocumentDisseminationLog::
-            select('sent_at')
-                ->count();
+            $sent_all = DocumentDisseminationLog::select('sent_at')->count();
             $avg_sent_by_week = round($sent_all/$sent_by_week,0);
 
             $emails_per_contact = DocumentDisseminationLog::with(['emailContact','employee'])
@@ -222,9 +156,80 @@ class HomeController extends Controller{
             ]);
         }
 
-//        if(Auth::user()->dash == ''){
-//            return redirect('/dashboard/dtr/my_dtr');
-//        }
     	return $this->home->view();
+    }
+
+    private function birthdayCelebrantsView($this_month){
+
+        $union = Employee::query()
+            ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
+            ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',Carbon::parse($this_month)->format('m'))
+            ->where('is_active','=','ACTIVE')->get();
+
+        $bday_celebrants = [];
+        $bday_celebrants['prev'] = [];
+        $bday_celebrants['upcoming'] = [];
+        $bday_celebrants['today'] = [];
+        foreach ($union as $emp) {
+
+            if(Carbon::parse($emp->birthday)->format('md') < Carbon::now()->format('md')){
+                $bday_celebrants['prev'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
+            }elseif(Carbon::parse($emp->birthday)->format('md') == Carbon::now()->format('md')){
+                $bday_celebrants['today'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
+            }else{
+                $bday_celebrants['upcoming'][Carbon::parse($emp->birthday)->format('md')][$emp->employee_no] = $emp;
+            }
+        }
+        krsort($bday_celebrants['prev']);
+        ksort($bday_celebrants['upcoming']);
+        return view('dashboard.home.birthday_celebrants')->with([
+            'bday_celebrants' => $bday_celebrants,
+            'requested_month' => $this_month,
+        ])->render();
+    }
+    private  function stepIncrements($month,$year = null){
+
+        if($year == ''){
+            $year = Carbon::now()->format('Y');
+        }
+        $emps = Employee::query()->where('adjustment_date','!=',null)
+            ->where('is_active','=','ACTIVE')
+            ->where(function ($query){
+                $query  ->where('locations','=','LUZON/MINDANAO')
+                    ->orWhere('locations','=','VISAYAS');
+            })
+            ->whereMonth('adjustment_date','=',$month)
+            ->orderBy('lastname','asc')
+            ->get();
+        $employees_with_adjustments = [];
+
+        foreach ($emps as $emp){
+            $diff = ($year)-(Carbon::parse($emp->adjustment_date)->format('Y'));
+            if($diff%3 == 0 && Carbon::now()->format('Y') != Carbon::parse($emp->adjustment_date)->format('Y')){
+                $employees_with_adjustments[$emp->slug] = $emp;
+            }
+        }
+
+        return view('dashboard.home.step_increments')->with([
+            'employees_with_adjustments' => $employees_with_adjustments,
+            'year_step' => $year
+        ])->render();
+    }
+    private function milestones(){
+        $loyaltys = Employee::query()
+            ->select('slug','employee_no','lastname','firstname','firstday_gov',DB::raw('YEAR(firstday_gov) as firstday_gov_year'),DB::raw('YEAR(firstday_gov) as firstday_gov_year'),DB::raw(Carbon::now()->format("Y").' - YEAR(firstday_gov) as years_in_gov'))
+            ->where(DB::raw('('.Carbon::now()->format("Y").' - YEAR(firstday_gov)) % 5'),'=',0)
+            ->where(DB::raw(Carbon::now()->format("Y").' - YEAR(firstday_gov)'),'>',9)
+            ->where('locations','!=', 'COS')
+            ->where('locations','!=','RETIREE')
+            ->where('is_active','!=','INACTIVE')
+            ->orderBy('firstday_gov','desc')
+            ->orderBy('lastname','asc')
+            ->get();
+        $loyaltysArr = [];
+        foreach ($loyaltys as $loyalty) {
+            $loyaltysArr[$loyalty->slug] = $loyalty;
+        }
+        return $loyaltysArr;
     }
 }
