@@ -22,11 +22,11 @@ class UserEditFormRequest extends FormRequest
         $rules = [
 
             'employee_sync'=>'nullable|string|max:45',
-            'firstname'=>'required|string|max:90',
-            'middlename'=>'required|string|max:90',
-            'lastname'=>'required|string|max:90',
-            'email'=>'required|string|email|max:90',
-            'position'=>'required|string|max:90',
+            'firstname'=>'nullable|string|max:90',
+            'middlename'=>'nullable|string|max:90',
+            'lastname'=>'nullable|string|max:90',
+            'email'=>'nullable|string|email|max:90',
+            'position'=>'nullable|string|max:90',
 
         ];
 
