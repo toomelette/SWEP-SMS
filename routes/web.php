@@ -847,10 +847,11 @@ Route::get('/sdd',function (){
            $query->orWhere('is_active','=','SUSPENDED');
        })
         ->where(function ($query){
-            $query->where('locations','=','VISAYAS');
-            $query->orWhere('locations','=','LUZON/MINDANAO');
+            $query->where('locations','=','COS-VISAYAS');
+//            $query->orWhere('locations','=','LUZON/MINDANAO');
         })
-       ->whereHas('employeeTraining')
+       ->where('civil_status' ,'!=','')
+//       ->whereHas('employeeTraining')
 
 //       ->where('sex','=','MALE')
        ->get();
@@ -864,19 +865,19 @@ Route::get('/sdd',function (){
 
             switch ($age){
                 case ($age >= 21 && $age <= 30):
-                    $arr[$emp->sex]['21-30'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['21-30'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 31 && $age <= 40):
-                    $arr[$emp->sex]['31-40'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['31-40'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 41 && $age <= 50):
-                    $arr[$emp->sex]['41-50'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['41-50'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 51 && $age <= 60):
-                    $arr[$emp->sex]['51-60'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['51-60'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 61):
-                    $arr[$emp->sex]['61+'][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['61+'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
             }
 
@@ -891,5 +892,36 @@ Route::get('/sdd',function (){
         ksort($arr['MALE'][$l]);
 //        echo $l.'<br>';
     }
+    krsort($arr);
+    dd($arr);
+});
+
+Route::get('/import_employees',function (){
+    $es = DB::connection('mysql_temp')->table('employees')->get();
+    $arr = [];
+    foreach ( $es as $e){
+        array_push($arr,[
+            'slug' => \Illuminate\Support\Str::random(),
+            'employee_no' => $e->employee_no,
+            'fullname' => strtoupper($e->lastname).', '. strtoupper($e->firstname).' '.substr(strtoupper($e->middlename),0,1).'.',
+            'lastname' => strtoupper($e->lastname),
+            'firstname' => strtoupper($e->firstname),
+            'middlename' => strtoupper($e->middlename),
+            'position' => $e->position,
+            'name_ext' => $e->name_ext,
+            'sex' => strtoupper($e->sex),
+            'civil_status' => $e->civil_status,
+            'email' => $e->email,
+            'is_active' => 'ACTIVE',
+            'cell_no' => $e->phone,
+            'date_of_birth' => ($e->date_of_birth != '') ? \Illuminate\Support\Carbon::parse($e->date_of_birth)->format('Y-m-d') : null,
+            'salary_grade' => ($e->salary_grade != '') ? $e->salary_grade : null,
+            'locations' => $e->locations,
+            'place_of_assignment' => $e->place_of_assignment,
+            'remarks' => $e->remark,
+        ]);
+    }
+    \App\Models\Employee::insert($arr);
+    return $arr;
     dd($arr);
 });
