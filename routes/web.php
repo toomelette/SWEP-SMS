@@ -909,7 +909,7 @@ Route::get('/import_employees',function (){
             'firstname' => strtoupper($e->firstname),
             'middlename' => strtoupper($e->middlename),
             'position' => $e->position,
-            'name_ext' => $e->name_ext,
+            'name_ext' => strtoupper($e->name_ext),
             'sex' => strtoupper($e->sex),
             'civil_status' => $e->civil_status,
             'email' => $e->email,
@@ -920,9 +920,10 @@ Route::get('/import_employees',function (){
             'locations' => $e->locations,
             'place_of_assignment' => $e->place_of_assignment,
             'remarks' => $e->remark,
+            'tin' => str_replace('-','',$e->tin),
         ]);
     }
-    return 'no';
+    return 'nononono';
     \App\Models\Employee::insert($arr);
     return $arr;
     dd($arr);
