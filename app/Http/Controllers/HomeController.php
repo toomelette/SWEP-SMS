@@ -164,7 +164,9 @@ class HomeController extends Controller{
         $union = Employee::query()
             ->select('lastname','firstname','middlename','date_of_birth as birthday',DB::raw("LPAD(MONTH(date_of_birth),2,'0') as month_bday"), DB::raw("'PERM' as type") ,'employee_no')
             ->where(DB::raw("LPAD(MONTH(date_of_birth),2,'0')") , '=',Carbon::parse($this_month)->format('m'))
-            ->where('is_active','=','ACTIVE')->get();
+            ->where('is_active','=','ACTIVE')
+            ->where('locations' ,'!=','RETIREE')
+            ->get();
 
         $bday_celebrants = [];
         $bday_celebrants['prev'] = [];
