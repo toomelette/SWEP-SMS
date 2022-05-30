@@ -128,6 +128,36 @@ class EmployeeController extends Controller{
                 }
                 return $data->position;
             })
+            ->editColumn('fullname',function ($data){
+                $bday_mark = '';
+                $bday = 'N/A';
+                if($data->date_of_birth != '' ){
+                    if(Carbon::parse($data->date_of_birth)->format("md") == Carbon::now()->format('md')){
+                        $bday_mark  = '<span class="pull-right text-danger"><i class="fa fa-birthday-cake" title="Today is '.ucfirst(strtolower($data->firstname)).'\'s birthday."></i></span>';
+                    }
+                    $bday = Carbon::parse($data->date_of_birth)->format("M. d, Y");
+                }
+
+                return '<p class="text-strong no-margin">'.$data->fullname.$bday_mark.'</p>'.
+                    '<div class="table-subdetail" style="margin-top: 3px">
+                        <table>
+                            <tr>
+                                <td style="padding-right: 10px">Bday:</td>
+                                <td>'.$bday.'</td>
+                                <td style="padding-left: 20px;padding-right: 10px">Age:</td>
+                                <td>'.Carbon::parse($data->date_of_birth)->age.'</td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding-right: 10px">Sex:</td>
+                                <td>'.$data->sex.'</td>
+                                <td style="padding-left: 20px;padding-right: 10px">Civil Stat:</td>
+                                <td>'.$data->civil_status.'</td>
+                            </tr>
+                        </table>
+                        
+                    </div>';
+            })
             ->escapeColumns([])
             ->setRowId('slug')
             ->toJson();

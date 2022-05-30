@@ -899,6 +899,7 @@ Route::get('/sdd',function (){
 Route::get('/import_employees',function (){
     $es = DB::connection('mysql_temp')->table('employees')->get();
     $arr = [];
+
     foreach ( $es as $e){
         array_push($arr,[
             'slug' => \Illuminate\Support\Str::random(),
@@ -921,7 +922,39 @@ Route::get('/import_employees',function (){
             'remarks' => $e->remark,
         ]);
     }
+    return 'no';
     \App\Models\Employee::insert($arr);
     return $arr;
     dd($arr);
 });
+
+Route::get('/update_luzmin',function (){
+    $employees = \App\Models\Employee::query()
+        ->where('locations','=','LUZON/MINDANAO')
+        ->get();
+    $duplicates = [];
+    foreach ($employees as $employee){
+        $temp = DB::connection('mysql_temp')->table('perm_employees')->where('employee_no','=',$employee->employee_no)->get();
+        if($temp->count() <= 1){
+            foreach ($temp as $t){
+                $employee->date_of_birth = \Illuminate\Support\Carbon::parse($t->date_of_birth)->format('Y-m-d');
+                $employee->email = $t->email;
+                $employee->sex = $t->sex;
+                $employee->tel_no = $t->tel_no;
+                $employee->cell_no = $t->cell_no;
+                $employee->gsis = $t->gsis_no;
+                $employee->philhealth = $t->philheath;
+                $employee->sss = $t->sss;
+                $employee->hdmf = $t->pagibig_no;
+                $employee->save();
+            }
+        }else{
+            array_push($duplicates,$employee->employee_no);
+        }
+    }
+
+    dd($duplicates);
+
+});
+
+

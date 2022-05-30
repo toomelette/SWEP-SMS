@@ -109,7 +109,7 @@ class HomeController extends Controller{
                 'all_ps' => $all_ps,
                 'male_jo_employees' => $male_jo_employees,
                 'female_jo_employees' => $female_jo_employees,
-                'all_jo_employees' => $all_jo_employees,
+                'all_jo_employees' => $male_jo_employees+$female_jo_employees,
                 'bday_celebrants_view' => $this->birthdayCelebrantsView(Carbon::now()->format('Y-m-d')),
                 'step_increments_view' => $this->stepIncrements(Carbon::now()->format('m'),Carbon::now()->format('Y')),
                 'loyaltys' => $this->milestones(),
