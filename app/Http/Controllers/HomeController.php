@@ -89,8 +89,14 @@ class HomeController extends Controller{
             $all_employees = Employee::where('is_active','ACTIVE')->count();
             $all_applicants = Applicant::count();
 
-            $male_jo_employees = Employee::query()->where('locations','=','COS')->where('sex','=','MALE')->count();
-            $female_jo_employees = Employee::query()->where('locations','=','COS')->where('sex','=','FEMALE')->count();
+            $male_jo_employees = Employee::query()
+                ->where('locations','like','%COS%')
+                ->where('sex','=','MALE')
+                ->count();
+            $female_jo_employees = Employee::query()
+                ->where('locations','like','%COS%')
+                ->where('sex','=','FEMALE')
+                ->count();
             $all_jo_employees = Employee::query()->where('locations','=','COS')->count();
             return view('dashboard.home.hru_index')->with([
                 'male_employees' => $male_employees,
