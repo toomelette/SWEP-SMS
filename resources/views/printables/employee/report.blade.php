@@ -67,7 +67,7 @@
                      <thead>
                      <tr>
                          <th>#</th>
-                         <th>Name</th>
+{{--                         <th>Name</th>--}}
                          @if(!empty($selected_columns))
                              @foreach($selected_columns as $s_cols)
                                  <th>{{$all_columns[$s_cols]['name']}}</th>
@@ -88,7 +88,7 @@
                                  <td style="width: 10px;">
                                      {{$num}}
                                  </td>
-                                 <td>{{$employee->lastname}}, {{$employee->firstname}} {{\Illuminate\Support\Str::limit($employee->middlename,1,'.')}}</td>
+{{--                                 <td>{{$employee->lastname}}, {{$employee->firstname}} {{\Illuminate\Support\Str::limit($employee->middlename,1,'.')}}</td>--}}
                                  @if(!empty($selected_columns))
                                      @foreach($selected_columns as $s_cols)
                                          @switch($s_cols)
@@ -101,10 +101,30 @@
                                              @case('date_of_birth')
                                              <td>{{\Illuminate\Support\Carbon::parse($employee->date_of_birth)->format('F d, Y')}}</td>
                                              @break
+                                             @case('firstday_gov')
+                                             <td>
+                                                 {{($employee->firstday_gov != '') ? \Illuminate\Support\Carbon::parse($employee->firstday_gov)->format('F d, Y') : ''}}
+                                             </td>
+                                             @break
+                                             @case('appointment_date')
+                                             <td>
+                                                 {{($employee->appointment_date != '') ? \Illuminate\Support\Carbon::parse($employee->appointment_date)->format('F d, Y') : ''}}
+                                             </td>
+                                             @break
+                                             @case('adjustment_date')
+                                             <td>
+                                                 {{($employee->adjustment_date != '') ? \Illuminate\Support\Carbon::parse($employee->adjustment_date)->format('F d, Y') : ''}}
+                                             </td>
+                                             @break
+                                            @case('cs_eligibility_level')
+                                            <td>
+                                                {{ucfirst(strtolower($employee->cs_eligibility_level))}} Level
+                                            </td>
+                                            @break
                                              @case('trainings')
                                              <td>
                                                  @if(!empty($employee->employeeTraining))
-                                                     <ul>
+                                                     <ul style="padding-left: 20px !important;">
                                                          @foreach($employee->employeeTraining as $training)
                                                              <li>{{$training->title}} | {{$training->detailed_period}}</li>
                                                          @endforeach
@@ -115,7 +135,7 @@
                                              @case('service_records')
                                              <td>
                                                  @if(!empty($employee->employeeServiceRecord))
-                                                     <ul>
+                                                     <ul style="padding-left: 20px !important;">
                                                          @foreach($employee->employeeServiceRecord as $sr)
                                                              <li>{{$sr->position}} [ {{$sr->from_date}} - {{($sr->upto_date != 1)? $sr->to_date : 'PRESENT'}} ]</li>
                                                          @endforeach
@@ -126,7 +146,7 @@
                                              @case('eligibility')
                                              <td>
                                                  @if(!empty($employee->employeeEligibility))
-                                                     <ul>
+                                                     <ul style="padding-left: 20px !important;">
                                                          @foreach($employee->employeeEligibility as $el)
                                                              <li>{{$el->eligibility}}</li>
                                                          @endforeach

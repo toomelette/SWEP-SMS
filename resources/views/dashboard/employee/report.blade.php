@@ -58,12 +58,6 @@
                                                 'class' => 'input-sm',
                                             ]) !!}
 
-                                            {!! \App\Swep\ViewHelpers\__form2::select('locations',[
-                                                'label' => 'Location:',
-                                                'cols' => 6,
-                                                'options' => \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value'),
-                                                'class' => 'input-sm',
-                                            ]) !!}
 
                                             {!! \App\Swep\ViewHelpers\__form2::select('sex',[
                                                 'label' => 'Sex:',
@@ -75,12 +69,41 @@
                                                 'class' => 'input-sm',
                                             ]) !!}
 
-                                            {!! \App\Swep\ViewHelpers\__form2::select('civil_status',[
-                                                'label' => 'Civil Status:',
-                                                'cols' => 6,
-                                                'options' => \App\Swep\Helpers\Helper::civil_status(),
-                                                'class' => 'input-sm',
-                                            ]) !!}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Location:</label>
+                                                    <div class="checkbox">
+                                                        @foreach(\App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value') as $key=>$value)
+                                                        <label>
+                                                            <input type="checkbox" name="locations[]" value="{{$key}}"> {{$value}}
+                                                        </label>
+                                                            <br>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Civil Status:</label>
+                                                    <div class="checkbox">
+                                                        @foreach(\App\Swep\Helpers\Helper::civil_status() as $key=>$value)
+                                                            <label>
+                                                                <input type="checkbox" name="civil_status[]" value="{{$key}}"> {{$value}}
+                                                            </label>
+                                                            <br>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+
+{{--                                            {!! \App\Swep\ViewHelpers\__form2::select('civil_status',[--}}
+{{--                                                'label' => 'Civil Status:',--}}
+{{--                                                'cols' => 6,--}}
+{{--                                                'options' => ,--}}
+{{--                                                'class' => 'input-sm',--}}
+{{--                                            ]) !!}--}}
                                         </div>
                                     </div>
                                 </div>
@@ -106,6 +129,7 @@
                                                     'position' => 'Position',
                                                     'monthly_basic' => 'Monthly Basic',
                                                     'date_of_birth' => 'Date of Birth',
+                                                    'dept_name' => 'Department',
                                                 ],
                                                 'class' => 'input-sm',
                                             ]) !!}

@@ -42,57 +42,55 @@ class ApplicantRepository extends BaseRepository implements ApplicantInterface {
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
 
+
+        $app = Applicant::query()
+            ->select('fullname', 'course_id', 'plantilla_id', 'date_of_birth', 'received_at' , 'is_on_short_list', 'slug')
+            ->with('course', 'departmentUnit','positionApplied');
+
+
         $applicant = $this->applicant->newQuery();
 
         if(isset($request->q)){
-            $this->search($applicant, $request->q);
+            $q = $request->q;
+            $app->where(function ($query) use ($q){
+                $query->where('lastname', 'LIKE', '%'. $q .'%')
+                    ->orWhere('firstname', 'LIKE', '%'. $q .'%')
+                    ->orWhere('middlename', 'LIKE', '%'. $q .'%')
+                    ->orWhere('address', 'LIKE', '%'. $q .'%')
+                    ->orWhere('contact_no', 'LIKE', '%'. $q .'%')
+                    ->orWhere('received_at', 'LIKE', '%'. $q .'%');
+            });
         }
 
         if(isset($request->c)){
-            $applicant->whereCourseId($request->c);
+            $app->where('course_id','=',$request->c);
+//            $applicant->whereCourseId($request->c);
         }
 
         if(isset($request->p)){
-            $applicant->wherePlantillaId($request->p);
+            $position = $request->p;
+            $app->whereHas('positionApplied',function ($query) use ($position){
+                $query->where('position_applied','=',$position);
+            });
         }
 
         if(isset($request->g)){
+            $app->where('gender','=',$request->g);
             $applicant->whereGender($request->g);
         }
 
         if(isset($request->du)){
+            $app->where('department_unit_id','=',$request->du);
             $applicant->whereDepartmentUnit_id($request->du);
         }
 
+
+        return $app->sortable()
+            ->orderBy('updated_at', 'desc')
+            ->paginate($entries);
         return $this->populate($applicant, $entries);
 
-        $applicants = $this->cache->remember('applicants:fetch:' . $key, 240, function() use ($request, $entries){
 
-            $applicant = $this->applicant->newQuery();
-            
-            if(isset($request->q)){
-                $this->search($applicant, $request->q);
-            }
-
-            if(isset($request->c)){
-                $applicant->whereCourseId($request->c);
-            }
-
-            if(isset($request->p)){
-                $applicant->wherePlantillaId($request->p);
-            }
-
-            if(isset($request->g)){
-                $applicant->whereGender($request->g);
-            }
-
-            if(isset($request->du)){
-                $applicant->whereDepartmentUnit_id($request->du);
-            }
-
-            return $this->populate($applicant, $entries);
-
-        });
 
         return $applicants;
 

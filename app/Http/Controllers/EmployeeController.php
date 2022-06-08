@@ -538,7 +538,7 @@ class EmployeeController extends Controller{
     }
 
     public function reportGenerate(EmployeeReportRequest $request){
-        $type = $request->type;
+
         $employees = Employee::with(['employeeTraining','employeeServiceRecord','employeeEducationalBackground','employeeEligibility','employeeChildren']);
         $filters = [];
         if($request->status != null){
@@ -546,9 +546,33 @@ class EmployeeController extends Controller{
             array_push($filters,'STATUS: '.$request->status);
         }
         if($request->locations != null){
-            $employees = $employees->where('locations','=',$request->locations);
-            array_push($filters,'LOCATION: '.$request->locations);
+            if(count($request->locations) > 0){
+                $locations = $request->locations;
+                $push = 'LOCATION: ';
+                $employees = $employees->where(function ($query) use ($locations, &$push){
+                    foreach ($locations as $location){
+                       $query = $query->orWhere('locations','=',$location);
+                        $push = $push.' '.$location.', ';
+                    }
+                });
+                array_push($filters,$push);
+            }
         }
+
+        if($request->civil_status != null){
+            if(count($request->civil_status) > 0){
+                $civil_statuses = $request->civil_status;
+                $push = 'CIVIL STAT: ';
+                $employees = $employees->where(function ($query) use ($civil_statuses, &$push){
+                    foreach ($civil_statuses as $civil_status){
+                        $query = $query->orWhere('civil_status','=',$civil_status);
+                        $push = $push.' '.$civil_status.', ';
+                    }
+                });
+                array_push($filters,$push);
+            }
+        }
+
         if($request->sex != null){
             $employees = $employees->where('sex','=',$request->sex);
             array_push($filters,'SEX: '.$request->sex);
@@ -559,11 +583,7 @@ class EmployeeController extends Controller{
             }
             $employees = $employees->orderBy($request->order_column,$request->direction);
         }
-
-        if($request->civil_status != null){
-            $employees = $employees->where('civil_status','=',$request->civil_status);
-            array_push($filters,'CIVIL STAT: '.$request->civil_status);
-        }
+        $employees = $employees->orderBy('lastname','asc');
         $employees = $employees->get();
         $employee_arr = [];
         $type = null;
@@ -613,6 +633,26 @@ class EmployeeController extends Controller{
 
     public function allColumnsForReport(){
         return [
+            'fullname' => [
+                'name' => 'Fullname',
+                'checked' => 1,
+            ],
+            'lastname' => [
+                'name' => 'Last Name',
+                'checked' => 0,
+            ],
+            'firstname' => [
+                'name' => 'First Name',
+                'checked' => 0,
+            ],
+            'middlename' => [
+                'name' => 'Middle Name',
+                'checked' => 0,
+            ],
+            'name_ext' => [
+                'name' => 'Name Ext.',
+                'checked' => 0,
+            ],
             'sex' => [
                 'name' => 'Sex',
                 'checked' => 1,
@@ -637,6 +677,14 @@ class EmployeeController extends Controller{
                 'name' => 'Position',
                 'checked' => 1,
             ],
+            'dept_name' => [
+                'name' => 'Department',
+                'checked' => 0,
+            ],
+            'unit_name' => [
+                'name' => 'Unit',
+                'checked' => 0,
+            ],
             'monthly_basic' => [
                 'name' => 'Monthly Basic',
                 'checked' => 1,
@@ -647,6 +695,18 @@ class EmployeeController extends Controller{
             ],
             'step_inc' => [
                 'name' => 'SI',
+                'checked' => 0,
+            ],
+            'firstday_gov' => [
+                'name' => 'First Day in Government',
+                'checked' => 0,
+            ],
+            'appointment_date' => [
+                'name' => 'Appointment Date',
+                'checked' => 0,
+            ],
+            'adjustment_date' => [
+                'name' => 'Date of Last Promotion',
                 'checked' => 0,
             ],
             'civil_status' => [
@@ -677,6 +737,10 @@ class EmployeeController extends Controller{
                 'name' => 'Eligibility',
                 'checked' => 0,
             ],
+            'cs_eligibility_level' => [
+                'name' => 'CS Level',
+                'checked' => 0,
+            ],
             'educational_background' => [
                 'name' => 'Educational Background',
                 'checked' => 0,
@@ -685,6 +749,35 @@ class EmployeeController extends Controller{
                 'name' => '# of children',
                 'checked' => 0,
             ],
+            'ra' => [
+                'name' => 'Representation Allowance (RA)',
+                'checked' => 0,
+            ],
+            'ta' => [
+                'name' => 'Transportation Allowance (TA)',
+                'checked' => 0,
+            ],
+            'tin' => [
+                'name' => 'TIN',
+                'checked' => 0,
+            ],
+            'gsis' => [
+                'name' => 'GSIS',
+                'checked' => 0,
+            ],
+            'philhealth' => [
+                'name' => 'PhilHealth',
+                'checked' => 0,
+            ],
+            'sss' => [
+                'name' => 'SSS',
+                'checked' => 0,
+            ],
+            'hdmf' => [
+                'name' => 'HDMF',
+                'checked' => 0,
+            ],
+
         ];
     }
 

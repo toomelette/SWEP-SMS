@@ -820,80 +820,94 @@ Route::get('/item_employees',function (){
 Route::get('/sdd',function (){
    $employees = \App\Models\Employee::query()->get();
    $arr = [];
-    $arr2 = [];
-//   $arr = [
-//       '21-30' => [],
-//       '31-40' => [],
-//       '41-50' => [],
-//       '51-60' => [],
-//       '61+' => [],
-//   ];
-    $q = $query = \App\Models\Employee::query()->groupBy('position')->where(function ($query){
-        $query->where('is_active','=','ACTIVE');
-        $query->orWhere('is_active','=','SUSPENDED');
-    })
-    ->where(function ($query){
-        $query->where('locations','=','VISAYAS');
-        $query->orWhere('locations','=','LUZON/MINDANAO');
-    })->get()->toArray();
-    foreach ($q as $a){
-        array_push($arr2,$a['position']);
-    }
+
 
    $query = \App\Models\Employee::query()
-       ->with('employeeChildren')
+       ->with(['employeeChildren','employeeTraining'])
        ->where(function ($query){
            $query->where('is_active','=','ACTIVE');
            $query->orWhere('is_active','=','SUSPENDED');
        })
         ->where(function ($query){
-            $query->where('locations','=','COS-VISAYAS');
-//            $query->orWhere('locations','=','LUZON/MINDANAO');
+            $query->where('locations','=','VISAYAS');
+            $query->orWhere('locations','=','LUZON/MINDANAO');
         })
-       ->where('civil_status' ,'!=','')
-//       ->whereHas('employeeTraining')
+//       ->whereHas('employeeTraining',function ($query){
+//           $query->where('title','like','%GAD%')
+//               ->orWhere('title','like','%GST%')
+//               ->orWhere('title','like','%GENDER%')
+//               ->orWhere('title','like','%GESI%')
+//               ->orWhere('title','like','%WOMAN%')
+//               ->orWhere('title','like','%WOMEN%');
+//       })
 
-//       ->where('sex','=','MALE')
        ->get();
-    foreach ($query as $emp){
-//        $arr[$emp->sex][$emp->position]['21-30'] = null;
-//        $arr[$emp->sex][$emp->position]['31-40'] = null;
-//        $arr[$emp->sex][$emp->position]['41-50'] = null;
-//        $arr[$emp->sex][$emp->position]['51-60'] = null;
-//        $arr[$emp->sex][$emp->position]['61+'] = null;
-        $age = \Illuminate\Support\Carbon::parse($emp->date_of_birth)->age;
+   $columns = [];
+    function salary($sal){
+        $r = null;
+        switch ($sal){
 
+            case ($sal > 0 && $sal <= 250):
+                $r = '0-250';
+                break;
+            case ($sal > 250 && $sal <= 400):
+                $r = '251-400';
+                break;
+            case ($sal > 400 && $sal <= 600):
+                $r = '401-600';
+                break;
+            case ($sal > 600 && $sal <= 800):
+                $r = '601-800';
+                break;
+            case ($sal > 800 && $sal <= 1200):
+                $r = '801-1200';
+                break;
+            case ($sal > 1200):
+                $r = '1200+';
+                break;
+            default:
+                $r = '1200q+';
+                break;
+        }
+        return $r;
+    }
+    foreach ($query as $emp){
+        $for_column  = salary($emp->monthly_basic*12/1000);
+        $columns[$for_column] = $for_column;
+        //array_push($columns[$emp->lastname],$for_column);
+        $age = \Illuminate\Support\Carbon::parse($emp->date_of_birth)->age;
             switch ($age){
                 case ($age >= 21 && $age <= 30):
-                    $arr[$emp->sex]['21-30'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['21-30'][$for_column][$emp->fullname.'-'.$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 31 && $age <= 40):
-                    $arr[$emp->sex]['31-40'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['31-40'][$for_column][$emp->fullname.'-'.$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 41 && $age <= 50):
-                    $arr[$emp->sex]['41-50'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['41-50'][$for_column][$emp->fullname.'-'.$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 51 && $age <= 60):
-                    $arr[$emp->sex]['51-60'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['51-60'][$for_column][$emp->fullname.'-'.$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
                 case ($age >= 61):
-                    $arr[$emp->sex]['61+'][$emp->position][$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
+                    $arr[$emp->sex]['61+'][$for_column][$emp->fullname.'-'.$emp->employee_no] = $age.' '.$emp->civil_status.' - '.$emp->monthly_basic*12/1000;
                     break;
             }
-
     }
     ksort($arr['FEMALE']);
     foreach ($arr['FEMALE'] as $l => $ar){
         ksort($arr['FEMALE'][$l]);
-//        echo $l.'<br>';
+
     }
     ksort($arr['MALE']);
     foreach ($arr['MALE'] as $l => $ar){
         ksort($arr['MALE'][$l]);
-//        echo $l.'<br>';
     }
     krsort($arr);
-    dd($arr);
+    ksort($columns);
+//    dd($arr);
+    return view('dashboard.temp.sdd')->with(['employees' => $arr,'columns' => $columns]);
+
 });
 
 Route::get('/import_employees',function (){
@@ -929,33 +943,21 @@ Route::get('/import_employees',function (){
     dd($arr);
 });
 
-Route::get('/update_luzmin',function (){
-    $employees = \App\Models\Employee::query()
-        ->where('locations','=','LUZON/MINDANAO')
-        ->get();
-    $duplicates = [];
-    foreach ($employees as $employee){
-        $temp = DB::connection('mysql_temp')->table('perm_employees')->where('employee_no','=',$employee->employee_no)->get();
-        if($temp->count() <= 1){
-            foreach ($temp as $t){
-                $employee->date_of_birth = \Illuminate\Support\Carbon::parse($t->date_of_birth)->format('Y-m-d');
-                $employee->email = $t->email;
-                $employee->sex = $t->sex;
-                $employee->tel_no = $t->tel_no;
-                $employee->cell_no = $t->cell_no;
-                $employee->gsis = $t->gsis_no;
-                $employee->philhealth = $t->philheath;
-                $employee->sss = $t->sss;
-                $employee->hdmf = $t->pagibig_no;
-                $employee->save();
-            }
-        }else{
-            array_push($duplicates,$employee->employee_no);
+Route::get('/update_emp_dep',function (){
+    $emps = DB::connection('sqlsrv')->table('dbo.EmpMaster')->get();
+    foreach ($emps as $emp){
+        $e = \App\Models\Employee::query()->where('employee_no','=',$emp->EmpNo)->first();
+        if(!empty($e)){
+            $e->dept_name = $emp->Dept;
+            $e->unit_name = $emp->Division;
+            $e->cs_eligibility = $emp->Eligibility;
+            $e->cs_eligibility_level = $emp->EligibilityLevel;
+            $e->save();
         }
     }
-
-    dd($duplicates);
-
+    dd(1);
 });
+
+
 
 

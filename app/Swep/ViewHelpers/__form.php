@@ -498,12 +498,24 @@ class __form{
 
       $string = '';
 
-      foreach($array as $value){
+      if(is_object($array)){
+          foreach($array as $value){
 
-        $condition = $value->$var1 == $old_value ? 'selected' : '';
-        
-        $string .= '<option value="'. $value->$var1 .'" '. $condition .'>'. $value->$var2 .'</option>';
+              $condition = $value->$var1 == $old_value ? 'selected' : '';
 
+              $string .= '<option value="'. $value->$var1 .'" '. $condition .'>'. $value->$var2 .'</option>';
+
+          }
+      }
+
+      if(is_array($array)){
+          foreach($array as $key => $value){
+
+              $condition = $key == $old_value ? 'selected' : '';
+
+              $string .= '<option value="'. $key .'" '. $condition .'>'. $value .'</option>';
+
+          }
       }
 
       return $string;

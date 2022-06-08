@@ -4,6 +4,9 @@
 namespace App\Swep\Helpers;
 
 
+use App\Models\Applicant;
+use App\Models\ApplicantPositionApplied;
+
 class Arrays
 {
     public static function countries(){
@@ -293,4 +296,15 @@ class Arrays
             '17px' => '17px',
         ];
     }
+
+    public static function positionsAppliedFor(){
+        $arr = [];
+        $positions = ApplicantPositionApplied::query()->groupBy('position_applied')->orderBy('position_applied','asc')->get();
+        foreach ($positions as $position){
+            $arr[$position->position_applied] = $position->position_applied;
+        }
+
+        return $arr;
+    }
+
 }

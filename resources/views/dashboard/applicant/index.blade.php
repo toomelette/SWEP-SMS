@@ -47,7 +47,7 @@
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '3', 'p', 'Position Applied For', old('p'), $global_plantilla_all, 'plantilla_id', 'name', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
+        '3', 'p', 'Position Applied For', old('p'), \App\Swep\Helpers\Arrays::positionsAppliedFor(), 'plantilla_id', 'name', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_static_for_filter(
