@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountRecovery\ResetPasswordFormRequest;
 use App\Http\Requests\AccountRecovery\UsernameLookupFormRequest;
+use App\Mail\ResetPassword;
 use App\Models\Employee;
 use App\Models\JoEmployees;
 use App\Models\SuEmailVerification;
@@ -88,39 +89,18 @@ class AccountRecoveryController extends Controller
         $ev->verification_slug = $slug;
         $ev->user_slug = $user_slug;
         if($ev->save()){
-            // Backup your default mailer
-            $backup = Mail::getSwiftMailer();
-
-            // Setup your gmail mailer
-            $transport = new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl');
-            $transport->setUsername(env('SWIFTMAILER_EMAIL',null));
-            $transport->setPassword(env('SWIFTMAILER_PASSWORD',null));
-
-            // Any other mailer configuration stuff needed...
-            $gmail = new \Swift_Mailer($transport);
-
-            // Set the mailer as gmail
-            Mail::setSwiftMailer($gmail);
             $data = [
                 'verification_slug' => $slug,
                 'user_slug' => $user_slug,
                 'name' => $user->employeeUnion->firstname,
             ];
 
-            // Send your message
             try{
-                Mail::send('mailables.verify_email',$data, function($message) use($email) {
-                    $message->to($email, '')
-                        ->subject('SWEP Email Verification - '.strtoupper(Str::random(5)));
-                    $message->from('sys.srawebportal@gmail.com','SWEP System');
-                });
+                Mail::mailer('system')->send(new ResetPassword($email,$data));
             }catch (\Exception $e){
                 $ev->delete();
                 abort(503,'Error sending email verification');
             }
-
-            // Restore your original mailer
-            Mail::setSwiftMailer($backup);
             return 1;
         }
 

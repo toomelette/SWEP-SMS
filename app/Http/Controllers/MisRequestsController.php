@@ -59,47 +59,17 @@ class MisRequestsController extends Controller
         $r->request_details = $request->details;
         if($r->save()){
             $user = User::query()->where('user_id','=',$r->user_created)->first();
-
-            // Backup your default mailer
-            $backup = Mail::getSwiftMailer();
-
-            // Setup your gmail mailer
-            $transport = new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl');
-            $transport->setUsername(env('SWIFTMAILER_EMAIL',null));
-            $transport->setPassword(env('SWIFTMAILER_PASSWORD',null));
-
-            // Any other mailer configuration stuff needed...
-            $gmail = new \Swift_Mailer($transport);
-
-            // Set the mailer as gmail
-            Mail::setSwiftMailer($gmail);
             $data = [
                 'r' => $r,
                 'user' => $user,
             ];
 
-            $email = [];
-            $recipients = MisRequestsEmailRecipients::query()->get();
-            if(!empty($recipients)){
-                foreach ($recipients as $recipient){
-                    array_push($email,$recipient->email);
-                }
-            }
-
             try{
-                Mail::send('mailables.mis_requests.inform',$data, function($message) use($email, $r) {
-                    $message->to($email, '')
-                        ->subject('MIS Service Request - '.$r->nature_of_request.' - '.strtoupper(Str::random(5)));
-                    $message->from('sys.srawebportal@gmail.com','SWEP System');
-                });
+                \Illuminate\Support\Facades\Mail::mailer('system')->send(new \App\Mail\MisRequestCreate($data,$r,$user));
             }catch (\Exception $e){
-
+                $r->delete();
                 abort(503,'Error sending email verification: '.$e->getMessage());
             }
-
-            // Restore your original mailer
-            Mail::setSwiftMailer($backup);
-
 
             return $r->only(['slug','request_no']);
 
@@ -155,16 +125,7 @@ class MisRequestsController extends Controller
         if(\request()->ajax() && \request()->has('draw')){
             $mis_requests = MisRequests::query();
             $request = \request();
-//            $table = DB::select('SELECT * FROM (
-//                        SELECT x.lastname, x.firstname, x.employee_no, users.user_id FROM (
-//                            SELECT hr_employees.lastname, hr_employees.firstname, hr_employees.employee_no FROM hr_employees WHERE hr_employees.employee_no != \'\'
-//                            UNION
-//                            SELECT hr_jo_employees.lastname, hr_jo_employees.firstname, hr_jo_employees.employee_no FROM hr_jo_employees
-//                        ) as x
-//                        LEFT JOIN users ON users.employee_no = x.employee_no
-//                        WHERE user_id != ""
-//                    ) as y
-//                    RIGHT JOIN mis_requests ON mis_requests.requisitioner = y.user_id;');
+
             $table = MisRequests::query()->with(['user','user.employee']);
             return DataTables::of($table)
                 ->addColumn('action',function ($data){
@@ -200,14 +161,6 @@ class MisRequestsController extends Controller
                         }
                     }
                     return $data->requisitioner;
-                    if($data->lastname == '' && $data->firstname == ''){
-                        $user = User::query()->where('user_id','=',$data->requisitioner)->first();
-                        if(!empty($user)){
-                            return $user->lastname.', '.$user->firstname;
-                        }
-                        return $data->requisitioner;
-                    }
-                    return $data->lastname.', '.$data->firstname;
                 })
                 ->editColumn('nature_of_request',function ($data){
                     $success = '';

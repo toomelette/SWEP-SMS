@@ -943,21 +943,26 @@ Route::get('/import_employees',function (){
     dd($arr);
 });
 
-Route::get('/update_emp_dep',function (){
-    $emps = DB::connection('sqlsrv')->table('dbo.EmpMaster')->get();
-    foreach ($emps as $emp){
-        $e = \App\Models\Employee::query()->where('employee_no','=',$emp->EmpNo)->first();
-        if(!empty($e)){
-            $e->dept_name = $emp->Dept;
-            $e->unit_name = $emp->Division;
-            $e->cs_eligibility = $emp->Eligibility;
-            $e->cs_eligibility_level = $emp->EligibilityLevel;
-            $e->save();
-        }
-    }
-    dd(1);
+Route::get('/rde_cos',function (){
+    dd('FORBIDDEN');
+   $coss = DB::connection('mysql_temp')->table('rde_cos')->where('date_of_birth','!=','')->get();
+   foreach ($coss as $cos){
+       $emp = \App\Models\Employee::query()->where('employee_no','=',$cos->employee_no)->first();
+       if(!empty($emp)){
+           $emp->civil_status = $cos->civil_status;
+           $emp->date_of_birth = \Illuminate\Support\Carbon::parse($cos->date_of_birth)->format('Y-m-d');
+           $emp->email = $cos->email;
+           $emp->cell_no = $cos->phone;
+
+           $emp->save();
+       }
+   }
+   dd('DOne');
 });
 
 
+Route::get('/mail',function (){
 
+
+});
 
