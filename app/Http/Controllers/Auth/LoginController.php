@@ -14,6 +14,7 @@ use App\Swep\Helpers\__cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use function PHPUnit\Framework\returnArgument;
 
 
 class LoginController extends Controller{
@@ -84,6 +85,7 @@ class LoginController extends Controller{
 
 
         if($this->auth->guard()->attempt($this->credentials($request))){
+
             if($this->auth->user()->is_activated == false){
 
                 $this->session->flush();
@@ -91,7 +93,9 @@ class LoginController extends Controller{
                 $this->auth->logout();
 
             }else{
+
                 $portal = $request->portal;
+
                 $user = User::query()->where('user_id','=',Auth::user()->user_id)->first();
                 $user->portal = $request->portal;
                 $user->update();

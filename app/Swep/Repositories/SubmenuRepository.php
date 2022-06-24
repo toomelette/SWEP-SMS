@@ -58,7 +58,8 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
 
     public function findBySubmenuId($submenu_id){
-
+        $submenu = $this->submenu->where('submenu_id', $submenu_id)->first();
+        return $submenu;
         $submenu = $this->cache->remember('submenus:findBySubmenuId:' . $submenu_id, 240, function() use ($submenu_id){
             return $this->submenu->where('submenu_id', $submenu_id)->first();
         });
@@ -111,7 +112,11 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
 
     public function getByMenuId($menu_id){
-
+        $submenu = $this->submenu->select('submenu_id', 'name')
+            ->where('menu_id', $menu_id)
+            ->orderBy('submenu_id', 'asc')
+            ->get();
+        return $submenu;
         $submenu = $this->cache->remember('submenus:getByMenuId:'. $menu_id .'', 240, function() use ($menu_id){
 
             return $this->submenu->select('submenu_id', 'name')

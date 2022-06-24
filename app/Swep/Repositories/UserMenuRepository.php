@@ -80,7 +80,11 @@ class UserMenuRepository extends BaseRepository implements UserMenuInterface {
 
 
     public function getByCategory($cat){
-
+        $user_menus_u = $this->user_menu->where('user_id', $this->auth->user()->user_id)
+            ->where('category', $cat)
+            ->with('userSubMenu')
+            ->get();
+        return $user_menus_u;
         $user_menus_u = $this->cache->remember('user_menus:getByCategory:'. $this->auth->user()->user_id .':'.$cat.'', 240, function() use ($cat){
           return $this->user_menu->where('user_id', $this->auth->user()->user_id)
                                  ->where('category', $cat)
@@ -104,12 +108,9 @@ class UserMenuRepository extends BaseRepository implements UserMenuInterface {
         $user_id = $this->auth->user()->user_id;
         $route_name = Route::currentRouteName();
 
-        $user_menu = $this->cache->remember('nav:user_menus:byUserId:'. $user_id .':byRoute:'. $route_name, 240, function() use($user_id, $route_name){
-            $um = $this->user_menu->where('route', $route_name)
-                                  ->where('user_id', $user_id)
-                                  ->exists();
-            return $um;
-        });
+        $user_menu = $this->user_menu->where('route', $route_name)
+            ->where('user_id', $user_id)
+            ->exists();
 
         return $user_menu;
 

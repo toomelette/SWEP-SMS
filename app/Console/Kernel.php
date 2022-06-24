@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('dtr:extract')->everyTenMinutes();
         $schedule->command('dtr:reconstruct')->everyTenMinutes();
         $schedule->command('dtr:compute_late_undertime')->everyTenMinutes();
+        $schedule->command('demo:cron')->everyMinute();
     }
 
 
