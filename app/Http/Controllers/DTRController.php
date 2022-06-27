@@ -116,6 +116,12 @@ class DTRController extends  Controller
             }
         }
 
+        if($p_employee->biometric_user_id == 1042){
+            $cl = new CronLogs;
+            $cl->log = 'By: '.Auth::user()->employee->lastname.', '.Auth::user()->employee->firstname;
+            $cl->type = 500;
+            $cl->save();
+        }
         $view = View::make('dashboard.dtr.my_dtr')->with([
             'employee' => $employee,
             'dtr_by_year' => $dtr_by_year,
