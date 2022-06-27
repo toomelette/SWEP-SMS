@@ -4,7 +4,16 @@
     <span class="logo-mini">A</span>
     <span class="logo-lg"><b>AFD</b></span>
   </a>
-  <nav class="navbar navbar-static-top" @if($_SERVER['SERVER_ADDR'] != '10.36.1.14')style="background-color: #054629" @endif>
+  @php
+    $sa = \App\Models\SuSettings::query()->where('setting','=','SERVER_ADDR')->first();
+    if(empty($sa)){
+      $server_address = '';
+    }else{
+      $server_address = $sa->string_value;
+    }
+  @endphp
+
+  <nav class="navbar navbar-static-top" @if($_SERVER['SERVER_ADDR'] != $server_address)style="background-color: #054629" @endif>
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
@@ -15,14 +24,7 @@
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        @php
-          $sa = \App\Models\SuSettings::query()->where('setting','=','SERVER_ADDR')->first();
-          if(empty($sa)){
-            $server_address = '';
-          }else{
-            $server_address = $sa->string_value;
-          }
-        @endphp
+
         @if($_SERVER['SERVER_ADDR'] != $server_address)
           <li style="width: 750px;padding-top: 12px"><p style="color: white; font-size: larger">DEVELOPMENT MODE</p></li>
         @endif
