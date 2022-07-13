@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\ExtractBiometricData::class,
         Commands\ReconstructDTR::class,
         Commands\ComputeLateUndertime::class,
+        Commands\SanitizeBiometricDevice::class,
     ];
 
     /**
@@ -32,7 +33,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('dtr:extract')->everyTenMinutes();
         $schedule->command('dtr:reconstruct')->everyTenMinutes();
         $schedule->command('dtr:compute_late_undertime')->everyTenMinutes();
-        $schedule->command('demo:cron')->everyMinute();
+        $schedule->command('dtr:sanitizeBiometricDevices')->fridays()->at('18:00');
+//        $schedule->command('demo:cron')->everyMinute();
     }
 
 

@@ -10,4 +10,6 @@ class SuSettings extends Model
 {
     protected $table = 'su_settings';
 
+
+
 }

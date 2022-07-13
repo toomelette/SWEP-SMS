@@ -162,6 +162,7 @@ class HomeController extends Controller{
             ]);
         }
 
+        return redirect()->route('dashboard.dtr.my_dtr');
     	return $this->home->view();
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Document;
+use App\Models\SuSettings;
 use App\Models\User;
 use App\Swep\Interfaces\UserInterface;
 
@@ -106,7 +107,12 @@ class LoginController extends Controller{
                     ->log('auth');
 
                 $this->clearLoginAttempts($request);
-                return redirect(session('_previous')['url']);
+                if (isset(session('_previous')['url'])){
+                    return redirect(session('_previous')['url']);
+                }else{
+                    return redirect()->route('dashboard.home');
+                }
+
             }
         
         }
@@ -136,7 +142,13 @@ class LoginController extends Controller{
             $this->guard()->logout();
             $request->session()->invalidate();
 
-            return redirect('http://'.$_SERVER['SERVER_NAME'].'/');
+            $logout_redirect_link = $_SERVER['SERVER_NAME'];
+            $logout_redirect = SuSettings::query()->where('setting','=','logout_redirect')->first();
+            if(!empty($logout_redirect)){
+                $logout_redirect_link = $logout_redirect->string_value;
+            }
+
+            return redirect('http://'.$logout_redirect_link.'/');
             return redirect('/?portal='.$request->portal);
 
         }

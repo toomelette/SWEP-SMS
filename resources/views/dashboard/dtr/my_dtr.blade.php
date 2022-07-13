@@ -175,7 +175,7 @@
                    populate_modal2(btn,res);
                 },
                 error: function (res) {
-                    console.log(res);
+                    populate_modal2_error(res);
                 }
             })
         })

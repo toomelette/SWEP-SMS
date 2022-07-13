@@ -187,7 +187,6 @@
 
     </div>
 
-
 @endsection
 
 @section('modal-footer')

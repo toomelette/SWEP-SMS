@@ -283,9 +283,14 @@ class DTRService extends BaseService
 
         }
         catch (\Exception $e){
+            $string = 'Error saving sanitizing device: '.$ip.' | '.$e->getMessage();
+            $cl = new CronLogs;
+            $cl->log = $string;
+            $cl->type = 0;
+            $cl->save();
+
             return $e->getMessage();
         }
-
     }
 
     private function getSerialNo($ip){

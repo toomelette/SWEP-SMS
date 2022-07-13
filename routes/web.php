@@ -961,8 +961,8 @@ Route::get('/rde_cos',function (){
 });
 
 
-Route::get('/mail',function (){
-
+Route::get('/lbp',function (){
+    return view('dashboard.test.lbp');
 
 });
 
