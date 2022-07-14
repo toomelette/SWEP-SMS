@@ -16,17 +16,20 @@
                     <div class="box box-widget widget-user-2">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header {{$colors[$count]}} clearfix">
-                            <div class="widget-user-image">
-                                <img class="img-circle" src="{{asset('images/bds.jpg')}}" alt="User Avatar">
+                            <div class="clearfix">
+                                <div class="widget-user-image">
+                                    <img class="img-circle" src="{{asset('images/bds.jpg')}}" alt="User Avatar">
+                                </div>
+                                <!-- /.widget-user-image -->
+                                <h3 class="widget-user-username">{{$device->name}}</h3>
+                                <h5 class="widget-user-desc">S/N: {{$device->serial_no}}</h5>
                             </div>
-                            <!-- /.widget-user-image -->
-                            <h3 class="widget-user-username">{{$device->name}}</h3>
-                            <h5 class="widget-user-desc">S/N: {{$device->serial_no}}</h5>
                             <div class="btn-group pull-right btn-group-sm" role="group" aria-label="...">
-                                <button type="button" class="btn btn-default clear_attendance_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b><br> <span class='text-danger text-strong'>THIS ACTION CANNOT BE UNDONE!</span> <br> <span class='text-info'>Please enter your password to continue:</span> "><i class="fa fa-eraser"></i> Clear Attendance</button>
-                                <button type="button" class="btn btn-default logs_btn" data="{{$device->id}}" data-target="#logs_modal" data-toggle="modal"><i class="fa fa-calendar"></i> Logs</button>
-                                <button type="button" class="btn btn-default restart_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i class="fa fa-refresh"></i> Restart</button>
-                                <button type="button" class="btn btn-default extract_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i class="fa fa-sign-out"></i>Extract</button>
+                                <button type="button" class="btn btn-default admin_btn" data="{{$device->id}}" data-target="#admin_modal" data-toggle="modal"><i  style="font-size: 15px" class="fa fa-key"></i><br> Admin</button>
+                                <button type="button" class="btn btn-default clear_attendance_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b><br> <span class='text-danger text-strong'>THIS ACTION CANNOT BE UNDONE!</span> <br> <span class='text-info'>Please enter your password to continue:</span> "><i  style="font-size: 15px" class="fa fa-eraser"></i> <br>Clear Att.</button>
+                                <button type="button" class="btn btn-default logs_btn" data="{{$device->id}}" data-target="#logs_modal" data-toggle="modal"><i  style="font-size: 15px" class="fa fa-calendar"></i><br> Logs</button>
+                                <button type="button" class="btn btn-default restart_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i  style="font-size: 15px" class="fa fa-refresh"></i><br> Restart</button>
+                                <button type="button" class="btn btn-default extract_btn" data="{{$device->id}}" text="Device: <b>{{$device->name}}</b> <br> IP Address: <b>{{$device->ip_address}}</b>"><i  style="font-size: 15px" class="fa fa-sign-out"></i><br>Extract</button>
                             </div>
                         </div>
                         <div class="box-footer no-padding">
@@ -60,6 +63,7 @@
 
 @section('modals')
 {!! \App\Swep\ViewHelpers\__html::blank_modal('logs_modal','60') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('admin_modal','sm') !!}
 @endsection
 
 @section('scripts')
@@ -190,6 +194,24 @@
             error: function (res) {
                 notify('Bad request.','danger');
                 console.log(res);
+            }
+        })
+    });
+    $(".admin_btn").click(function () {
+        btn = $(this);
+        load_modal2(btn);
+        $.ajax({
+            url : '{{route("dashboard.biometric_devices.admin")}}',
+            data : {id: btn.attr('data')},
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                populate_modal2(btn,res);
+            },
+            error: function (res) {
+                populate_modal2_error(res);
             }
         })
     })

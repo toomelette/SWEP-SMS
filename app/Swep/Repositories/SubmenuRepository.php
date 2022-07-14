@@ -35,7 +35,7 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
         $submenu = new Submenu;
         $submenu->slug = $this->str->random(16);
-        $submenu->submenu_id = $this->getSubmenuIdInc();
+        $submenu->submenu_id = strtoupper($this->str->random(7));
         $submenu->menu_id = $menu->menu_id;
         $submenu->name = $data['sub_name'];
         $submenu->route = $data['sub_route'];

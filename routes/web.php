@@ -256,6 +256,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('biometric_devices/restart','BiometricDevicesController@restart')->name('biometric_devices.restart');
     Route::get('biometric_devices/attendances','BiometricDevicesController@attendances')->name('biometric_devices.attendances');
     Route::post('biometric_devices/clear_attendance','BiometricDevicesController@clear_attendance')->name('biometric_devices.clear_attendance');
+    Route::get('biometric_device/admin','BiometricDevicesController@admin')->name('biometric_devices.admin');
+    Route::post('biometric_device/admin_change_password','BiometricDevicesController@adminChangePassword')->name('biometric_devices.admin_change_password');
+    Route::post('biometric_device/clear_admin','BiometricDevicesController@clearAdmin')->name('biometric_devices.clear_admin');
 
     Route::get('mis_requests','MisRequestsController@index')->name('mis_requests.index');
     Route::get('mis_requests/{slug}/edit','MisRequestsController@edit')->name('mis_requests.edit');
@@ -965,4 +968,24 @@ Route::get('/lbp',function (){
     return view('dashboard.test.lbp');
 
 });
+Route::get('/getSerial',function (\Illuminate\Http\Request $request){
+    if(!$request->has('ip')){
+        return 'IP Address missing';
+    }
+    $zk = new ZKTeco($request->ip);
+    $zk->connect();
+    return $zk->serialNumber();
+});
 
+Route::get('/setUser',function (){
+    $zk = new ZKTeco('10.36.1.23');
+    $zk->connect();
+//    $zk->clearAdmin();
+
+
+    return $zk->getUser();
+    return $zk->setUser('555','555','GJG','5544',\Rats\Zkteco\Lib\Helper\Util::LEVEL_ADMIN);
+    return 1;
+    return view('dashboard.test.lbp');
+
+});

@@ -31,6 +31,7 @@ class SubmenuController extends Controller
 
         $submenu = new Submenu;
         $submenu->slug = Str::random(15);
+        $submenu->submenu_id = strtoupper(Str::random(7));
         $submenu->name = $request->name;
         $submenu->route = $request->route;
         $submenu->nav_name = $request->nav_name;

@@ -71,7 +71,10 @@ class UserSubmenuRepository extends BaseRepository implements UserSubmenuInterfa
             $submenu_id = $submenu_id->submenu_id;
             $usm = $this->user_submenu->where('submenu_id', $submenu_id)
                 ->where('user_id', $user_id)
-                ->exists();
+                ->first();
+            if(empty($usm)){
+                abort(504,'You do not have enough privileges to perform this action.');
+            }
             return $usm;
         }
 
