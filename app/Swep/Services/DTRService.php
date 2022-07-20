@@ -43,14 +43,17 @@ class DTRService extends BaseService
             $attendances_array = [];
             for ($x = $last_uid+1 ; $x <= $last_from_device ; $x++){
                 if(isset($attendances[$x])){
-                    array_push($attendances_array,[
-                        'uid' => $attendances[$x]['uid'],
-                        'user' => $attendances[$x]['id'],
-                        'state' => $attendances[$x]['state'],
-                        'timestamp' => $attendances[$x]['timestamp'],
-                        'type' => $attendances[$x]['type'],
-                        'device' => $serial_no,
-                    ]);
+                    if(isset($this->biometric_values(true)[$attendances[$x]['type']])){
+                        array_push($attendances_array,[
+                            'uid' => $attendances[$x]['uid'],
+                            'user' => $attendances[$x]['id'],
+                            'state' => $attendances[$x]['state'],
+                            'timestamp' => $attendances[$x]['timestamp'],
+                            'type' => $attendances[$x]['type'],
+                            'device' => $serial_no,
+                        ]);
+                    }
+
                 }
             }
 
