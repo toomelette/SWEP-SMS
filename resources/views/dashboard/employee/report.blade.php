@@ -262,7 +262,7 @@
 
                                 <div id="report_frame_loader" style="display: none">
                                     <center>
-                                        <img style="width: 100px; margin: 140px 0;" src="http://10.36.1.14:8003/images/loaders/loader-bg-purple.gif">
+                                        <img style="width: 100px; margin: 140px 0;" src="{{asset('images/loader.gif')}}">
                                     </center>
                                 </div>
                                 <div class="row" id="report_frame_container" style="height: 100%; display: none">
