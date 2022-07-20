@@ -75,7 +75,7 @@
                                                     <div class="checkbox">
                                                         @foreach(\App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeGroupings(),'option','value') as $key=>$value)
                                                         <label>
-                                                            <input type="checkbox" name="locations[]" value="{{$key}}" checked> {{$value}}
+                                                            <input type="checkbox" name="locations[]" value="{{$value}}" checked> {{$key}}
                                                         </label>
                                                             <br>
                                                         @endforeach
