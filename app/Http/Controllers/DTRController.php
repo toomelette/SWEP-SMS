@@ -63,7 +63,12 @@ class DTRController extends  Controller
                 ->addColumn('last_attendance',function ($data){
                     $dtr = DTR::query()->where('user','=',$data->biometric_user_id)->orderBy('timestamp','desc')->first();
                     if(!empty($dtr)){
-                        return Carbon::parse($dtr->timestamp)->format('M. d, Y | h:i A') .' ----- '.$this->dtr_service->biometric_values(true)[$dtr->type];
+                        try{
+                            return Carbon::parse($dtr->timestamp)->format('M. d, Y | h:i A') .' ----- '.$this->dtr_service->biometric_values(true)[$dtr->type];
+                        }catch (\Exception $e){
+                            return $e->getMessage();
+                        }
+
                     }
                 })
                 ->editColumn('sex',function ($data){

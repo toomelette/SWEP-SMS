@@ -43,14 +43,17 @@ class DTRService extends BaseService
             $attendances_array = [];
             for ($x = $last_uid+1 ; $x <= $last_from_device ; $x++){
                 if(isset($attendances[$x])){
-                    array_push($attendances_array,[
-                        'uid' => $attendances[$x]['uid'],
-                        'user' => $attendances[$x]['id'],
-                        'state' => $attendances[$x]['state'],
-                        'timestamp' => $attendances[$x]['timestamp'],
-                        'type' => $attendances[$x]['type'],
-                        'device' => $serial_no,
-                    ]);
+                    if(isset($this->biometric_values(true)[$attendances[$x]['type']])){
+                        array_push($attendances_array,[
+                            'uid' => $attendances[$x]['uid'],
+                            'user' => $attendances[$x]['id'],
+                            'state' => $attendances[$x]['state'],
+                            'timestamp' => $attendances[$x]['timestamp'],
+                            'type' => $attendances[$x]['type'],
+                            'device' => $serial_no,
+                        ]);
+                    }
+
                 }
             }
 
@@ -99,47 +102,56 @@ class DTRService extends BaseService
             ->orWhere('processed','=',0)->get();
         $values = $this->biometric_values();
         $no_of_processed = 0;
-
+        $not_processed = 0;
         foreach ($dtrs_raw as $dtr_raw) {
             $biometric_user_id = $dtr_raw->user;
             $p_employee = Employee::query()->select('firstname','lastname','biometric_user_id','employee_no',DB::raw('"permanent" as type'))->where('biometric_user_id','=',$biometric_user_id);
             $jo_employee = JoEmployees::query()->select('firstname','lastname','biometric_user_id','employee_no',DB::raw('"jo" as type'))->where('biometric_user_id','=',$biometric_user_id);
             $employees = $p_employee->union($jo_employee)->first();
+            $ext = '';
+
             if(!empty($employees)){
                 $dtr_check = DailyTimeRecord::query()
                     ->where('date','=',Carbon::parse($dtr_raw->timestamp)->format('Y-m-d'))
                     ->where('employee_no','=',$employees->employee_no)
                     ->first();
-                $db_col = $values[$dtr_raw->type];
-                if(empty($dtr_check)){
-                    $dtr = new DailyTimeRecord;
-                    $dtr->$db_col = Carbon::parse($dtr_raw->timestamp)->format('H:i');
-                    $dtr->date = Carbon::parse($dtr_raw->timestamp)->format('Y-m-d');
-                    $dtr->employee_no = $employees->employee_no;
-                    $dtr->biometric_user_id = $biometric_user_id;
-                    $dtr->biometric_uid = 0;
-                    $dtr->calculated = 0;
-                    if($dtr->save()){
-                        $dtr_raw->processed = 1;
-                        $dtr_raw->update();
-                        $no_of_processed++;
+                if(isset($values[$dtr_raw->type])){
+                    $db_col = $values[$dtr_raw->type];
+                    if(empty($dtr_check)){
+                        $dtr = new DailyTimeRecord;
+                        $dtr->$db_col = Carbon::parse($dtr_raw->timestamp)->format('H:i');
+                        $dtr->date = Carbon::parse($dtr_raw->timestamp)->format('Y-m-d');
+                        $dtr->employee_no = $employees->employee_no;
+                        $dtr->biometric_user_id = $biometric_user_id;
+                        $dtr->biometric_uid = 0;
+                        $dtr->calculated = 0;
+                        if($dtr->save()){
+                            $dtr_raw->processed = 1;
+                            $dtr_raw->update();
+                            $no_of_processed++;
+                        }
+                    }else{
+
+                        $dtr_check->$db_col = Carbon::parse($dtr_raw->timestamp)->format('H:i');
+                        $dtr_check->biometric_user_id = $biometric_user_id;
+                        $dtr_check->biometric_uid = 0;
+                        $dtr_check->calculated = 0;
+                        if($dtr_check->update()){
+                            $dtr_raw->processed = 1;
+                            $dtr_raw->update();
+                            $no_of_processed++;
+                        }
                     }
                 }else{
-                    $dtr_check->$db_col = Carbon::parse($dtr_raw->timestamp)->format('H:i');
-                    $dtr_check->biometric_user_id = $biometric_user_id;
-                    $dtr_check->biometric_uid = 0;
-                    $dtr_check->calculated = 0;
-                    if($dtr_check->update()){
-                        $dtr_raw->processed = 1;
-                        $dtr_raw->update();
-                        $no_of_processed++;
-                    }
+                    $not_processed++;
+                    $ext = ' | '.$not_processed.' data not processed due to DTR Value not set.';
                 }
+
             }
         }
 
         $cl = new CronLogs;
-        $cl->log = 'Reconstructed '.$no_of_processed.' raw DTR data';
+        $cl->log = 'Reconstructed '.$no_of_processed.' raw DTR data'. $ext;
         $cl->type = 1;
         $cl->save();
     }

@@ -467,7 +467,7 @@ class Helper
         $new_arr = [];
         if(count($array) > 0){
             foreach ($array as $key => $item){
-                $new_arr[$item[$value_key]] = $item[$option_key];
+                $new_arr[$item[$option_key]] = $item[$value_key];
 //                array_push($new_arr,[]);
             }
         }else{

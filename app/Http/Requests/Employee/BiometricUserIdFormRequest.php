@@ -20,7 +20,6 @@ class BiometricUserIdFormRequest extends FormRequest
                 'string',
                 'max:10',
                 'not_in:0',
-                Rule::unique('hr_jo_employees','biometric_user_id'),
                 Rule::unique('hr_employees','biometric_user_id')->ignore($this->slug,'slug'),
             ],
         ];

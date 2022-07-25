@@ -155,15 +155,16 @@ class UserController extends Controller{
             }
 
             if(request()->has('typeahead')){
+
                 $query = request('query');
                 $employees = Employee::query()
                     ->select(['slug','firstname','middlename','lastname','locations'])
-                    ->addSelect(DB::raw('"PERM" as type'))
+//                    ->addSelect(DB::raw('"PERM" as type'))
                     ->where('firstname','like','%'.$query.'%')
                     ->orWhere('middlename','like','%'.$query.'%')
                     ->orWhere('lastname','like','%'.$query.'%')
                     ->doesntHave('user');
-
+//                return $employees->to
                 $all_employees = $employees->get();
 
                 $list = [];
