@@ -148,8 +148,8 @@ class File201Controller extends Controller
 
     private function deleteFile($employee_no,$filename){
         $path = __static::archive_dir().$this->path.$employee_no.'/'.$filename;
-        if(File::exists($path)){
-            File::delete($path);
+        if(\File::exists($path)){
+            \File::delete($path);
             return true;
         }
         return false;
