@@ -30,10 +30,11 @@ class __form2
         $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
         $step = ($n->step != '') ? 'step="'.$n->step.'"' : '';
         $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+        $tab_index = ($n->tab_index != '') ?  'tabindex="'.$n->tab_index.'"' : '';
         $title = ($n->title != '') ? '<i class="fa fa-question-circle" title="'.$n->title.'"></i>' : '';
         return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> '.$title.'
-                <input class="form-control '.$n->class.'" '.$id.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
+                <input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
               </div>';
     }
 
@@ -186,6 +187,7 @@ class __form2
             $array['placeholder'] = str_replace('*','',$array['placeholder']);
         }
         (!isset($array['id'])) ? $array['id']= '' : false;
+        (!isset($array['tab_index'])) ? $array['tab_index']= '' : false;
         (!isset($array['type'])) ? $array['type']= '' : false;
         (!isset($array['value'])) ? $array['value']= '' : false;
         (!isset($array['placeholder'])) ? $array['placeholder']= '' : false;
@@ -204,6 +206,7 @@ class __form2
         $this->cols = $array['cols'];
         $this->label = $array['label'];
         $this->id = $array['id'];
+        $this->tab_index = $array['tab_index'];
         $this->type = $array['type'];
         $this->value = $array['value'];
         $this->extra_attr = $array['extra_attr'];

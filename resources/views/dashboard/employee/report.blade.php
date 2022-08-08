@@ -310,7 +310,6 @@
             remove_loading_btn($("#generate_report_form"));
             $("#report_frame_container").show();
             $("#report_frame_loader").hide();
-
         })
 
         $("#print_btn").click(function () {

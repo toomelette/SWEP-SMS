@@ -34,11 +34,11 @@
       Document List 
 
       <p style="float:right;">
-        @if(PHP_OS == "WINNT")
-          {{ __dataType::convert_bytes(disk_free_space("E:/home")) }} free of {{ __dataType::convert_bytes(disk_total_space("E:/home")) }}
-        @else
-          {{ __dataType::convert_bytes(disk_free_space("/home")) }} free of {{ __dataType::convert_bytes(disk_total_space("/home")) }}
-        @endif
+{{--        @if(PHP_OS == "WINNT")--}}
+{{--          {{ __dataType::convert_bytes(disk_free_space("D:/home")) }} free of {{ __dataType::convert_bytes(disk_total_space("E:/home")) }}--}}
+{{--        @else--}}
+{{--          {{ __dataType::convert_bytes(disk_free_space("/home")) }} free of {{ __dataType::convert_bytes(disk_total_space("/home")) }}--}}
+{{--        @endif--}}
       </p>
 
     </h1>

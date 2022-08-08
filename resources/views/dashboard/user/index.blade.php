@@ -294,7 +294,7 @@
       "ajax" : '{{ route("dashboard.user.index") }}',
       "columns": [
         { "data": "username" },
-        { "data": "fullname" },
+        { "data": "lastname" },
         { "data": "is_online" },
         { "data": "account_status" },
         { "data": "action" }
@@ -322,10 +322,7 @@
           "orderable" : false,
           "class" : 'action4'
         },
-        {
-          "targets" : 1,
-          "orderable" : false,
-        },
+
       ],
       'order': [[2,'desc']],
       "responsive": false,

@@ -105,7 +105,9 @@ class PermissionSlipController extends Controller{
     }
 
 
-
+    public function myPermissionSlips(){
+        return view('dashboard.permission_slip.my_permission_slips');
+    }
 
     
 }

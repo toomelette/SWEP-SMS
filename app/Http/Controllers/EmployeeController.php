@@ -107,6 +107,7 @@ class EmployeeController extends Controller{
                                           <li><a href="#" data-toggle="modal" data-target="#matrix_modal" class="matrix_btn" data="'.$data->slug.'"><i class="fa fa-dashboard"></i> Matrix</a></li>
                                           <li><a href="#" uri="'.route('dashboard.file201.index').'"  data-toggle="modal" data-target="#file201_modal" class="file201_btn" data="'.$data->slug.'"><i class="fa fa-folder"></i> 201 File</a></li>
                                           <li><a href="#"  employee="'.$data->lastname.', '.$data->firstname.'" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'"><i class="fa icon-ico-fingerprint"></i> Biometric User ID</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#other_hr_actions_modal" class="other_actions_btn" data="'.$data->slug.'"><i class="fa icon-service-record"></i> Other HR Actions</a></li>
                                         </ul>
                                     </div>
                                 </div>';
@@ -629,6 +630,33 @@ class EmployeeController extends Controller{
             'request' => $request,
         ]);
 
+    }
+
+    public function otherHrActions($slug){
+        $employee = $this->findEmployeeBySlug($slug);
+        return view('dashboard.employee.other_hr_actions.index')->with([
+            'employee' => $employee,
+        ]);
+    }
+
+    public function otherHrActionsPrint($slug, $type){
+        $employee = $this->findEmployeeBySlug($slug);
+        if($type == 'nosa'){
+            return \view('printables.employee.nosa')->with([
+                'employee' => $employee,
+            ]);
+        }
+
+        if($type == 'coe'){
+            return \view('printables.employee.coe')->with([
+                'employee' => $employee,
+            ]);
+        }
+
+
+        return view('dashboard.employee.other_hr_actions.index')->with([
+            'employee' => $employee,
+        ]);
     }
 
     public function allColumnsForReport(){

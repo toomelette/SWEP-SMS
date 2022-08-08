@@ -525,9 +525,21 @@ ol.example li.placeholder:before {
     padding: 5px;
 }
 
+.box.box-sm.box-solid.box-primary>.box-header{
+    padding: 5px;
+}
+
+.box.box-sm.box-solid.box-success>.box-header{
+    padding: 5px;
+}
+
 .box.box-sm.box-solid>.box-header>.box-tools .btn{
     padding: 0px 5px;
 }
 .box-sm>.box-header>.box-tools{
     top: 2px;
+}
+
+.callout-default{
+    background-color: #efefef;
 }

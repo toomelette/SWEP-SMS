@@ -159,7 +159,8 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
     public function store($request, $filename){
 
         $document = new document;
-        $document->slug = $this->str->random(32);
+//        $document->slug = $this->str->random(32);
+        $document->slug = $request->slug;
         $document->document_id = $this->getDocumentIdInc();
         $document->filename = $filename;
         $document->reference_no = $request->reference_no;

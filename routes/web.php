@@ -4,7 +4,83 @@
 
 use App\Swep\Helpers\Helper;
 use Rats\Zkteco\Lib\ZKTeco;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
+Route::get('/pdf', function () {
+    $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+    file_put_contents('D:/SRA-QC-0001.png', $generator->getBarcode('SRA-QC-0001', $generator::TYPE_CODE_128));
+
+    $image1 ='D:/SRA-QC-0001.png';
+    $pdf = new \setasign\Fpdi\Fpdi();
+
+    $filename = 'D:/sample.pdf';
+    $totalPages = $pdf->setSourceFile($filename);
+    $page_height = $pdf->GetPageHeight();
+    $page_width = $pdf->GetPageWidth();
+
+
+    for ($pageNo = 1;$pageNo <= $totalPages; $pageNo++){
+        $pdf->AddPage();
+        $tplIdx = $pdf->importPage($pageNo);
+
+        $pdf->useTemplate($tplIdx, 0, 0, null, null, true);
+
+//        UPPER RIGHT
+        $mainX = $page_width - 50;
+        $mainY = 20;
+        //UPPER LEFT
+//        $mainX = 10;
+//        $mainY = 20;
+
+        //BOTTOM LEFT
+//        $mainX = 10;
+//        $mainY = $page_height - 20;
+
+        //BOTTOM RIGHT
+//        $mainX = $page_width  - 45;
+//        $mainY = $page_height - 20;
+
+
+
+        $pdf->SetXY($mainX,$mainY);
+        $pdf->SetFont('Arial', '', '8');
+        $pdf->Image($image1,$mainX,$mainY-15,40 , 10);
+        $pdf->SetFont('Arial', '', '8');
+        $pdf->SetXY($mainX-10,$mainY-3);
+
+        $pdf->Multicell(60,2    ,"SRA-QC-0001",0,"C");
+
+        $pdf->SetXY($mainX-10,$mainY-18);
+        $pdf->SetFont('Arial', '', '6');
+        $pdf->Multicell(60,2    ,"SUGAR REGULATORY ADMINISTRATION",0,"C");
+    }
+
+
+    $pdf->Output('D:/sample.pdf', 'F');
+
+//    header("location: ".$filename);
+    exit;
+
+});
+
+Route::get('/qr',function (){
+
+    $image = QrCode::size('200')
+        ->format('png')
+//        ->color(0,100,5)
+        ->merge('/public/images/sra_only2.png',0.4)
+        ->errorCorrection('H')
+        ->generate('Haru');
+//        ->merge('img/t.jpg', 0.1, true)
+//        ->size(200)->errorCorrection('H')
+//        ->generate('A simple example of QR code!');
+    file_put_contents('D:/test.png',$image);
+    return view('dashboard.test.qr');
+});
+
+
+
+//PUBLIC ROUTES
 Route::group(['as' => 'auth.'], function () {
 	
 	Route::get('/', 'Auth\LoginController@showLoginForm')->name('showLogin');
@@ -24,6 +100,8 @@ Route::get('dashboard/home', 'HomeController@index')->name('dashboard.home')->mi
 
 Route::get('/dashboard/plantilla/print','PlantillaController@print')->name('plantilla.print');
 
+
+//USER LEVEL ROUTES
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     'middleware' => ['check.user_status', 'last_activity','sidenav_mw']
 ], function () {
@@ -33,6 +111,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::post('dashboard/changePass','UserController@changePassword')->name('all.changePass');
     Route::post('/change_side_nav','SidenavController@change')->name('sidenav.change');
 
+    /** MIS REQUESTS **/
     Route::get('/mis_requests/my_requests','MisRequestsController@myRequests')->name('mis_requests.my_requests');
     Route::post('/mis_requests/store','MisRequestsController@store')->name('mis_requests.store');
     Route::post('/mis_requests/cancel_request','MisRequestsController@cancelRequest')->name('mis_requests.cancel_request');
@@ -48,6 +127,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/profile/print_pds/{slug}/{page}', 'ProfileController@printPds')->name('profile.print_pds');
     Route::post('/profile/save_family_info','ProfileController@saveFamilyInfo')->name('profile.save_family_info');
 
+    /** PROFILE SERVICE RECORD**/
     Route::get('/profile/service_record','ProfileController@serviceRecord')->name('profile.service_record');
     Route::post('/profile/service_record_store','ProfileController@serviceRecordStore')->name('profile.service_record_store');
     Route::put('/profile/service_record_update/{slug}','ProfileController@serviceRecordUpdate')->name('profile.service_record_update');
@@ -67,8 +147,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::get('/view_doc/{id}','NewsController@viewDoc')->name('news.view_doc');
     Route::get('/view_document/{id}/{type}','ViewDocument@index')->name('view_document.index');
+
+    /** PERMISSION SLIPS **/
+    Route::get('/permission_slips/my_permission_slips','PermissionSlipController@myPermissionSlips')->name('permission_slip.my_permission_slips');
+
 });
 
+
+//ADMIN LEVEL ROUTES
 /** Dashboard **/
 Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     'middleware' => ['check.user_status', 'check.user_route', 'last_activity']
@@ -161,6 +247,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 	Route::resource('employee', 'EmployeeController');
 
 	Route::resource('file201','File201Controller');
+    Route::get('/other_hr_actions_print/{slug}/{type}','EmployeeController@otherHrActionsPrint')->name('employee.other_hr_actions_print');
+    Route::get('/other_hr_actions/{slug}','EmployeeController@otherHrActions')->name('employee.other_hr_actions');
+
+
 
 	/** DOCUMENTS **/
 	Route::get('/document/report', 'DocumentController@report')->name('document.report');

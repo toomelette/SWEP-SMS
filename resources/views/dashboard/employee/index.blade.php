@@ -104,6 +104,8 @@
 {!! \App\Swep\ViewHelpers\__html::blank_modal('add_file201_modal','') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_file201_modal','') !!}
 
+{!! \App\Swep\ViewHelpers\__html::blank_modal('other_hr_actions_modal','80') !!}
+
 {{-- Print Modal --}}
 <div class="modal fade" id="print_sr_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -441,6 +443,26 @@
             },
             success: function (res) {
                populate_modal2(btn,res);
+            },
+            error: function (res) {
+                populate_modal2_error(res);
+            }
+        })
+    })
+
+    $("body").on("click",".other_actions_btn",function () {
+        btn = $(this);
+        load_modal2(btn);
+        let uri = '{{route("dashboard.employee.other_hr_actions","slug")}}';
+        uri = uri.replace('slug',btn.attr('data'));
+        $.ajax({
+            url : uri,
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                populate_modal2(btn,res);
             },
             error: function (res) {
                 populate_modal2_error(res);

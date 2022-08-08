@@ -5,6 +5,9 @@ namespace App\Swep\Services;
 use File;
 use Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use ZipArchive;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -70,6 +73,7 @@ class DocumentService extends BaseService{
         if (!empty($request->person_to)) {
             $to = " [TO ".$request->person_to."] - ";
         }
+        $home = \Storage::disk('local')->getAdapter()->getPathPrefix();
 
 
         $filename = $request->reference_no .'-'.$to. $request->subject .'-'. $this->str->random(8).'.'.$fileext;
@@ -79,14 +83,153 @@ class DocumentService extends BaseService{
         $dir = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code;
 
         $dir2 = $this->__dataType->date_parse($request->date, 'Y') .'/'. $request->folder_code2;
+        if (!is_dir($home.$this->__dataType->date_parse($request->date, 'Y'))) {
+            // dir doesn't exist, make it
+            mkdir($home.$this->__dataType->date_parse($request->date, 'Y'));
+        }
+
+        $request->slug = Str::random(16);
+
 
         if(!is_null($request->file('doc_file'))){
+            $type = 'QR';
 
-            $request->file('doc_file')->storeAs($dir, $filename);
+
+            switch ($type){
+                case 'BARCODE':
+                    $barcode ='SRA-VIS-'.$request->reference_no;
+                    $generator = new BarcodeGeneratorPNG();
+                    $temp_barcode_dir = $home.'/BARCODE_TEMP/';
+                    if (!is_dir($temp_barcode_dir)) {
+                        // dir doesn't exist, make it
+                        mkdir($temp_barcode_dir);
+                    }
+
+                    $image = $generator->getBarcode($barcode, $generator::TYPE_CODE_128);
+
+//            file_put_contents('D:/test.png',$image);
+
+
+                    file_put_contents($temp_barcode_dir.$barcode.'.png', $image);
+
+                    $image1 = $temp_barcode_dir.$barcode.'.png';
+                    $pdf = new \setasign\Fpdi\Fpdi();
+
+
+                    $totalPages = $pdf->setSourceFile($request->file('doc_file')->path());
+                    $page_height = $pdf->GetPageHeight();
+                    $page_width = $pdf->GetPageWidth();
+
+
+                    for ($pageNo = 1;$pageNo <= $totalPages; $pageNo++){
+                        $pdf->AddPage();
+                        $tplIdx = $pdf->importPage($pageNo);
+
+                        $pdf->useTemplate($tplIdx, 0, 0, null, null, true);
+                        $mainX = 10;
+                        $mainY = 250;
+
+                        $pdf->SetXY($mainX,$mainY);
+                        $pdf->SetFont('Arial', '', '8');
+                        $pdf->Image($image1,$mainX,$mainY-15,40 , 10);
+                        $pdf->SetFont('Arial', '', '8');
+                        $pdf->SetXY($mainX-10,$mainY-3);
+
+                        $pdf->Multicell(60,2    ,$barcode,0,"C");
+
+                        $pdf->SetXY($mainX-10,$mainY-18);
+                        $pdf->SetFont('Arial', '', '6');
+                        $pdf->Multicell(60,2    ,"SUGAR REGULATORY ADMINISTRATION",0,"C");
+                    }
+                    break;
+
+                case 'QR':
+
+
+                    $barcode ='SRA-VIS-'.$request->reference_no;
+                    $generator = new BarcodeGeneratorPNG();
+                    $temp_barcode_dir = $home.'/BARCODE_TEMP/';
+                    if (!is_dir($temp_barcode_dir)) {
+                        // dir doesn't exist, make it
+                        mkdir($temp_barcode_dir);
+                    }
+
+                    $image = $generator->getBarcode($barcode, $generator::TYPE_CODE_128);
+                    $image = QrCode::size('200')
+                        ->format('png')
+                        ->merge('/public/images/sra_only2.png',0.4)
+                        ->errorCorrection('H')
+                        ->generate('http://10.36.1.14:8001/dashboard/home');
+
+
+
+                    file_put_contents($temp_barcode_dir.$barcode.'.png', $image);
+
+                    $image1 = $temp_barcode_dir.$barcode.'.png';
+                    $pdf = new \setasign\Fpdi\Fpdi();
+
+
+                    $totalPages = $pdf->setSourceFile($request->file('doc_file')->path());
+                    $page_height = $pdf->GetPageHeight();
+                    $page_width = $pdf->GetPageWidth();
+
+                    //        UPPER RIGHT
+                    $mainX = $page_width - 50;
+                    $mainY = 20;
+                    return $pdf->GetStringWidth();
+                    //UPPER LEFT
+                    //        $mainX = 10;
+                    //        $mainY = 20;
+
+                                        //BOTTOM LEFT
+                    //        $mainX = 10;
+                    //        $mainY = $page_height - 20;
+
+                                        //BOTTOM RIGHT
+                    //        $mainX = $page_width  - 45;
+                    //        $mainY = $page_height - 20;
+
+
+
+                    for ($pageNo = 1;$pageNo <= $totalPages; $pageNo++){
+                        $pdf->AddPage();
+                        $tplIdx = $pdf->importPage($pageNo);
+
+                        $pdf->useTemplate($tplIdx, 0, 0, null, null, true);
+
+                        $pdf->SetXY($mainX,$mainY);
+                        $pdf->SetFont('Arial', '', '8');
+                        $pdf->Image($image1,$mainX-20,$mainY-15,15 , 15);
+                        $pdf->SetFont('Arial', '', '8');
+                        $pdf->SetXY($mainX-5,$mainY-7);
+
+                        $pdf->Multicell(60,2    ,$barcode,0,"L");
+
+                        $pdf->SetXY($mainX-5,$mainY-15);
+                        $pdf->SetFont('Arial', '', '6');
+                        $pdf->Multicell(60,2    ,"SUGAR REGULATORY ADMINISTRATION\nRECORDS SECTION\nDOCUMENT ARCHIVING SYSTEM",0,"L");
+                    }
+                break;
+
+            }
+
+            $directory =$home . $dir;
+            if (!is_dir($directory)) {
+                // dir doesn't exist, make it
+                mkdir($directory);
+            }
+
+            $pdf->Output($directory.'/'.$filename, 'F');
 
             if (isset($request->folder_code2)) {
+                $directory2 = $home . $dir2;
+                if (!is_dir($directory2)) {
+                    // dir doesn't exist, make it
+                    mkdir($directory2);
 
-                $request->file('doc_file')->storeAs($dir2, $filename);
+
+                }
+                $pdf->Output($directory2.'/'.$filename, 'F');
             }
         }
 

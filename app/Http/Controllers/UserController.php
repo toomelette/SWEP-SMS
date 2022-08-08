@@ -7,6 +7,7 @@ use App\Http\Requests\User\UserEditFormRequest;
 use App\Models\Employee;
 use App\Models\JoEmployees;
 use App\Models\Menu;
+use App\Models\SuSettings;
 use App\Models\User;
 use App\Models\UserSubmenu;
 use App\Swep\Helpers\Helper;
@@ -24,6 +25,7 @@ use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
 use function foo\func;
+use function Symfony\Component\String\b;
 
 
 class UserController extends Controller{
@@ -39,11 +41,30 @@ class UserController extends Controller{
     }
 
 
-
+    private function assignNames(){
+        $users = User::query()
+            ->with('employee')
+            ->where('lastname' ,'=','')
+            ->where('firstname' ,'=','')
+            ->where('employee_no' ,'!=','')
+            ->get();
+        foreach ($users as $user){
+            if(!empty($user->employee)){
+                $user->lastname =  $user->employee->lastname;
+                $user->firstname =  $user->employee->firstname;
+                $user->middlename =  $user->employee->middlename;
+                $user->update();
+            }
+        }
+    }
 
     public function index(UserFilterRequest $request){
+        $this->assignNames();
+
         $menus = Menu::with('submenu')->get();
-        $users = User::query()->with(['userSubmenu','employeeUnion']);
+        $users = User::select(['users.*',DB::raw('hr_employees.fullname as fullname')])
+            ->leftJoin('hr_employees','users.employee_no','=', 'hr_employees.employee_no')
+        ->addSelect(['users.*','hr_employees.fullname as fullname']);
         if(request()->ajax()){
             if(request()->has('draw')){
                 if($request->has('is_online') || $request->has('is_active')){
@@ -60,12 +81,43 @@ class UserController extends Controller{
                     }
                 }
 
-                $dt = DataTables::of($users->with(['employee','employeeUnion']))
-                    ->order(function ($query) use ($request){
+                //check for location
+                $setting = SuSettings::query()->where('setting','users_filter')->first();
+                if(!empty($setting)){
+                    switch ($setting->string_value){
+                        case 'LUZON':
+                            $dt = $users->whereHas('employee',function($a){
+                                $a->where('locations','LUZON/MINDANAO')
+                                    ->orWhere('locations','COS-LUZMIN');
+                            });
+                            break;
+                        case 'VISAYAS':
+                            $dt = $users->whereHas('employee',function($a){
+                                    $a->where('locations','VISAYAS')
+                                        ->orWhere('locations','COS-VISAYAS');
+                                });
+                            break;
+                        default:
+
+                            break;
+                    }
+                }
+
+
+
+                $dt = DataTables::of($users->with(['employee']));
+
+
+                $dt = $dt->order(function ($query) use ($request){
                         if($request->has('order')){
                             if($request->order[0]['column'] == 2)
                             $query->orderBy('last_activity',$request->order[0]['dir']);
                         }
+
+                    if($request->has('order')){
+                        if($request->order[0]['column'] == 1)
+                            $query->orderBy('lastname',$request->order[0]['dir']);
+                    }
 
                         if($request->has('order')){
                             if($request->order[0]['column'] == 0)
@@ -116,14 +168,15 @@ class UserController extends Controller{
                                 </div>';
                         return $button;
                     })
-                    ->addColumn('fullname', function ($data){
+                    ->editColumn('lastname', function ($data){
+
                         if(!empty($data->employee)){
                             $default_pword = Carbon::parse($data->employee->date_of_birth)->format('mdy');
                             $add = '';
                             if(!Hash::check($default_pword,$data->password)){
                                 $add = '<i class="fa fa-lock text-muted" title="The user has already changed its password."></i>';
                             }
-                            return strtoupper($data->employeeUnion->lastname.', '.$data->employeeUnion->firstname) .' '.$add;
+                            return strtoupper($data->lastname.', '.$data->firstname) .' '.$add;
                         }
                         return $data->lastname.', '.$data->firstname;
                     })
@@ -145,7 +198,6 @@ class UserController extends Controller{
                             })
                             ->orWhere('username','like','%'.$request->search['value'].'%');
                         }
-
                     })
                     ->escapeColumns([])
                     ->setRowId('slug')
@@ -252,9 +304,6 @@ class UserController extends Controller{
             return $this->user_service->store($request);
         }
     }
-
-
-
 
     public function show($slug){
         $user = User::query()->with('actions')->where('slug',$slug)->first();
