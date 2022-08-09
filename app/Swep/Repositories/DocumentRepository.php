@@ -2,6 +2,7 @@
 
 namespace App\Swep\Repositories;
  
+use App\Models\SuSettings;
 use App\Swep\BaseClasses\BaseRepository;
 use App\Swep\Interfaces\DocumentInterface;
 
@@ -161,7 +162,7 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
         $document = new document;
 //        $document->slug = $this->str->random(32);
         $document->slug = $request->slug;
-        $document->document_id = $this->getDocumentIdInc();
+        $document->document_id = $request->doc_id;
         $document->filename = $filename;
         $document->reference_no = $request->reference_no;
         $document->date = $this->__dataType->date_parse($request->date);
@@ -289,15 +290,17 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function getDocumentIdInc(){
 
-        $id = 'DOC10000001';
+	    $prefix = SuSettings::query()->where('setting','=','document_prefix')->first()->string_value;
+
+        $id = $prefix.'10000001';
 
         $document = $this->document->select('document_id')->orderBy('document_id', 'desc')->first();
 
         if($document != null){
             
             if($document->document_id != null){
-                $num = str_replace('DOC', '', $document->document_id) + 1;
-                $id = 'DOC' . $num;
+                $num = str_replace($prefix, '', $document->document_id) + 1;
+                $id = $prefix. $num;
             }
         
         }

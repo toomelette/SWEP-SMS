@@ -67,6 +67,19 @@
 
           <div class="col-md-8"></div>
 
+          {!! \App\Swep\ViewHelpers\__form2::select('qr_location',[
+              'label' => 'QR Code location:',
+              'cols' => 4,
+              'options' => [
+                'UPPER_RIGHT' => 'Upper right',
+                'UPPER_LEFT' => 'Upper left',
+                'LOWER_RIGHT' => 'Lower Right',
+                'LOWER_LEFT' => 'Lower left',
+              ],
+              'class' => '',
+          ]) !!}
+
+
           {!! __form::textbox(
              '4', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
           ) !!}  

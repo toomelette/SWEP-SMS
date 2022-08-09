@@ -89,12 +89,11 @@ class DocumentService extends BaseService{
         }
 
         $request->slug = Str::random(16);
-
+        $request->doc_id = $this->document_repo->getDocumentIdInc();
+        $document_id = $request->doc_id;
 
         if(!is_null($request->file('doc_file'))){
             $type = 'QR';
-
-
             switch ($type){
                 case 'BARCODE':
                     $barcode ='SRA-VIS-'.$request->reference_no;
@@ -159,7 +158,7 @@ class DocumentService extends BaseService{
                         ->format('png')
                         ->merge('/public/images/sra_only2.png',0.4)
                         ->errorCorrection('H')
-                        ->generate('http://10.36.1.14:8001/dashboard/home');
+                        ->generate(route("dashboard.document.view_file",$request->slug));
 
 
 
@@ -168,32 +167,53 @@ class DocumentService extends BaseService{
                     $image1 = $temp_barcode_dir.$barcode.'.png';
                     $pdf = new \setasign\Fpdi\Fpdi();
 
-
                     $totalPages = $pdf->setSourceFile($request->file('doc_file')->path());
-                    $page_height = $pdf->GetPageHeight();
-                    $page_width = $pdf->GetPageWidth();
-
-                    //        UPPER RIGHT
-                    $mainX = $page_width - 50;
-                    $mainY = 20;
-                    return $pdf->GetStringWidth();
-                    //UPPER LEFT
-                    //        $mainX = 10;
-                    //        $mainY = 20;
-
-                                        //BOTTOM LEFT
-                    //        $mainX = 10;
-                    //        $mainY = $page_height - 20;
-
-                                        //BOTTOM RIGHT
-                    //        $mainX = $page_width  - 45;
-                    //        $mainY = $page_height - 20;
 
 
 
                     for ($pageNo = 1;$pageNo <= $totalPages; $pageNo++){
                         $pdf->AddPage();
                         $tplIdx = $pdf->importPage($pageNo);
+
+
+                        $page_height = $pdf->getTemplateSize($tplIdx)['height'];
+                        $page_width = $pdf->getTemplateSize($tplIdx)['width'];
+
+                        switch ($request->qr_location){
+                            case 'UPPER_RIGHT':
+                                $mainX = $page_width - 50;
+                                $mainY = 20;
+                                break;
+                            case 'UPPER_LEFT':
+                                $mainX = 30;
+                                $mainY = 20;
+                                break;
+                            case 'LOWER_RIGHT':
+                                $mainX = $page_width  - 50;
+                                $mainY = $page_height - 19;
+                                break;
+                            case 'LOWER_LEFT':
+                                $mainX = 30;
+                                $mainY = $page_height - 19;
+                                break;
+                            default:
+                                $mainX = $page_width - 50;
+                                $mainY = 20;
+                                break;
+                        }
+
+                        //        UPPER RIGHT
+
+                                                    //UPPER LEFT
+                            //
+
+                                                    //BOTTOM LEFT
+                            //
+
+                                                    //BOTTOM RIGHT
+                    //
+
+
 
                         $pdf->useTemplate($tplIdx, 0, 0, null, null, true);
 
@@ -203,8 +223,11 @@ class DocumentService extends BaseService{
                         $pdf->SetFont('Arial', '', '8');
                         $pdf->SetXY($mainX-5,$mainY-7);
 
-                        $pdf->Multicell(60,2    ,$barcode,0,"L");
-
+                        $pdf->Multicell(60,2    ,$document_id,0,"L");
+//                        $pdf->SetAlpha(0.5);
+//                        $pdf->SetFillColor(191, 227,192);
+//                        $pdf->Rect(20,40,20,30,'F');
+//                        $pdf->SetAlpha(1);
                         $pdf->SetXY($mainX-5,$mainY-15);
                         $pdf->SetFont('Arial', '', '6');
                         $pdf->Multicell(60,2    ,"SUGAR REGULATORY ADMINISTRATION\nRECORDS SECTION\nDOCUMENT ARCHIVING SYSTEM",0,"L");
@@ -406,7 +429,12 @@ class DocumentService extends BaseService{
             $file = File::get($path);
             $type = File::mimeType($path);
             $response = response()->make($file, 200);
-            $response->header("Content-Type", $type);
+//            $response->header("Content-Type", $type)
+//                ->header('Content-disposition' => 'attachment; filename=' . $fileName,);
+            $response->withHeaders([
+                    'Content-Type' => $type,
+                    'Content-disposition' => 'inline; filename='.$document->reference_no.'.pdf',
+            ]);
             return $response;
         }
 

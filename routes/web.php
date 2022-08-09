@@ -64,18 +64,26 @@ Route::get('/pdf', function () {
 });
 
 Route::get('/qr',function (){
+    $documents = \App\Models\Document::query()->get();
+    $num = 1000001;
+    foreach ($documents as $document){
 
-    $image = QrCode::size('200')
-        ->format('png')
-//        ->color(0,100,5)
-        ->merge('/public/images/sra_only2.png',0.4)
-        ->errorCorrection('H')
-        ->generate('Haru');
-//        ->merge('img/t.jpg', 0.1, true)
-//        ->size(200)->errorCorrection('H')
-//        ->generate('A simple example of QR code!');
-    file_put_contents('D:/test.png',$image);
-    return view('dashboard.test.qr');
+        $document->document_id = 'SRA-VIS-'.$num;
+        $document->update();
+        $num++;
+    }
+    return 1;
+//    $image = QrCode::size('200')
+//        ->format('png')
+////        ->color(0,100,5)
+//        ->merge('/public/images/sra_only2.png',0.4)
+//        ->errorCorrection('H')
+//        ->generate('Haru');
+////        ->merge('img/t.jpg', 0.1, true)
+////        ->size(200)->errorCorrection('H')
+////        ->generate('A simple example of QR code!');
+//    file_put_contents('D:/test.png',$image);
+//    return view('dashboard.test.qr');
 });
 
 
