@@ -3,6 +3,7 @@
 
 namespace App\Swep\Helpers;
 use App\Models\Department;
+use App\Models\DocumentFolder;
 use App\Models\MisRequestsNature;
 use App\Models\PPU\RecommendedBudget;
 use App\Models\SuSettings;
@@ -72,6 +73,22 @@ class Helper
 
     }
 
+
+    public static function folderCodesArray(){
+        $folders = DocumentFolder::query()->orderBy('folder_code','asc')->get();
+        if(!empty($folders)){
+            $opt = '';
+                $new_arr = [];
+                foreach ($folders as $folder){
+                    $new_arr[$folder->folder_code] = $folder->folder_code.' - '.$folder->description;
+//                array_push($new_arr,[]);
+                }
+
+
+            return $new_arr;
+        }
+        return [];
+    }
     public static function dtr_type($type){
         $types = [
             10 => 'Check in',
@@ -274,10 +291,19 @@ class Helper
     }
     public static function budgetTypes(){
         return [
-            'COB' => 'COB',
+            'COB' => 'Corporate',
             'SIDA' => 'SIDA',
         ];
     }
+
+    public static function stations(){
+        return [
+            'Bacolod City' => 'Bacolod City',
+            'Quezon City' => 'Quezon City',
+        ];
+    }
+
+
 
     public static function getPapCodes($fiscal_year,$resp_center){
         $pap = RecommendedBudget::query()
@@ -474,6 +500,21 @@ class Helper
 
         }
         return $new_arr;
+    }
+
+    public static function populateOptionsFromArray($array,$selected = null){
+        $opt = '';
+        if(count($array) > 0){
+            foreach ($array as $key => $value){
+                if($key == $selected){
+                    $s = 'selected';
+                }else{
+                    $s = '';
+                }
+                $opt = $opt.'<option value="'.$key.'" '.$s.'>'.$value.'</option>';
+            }
+        }
+        return $opt;
     }
 
     public static function convertFromBytes($byte,$to){

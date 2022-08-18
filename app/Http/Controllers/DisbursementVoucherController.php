@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\DisbursementVoucher;
+use App\Models\DisbursementVoucherDetails;
 use App\Swep\Helpers\__sanitize;
 use App\Swep\Helpers\Helper;
+use App\Swep\Repositories\DisbursementVoucherRepository;
 use App\Swep\Services\DisbursementVoucherService;
 use App\Http\Requests\DisbursementVoucher\DisbursementVoucherFormRequest;
 use App\Http\Requests\DisbursementVoucher\DisbursementVoucherSetNoRequest;
@@ -162,9 +164,59 @@ class DisbursementVoucherController extends Controller{
     }
 
    
-    public function store(DisbursementVoucherFormRequest $request){
+    public function store(DisbursementVoucherFormRequest $request, DisbursementVoucherRepository $disbursementVoucherRepository){
 
-        $dv = $this->disbursement_voucher->store($request);
+        $dv = new DisbursementVoucher;
+        $dv->slug = Str::random(32);
+        $dv->dv_id = $disbursementVoucherRepository->getDvIdInc();
+        $dv->user_id = Auth::user()->user_id;
+        $dv->doc_no = 'DV' . rand(10000000, 99999999);
+        $dv->date = Carbon::now()->format('Y-m-d');
+        $dv->project_id = $request->project_id;
+        $dv->fund_source = $request->fund_source;
+        $dv->mode_of_payment = $request->mode_of_payment;
+        $dv->payee = $request->payee;
+        $dv->address =  $request->address;
+        $dv->tin = $request->tin;
+        $dv->bur_no = $request->bur_no;
+        $dv->department_name = $request->department_name;
+        $dv->department_unit_name = $request->department_unit_name;
+        $dv->project_code = $request->project_code;
+        $dv->explanation = $request->explanation;
+        $dv->certified_supervisor = $request->certified_supervisor;
+        $dv->certified_supervisor_position =  $request->certified_supervisor_position;
+        $dv->certified_by = $request->certified_by;
+        $dv->certified_by_position =  $request->certified_by_position;
+        $dv->approved_by = $request->approved_by;
+        $dv->approved_by_position = $request->approved_by_position;
+        $dv->created_at = Carbon::now();
+        $dv->updated_at = Carbon::now();
+        $dv->ip_created = request()->ip();
+        $dv->ip_updated = request()->ip();
+        $dv->user_created = Auth::user()->user_id;
+        $dv->user_updated = Auth::user()->user_id;
+        if($dv->mode_of_payment == 'OTHERS'){
+            $dv->mode_of_payment_specify = $request->mode_of_payment_specify;
+        }else{
+            $dv->mode_of_payment_specify = '';
+        }
+        $arr = [];
+        $sum_of_amount = 0;
+        foreach ($request->amount as $key => $value){
+            $sum_of_amount = $sum_of_amount+Helper::sanitizeAutonum($value);
+            array_push($arr,[
+                'slug' => Str::random(16),
+                'dv_slug' => $dv->slug,
+                'dv_id' => $dv->dv_id,
+                'amount' => Helper::sanitizeAutonum($value),
+                'resp_center' => $request->resp_center[$key],
+                'mfo_pap' => $request->mfo_pap[$key],
+            ]);
+        }
+        $dv->amount = $sum_of_amount;
+        DisbursementVoucherDetails::insert($arr);
+        $dv->save();
+
         if($dv){
             return $dv->only('slug');
         }
@@ -204,11 +256,52 @@ class DisbursementVoucherController extends Controller{
 
 
     public function update(DisbursementVoucherFormRequest $request, $slug){
-        $dv = $this->disbursement_voucher->update($request, $slug);
-        if($dv){
-            return $dv;
+        $dv = $this->findBySlug($slug);
+        $dv->doc_no = 'DV' . rand(10000000, 99999999);
+        $dv->project_id = $request->project_id;
+        $dv->fund_source = $request->fund_source;
+        $dv->mode_of_payment = $request->mode_of_payment;
+        $dv->payee = $request->payee;
+        $dv->address =  $request->address;
+        $dv->tin = $request->tin;
+        $dv->bur_no = $request->bur_no;
+        $dv->explanation = $request->explanation;
+        $dv->certified_supervisor = $request->certified_supervisor;
+        $dv->certified_supervisor_position =  $request->certified_supervisor_position;
+        $dv->certified_by = $request->certified_by;
+        $dv->certified_by_position =  $request->certified_by_position;
+        $dv->approved_by = $request->approved_by;
+        $dv->approved_by_position = $request->approved_by_position;
+        $dv->updated_at = Carbon::now();
+        $dv->ip_updated = request()->ip();
+        $dv->user_updated = Auth::user()->user_id;
+        if($dv->mode_of_payment == 'OTHERS'){
+            $dv->mode_of_payment_specify = $request->mode_of_payment_specify;
+        }else{
+            $dv->mode_of_payment_specify = '';
         }
-        abort(503, 'Error saving data.');
+        $arr = [];
+        $sum_of_amount = 0;
+
+        foreach ($request->amount as $key => $value){
+            $sum_of_amount = $sum_of_amount+Helper::sanitizeAutonum($value);
+            array_push($arr,[
+                'slug' => Str::random(16),
+                'dv_slug' => $dv->slug,
+                'dv_id' => $dv->dv_id,
+                'amount' => Helper::sanitizeAutonum($value),
+                'resp_center' => $request->resp_center[$key],
+                'mfo_pap' => $request->mfo_pap[$key],
+            ]);
+        }
+        $dv->amount = $sum_of_amount;
+        $dv->details()->delete();
+        DisbursementVoucherDetails::insert($arr);
+        $dv->save();
+        if($dv){
+            return $dv->only('slug');
+        }
+        abort(503,'Error saving data.');
     }
 
 

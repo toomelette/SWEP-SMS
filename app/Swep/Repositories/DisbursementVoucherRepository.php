@@ -158,7 +158,7 @@ class DisbursementVoucherRepository extends BaseRepository implements Disburseme
 
         $disbursement_voucher = $this->findBySlug($slug);
         $disbursement_voucher->delete();
-
+        $disbursement_voucher->details()->delete();
         return $disbursement_voucher;
 
     }

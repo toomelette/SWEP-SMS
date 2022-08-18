@@ -19,11 +19,11 @@ class DisbursementVoucherFormRequest extends FormRequest{
     
     public function rules(){
 
-        return [
-
-            'project_id'=>'nullable|string|max:11',
-            'fund_source_id'=>'nullable|string|max:11',
-            'mode_of_payment'=>'nullable|string|max:11',
+        $rules = [
+            'project_id'=>'nullable|string|max:20',
+            'fund_source'=>'required|string|max:11',
+            'mode_of_payment'=>'required|string|max:11',
+            'mode_of_payment_specify' =>'required_if:mode_of_payment,==,OTHERS',
             'payee'=>'required|string|max:255',
             'tin'=>'nullable|string|max:20',
             'bur_no'=>'nullable|string|max:20',
@@ -32,14 +32,18 @@ class DisbursementVoucherFormRequest extends FormRequest{
             'department_unit_name'=>'nullable|string|max:45',
             'project_code'=>'nullable|string|max:45',
             'explanation'=>'required',
-            'amount'=>'required|string|max:13',
+            'amount.*'=>'required|string|max:13',
+            'certified_supervisor' => 'required|string|max:35',
+            'certified_supervisor_position' => 'required|string|max:35',
             'certified_by' => 'required|string|max:35',
             'certified_by_position' => 'required|string|max:35',
             'approved_by' => 'required|string|max:42',
             'approved_by_position' => 'required|string|max:42',
+            'resp_center.*' => 'required',
 
         ];
 
+        return $rules;
     }
 
 

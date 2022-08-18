@@ -201,6 +201,7 @@ ol.example li.placeholder:before {
 
 .w-16p{
     width: 16%;
+    max-width: 17%;
 }
 
 .w-18p{
@@ -542,4 +543,15 @@ ol.example li.placeholder:before {
 
 .callout-default{
     background-color: #efefef;
+}
+
+.file-input.has-errors .file-preview,.file-input.has-errors .file-drop-zone{
+    border: 1px solid #dd4b39;
+}
+.file-input.has-errors .file-drop-zone{
+    background-color: #ffe8e8;
+}
+
+.select2-container{
+    width: 100% !important;
 }

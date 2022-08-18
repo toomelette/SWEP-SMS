@@ -251,7 +251,7 @@
                                 start          : new Date("{{Carbon::parse($attendance_log->timestamp)->format('Y-m-d').'T'.Carbon::parse($attendance_log->timestamp)->format('H:i:s')}}"),
                                 backgroundColor: "{{\App\Swep\Helpers\Helper::biometricValuesColor($attendance_log->type)}}", //red
                                 borderColor    : "{{\App\Swep\Helpers\Helper::biometricValuesColor($attendance_log->type)}}",
-                                    url: "Biometric device: {{$attendance_log->deviceDetails->name}}",
+                                    url: "Biometric device: {{(!empty($attendance_log->deviceDetails->name) ? $attendance_log->deviceDetails->name : 'UNKNOWN')}}",
                             },
                         @endforeach
                     @endif

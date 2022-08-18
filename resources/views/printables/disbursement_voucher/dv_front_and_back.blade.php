@@ -78,9 +78,7 @@
             transform: rotate(54deg) skew(20deg);
         }
 
-       .page-break{
-            border: 1px dashed red;
-        }
+
 
     </style>
 

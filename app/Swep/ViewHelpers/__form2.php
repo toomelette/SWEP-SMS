@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 class __form2
 {
 
-    public static function textbox($name,$options = [],$value = null){
+    public static function textbox($name,$options = [],$value = null,$input_only = false){
         $n = new __form2;
         $n->set($options);
         $r_o = '';
@@ -19,8 +19,13 @@ class __form2
             $value = $value->$name;
         }
         $ext = '';
+
         if($n->is_multiple == 1){
             $ext = '[]';
+        }
+        $c_class = '';
+        if($n->container_class != ''){
+            $c_class = $n->container_class;
         }
 
         if($n->type == 'date'){
@@ -32,7 +37,12 @@ class __form2
         $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
         $tab_index = ($n->tab_index != '') ?  'tabindex="'.$n->tab_index.'"' : '';
         $title = ($n->title != '') ? '<i class="fa fa-question-circle" title="'.$n->title.'"></i>' : '';
-        return '<div class="form-group col-md-'.$n->cols.' '.$name.'">
+
+        if($input_only == true){
+            return '<input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
+             ';
+        }
+        return '<div class="form-group '.$c_class.' col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> '.$title.'
                 <input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
               </div>';
@@ -65,6 +75,11 @@ class __form2
                 $value = Carbon::now()->format('Y');
             }
         }
+        $c_class = '';
+        if($n->container_class != ''){
+            $c_class = $n->container_class;
+        }
+
         $r_o = '';
         $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
         $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
@@ -94,7 +109,7 @@ class __form2
 
 
 
-        return '<div class="form-group col-md-'.$n->cols .' '.$name.'">
+        return '<div class="form-group '.$c_class.' col-md-'.$n->cols .' '.$name.'">
                   <label for="'. $name .'">'. $n->label .'</label>
                   <select name="'. $name .$ext.'" '. $id .' class="form-control '.$n->class.'" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
                     <option value="">Select</option>
@@ -200,6 +215,7 @@ class __form2
         (!isset($array['is_multiple'])) ? $array['is_multiple']= '' : false;
         (!isset($array['required'])) ? $array['required']= '' : false;
         (!isset($array['for'])) ? $array['for']= '' : false;
+        (!isset($array['container_class'])) ? $array['container_class']= '' : false;
         ($array['type'] == '') ?  $array['type'] = 'text' : false;
 
         $this->class = $array['class'];
@@ -219,6 +235,7 @@ class __form2
         $this->is_multiple = $array['is_multiple'];
         $this->required = $array['required'];
         $this->for = $array['for'];
+        $this->container_class = $array['container_class'];
     }
     public function get($array){
         return $this->name.' Hello';

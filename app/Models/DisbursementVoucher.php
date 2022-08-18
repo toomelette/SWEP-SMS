@@ -99,7 +99,9 @@ class DisbursementVoucher extends Model{
         return $this->hasOne("App\Models\User","user_id","user_updated");
     }
 
-
+    public function details(){
+        return $this->hasMany(DisbursementVoucherDetails::class,'dv_slug','slug');
+    }
 
 
 

@@ -73,19 +73,99 @@ Route::get('/qr',function (){
         $num++;
     }
     return 1;
-//    $image = QrCode::size('200')
-//        ->format('png')
-////        ->color(0,100,5)
-//        ->merge('/public/images/sra_only2.png',0.4)
-//        ->errorCorrection('H')
-//        ->generate('Haru');
-////        ->merge('img/t.jpg', 0.1, true)
-////        ->size(200)->errorCorrection('H')
-////        ->generate('A simple example of QR code!');
-//    file_put_contents('D:/test.png',$image);
-//    return view('dashboard.test.qr');
+
 });
 
+Route::get('/rec1',function (){
+    if(!\Illuminate\Support\Facades\Request::has('less_than') OR !\Illuminate\Support\Facades\Request::has('more_than')){
+        return 'Missing less_than and _more_than';
+    }
+    $old_docs = DB::table('temp_rec_documents_qc')
+        ->where('id','<=',\Illuminate\Support\Facades\Request::get('less_than'))
+        ->orWhere('id','=>',\Illuminate\Support\Facades\Request::get('more_than'))
+        ->get();
+
+    foreach ($old_docs as $old_doc){
+        $new_doc = \App\Models\Document::query()->where('slug','=',$old_doc->slug)->first();
+
+        if(!empty($new_doc)){
+            $new_doc->old_document_id = $old_doc->document_id;
+            $new_doc->save();
+        }
+    }
+    return 'Done';
+});
+Route::get('/rec2',function (){
+    $d_logs = \App\Models\DocumentDisseminationLog::query()->where('document_id','like','%DOC%')->limit(5000)->get();
+    foreach ($d_logs as $d_log){
+        $doc = \App\Models\Document::query()->where('old_document_id','=', $d_log->document_id)->first();
+        if(!empty($doc)){
+            $d_log->document_id = $doc->document_id;
+            $d_log->save();
+        }
+    }
+    return 'DONE 5000';
+});
+
+Route::get('/rec3',function (){
+    $d_logs = \App\Models\DocumentDisseminationLog::query()
+        ->where('document_id','like','%DOC%')
+        ->limit(500)->get();
+
+    foreach ($d_logs as $d_log){
+
+        $doc = \App\Models\Document::query()->where('subject','like', '%'.$d_log->subject.'%')->first();
+
+        if(!empty($doc)){
+
+            $d_log->document_id = $doc->document_id;
+            $d_log->save();
+        }
+    }
+    return 'DONE 1000';
+});
+
+Route::get('rec4',function (){
+   $docs = \App\Models\Document::query()->where('path','=',null)->limit(4000)->get();
+   foreach ($docs as $doc){
+
+       $doc->path = \Illuminate\Support\Carbon::parse($doc->date)->format('Y').'/'.$doc->folder_code.'/';
+       if($doc->folder_code2 != null){
+           $doc->path2 =\Illuminate\Support\Carbon::parse($doc->date)->format('Y').'/'.$doc->folder_code2.'/';
+       }
+       $doc->save();
+   }
+   return 1;
+});
+
+Route::get('/dv1',function(){
+    $dvs = \App\Models\DisbursementVoucher::query()->get();
+    foreach ($dvs as $dv){
+        $resp_center = '';
+        switch ($dv->department_name){
+            case 'RD':
+                $resp_center = 'RD-VIS';
+                break;
+            case 'AFD':
+                $resp_center = 'AFD-VIS';
+                break;
+            case 'RDE':
+                $resp_center = 'RDE-VIS';
+                break;
+            default:
+                break;
+        }
+        \App\Models\DisbursementVoucherDetails::insert([
+            'slug' => \Illuminate\Support\Str::random(),
+            'dv_slug' => $dv->slug,
+            'dv_id' => $dv->dv_id,
+            'resp_center' => $resp_center,
+            'mfo_pap' => $dv->project_code,
+            'amount' => $dv->amount,
+        ]);
+    }
+    return 1;
+});
 
 
 //PUBLIC ROUTES

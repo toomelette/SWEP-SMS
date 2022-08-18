@@ -12,7 +12,13 @@ class __static{
 	// Disbursement Voucher
     public static function dv_mode_of_payment(){
 
-        return ['CASH' => 'CASH', 'CHECK' => 'CHECK', 'OTHERS' => 'OTHERS'];
+        return [
+//            'CASH' => 'CASH',
+            'CHECK' => 'MDS CHECK',
+            'COM_CHECK' => 'COMMERCIAL CHECK',
+            'ADA' => 'AUTO DEBIT ADJUSTMENT',
+            'OTHERS' => 'OTHERS',
+        ];
         
     }
 
@@ -173,8 +179,25 @@ class __static{
 
 
     // Document Types
-    public static function document_types(){
+    public static function document_types($reverse = false){
+        if($reverse == true){
+            return [
 
+                'ADMIN_ORD'=>'Administrative Order' ,
+                'CIR_LTR'=>'Circular Letter' ,
+                'MEMO'=>'Memo' ,
+                'MEMO_CIR'=>'Memorandum Circular',
+                'MEMO_ORD'=>'Memorandum Order' ,
+                'SEC_CERT'=>'Secretary Certificate' ,
+                'SUGAR_ORD'=>'Sugar Order' ,
+                'SPECIAL_ORD'=>'Special Order' ,
+                'VOM'=>'VOM' ,
+                'IN_LTR'=>'Incoming Letter' ,
+                'OUT_LTR'=>'Outgoing Letter' ,
+                'OTHERS'=>'Others' ,
+
+            ];
+        }
         return [
 
             'Administrative Order' => 'ADMIN_ORD',

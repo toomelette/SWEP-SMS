@@ -145,6 +145,8 @@
 </head>
 
 <body>
+
+
   <div id="wrapper">
 
     <div class="grid">
@@ -155,10 +157,10 @@
       <span class="server"></span>
     </div>
 
-    <div class="content">          
+    <div class="content">
       <h1>Currently performing maintenance.</h1>
     </div>
 
-  </div>  
+  </div>
 </body>
 </html>

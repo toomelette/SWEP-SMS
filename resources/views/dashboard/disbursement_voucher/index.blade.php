@@ -29,28 +29,28 @@
                     <div class="box-body">
                         <form id="filter_form">
                             <div class="row">
-                                <div class="col-md-2 dt_filter-parent-div">
-                                    <label>Department:</label>
-                                    <select name="department_name"  class="form-control dt_filter filter_sex filters select22">
-                                        <option value="">None</option>
-                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_departments_all,'name','name') !!}
-                                    </select>
-                                </div>
-                                <div class="col-md-2 dt_filter-parent-div">
-                                    <label>Unit:</label>
-                                    <select name="department_unit_name"  class="form-control dt_filter filter_sex filters select22">
-                                        <option value="">None</option>
-                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_department_units_all,'description','name') !!}
-                                    </select>
-                                </div>
+{{--                                <div class="col-md-2 dt_filter-parent-div">--}}
+{{--                                    <label>Department:</label>--}}
+{{--                                    <select name="department_name"  class="form-control dt_filter filter_sex filters select22">--}}
+{{--                                        <option value="">None</option>--}}
+{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_departments_all,'name','name') !!}--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-2 dt_filter-parent-div">--}}
+{{--                                    <label>Unit:</label>--}}
+{{--                                    <select name="department_unit_name"  class="form-control dt_filter filter_sex filters select22">--}}
+{{--                                        <option value="">None</option>--}}
+{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_department_units_all,'description','name') !!}--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
 
-                                <div class="col-md-2 dt_filter-parent-div">
-                                    <label>Project Code:</label>
-                                    <select name="project_code"  class="form-control dt_filter filter_sex filters select22">
-                                        <option value="">None</option>
-                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_project_codes_all,'project_code','project_code') !!}
-                                    </select>
-                                </div>
+{{--                                <div class="col-md-2 dt_filter-parent-div">--}}
+{{--                                    <label>Project Code:</label>--}}
+{{--                                    <select name="project_code"  class="form-control dt_filter filter_sex filters select22">--}}
+{{--                                        <option value="">None</option>--}}
+{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_project_codes_all,'project_code','project_code') !!}--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
                                 <div class="col-md-1 dt_filter-parent-div">
                                     <label>Fund Source:</label>
                                     <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">
@@ -166,8 +166,9 @@
 {!! \App\Swep\ViewHelpers\__html::blank_modal('print_dv_modal','50') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_dv_modal','60','',true) !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('save_as_modal','60','',true) !!}
+
 <div class="modal fade" id="add_dv_modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style="width: 60%" role="document">
+    <div class="modal-dialog" style="width: 70%" role="document">
         <div class="modal-content">
             <form id="add_dv_form">
                 <div class="modal-header">
@@ -176,99 +177,128 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        {!! __form::select_dynamic(
-                          '2 project_id', 'project_id', 'Station', '', $global_projects_all, 'project_id', 'project_address', $errors->has('project_id'), $errors->first('project_id'), '', ''
-                        ) !!}
-
-                        {!! __form::select_dynamic(
-                          '2 fund_source_id', 'fund_source_id', 'Fund Source', '', $global_fund_source_all, 'fund_source_id', 'description', $errors->has('fund_source_id'), $errors->first('fund_source_id'), '', ''
-                        ) !!}
-
-                        {!! __form::select_static(
-                          '2 mode_of_payment', 'mode_of_payment', 'Mode Of Payment', '', __static::dv_mode_of_payment(), $errors->has('mode_of_payment'), $errors->first('mode_of_payment'), '', ''
-                        ) !!}
-
-                        {!! __form::textbox(
-                          '6 payee', 'payee', 'text', 'Payee *', 'Payee', '', $errors->has('payee'), $errors->first('payee'), 'data-transform="uppercase"'
-                        ) !!}
-                    </div>
-                    <div class="row">
-
-                        {!! __form::textbox(
-                          '3 tin', 'tin', 'text', 'TIN/Employee No', 'TIN / Employee No', '', $errors->has('tin'), $errors->first('tin'), ''
-                        ) !!}
-
-                        {!! __form::textbox(
-                          '3 bur_no', 'bur_no', 'text', 'BUR No', 'BUR No', '', $errors->has('bur_no'), $errors->first('bur_no'), ''
-                        ) !!}
-
-                        {!! __form::textbox(
-                          '6 address', 'address', 'text', 'Address', 'Address', '', $errors->has('address'), $errors->first('address'), 'data-transform="uppercase"'
-                        ) !!}
-                    </div>
-
-                    <div class="row">
-
-
-                        {!! __form::select_dynamic(
-                          '3 department_name', 'department_name', 'Department', '', $global_departments_all, 'name', 'name', $errors->has('department_name'), $errors->first('department_name'), 'select2', ''
-                        ) !!}
-
-                        {!! __form::select_dynamic(
-                          '3 department_unit_name', 'department_unit_name', 'Unit', '', $global_department_units_all, 'name', 'description', $errors->has('department_unit_name'), $errors->first('department_unit_name'), 'select2', ''
-                        ) !!}
-
-                        {!! __form::select_dynamic(
-                          '3 project_code', 'project_code', 'Project Code', '', $global_project_codes_all, 'project_code', 'project_code', $errors->has('project_code'), $errors->first('project_code'), 'select2', ''
-                        ) !!}
-
-                        {!! \App\Swep\ViewHelpers\__form2::textbox('amount',[
-                            'cols' => 3,
-                            'label' => 'Amount:',
-                            'class' => 'autonumber amount',
-                            'autocomplete' => 'off',
-                            'title' => 'Please put your computations below',
+                        {!! \App\Swep\ViewHelpers\__form2::select('project_id',[
+                            'label' => 'Station:',
+                            'cols' => 2,
+                            'options' => \App\Swep\Helpers\Helper::stations(),
                         ]) !!}
+
+                        {!! \App\Swep\ViewHelpers\__form2::select('fund_source',[
+                            'label' => 'Fund source:',
+                            'cols' => 2,
+                            'options' => \App\Swep\Helpers\Helper::budgetTypes(),
+                        ]) !!}
+
+                        {!! \App\Swep\ViewHelpers\__form2::select('mode_of_payment',[
+                           'label' => 'Fund source:',
+                           'cols' => 3,
+                           'options' => __static::dv_mode_of_payment(),
+                       ]) !!}
+
+
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('mode_of_payment_specify',[
+                            'label' => 'If OTHERS, Specify:',
+                            'cols' => 5,
+                        ]) !!}
+
+                    </div>
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('payee',[
+                            'label' => 'Payee *:',
+                            'cols' => 4,
+                        ]) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('tin',[
+                            'label' => 'TIN:',
+                            'cols' => 2,
+                        ]) !!}
+
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('bur_no',[
+                            'label' => 'BUR No:',
+                            'cols' => 2,
+                        ]) !!}
+
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('address',[
+                            'label' => 'Address:',
+                            'cols' => 4,
+                        ]) !!}
+
                     </div>
                     <div class="row">
                         {!! __form::textarea(
-                          '12 explanation', 'explanation', 'Explanation *', '', $errors->has('explanation'), $errors->first('explanation'), '',' Please put your computations below'
+                          '12 explanation', 'explanation', 'Particular: *', '', $errors->has('explanation'), $errors->first('explanation'), '',' Please put your computations below'
                         ) !!}
-
-
                     </div>
+
+                    @php($rcs = \App\Models\RC::query()->get())
+
                     <div class="row">
                         <div class="col-md-6">
-                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                Certified by
+                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;padding-bottom:8px">
+                                Charging
+                                <button type="button" class="pull-right btn btn-xs btn-success add_charging_btn"><i class="fa fa-plus"></i> Add</button>
                             </p>
-                            <div class="row">
-                                {!! __form::textbox(
-                                '6 certified_by', 'certified_by', 'text', 'Certified by:', 'Certified by', '', $errors->has('certified_by'), $errors->first('certified_by'), 'data-transform="uppercase" list="certified_list"'
-                                ) !!}
-
-                                {!! __form::textbox(
-                                  '6 certified_by_position', 'certified_by_position', 'text', 'Position', 'Position', '', $errors->has('certified_by_position'), $errors->first('certified_by_position'), 'data-transform="uppercase" list="certified_list_position"'
-                                ) !!}
+                            <div class="wrapping" id="wrapping">
+                                @include('ajax.disbursement_voucher.add_item',['rand' => \Illuminate\Support\Str::random(5)])
                             </div>
                         </div>
-
                         <div class="col-md-6">
-                            <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                Approved by
-                            </p>
                             <div class="row">
-                                {!! __form::textbox(
-                                    '6 approved_by', 'approved_by', 'text', 'Approved for payment by:', 'Approved by', '', $errors->has('approved_by'), $errors->first('approved_by'), 'data-transform="uppercase" list="approved_list"'
-                                ) !!}
-                                {!! __form::textbox(
-                                    '6 approved_by_position', 'approved_by_position', 'text', 'Position', 'Position', '', $errors->has('approved_by_position'), $errors->first('approved_by_position'), 'data-transform="uppercase" list="approved_list_position"'
-                                ) !!}
+                                <div class="col-md-12">
+                                    <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                        Certified by (Supervisor)
+                                    </p>
+                                    <div class="row">
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('certified_supervisor',[
+                                            'label' => 'Certified by: (Supervisor):',
+                                            'cols' => 6,
+                                        ]) !!}
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('certified_supervisor_position',[
+                                            'label' => 'Position:',
+                                            'cols' => 6,
+                                        ]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                        Certified by
+                                    </p>
+                                    <div class="row">
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('certified_by',[
+                                            'label' => 'Certified by:*',
+                                            'cols' => 6,
+                                            'extra_attr' => 'data-transform="uppercase" list="certified_list"',
+                                        ]) !!}
+
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('certified_by_position',[
+                                            'label' => 'Position*:',
+                                            'cols' => 6,
+                                            'extra_attr' => 'data-transform="uppercase" list="certified_list_position"',
+                                        ]) !!}
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                        Approved by
+                                    </p>
+                                    <div class="row">
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('approved_by',[
+                                            'label' => 'Approved for payment by:*',
+                                            'cols' => 6,
+                                            'extra_attr' => 'data-transform="uppercase" list="approved_list"',
+                                        ]) !!}
+
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('approved_by_position',[
+                                            'label' => 'Position:*',
+                                            'cols' => 6,
+                                            'extra_attr' => 'data-transform="uppercase" list="approved_list_position"',
+                                        ]) !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Create</button>
@@ -277,6 +307,45 @@
         </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div class="modal fade" id="add_item_modal" tabindex="-1" role="dialog" aria-labelledby="add_item_modal_label">
+    <div class="modal-dialog modal-lg" role="document">
+        <form id="add_item_form">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        {!! __form::textarea(
+                              '12 particular', 'particular', 'Particular *', '', $errors->has('particular'), $errors->first('particular'), '',' Please put your computations below'
+                            ) !!}
+                    </div>
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::select('resp_center',[
+                                'label' => 'Resp. Center',
+                                'options' => \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray($rcs,'name','name'),
+                                'cols' => 3
+                        ]) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('pap',[
+                                'label' => 'PAP Code',
+                                'cols' => 3,
+                         ]) !!}
+
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('resp_center',[
+                            'label' => 'Amount',
+                            'class' => 'autonumber amount',
+                            'cols' => 3,
+                        ]) !!}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 @section('scripts')
     <script type="text/javascript">
@@ -372,12 +441,52 @@
           }
         });
 
-        $(function () {
-            CKEDITOR.replace('editor');
-        });
+        $("body").on("click",".add_charging_btn",function () {
+            let btn = $(this);
+            wait_this_button(btn);
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","dv_add_item")}}',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    unwait_this_button(btn);
+                    btn.parent('p').parent('div').find('.wrapping').append(res.view);
+                    new AutoNumeric("input.amount_"+res.rand, autonum_settings);
+                },
+                error: function (res) {
+                    unwait_this_button(btn)
+                }
+            })
+        })
 
+        $("body").on("click",".remove_item_btn",function () {
+            let btn = $(this);
+            let parent_div = btn.parents('.wrapping');
+            if(parent_div.find('.row').length < 2){
+                notify('Must have at least one row.','warning');
+            }else{
+                btn.parent('div').parent('div').remove();
+            }
+        })
         $(document).ready(function () {
             $("#date_range").attr('readonly','readonly');
+            $(function () {
+                CKEDITOR.replace('editor',{
+                    height: 250,
+                });
+            });
+
+            $(function () {
+                CKEDITOR.replace('editor_1',{
+                    height: 100,
+                });
+            })
+
+
+
+
         })
         {!! __js::ajax_select_to_select(
           'department_name', 'department_unit_name', '/api/department_unit/select_departmentUnit_byDeptName/', 'name', 'description'
@@ -440,6 +549,7 @@
             e.preventDefault();
             var form = $(this);
             loading_btn(form);
+            for (instance in CKEDITOR.instances) {CKEDITOR.instances[instance].updateElement()}
             $.ajax({
                 url : '{{route("dashboard.disbursement_voucher.store")}}',
                 data : form.serialize(),
