@@ -94,7 +94,7 @@
             <table id="dv_table" style="width: 100%">
                 <tr style="border: none">
                     <td style="border: none"></td>
-                    <td style="border: none"></td>
+                    <td style="border: none; width: 40px"></td>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
@@ -186,7 +186,7 @@
                 @if(!empty($dv->details))
                     @php($n = 0)
                     <tr>
-                        <td colspan="8" class="explanation" style="width: 55%; height: 200px; vertical-align: top">
+                        <td colspan="8" class="explanation" style="max-width: 500px; height: 200px; vertical-align: top">
                             {!! $dv->explanation!!}
                         </td>
                         <td class="text-top text-center f-12">
