@@ -43,7 +43,7 @@
         </u>
         and up to the present.
 
-        {{($employee->sex = 'FEMALE') ? 'She' : 'He'}}
+        {{($employee->sex == 'FEMALE') ? 'She' : 'He'}}
 
         holds a Permanent Appointment of
         <u>

@@ -104,6 +104,7 @@ class EmployeeController extends Controller{
                                         <ul class="dropdown-menu dropdown-menu-right">
                                           <li><a href="#" data-toggle="modal" data-target="#service_records_modal" class="service_records_btn" data="'.$data->slug.'"><i class="fa icon-service-record"></i> Service Records</a></li>
                                           <li><a href="#" data-toggle="modal" data-target="#trainings_modal" class="trainings_btn" data="'.$data->slug.'"><i class="fa icon-seminar"></i> Trainings</a></li>
+                                          <li><a href="#" data-toggle="modal" data-target="#credentials_modal" class="credentials_btn" data="'.$data->slug.'"><i class="fa swep-certificate"></i> Credentials</a></li>
                                           <li><a href="#" data-toggle="modal" data-target="#matrix_modal" class="matrix_btn" data="'.$data->slug.'"><i class="fa fa-dashboard"></i> Matrix</a></li>
                                           <li><a href="#" uri="'.route('dashboard.file201.index').'"  data-toggle="modal" data-target="#file201_modal" class="file201_btn" data="'.$data->slug.'"><i class="fa fa-folder"></i> 201 File</a></li>
                                           <li><a href="#"  employee="'.$data->lastname.', '.$data->firstname.'" class="bm_uid_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'"><i class="fa icon-ico-fingerprint"></i> Biometric User ID</a></li>
@@ -811,5 +812,5 @@ class EmployeeController extends Controller{
 
 
 
-    
+
 }

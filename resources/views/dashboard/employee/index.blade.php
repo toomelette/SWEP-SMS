@@ -104,6 +104,18 @@
 {!! \App\Swep\ViewHelpers\__html::blank_modal('add_file201_modal','') !!}
 {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_file201_modal','') !!}
 
+
+
+{!! \App\Swep\ViewHelpers\__html::blank_modal('credentials_modal','80') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('add_educ_bg_modal','') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('edit_educ_bg_modal','') !!}
+
+{!! \App\Swep\ViewHelpers\__html::blank_modal('add_elig_modal','') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('edit_elig_modal','') !!}
+
+{!! \App\Swep\ViewHelpers\__html::blank_modal('add_work_modal','') !!}
+{!! \App\Swep\ViewHelpers\__html::blank_modal('edit_work_modal','') !!}
+
 {!! \App\Swep\ViewHelpers\__html::blank_modal('other_hr_actions_modal','80') !!}
 
 {{-- Print Modal --}}
@@ -470,6 +482,26 @@
         })
     })
 
+    $("body").on("click",".credentials_btn",function () {
+        let btn = $(this);
+        let uri = '{{route("dashboard.employee.credentials","slug")}}';
+        uri = uri.replace('slug',btn.attr('data') );
+        load_modal2(btn);
+        $.ajax({
+            url : uri,
+            data : '',
+            type: 'GET',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                populate_modal2(btn,res);
+            },
+            error: function (res) {
+                populate_modal2_error(res);
+            }
+        })
+    })
     // window.history.pushState({}, document.title, "/dashboard/employee");
 
 </script>

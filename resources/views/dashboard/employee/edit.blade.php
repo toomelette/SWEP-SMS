@@ -65,7 +65,7 @@
               <li class="active"><a href="#pi" data-toggle="tab">Personal Info</a></li>
               <li><a href="#fi" data-toggle="tab">Family Information</a></li>
               <li><a href="#ad" data-toggle="tab">Appointment Details</a></li>
-              <li><a href="#cre" data-toggle="tab">Credentials</a></li>
+{{--              <li><a href="#cre" data-toggle="tab">Credentials</a></li>--}}
               <li><a href="#or" data-toggle="tab">Other Records</a></li>
               <li><a href="#oq" data-toggle="tab">Other Questions</a></li>
 {{--              <li><a href="#health_declaration" data-toggle="tab">201 File <span class="label label-success">NEW</span></a></li>--}}
@@ -545,30 +545,17 @@
                           '3 monthly_basic', 'monthly_basic', 'text', 'Monthly Basic *', 'Monthly Basic', old('monthly_basic') ? old('monthly_basic') : $employee->monthly_basic, $errors->has('monthly_basic'), $errors->first('monthly_basic'), ''
                         ) !!}
 
-                        {!! __form::textbox_numeric(
-                          '3 aca', 'aca', 'text', 'ACA', 'ACA', old('aca') ? old('aca') : $employee->aca, $errors->has('aca'), $errors->first('aca'), ''
-                        ) !!}
+{{--                        {!! __form::textbox_numeric(--}}
+{{--                          '3 aca', 'aca', 'text', 'ACA', 'ACA', old('aca') ? old('aca') : $employee->aca, $errors->has('aca'), $errors->first('aca'), ''--}}
+{{--                        ) !!}--}}
+
+{{--                        {!! __form::textbox_numeric(--}}
+{{--                          '3 pera', 'pera', 'text', 'PERA', 'PERA', old('pera') ? old('pera') : $employee->pera, $errors->has('pera'), $errors->first('pera'), ''--}}
+{{--                        ) !!}--}}
 
                         {!! __form::textbox_numeric(
-                          '3 pera', 'pera', 'text', 'PERA', 'PERA', old('pera') ? old('pera') : $employee->pera, $errors->has('pera'), $errors->first('pera'), ''
+                          '3 food_subsidy', 'food_subsidy', 'text', 'Fixed basic:', 'Fixed basic', old('food_subsidy') ? old('food_subsidy') : $employee->food_subsidy, $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
                         ) !!}
-
-                        {!! __form::textbox_numeric(
-                          '3 food_subsidy', 'food_subsidy', 'text', 'Food Subsidy', 'Food Subsidy', old('food_subsidy') ? old('food_subsidy') : $employee->food_subsidy, $errors->has('food_subsidy'), $errors->first('food_subsidy'), ''
-                        ) !!}
-
-                        <div class="col-md-12"></div>
-
-                        {!! __form::textbox_numeric(
-                          '3 ra', 'ra', 'text', 'RA', 'RA', old('ra') ? old('ra') : $employee->ra, $errors->has('ra'), $errors->first('ra'), ''
-                        ) !!}
-
-                        {!! __form::textbox_numeric(
-                          '3 ta', 'ta', 'text', 'TA', 'TA', old('ta') ? old('ta') : $employee->ta, $errors->has('ta'), $errors->first('ta'), ''
-                        ) !!}
-
-                        <div class="col-md-12"></div>
-
                         {!! __form::datepicker(
                           '3 firstday_gov', 'firstday_gov',  'First Day to serve Government *', old('firstday_gov') ? old('firstday_gov') : $employee->firstday_gov, $errors->has('firstday_gov'), $errors->first('firstday_gov')
                         ) !!}
@@ -576,6 +563,20 @@
                         {!! __form::datepicker(
                           '3 firstday_sra', 'firstday_sra',  'First Day in SRA *', old('firstday_sra') ? old('firstday_sra') : $employee->firstday_sra, $errors->has('firstday_sra'), $errors->first('firstday_sra')
                         ) !!}
+
+
+                        <div class="col-md-12"></div>
+
+{{--                        {!! __form::textbox_numeric(--}}
+{{--                          '3 ra', 'ra', 'text', 'RA', 'RA', old('ra') ? old('ra') : $employee->ra, $errors->has('ra'), $errors->first('ra'), ''--}}
+{{--                        ) !!}--}}
+
+{{--                        {!! __form::textbox_numeric(--}}
+{{--                          '3 ta', 'ta', 'text', 'TA', 'TA', old('ta') ? old('ta') : $employee->ta, $errors->has('ta'), $errors->first('ta'), ''--}}
+{{--                        ) !!}--}}
+
+                        <div class="col-md-12"></div>
+
 
                         {!! __form::datepicker(
                           '3 appointment_date', 'appointment_date',  'Appointment Date', old('appointment_date') ? old('appointment_date') : $employee->appointment_date, $errors->has('appointment_date'), $errors->first('appointment_date')
