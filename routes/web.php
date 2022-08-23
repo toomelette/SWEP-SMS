@@ -578,435 +578,11 @@ Route::get('check_device',function (\App\Swep\Services\DTRService $DTRService){
 
 Route::get('dashboard/set', 'Pub\SetController@index')->name('dashboard.set');
 
-Route::get('/pdo',function(){
-
-    $db = \App\Models\SqlServer\EmpMaster::query()->where('EmpNo','=','0090-8')->first();
-    return dd($db);
-    $serverName = "10.36.1.105\SRA";
-
-    $connectionInfo = array("Database"=>"GASS","UID" => "sa", "PWD" => 'noliboy');
-    $conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if($conn){
-        echo "Connection established. <br>";
-        $tsql = "SELECT * FROM dbo.EmpMaster";
-
-        $stmt = sqlsrv_query( $conn, $tsql );
-
-        if( $stmt === false) {
-            die( print_r( sqlsrv_errors(), true) );
-        }
-
-        while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-            echo $row['LastName'].", ".$row['FirstName']."<br />";
-        }
-
-        sqlsrv_free_stmt( $stmt);
-        
-
-    }else{
-        echo "Connection failed: <br>";
-        die(print_r(sqlsrv_errors(), true));
-    }
-});
 
 Route::get('/phpinfo',function (){
     echo phpinfo();
 });
 
-Route::get('/fix_dates',function (Request $request){
-
-    if(request('no')== 1){
-        $srs = \App\Models\EmployeeServiceRecord::query()
-            ->where('date_to','!=' ,'99/99/99')
-            ->where('date_to','!=','00/00/00')
-            ->where('date_to','!=','00/00/0000')
-            ->where('date_to','!=','')
-            ->get();
-        $ct = 0;
-        foreach ($srs as $sr){
-            if (DateTime::createFromFormat('m/d/Y', $sr->date_to) !== false && $sr->date_to != '99/99/99' && $sr->date_to != '//') {
-                $sr->to_date = \Illuminate\Support\Carbon::parse($sr->date_to)->format('Y-m-d');
-                $sr->update();
-            }
-        }
-
-        return 'COpied';
-    }
-
-    if(request('no')== 2){
-        $srs = \App\Models\EmployeeServiceRecord::query()
-            ->where('date_from','!=' ,'99/99/99')
-            ->where('date_from','!=','00/00/00')
-            ->where('date_from','!=','00/00/0000')
-            ->where('date_from','!=','')
-            ->get();
-        $ct = 0;
-        foreach ($srs as $sr){
-            if (DateTime::createFromFormat('m/d/Y', $sr->date_from) !== false && $sr->date_from != '99/99/99' && $sr->date_from != '//') {
-                $sr->from_date = \Illuminate\Support\Carbon::parse($sr->date_from)->format('Y-m-d');
-                $sr->update();
-            }
-        }
-
-        return 'COpied';
-    }
-    return 111;
-});
-
-
-Route::get('/import_service_records',function (){
-    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('from_date','=',null)->get();
-    foreach ($dbs as $db){
-        if (DateTime::createFromFormat('m/d/Y', $db->date_from) !== false && $db->date_from != '99/99/99' && $db->date_from != '//') {
-            $db->from_date = \Illuminate\Support\Carbon::parse($db->date_from)->format('Y-m-d');
-            $db->update();
-        }
-    }
-
-    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('to_date','=',null)->get();
-
-    foreach ($dbs as $db){
-        if (DateTime::createFromFormat('m/d/Y', $db->date_to) !== false && $db->date_to != '99/99/99' && $db->date_to != '99/99/9999' && $db->date_to != '//') {
-            $db->to_date = \Illuminate\Support\Carbon::parse($db->date_to)->format('Y-m-d');
-            $db->update();
-        }
-    }
-
-    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('gov_serve','!=',null)->where('gov_serve','!=','')->get();
-
-    foreach ($dbs as $db){
-        if (DateTime::createFromFormat('m/d/Y', $db->gov_serve) !== false && $db->gov_serve != '99/99/99' && $db->gov_serve != '99/99/9999' && $db->gov_serve != '//') {
-            $db->gov_serve = Carbon::parse($db->gov_serve)->format('Y-m-d');
-            $db->update();
-        }else{
-//            return $db;
-        }
-    }
-
-    $dbs = \App\Models\HrEmployeesSRTemp::query()->where('psc_serve','!=',null)->where('psc_serve','!=','')->get();
-
-    foreach ($dbs as $db){
-        if (DateTime::createFromFormat('m/d/Y', $db->psc_serve) !== false && $db->psc_serve != '99/99/99' && $db->psc_serve != '99/99/9999' && $db->psc_serve != '//') {
-            $db->psc_serve = Carbon::parse($db->psc_serve)->format('Y-m-d');
-            $db->update();
-        }else{
-//            return $db;
-        }
-    }
-    $dbs = \App\Models\HrEmployeesSRTemp::query();
-    $dbs->update([
-        'remarks' => 'IMPORTED',
-    ]);
-
-    $arr = [];
-    $arr[0] = [];
-    $arr[1] = [];
-    $arr[2] = [];
-    $arr[3] = [];
-    $arr[4] = [];
-    $arr[5] = [];
-    $dbs = \App\Models\HrEmployeesSRTemp::query()->get();
-    $num = 0;
-    $key = 0;
-    foreach ($dbs as $db){
-        $num++;
-        switch ($num){
-            case $num > 4999 : $key = 5; break;
-            case $num > 3999 : $key = 4; break;
-            case $num > 2999 : $key = 3; break;
-            case $num > 1999 : $key = 2; break;
-            case $num > 999 : $key = 1; break;
-
-        }
-
-        array_push($arr[$key],[
-            'slug' => \Illuminate\Support\Str::random(16),
-            'employee_no' => $db->employee_no,
-            'sequence_no' => $db->sequence_no,
-            'date_from' => $db->date_from,
-            'from_date' => $db->from_date,
-            'date_to' => $db->date_to,
-            'to_date' => $db->to_date,
-            'upto_date' => $db->upto_date,
-            'position' => $db->position,
-            'appointment_status' => $db->appointment_status,
-            'salary' => $db->salary,
-            'mode_of_payment' => $db->mode_of_payment,
-            'station' => $db->station,
-            'gov_serve' => $db->gov_serve,
-            'psc_serve' => $db->psc_serve,
-            'lwp' => $db->lwp,
-            'spdate' => $db->spdate,
-            'status' => $db->status,
-            'remarks' => $db->remarks,
-            'user_created' => 'SYSTEM',
-        ]);
-    }
-
-    foreach ($arr as $ar){
-        $ins = \App\Models\EmployeeServiceRecord::query()->insert($ar);
-
-    }
-    return 'DONE';
-
-});
-
-Route::get('/trainings',function (){
-    $grp = \App\Models\EmployeeTraining::query()
-        ->where('date_from','!=',null)
-        ->where('sequence_no','=',null)
-        ->groupBy('employee_no')
-        ->orderBy('id','asc')
-        ->get();
-
-    foreach ($grp as $emp){
-
-        $ts = \App\Models\EmployeeTraining::query()
-            ->where('employee_no','=',$emp->employee_no)
-            ->orderBy('date_from','asc')->get();
-        $sn = 10;
-        foreach ($ts as $t){
-            $t->sequence_no = $sn;
-            $t->update();
-            $sn = $sn+10;
-        }
-    }
-    $ts = \App\Models\EmployeeTraining::query()
-        ->where('date_from','!=',null)
-        ->where('date_to','!=',null)
-        ->get();
-    foreach ($ts as $t){
-        if($t->date_from != $t->date_to){
-            $t->detailed_period = \Illuminate\Support\Carbon::parse($t->date_from)->format('F d, Y').' - '.\Illuminate\Support\Carbon::parse($t->date_to)->format('F d, Y');
-            $t->update();
-        }else{
-            $t->detailed_period = \Illuminate\Support\Carbon::parse($t->date_from)->format('F d, Y');
-            $t->update();
-        }
-    }
-    return 1000;
-});
-
-Route::get('/trainings_t_to_t',function (){
-    $ts = \App\Models\HRTrainingsTemp::query()->get();
-    $arr[0] = [];
-    $arr[1] = [];
-    $arr[2] = [];
-    $arr[3] = [];
-    $arr[4] = [];
-    $arr[5] = [];
-    $num = 0;
-    foreach ($ts as $t){
-        $key = 0;
-        switch ($num){
-            case ($num < 1000): $key = 0;
-                break;
-            case ($num < 2000): $key = 1;
-                break;
-            case ($num < 3000): $key = 2;
-                break;
-            case ($num < 4000): $key = 3;
-                break;
-            case ($num < 5000): $key = 4;
-                break;
-            case ($num < 6000): $key = 5;
-                break;
-        }
-        $num++;
-        array_push($arr[$key],[
-            'employee_no' => $t->employee_no,
-            'slug' => \Illuminate\Support\Str::random(),
-            'sequence_no' => $t->sequence_no,
-            'title' => $t->title,
-            'type' => $t->type,
-            'date_from' => $t->date_from,
-            'date_to' => $t->date_to,
-            'detailed_period' => $t->period,
-            'hours' => $t->hours,
-            'conducted_by' => $t->conducted_by,
-            'venue' => $t->venue,
-            'user_created' => 'SYSTEM',
-        ]);
-    }
-    foreach ($arr as $ar){
-        \App\Models\EmployeeTraining::query()->insert($ar);
-    }
-    return 'DONE';
-});
-
-Route::get('/checking',function (){
-    return 1;
-    $sqlsrv_emps_arr = [];
-    $emps_arr = [];
-    $sqlsrv_emps = \App\Models\SqlServer\EmpMaster::query()->get();
-    foreach ($sqlsrv_emps as $sqlsrv_emp){
-        array_push($sqlsrv_emps_arr,$sqlsrv_emp->EmpNo);
-    }
-    $emps = \App\Models\Employee::query()->get();
-    foreach ($emps as $emp){
-        array_push($emps_arr,$emp->employee_no);
-    }
-    $diff = array_diff($sqlsrv_emps_arr,$emps_arr);
-
-    foreach ($diff as $diff_emp_no){
-        $sql_srv_e = \App\Models\SqlServer\EmpMaster::query()->where('EmpNo','=',$diff_emp_no)->first();
-        $e = \App\Models\Employee::query()->where('lastname','=',$sql_srv_e->LastName)
-            ->where('firstname','=',$sql_srv_e->FirstName)->first();
-        if(!empty($e)){
-
-            $e->user()->update(['employee_no' => $sql_srv_e->EmpNo]);
-            $e->employeeTraining()->update(['employee_no' => $sql_srv_e->EmpNo]);
-            $e->dtr_records()->update(['employee_no' => $sql_srv_e->EmpNo]);
-            $e->documentDisseminationLog()->update(['employee_no' => $sql_srv_e->EmpNo]);
-            $e->employee_no = $sql_srv_e->EmpNo;
-            $e->update();
-            return $e;
-        }else{
-            $e = new \App\Models\Employee;
-            $e->employee_no = $sql_srv_e->EmpNo;
-            $e->lastname = $sql_srv_e->LastName;
-            $e->slug = \Illuminate\Support\Str::random();
-            $e->firstname = $sql_srv_e->FirstName;
-            $e->middlename = $sql_srv_e->MiddleName;
-            $e->department_id = $sql_srv_e->Division;
-            $e->department_unit_id = $sql_srv_e->Dept;
-            $e->fullname = $sql_srv_e->EmpName;
-            $e->date_of_birth = Carbon::parse($sql_srv_e->DOB)->format('Y-m-d');
-            $e->place_of_birth = $sql_srv_e->POB;
-            $e->sex = $sql_srv_e->Gender;
-            $e->civil_status = $sql_srv_e->CivilStat;
-            $e->blood_type = $sql_srv_e->BloodType;
-            $e->gsis = $sql_srv_e->GSIS;
-            $e->philhealth = $sql_srv_e->PHIC;
-            $e->tin = $sql_srv_e->TIN;
-            $e->hdmf = $sql_srv_e->HDMF;
-            $e->hdmfpremiums = $sql_srv_e->HDMFPREMIUMS;
-            $e->appointment_status = $sql_srv_e->ApptStat;
-            $e->position = $sql_srv_e->Position;
-            $e->item_no = $sql_srv_e->ItemNo;
-            $e->salary_grade = $sql_srv_e->SalGrade;
-            $e->step_inc = $sql_srv_e->StepInc;
-            $e->monthly_basic = $sql_srv_e->MonthlyBasic;
-            $e->aca = $sql_srv_e->ACA;
-            $e->pera = $sql_srv_e->PERA;
-            $e->food_subsidy = $sql_srv_e->FoodSubsi;
-            $e->ra = $sql_srv_e->RA;
-            $e->ta= $sql_srv_e->TA;
-            $e->firstday_gov = $sql_srv_e->GovServ;
-            $e->firstday_sra = $sql_srv_e->FirstDay;
-            $e->appointment_date = $sql_srv_e->ApptDate;
-            $e->adjustment_date = $sql_srv_e->AdjDate;
-            $e->is_active = $sql_srv_e->ACTIVE;
-            $e->user_created = 'SYSTEM';
-            $e->locations = $sql_srv_e->LOCATION;
-            $e->save();
-
-        }
-    }
-});
-
-Route::get('/copy_depts',function (){
-//   $depts = DB::connection('sqlsrv')->table('dbo.RespCtr')->get();
-//
-//   $arr = [];
-//   foreach ($depts as $dept){
-//       array_push($arr,[
-//           'slug' => \Illuminate\Support\Str::random(),
-//           'department_id' => $dept->RSCode,
-//            'department_name' => $dept->DEPTNAME,
-//           'user_created' => 'SYSTEM',
-//       ]);
-//   }
-//    \App\Models\Department::query()->insert($arr);
-});
-
-Route::get('/copy_dept_units',function (){
-//    $dus = DB::connection('sqlsrv')->table('dbo.Depts')->get();
-//    $arr = [];
-//    foreach ($dus as $du){
-//        array_push($arr,[
-//            'slug' => \Illuminate\Support\Str::random(),
-//            'department_id' => $du->DeptID,
-//            'department_unit_id' => $du->DeptUnit,
-//            'department_unit_name' => $du->LongName,
-//            'department_no' => $du->DEPTNO,
-//            'user_created' => 'SYSTEM',
-//        ]);
-//    }
-//    \App\Models\DepartmentUnit::query()->insert($arr);
-});
-
-Route::get('/import_plantilla',function (){
-   $sqlsrv = DB::connection('sqlsrv')->table('dbo.PayPLANTILLA')->get();
-   $plantillaArr = [];
-   foreach ($sqlsrv as $item){
-       $arr = [
-           'location' => $item->Location,
-           'item_no' => $item->ItemNo,
-           'department_header' => $item->DeptHeader,
-           'department' => $item->Dept,
-           'division_header' => $item->DivisionHeader,
-           'division' => $item->Division,
-           'section_header' => $item->SectionHeader,
-           'section' => $item->Sectionss,
-           'position' => $item->Position,
-           'employee_name' => $item->EmpName,
-           'job_grade' => $item->JobGrade,
-           'step_inc' => $item->StepInc,
-           'actual_salary' => $item->ActualSalary,
-           'actual_salary_gcg' => $item->ActualSalaryGCG,
-           'eligibility' => $item->Eligibility,
-           'educ_att' => $item->EducAttain,
-           'appointment_status' => $item->ApptStat,
-           'appointment_date' => $item->ApptDate,
-           'last_promotion' => $item->LastPromote,
-           'seq_groupings' => $item->SeqGroupings,
-           'div_groupings' => $item->DivGroupings,
-           'original_job_grade' => $item->OriginalJG,
-           'original_job_grade_si' => $item->OriginalSI,
-           'original_salary_grade' => $item->OriginalSG,
-           'original_salary_grade_si' => $item->OriginalSGSI,
-           'control_no' => $item->CONTROLNO,
-           'user_created' => 'SYSTEM',
-       ];
-        array_push($plantillaArr,$arr);
-   }
-    \App\Models\HRPayPlanitilla::query()->insert($plantillaArr);
-});
-
-Route::get('/get_emp_no',function (){
-    $pls = \App\Models\HRPayPlanitilla::query()->get();
-    foreach ($pls as $pl){
-        if($pl->employee_name != null){
-            $cut = substr($pl->employee_name,0,15);
-            $emp = \App\Models\Employee::query()->where(DB::raw('CONCAT(lastname,", ",firstname)'),'like','%'.$cut.'%')->first();
-            if(!empty($emp)){
-                $pl->employee_no = $emp->employee_no;
-                $pl->update();
-            }
-        }
-    }
-
-    $pls = \App\Models\HRPayPlanitilla::query()->where('employee_no','=',null)->get();
-    foreach ($pls as $pl){
-        if($pl->employee_name != null){
-            $cut = substr($pl->employee_name,0,11);
-            $emp = \App\Models\Employee::query()->where(DB::raw('CONCAT(lastname,", ",firstname)'),'like','%'.$cut.'%')->first();
-            if(!empty($emp)){
-                $pl->employee_no = $emp->employee_no;
-                $pl->update();
-            }
-        }
-    }
-});
-
-Route::get('/opts', function (){
-    $s = \App\Models\SuOptions::employeeStatus();
-
-    return Helper::populateOptionsFromObjectAsArray($s,'option','value');
-  return 1;
-});
 
 Route::get('/item_employees',function (){
     $emps = \App\Models\Employee::query()->where('item_no','!=',0)->where('item_no','!=',null)->get();
@@ -1165,11 +741,6 @@ Route::get('/rde_cos',function (){
    dd('DOne');
 });
 
-
-Route::get('/lbp',function (){
-    return view('dashboard.test.lbp');
-
-});
 Route::get('/getSerial',function (\Illuminate\Http\Request $request){
     if(!$request->has('ip')){
         return 'IP Address missing';
@@ -1179,15 +750,57 @@ Route::get('/getSerial',function (\Illuminate\Http\Request $request){
     return $zk->serialNumber();
 });
 
-Route::get('/setUser',function (){
-    $zk = new ZKTeco('10.36.1.23');
-    $zk->connect();
-//    $zk->clearAdmin();
+Route::get('/bridge',function (){
+    $server_location = \App\Models\SuSettings::query()->where('setting','server_location')->first()->string_value;
+    //UPDATE CLOUD
+    if($server_location == 'VISAYAS'){
+        //PUSH TO CLOUD
+//        $local_employees = \App\Models\Employee::query()->where('locations','like','%VIS%')->get();
+//        $array = [];
+//        $employee_table_columns = Schema::getColumnListing('hr_employees');
+//        array_splice($employee_table_columns,0,1);
+//
+//        foreach ($local_employees as $local_employee){
+//            $arr  = [];
+//            foreach ($employee_table_columns as $column){
+//                $arr[$column] = $local_employee->$column;
+//            }
+//            array_push($array,$arr);
+//        }
+//
+//        foreach (array_chunk($array,500) as $a){
+//            \App\Models\Bridge\B_Employees::upsert(
+//                $a,
+//                ['slug'],
+//                $employee_table_columns
+//            );
+//        }
+//        return 1;
 
+        //STEP 2 PULL UPDATES FROM CLOUD
 
-    return $zk->getUser();
-    return $zk->setUser('555','555','GJG','5544',\Rats\Zkteco\Lib\Helper\Util::LEVEL_ADMIN);
+//        $cloud_employees = \App\Models\Bridge\B_Employees::query()->where('locations','like','%LUZ%')->get();
+//        $array = [];
+//        $employee_table_columns = Schema::getColumnListing('hr_employees');
+//        array_splice($employee_table_columns,0,1);
+//
+//        foreach ($cloud_employees as $cloud_employee){
+//            $arr  = [];
+//            foreach ($employee_table_columns as $column){
+//                $arr[$column] = $cloud_employee->$column;
+//            }
+//            array_push($array,$arr);
+//        }
+//
+//        foreach (array_chunk($array,500) as $a){
+//            \App\Models\Employee::upsert(
+//                $a,
+//                ['slug'],
+//                $employee_table_columns
+//            );
+//        }
+        return 1;
+    }
     return 1;
-    return view('dashboard.test.lbp');
-
+    return $emps;
 });

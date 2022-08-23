@@ -99,13 +99,13 @@ return [
             'engine' => null,
         ],
 
-        'cloud_server' => [
+        'swep_bridge' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST_CLOUD', '10.36.1.17'),
-            'port' => env('DB_PORT_CLOUD', '3306'),
-            'database' => env('DB_DATABASE_CLOUD', 'forge'),
-            'username' => env('DB_USERNAME_CLOUD', 'forge'),
-            'password' => env('DB_PASSWORD_CLOUD', ''),
+            'host' => env('DB_HOST_BRIDGE', ''),
+            'port' => env('DB_PORT_BRIDGE', '3306'),
+            'database' => env('DB_DATABASE_BRIDGE', 'forge'),
+            'username' => env('DB_USERNAME_BRIDGE', 'forge'),
+            'password' => env('DB_PASSWORD_BRIDGE', ''),
             'unix_socket' => env('DB_SOCKET_CLOUD', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

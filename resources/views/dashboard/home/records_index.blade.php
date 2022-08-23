@@ -13,8 +13,8 @@
     $free = 0;
     $total = 0;
     if(PHP_OS == "WINNT"){
-        $free =disk_free_space("E:/home");
-        $total =disk_total_space("E:/home");
+        $free =disk_free_space("/home");
+        $total =disk_total_space("/home");
     }else{
         $free = disk_free_space("/home");
         $total =disk_total_space("/home");

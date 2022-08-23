@@ -5,6 +5,7 @@ namespace App\Swep\Services;
 use File;
 use Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -425,6 +426,8 @@ class DocumentService extends BaseService{
         if(!empty($document->filename)){
 
             $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+            $path = '/home/swep_afd_storage/2022/ADMIN_ORD/MEMO-VIS-BAC-2022-Aug-002.pdf';
+            $path = Storage::path('/'.$document->path.$document->filename);
             if (!File::exists($path)) { return "Cannot Detect File!"; }
             $file = File::get($path);
             $type = File::mimeType($path);

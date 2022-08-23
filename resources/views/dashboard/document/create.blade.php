@@ -7,16 +7,18 @@
   </section>
 
   <section class="content">
+    <div class="callout callout-info">
+      <h4>Upload document page has been moved!</h4>
 
-    <div class="box">
-    
+      <a href="{{route("dashboard.document.index")}}?initiator=create">Click here and you will be guided.</a>
+    </div>
+    <div class="box" style="display: none">
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
         </div> 
       </div>
-      
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.document.store') }}" enctype="multipart/form-data">
 
         <div class="box-body">
@@ -91,9 +93,7 @@
         </div>
 
       </form>
-
     </div>
-
   </section>
 
 @endsection

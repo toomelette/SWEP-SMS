@@ -1,102 +1,77 @@
-@extends('layouts.admin-master')
+@extends('layouts.modal-content')
 
-@section('content')
+@section('modal-header')
+    {{$document->reference_no}}
+@endsection
 
-<section class="content-header">
-    <h1>Document Details</h1>
-    <div class="pull-right" style="margin-top: -25px;">
-      {!! __html::back_button(['dashboard.document.index']) !!}
+@section('modal-body')
+    <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+        Document Info
+    </p>
+
+    <div class="well well-sm">
+        <dl class="dl-horizontal">
+            <dt>Reference No:</dt>
+            <dd>{{$document->reference_no}}</dd>
+            <dt>Document ID:</dt>
+            <dd>{{$document->document_id}}</dd>
+            <dt>Date:</dt>
+            <dd>{{\Illuminate\Support\Carbon::parse($document->data)->format('F d, Y')}}</dd>
+            <dt>To:</dt>
+            <dd>{{$document->person_to}}</dd>
+            <dt>From:</dt>
+            <dd>{{$document->person_from}}</dd>
+            <dt>Subject:</dt>
+            <dd>{{$document->subject}}</dd>
+            <dt>Type:</dt>
+            <dd>{{(isset(\App\Swep\Helpers\__static::document_types(true)[$document->type])? \App\Swep\Helpers\__static::document_types(true)[$document->type] : $document->type)}}</dd>
+            <dt>Folder:</dt>
+            <dd>{{$document->folder_code}} - {{$document->folder->description}}</dd>
+            @if($document->folder_code2 != '')
+                <dt>Folder 2:</dt>
+                <dd>{{$document->folder_code2}} - {{$document->folder2->description}}</dd>
+            @endif
+        </dl>
     </div>
-</section>
+    <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+        File info
+    </p>
 
-<section class="content">
+    <div class="well well-sm">
+        <dl class="dl-horizontal">
+            <dt>Filename:</dt>
+            <dd>{{$document->filename}}</dd>
 
-    <div class="box">
-
-      <div class="box-header with-border">
-
-        <h3 class="box-title">Details</h3>
-
-        <div class="box-tools">
-          <a href="{{ route('dashboard.document.edit', $document->slug) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
-        </div>
-
-      </div>
-
-      <div class="box-body">
-
-
-        {{-- DOC Info --}}
-        <div class="col-md-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Document Info</h3>
-            </div>
-            <div class="box-body">
-              <dl class="dl-horizontal">
-                <dt>Reference No:</dt>
-                <dd>{{ $document->reference_no }}</dd>
-                <dt>Date:</dt>
-                <dd>{{ __dataType::date_parse($document->date, 'm/d/Y') }}</dd>
-                <dt>To:</dt>
-                <dd>{{ $document->person_to }}</dd>
-                <dt>From:</dt>
-                <dd>{{ $document->person_from }}</dd>
-                <dt>Subject:</dt>
-                <dd>{{ $document->subject }}</dd>
-                <dt>Reference No:</dt>
-                <dd>{{ $document->reference_no }}</dd>
-                <dt>Folder Code:</dt>
+                @if(\Illuminate\Support\Facades\Storage::exists($document->path.$document->filename))
+                <dt>Size:</dt>
                 <dd>
-                  {{ $document->folder_code }}, {{ !empty($document->folder_code2) ? $document->folder_code2 : '' }}
-
+                    {{\App\Swep\Helpers\Helper::formatBytes(\Illuminate\Support\Facades\Storage::size($document->path.$document->filename), 'MB')}}
                 </dd>
-                <dt>Remarks:</dt>
-                <dd>{{ $document->remarks }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
+                @endif
 
-
-
-
-
-        <div class="col-md-6">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">User Modifications</h3>
-            </div>
-            <div class="box-body">
-
-              <dl class="dl-horizontal col-sm-12">
-                <dt>Date Created:</dt>
-                <dd>{{ __dataType::date_parse($document->created_at, 'M d, Y h:i A') }}</dd>
-                <dt>IP Created:</dt>
-                <dd>{{ $document->ip_created }}</dd>
-                <dt>User Created:</dt>
-                <dd>{{ $document->user_created }}</dd>
-                <dt>Date Updated:</dt>
-                <dd>{{ __dataType::date_parse($document->updated_at, 'M d, Y h:i A') }}</dd>
-                <dt>IP Updated:</dt>
-                <dd>{{ $document->ip_updated }}</dd>
-                <dt>User Updated:</dt>
-                <dd>{{ $document->user_updated }}</dd>
-              </dl>
-
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
+            <dt>Path:</dt>
+            <dd>{{$document->path}}</dd>
+            @if($document->folder_code2 != '')
+                <dt>Path 2:</dt>
+                <dd>{{$document->path2}}</dd>
+            @endif
+        </dl>
     </div>
-  </div>
 
-</section>
+ @endsection
 
+@section('modal-footer')
+    <div class="row">
+        {!! \App\Swep\ViewHelpers\__html::timestamp($document,'5') !!}
+        <div class="col-md-2">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+
+    </script>
 @endsection
 

@@ -2,13 +2,29 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Document extends Model{
+    public static function boot()
+    {
+        parent::boot();
+        static::updating(function($a){
+            $a->user_updated = Auth::user()->user_id;
+            $a->ip_updated = request()->ip();
+            $a->created_at = \Carbon::now();
+        });
 
+        static::creating(function ($a){
+            $a->user_created = Auth::user()->user_id;
+            $a->ip_created = request()->ip();
+            $a->created_at = \Carbon::now();
+            $a->updated_at = \Carbon::now();
+        });
+    }
 
 	use Sortable, LogsActivity;
 
@@ -69,5 +85,20 @@ class Document extends Model{
         return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->where('send_copy','=', 1);
     }
 
+    public function folder(){
+        return $this->belongsTo(DocumentFolder::class , 'folder_code','folder_code');
+    }
+
+    public function folder2(){
+        return $this->belongsTo(DocumentFolder::class , 'folder_code2','folder_code');
+    }
+
+    public function creator(){
+        return $this->hasOne("App\Models\User","user_id","user_created");
+    }
+
+    public function updater(){
+        return $this->hasOne("App\Models\User","user_id","user_updated");
+    }
 
 }

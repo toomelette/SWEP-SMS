@@ -275,6 +275,22 @@ class Helper
         return $array;
     }
 
+
+    public static function formatBytes($size,$unit) {
+        if($unit == "KB")
+        {
+            return $fileSize = round($size / 1024,2) . ' KB';
+        }
+        if($unit == "MB")
+        {
+            return $fileSize = round($size / 1024 / 1024,2) . ' MB';
+        }
+        if($unit == "GB")
+        {
+            return $fileSize = round($size / 1024 / 1024 / 1024,2) . ' GB';
+        }
+    }
+
     public static function responsibilityCenters(){
         $arr = [
             'PPSPD' => 'PPSPD',
