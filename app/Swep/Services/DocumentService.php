@@ -543,9 +543,10 @@ class DocumentService extends BaseService{
 
         $document = $this->document_repo->findBySlug($slug);
 
-        $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        //$path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
+        $path = $this->__static->archive_dir() .$document->path.$document->filename;
 
-        $cc = []; //---> Array of recepients to be used for Logs
+        $cc = []; //---> Array of recipients to be used for Logs
         $to_be_emailed = []; //---> Array of emails to be used for sending
 
         // if($request->content == null){
@@ -638,59 +639,7 @@ class DocumentService extends BaseService{
                 $ddl = $this->ddl_repo->store($request, null, $key, $document->document_id, $recepient['email'], $status, $send_copy);
             }
         }
-        
-        // return $to_be_emailed;
-        // if (!empty($request->employee)) {
-           
-        //     foreach ($request->employee as $employee_no) {
 
-        //         $employee = $this->employee_repo->findByEmployeeNo($employee_no);
-        //         $status = "";
-
-        //         if (filter_var($employee->email, FILTER_VALIDATE_EMAIL ) != false) {
-
-        //             try {
-        //                 $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $employee->email, $request->content));
-        //                 $status = "SENT";
-        //             } catch (Exception $e) {
-        //                 $status = "FAILED";
-        //             }
-
-        //         }else{ $status = "FAILED"; }
-
-        //         $ddl = $this->ddl_repo->store($request, $employee->employee_no, null, $document->document_id, $employee->email, $status);
-
-        //     }
-
-        // }
-
-
-        // if (!empty($request->email_contact)) {
-           
-        //     foreach ($request->email_contact as $email_contact_id) {
-
-        //         $email_contact = $this->email_contact_repo->findByEmailContactId($email_contact_id);
-        //         $status = "";
-
-        //         if (filter_var($email_contact->email, FILTER_VALIDATE_EMAIL ) != false) {
-
-        //             try {
-        //                 $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $email_contact->email, $request->content));
-        //                 $status = "SENT";
-        //             } catch (Exception $e) {
-        //                 $status = "FAILED";
-        //             }
-
-        //         }else{ $status = "FAILED"; }
-
-        //         $ddl = $this->ddl_repo->store($request, null, $email_contact->email_contact_id, $document->document_id, $email_contact->email, $status);
-
-        //     }
-
-        // }   
-
-
-       // $this->event->dispatch('document.dissemination', $document);
         return redirect()->back();
 
     }
