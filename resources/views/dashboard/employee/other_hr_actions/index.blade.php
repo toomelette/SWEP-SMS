@@ -59,7 +59,7 @@
                                 <p class="box-title-sm no-margin">CERTIFICATE OF EMPLOYMENT</p>
                             </div>
                             <div class="box-body" style="">
-                                <form class="report_form" id="coe_frame_form">
+                                <form class="report_form_{{$rand}}" id="coe_frame_form">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="tab-pane" id="tab_3">
-                        <form id="nosa_form">
+                        <form id="nosa_form_{{$rand}}">
                             <div class="box box-sm box-default box-solid">
                                 <div class="box-header with-border">
                                     <p class="box-title-sm no-margin"><i class="fa fa-wrench"></i> NOTICE OF SALARY ADJUSTMENT</p>
@@ -186,12 +186,14 @@
                                                     'label' => 'Item No:',
                                                     'cols' => 2,
                                                     'class' => 'input-sm',
+                                                    'required' => 'required',
                                                 ]) !!}
 
                                                 {!! \App\Swep\ViewHelpers\__form2::textbox('new_position',[
                                                     'label' => 'Position:',
                                                     'cols' => 4,
                                                     'class' => 'input-sm',
+                                                    'required' => 'required',
                                                 ]) !!}
                                                 {!! \App\Swep\ViewHelpers\__form2::textbox('new_salary_grade',[
                                                     'label' => 'Job Grade:',
@@ -199,6 +201,7 @@
                                                     'class' => 'input-sm news_'.$rand,
                                                     'type' => 'number',
                                                     'id' => 'new_sg_'.$rand,
+                                                    'required' => 'required',
 
                                                 ]) !!}
                                                 {!! \App\Swep\ViewHelpers\__form2::textbox('new_step_inc',[
@@ -207,6 +210,7 @@
                                                     'class' => 'input-sm news_'.$rand,
                                                     'type' => 'number',
                                                     'id' => 'new_si_'.$rand,
+                                                    'required' => 'required',
                                                 ]) !!}
                                                 {!! \App\Swep\ViewHelpers\__form2::textbox('new_monthly_salary',[
                                                     'label' => 'Monthly Sal.:',
@@ -270,7 +274,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div style="height: 101px">
-                                                <button type="submit" class="btn btn-success btn-sm" style="position: absolute;bottom: 15px; right: 15px"><i class="fa fa-refresh"></i> Generate NOSA</button>
+                                                <button frame="nosa_frame" type="submit" class="btn btn-success btn-sm" style="position: absolute;bottom: 15px; right: 15px"><i class="fa fa-refresh"></i> Generate NOSA</button>
                                             </div>
                                         </div>
                                     </div>
@@ -283,27 +287,27 @@
                         <div class="panel panel-default">
                             <div class="panel-heading clearfix">
                                 <span style="font-weight: bold; font-size: 16px">Print Preview</span>
-                                <button id="print_btn" class="btn btn-success btn-sm pull-right"><i class="fa fa-print"></i> Print</button>
+                                <button id="print_btn" class="btn btn-success btn-sm pull-right print_button"><i class="fa fa-print"></i> Print</button>
                             </div>
                             <div class="panel-body" style="height: 700px">
-                                <div id="print_container" style="text-align: center; margin-top: 100px">
+                                <div id="nosa_frame_placeholder" style="text-align: center; margin-top: 100px">
                                     <i class="fa fa-print" style="font-size: 300px; color: grey; "></i>
                                     <br>
                                     <span class="text-info">Click <b>"Generate Report"</b> button to see print preview here</span>
                                 </div>
 
 
-                                <div id="report_frame_loader" style="display: none">
+                                <div id="nosa_frame_loader" style="display: none">
                                     <center>
                                         <img style="width: 100px; margin: 140px 0;" src="{{asset('images/loader.gif')}}">
                                     </center>
                                 </div>
-                                <div class="row" id="report_frame_container" style="height: 100%; display: none">
+                                <div class="row" id="nosa_frame_container" style="height: 100%; display: none">
 
 
                                     <div class="col-md-12" style="height: 100%">
                                         <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe id="report_frame"  style="width: 100%; height: 100%;overflow:hidden; " class="embed-responsive" src=""></iframe>
+                                            <iframe id="nosa_frame"  style="width: 100%; height: 100%;overflow:hidden; " class="embed-responsive" src=""></iframe>
                                         </div>
                                     </div>
                                 </div>
@@ -373,7 +377,7 @@
         })
     })
 
-    $(".report_form").submit(function (e) {
+    $(".report_form_{{$rand}}").submit(function (e) {
         e.preventDefault();
         let form = $(this);
         let submit_btn = form.find('button[type="submit"]');
@@ -393,7 +397,7 @@
         let frame_id = $(this).attr('id');
         $("#"+frame_id+"_loader").hide();
         $("#"+frame_id+"_container").fadeIn();
-        remove_loading_btn($("#"+frame_id+"_form"));
+        remove_loading_btn($(".report_form_{{$rand}}"));
         $("#"+frame_id+"_print_btn").removeAttr('disabled');
     })
 
@@ -401,6 +405,31 @@
         let btn = $(this);
         let parent = btn.parent('div').parent('div');
         parent.find('iframe').get(0).contentWindow.print();
+    })
+
+
+    $("#nosa_form_{{$rand}}").submit(function (e) {
+        e.preventDefault();
+        let form = $(this);
+        let submit_btn = form.find('button[type="submit"]');
+        let frame = submit_btn.attr('frame');
+        let src = '{{route("dashboard.employee.other_hr_actions_print",["slug"=>"slug","type" => "type"])}}';
+        src = src.replace('slug',"{{$employee->slug}}");
+        src = src.replace("type","nosa");
+        $("#"+frame).attr('src',src+"?"+form.serialize());
+
+        $("#"+frame+"_placeholder").hide();
+        $("#"+frame+"_loader").fadeIn();
+
+        loading_btn(form);
+    })
+
+    $("#nosa_frame").on("load",function () {
+        let frame_id = $(this).attr('id');
+        $("#"+frame_id+"_loader").hide();
+        $("#"+frame_id+"_container").fadeIn();
+        remove_loading_btn($("#nosa_form_{{$rand}}"));
+        $("#"+frame_id+"_print_btn").removeAttr('disabled');
     })
 </script>
 @endsection

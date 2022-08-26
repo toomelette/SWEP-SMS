@@ -50,6 +50,7 @@ class EducationalBGController extends Controller
         ]);
     }
     public function update($id,EducBGFormRequest $request){
+
         $eb = $this->findById($id);
         $eb->level = $request->level;
         $eb->school_name = $request->school_name;
@@ -61,6 +62,7 @@ class EducationalBGController extends Controller
         $eb->scholarship = $request->scholarship;
         $eb->honor = $request->honor;
         if($eb->update()){
+
             return $eb->only('id');
         }
     }

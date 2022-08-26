@@ -44,9 +44,9 @@
         as follows:
     </p>
 
-    <table>
+    <table style="width: 100%">
         <tr>
-            <td>
+            <td style="width: 80%">
                 1. Adjusted monthly basic salary effective
                 {{\Carbon\Carbon::parse(\Illuminate\Support\Facades\Request::get('effectivity'))->format('F d, Y')}}
                 under the new salary schedule
@@ -56,7 +56,7 @@
             <td class="text-right">
                 <u>
                     <p class="editable">
-                        {{number_format(\Illuminate\Support\Facades\Request::get('new_monthly_salary'),2)}}
+                        {{number_format(\App\Swep\Helpers\Helper::sanitizeNumFormat(\Illuminate\Support\Facades\Request::get('new_monthly_salary')),2)}}
                     </p>
                 </u>
             </td>
@@ -72,7 +72,8 @@
             <td class="text-right">
                 <u>
                     <p class="editable">
-                        {{number_format(\Illuminate\Support\Facades\Request::get('monthly_basic'),2)}}
+                        {{number_format(\App\Swep\Helpers\Helper::sanitizeNumFormat(\Illuminate\Support\Facades\Request::get('monthly_basic')),2)}}
+
                     </p>
                 </u>
             </td>
@@ -86,7 +87,7 @@
             <td class="text-right">
                 <u>
                     <p class="editable">
-                        {{number_format(\Illuminate\Support\Facades\Request::get('new_monthly_salary') - \Illuminate\Support\Facades\Request::get('monthly_basic'),2)}}
+                        {{number_format(\App\Swep\Helpers\Helper::sanitizeNumFormat(\Illuminate\Support\Facades\Request::get('new_monthly_salary')) - \App\Swep\Helpers\Helper::sanitizeNumFormat(\Illuminate\Support\Facades\Request::get('monthly_basic')),2)}}
                     </p>
                 </u>
             </td>

@@ -257,6 +257,9 @@ class Helper
 
         return$values[$val];
     }
+    public static function sanitizeNumFormat($num){
+        return str_replace(',','',$num);
+    }
 
     public static function sanitizeAutonum($num){
         $num = str_replace('₱','',$num);

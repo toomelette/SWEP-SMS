@@ -799,21 +799,11 @@ Route::get('/bridge',function (){
 //                $employee_table_columns
 //            );
 //        }
-        return 1;
+//        return 1;
     }
-    return 1;
-    return $emps;
-});
 
-Route::get('/doc',function (){
-    $docs = \App\Models\Document::query()->where('path' ,'=',null)->get();
-    foreach ($docs as $doc){
-        $doc->path = $doc->year.'/'.$doc->folder_code.'/';
-        if($doc->folder_code2 != null){
-            $doc->path2 = $doc->year.'/'.$doc->folder_code2.'/';
-        }
-        $doc->update();
-    }
-    return 1;
-    return $docs;
+    //EDUCATIONAL BACKGROUND
+
+    $eb = \App\Models\Bridge\Employees\B_EducationalBg::query()->get();
+    return $eb;
 });
