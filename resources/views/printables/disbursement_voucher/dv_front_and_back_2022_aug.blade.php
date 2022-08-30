@@ -61,11 +61,13 @@
         .no-border-right{
             border-right: 0px
         }
-        #dv_table{
+        .dv_table{
             border-right: 2px solid black;
             border-left: 2px solid black;
             border-bottom: 2px solid black;
+            border-collapse: collapse;
         }
+
         .arrow {
             position: absolute;
             overflow: hidden;
@@ -81,6 +83,10 @@
             width: 5px;
         }
 
+        ol li{
+            text-align: justify;
+        }
+
     </style>
 
 </head>
@@ -91,7 +97,7 @@
 <div class="printable">
     <div style="break-after: page">
         <div class="printable font-px14">
-            <table id="dv_table" style="width: 100%">
+            <table class="dv_table" style="width: 100%; border-bottom: none">
                 <tr style="border: none">
                     <td style="border: none"></td>
                     <td style="border: none; width: 40px"></td>
@@ -186,7 +192,7 @@
                 @if(!empty($dv->details))
                     @php($n = 0)
                     <tr>
-                        <td colspan="8" class="explanation" style="max-width: 500px; height: 200px; vertical-align: top">
+                        <td colspan="8" class="explanation" style="max-width: 650px; height: 200px; vertical-align: top">
                             {!! $dv->explanation!!}
                         </td>
                         <td class="text-top text-center f-12">
@@ -212,24 +218,6 @@
 
                 @endif
 
-                {{--                @if(!empty($dv->details))--}}
-{{--                    @php($n = 0)--}}
-{{--                    @foreach($dv->details as $detail)--}}
-{{--                        @php($total = $total+$detail->amount)--}}
-{{--                        @php($n++)--}}
-{{--                        <tr>--}}
-{{--                            @if($n <= 1)--}}
-{{--                                <td colspan="8" class="explanation" rowspan="{{$dv->details()->count()}}">--}}
-{{--                                    {!! $dv->explanation!!}--}}
-{{--                                </td>--}}
-{{--                            @endif--}}
-{{--                            <td class="text-top text-center f-12">{{$detail->resp_center}}</td>--}}
-{{--                            <td class="text-top text-center f-12" colspan="2">{{$detail->mfo_pap}}</td>--}}
-{{--                            <td class="text-right text-top f-12">{{number_format($detail->amount,2)}}</td>--}}
-{{--                        </tr>--}}
-{{--                    @endforeach--}}
-{{--                @else--}}
-{{--                @endif--}}
 
                 <tr class="text-strong">
                     <td colspan="8" class="text-center">Amount Due</td>
@@ -237,9 +225,11 @@
                     <td colspan="2"></td>
                     <td class="text-right ">{{number_format($total,2)}}</td>
                 </tr>
-                <tr class="text-strong font-px11">
-                    <td class="letter">A</td>
-                    <td colspan="11" class="no-border-bottom">Certified: Expenses/Cash Advance necessary, lawful and incurred under my direct supervision</td>
+            </table>
+            <table class="dv_table" style="width: 100%; border-top: none">
+                <tr style="border: none" class="text-strong font-px11">
+                    <td style="border-top: none" class="letter">A</td>
+                    <td style="border-top: none" colspan="11" class="no-border-bottom">Certified: Expenses/Cash Advance necessary, lawful and incurred under my direct supervision</td>
                 </tr>
 
                 <tr  class="text-strong font-px11">
@@ -257,11 +247,12 @@
                 </tr>
                 <tr  class="text-strong font-px11">
                     <td class="letter">B</td>
-                    <td colspan="11">Accounting Entry:</td>
+                    <td colspan="5" style=" width: 45%">Accounting Entry:</td>
+                    <td colspan="6"></td>
                 </tr>
                 <tr  class="text-strong font-px11">
                     <td colspan="6" class="text-center">Account Title</td>
-                    <td colspan="3" class="text-center">UACS Code</td>
+                    <td colspan="3" class="text-center" style="width: 5%">UACS Code</td>
                     <td colspan="2" class="text-center">Debit</td>
                     <td class="text-center">Credit</td>
                 </tr>
@@ -353,7 +344,7 @@
                 </tr>
                 <tr class="font-px11 text-strong">
                     <td colspan="2" class="no-border-bottom">Check/</td>
-                    <td colspan="3" rowspan="2"></td>
+                    <td colspan="3" rowspan="2" style="width: 20%;"></td>
                     <td class="no-border-bottom">Date:</td>
                     <td colspan="5" class="no-border-bottom">Bank Name & Account Number</td>
                     <td rowspan="2"></td>
