@@ -954,6 +954,7 @@ Route::post('/insertDTR',function(){
         if($pairing_token->string_value == request('token')){
             if(!empty(request())){
                 if( count(request('dtrs')) > 0 ){
+                    return 'ari na ko di';
                     \App\Models\DTR::insert(request('dtrs'));
                 }
                 \App\Models\CronLogs::insert([
