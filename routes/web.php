@@ -954,8 +954,22 @@ Route::post('/insertDTR',function(){
         if($pairing_token->string_value == request('token')){
             if(!empty(request())){
                 if( count(request('dtrs')) > 0 ){
-                    return request('dtrs');
-                    \App\Models\DTR::insert(request('dtrs'));
+                    $arr = [];
+                    foreach (request('dtrs') as $dtr){
+                        $a =  [
+                            'uid' => $dtr->uid,
+                            'user' => $dtr->user,
+                            'state' => $dtr->state,
+                            'type' => $dtr->type,
+                            'timestamp' => \Illuminate\Support\Carbon::parse($dtr->timestamp)->format('Y-m-d H:i:s'),
+                            'device' => $dtr->device,
+                            'location' => $dtr->location,
+                        ];
+                        array_push($arr,$a);
+                    }
+
+                    \App\Models\DTR::insert($arr);
+                    return 'na insert';
                 }
                 \App\Models\CronLogs::insert([
                     'log' => 'RECEIVED '.count(request('dtrs')).' DTR Data',
