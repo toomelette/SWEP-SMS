@@ -878,10 +878,11 @@ Route::get('/work',function (){
 
 Route::get('/post',function (){
         $server = \App\Models\SuSettings::query()->where('setting','=','server_location')->first()->string_value;
+        $token = \App\Models\SuSettings::query()->where('setting','=','pairing_token')->first()->string_value;
         // set post fields
         $array = [
             'server' => $server,
-            'token' => 'token',
+            'token' => $token ,
             'dtrs' => [],
         ];
         $staged_ids = [];
