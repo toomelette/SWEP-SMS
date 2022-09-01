@@ -13,6 +13,7 @@ use App\Http\Requests\Document\DocumentDisseminationRequest;
 use Howtomakeaturn\PDFInfo\PDFInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -29,10 +30,9 @@ class DocumentController extends Controller{
 	protected $document;
 
 
-
     public function __construct(DocumentService $document){
-
         $this->document = $document;
+
 
     }
 
@@ -42,40 +42,70 @@ class DocumentController extends Controller{
     public function index(DocumentFilterRequest $request){
         $documents = Document::with(['folder','folder2']);
         if ($request->ajax() && !empty($request->draw)){
-            if(!empty($request->type)){
-                $documents->where('type','=',$request->type);
-            }
-            if(!empty($request->person_to)){
-                $documents->where('person_to','=',$request->person_to);
-            }
-            if(!empty($request->person_from)){
-                $documents->where('person_from','=',$request->person_from);
-            }
-            if(!empty($request->folder_code)){
-                $documents->where('folder_code','=',$request->folder_code);
+            switch (Auth::user()->access){
+                case 'VIS':
+                    $documents->where('visibility' ,'=','VIS')
+                                ->orWhere('visibility','=','LGAREC');
+                    break;
+                case 'LM':
+                    $documents->where('visibility' ,'=','LM')
+                                ->orWhere('visibility','=','QC');
+                    break;
+                case 'QC':
+                    $documents->where('visibility','=','QC');
+                    break;
+                case 'LGAREC':
+                    $documents->where('visibility' ,'=','LGAREC');
+                    break;
+                default:
+                    abort(503, 'Document access not available.');
+                    break;
             }
 
-            if(!empty($request->date_before)){
-                $documents->where('date','<=',$request->date_before);
-            }
-            if(!empty($request->date_after)){
-                $documents->where('date','>=',$request->date_after);
-            }
-            return \DataTables::of($documents)
-                ->addColumn('view_document',function($data){
 
-                    if(Storage::disk('local')->exists($data->path.$data->filename)){
-                        return '<a href="'.route("dashboard.document.view_file", $data->slug).'" class="btn btn-sm btn-success" target="_blank">
+            return $this->dataTable($request, $documents);
+        }
+        return $this->document->fetch($request);
+    
+    }
+
+    
+    public function dataTable($request, $documents){
+
+        if(!empty($request->type)){
+            $documents->where('type','=',$request->type);
+        }
+        if(!empty($request->person_to)){
+            $documents->where('person_to','=',$request->person_to);
+        }
+        if(!empty($request->person_from)){
+            $documents->where('person_from','=',$request->person_from);
+        }
+        if(!empty($request->folder_code)){
+            $documents->where('folder_code','=',$request->folder_code);
+        }
+
+        if(!empty($request->date_before)){
+            $documents->where('date','<=',$request->date_before);
+        }
+        if(!empty($request->date_after)){
+            $documents->where('date','>=',$request->date_after);
+        }
+        return \DataTables::of($documents)
+            ->addColumn('view_document',function($data){
+
+                if($this->getStorage()->exists($data->path.$data->filename)){
+                    return '<a href="'.route("dashboard.document.view_file", $data->slug).'" class="btn btn-sm btn-success" target="_blank">
                                     <i class="fa fa-file-o"></i>
                                   </a>';
-                    }else{
-                        return '<button class="btn btn-sm btn-warning" title="File not found" disabled><i class="fa fa-exclamation-circle" ></i></button>';
-                    }
-                })
-                ->addColumn('action',function($data){
-                    $destroy_route = "'".route("dashboard.document.destroy","slug")."'";
-                    $slug = "'".$data->slug."'";
-                    $button = '<div class="btn-group">
+                }else{
+                    return '<button class="btn btn-sm btn-warning" title="File not found" disabled><i class="fa fa-exclamation-circle" ></i></button>';
+                }
+            })
+            ->addColumn('action',function($data){
+                $destroy_route = "'".route("dashboard.document.destroy","slug")."'";
+                $slug = "'".$data->slug."'";
+                $button = '<div class="btn-group">
                                     <button type="button" class="btn btn-default btn-sm view_document_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#show_document_modal" title="View more" data-placement="left">
                                         <i class="fa fa-file-text"></i>
                                     </button>
@@ -97,49 +127,47 @@ class DocumentController extends Controller{
                                          </ul>
                                     </div>
                                 </div>';
-                    return $button;
-                })
-                ->editColumn('date',function($data){
-                    return Carbon::parse($data->date)->format('m/d/Y');
-                })
-                ->editColumn('reference_no',function($data){
-                    $one = '<i class="fa fa-folder"></i> '.$data->folder_code;
-                    if(!empty($data->folder)){
-                        $one = '<a title="'.$data->folder->description.'" href="'.route("dashboard.document_folder.browse",$data->folder_code).'" target="_blank"><i class="fa fa-folder"></i> '.$data->folder_code.'</a>';
-                    }
-                    if($data->folder_code2 == ''){
-                        $two = '';
+                return $button;
+            })
+            ->editColumn('date',function($data){
+                return Carbon::parse($data->date)->format('m/d/Y');
+            })
+            ->editColumn('reference_no',function($data){
+                $one = '<i class="fa fa-folder"></i> '.$data->folder_code;
+                if(!empty($data->folder)){
+                    $one = '<a title="'.$data->folder->description.'" href="'.route("dashboard.document_folder.browse",$data->folder_code).'" target="_blank"><i class="fa fa-folder"></i> '.$data->folder_code.'</a>';
+                }
+                if($data->folder_code2 == ''){
+                    $two = '';
+                }else{
+                    if(!empty($data->folder2)){
+                        $two = ' & <a title="'.$data->folder2->description.'" href="'.route("dashboard.document_folder.browse",$data->folder_code2).'" target="_blank">'.$data->folder_code2.'</a>';
                     }else{
-                        if(!empty($data->folder2)){
-                            $two = ' & <a title="'.$data->folder2->description.'" href="'.route("dashboard.document_folder.browse",$data->folder_code2).'" target="_blank">'.$data->folder_code2.'</a>';
-                        }else{
-                            $two = ' & '. $data->folder_code2;
-                        }
+                        $two = ' & '. $data->folder_code2;
                     }
-                    $folder_sub = '<span class="pull-right">'.$one.$two.'</span>';
-                    return $data->reference_no.'
+                }
+                $folder_sub = '<span class="pull-right">'.$one.$two.'</span>';
+                return $data->reference_no.'
                     <div class="table-subdetail" style="margin-top: 3px">
                          '.array_search($data->type,__static::document_types()).$folder_sub.'
                     </div>';
-                })
-                ->escapeColumns([])
-                ->setRowId('slug')
-                ->toJson();
-        }
-        return $this->document->fetch($request);
-    
+            })
+            ->escapeColumns([])
+            ->setRowId('slug')
+            ->toJson();
     }
-
-    
-
 
     public function create(){
-
         return view('dashboard.document.create');
-
     }
 
-    
+    private function getStorage(){
+        if(Auth::user()->access == 'VIS' ||Auth::user()->access == 'LGAREC'){
+            return Storage::disk('local');
+        }elseif (Auth::user()->access == 'LM' || Auth::user()->access == 'QC'){
+            return Storage::disk('qc');
+        }
+    }
 
 
     public function store(DocumentFormRequest $request, DocumentRepository $documentRepository){
@@ -148,9 +176,14 @@ class DocumentController extends Controller{
         if(!empty($request->folder_code2)){
             $path2 = Carbon::parse($request->date)->format('Y').'/'.$request->folder_code2.'/';
         }
+
+        $storage = $this->getStorage();
+
+
         $document_id = $documentRepository->getDocumentIdInc();
         $new_file_name = $request->reference_no.'.'.$request->file('doc_file')->getClientOriginalExtension();
         $document = new Document;
+        $document->visibility = Auth::user()->access;
         $document->slug = Str::random();
         $document->reference_no = strtoupper($request->reference_no);
         $document->date = Carbon::parse($request->date)->format('Y-m-d');
@@ -168,30 +201,30 @@ class DocumentController extends Controller{
         if(!empty($request->qr_location)){
             //Make QR
             $this->makeQR($document,$document_id);
-            $image1 = Storage::path('/QRCODE_TEMP/'.$document_id.'.png');
+            $image1 = $storage->path('/QRCODE_TEMP/'.$document_id.'.png');
             //Processed PDF
             $output = $this->stampPDFwithQR($request,$image1,$document_id);
         }else{
             $output = $request->file('doc_file')->get();
         }
         //Write to Disk
-        Storage::put($path.'/'.$new_file_name,$output);
+        $storage->put($path.'/'.$new_file_name,$output);
         //Cross filing
         if(!empty($request->folder_code2)){
             $document->path2 = $path2;
-            Storage::put($path2.'/'.$new_file_name,$output);
+            $storage->put($path2.'/'.$new_file_name,$output);
         }
 
         //Delete Temporary QR
-        Storage::delete('/QRCODE_TEMP/'.$document_id.'.png');
+        $storage->delete('/QRCODE_TEMP/'.$document_id.'.png');
 
         if($document->save()){
             return $document->only('slug');
         }
         abort(503,'Error saving data');
         return $this->document->store($request);
-        
     }
+
     private  function makeQR($document,$document_id){
         //Make QR Code
         $image = QrCode::size('200')
@@ -200,8 +233,9 @@ class DocumentController extends Controller{
             ->errorCorrection('H')
             ->generate(route("dashboard.document.view_file",$document->reference_no).'?trigger=SCANNER');
         //Store QR Code temporarily
-        Storage::put('/QRCODE_TEMP/'.$document_id.'.png',$image);
+        $this->getStorage()->put('/QRCODE_TEMP/'.$document_id.'.png',$image);
     }
+
     private function stampPDFwithQR($request,$image1,$document_id){
         $pdf = new \setasign\Fpdi\Fpdi();
         $totalPages = $pdf->setSourceFile($request->file('doc_file')->path());
@@ -318,7 +352,7 @@ class DocumentController extends Controller{
                 $path = $path.$document->folder_code.'/';
             }
             if($path != $document->path || $document->isDirty('reference_no')){
-                Storage::move($document->path.$document->filename,$path.$new_filename);
+                $this->getStorage()->move($document->path.$document->filename,$path.$new_filename);
             }
 
             $document->path = $path;
@@ -339,16 +373,16 @@ class DocumentController extends Controller{
 
                 if($path2 != $document->path2 || $document->isDirty('reference_no')){
                     //IF PATH 2 IS CHANGED
-                    if(Storage::exists($document->path2.$document->filename)){
-                        Storage::move($document->path2.$document->filename,$path2.$new_filename);
+                    if($this->getStorage()->exists($document->path2.$document->filename)){
+                        $this->getStorage()->move($document->path2.$document->filename,$path2.$new_filename);
                     }else{
-                        Storage::copy($path.$new_filename,$path2.$new_filename);
+                        $this->getStorage()->copy($path.$new_filename,$path2.$new_filename);
                     }
                     $document->path2 = $path2;
                 }
             }else{
-                if(Storage::exists($document->path2.$new_filename)){
-                    Storage::delete($document->path2.$new_filename);
+                if($this->getStorage()->exists($document->path2.$new_filename)){
+                    $this->getStorage()->delete($document->path2.$new_filename);
                 }
                 $document->path2 = null;
             }
@@ -376,11 +410,11 @@ class DocumentController extends Controller{
 
     public function destroy($slug){
         $document = $this->findBySlug($slug);
-        if(Storage::exists($document->path.$document->filename)){
-            Storage::delete($document->path.$document->filename);
+        if($this->getStorage()->exists($document->path.$document->filename)){
+            $this->getStorage()->delete($document->path.$document->filename);
         }
-        if(Storage::exists($document->path2.$document->filename)){
-            Storage::delete($document->path2.$document->filename);
+        if($this->getStorage()->exists($document->path2.$document->filename)){
+            $this->getStorage()->delete($document->path2.$document->filename);
         }
 
         if($document->delete()){

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class EmployeeTraining extends Model{
@@ -16,7 +16,7 @@ class EmployeeTraining extends Model{
     protected $dates = ['date_from', 'date_to', 'created_at', 'updated_at'];
 
     public $timestamps = false;
-    
+    use SoftDeletes;
 
     
 

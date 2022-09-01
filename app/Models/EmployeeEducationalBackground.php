@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmployeeEducationalBackground extends Model{
 
+    use SoftDeletes;
 
-
-
+//    protected $connection = 'server5';
 
 	protected $table = 'hr_employee_educational_background';
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Requests\Employee\EducBGFormRequest;
 use App\Models\EmployeeEducationalBackground;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EducationalBGController extends Controller
 {
@@ -77,6 +78,7 @@ class EducationalBGController extends Controller
 
     public function store(EducBGFormRequest $request){
         $eb = new EmployeeEducationalBackground;
+        $eb->slug = Str::random();
         $eb->employee_no = $request->employee_no;
         $eb->level = $request->level;
         $eb->school_name = $request->school_name;

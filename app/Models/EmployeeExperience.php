@@ -3,20 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmployeeExperience extends Model{
 
 
 
 
-
+//    protected $connection = 'server5';
 	protected $table = 'hr_employee_experiences';
 
     protected $dates = ['date_from', 'date_to'];
 
     public $timestamps = false;
     
-
+    use SoftDeletes;
 
 
 

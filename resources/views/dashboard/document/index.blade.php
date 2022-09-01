@@ -244,7 +244,11 @@
         modal_loader = $("#modal_loader").parent('div').html();
         //Initialize DataTable
         active = '';
-        documents_tbl = $("#documents_table").DataTable({
+        documents_tbl = $("#documents_table").on('xhr.dt', function (e, settings, json, xhr){
+            if(xhr.status > 500){
+                alert('Error '+xhr.status+': '+xhr.responseJSON.message);
+            }
+        }).DataTable({
             'dom' : 'lBfrtip',
             "processing": true,
             "serverSide": true,

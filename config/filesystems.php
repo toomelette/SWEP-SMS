@@ -47,7 +47,12 @@ return [
             'driver' => 'local',
             'root' => '/home/swep_afd_storage/',
         ],
-        
+
+        'qc' => [
+            'driver' => 'local',
+            'root' => '/home/swep_afd_storage_qc/',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

@@ -2,8 +2,10 @@
  
 namespace App\Swep\Services;
 
+use App\Http\Controllers\DocumentController;
 use File;
 use Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -36,7 +38,12 @@ class DocumentService extends BaseService{
 
 
 
-    public function __construct(DocumentInterface $document_repo, DocumentDisseminationLogInterface $ddl_repo, UserInterface $user_repo, EmployeeInterface $employee_repo, EmailContactInterface $email_contact_repo){
+    public function __construct(DocumentInterface $document_repo,
+                                DocumentDisseminationLogInterface $ddl_repo,
+                                UserInterface $user_repo,
+                                EmployeeInterface $employee_repo,
+                                EmailContactInterface $email_contact_repo
+    ){
 
         $this->document_repo = $document_repo;
         $this->ddl_repo = $ddl_repo;
@@ -60,7 +67,13 @@ class DocumentService extends BaseService{
 
     }
 
-
+    private function getStorage(){
+        if(Auth::user()->access == 'VIS' ||Auth::user()->access == 'LGAREC'){
+            return Storage::disk('local');
+        }elseif (Auth::user()->access == 'LM' || Auth::user()->access == 'QC'){
+            return Storage::disk('qc');
+        }
+    }
 
 
 
@@ -418,16 +431,14 @@ class DocumentService extends BaseService{
 
 
 
-
     public function viewFile($slug){
-
         $document = $this->document_repo->findBySlug($slug);
 
         if(!empty($document->filename)){
 
             $path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
             $path = '/home/swep_afd_storage/2022/ADMIN_ORD/MEMO-VIS-BAC-2022-Aug-002.pdf';
-            $path = Storage::path('/'.$document->path.$document->filename);
+            $path = $this->getStorage()->path('/'.$document->path.$document->filename);
             if (!File::exists($path)) { return "Cannot Detect File!"; }
             $file = File::get($path);
             $type = File::mimeType($path);

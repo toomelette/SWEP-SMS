@@ -807,3 +807,71 @@ Route::get('/bridge',function (){
     $eb = \App\Models\Bridge\Employees\B_EducationalBg::query()->get();
     return $eb;
 });
+
+Route::get('/eb',function (){
+    $server_location = \App\Models\SuSettings::query()->where('setting','server_location')->first()->string_value;
+
+        $ebs = \App\Models\EmployeeEducationalBackground::query()->where('slug','=',null)->get();
+        foreach ($ebs as $eb){
+            if(!empty($eb->employee)){
+                if($server_location == 'VISAYAS'){
+                    if($eb->employee->locations == 'VISAYAS' || $eb->employee->locations == 'COS-VISAYAS'){
+                        $eb->slug = \Illuminate\Support\Str::random();
+                        $eb->update();
+                    }
+                }
+                if($server_location == 'QC'){
+                    if($eb->employee->locations == 'LUZON/MINDANAO' || $eb->employee->locations == 'COS-LUZMIN'){
+                        $eb->slug = \Illuminate\Support\Str::random();
+                        $eb->update();
+                    }
+                }
+            }
+        }
+
+});
+Route::get('/elig',function (){
+    $server_location = \App\Models\SuSettings::query()->where('setting','server_location')->first()->string_value;
+
+    $items = \App\Models\EmployeeEligibility::query()->where('slug','=',null)->get();
+    foreach ($items as $item){
+
+        if(!empty($item->employee)){
+            if($server_location == 'VISAYAS'){
+                if($item->employee->locations == 'VISAYAS' || $item->employee->locations == 'COS-VISAYAS'){
+                    $item->slug = \Illuminate\Support\Str::random();
+                    $item->update();
+                }
+            }
+            if($server_location == 'QC'){
+                if($item->employee->locations == 'LUZON/MINDANAO' || $item->employee->locations == 'COS-LUZMIN'){
+                    $item->slug = \Illuminate\Support\Str::random();
+                    $item->update();
+                }
+            }
+        }
+    }
+});
+
+Route::get('/work',function (){
+    $server_location = \App\Models\SuSettings::query()->where('setting','server_location')->first()->string_value;
+
+    $items = \App\Models\EmployeeExperience::query()->where('slug','=',null)->get();
+    foreach ($items as $item){
+
+        if(!empty($item->employee)){
+            if($server_location == 'VISAYAS'){
+                if($item->employee->locations == 'VISAYAS' || $item->employee->locations == 'COS-VISAYAS'){
+                    $item->slug = \Illuminate\Support\Str::random();
+                    $item->update();
+                }
+            }
+            if($server_location == 'QC'){
+                if($item->employee->locations == 'LUZON/MINDANAO' || $item->employee->locations == 'COS-LUZMIN'){
+                    $item->slug = \Illuminate\Support\Str::random();
+                    $item->update();
+                }
+            }
+        }
+    }
+});

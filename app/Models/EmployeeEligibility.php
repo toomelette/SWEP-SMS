@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmployeeEligibility extends Model{
 
 
 
 
-
+//    protected $connection = 'server5';
 	protected $table = 'hr_employee_eligibilities';
 
     protected $dates = ['exam_date'];
@@ -17,7 +18,7 @@ class EmployeeEligibility extends Model{
     public $timestamps = false;
     
 
-
+    use SoftDeletes;
 
 
 
