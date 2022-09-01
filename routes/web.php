@@ -875,3 +875,43 @@ Route::get('/work',function (){
         }
     }
 });
+
+Route::get('/post',function (){
+
+// set post fields
+    $post = [
+        'username' => 'user1',
+        'text' => 'passuser1',
+        'gender'   => 1,
+    ];
+
+    $ch = curl_init('http://'.request('url').'/display');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+// execute!
+    $response = curl_exec($ch);
+
+// close the connection, release resources used
+    curl_close($ch);
+
+// do anything you want with your response
+    var_dump($response);
+
+});
+
+Route::post('/display',function(){
+
+   if(!empty(request())){
+        \App\Models\CronLogs::insert([
+            'log' => request('text'),
+            'type' => 200
+        ]);
+   }
+   else{
+       \App\Models\CronLogs::insert([
+           'log' => 'NONE',
+           'type' => 201,
+       ]);
+   }
+});

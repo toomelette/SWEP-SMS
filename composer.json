@@ -27,7 +27,8 @@
         "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-activitylog": "^3.0",
         "yajra/laravel-datatables": "^1.5",
-        "yajra/laravel-datatables-html": "^4.0"
+        "yajra/laravel-datatables-html": "^4.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
