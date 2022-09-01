@@ -877,41 +877,115 @@ Route::get('/work',function (){
 });
 
 Route::get('/post',function (){
+        $server = \App\Models\SuSettings::query()->where('setting','=','server_location')->first()->string_value;
+        // set post fields
+        $array = [
+            'server' => $server,
+            'token' => 'token',
+            'dtrs' => [],
+        ];
+        $staged_ids = [];
+        $dtrs_array = [];
+        $dtrs = \App\Models\DTR::query()->where('uploaded','=',null)->orWhere('uploaded','=',0)->get();
+        if(!empty($dtrs)){
+            foreach ($dtrs as $dtr) {
+                $temp_arr = [
+                    'uid' => $dtr->uid,
+                    'user' => $dtr->user,
+                    'state' => $dtr->state,
+                    'type' => $dtr->type,
+                    'timestamp' => $dtr->timestamp,
+                    'device' => $dtr->device,
+                    'location' => $server,
+                ];
+                array_push($dtrs_array,$temp_arr);
+                array_push($staged_ids,$dtr->id);
+            }
+        }
 
-// set post fields
-    $post = [
-        'username' => 'user1',
-        'text' => 'passuser1',
-        'gender'   => 1,
-    ];
+        $array['dtrs'] = $dtrs_array;
+        $ch = curl_init('http://'.request('url').'/insertDTR');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($array));
 
-    $ch = curl_init('http://'.request('url').'/display');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        // execute!
+        $response = curl_exec($ch);
 
-// execute!
-    $response = curl_exec($ch);
+        // close the connection, release resources used
+        curl_close($ch);
 
-// close the connection, release resources used
-    curl_close($ch);
 
-// do anything you want with your response
-    var_dump($response);
-
+        return $response;
+         // do anything you want with your response
+        $response = json_decode($response);
+        if(!empty($response->code)){
+            if($response->code == 200){
+                if(count($staged_ids) > 0){
+                    foreach ($staged_ids as $staged_id){
+                        \App\Models\DTR::query()->find($staged_id)->update([
+                            'uploaded' => 1,
+                        ]);
+                    }
+                }
+                \App\Models\CronLogs::insert([
+                    'log' => 'Uploaded '.count($staged_ids).' DTRs to the server',
+                    'type' => 8,
+                ]);
+            }
+        }
 });
 
-Route::post('/display',function(){
+Route::post('/insertDTR',function(){
 
-   if(!empty(request())){
+    $pairing_token = \App\Models\SuSettings::query()->where('setting','=','pairing_token')->first();
+    if(empty($pairing_token)){
         \App\Models\CronLogs::insert([
-            'log' => request('text'),
-            'type' => 200
+            'log' => 'The pairing token of server is not set',
+            'type' => -6
         ]);
-   }
-   else{
-       \App\Models\CronLogs::insert([
-           'log' => 'NONE',
-           'type' => 201,
-       ]);
-   }
+        $res = [
+            'status' => 'error',
+            'message' => 'No token set on the server.',
+        ];
+
+    }else{
+
+        if($pairing_token->string_value == request('token')){
+            if(!empty(request())){
+                if( count(request('dtrs')) > 0 ){
+                    \App\Models\DTR::insert(request('dtrs'));
+                }
+                \App\Models\CronLogs::insert([
+                    'log' => 'RECEIVED '.count(request('dtrs')).' DTR Data',
+                    'type' => 200
+                ]);
+                return [
+                    'status' => 'success',
+                    'code' => 200,
+                ];
+            }
+            else{
+                \App\Models\CronLogs::insert([
+                    'log' => 'Empty request',
+                    'type' => -5,
+                ]);
+                return [
+                    'status' => 'success',
+                    'message' => 'Empty request.',
+                ];
+            }
+        }else{
+            \App\Models\CronLogs::insert([
+                'log' => request('server').' made a request with an invalid token',
+                'type' => 5
+            ]);
+
+            return [
+                'status' => 'error',
+                'message' => 'Invalid token.',
+            ];
+        }
+
+    }
+
 });

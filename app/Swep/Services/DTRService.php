@@ -38,7 +38,7 @@ class DTRService extends BaseService
             if(count($attendances) > 0){
                 $last_from_device = array_key_last($attendances);
             }
-
+            $server_location = SuSettings::query()->where('setting','=','server_location')->first()->string_value;
 
             $attendances_array = [];
             for ($x = $last_uid+1 ; $x <= $last_from_device ; $x++){
@@ -51,6 +51,7 @@ class DTRService extends BaseService
                             'timestamp' => $attendances[$x]['timestamp'],
                             'type' => $attendances[$x]['type'],
                             'device' => $serial_no,
+                            'location' => $server_location,
                         ]);
                     }
 
@@ -237,6 +238,62 @@ class DTRService extends BaseService
         return 0;
     }
 
+    public function upload(){
+        $server = \App\Models\SuSettings::query()->where('setting','=','server_location')->first()->string_value;
+        // set post fields
+        $array = [
+            'server' => $server,
+            'token' => 'token',
+            'dtrs' => [],
+        ];
+        $staged_ids = [];
+        $dtrs_array = [];
+        $dtrs = \App\Models\DTR::query()->where('uploaded','=',null)->orWhere('uploaded','=',0)->get();
+        if(!empty($dtrs)){
+            foreach ($dtrs as $dtr) {
+                $temp_arr = [
+                    'uid' => $dtr->uid,
+                    'user' => $dtr->user,
+                    'state' => $dtr->state,
+                    'type' => $dtr->type,
+                    'timestamp' => $dtr->timestamp,
+                    'device' => $dtr->device,
+                    'location' => $server,
+                ];
+                array_push($dtrs_array,$temp_arr);
+                array_push($staged_ids,$dtr->id);
+            }
+        }
+
+        $array['dtrs'] = $dtrs_array;
+        $ch = curl_init('http://119.93.145.202:1986/insertDTR');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($array));
+
+        // execute!
+        $response = curl_exec($ch);
+
+        // close the connection, release resources used
+        curl_close($ch);
+
+        // do anything you want with your response
+        $response = json_decode($response);
+        if(!empty($response->code)){
+            if($response->code == 200){
+                if(count($staged_ids) > 0){
+                    foreach ($staged_ids as $staged_id){
+                        \App\Models\DTR::query()->find($staged_id)->update([
+                            'uploaded' => 1,
+                        ]);
+                    }
+                }
+                \App\Models\CronLogs::insert([
+                    'log' => 'Uploaded '.count($staged_ids).' DTRs to the server',
+                    'type' => 8,
+                ]);
+            }
+        }
+    }
 
     public  function biometric_values($displayMode = false){
         if($displayMode == false){
