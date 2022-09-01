@@ -958,12 +958,12 @@ Route::post('/insertDTR',function(){
                     foreach (request('dtrs') as $dtr){
                         $a =  [
                             'uid' => $dtr['uid'],
-                            'user' => $dtr->user,
-                            'state' => $dtr->state,
-                            'type' => $dtr->type,
-                            'timestamp' => \Illuminate\Support\Carbon::parse($dtr->timestamp)->format('Y-m-d H:i:s'),
-                            'device' => $dtr->device,
-                            'location' => $dtr->location,
+                            'user' => $dtr['user'],
+                            'state' => $dtr['state'],
+                            'type' => $dtr['type'],
+                            'timestamp' => \Illuminate\Support\Carbon::parse($dtr['timestamp'])->format('Y-m-d H:i:s'),
+                            'device' => $dtr['device'],
+                            'location' => $dtr['location'],
                         ];
                         array_push($arr,$a);
                     }
