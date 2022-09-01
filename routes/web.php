@@ -957,7 +957,7 @@ Route::post('/insertDTR',function(){
                     $arr = [];
                     foreach (request('dtrs') as $dtr){
                         $a =  [
-                            'uid' => $dtr->uid,
+                            'uid' => $dtr['uid'],
                             'user' => $dtr->user,
                             'state' => $dtr->state,
                             'type' => $dtr->type,
