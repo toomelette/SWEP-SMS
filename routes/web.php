@@ -887,7 +887,7 @@ Route::get('/post',function (){
         ];
         $staged_ids = [];
         $dtrs_array = [];
-        $dtrs = \App\Models\DTR::query()->where('uploaded','=',null)->orWhere('uploaded','=',0)->get();
+        $dtrs = \App\Models\DTR::query()->where('uploaded','=',null)->orWhere('uploaded','=',0)->limit(100)->get();
         if(!empty($dtrs)){
             foreach ($dtrs as $dtr) {
                 $temp_arr = [
@@ -916,9 +916,10 @@ Route::get('/post',function (){
         curl_close($ch);
 
 
-        return $response;
+
          // do anything you want with your response
         $response = json_decode($response);
+
         if(!empty($response->code)){
             if($response->code == 200){
                 if(count($staged_ids) > 0){
@@ -940,6 +941,7 @@ Route::post('/insertDTR',function(){
 
     $pairing_token = \App\Models\SuSettings::query()->where('setting','=','pairing_token')->first();
     if(empty($pairing_token)){
+
         \App\Models\CronLogs::insert([
             'log' => 'The pairing token of server is not set',
             'type' => -6
@@ -955,8 +957,11 @@ Route::post('/insertDTR',function(){
             if(!empty(request())){
                 if( count(request('dtrs')) > 0 ){
                     $arr = [];
+
                     foreach (request('dtrs') as $dtr){
+
                         $a =  [
+
                             'uid' => $dtr['uid'],
                             'user' => $dtr['user'],
                             'state' => $dtr['state'],
@@ -969,7 +974,6 @@ Route::post('/insertDTR',function(){
                     }
 
                     \App\Models\DTR::insert($arr);
-                    return 'na insert';
                 }
                 \App\Models\CronLogs::insert([
                     'log' => 'RECEIVED '.count(request('dtrs')).' DTR Data',

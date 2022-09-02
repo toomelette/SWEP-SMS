@@ -249,7 +249,7 @@ class DTRService extends BaseService
         ];
         $staged_ids = [];
         $dtrs_array = [];
-        $dtrs = \App\Models\DTR::query()->where('uploaded','=',null)->orWhere('uploaded','=',0)->get();
+        $dtrs = \App\Models\DTR::query()->where('uploaded','=',null)->orWhere('uploaded','=',0)->limit(100)->get();
         if(!empty($dtrs)){
             foreach ($dtrs as $dtr) {
                 $temp_arr = [
