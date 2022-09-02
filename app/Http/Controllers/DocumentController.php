@@ -41,27 +41,35 @@ class DocumentController extends Controller{
     
     public function index(DocumentFilterRequest $request){
         $documents = Document::with(['folder','folder2']);
+
         if ($request->ajax() && !empty($request->draw)){
             switch (Auth::user()->access){
                 case 'VIS':
-                    $documents->where('visibility' ,'=','VIS')
-                                ->orWhere('visibility','=','LGAREC');
+                    $documents = $documents->where(function ($query){
+                        $query->where('visibility' ,'=','VIS')
+                            ->orWhere('visibility','=','LGAREC');
+                    });
                     break;
                 case 'LM':
-                    $documents->where('visibility' ,'=','LM')
-                                ->orWhere('visibility','=','QC');
+                    $documents = $documents->where(function ($query){
+                        $query->where('visibility' ,'=','LM')
+                            ->orWhere('visibility','=','QC');
+                    });
                     break;
                 case 'QC':
-                    $documents->where('visibility','=','QC');
+                    $documents = $documents->where(function ($query){
+                        $query->where('visibility','=','QC');
+                    });
                     break;
                 case 'LGAREC':
-                    $documents->where('visibility' ,'=','LGAREC');
+                    $documents = $documents->where(function ($query){
+                        $query->where('visibility' ,'=','LGAREC');
+                    });
                     break;
                 default:
                     abort(503, 'Document access not available.');
                     break;
             }
-
 
             return $this->dataTable($request, $documents);
         }
@@ -91,6 +99,9 @@ class DocumentController extends Controller{
         if(!empty($request->date_after)){
             $documents->where('date','>=',$request->date_after);
         }
+
+
+
         return \DataTables::of($documents)
             ->addColumn('view_document',function($data){
 
