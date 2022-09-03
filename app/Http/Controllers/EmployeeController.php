@@ -69,7 +69,8 @@ class EmployeeController extends Controller{
 
     private function dataTable($request){
         $sql_server_is_on = Helper::sqlServerIsOn();
-        $employees = Employee::query();
+        $cols = ['fullname','employee_no','position','email','biometric_user_id', 'date_of_birth','sex','civil_status','firstname','slug'];
+        $employees = Employee::query()->select($cols);
         if($sql_server_is_on === true){
             $employees = $employees->with('empMaster');
         }
