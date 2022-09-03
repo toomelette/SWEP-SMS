@@ -599,7 +599,7 @@ class DocumentService extends BaseService{
             }
         }
 
-        $content = "Good day. Please see the attached file. Thank you";
+        $content = "Good day. Please see the attached file. Thank you.";
         if($request->content != null){
             $content = $request->content;
         }

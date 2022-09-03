@@ -18,7 +18,6 @@ $span_failed = '<span class="badge bg-red">Failed</span>';
 @extends('layouts.admin-master')
 
 @section('content')
-    
   <section class="content-header">
       <h1>Document Dissemination</h1>
       <div class="pull-right" style="margin-top: -25px;">

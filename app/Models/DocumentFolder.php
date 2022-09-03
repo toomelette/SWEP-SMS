@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -40,6 +41,14 @@ class DocumentFolder extends Model{
 
     ];
 
+    public function getTable(){
+        if(Auth::user()->access == 'QC'){
+            return 'qc_rec_document_folders';
+        }
+        if( Auth::user()->access == 'VIS'){
+            return 'rec_document_folders';
+        }
+    }
 
     public function documents1(){
         return $this->hasMany('App\Models\Document','folder_code','folder_code');

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentDisseminationLog extends Model{
 
 
-    protected $table = 'rec_document_dissemination_logs';
+//    protected $table = 'rec_document_dissemination_logs';
 
     protected $dates = ['sent_at'];
 
@@ -32,7 +33,14 @@ class DocumentDisseminationLog extends Model{
 
     ];
 
-    
+    public function getTable(){
+        if(Auth::user()->access == 'QC'){
+            return 'qc_rec_document_dissemination_logs';
+        }
+        if( Auth::user()->access == 'VIS'){
+            return 'rec_document_dissemination_logs';
+        }
+    }
 
     // Relationships
 

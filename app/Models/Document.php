@@ -26,9 +26,18 @@ class Document extends Model{
         });
     }
 
-	use Sortable, LogsActivity;
+//    protected $table = 'rec_documents';
 
-    protected $table = 'rec_documents';
+    use Sortable, LogsActivity;
+
+    public function getTable(){
+        if(Auth::user()->access == 'QC'){
+            return 'qc_rec_documents';
+        }
+        if( Auth::user()->access == 'VIS'){
+            return 'rec_documents';
+        }
+    }
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
@@ -73,11 +82,11 @@ class Document extends Model{
     // Relationships
 
     public function documentDisseminationLogAll(){
-        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id');
+        return $this->hasMany(DocumentDisseminationLog::class, 'document_id', 'document_id');
     }
 
     public function documentDisseminationLog(){
-        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->whereNull('send_copy');
+        return $this->hasMany('App\Models\DocumentDisseminationLog', 'document_id', 'document_id')->whereNull('send_copy')->orWhere('send_copy','!=',1);
     }
 
 
