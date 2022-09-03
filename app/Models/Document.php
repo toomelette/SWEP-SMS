@@ -27,7 +27,7 @@ class Document extends Model{
     }
 
 	use Sortable, LogsActivity;
-//    protected $connection = 'server5';
+
     protected $table = 'rec_documents';
 
     protected $dates = ['date', 'created_at', 'updated_at'];

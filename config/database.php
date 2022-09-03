@@ -99,6 +99,21 @@ return [
             'engine' => null,
         ],
 
+        'swep_bcd' => [
+            'driver' => 'mysql',
+            'host' => '119.93.145.202',
+            'port' => '1987',
+            'database' =>'swep_afd',
+            'username' => 'root',
+            'password' =>'P@ssword:mssius@server5@misvis',
+            'unix_socket' => env('DB_SOCKET_SERVER5', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
         'swep_bridge' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_BRIDGE', ''),

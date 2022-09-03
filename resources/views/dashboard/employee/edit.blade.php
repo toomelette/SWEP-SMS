@@ -518,7 +518,7 @@
                         ) !!}
 
                         {!! __form::select_static(
-                          '3 appointment_status', 'appointment_status', 'Appointment Status *', old('appointment_status') ? old('appointment_status') : $employee->appointment_status, ['Permanent' => 'PERM', 'Job Order / Contract of Service' => 'COS'], $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
+                          '3 appointment_status', 'appointment_status', 'Appointment Status *', old('appointment_status') ? old('appointment_status') : $employee->appointment_status, \App\Swep\Helpers\Helper::populateOptionsFromObjectAsArray(\App\Models\SuOptions::employeeApptStatus(),'option','value'), $errors->has('appointment_status'), $errors->first('appointment_status'), '', ''
                         ) !!}
 
                         <div class="col-md-12"></div>
