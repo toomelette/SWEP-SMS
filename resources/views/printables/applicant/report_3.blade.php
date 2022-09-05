@@ -105,7 +105,7 @@
                                                                 @endif
                                                             @break
                                                             @case('received_at')
-                                                                <td class="{{$requested_column}}">{{date("M. d, 'y",strtotime($applicant['applicant_obj']->received_at))}}</td>
+                                                                <td class="{{$requested_column}}">{{date("m/d/Y",strtotime($applicant['applicant_obj']->received_at))}}</td>
                                                             @break
                                                             @default
                                                                 <td class="{{$requested_column}}">{{$applicant['applicant_obj']->$requested_column}}</td>
