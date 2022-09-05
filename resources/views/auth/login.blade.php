@@ -465,7 +465,7 @@
                                 @if(Session::has('PASSWORD_RESET_FAILED'))
                                     {!! __html::alert('danger', '<i class="icon fa fa-times"></i> Success!', Session::get('PASSWORD_RESET_FAILED')) !!}
                                 @endif
-                                <form class="login100-form validate-form" action="{{ route('auth.login') }}?portal={{request('portal')}}" method="POST">
+                                <form class="login100-form validate-form" id="loginForm" action="{{ route('auth.login') }}?portal={{request('portal')}}" method="POST">
                                     @csrf
                                     <span class="login100-form-title "> SWEP </span>
                                     <span class="login100-form-subtitle m-b-16"> SRA - Web Protal | Login </span>
@@ -680,6 +680,10 @@
                 errored(form,res);
             }
         })
+    })
+    $("#loginForm").submit(function () {
+        $("#loginForm button[type='submit']").attr('disabled','disabled');
+        $("#loginForm button[type='submit']").html('<i class="fa fa-spinner fa-spin fa-fw"></i> PLEASE WAIT. . .');
     })
 </script>
 
