@@ -32,6 +32,7 @@ class BiometricDevicesController extends Controller
             4 => 'bg-blue',
             5 => 'bg-red',
             6 => 'bg-info',
+            7 => 'bg-green',
         ];
 
         $devices = BiometricDevices::query()->get();
