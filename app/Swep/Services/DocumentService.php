@@ -58,6 +58,7 @@ class DocumentService extends BaseService{
 
 
 
+
     public function fetch($request){
 
         $documents = $this->document_repo->fetch($request);
@@ -555,7 +556,7 @@ class DocumentService extends BaseService{
         $document = $this->document_repo->findBySlug($slug);
 
         //$path = $this->__static->archive_dir() . $document->year .'/'. $document->folder_code .'/'. $document->filename;
-        $path = $this->__static->archive_dir() .$document->path.$document->filename;
+        $path = $this->getStorage()->path($document->path.$document->filename);
 
         $cc = []; //---> Array of recipients to be used for Logs
         $to_be_emailed = []; //---> Array of emails to be used for sending
@@ -618,8 +619,11 @@ class DocumentService extends BaseService{
         }
 
 
+
+
         //SENDING EMAIL
         try {
+
             $this->mail->queue(new DocumentDisseminationMail($path, $request->subject, $document->filename, $to_be_emailed, $content));
             $status = "SENT";
         } catch (Exception $e) {

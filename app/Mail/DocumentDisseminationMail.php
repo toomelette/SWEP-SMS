@@ -48,7 +48,7 @@ class DocumentDisseminationMail extends Mailable{
          
 
         return $this->subject($subject)
-                    ->attach($path, ['name' => $filename, 'mime' => 'application/pdf'])
+                    ->attach($path)
                     ->to($email)
                     ->view('emails.document_dissemination')
                     ->with(['content' => $content]);
