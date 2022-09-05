@@ -8,6 +8,7 @@ use App\Swep\Interfaces\DocumentInterface;
 
 
 use App\Models\Document;
+use Illuminate\Support\Facades\Auth;
 
 
 class DocumentRepository extends BaseRepository implements DocumentInterface {
@@ -290,23 +291,21 @@ class DocumentRepository extends BaseRepository implements DocumentInterface {
 
     public function getDocumentIdInc(){
 
-	    $prefix = SuSettings::query()->where('setting','=','document_prefix')->first()->string_value;
-
+//	    $prefix = SuSettings::query()->where('setting','=','document_prefix')->first()->string_value;
+        $prefix = env('DOCUMENT_PREFIX','NULL-');
         $id = $prefix.'10000001';
 
         $document = $this->document->select('document_id')->orderBy('document_id', 'desc')->first();
 
         if($document != null){
-            
             if($document->document_id != null){
-                $num = str_replace($prefix, '', $document->document_id) + 1;
+//                $num = str_replace($prefix, '', $document->document_id);
+                $num = preg_replace("/[^0-9]/", "", $document->document_id)+1;
                 $id = $prefix. $num;
             }
         
         }
-        
         return $id;
-        
     }
 
 

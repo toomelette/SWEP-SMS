@@ -190,8 +190,8 @@ class DocumentController extends Controller{
 
         $storage = $this->getStorage();
 
-
         $document_id = $documentRepository->getDocumentIdInc();
+
         $new_file_name = $request->reference_no.'.'.$request->file('doc_file')->getClientOriginalExtension();
         $document = new Document;
         $document->visibility = Auth::user()->access;
