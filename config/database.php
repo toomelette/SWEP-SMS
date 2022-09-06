@@ -129,6 +129,29 @@ return [
             'engine' => null,
         ],
 
+        'slave' => [
+            'read' => [
+                'host' => '127.0.0.1',
+                'port' => '3306',
+                'username' => 'root',
+                'password' =>'mssius@serverqc@misvis',
+            ],
+            'write' => [
+                'host' => '119.93.145.202',
+                'port' => '1987',
+                'username' => 'slave_user',
+                'password' =>'P@ssw0rd',
+            ],
+            'driver' => 'mysql',
+            'database' =>'swep_afd',
+            'unix_socket' => env('DB_SOCKET_SERVER5', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
         'swep_bridge' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_BRIDGE', ''),
