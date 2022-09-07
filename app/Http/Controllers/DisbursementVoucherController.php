@@ -257,7 +257,7 @@ class DisbursementVoucherController extends Controller{
 
     public function update(DisbursementVoucherFormRequest $request, $slug){
         $dv = $this->findBySlug($slug);
-        $dv->doc_no = 'DV' . rand(10000000, 99999999);
+//        $dv->doc_no = 'DV' . rand(10000000, 99999999);
         $dv->project_id = $request->project_id;
         $dv->fund_source = $request->fund_source;
         $dv->mode_of_payment = $request->mode_of_payment;
