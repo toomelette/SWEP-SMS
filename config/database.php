@@ -131,10 +131,10 @@ return [
 
         'slave' => [
             'read' => [
-                'host' => '127.0.0.1',
-                'port' => '3306',
-                'username' => 'root',
-                'password' =>'misvis',
+                'host' => env('DB_HOST', '127.0.0.1'),
+                'port' => env('DB_PORT', '3306'),
+                'username' => env('DB_USERNAME', 'forge'),
+                'password' => env('DB_PASSWORD', ''),
             ],
             'write' => [
                 'host' => '119.93.145.202',

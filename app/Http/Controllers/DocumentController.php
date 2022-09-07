@@ -259,6 +259,7 @@ class DocumentController extends Controller{
             $mainY = $this->getXY($request->qr_location,$page_width,$page_height)['mainY'];
             $pdf->useTemplate($tplIdx, 0, 0, null, null, true);
             $pdf->SetXY($mainX,$mainY);
+
             $pdf->SetFont('Arial', '', '8');
             $pdf->Image($image1,$mainX-20,$mainY-15,15 , 15);
             $pdf->SetFont('Arial', '', '8');
