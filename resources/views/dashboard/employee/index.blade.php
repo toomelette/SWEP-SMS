@@ -263,7 +263,6 @@
                     },3000);
                     window.history.pushState({}, document.title, "/dashboard/employee");
                 }
-
             });
           @if(\Illuminate\Support\Facades\Request::get('toPage') != null && \Illuminate\Support\Facades\Request::get('mark') != null)
           setTimeout(function () {

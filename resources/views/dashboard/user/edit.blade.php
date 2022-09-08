@@ -1,4 +1,5 @@
-@extends('layouts.modal-content',['form_id'=>'edit_user_form', 'slug'=> $user->slug,])
+@php($rand = \Illuminate\Support\Str::random())
+@extends('layouts.modal-content',['form_id'=>'edit_user_form_'.$rand, 'slug'=> $user->slug,])
 
 
 @section('modal-header')
@@ -30,6 +31,40 @@ Edit
             {!! __form::textbox(
               '12 position', 'position', 'text', 'Position *', 'Position', $user->position, '', '', ''
             ) !!}
+
+
+        </div>
+        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+            Access to Employees
+        </p>
+
+        <div class="row">
+            @foreach(\App\Swep\Helpers\Arrays::accessToEmployees() as $item)
+                <div class="col-md-6">
+                    <div class="checkbox no-margin" >
+                        <label>
+                            <input type="checkbox" name="accessToEmployees[]" value="{{$item}}" {{(in_array($item, $user->getAccessToEmployees())) ? 'checked' : ''}}> {{$item}}
+                        </label>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+            Access to Documents
+        </p>
+
+        <div class="row">
+            @foreach(\App\Swep\Helpers\Arrays::accessToDocuments() as $item)
+                <div class="col-md-6">
+                    <div class="radio no-margin">
+                        <label>
+                            <input type="radio" name="accessToDocuments" value="{{$item}}" {{($user->getAccessToDocuments() == $item) ? 'checked':''}}>
+                            {{$item}}
+                        </label>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
     <div class="col-md-9">
@@ -127,20 +162,24 @@ Edit
 
 @section('scripts')
     <script>
-        $("#edit_user_form").submit(function (e) {
+        $("#edit_user_form_{{$rand}}").submit(function (e) {
             e.preventDefault();
             uri = "{{route('dashboard.user.update', 'slug')}}";
             uri = uri.replace('slug',"{{$user->slug}}");
-            form = $(this);
+            let form = $(this);
             $.ajax({
                 url : uri,
                 data : form.serialize(),
                 type : 'PATCH',
                 success : function (response) {
-                    console.log(response);
+                      active = response.slug;
+                      users_table.draw(false);
+                      notify("Changes were saved successfully.", "success");
+                      succeed(form, true,true);
                 },
                 error: function (response) {
                     console.log(response);
+                    errored(form,res);
                 }
             })
         })

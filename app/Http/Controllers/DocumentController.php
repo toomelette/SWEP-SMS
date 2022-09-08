@@ -40,36 +40,10 @@ class DocumentController extends Controller{
 
     
     public function index(DocumentFilterRequest $request){
+        Auth::user()->hasAccessToDocuments('QC','VIS');
         $documents = Document::with(['folder','folder2']);
 
         if ($request->ajax() && !empty($request->draw)){
-//            switch (Auth::user()->access){
-//                case 'VIS':
-//                    $documents = $documents->where(function ($query){
-//                        $query->where('visibility' ,'=','VIS')
-//                            ->orWhere('visibility','=','LGAREC');
-//                    });
-//                    break;
-//                case 'LM':
-//                    $documents = $documents->where(function ($query){
-//                        $query->where('visibility' ,'=','LM')
-//                            ->orWhere('visibility','=','QC');
-//                    });
-//                    break;
-//                case 'QC':
-//                    $documents = $documents->where(function ($query){
-//                        $query->where('visibility','=','QC');
-//                    });
-//                    break;
-//                case 'LGAREC':
-//                    $documents = $documents->where(function ($query){
-//                        $query->where('visibility' ,'=','LGAREC');
-//                    });
-//                    break;
-//                default:
-//                    abort(503, 'Document access not available.');
-//                    break;
-//            }
 
             return $this->dataTable($request, $documents);
         }

@@ -31,10 +31,9 @@ class Document extends Model{
     use Sortable, LogsActivity;
 
     public function getTable(){
-        if(Auth::user()->access == 'QC'){
+        if( Auth::user()->getAccessToDocuments() == 'QC'){
             return 'qc_rec_documents';
-        }
-        if( Auth::user()->access == 'VIS'){
+        }elseif(  Auth::user()->getAccessToDocuments() == 'VIS'){
             return 'rec_documents';
         }
     }

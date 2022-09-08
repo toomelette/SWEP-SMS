@@ -469,38 +469,38 @@
     //Activate and Deactivate
 
 
-    $("body").on("submit",'#edit_user_form', function(e){
-      e.preventDefault();
-      id = $(this).attr('data');
-      uri = " {{ route('dashboard.user.update', 'slug') }} ";
-      uri = uri.replace("slug",id);
-      form = $(this);
-      loading_btn(form);
+    {{--$("body").on("submit",'#edit_user_form', function(e){--}}
+    {{--  e.preventDefault();--}}
+    {{--  id = $(this).attr('data');--}}
+    {{--  uri = " {{ route('dashboard.user.update', 'slug') }} ";--}}
+    {{--  uri = uri.replace("slug",id);--}}
+    {{--  form = $(this);--}}
+    {{--  loading_btn(form);--}}
 
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
+    {{--  $.ajaxSetup({--}}
+    {{--    headers: {--}}
+    {{--      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+    {{--    }--}}
+    {{--  });--}}
 
-      $.ajax({
-        url : uri,
-        type: 'PUT',
-        dataType: 'json',
-        data : $(this).serialize(),
-        success: function(response){
-          active = response.slug;
-          users_table.draw(false);
-          $("#edit_user_modal").modal('hide');
-          notify("Changes were saved successfully.", "success");
-          succeed(form, true,true);
-        },
-        error: function(response){
-          console.log(response);
-          errored(form,response);
-        }
-      })
-    })
+    {{--  $.ajax({--}}
+    {{--    url : uri,--}}
+    {{--    type: 'PUT',--}}
+    {{--    dataType: 'json',--}}
+    {{--    data : $(this).serialize(),--}}
+    {{--    success: function(response){--}}
+    {{--      active = response.slug;--}}
+    {{--      users_table.draw(false);--}}
+    {{--      $("#edit_user_modal").modal('hide');--}}
+    {{--      notify("Changes were saved successfully.", "success");--}}
+    {{--      succeed(form, true,true);--}}
+    {{--    },--}}
+    {{--    error: function(response){--}}
+    {{--      console.log(response);--}}
+    {{--      errored(form,response);--}}
+    {{--    }--}}
+    {{--  })--}}
+    {{--})--}}
 
     $("body").on("click",".reset_password_btn", function(){
       slug = $(this).attr('data');

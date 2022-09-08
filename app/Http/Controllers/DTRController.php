@@ -55,10 +55,28 @@ class DTRController extends  Controller
     }
 
     public function index(Request $request){
+        Auth::user()->hasAccessToEmployees('QC','LM','VIS','LGAREC');
+
         if($request->ajax()){
+            $access = Auth::user()->getAccessToEmployees();
+            $query = Employee::query()->where('biometric_user_id','!=','')
+                ->where(function($q) use($access){
+                foreach ($access as $item){
+                    $q->orWhere('station','=',$item);
+                }
+            });
 
+            if($request->has('is_active') && $request->is_active != null){
+                $query = $query->where('is_active','=',$request->is_active);
+            }
 
-            $query = Employee::query()->where('biometric_user_id','!=','');
+            if($request->has('sex') && $request->sex != null){
+                $query = $query->where('sex','=',$request->sex);
+            }
+            if($request->has('locations') && $request->locations != null){
+                $query = $query->where('locations','=',$request->locations);
+            }
+
             return Datatables::of($query)
                 ->addColumn('last_attendance',function ($data){
                     $dtr = DTR::query()->where('user','=',$data->biometric_user_id)->orderBy('timestamp','desc')->first();
@@ -68,7 +86,6 @@ class DTRController extends  Controller
                         }catch (\Exception $e){
                             return $e->getMessage();
                         }
-
                     }
                 })
                 ->editColumn('sex',function ($data){

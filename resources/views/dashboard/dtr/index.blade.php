@@ -12,38 +12,51 @@
             <div class="box-header with-border">
                 <h3 class="box-title">List of Biometric Users</h3>
             </div>
-            <div class="panel">
-                <div class="box-header with-border">
-                    <h4 class="box-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#advanced_filters" aria-expanded="true" class="">
-                            <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
-                        </a>
-                    </h4>
-                </div>
-                <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-1 col-sm-2 col-lg-2">
-                                <label>Sex:</label>
-                                <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_sex filters">
-                                    <option value="">All</option>
-                                    <option value="MALE">Male</option>
-                                    <option value="FEMALE">Female</option>
-                                </select>
+            <div class="box-body">
+                <div class="panel">
+                    <div class="box box-sm box-default box-solid collapsed-box">
+                        <div class="box-header with-border">
+                            <p class="no-margin"><i class="fa fa-filter"></i> Advanced Filters <small id="filter-notifier" class="label bg-blue blink"></small></p>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool advanced_filters_toggler" data-widget="collapse"><i class="fa fa-plus"></i>
+                                </button>
                             </div>
-                            <div class="col-md-1 col-sm-2 col-lg-2">
-                                <label>Employment Status:</label>
-                                <select name="scholars_table_length" aria-controls="scholars_table" class="form-control input-sm filter_status filters">
-                                    <option value="">All</option>
-                                    <option value="PERM">Permanent</option>
-                                    <option value="COS">Contract of Service</option>
-                                </select>
-                            </div>
+
                         </div>
+
+                        <div class="box-body" style="display: none">
+                            <form id="filter_form">
+                                <div class="row">
+                                    <div class="col-md-2 dt_filter-parent-div">
+                                        <label>Status:</label>
+                                        <select name="is_active"  class="form-control dt_filter filters">
+                                            <option value="">Don't filter</option>
+                                            {!! \App\Swep\Helpers\Helper::populateOptionsFromObject(\App\Models\SuOptions::employeeStatus(),'option','value') !!}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 dt_filter-parent-div">
+                                        <label>Sex:</label>
+                                        <select name="sex"  class="form-control dt_filter filter_sex filters select22">
+                                            <option value="">Don't filter</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 dt_filter-parent-div">
+                                        <label>Location:</label>
+                                        <select name="locations"  class="form-control dt_filter filter_locations filters select22">
+                                            <option value="">Don't filter</option>
+                                            {!! \App\Swep\Helpers\Helper::populateOptionsFromObject(\App\Models\SuOptions::employeeGroupings(),'option','value') !!}
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-            <div class="box-body">
+
+
                 <div id="dtr_table_container" style="display: none">
                     <div class="table-responsive" >
                         <table class="table table-bordered table-striped table-hover" id="dtr_table" style="width: 100%">
@@ -150,9 +163,15 @@
           ],
           "responsive": true,
           "initComplete": function( settings, json ) {
-            $('#tbl_loader').fadeOut(function(){
-              $("#dtr_table_container").fadeIn();
-            });
+                  setTimeout(function () {
+                      $("#filter_form select[name='is_active']").val('ACTIVE');
+                      $("#filter_form select[name='is_active']").trigger('change');
+                  },100);
+
+                $('#tbl_loader').fadeOut(function(){
+                  $("#dtr_table_container").fadeIn();
+                });
+
           },
           "language":
                   {
@@ -177,8 +196,8 @@
           }
         });
 
-        $(".filters").change(function () {
-            filter_dt();
+        $(".dt_filter").change(function () {
+            filterDT(dtr_tbl);
         })
         $("body").on("click",'.show_dtr_btn',function () {
             btn = $(this);

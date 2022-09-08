@@ -9,6 +9,21 @@ use App\Models\ApplicantPositionApplied;
 
 class Arrays
 {
+    public static function accessToDocuments(){
+        return [
+            'VIS' => 'VIS',
+            'QC' => 'QC',
+        ];
+    }
+
+    public static function accessToEmployees(){
+        return [
+            'VIS' => 'VIS',
+            'LM' => 'LM',
+            'QC' => 'QC',
+            'LGAREC' => 'LGAREC',
+        ];
+    }
     public static function countries(){
         return [
             "AF" => "Afghanistan",

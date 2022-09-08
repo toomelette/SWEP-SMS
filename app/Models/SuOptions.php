@@ -21,4 +21,6 @@ class SuOptions extends Model
     public static function employeeGroupings(){
         return SuOptions::query()->where('for','=','employee_groupings')->get();
     }
+
+
 }

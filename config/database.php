@@ -130,18 +130,22 @@ return [
         ],
 
         'slave' => [
-            'read' => [
-                'host' => env('DB_HOST', '127.0.0.1'),
-                'port' => env('DB_PORT', '3306'),
-                'username' => env('DB_USERNAME', 'forge'),
-                'password' => env('DB_PASSWORD', ''),
-            ],
-            'write' => [
-                'host' => '119.93.145.202',
-                'port' => '1987',
-                'username' => 'root',
-                'password' =>'P@ssword:mssius@server5@misvis',
-            ],
+//            'read' => [
+//                'host' => env('DB_HOST', '127.0.0.1'),
+//                'port' => env('DB_PORT', '3306'),
+//                'username' => env('DB_USERNAME', 'forge'),
+//                'password' => env('DB_PASSWORD', ''),
+//            ],
+//            'write' => [
+//                'host' => '119.93.145.202',
+//                'port' => '1987',
+//                'username' => 'root',
+//                'password' =>'P@ssword:mssius@server5@misvis',
+//            ],
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'driver' => 'mysql',
             'database' =>'swep_afd_bcd',
             'unix_socket' => env('DB_SOCKET_SERVER5', ''),
