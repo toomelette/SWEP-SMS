@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -37,6 +38,8 @@ class Document extends Model{
             return 'rec_documents';
         }
     }
+
+    use SoftDeletes;
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
