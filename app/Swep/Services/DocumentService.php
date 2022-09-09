@@ -69,11 +69,16 @@ class DocumentService extends BaseService{
     }
 
     private function getStorage(){
-        if(Auth::user()->access == 'VIS' ||Auth::user()->access == 'LGAREC'){
-            return Storage::disk('local');
-        }elseif (Auth::user()->access == 'LM' || Auth::user()->access == 'QC'){
+        if( Auth::user()->getAccessToDocuments() == 'QC'){
             return Storage::disk('qc');
+        }elseif(  Auth::user()->getAccessToDocuments() == 'VIS'){
+            return Storage::disk('local');
         }
+//        if(Auth::user()->access == 'VIS' ||Auth::user()->access == 'LGAREC'){
+//            return Storage::disk('local');
+//        }elseif (Auth::user()->access == 'LM' || Auth::user()->access == 'QC'){
+//            return Storage::disk('qc');
+//        }
     }
 
 

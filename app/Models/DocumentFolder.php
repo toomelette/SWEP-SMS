@@ -42,10 +42,9 @@ class DocumentFolder extends Model{
     ];
 
     public function getTable(){
-        if(Auth::user()->access == 'QC'){
+        if( Auth::user()->getAccessToDocuments() == 'QC'){
             return 'qc_rec_document_folders';
-        }
-        if( Auth::user()->access == 'VIS'){
+        }elseif(  Auth::user()->getAccessToDocuments() == 'VIS'){
             return 'rec_document_folders';
         }
     }

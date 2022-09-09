@@ -147,11 +147,18 @@ class DocumentController extends Controller{
     }
 
     private function getStorage(){
-        if(Auth::user()->access == 'VIS' ||Auth::user()->access == 'LGAREC'){
-            return Storage::disk('local');
-        }elseif (Auth::user()->access == 'LM' || Auth::user()->access == 'QC'){
+        if( Auth::user()->getAccessToDocuments() == 'QC'){
             return Storage::disk('qc');
+        }elseif(  Auth::user()->getAccessToDocuments() == 'VIS'){
+            return Storage::disk('local');
         }
+
+
+//        if(Auth::user()->access == 'VIS' ||Auth::user()->access == 'LGAREC'){
+//
+//        }elseif (Auth::user()->access == 'LM' || Auth::user()->access == 'QC'){
+//
+//        }
     }
 
 
@@ -397,10 +404,12 @@ class DocumentController extends Controller{
     public function destroy($slug){
         $document = $this->findBySlug($slug);
         if($this->getStorage()->exists($document->path.$document->filename)){
-            $this->getStorage()->delete($document->path.$document->filename);
+            $this->getStorage()->move($document->path.$document->filename,$document->path.$document->filename.'.x');
+           // $this->getStorage()->delete($document->path.$document->filename);
         }
         if($this->getStorage()->exists($document->path2.$document->filename)){
-            $this->getStorage()->delete($document->path2.$document->filename);
+            $this->getStorage()->move($document->path2.$document->filename,$document->path2.$document->filename.'.x');
+            //$this->getStorage()->delete($document->path2.$document->filename);
         }
 
         if($document->delete()){
