@@ -82,12 +82,12 @@ class MisRequestsController extends Controller
 
         $r = MisRequests::query()->orderBy('id','desc')->first();
         if(empty($r)){
-            $new_no = Carbon::now()->format('Y').'-0001';
+            $new_no = Carbon::now()->format('Y').'-0001'.env('MIS_REQUEST_SUFFIX','');
         }else{
             if(explode('-',$r->request_no)[0] == Carbon::now()->format('Y')){
-                $new_no =  Carbon::now()->format('Y').'-'.str_pad(explode('-',$r->request_no)[1]+1,4,'0',STR_PAD_LEFT);
+                $new_no =  Carbon::now()->format('Y').'-'.str_pad(explode('-',$r->request_no)[1]+1,4,'0',STR_PAD_LEFT).env('MIS_REQUEST_SUFFIX','');
             }else{
-                $new_no = Carbon::now()->format('Y').'-0001';
+                $new_no = Carbon::now()->format('Y').'-0001'.env('MIS_REQUEST_SUFFIX','');
             }
         }
         return $new_no;
