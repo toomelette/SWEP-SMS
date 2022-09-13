@@ -99,17 +99,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            {!! __form::textbox(
-                              '12 date', 'date', 'date', 'Date *', 'Date', '', 'date', '', ''
-                            ) !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('date',[
+                                'cols' => '12',
+                                'label' =>'Date:',
+                                'type' => 'date',
+                            ]) !!}
 
-                            {!! __form::textbox(
-                              '12 holiday_name', 'holiday_name', 'holiday_name', 'Name *', 'Name', '', 'holiday_name', '', ''
-                            ) !!}
+                            {!! \App\Swep\ViewHelpers\__form2::textbox('holiday_name',[
+                                'cols' => 12,
+                                'label' => 'Name: ',
+                            ]) !!}
 
-                            {!! __form::select_static(
-                            '12 type', 'type', 'Type', '', \App\Swep\Helpers\Helper::holiday_types(), '', '', '', ''
-                            ) !!}
+
                         </div>
                     </div>
                     <div class="modal-footer">

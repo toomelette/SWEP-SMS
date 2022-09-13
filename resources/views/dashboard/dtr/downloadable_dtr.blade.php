@@ -174,7 +174,7 @@
                                 SUN
                             @endif
                             @if(isset($holidays[$month.'-'.$date]))
-                                <b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b>
+                                <b>{{$holidays[$month.'-'.$date]['type']}}</b>
                             @endif
 
 {{--                            @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}
@@ -341,7 +341,7 @@
                                 SUN
                             @endif
                             @if(isset($holidays[$month.'-'.$date]))
-                                <b>{{$holidays[$month.'-'.$date]['type']}} HOLIDAY</b>
+                                <b>{{$holidays[$month.'-'.$date]['type']}}</b>
                             @endif
 
 {{--                            @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}

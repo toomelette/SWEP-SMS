@@ -20,7 +20,6 @@
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.applicant.store') }}">
 
         <div class="box-body">
-     
           @csrf    
 
           {!! __form::textbox(
@@ -56,13 +55,21 @@
           <div class="col-md-12"></div>
 
           {!! __form::select_dynamic(
-            '3', 'course_id', 'Course *', old('course_id'), $global_courses_all, 'course_id', 'name', $errors->has('course_id'), $errors->first('course_id'), 'select2', ''
+            '6', 'course_id', 'Course *', old('course_id'), [], 'course_id', 'name', $errors->has('course_id'), $errors->first('course_id'), 'select2_course', ''
           ) !!}
 
           {!! __form::textbox(
-            '3', 'school', 'text', 'School', 'School where you graduated your Degree', old('school'), $errors->has('school'), $errors->first('school'), ''
+            '6', 'school', 'text', 'School', 'School where you graduated your Degree', old('school'), $errors->has('school'), $errors->first('school'), ''
           ) !!}
 
+          <div class="col-md-12"></div>
+          {!! __form::datepicker(
+           '3', 'received_at',  'Date Received *', old('received_at'), $errors->has('received_at'), $errors->first('received_at')
+         ) !!}
+
+          {!! __form::textbox(
+            '3', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
+          ) !!}
 {{--          {!! __form::select_dynamic(--}}
 {{--            '3', 'plantilla_id', 'Position Applied for', old('plantilla_id'), $global_plantilla_all, 'plantilla_id', 'name', $errors->has('plantilla_id'), $errors->first('plantilla_id'), 'select2', ''--}}
 {{--          ) !!}--}}
@@ -80,22 +87,16 @@
 
 
           <div class="col-md-12"></div>
-          <div class="form-group col-md-6 ">
+          <div class="form-group col-md-12 ">
             <label for="school">Position Applied</label>
             <br>
-            <input type="text" name="position_applied" id="position_applied" class="form-control" value="" data-role="tagsinput" style="width:100%;">
+            <input value="{{old('position_applied')}}" type="text" name="position_applied" id="position_applied" class="form-control" value="" data-role="tagsinput" style="width:100%;">
             <p class="text-info"><i class="fa fa-info"></i> You can add more "Position applied for" by pressing <b>ENTER</b>. </p>
           </div>
 
 
 
-          {!! __form::datepicker(
-            '3', 'received_at',  'Date Received *', old('received_at'), $errors->has('received_at'), $errors->first('received_at')
-          ) !!}
 
-          {!! __form::textbox(
-            '3', 'remarks', 'text', 'Remarks', 'Remarks', old('remarks'), $errors->has('remarks'), $errors->first('remarks'), ''
-          ) !!}
 
 
 
@@ -463,7 +464,7 @@
 
 
 @section('scripts')
-
+  <script type="text/javascript" src="{{ asset('template/plugins/bloodhound/typeahead.js') }}"></script>
   <script type="text/javascript">
 
 
@@ -471,6 +472,27 @@
       $('#applicant_create').modal('show');
     @endif
 
+    var citynames = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              prefetch: {
+                url: '{{route("dashboard.ajax.get","position_applied")}}?rand={{\Illuminate\Support\Str::random()}}',
+                filter: function(list) {
+                  return $.map(list, function(cityname) {
+                    return { name: cityname }; });
+                }
+              }
+            });
+    citynames.initialize();
+
+    $("#position_applied").tagsinput({
+      typeaheadjs: {
+        name: 'citynames',
+        displayKey: 'name',
+        valueKey: 'name',
+        source: citynames.ttAdapter(),
+      }
+    });
 
     {{-- EDC Background ADD ROW --}}
     $(document).ready(function() {
@@ -478,10 +500,10 @@
 
 
       $('.bootstrap-tagsinput input').on('keypress', function(e){
-        if (e.keyCode == 13){
-          e.keyCode = 188;
-          e.preventDefault();
-        };
+        // if (e.keyCode == 13){
+        //   e.keyCode = 188;
+        //   e.preventDefault();
+        // };
       });
 
       $("#edc_background_add_row").on("click", function() {
@@ -745,6 +767,15 @@
 
     });
 
+
+    $(".select2_course").select2({
+      ajax: {
+        url: '{{route("dashboard.ajax.get","applicant_courses")}}',
+        dataType: 'json',
+        delay : 250,
+        // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+      },
+    });
 
 
 

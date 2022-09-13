@@ -158,6 +158,7 @@ class Helper
             'Special Non-working holiday' => 'Special Non-working holiday',
             'Observances' => 'Observances',
             'Office declaration' => 'Office declaration',
+            'Work Suspension' => 'Work Suspension',
         ];
     }
 

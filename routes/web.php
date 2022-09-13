@@ -1010,12 +1010,13 @@ Route::post('/insertDTR',function(){
 
 });
 
-Route::get('/ot',function (){
-//    $items = \App\Models\Temp\DocsQC::query()->with('logs')->get();
-//    foreach ($items as $item){
-//        $logs = \App\Models\Temp\Logs::query()->where('document_id','=',$item->old_document_id)->update([
-//            'document_id' => $item->document_id,
-//        ]);
-//    }
+Route::get('/dtrssss',function (){
+    $id = 11505;
+    foreach ( \App\Models\DTR::query()->get() as $dtr){
+        $id++;
+        $dtr->id = $dtr->id = $id;
+        $dtr->save();
+    }
 
+    return 1;
 });
