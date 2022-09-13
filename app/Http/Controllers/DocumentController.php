@@ -426,12 +426,33 @@ class DocumentController extends Controller{
         $request_slug = \Illuminate\Support\Facades\Request::get('slug');
 
         if(empty(\Illuminate\Support\Facades\Request::get('slug'))){
-            $document = $this->findBySlug($slug);
-            $rt = route('dashboard.document.view_file',$document->reference_no).'?slug='.$slug;
-            return redirect($rt);
+
+            try{
+                $document = $this->findBySlug($slug);
+                $rt = route('dashboard.document.view_file',$document->reference_no).'?slug='.$slug;
+                return redirect($rt);
+            }catch (\Exception $e){
+                try{
+                    $document = $this->findByRefNo($slug);
+                    $rt = route('dashboard.document.view_file',$document->reference_no).'?slug='.$document->slug;
+                    return redirect($rt);
+                }catch (\Exception $e){
+                    return 'End of Try Catch statement';
+                }
+            }
+
         }
+
         return $this->document->viewFile($request_slug);
 
+    }
+
+    public function findByRefNo($ref_no){
+        $document = Document::query()->where('reference_no','=',$ref_no)->first();
+        if(!empty($document)){
+            return $document;
+        }
+        abort(503);
     }
 
     public function findBySlug($slug){

@@ -1010,13 +1010,16 @@ Route::post('/insertDTR',function(){
 
 });
 
-Route::get('/dtrssss',function (){
-    $id = 11505;
-    foreach ( \App\Models\DTR::query()->get() as $dtr){
-        $id++;
-        $dtr->id = $dtr->id = $id;
-        $dtr->save();
-    }
+Route::get('/updateee',function (){
 
-    return 1;
+//    $temp_emps = DB::table('aaa_temp_employees')->get();
+//    foreach ($temp_emps as $temp_emp){
+//        $emp = \App\Models\Employee::query()->where('employee_no','=',$temp_emp->employee_no)->first();
+//        if(!empty($emp)){
+//            $emp->salary_grade = $temp_emp->salary_grade;
+//            $emp->step_inc = $temp_emp->step_inc;
+//            $emp->save();
+//        }
+//    }
+//    return 1;
 });

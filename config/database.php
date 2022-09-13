@@ -171,6 +171,21 @@ return [
             'engine' => null,
         ],
 
+        'mysql_qc_server' => [
+            'driver' => 'mysql',
+            'host' => '143.68.29.202',
+            'port' => '3306',
+            'database' => 'swep_afd',
+            'username' => 'remoteUser',
+            'password' => 'mysql@serverqc',
+            'unix_socket' => env('DB_SOCKET_CLOUD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
 //        'pgsql' => [
 //            'driver' => 'pgsql',
 //            'host' => env('DB_HOST', '127.0.0.1'),
