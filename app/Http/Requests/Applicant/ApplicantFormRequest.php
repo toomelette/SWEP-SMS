@@ -33,15 +33,16 @@ class ApplicantFormRequest extends FormRequest{
             'firstname'=>'required|string|max:90',
             'middlename'=>'required|string|max:90',
             'gender'=>'required|string|max:11',
-            'date_of_birth' => 'required|date_format:"m/d/Y"',
+            'date_of_birth' => 'required|date_format:"Y-m-d"',
             'civil_status'=>'required|string|max:45',
             'address'=>'required|string|max:255',
-            'course_id'=>'required|string|max:11',
+            'course'=>'required|string|max:255',
             'plantilla_id'=>'nullable|string|max:11',
             'contact_no'=>'nullable|string|max:90',
             'department_unit_id'=>'nullable|string|max:11',
-            'received_at' => 'required|date_format:"m/d/Y"',
+            'received_at' => 'required|date_format:"Y-m-d"',
             'remarks'=>'nullable|string|max:255',
+            'position_applied' => 'required|string',
 
         ];
 

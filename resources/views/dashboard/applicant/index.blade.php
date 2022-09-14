@@ -1,194 +1,545 @@
-<?php
-
-  $table_sessions = [ 
-                      Session::get('APPLICANT_UPDATE_SUCCESS_SLUG'),
-                      Session::get('APPLICANT_ADD_SL_SUCCESS_SLUG'),
-                      Session::get('APPLICANT_REMOVE_SL_SUCCESS_SLUG'),
-                    ];
-
-  $appended_requests = [
-                        'q'=> Request::get('q'),
-                        'sort' => Request::get('sort'),
-                        'direction' => Request::get('direction'),
-                        'e' => Request::get('e'),
-                        
-                        'c' => Request::get('c'),
-                        'p' => Request::get('p'),
-                        'g' => Request::get('g'),
-                        'du' => Request::get('du'),
-                      ];
-
-  $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';
-  $span_times = '<span class="badge bg-red"><i class="fa fa-times "></i></span>';
-              
-?>
-
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
-    
-  <section class="content-header">
-      <h1>Applicant List</h1>
-  </section>
+    <style>
+        .select2-container{
+            width: 100% !important;
+        }
+    </style>
+    <section class="content-header">
+        <h1>Applicants</h1>
 
-  <section class="content">
+        <button id='temp_btn' type="button" class="edit_applicant_btn" data-target="#edit_applicant_modal" data-toggle="modal"></button>
+    </section>
 
-    {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.applicant.index') }}">
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">List of Applicants</h3>
+                <button data-step="1" data-intro="Create Disbursement Voucher by using this button." class="btn btn-primary pull-right btn-sm" data-toggle="modal" data-target="#add_applicant_modal"><i class="fa fa-plus"></i> Create</button>
+            </div>
+            <div class="panel">
+                <div class="box-header with-border">
+                    <h4 class="box-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#advanced_filters" aria-expanded="true" class="">
+                            <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
+                        </a>
+                    </h4>
+                    <small id="filter-notifier" class="label bg-blue blink"></small>
+                </div>
+                <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
+                    <div class="box-body">
+                        <form id="filter_form">
+                            <div class="row">
 
-    {{-- Advance Filters --}}
-    {!! __html::filter_open() !!}
+                                <div class="col-md-1 dt_filter-parent-div">
+                                    <label>Fund Source:</label>
+                                    <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">
+                                        <option value="">None</option>
+{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_fund_source_all,'description','fund_source_id') !!}--}}
+                                    </select>
+                                </div>
+                                <div class="col-md-2 dt_filter-parent-div">
+                                    <label>Station:</label>
+                                    <select name="project_id"  class="form-control dt_filter filter_sex filters">
+                                        <option value="">None</option>
+{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_projects_all,'project_address','project_id') !!}--}}
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group ">
+                                            <label style="margin-bottom: 2px;">
+                                                Filter Date
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon dt_filter-parent-div">
+                                                    <input type="checkbox" name="filter_date" class="dt_filter" id="filter_date_checkbox">
+                                                </div>
+                                                <input name="date_range" type="text" class="form-control pull-right dt_filter" id="date_range" autocomplete="off" disabled>
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-      {!! __form::select_dynamic_for_filter(
-        '3', 'c', 'Course', old('c'), $global_courses_all, 'course_id', 'name', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
-      ) !!}
-
-      {!! __form::select_dynamic_for_filter(
-        '3', 'p', 'Position Applied For', old('p'), \App\Swep\Helpers\Arrays::positionsAppliedFor(), 'plantilla_id', 'name', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
-      ) !!}
-
-      {!! __form::select_static_for_filter(
-          '3', 'g', 'Gender', old('leave_t'), ['Male' => 'MALE', 'Female' => 'FEMALE'], 'submit_applicant_filter', '', ''
-      ) !!}
-
-      {!! __form::select_dynamic_for_filter(
-        '3', 'du', 'Unit', old('du'), $global_department_units_all, 'department_unit_id', 'description', 'submit_applicant_filter', 'select2', 'style="width:100%;"'
-      ) !!}
-
-    {!! __html::filter_close('submit_applicant_filter') !!}
-
-
-    <div class="box" id="pjax-container" style="overflow-x:auto;">
-
-      {{-- Table Search --}}        
-      <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.applicant.index')) !!}
-      </div>
-
-    {{-- Form End --}}  
-    </form>
-
-      {{-- Table Grid --}}        
-      <div class="box-body no-padding">
-        <table class="table table-hover">
-          <tr>
-            <th>@sortablelink('fullname', 'Name')</th>
-            <th>@sortablelink('plantilla.name', 'Position Applied For')</th>
-            <th>@sortablelink('course.name', 'Course')</th>
-            <th>@sortablelink('date_of_birth', 'Age')</th>
-            <th>@sortablelink('received_at', 'Date of Application')</th>
-            <th>@sortablelink('is_on_short_list', 'On Short List')</th>
-            <th style="width: 150px">Action</th>
-          </tr>
-          @foreach($applicants as $data) 
-            <tr {!! __html::table_highlighter( $data->slug, $table_sessions) !!} >
-              <td id="mid-vert">{{ $data->fullname }}</td>
-              <td id="mid-vert">
-                @if(!empty($data->positionApplied))
-                <ul style="padding-left: 2px; margin-bottom: 0px">
-                  @foreach($data->positionApplied as $position_applied)
-                    <li>{{$position_applied->position_applied}}</li>
-                  @endforeach
-                </ul>
-                @endif
-              </td>
-              <td id="mid-vert" style="width: 30%">{{ empty($data->course) ? '' : str_replace('BACHELOR OF SCIENCE IN ','BS ',$data->course->name) }}</td>
-              <td id="mid-vert">{{ Carbon::parse($data->date_of_birth)->age }}</td>
-              <td id="mid-vert">{!! __dataType::date_parse($data->received_at, 'M. d, Y') !!}</td>
-              <td id="mid-vert" style="width: 5%">{!! $data->is_on_short_list == 1 ? $span_check : $span_times !!}</td>
-              <td id="mid-vert"> 
-                <select id="action" class="form-control input-md">
-                  <option value="">Select</option>
-                  <option data-type="1" data-url="{{ route('dashboard.applicant.show', $data->slug) }}">Details</option>
-                  <option data-type="1" data-url="{{ route('dashboard.applicant.edit', $data->slug) }}">Edit</option>
-                  <option data-type="0" data-action="delete" data-url="{{ route('dashboard.applicant.destroy', $data->slug) }}">Delete</option>
-
-                  @if($data->is_on_short_list == 0)
-                    <option data-type="0" data-action="addToShortList" data-url="{{ route('dashboard.applicant.add_to_shortlist', $data->slug) }}">Add to Shortlist</option>
-                  @else
-                    <option data-type="0" data-action="removeToShortList" data-url="{{ route('dashboard.applicant.remove_to_shortlist', $data->slug) }}">Remove to Shortlist</option>
-                  @endif
-
-                </select>
-              </td>
-            </tr>
-            @endforeach
-          </table>
-      </div>
-
-      @if($applicants->isEmpty())
-        <div style="padding :5px;">
-          <center><h4>No Records found!</h4></center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div id="applicants_table_container" style="display: none">
+                    <table class="table table-bordered table-striped table-hover" id="applicants_table" style="width: 100%">
+                        <thead>
+                        <tr class="">
+                            <th >Name</th>
+                            <th>Position(s) Applied</th>
+                            <th >Course</th>
+                            <th >Age</th>
+                            <th ><small>Appln. Date</small></th>
+                            <th >SL</th>
+                            <th class="action">Action</th>
+                            <th>Updated at</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tbl_loader">
+                    <center>
+                        <img style="width: 100px" src="{{asset('images/loader.gif')}}">
+                    </center>
+                </div>
+            </div>
+            <!-- /.box-body -->
         </div>
-      @endif
-
-      <div class="box-footer">
-        {!! __html::table_counter($applicants) !!}
-        {!! $applicants->appends($appended_requests)->render('vendor.pagination.bootstrap-4') !!}
-      </div>
-
-    </div>
-
-  </section>
-
-  <form id="form_add_to_shortlist" method="POST" style="display: none;">
-    @csrf
-  </form>
-
-  <form id="form_remove_to_shortlist" method="POST" style="display: none;">
-    @csrf
-  </form>
+    </section>
 
 @endsection
-
-
 
 
 @section('modals')
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('edit_applicant_modal','lg') !!}
+    <div class="modal fade" id="add_applicant_modal"role="dialog" aria-labelledby="add_applicant_modal_label">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form role="form" id="add_applicant_form">
+                @csrf
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Applicant</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('received_at',[
+                            'cols' => 3,
+                            'label' => 'Date received:*',
+                            'type' => 'date',
+                        ]) !!}
 
-  {!! __html::modal_delete('applicant_delete') !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('lastname',[
+                            'cols' => 3,
+                            'label' => 'Last Name:*',
+                        ]) !!}
 
-@endsection 
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('firstname',[
+                            'cols' => 3,
+                            'label' => 'First Name:*',
+                        ]) !!}
 
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('middlename',[
+                            'cols' => 3,
+                            'label' => 'Middle Name:*',
+                        ]) !!}
+                    </div>
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_birth',[
+                            'cols' => 2,
+                            'label' => 'Birthday:*',
+                            'type' => 'date',
+                        ]) !!}
 
+                        {!! \App\Swep\ViewHelpers\__form2::select('gender',[
+                            'cols' => 2,
+                            'label' => 'Sex:*',
+                            'options' => \App\Swep\Helpers\Arrays::sex()
+                        ]) !!}
 
+                        {!! \App\Swep\ViewHelpers\__form2::select('civil_status',[
+                            'cols' => 2,
+                            'label' => 'Civil Status:*',
+                            'options' => \App\Swep\Helpers\Arrays::civil_status()
+                        ]) !!}
 
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('address',[
+                            'cols' => 6,
+                            'label' => 'Address:*',
+                        ]) !!}
+                    </div>
+
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::select('course',[
+                            'cols' => 6,
+                            'label' => 'Course: *',
+                            'class' => 'select2_course',
+                            'options' => [],
+                        ]) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('school',[
+                            'cols' => 6,
+                            'label' => 'School:*',
+                        ]) !!}
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12 position_applied">
+                            <label for="school">Position(s) Applied for:</label>
+                            <br>
+                            <input value="{{old('position_applied')}}" type="text" name="position_applied" id="position_applied" class="form-control" value="" data-role="tagsinput" style="width:100%;">
+                            <p class="text-info"><i class="fa fa-info"></i> You can add more "Position applied for" by pressing <b>ENTER</b>. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default pull-left" data-toggle="modal" data-target="#import_from_employee_modal"> Import data from employee</button>
+
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="import_from_employee_modal"role="dialog" aria-labelledby="import_from_employee_modal_label">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Search employee</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of employee:</label>
+                        <input class="form-control" id="search_employee"  autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
 @section('scripts')
 
-  <script type="text/javascript">
+    <script type="text/javascript">
 
-    {{-- CALL AddToShortList FORM --}}
-    {!! __js::form_submitter_via_action('addToShortList', 'form_add_to_shortlist') !!}
+        //-----DATATABLES-----//
+        modal_loader = $("#modal_loader").parent('div').html();
+        //Initialize DataTable
+        var active = '';
+        applicants_tbl = $("#applicants_table").DataTable({
+            'dom' : 'lBfrtip',
+            "processing": true,
+            "serverSide": true,
+            "ajax" : '{{route(\Illuminate\Support\Facades\Route::currentRouteName())}}',
+            "columns": [
+                { "data": "fullname" },
+                { "data": "position_applied" },
+                { "data": "course" },
+                { "data": "age" },
+                { "data": "received_at" },
+                { "data": "sl" },
+                { "data": "action" },
+                { "data": "updated_at" },
+            ],
+            "buttons": [
+                {!! __js::dt_buttons() !!}
+            ],
+            "columnDefs":[
 
-    {{-- CALL RemoveToShortList FORM --}}
-    {!! __js::form_submitter_via_action('removeToShortList', 'form_remove_to_shortlist') !!}
+                {
+                    "targets" : 0,
+                    "class" : 'w-20p'
+                },
+                {
+                    "targets" : 2,
+                    "class" : 'w-25p'
+                },
+                {
+                    "targets" : 1,
+                    "class" : 'w-15p'
+                },
+                {
+                    "targets" : [3,4],
+                    "class" : 'text-center',
+                },
+                {
+                    "targets" : 6,
+                    "orderable" : false,
+                    "class" : 'action3'
+                },
+                {
+                    "targets" : 7,
+                    "visible" : false,
+                },
+            ],
+            "order":[[7,'desc'],[0,'asc']],
+            "responsive": false,
+            "initComplete": function( settings, json ) {
+                $('#tbl_loader').fadeOut(function(){
+                    $("#applicants_table_container").fadeIn(function () {
+                        @if(request()->has('initiator') && request('initiator') == 'create')
+                        introJs().start();
+                        @endif
+                    });
+                });
+            },
+            "language":
+                {
+                    "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
+                },
+            "drawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="modal"]').tooltip();
+                if(active != ''){
+                    $("#applicants_table #"+active).addClass('success');
+                }
+            }
+        })
 
-    {{-- CALL CONFIRM DELETE MODAL --}}
-    {!! __js::modal_confirm_delete_caller('applicant_delete') !!}
+        style_datatable("#applicants_table");
 
-    {{-- UPDATE TOAST --}}
-    @if(Session::has('APPLICANT_UPDATE_SUCCESS'))
-      {!! __js::toast(Session::get('APPLICANT_UPDATE_SUCCESS')) !!}
-    @endif
+        //Need to press enter to search
+        $('#applicants_table_filter input').unbind();
+        $('#applicants_table_filter input').bind('keyup', function (e) {
+            if (e.keyCode == 13) {
+                applicants_tbl.search(this.value).draw();
+            }
+        });
 
-    {{-- Add to Shortlist TOAST --}}
-    @if(Session::has('APPLICANT_ADD_SL_SUCCESS'))
-      {!! __js::toast(Session::get('APPLICANT_ADD_SL_SUCCESS')) !!}
-    @endif
+        $(".select2_course").select2({
+            ajax: {
+                url: '{{route("dashboard.ajax.get","applicant_courses")}}',
+                dataType: 'json',
+                delay : 250,
+                // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+            },
+            dropdownParent: $('#add_applicant_modal')
+        });
 
-    {{-- Remove to Shortlist TOAST --}}
-    @if(Session::has('APPLICANT_REMOVE_SL_SUCCESS'))
-      {!! __js::toast(Session::get('APPLICANT_REMOVE_SL_SUCCESS')) !!}
-    @endif
+        $("#add_applicant_form").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            loading_btn(form);
+            $.ajax({
+                url : '{{route("dashboard.applicant.store")}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    succeed(form,true,false);
+                    $(".course .select2-selection__rendered").html('Select');
+                    $("#position_applied").tagsinput('removeAll');
+                    notify('Applicant successfully added.');
+                    active = res.slug;
+                    applicants_tbl.draw(false);
+                },
+                error: function (res) {
+                    if(res.status == 507){
+                        remove_loading_btn(form);
+                        Swal.fire({
+                            title: 'Applicant already exists.',
+                            html :'You can edit the applicant by clicking the edit button below',
+                            showDenyButton: false,
+                            showCancelButton: true,
+                            confirmButtonText: '<i class="fa fa-edit"></i> Edit',
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                let slug =res.responseJSON.message;
+                                $("#add_applicant_modal").modal('hide');
+                                setTimeout(function () {
+                                    $("#temp_btn").attr('data',slug);
+                                    $("#temp_btn").trigger('click');
+                                },500)
+                            } else if (result.isDenied) {
+                                Swal.fire('Changes are not saved', '', 'info')
+                            }
+                        })
+                    }else{
+                        errored(form,res);
+                    }
+                }
+            })
+        })
 
-    {{-- DELETE TOAST --}}
-    @if(Session::has('APPLICANT_DELETE_SUCCESS'))
-      {!! __js::toast(Session::get('APPLICANT_DELETE_SUCCESS')) !!}
-    @endif
+        $("#search_employee").typeahead({
+            ajax : "{{ route('dashboard.ajax.get','search_active_employees') }}",
+            onSelect:function (result) {
+                $("#add_user_employee_modal input[name='employee_slug']").val(result.value);
+                console.log();
+                $.ajax({
+                    url : "{{ route('dashboard.ajax.get','search_active_employees') }}?afterTypeahead=true",
+                    data : {id:result.value},
+                    type: 'GET',
+                    headers: {
+                        {!! __html::token_header() !!}
+                    },
+                    success: function (res) {
+                        $("#add_applicant_form input[name='lastname']").val(res.lastname);
+                        $("#add_applicant_form input[name='firstname']").val(res.firstname);
+                        $("#add_applicant_form input[name='middlename']").val(res.middlename);
+                        $("#add_applicant_form select[name='gender']").val(res.sex);
+                        $("#add_applicant_form input[name='date_of_birth']").val(res.date_of_birth);
+                        $("#add_applicant_form select[name='civil_status']").val(res.civil_status);
+                        $("#import_from_employee_modal").modal('hide');
+                        setTimeout(function () {
+                            $("#search_employee").val('');
+                        },1000)
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                })
+            },
+            lookup: function (i) {
+                console.log(i);
+            }
+        });
 
-  </script>
-    
+        $("body").on('click','.edit_applicant_btn',function () {
+            let btn = $(this);
+            load_modal2(btn);
+            let uri = '{{route("dashboard.applicant.edit","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                }
+            })
+        })
+    </script>
+
+    <script type="text/javascript" src="{{ asset('template/plugins/bloodhound/typeahead.js') }}"></script>
+    <script type="text/javascript">
+        var citynames = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: '{{route("dashboard.ajax.get","position_applied")}}?rand={{\Illuminate\Support\Str::random()}}',
+                filter: function(list) {
+                    return $.map(list, function(cityname) {
+                        return { name: cityname }; });
+                }
+            }
+        });
+        citynames.initialize();
+
+        $("#position_applied").tagsinput({
+            typeaheadjs: {
+                name: 'citynames',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: citynames.ttAdapter(),
+            }
+        });
+
+
+        $('#add_applicant_form').keydown(function(event) {
+            if (event.ctrlKey && event.keyCode === 13) {
+                alert();
+            }
+        })
+
+        $("body").on("click",'.add_to_sl_btn',function () {
+            btn = $(this);
+            let id = btn.attr('data');
+            let uri = '{{route('dashboard.applicant.add_to_shortlist','slug')}}';
+            uri = uri.replace('slug',id);
+            Swal.fire({
+                title: 'Add to short list?',
+                html: btn.attr('employee'),
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-check"></i> Add',
+                showLoaderOnConfirm: true,
+                preConfirm: (email) => {
+                    return $.ajax({
+                        url : uri,
+                        type: 'POST',
+                        data: {'slug':id},
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                    })
+                        .then(response => {
+                            return  response;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            Swal.showValidationMessage(
+                                'Error : '+ error.responseJSON.message,
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(result);
+                    notify('Applicant was added to the short list.','success');
+                    active = result.value;
+                    applicants_tbl.draw(false);
+                }
+            })
+
+        })
+
+        $("body").on("click",'.remove_from_sl_btn',function () {
+            btn = $(this);
+            let id = btn.attr('data');
+            let uri = '{{route('dashboard.applicant.remove_to_shortlist','slug')}}';
+            uri = uri.replace('slug',id);
+            Swal.fire({
+                title: 'Remove from short list?',
+                html: btn.attr('employee'),
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-check"></i> Add',
+                showLoaderOnConfirm: true,
+                preConfirm: (email) => {
+                    return $.ajax({
+                        url : uri,
+                        type: 'POST',
+                        data: {'slug':id},
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                    })
+                        .then(response => {
+                            return  response;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            Swal.showValidationMessage(
+                                'Error : '+ error.responseJSON.message,
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(result);
+                    notify('Applicant was removed from the short list.','success');
+                    active = result.value;
+                    applicants_tbl.draw(false);
+                }
+            })
+
+        })
+
+        $('.bootstrap-tagsinput input').on('keypress', function(e){
+            if (e.keyCode == 13){
+                e.keyCode = 188;
+                e.preventDefault();
+            };
+        });
+    </script>
+
 @endsection
+

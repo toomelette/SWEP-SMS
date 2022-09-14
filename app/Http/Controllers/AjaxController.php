@@ -9,6 +9,7 @@ use App\Models\ApplicantPositionApplied;
 use App\Models\Course;
 use App\Models\Document;
 use App\Models\Employee;
+use App\Models\HRPayPlanitilla;
 use App\Models\SSL;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
@@ -96,8 +97,13 @@ class AjaxController extends Controller
         }
 
         if($for == 'position_applied'){
-
-            return ["Any Position","Accounting Staff","Clerk III","Laboratory Aide","Science Research Specialist II","Science Researcher","Laboratory Science Researcher","Office Clerk","Junior Agriculturist","Project Development Officer","Surveyor","SPRO","Farm Surveyor","Agriculturist","Project Evaluation Officer","Driver","Clerk","Electrician Foreman","Sugar Production Regulations Officer I","Cashier I","Sugar Production and Regulation Officer","Secretary II","Records Officer III","Sugar Production and Regulation Officer II","Property Custodian","Secretary I","Laboratory Technician II","Cashier","Sugar Regulation Officer II","Chief Finance Officer","Mechanical Engineer","Sugar Production Regulation Officer II","Procurement Officer","Accounting Officer","Senior Sugar Production Regulation Officer","Chemical Engineer","Chemist III","Chemical Technician","IT Specialist","SRA Technician","Accountant","Science Aide","Laborer II","Driver II","Utility Worker II","Utility Worker","Research Assistant","Administrative Officer","Position in Accounting","Heavy Equipment Operator","ACCOUNTANT IV","Administrative Position","Senior Science Research Specialist","Engineer III","Supply Officer II","Supply Officer III","Supply Officer IV"];
+            $arr = [];
+            $pps = HRPayPlanitilla::query()->select('item_no','position')->get();
+            foreach ($pps as $pp){
+                array_push($arr,'ITEM '.$pp->item_no.' - '.$pp->position);
+            }
+            return $arr;
+            //return ["Any Position","Accounting Staff","Clerk III","Laboratory Aide","Science Research Specialist II","Science Researcher","Laboratory Science Researcher","Office Clerk","Junior Agriculturist","Project Development Officer","Surveyor","SPRO","Farm Surveyor","Agriculturist","Project Evaluation Officer","Driver","Clerk","Electrician Foreman","Sugar Production Regulations Officer I","Cashier I","Sugar Production and Regulation Officer","Secretary II","Records Officer III","Sugar Production and Regulation Officer II","Property Custodian","Secretary I","Laboratory Technician II","Cashier","Sugar Regulation Officer II","Chief Finance Officer","Mechanical Engineer","Sugar Production Regulation Officer II","Procurement Officer","Accounting Officer","Senior Sugar Production Regulation Officer","Chemical Engineer","Chemist III","Chemical Technician","IT Specialist","SRA Technician","Accountant","Science Aide","Laborer II","Driver II","Utility Worker II","Utility Worker","Research Assistant","Administrative Officer","Position in Accounting","Heavy Equipment Operator","ACCOUNTANT IV","Administrative Position","Senior Science Research Specialist","Engineer III","Supply Officer II","Supply Officer III","Supply Officer IV"];
         }
 
         if($for == 'applicant_courses'){
@@ -105,10 +111,10 @@ class AjaxController extends Controller
             $courses = Course::query()->where('acronym','like','%'.Request::get("q").'%')
                 ->orWhere('name','like','%'.Request::get("q").'%')
                 ->groupBy('name')->limit(30)->get();
-            array_push($arr['results'],['id'=>'','text' => "Don't Filter"]);
+            array_push($arr['results'],['id'=>'','text' => "Select"]);
             if(!empty($courses)){
                 foreach ($courses as $course){
-                    array_push($arr['results'],['id'=>$course->course_id,'text' => $course->name]);
+                    array_push($arr['results'],['id'=>$course->name,'text' => $course->name]);
                 }
             }
             return $arr;
@@ -126,7 +132,7 @@ class AjaxController extends Controller
                     'firstname' => $emp->firstname,
                     'middlename' => $emp->middlename,
                     'sex' => $emp->sex,
-                    'date_of_birth' => Carbon::parse($emp->date_of_birth)->format('m/d/Y'),
+                    'date_of_birth' => Carbon::parse($emp->date_of_birth)->format('Y-m-d'),
                     'civil_status' => $emp->civil_status,
                     'cell_no' => $emp->cell_no,
                     'civil_status' => $emp->civil_status,
@@ -135,7 +141,7 @@ class AjaxController extends Controller
             $arr = [];
             $find = Request::get('query');
 
-            $emps = Employee::query()->where('is_active','=','ACTIVE')
+            $emps = Employee::query()
                 ->where(function ($query) use($find){
                     $query->where('lastname','like','%'.$find.'%')
                         ->orWhere('firstname','like','%'.$find.'%')

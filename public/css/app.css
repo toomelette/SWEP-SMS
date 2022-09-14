@@ -212,6 +212,10 @@ ol.example li.placeholder:before {
     width: 20%;
 }
 
+.w-25p{
+    width: 25%;
+}
+
 .act3{
     width: 150px;
 }
@@ -506,6 +510,9 @@ ol.example li.placeholder:before {
     box-shadow: 0 0 10px #dd514c;
 }
 
+.has-error .bootstrap-tagsinput {
+    border: 1px solid #dd4b39;
+}
 .month-box{
     width: 30px;
 }

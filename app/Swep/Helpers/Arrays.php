@@ -6,6 +6,7 @@ namespace App\Swep\Helpers;
 
 use App\Models\Applicant;
 use App\Models\ApplicantPositionApplied;
+use App\Models\HRPayPlanitilla;
 
 class Arrays
 {
@@ -16,6 +17,23 @@ class Arrays
         ];
     }
 
+    public static function sex(){
+        return [
+            'MALE' => 'MALE',
+            'FEMALE' => 'FEMALE',
+        ];
+    }
+
+    public static function civil_status(){
+        return [
+            'SINGLE' => 'SINGLE',
+            'MARRIED' => 'MARRIED',
+            'WIDOWED' => 'WIDOWED',
+            'DIVORCED' => 'DIVORCED',
+            'SEPARATED' => 'SEPARATED',
+        ];
+    }
+
     public static function accessToEmployees(){
         return [
             'VIS' => 'VIS',
@@ -23,6 +41,17 @@ class Arrays
             'QC' => 'QC',
             'LGAREC' => 'LGAREC',
         ];
+    }
+
+    public static function payPlantillas(){
+        $array = ['1'=>2];
+        $pps = HRPayPlanitilla::query()->select('item_no','position')->get();
+        if(!empty($pps)){
+            foreach ($pps as $pp){
+                $array[$pp->item_no] = $pp->position;
+            }
+        }
+        return $array;
     }
     public static function countries(){
         return [

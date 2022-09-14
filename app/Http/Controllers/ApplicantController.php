@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\ApplicantPositionApplied;
 use App\Models\Course;
 use App\Models\DepartmentUnit;
 use App\Models\Document;
 use App\Swep\Helpers\__sanitize;
+use App\Swep\Helpers\Arrays;
+use App\Swep\Repositories\ApplicantRepository;
 use App\Swep\Services\ApplicantService;
 use App\Http\Requests\Applicant\ApplicantFormRequest;
 use App\Http\Requests\Applicant\ApplicantFilterRequest;
 use App\Http\Requests\Applicant\ApplicantReportRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 
 class ApplicantController extends Controller{
@@ -20,13 +25,13 @@ class ApplicantController extends Controller{
 
 
 	protected $applicant;
+    protected $applicantRepository;
 
 
-
-    public function __construct(ApplicantService $applicant){
+    public function __construct(ApplicantService $applicant, ApplicantRepository $applicantRepository){
 
         $this->applicant = $applicant;
-
+        $this->applicantRepository = $applicantRepository;
     }
 
 
@@ -38,12 +43,64 @@ class ApplicantController extends Controller{
 
     }
 
+    private function checkDuplicate($request){
+        $applicant = Applicant::query()
+            ->where('lastname','=',$request->lastname)
+            ->where('firstname','=',$request->firstname)
+            ->where('received_at','=',Carbon::parse($request->received_at)->format('Y-m-d'))
+            ->first();
+        if(!empty($applicant)){
+            abort(507,$applicant->slug);
+        }
+    }
 
 
+	public function store(Request $request){
+        $this->checkDuplicate($request);
+        $payPlantillas = Arrays::payPlantillas();
+        $applicant = new Applicant;
+        $applicant->applicant_id = $this->applicantRepository->getApplicantIdInc();
+        $applicant->slug = Str::random();
+        $applicant->course = strtoupper($request->course);
+        $applicant->lastname = strtoupper($request->lastname);
+        $applicant->firstname = strtoupper($request->firstname);
+        $applicant->middlename = strtoupper($request->middlename);
+        $applicant->fullname = strtoupper($request->firstname).' '.strtoupper($request->lastname);
+        $applicant->gender = $request->gender;
+        $applicant->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
+        $applicant->civil_status = $request->civil_status;
+        $applicant->address = $request->address;
+        $applicant->contact_no = $request->contact_no;
+        $applicant->school = $request->school;
+        $applicant->received_at = Carbon::parse($request->received_at)->format('Y-m-d');
+        $positions = explode(',',$request->position_applied);
+        if(count($positions) > 0){
+            $positions_to_db = [];
+            foreach ($positions as $position){
+                $data = $position;
+                $item_no = Str::replace(' ','',Str::after(Str::before($position,'-'),'ITEM'));
+                if(isset($payPlantillas[$item_no])){
+                    array_push($positions_to_db,[
+                        'applicant_slug' => $applicant->slug,
+                        'position_applied' =>  $payPlantillas[$item_no],
+                        'item_no' => $item_no,
+                    ]);
+                }else{
+                    array_push($positions_to_db,[
+                        'applicant_slug' => $applicant->slug,
+                        'position_applied' =>  strtoupper($position),
+                        'item_no' => '',
+                    ]);
+                }
+            }
 
-	public function store(ApplicantFormRequest $request){
-
-		return $this->applicant->store($request);
+        }
+        if($applicant->save()){
+            ApplicantPositionApplied::insert($positions_to_db);
+            return $applicant->only('slug');
+        }
+        abort(503,'Error saving applicant data.');
+    	return $this->applicant->store($request);
 
     }
 
@@ -52,10 +109,83 @@ class ApplicantController extends Controller{
 
 	public function index(ApplicantFilterRequest $request){
 
+        if($request->ajax() && $request->has('draw')){
+            $applicants = Applicant::query();
+            return \DataTables::of($applicants)
+                ->addColumn('action',function($data){
+                    $destroy_route = "'".route("dashboard.applicant.destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+                    if($data->is_on_short_list == 1){
+                        $sl = '<li><a href="#"  employee="'.$data->lastname.', '.$data->firstname.'" class="remove_from_sl_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'"><i class="fa fa-times"></i> Remove from Shortlist</a></li>';
+                    }else{
+                        $sl = '<li><a href="#"  employee="'.$data->lastname.', '.$data->firstname.'" class="add_to_sl_btn" data="'.$data->slug.'" bm_uid="'.$data->biometric_user_id.'"><i class="fa fa-check"></i> Add to Shortlist</a></li>';
+                    }
+
+                    $button = '<div class="btn-group">
+                                    <button data-target="#edit_applicant_modal" data-toggle="modal"   for="linkToEdit" type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_applicant_btn"  title="Edit" data-placement="top">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                   <div class="btn-group btn-group-sm" role="group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                          <li><a href="#" data-toggle="modal" data-target="#service_records_modal" class="service_records_btn" data="'.$data->slug.'"><i class="fa icon-service-record"></i> Details</a></li>
+                                          '.$sl.'
+                                        </ul>
+                                    </div>
+                                </div>';
+                    return $button;
+                })
+                ->addColumn('age',function($data){
+                    return Carbon::parse($data->date_of_birth)->age;
+                })
+                ->addColumn('position_applied',function($data){
+                    $text = '';
+                    if($data->positionApplied()->count() > 0){
+                        $text = $text.'<ul style="padding-left: 15px; margin-bottom: 0px">';
+                        foreach ($data->positionApplied as $position){
+                            $text = $text.'<li>';
+                            if($position->item != null || $position->item_no != ''){
+                                $text = $text.' '.$position->item_no.' - ';
+                            }
+                            $text = $text. $position->position_applied.'</li>';
+                        }
+                        $text = $text.'</ul>';
+                    }
+                    return $text;
+                })
+                ->addColumn('sl',function($data){
+                    if($data->is_on_short_list == 1){
+                        return '<i class="fa fa-check"></i>';
+                    }
+                })
+                ->editColumn('course',function($data){
+                    $text = $data->course;
+                    $text = str_replace('BACHELOR OF SCIENCE IN','BS',$text);
+                    return $text;
+                })
+                ->editColumn('received_at',function($data){
+                    return Carbon::parse($data->received_at)->format('m/d/y');
+                })
+                ->escapeColumns([])
+                ->setRowId('slug')
+                ->toJson();
+        }
 		return $this->applicant->fetch($request);
 
     }
 
+    public function findBySlug($slug){
+        $applicant = Applicant::query()->where('slug','=',$slug)->first();
+        if(!empty($applicant)){
+            return $applicant;
+        }
+        abort(503,'Applicant not found.');
+    }
 
 
 
@@ -69,7 +199,10 @@ class ApplicantController extends Controller{
 
 
 	public function edit($slug){
-
+        $applicant = $this->findBySlug($slug);
+        return view('dashboard.applicant.edit')->with([
+            'applicant' => $applicant,
+        ]);
 		return $this->applicant->edit($slug);
 
     }
@@ -78,7 +211,48 @@ class ApplicantController extends Controller{
 
 
 	public function update(ApplicantFormRequest $request, $slug){
+        $payPlantillas = Arrays::payPlantillas();
+        $applicant = $this->findBySlug($slug);
+        $applicant->course = strtoupper($request->course);
+        $applicant->lastname = strtoupper($request->lastname);
+        $applicant->firstname = strtoupper($request->firstname);
+        $applicant->middlename = strtoupper($request->middlename);
+        $applicant->fullname = strtoupper($request->firstname).' '.strtoupper($request->lastname);
+        $applicant->gender = $request->gender;
+        $applicant->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
+        $applicant->civil_status = $request->civil_status;
+        $applicant->address = $request->address;
+        $applicant->contact_no = $request->contact_no;
+        $applicant->school = $request->school;
+        $applicant->received_at = Carbon::parse($request->received_at)->format('Y-m-d');
+        $positions = explode(',',$request->position_applied);
+        if(count($positions) > 0){
+            $positions_to_db = [];
+            foreach ($positions as $position){
+                $data = $position;
+                $item_no = Str::replace(' ','',Str::after(Str::before($position,'-'),'ITEM'));
+                if(isset($payPlantillas[$item_no])){
+                    array_push($positions_to_db,[
+                        'applicant_slug' => $applicant->slug,
+                        'position_applied' =>  $payPlantillas[$item_no],
+                        'item_no' => $item_no,
+                    ]);
+                }else{
+                    array_push($positions_to_db,[
+                        'applicant_slug' => $applicant->slug,
+                        'position_applied' =>  strtoupper($position),
+                        'item_no' => '',
+                    ]);
+                }
+            }
 
+        }
+        if($applicant->update()){
+            $applicant->positionApplied()->delete();
+            ApplicantPositionApplied::insert($positions_to_db);
+            return $applicant->only('slug');
+        }
+        abort(503,'Error saving applicant data.');
 		return $this->applicant->update($request, $slug);
 
     }
@@ -87,7 +261,11 @@ class ApplicantController extends Controller{
 
 
 	public function destroy($slug){
-
+        $applicant = $this->findBySlug($slug);
+        if($applicant->delete()){
+            $applicant->positionApplied()->delete();
+            return 1;
+        }
 		return $this->applicant->destroy($slug);
 
     }
@@ -212,7 +390,13 @@ class ApplicantController extends Controller{
 
 
 	public function addToShortList($slug){
+        $applicant = $this->findBySlug($slug);
+        $applicant->is_on_short_list = 1;
 
+        if($applicant->update()){
+            return $slug;
+        }
+        abort(503,'Error adding applicant to short list');
 		return $this->applicant->addToShortList($slug);
 
     }
@@ -221,7 +405,13 @@ class ApplicantController extends Controller{
 
 
 	public function removeToShortList($slug){
+        $applicant = $this->findBySlug($slug);
+        $applicant->is_on_short_list = 0;
 
+        if($applicant->update()){
+            return $slug;
+        }
+        abort(503,'Error removing applicant to short list');
 		return $this->applicant->removeToShortList($slug);
 
     }
