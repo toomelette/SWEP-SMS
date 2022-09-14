@@ -8,7 +8,9 @@ use App\Models\Applicant;
 use App\Models\ApplicantPositionApplied;
 use App\Models\Course;
 use App\Models\Document;
+use App\Models\Employee;
 use App\Models\SSL;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -109,6 +111,49 @@ class AjaxController extends Controller
                     array_push($arr['results'],['id'=>$course->course_id,'text' => $course->name]);
                 }
             }
+            return $arr;
+        }
+
+        if($for == 'search_active_employees'){
+
+            if(Request::get('afterTypeahead') == true){
+                $emp = Employee::query()
+                    ->select('lastname','firstname','middlename','sex','date_of_birth','civil_status','cell_no')
+                    ->where('slug','=',Request::get('id'))->first();
+
+                return [
+                    'lastname' => $emp->lastname,
+                    'firstname' => $emp->firstname,
+                    'middlename' => $emp->middlename,
+                    'sex' => $emp->sex,
+                    'date_of_birth' => Carbon::parse($emp->date_of_birth)->format('m/d/Y'),
+                    'civil_status' => $emp->civil_status,
+                    'cell_no' => $emp->cell_no,
+                    'civil_status' => $emp->civil_status,
+                ];
+            }
+            $arr = [];
+            $find = Request::get('query');
+
+            $emps = Employee::query()->where('is_active','=','ACTIVE')
+                ->where(function ($query) use($find){
+                    $query->where('lastname','like','%'.$find.'%')
+                        ->orWhere('firstname','like','%'.$find.'%')
+                        ->orWhere('middlename','like','%'.$find.'%');
+                })
+                ->limit(10)
+                ->get();
+
+            if(!empty($emps)){
+                foreach ($emps as $emp){
+                    array_push($arr,[
+                        'id' => $emp->slug,
+                        'name' => $emp->lastname.', '.$emp->firstname.' '.$emp->middlename,
+                        'sex' => $emp->sex,
+                    ]);
+                }
+            }
+
             return $arr;
         }
 

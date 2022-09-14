@@ -9,12 +9,12 @@
   <section class="content">
 
     <div class="box">
-    
+
       <div class="box-header with-border">
         <h3 class="box-title">Form</h3>
-        <div class="pull-right">
-            <code>Fields with asterisks(*) are required</code>
-        </div> 
+        <buton class="pull-right btn btn-sm btn-primary" data-toggle="modal" data-target="#import_from_employee_modal">
+          Import from employee
+        </buton>
       </div>
       
       <form role="form" method="POST" autocomplete="off" action="{{ route('dashboard.applicant.store') }}">
@@ -457,6 +457,23 @@
     ) !!}
     
   @endif
+  
+  <div class="modal fade" id="import_from_employee_modal" tabindex="-1" role="dialog" aria-labelledby="import_from_employee_modal_label">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Search employee</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Name of employee:</label>
+            <input class="form-control" id="search_employee"  autocomplete="off">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 @endsection 
 
@@ -464,35 +481,52 @@
 
 
 @section('scripts')
-  <script type="text/javascript" src="{{ asset('template/plugins/bloodhound/typeahead.js') }}"></script>
+
   <script type="text/javascript">
+
+    $("#search_employee").typeahead({
+      ajax : "{{ route('dashboard.ajax.get','search_active_employees') }}",
+      onSelect:function (result) {
+        $("#add_user_employee_modal input[name='employee_slug']").val(result.value);
+        console.log();
+        $.ajax({
+          url : "{{ route('dashboard.ajax.get','search_active_employees') }}?afterTypeahead=true",
+          data : {id:result.value},
+          type: 'GET',
+          headers: {
+            {!! __html::token_header() !!}
+          },
+          success: function (res) {
+            $("#lastname").val(res.lastname);
+            $("#firstname").val(res.firstname);
+            $("#middlename").val(res.middlename);
+            $("#gender").val(res.sex);
+            $("#date_of_birth").val(res.date_of_birth);
+            $("#civil_status").val(res.civil_status);
+            $("#import_from_employee_modal").modal('hide');
+            setTimeout(function () {
+              $("#search_employee").val('');
+            },1000)
+          },
+          error: function (res) {
+            console.log(res);
+          }
+        })
+      },
+      lookup: function (i) {
+        console.log(i);
+      }
+    });
 
 
     @if(Session::has('APPLICANT_CREATE_SUCCESS'))
       $('#applicant_create').modal('show');
     @endif
 
-    var citynames = new Bloodhound({
-              datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-              queryTokenizer: Bloodhound.tokenizers.whitespace,
-              prefetch: {
-                url: '{{route("dashboard.ajax.get","position_applied")}}?rand={{\Illuminate\Support\Str::random()}}',
-                filter: function(list) {
-                  return $.map(list, function(cityname) {
-                    return { name: cityname }; });
-                }
-              }
-            });
-    citynames.initialize();
 
-    $("#position_applied").tagsinput({
-      typeaheadjs: {
-        name: 'citynames',
-        displayKey: 'name',
-        valueKey: 'name',
-        source: citynames.ttAdapter(),
-      }
-    });
+
+
+
 
     {{-- EDC Background ADD ROW --}}
     $(document).ready(function() {
@@ -779,6 +813,29 @@
 
 
 
-  </script> 
-    
+  </script>
+  <script type="text/javascript" src="{{ asset('template/plugins/bloodhound/typeahead.js') }}"></script>
+  <script type="text/javascript">
+    var citynames = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      prefetch: {
+        url: '{{route("dashboard.ajax.get","position_applied")}}?rand={{\Illuminate\Support\Str::random()}}',
+        filter: function(list) {
+          return $.map(list, function(cityname) {
+            return { name: cityname }; });
+        }
+      }
+    });
+    citynames.initialize();
+
+    $("#position_applied").tagsinput({
+      typeaheadjs: {
+        name: 'citynames',
+        displayKey: 'name',
+        valueKey: 'name',
+        source: citynames.ttAdapter(),
+      }
+    });
+  </script>
 @endsection
