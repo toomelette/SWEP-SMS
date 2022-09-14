@@ -9,14 +9,14 @@
     <section class="content-header">
         <h1>Applicants</h1>
 
-        <button id='temp_btn' type="button" class="edit_applicant_btn" data-target="#edit_applicant_modal" data-toggle="modal"></button>
+        <button hidden id='temp_btn' type="button" class="edit_applicant_btn" data-target="#edit_applicant_modal" data-toggle="modal"></button>
     </section>
 
     <section class="content">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title">List of Applicants</h3>
-                <button data-step="1" data-intro="Create Disbursement Voucher by using this button." class="btn btn-primary pull-right btn-sm" data-toggle="modal" data-target="#add_applicant_modal"><i class="fa fa-plus"></i> Create</button>
+                <button data-step="1" data-intro="Add applicant by using this button." class="btn btn-primary pull-right btn-sm" data-toggle="modal" data-target="#add_applicant_modal"><i class="fa fa-plus"></i> Create</button>
             </div>
             <div class="panel">
                 <div class="box-header with-border">

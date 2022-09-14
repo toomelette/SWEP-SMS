@@ -55,7 +55,7 @@ class ApplicantController extends Controller{
     }
 
 
-	public function store(Request $request){
+	public function store(ApplicantFormRequest $request){
         $this->checkDuplicate($request);
         $payPlantillas = Arrays::payPlantillas();
         $applicant = new Applicant;
