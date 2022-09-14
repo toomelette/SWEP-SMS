@@ -18,59 +18,66 @@
                 <h3 class="box-title">List of Applicants</h3>
                 <button data-step="1" data-intro="Add applicant by using this button." class="btn btn-primary pull-right btn-sm" data-toggle="modal" data-target="#add_applicant_modal"><i class="fa fa-plus"></i> Create</button>
             </div>
-            <div class="panel">
-                <div class="box-header with-border">
-                    <h4 class="box-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#advanced_filters" aria-expanded="true" class="">
-                            <i class="fa fa-filter"></i>  Advanced Filters <i class=" fa  fa-angle-down"></i>
-                        </a>
-                    </h4>
-                    <small id="filter-notifier" class="label bg-blue blink"></small>
-                </div>
-                <div id="advanced_filters" class="panel-collapse collapse" aria-expanded="true" style="">
-                    <div class="box-body">
-                        <form id="filter_form">
-                            <div class="row">
-
-                                <div class="col-md-1 dt_filter-parent-div">
-                                    <label>Fund Source:</label>
-                                    <select name="fund_source_id"  class="form-control dt_filter filter_sex filters">
-                                        <option value="">None</option>
-{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_fund_source_all,'description','fund_source_id') !!}--}}
-                                    </select>
-                                </div>
-                                <div class="col-md-2 dt_filter-parent-div">
-                                    <label>Station:</label>
-                                    <select name="project_id"  class="form-control dt_filter filter_sex filters">
-                                        <option value="">None</option>
-{{--                                        {!! \App\Swep\ViewHelpers\__html::options_obj($global_projects_all,'project_address','project_id') !!}--}}
-                                    </select>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group ">
-                                            <label style="margin-bottom: 2px;">
-                                                Filter Date
-                                            </label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon dt_filter-parent-div">
-                                                    <input type="checkbox" name="filter_date" class="dt_filter" id="filter_date_checkbox">
-                                                </div>
-                                                <input name="date_range" type="text" class="form-control pull-right dt_filter" id="date_range" autocomplete="off" disabled>
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="box-body">
+                <div class="panel">
+                    <div class="box box-sm box-default box-solid collapsed-box">
+                        <div class="box-header with-border">
+                            <p class="no-margin"><i class="fa fa-filter"></i> Advanced Filters <small id="filter-notifier" class="label bg-blue blink"></small></p>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool advanced_filters_toggler" data-widget="collapse"><i class="fa fa-plus"></i>
+                                </button>
                             </div>
 
-                        </form>
+                        </div>
+
+                        <div class="box-body" style="display: none">
+                            <form id="filter_form">
+                                <div class="row">
+                                    <div class="col-md-4 dt_filter-parent-div">
+                                        <label>Course:</label>
+                                        <select name="course"  class="form-control dt_filter filters select2_course_filter">
+                                            <option value="">Don't filter</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 dt_filter-parent-div">
+                                        <label>Sex:</label>
+                                        <select name="sex"  class="form-control dt_filter filter_sex filters select22">
+                                            <option value="">Don't filter</option>
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 dt_filter-parent-div">
+                                        <label>Civil Status:</label>
+                                        <select name="civil_status"  class="form-control dt_filter filter_locations filters select22">
+                                            <option value="">Don't filter</option>
+                                            {!! \App\Swep\Helpers\Helper::populateOptionsFromArray(\App\Swep\Helpers\Arrays::civil_status()) !!}
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 dt_filter-parent-div">
+                                        <label>Position applied for:</label>
+                                        <select name="position_applied"  class="form-control dt_filter filters select2_position_applied_filter">
+                                            <option value="">Don't filter</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-md-4 dt_filter-parent-div">
+                                        <label>Item No:</label>
+                                        <select name="item_no"  class="form-control dt_filter filters select2_item_no_filter">
+                                            <option value="">Don't filter</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-            <div class="box-body">
+                <br>
                 <div id="applicants_table_container" style="display: none">
                     <table class="table table-bordered table-striped table-hover" id="applicants_table" style="width: 100%">
                         <thead>
@@ -299,15 +306,46 @@
             }
         });
 
+        $(".dt_filter").change(function () {
+            filterDT(applicants_tbl);
+        })
+
         $(".select2_course").select2({
             ajax: {
-                url: '{{route("dashboard.ajax.get","applicant_courses")}}',
+                url: '{{route("dashboard.ajax.get","applicant_courses")}}?default=Select',
                 dataType: 'json',
                 delay : 250,
                 // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
             },
             dropdownParent: $('#add_applicant_modal')
         });
+
+        $(".select2_course_filter").select2({
+            ajax: {
+                url: '{{route("dashboard.ajax.get","applicant_courses")}}?default=DontFilter',
+                dataType: 'json',
+                delay : 250,
+                // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+            },
+        });
+
+        $(".select2_position_applied_filter").select2({
+            ajax: {
+                url: '{{route("dashboard.ajax.get","applicant_filter_position")}}',
+                dataType: 'json',
+                delay : 250,
+                // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+            },
+        })
+
+        $(".select2_item_no_filter").select2({
+            ajax: {
+                url: '{{route("dashboard.ajax.get","applicant_filter_item_no")}}',
+                dataType: 'json',
+                delay : 250,
+                // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+            },
+        })
 
         $("#add_applicant_form").submit(function (e) {
             e.preventDefault();

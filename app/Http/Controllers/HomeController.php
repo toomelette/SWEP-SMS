@@ -84,9 +84,24 @@ class HomeController extends Controller{
 
             $all_leave_applications = LeaveApplication::count();
             $all_ps = PermissionSlip::count();
-            $male_employees = Employee::where('sex','MALE')->where('is_active','ACTIVE')->count();
-            $female_employees = Employee::where('sex','FEMALE')->where('is_active','ACTIVE')->count();
-            $all_employees = Employee::where('is_active','ACTIVE')->count();
+            $male_employees = Employee::where('sex','MALE')
+                ->where(function ($query){
+                    $query->where('locations','=','VISAYAS')
+                        ->orWhere('locations','=','LUZON/MINDANAO');
+                })
+                ->where('is_active','ACTIVE')->count();
+            $female_employees = Employee::where('sex','FEMALE')
+                ->where(function ($query){
+                    $query->where('locations','=','VISAYAS')
+                        ->orWhere('locations','=','LUZON/MINDANAO');
+                })
+                ->where('is_active','ACTIVE')->count();
+            $all_employees = Employee::where('is_active','ACTIVE')
+                ->where(function ($query){
+                    $query->where('locations','=','VISAYAS')
+                        ->orWhere('locations','=','LUZON/MINDANAO');
+                })
+                ->count();
             $all_applicants = Applicant::count();
 
             $male_jo_employees = Employee::query()
@@ -97,7 +112,6 @@ class HomeController extends Controller{
                 ->where('locations','like','%COS%')
                 ->where('sex','=','FEMALE')
                 ->count();
-            $all_jo_employees = Employee::query()->where('locations','=','COS')->count();
             return view('dashboard.home.hru_index')->with([
                 'male_employees' => $male_employees,
                 'female_employees' => $female_employees,

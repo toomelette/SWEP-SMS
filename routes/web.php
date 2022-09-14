@@ -1023,3 +1023,8 @@ Route::get('/updateee',function (){
 //    }
 //    return 1;
 });
+
+
+Route::get('/update_applicants',function (){
+
+});

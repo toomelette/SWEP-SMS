@@ -111,7 +111,27 @@ class ApplicantController extends Controller{
 
         if($request->ajax() && $request->has('draw')){
             $applicants = Applicant::query();
+            if(!is_null($request->course)){
+                $applicants = $applicants->where('course','=',$request->course);
+            }
+            if(!is_null($request->sex)){
+                $applicants  = $applicants->where('gender','=',$request->sex);
+            }
+            if(!is_null($request->civil_status)){
+                $applicants  = $applicants->where('civil_status','=',$request->civil_status);
+            }
+            if(!is_null($request->position_applied)){
+                $applicants  = $applicants->whereHas('positionApplied',function ($query) use($request){
+                    $query->where('position_applied','=',$request->position_applied);
+                });
+            }
+            if(!is_null($request->item_no)){
+                $applicants  = $applicants->whereHas('positionApplied',function ($query) use($request){
+                    $query->where('item_no','=',$request->item_no);
+                });
+            }
             return \DataTables::of($applicants)
+
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.applicant.destroy","slug")."'";
                     $slug = "'".$data->slug."'";

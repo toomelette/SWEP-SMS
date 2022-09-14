@@ -115,7 +115,7 @@
         });
         $(".select2_course_{{$rand}}").select2({
             ajax: {
-                url: '{{route("dashboard.ajax.get","applicant_courses")}}',
+                url: '{{route("dashboard.ajax.get","applicant_courses")}}?default=Select',
                 dataType: 'json',
                 delay : 250,
                 // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
