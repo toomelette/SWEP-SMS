@@ -534,10 +534,10 @@
 
 
       $('.bootstrap-tagsinput input').on('keypress', function(e){
-        // if (e.keyCode == 13){
-        //   e.keyCode = 188;
-        //   e.preventDefault();
-        // };
+        if (e.keyCode == 13){
+          e.keyCode = 188;
+          e.preventDefault();
+        };
       });
 
       $("#edc_background_add_row").on("click", function() {
