@@ -339,9 +339,13 @@ class EmployeeController extends Controller{
     public function serviceRecordPrint($slug){
         $employee =  $this->findEmployeeBySlug($slug);
         $srArr = [];
-        foreach ($employee->employeeServiceRecord as $sr){
-            array_push($srArr,$sr);
+
+        if(!empty($employee->employeeServiceRecord)){
+            foreach ($employee->employeeServiceRecord as $sr){
+                array_push($srArr,$sr);
+            }
         }
+
         return view('printables.employee.service_record')->with([
             'employee' => $employee,
             'employee_service_records' => $srArr,

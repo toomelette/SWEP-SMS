@@ -37,7 +37,7 @@ class EmployeeServiceRecordRepository extends BaseRepository implements Employee
     public function fetchByEmpNo($slug){
 
         $employee = $this->employee_repo->findBySlug($slug);
-        $employee_sr = $this->employee_sr->newQuery();
+        $employee_sr = $this->employee_sr->newQuery()->orderBy('sequence_no','asc');
         return $this->populate($employee_sr ,$employee->employee_no);
 
         $employee_service_records = $this->cache->remember('employees:service_records:fetchByEmpNo:'. $employee->employee_no, 240, function() use ($employee){

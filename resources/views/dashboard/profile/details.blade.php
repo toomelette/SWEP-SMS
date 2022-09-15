@@ -176,7 +176,7 @@
                                 <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
                                     Father's Information
                                     <span class="pull-right">
-                                    <button class="btn btn-xs btn-success" id="enable_family_btn" type="button">Enable editing</button>
+{{--                                    <button class="btn btn-xs btn-success" id="enable_family_btn" type="button">Enable editing</button>--}}
                                 </span>
                                 </p>
                                 <form id="family_form">
@@ -378,7 +378,7 @@
                             <div class="tab-pane" id="tab_2">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button data-toggle="modal" data-target="#add_sr_modal" id="add_sr_btn" class="btn btn-primary btn-sm pull-right" style="margin-bottom: 10px"><i class="fa fa-plus"></i> Add Service Record</button>
+{{--                                        <button data-toggle="modal" data-target="#add_sr_modal" id="add_sr_btn" class="btn btn-primary btn-sm pull-right" style="margin-bottom: 10px"><i class="fa fa-plus"></i> Add Service Record</button>--}}
                                     </div>
                                 </div>
                                 <div id="service_records_table_container" style="display: none">
@@ -408,7 +408,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="btn-group pull-right btn-group-sm" role="group" aria-label="...">
-                                            <button class="btn btn-primary pull-right btn-sm" data-toggle="modal" id="add_training_btn" data-target="#add_training_modal"><i class="fa fa-plus"></i> Add Training/Seminar</button>
+{{--                                            <button class="btn btn-primary pull-right btn-sm" data-toggle="modal" id="add_training_btn" data-target="#add_training_modal"><i class="fa fa-plus"></i> Add Training/Seminar</button>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -449,7 +449,7 @@
                                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
                                                 Educational Background
                                                 <span class="pull-right">
-                                                    <button class="btn btn-xs btn-success" id="add_school_btn" type="button"><i class="fa fa-plus"></i> Add</button>
+{{--                                                    <button class="btn btn-xs btn-success" id="add_school_btn" type="button"><i class="fa fa-plus"></i> Add</button>--}}
                                                 </span>
                                             </p>
                                             <form id="educ_bg_form">
@@ -468,7 +468,7 @@
                                                 </table>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Educational Background</button>
+{{--                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Educational Background</button>--}}
                                                     </div>
                                                 </div>
                                             </form>
@@ -478,7 +478,7 @@
                                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
                                                 Eligibilities
                                                 <span class="pull-right">
-                                                    <button class="btn btn-xs btn-success" id="add_elig_btn" type="button"><i class="fa fa-plus"></i> Add</button>
+{{--                                                    <button class="btn btn-xs btn-success" id="add_elig_btn" type="button"><i class="fa fa-plus"></i> Add</button>--}}
                                                 </span>
                                             </p>
                                             <form id="elig_form">
@@ -497,7 +497,7 @@
                                                 </table>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Eligibilities</button>
+{{--                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Eligibilities</button>--}}
                                                     </div>
                                                 </div>
                                             </form>
@@ -507,7 +507,7 @@
                                             <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1; padding-bottom: 6px">
                                                 Work Experience
                                                 <span class="pull-right">
-                                                    <button class="btn btn-xs btn-success" id="add_we_btn" type="button"><i class="fa fa-plus"></i> Add</button>
+{{--                                                    <button class="btn btn-xs btn-success" id="add_we_btn" type="button"><i class="fa fa-plus"></i> Add</button>--}}
                                                 </span>
                                             </p>
                                             <form id="we_form">
@@ -526,7 +526,7 @@
                                                 </table>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Work Experience</button>
+{{--                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i> Save Work Experience</button>--}}
                                                     </div>
                                                 </div>
                                             </form>

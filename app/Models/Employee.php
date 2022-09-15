@@ -190,7 +190,7 @@ class Employee extends Model{
 
 
     public function employeeServiceRecord(){
-        return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no')->orderBy('sequence_no','desc');
+        return $this->hasMany('App\Models\EmployeeServiceRecord', 'employee_no', 'employee_no')->orderBy('sequence_no','asc');
     }
 
     public function employeeMatrix(){

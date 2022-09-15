@@ -1025,6 +1025,33 @@ Route::get('/updateee',function (){
 });
 
 
-Route::get('/update_applicants',function (){
+Route::get('/aaa',function (){
+//    $arr = json_decode(Storage::get('serverqc_trainings.json'));
+//    $insert = [];
+//    foreach ($arr as $a){
+//        array_push($insert,[
+//            'employee_no' => $a->employee_no,
+//            'slug' => $a->slug,
+//            'sequence_no' => $a->sequence_no,
+//            'title' => $a->title,
+//            'type' => $a->type,
+//            'date_from' => $a->date_from,
+//            'date_to' => $a->date_to,
+//            'detailed_period' => $a->detailed_period,
+//            'hours' => $a->hours,
+//            'conducted_by' => $a->conducted_by,
+//            'venue' => $a->venue,
+//            'remarks' => $a->remarks,
+//            'is_relevant' => $a->is_relevant,
+//            'created_at' => $a->created_at,
+//            'updated_at' => $a->updated_at,
+//            'ip_created' => $a->ip_created,
+//            'ip_updated' => $a->ip_updated,
+//            'user_created' => $a->user_created,
+//            'user_updated' => $a->user_updated,
+//            'deleted_at' => $a->deleted_at,
+//            'system_remarks' => 'QC Already',
+//        ]);
+//    }
 
 });

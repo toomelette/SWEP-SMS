@@ -1,7 +1,7 @@
-@extends('layouts.modal-content')
+ @extends('layouts.modal-content')
 
 @section('modal-header')
-{{\Carbon\Carbon::parse($month)->format('F, Y')}} - {{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}}
+{{\Carbon\Carbon::parse($month)->format('F, Y')}} - {{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}} {{strtoupper($employee->name_ext)}}
 @endsection
 
 @section('modal-body')
