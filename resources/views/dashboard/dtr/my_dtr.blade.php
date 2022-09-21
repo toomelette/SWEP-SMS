@@ -130,7 +130,7 @@
 
 
 @section('modals')
-    {!! __html::blank_modal('dtr_modal','70') !!}
+    {!! __html::blank_modal('dtr_modal','lg') !!}
 @endsection
 
 @section('scripts')
