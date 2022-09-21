@@ -7,6 +7,7 @@ use App\Models\ApplicantPositionApplied;
 use App\Models\Course;
 use App\Models\DepartmentUnit;
 use App\Models\Document;
+use App\Models\HRPayPlanitilla;
 use App\Swep\Helpers\__sanitize;
 use App\Swep\Helpers\Arrays;
 use App\Swep\Repositories\ApplicantRepository;
@@ -312,14 +313,8 @@ class ApplicantController extends Controller{
         $applicants_db = Applicant::with(['course','departmentUnit','positionApplied'])->orderBy('lastname','asc');
         $filters = [];
         if($request->course != '' || !empty($request->course)){
-            $applicants_db = $applicants_db->where('course_id',$request->course);
+            $applicants_db = $applicants_db->where('course',$request->course);
             $course_db = Course::where('course_id',$request->course)->first();
-            if(!empty($course_db)){
-                $filters['COURSE'] = $course_db->name;
-            }else{
-                $filters['COURSE'] = 'Course not found';
-            }
-
         }
 
         if($request->has('date_range')){
@@ -335,7 +330,6 @@ class ApplicantController extends Controller{
             }else{
                 $filters['UNIT APPLIED'] = 'Course not found';
             }
-
         }
 
         if($request->position_applied != '' || !empty($request->position_applied)){
@@ -344,6 +338,14 @@ class ApplicantController extends Controller{
                return $query->where('position_applied',$position_applied);
             });
             $filters['POSITION APPLIED'] = $request->position_applied;
+        }
+        if($request->item_no != '' || !empty($request->item_no)){
+            $item_no = $request->item_no;
+            $applicants_db = $applicants_db->whereHas('positionApplied',function ($query) use($item_no){
+                return $query->where('item_no',$item_no);
+            });
+
+            $filters['ITEM NO'] = $item_no;
         }
 
         $applicants_db = $applicants_db->get();
@@ -357,14 +359,10 @@ class ApplicantController extends Controller{
 
         if($request->layout == 'by_course'){
             foreach ($applicants_db as $applicant_db){
-                $applicants[$applicant_db->course_id][$applicant_db->slug] = ['applicant_obj' => $applicant_db];
+                $applicants[$applicant_db->course][$applicant_db->slug] = ['applicant_obj' => $applicant_db];
 
-                if(!empty($applicant_db->course)){
-                    $applicants[$applicant_db->course_id]['label'] = $applicant_db->course->name;
-                }else{
-                    $applicants[$applicant_db->course_id]['label'] = 'COURSE MISSING';
-                }
-
+                $applicants[$applicant_db->course][$applicant_db->slug] = ['applicant_obj'=>$applicant_db];
+                $applicants[$applicant_db->course]['label'] = $applicant_db->course;
             }
         }
 
@@ -390,7 +388,32 @@ class ApplicantController extends Controller{
                     $applicants[$position_applied->position_applied]['label'] = $position_applied->position_applied;
                 }
             }
+        }
+        if($request->layout == 'by_item_no'){
+            foreach ($applicants_db as $applicant_db){
+                foreach ($applicant_db->positionApplied as $position_applied){
+                    $number = 0;
+                    if($position_applied->item_no != null || $position_applied->item_no != ''){
+                        $number = $position_applied->item_no;
+                        $applicants[$position_applied->item_no][$applicant_db->slug] = ['applicant_obj'=>$applicant_db];
+                        $applicants[$number]['label'] = $position_applied->item_no .' - '.$position_applied->item->position;
+                    }
+                    else{
+                        $number = 1000;
+                        $applicants[$number][$applicant_db->slug] = ['applicant_obj'=>$applicant_db];
+                        $applicants[$number]['label'] = 'NO ITEM INDICATED';
+                    }
 
+
+                }
+            }
+            if($request->item_no != '' || !empty($request->item_no)){
+                foreach ($applicants as $key=> $applicant){
+                    if($request->item_no != $key){
+                        unset($applicants[$key]);
+                    }
+                }
+            }
         }
 
         ksort($applicants);

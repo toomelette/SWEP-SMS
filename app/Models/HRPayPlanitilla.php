@@ -17,4 +17,8 @@ class HRPayPlanitilla extends Model
     public function occupants(){
         return $this->hasMany(HrPayPlantillaEmployees::class,'item_no','item_no')->orderBy('appointment_date','desc');
     }
+
+    public function applicants(){
+        return $this->hasMany(ApplicantPositionApplied::class,'item_no','item_no');
+    }
 }

@@ -32,24 +32,34 @@
                 'List All' => 'all',
                 'List by Course' => 'by_course',
                 'List by Position Applied'=> 'by_position_applied',
-                'List by Unit' => 'by_unit',
+                'List by Item No.' => 'by_item_no',
                 ], '', '', '',''
               ) !!}
               </div>
               Filters:
 
               <div class="row">
-                {!! __form::select_dynamic(
-                  '12', 'course', 'Course', '', $global_courses_all, 'course_id', 'name', $errors->has('c'), $errors->first('c'), 'select2', ''
-                ) !!}
+                @php
+                  $db_courses = \App\Models\Applicant::select('course')->where('course','!=',null)->groupBy('course')->orderBy('course','asc')->pluck('course')->toArray();
+                  $courses = ['All' => ''];
+                  if(count($db_courses) > 0){
+                    foreach($db_courses as $db_course){
+                      $courses[$db_course] = $db_course;
+                    }
+                  }
+                @endphp
 
-                {!! __form::select_dynamic(
-                  '12', 'unit_applied', 'Unit Applied', old('du'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('du'), $errors->first('du'), 'select2', ''
-                ) !!}
+                {!! __form::select_static(
+                    '12', 'course', 'Select Course: *', old('lt'), $courses, '', '', 'select2', ''
+                  ) !!}
+
+{{--                {!! __form::select_dynamic(--}}
+{{--                  '12', 'unit_applied', 'Unit Applied', old('du'), $global_department_units_all, 'department_unit_id', 'description', $errors->has('du'), $errors->first('du'), 'select2', ''--}}
+{{--                ) !!}--}}
 
                 @php
-                  $db_positions = \App\Models\ApplicantPositionApplied::select('position_applied')->groupBy('position_applied')->pluck('position_applied')->toArray();
-                  $positions = ['All' => 'All'];
+                  $db_positions = \App\Models\ApplicantPositionApplied::select('position_applied')->groupBy('position_applied')->orderBy('position_applied','asc')->pluck('position_applied')->toArray();
+                  $positions = ['All' => ''];
                   if(count($db_positions) > 0){
                     foreach($db_positions as $db_position){
                       $positions[$db_position] = $db_position;
@@ -59,6 +69,21 @@
 
                 {!! __form::select_static(
                     '12', 'position_applied', 'Select Position *', old('lt'), $positions, '', '', 'select2', ''
+                  ) !!}
+
+
+                @php
+                  $db_items = \App\Models\HRPayPlanitilla::select('item_no','position')->orderBy('item_no','asc')->get();
+                  $items = ['All' => ''];
+                  if(!empty($db_items)){
+                    foreach($db_items as $db_item){
+                      $items[$db_item->item_no.' - '.$db_item->position] = $db_item->item_no ;
+                    }
+                  }
+                @endphp
+
+                {!! __form::select_static(
+                    '12', 'item_no', 'Select Item No. *', old('lt'), $items, '', '', 'select2', ''
                   ) !!}
               </div>
               <div class="row">

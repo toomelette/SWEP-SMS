@@ -76,7 +76,7 @@
                                                             @break
                                                             @case('course')
                                                                 @if(!empty($applicant['applicant_obj']->course))
-                                                                    <td class="{{$requested_column}}">{{str_replace('BACHELOR OF SCIENCE IN','BS',$applicant['applicant_obj']->course->name)}}</td>
+                                                                    <td class="{{$requested_column}}">{{str_replace('BACHELOR OF SCIENCE IN','BS',$applicant['applicant_obj']->course)}}</td>
                                                                 @else
                                                                     <td class="{{$requested_column}}">N/A</td>
                                                                 @endif

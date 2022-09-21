@@ -15,4 +15,8 @@ class ApplicantPositionApplied extends Model
     public function applicant(){
         return $this->belongsTo('App\Models\Applicant','applicant_slug','slug');
     }
+
+    public function item(){
+        return $this->hasOne(HRPayPlanitilla::class,'item_no','item_no');
+    }
 }

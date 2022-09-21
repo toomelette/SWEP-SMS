@@ -33,7 +33,7 @@
 
     thead{
 
-      -webkit-print-color-adjust: exact; 
+      -webkit-print-color-adjust: exact;
       background-color: #65D165 !important;
 
     }
@@ -44,7 +44,7 @@
       padding:5px;
       font-size:11px;
       font-weight: bold;
-      
+
     }
 
     .data-row-body{
@@ -52,7 +52,7 @@
       text-align: center;
       padding:5px;
       font-size:9px;
-      
+
     }
 
   </style>
@@ -64,7 +64,7 @@
 
     {{-- HEADER --}}
 
-    <div class="row">  
+    <div class="row">
 
       <div class="col-sm-2"></div>
 
@@ -158,9 +158,9 @@
     <br>
 
     <table style="border:solid 1px;">
-        
+
       <thead>
-          
+
         <td class="data-row-head">No.</td>
         <td class="data-row-head" style="width:50px;">Date Received</td>
         <td class="data-row-head" style="width:150px;">Name</td>
@@ -181,7 +181,7 @@
       @foreach ($applicants as $key => $data)
 
         <tbody>
-                
+
           <td class="data-row-body">{{ $key + 1 }}</td>
           <td class="data-row-body">{{ __dataType::date_parse($data->received_at, "M d,Y")}}</td>
           <td class="data-row-body">{{ $data->fullname }}</td>
@@ -201,7 +201,7 @@
           <td style="padding:5px; font-size:9px;">
             @foreach ($data->applicantExperience as $data_exp)
               &#8226; <b>{{ $data_exp->position }}</b> - {{ $data_exp->company }}.
-              ({{ __dataType::date_parse($data_exp->date_from, "M d,Y")}} - 
+              ({{ __dataType::date_parse($data_exp->date_from, "M d,Y")}} -
                {{ __dataType::date_parse($data_exp->date_to, "M d,Y")}})<br>
             @endforeach
           </td>
@@ -267,7 +267,7 @@
         &nbsp;
       </div>
     </div>
-    
+
 
   </body>
 </html>

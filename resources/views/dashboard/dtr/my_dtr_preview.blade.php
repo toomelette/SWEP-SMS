@@ -434,7 +434,7 @@
             Swal.fire({
                 title: 'Enter Time:',
                 html: '<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> Note:<br></span>' +
-                    'Edited Time Record must be supported with Permission slip or Timekeeping slip upon submission to the HR. ' +
+                    'An edited time record must be supported with a Permission Slip or Timekeeping Slip upon submission to the HR. ' +
                     '<br><input id="time_record_input" value="'+btn.attr('val')+'" type="time" class="form-control time_input_dtr" autofocus>',
                 inputAttributes: {
                     autocapitalize: 'off'
