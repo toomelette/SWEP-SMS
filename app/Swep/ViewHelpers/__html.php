@@ -253,7 +253,7 @@ class __html{
         }
         if(is_numeric($size)){
             return '<div class="modal fade" id="'.$id.'" '.$st.'>
-				    <div class="modal-dialog" style="width:'.$size.'%; padding-top:'.$padding.'">
+				    <div class="modal-dialog" style="width:'.$size.'%; padding-top:'.$padding.' ;margin:15px auto">
 				      <div class="modal-content" >
 				        </div>
 				    </div>

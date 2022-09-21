@@ -443,7 +443,7 @@
                 title: 'Enter Time:',
                 html: '<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> Note:<br></span>' +
                     'An edited time record must be supported with a Permission Slip or Timekeeping Slip upon submission to the HR. ' +
-                    '<br><input id="time_record_input" value="'+btn.attr('val')+'" type="time" class="form-control time_input_dtr" autofocus>',
+                    '<br><br><b class="text-danger">THIS ACTION CANNOT BE UNDONE</b><br><input id="time_record_input" value="'+btn.attr('val')+'" type="time" class="form-control time_input_dtr" autofocus>',
                 inputAttributes: {
                     autocapitalize: 'off'
                 },
@@ -505,7 +505,7 @@
                 inputAttributes: {
                     autocapitalize: 'off'
                 },
-                html : 'Max of 10 characters.',
+                html : 'Max of 10 characters.<br><b class="text-danger">THIS ACTION CANNOT BE UNDONE</b>',
                 input : 'text',
                 backdrop : true,
                 showCancelButton: true,
