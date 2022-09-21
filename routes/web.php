@@ -198,7 +198,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/dtr/fetch_by_user_and_month', 'DTRController@fetchByUserAndMonth')->name('dtr.fetch_by_user_and_month');
     Route::post('dashboard/changePass','UserController@changePassword')->name('all.changePass');
     Route::post('/change_side_nav','SidenavController@change')->name('sidenav.change');
-
+    Route::post('/dtr/update_time_record','DTRController@updateTimeRecord')->name('dtr.update_time_record');
+    Route::post('/dtr/update_remarks','DTRController@updateRemarks')->name('dtr.update_remarks');
     /** MIS REQUESTS **/
     Route::get('/mis_requests/my_requests','MisRequestsController@myRequests')->name('mis_requests.my_requests');
     Route::post('/mis_requests/store','MisRequestsController@store')->name('mis_requests.store');
@@ -227,6 +228,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::delete('/profile/training_destroy/{slug}','ProfileController@trainingDestroy')->name('profile.training_destroy');
 
     Route::get('/ajax/{for}','AjaxController@get')->name('ajax.get');
+    Route::post('/ajaxPost/{for}','AjaxPostController@post')->name('ajax.post');
     Route::post('/profile/educ_bg_store','ProfileController@educationalBackgroundStore')->name('profile.educ_bg_store');
     Route::post('/profile/eligibility_store','ProfileController@eligibilityStore')->name('profile.eligibility_store');
     Route::post('/profile/work_experience_store','ProfileController@workExperienceStore')->name('profile.work_experience_store');
@@ -1026,32 +1028,17 @@ Route::get('/updateee',function (){
 
 
 Route::get('/aaa',function (){
-//    $arr = json_decode(Storage::get('serverqc_trainings.json'));
-//    $insert = [];
-//    foreach ($arr as $a){
-//        array_push($insert,[
-//            'employee_no' => $a->employee_no,
-//            'slug' => $a->slug,
-//            'sequence_no' => $a->sequence_no,
-//            'title' => $a->title,
-//            'type' => $a->type,
-//            'date_from' => $a->date_from,
-//            'date_to' => $a->date_to,
-//            'detailed_period' => $a->detailed_period,
-//            'hours' => $a->hours,
-//            'conducted_by' => $a->conducted_by,
-//            'venue' => $a->venue,
-//            'remarks' => $a->remarks,
-//            'is_relevant' => $a->is_relevant,
-//            'created_at' => $a->created_at,
-//            'updated_at' => $a->updated_at,
-//            'ip_created' => $a->ip_created,
-//            'ip_updated' => $a->ip_updated,
-//            'user_created' => $a->user_created,
-//            'user_updated' => $a->user_updated,
-//            'deleted_at' => $a->deleted_at,
-//            'system_remarks' => 'QC Already',
-//        ]);
+//    $courses = \App\Models\Course::query()->get();
+//    $arr = [];
+//    foreach ($courses as $course){
+//        $arr[$course->course_id] = $course->name;
 //    }
-
+//    $as = \App\Models\Applicant::query()->where('course','=',null)->get();
+//    foreach ($as as $a){
+//        if(isset($arr[$a->course_id])){
+//            $a->course = $arr[$a->course_id];
+//            $a->save();
+//        }
+//    }
+//    return $as;
 });

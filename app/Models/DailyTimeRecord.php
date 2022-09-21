@@ -19,5 +19,8 @@ class DailyTimeRecord extends Model
         'ot_out' => null,
     ];
 
+    public function edits(){
+        return $this->hasMany(DTREdits::class,'dtr_slug','slug');
+    }
 
 }

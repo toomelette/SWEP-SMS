@@ -86,7 +86,12 @@
             margin: 2%;
         }
          {{--.dtr-table tr  td:nth-child(2),td:nth-child(3),td:nth-child(4),td:nth-child(5),td:nth-child(6),td:nth-child(7) { background: url("{{asset('images/wm.png')}}");}--}}
-
+        .text-blue{
+             color: blue;
+         }
+        .text-red{
+            color: red;
+        }
     </style>
 
     <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -132,6 +137,7 @@
             @for($a = 1 ; $a <= $days_in_this_month; $a++)
 
                 @php($date = sprintf('%02d', $a))
+                @php($fullDate = $month.'-'.$date)
                 @if(isset($dtr_array[$month.'-'.$date]))
                     @php($late = $late + $dtr_array[$month.'-'.$date]->late)
                     @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
@@ -148,10 +154,37 @@
                                 @endif>
                             {{$date}}
                         </td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}</td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}</td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}</td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
+
+                        <td>
+                            @if(isset($dtr_edits_array[$fullDate]['am_in']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['am_in']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}
+                            @endif
+                        </td>
+                        <td >
+                            @if(isset($dtr_edits_array[$fullDate]['am_out']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['am_out']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}
+                            @endif
+
+                        </td>
+                        <td>
+                            @if(isset($dtr_edits_array[$fullDate]['pm_in']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_in']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}
+                            @endif
+                        </td>
+                        <td>
+                            @if(isset($dtr_edits_array[$fullDate]['pm_out']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_out']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}
+                            @endif
+                        </td>
+
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
                         <td>
@@ -297,8 +330,8 @@
             @php($saturdays= 0)
             @php($sundays = 0)
             @for($a = 1 ; $a <= $days_in_this_month; $a++)
-
                 @php($date = sprintf('%02d', $a))
+                @php($fullDate = $month.'-'.$date)
                 @if(isset($dtr_array[$month.'-'.$date]))
                     @php($late = $late + $dtr_array[$month.'-'.$date]->late)
                     @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
@@ -315,10 +348,37 @@
                                 @endif>
                             {{$date}}
                         </td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}</td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}</td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}</td>
-                        <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
+
+                        <td>
+                            @if(isset($dtr_edits_array[$fullDate]['am_in']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['am_in']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}
+                            @endif
+                        </td>
+                        <td >
+                            @if(isset($dtr_edits_array[$fullDate]['am_out']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['am_out']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}
+                            @endif
+
+                        </td>
+                        <td>
+                            @if(isset($dtr_edits_array[$fullDate]['pm_in']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_in']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}
+                            @endif
+                        </td>
+                        <td>
+                            @if(isset($dtr_edits_array[$fullDate]['pm_out']))
+                                <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_out']}}</span>
+                            @else
+                                {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}
+                            @endif
+                        </td>
+
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
                         <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
                         <td>

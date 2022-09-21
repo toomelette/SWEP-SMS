@@ -1,4 +1,9 @@
- @extends('layouts.modal-content')
+@php
+    $ud = \App\Models\UserData::query()->where('user_id','=',\Illuminate\Support\Facades\Auth::user()->user_id)
+            ->where('data','=','dtr_edit_intro')
+            ->first();
+@endphp
+@extends('layouts.modal-content')
 
 @section('modal-header')
 {{\Carbon\Carbon::parse($month)->format('F, Y')}} - {{strtoupper($employee->lastname)}}, {{strtoupper($employee->firstname)}} {{strtoupper($employee->name_ext)}}
@@ -16,7 +21,7 @@
         <input value="{{$bm_u_id}}" id="" name="bm_u_id" hidden>
         <input value="{{$month}}" name="month" hidden>
     </form>
-    <button class="btn btn-primary pull-right" id="print_dtr_btn"><i class="fa fa-print"></i> Print</button>
+    <button data-step="1" data-intro="Create Disbursement Voucher by using this button." class="btn btn-primary pull-right" id="print_dtr_btn"><i class="fa fa-print"></i> Print</button>
 {{--    <button type="submit" class="btn btn-primary pull-right download_btn" style="margin-bottom: 1rem"><i class="fa fa-download"></i> Download PDF </button>--}}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
@@ -51,15 +56,20 @@
                         @php($undertime = 0)
                         @php($saturdays= 0)
                         @php($sundays = 0)
+                        @php($intro_num = 0)
+
                         @for($a = 1 ; $a <= $days_in_this_month; $a++)
 
                             @php($date = sprintf('%02d', $a))
+                            @php($fullDate = $month.'-'.$date)
                             @if($month.'-'.$date == \Carbon\Carbon::now()->format('Y-m-d'))
                                 @php($mark = 'info')
                             @else
                                 @php($mark ='')
                             @endif
+{{--                            IF THIS DATE HAS A RECORD--}}
                             @if(isset($dtr_array[$month.'-'.$date]))
+
                                 @php($late =  $late + $dtr_array[$month.'-'.$date]->late)
                                 @php($undertime = $undertime + $dtr_array[$month.'-'.$date]->undertime)
                                 @if($dtr_array[$month.'-'.$date]->calculated == -1)
@@ -74,12 +84,41 @@
                                     <td>
                                         {{$date}}
                                     </td>
-                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}</td>
-                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}</td>
-                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}</td>
-                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}</td>
-                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}</td>
-                                    <td>{!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}</td>
+                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->am_in}}" data="{{$month}}-{{$date}}" data-type="am_in" title="Click to edit Time">
+                                        @if(isset($dtr_edits_array[$fullDate]['am_in']))
+                                            <span class="text-red">{{$dtr_edits_array[$fullDate]['am_in']}}</span>
+                                        @else
+                                            {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}
+                                        @endif
+                                    </td>
+                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->am_out}}" data="{{$month}}-{{$date}}" data-type="am_out" title="Click to edit Time">
+                                        @if(isset($dtr_edits_array[$fullDate]['am_out']))
+                                            <span class="text-red">{{$dtr_edits_array[$fullDate]['am_out']}}</span>
+                                        @else
+                                            {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_out) !!}
+                                        @endif
+
+                                    </td>
+                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->pm_in}}" data="{{$month}}-{{$date}}" data-type="pm_in" title="Click to edit Time">
+                                        @if(isset($dtr_edits_array[$fullDate]['pm_in']))
+                                            <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_in']}}</span>
+                                        @else
+                                            {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}
+                                        @endif
+                                    </td>
+                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->pm_out}}" data="{{$month}}-{{$date}}" data-type="pm_out" title="Click to edit Time">
+                                        @if(isset($dtr_edits_array[$fullDate]['pm_out']))
+                                            <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_out']}}</span>
+                                        @else
+                                            {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_out) !!}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_in) !!}
+                                    </td>
+                                    <td>
+                                        {!! __html::dtrTime($dtr_array[$month.'-'.$date]->ot_out) !!}
+                                    </td>
                                     <td>
                                         @if($dtr_array[$month.'-'.$date]->date != \Carbon\Carbon::now()->format('Y-m-d'))
                                             {!! $italic_op !!}
@@ -95,7 +134,7 @@
                                             {!! $italic_cl !!}
                                         @endif
                                     </td>
-                                    <td class="text-left">
+                                    <td class="text-left editable-remarks" id="a{{\Illuminate\Support\Str::random(8)}}" data="{{$month}}-{{$date}}" title="Click to edit remark">
                                         @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                             @php($saturdays++)
                                             SATURDAY
@@ -110,30 +149,24 @@
 {{--                                        @if($dtr_array[$month.'-'.$date]->calculated == -1)--}}
 {{--                                            <span class="text-danger">INC</span>--}}
 {{--                                        @endif--}}
+                                            <span class="text-red">{{$dtr_array[$month.'-'.$date]->remarks}}</span>
                                     </td>
                                 </tr>
                             @else
-                                @if(isset($holidays[$month.'-'.$date]))
-                                    <tr class="text-center {{$mark}}">
+                                @php($intro_num++)
+                                    <tr class="text-center {{$mark}} {{($intro_num == 1) ? 'first-empty-cell':''}}">
                                         <td>
                                             {{$date}}
                                         </td>
-                                        <td colspan="9"><b>{{$holidays[$month.'-'.$date]['type']}} </b> (<i>{{$holidays[$month.'-'.$date]['name']}}</i>)</td>
-                                    </tr>
-                                @else
-                                    <tr class="text-center {{$mark}}">
-                                        <td>
-                                            {{$date}}
-                                        </td>
+                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="am_in" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="am_out" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="pm_in" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="pm_out" title="Click to edit Time"></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-left">
+                                        <td class="text-left editable-remarks" id="a{{\Illuminate\Support\Str::random(8)}}" data="{{$month}}-{{$date}}" title="Click to edit remark">
                                             @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                                 @php($saturdays++)
                                                 SAT
@@ -142,13 +175,15 @@
                                                 @php($sundays++)
                                                 SUN
                                             @endif
+                                            @if(isset($holidays[$month.'-'.$date]))
+                                                <b>HOL</b>
+                                            @endif
 
                                         </td>
                                     </tr>
-                                @endif
                             @endif
                         @endfor
-                        </tbody>
+                        </tb    ody>
                     </table>
                 </div>
 
@@ -267,6 +302,7 @@
                         @endforeach
                     @endif
             ],
+
             editable  : false,
             droppable : false, // this allows things to be dropped onto the calendar !!!
             drop      : function (date, allDay) { // this function is called when something is dropped
@@ -295,6 +331,8 @@
 
             }
         })
+
+        $('#calendar').fullCalendar('gotoDate', '{{$fullDate}}');
 
         /* ADDING EVENTS */
         var currColor = '#3c8dbc' //Red by default
@@ -364,25 +402,10 @@
             }
         })
 
-        // e.preventDefault();
-        // Swal.fire({
-        //     title: "Enter your immediate supervisor's complete name:",
-        //     html: "<i class='fa fa-info'></i> You may leave this field blank.",
-        //     input: 'text',
-        //     showCancelButton: true
-        // }).then((result) => {
-        //     if (result.value) {
-        //         $("#sup_name").val(result.value);
-        //         $("#download_form").submit();
-        //         console.log("Result: " + result.value);
-        //     }
-        // });
 
     })
     $('#print_dtr_btn').click(function () {
-        // let btn = $(this);
-        // btn.children('i').removeClass('fa-print');
-        // btn.children('i').addClass('fa-spinner fa-spin');
+
         Swal.fire({
             icon: 'info',
             title: 'Please wait...',
@@ -403,6 +426,169 @@
             Swal.close();
             $('#print_frame').get(0).contentWindow.print();
         }
+
+        $(".editable-dtr").click(function () {
+            let btn = $(this);
+            let date = btn.attr('data');
+            btn.addClass('active');
+            Swal.fire({
+                title: 'Enter Time:',
+                html: '<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> Note:<br></span>' +
+                    'Edited Time Record must be supported with Permission slip or Timekeeping slip upon submission to the HR. ' +
+                    '<br><input id="time_record_input" value="'+btn.attr('val')+'" type="time" class="form-control time_input_dtr" autofocus>',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                backdrop : true,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-check"></i> Save Changes',
+                showLoaderOnConfirm: true,
+                preConfirm: (login) => {
+                    return $.ajax({
+                        url : '{{route('dashboard.dtr.update_time_record')}}',
+                        type: 'POST',
+                        data: {
+                            'date':date,
+                            'biometric_user_id':'{{$bm_u_id}}',
+                            'employee_no' : '{{$employee->employee_no}}',
+                            'time' : $("#time_record_input").val(),
+                            'type' : btn.attr('data-type'),
+                            'element_id' : btn.attr('id'),
+                        },
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                    })
+                    .then(response => {
+                        $("#"+response.element_id).removeClass('active');
+                        $("#"+response.element_id).html('<span class="text-red">'+response.time+'</span>');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        Swal.showValidationMessage(
+                            'Error : '+ error.responseJSON.message,
+                        )
+                    })
+                },
+                allowOutsideClick: false,
+                didClose : function () {
+                    $(".editable-dtr").each(function () {
+                        $(this).removeClass('active');
+                    });
+                },
+            }).then((result) => {
+                $(".editable-dtr").each(function () {
+                    $(this).removeClass('active');
+                });
+                if (result.isConfirmed) {
+                    notify('Time record successfully updated.');
+                }
+            })
+        });
+        
+        
+        $(".editable-remarks").click(function () {
+            let btn = $(this);
+            let date = btn.attr('data');
+            btn.addClass('active');
+
+            Swal.fire({
+                title: 'Edit remarks:',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html : 'Max of 10 characters.',
+                input : 'text',
+                backdrop : true,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-check"></i> Save Changes',
+                showLoaderOnConfirm: true,
+                preConfirm: (text) => {
+                    return $.ajax({
+                        url : '{{route('dashboard.dtr.update_remarks')}}',
+                        type: 'POST',
+                        data: {
+                            'date':date,
+                            'biometric_user_id':'{{$bm_u_id}}',
+                            'employee_no' : '{{$employee->employee_no}}',
+                            'remark' : text,
+                            'element_id' : btn.attr('id'),
+                        },
+                        headers: {
+                            {!! __html::token_header() !!}
+                        },
+                    })
+                        .then(response => {
+                            $("#"+response.element_id).removeClass('active');
+                            $("#"+response.element_id).html('<span class="text-red">'+response.remark+'</span>');
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            Swal.showValidationMessage(
+                                'Error : '+ error.responseJSON.message,
+                            )
+                        })
+                },
+                allowOutsideClick: false,
+                didClose : function () {
+                    $(".editable-remarks").each(function () {
+                        $(this).removeClass('active');
+                    });
+                }
+            }).then((result) => {
+                $(".editable-remarks").each(function () {
+                    $(this).removeClass('active');
+                });
+                if (result.isConfirmed) {
+                    notify('Time record successfully updated.');
+                }
+            })
+        });
+
+        $('body').on('click','.swal2-cancel',function () {
+
+            $(".editable-dtr").each(function () {
+                $(this).removeClass('active');
+            })
+            $(".editable-remarks").each(function () {
+                $(this).removeClass('active');
+            });
+        })
     </script>
+    @if(empty($ud))
+    <script>
+        introJs().setOptions({
+            steps: [
+                {
+                    intro: "<h4 class='no-margin'>Hi there!</h4>" +
+                        " <br> The next steps will show you how to <b>EDIT</b> your DTR.<br><br>" +
+                        " Please be reminded that edited time records must be supported with a Permission Slip (PS) or Timekeeping Slip upon submission of the DTR."
+                }, {
+                    element: document.querySelector('.first-empty-cell > .editable-dtr'),
+                    intro: "Click here to edit time record."
+                },{
+                    element: document.querySelector('.first-empty-cell > .editable-remarks'),
+                    intro: "You can also add your remarks by clicking here.<br><br> Editable cells are indicated with a light yellow background."
+                },
+            ],
+            showProgress: true,
+            exitOnOverlayClick: false,
+        }).onbeforeexit(function () {
+            $.ajax({
+                url : '{{route("dashboard.ajax.post","dtr_edit_intro")}}',
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            })
+        }).start();
+    </script>
+    @endif
 @endsection
 

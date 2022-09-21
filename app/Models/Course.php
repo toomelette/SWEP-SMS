@@ -13,7 +13,6 @@ class Course extends Model{
     use Sortable, LogsActivity;
 
 	protected $table = 'hr_courses';
-
     protected $dates = ['created_at', 'updated_at'];
 
     public $sortable = ['acronym', 'name'];

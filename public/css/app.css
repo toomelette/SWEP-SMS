@@ -616,3 +616,55 @@ ol.example li.placeholder:before {
 .tt-cursor{
     background-color: lightgrey;
 }
+
+
+.nav-stacked .active{
+    background-color: #3c8dbc;
+}
+.nav-stacked li{
+    background-color: #fafafa;
+    border-left: 3px solid #747474;
+}
+
+.nav-pills>li.active>a{
+    color: white;
+}
+
+.tab-container{
+    background-color: #fafafa;
+    border-left: 3px solid #8ba896;
+}
+
+.editable-dtr{
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #fffef6;
+}
+
+.editable-dtr:hover{
+    background-color: darkseagreen;
+}
+
+.editable-dtr.active{
+    background-color: darkseagreen !important;
+}
+
+.time_input_dtr{
+    width: 50%;
+    margin: 20px auto 10px;
+}
+
+
+.editable-remarks{
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: #fffef6;
+}
+
+.editable-remarks:hover{
+    background-color: darkseagreen;
+}
+
+.editable-remarks.active{
+    background-color: darkseagreen !important;
+}

@@ -8,6 +8,7 @@ use App\Models\BiometricDevices;
 use App\Models\CronLogs;
 use App\Models\DailyTimeRecord;
 use App\Models\DTR;
+use App\Models\DTREdits;
 use App\Models\Employee;
 use App\Models\Holiday;
 use App\Models\JoEmployees;
@@ -19,6 +20,7 @@ use App\Swep\ViewHelpers\__html;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -95,7 +97,7 @@ class DTRController extends  Controller
                     $destroy_route = "'".route("dashboard.menu.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
 
-                    $route = route('dashboard.employee.index')."?q=".$data->employee_no;
+                    $route = route('dashboard.employee.index')."?find=".$data->employee_no;
 
                     return '<div class="btn-group">
                                 <button type="button" class="btn btn-default btn-sm show_dtr_btn"  data="'.$data->slug.'" data-toggle="modal" data-target="#show_dtr_modal" title="" data-placement="left" data-original-title="View more">
@@ -186,7 +188,7 @@ class DTRController extends  Controller
                 $bm_u_id = $request->bm_u_id;
             }
 
-            $dtrs = DailyTimeRecord::query()->where('biometric_user_id','=',$request->bm_u_id)->
+            $dtrs = DailyTimeRecord::with('edits')->where('biometric_user_id','=',$request->bm_u_id)->
                 where('date','like',$request->month.'%')->orderBy('date','asc')->get();
             $dtr_array = [];
             if($dtrs->count() > 0){
@@ -212,6 +214,18 @@ class DTRController extends  Controller
                 ->where('user','=',$request->bm_u_id)
                 ->whereBetween('timestamp',[$first_day,$first_day_next_month])
                 ->get();
+            $dtr_edits = DTREdits::query()
+                ->where('biometric_user_id','=',$request->bm_u_id)
+                ->where('date','like',$request->month.'%')
+                ->orderBy('updated_at','asc')
+                ->get();
+            $dtr_edits_array = [];
+            if(!empty($dtr_edits)){
+                foreach ($dtr_edits as $dtr_edit){
+                    $dtr_edits_array[$dtr_edit->date][$dtr_edit->type] = $dtr_edit->time;
+                }
+            }
+
             return view('dashboard.dtr.my_dtr_preview')->with([
                 'month' => $request->month,
                 'dtr_array' =>  $dtr_array,
@@ -220,6 +234,7 @@ class DTRController extends  Controller
                 'biometric_values' => $this->dtr_service->biometric_values(true),
                 'bm_u_id' => $request->bm_u_id,
                 'employee' => $employee,
+                'dtr_edits_array' => $dtr_edits_array,
             ]);
         }else{
             abort(404);
@@ -260,7 +275,17 @@ class DTRController extends  Controller
         }
 
         $holidays = $this->holidaysArray($request->month);
-
+        $dtr_edits = DTREdits::query()
+            ->where('biometric_user_id','=',$request->bm_u_id)
+            ->where('date','like',$request->month.'%')
+            ->orderBy('updated_at','asc')
+            ->get();
+        $dtr_edits_array = [];
+        if(!empty($dtr_edits)){
+            foreach ($dtr_edits as $dtr_edit){
+                $dtr_edits_array[$dtr_edit->date][$dtr_edit->type] = $dtr_edit->time;
+            }
+        }
 
         $data = [
             'month' => $request->month,
@@ -268,6 +293,7 @@ class DTRController extends  Controller
             'holidays' => $holidays,
             'employee' => $employee,
             'sup_name' => $request->sup_name,
+            'dtr_edits_array' => $dtr_edits_array,
         ];
 
         //return $request;
@@ -394,4 +420,80 @@ class DTRController extends  Controller
             }
         }
     }
+
+    public function updateTimeRecord(Request $request){
+
+        if(!$request->has('time') || $request->time == null){
+            abort(503,'Time field is required.');
+        }
+        $daily_time_record = DailyTimeRecord::query()
+            ->where('biometric_user_id','=',$request->biometric_user_id)
+            ->where('date',$request->date)
+            ->first();
+        $type = $request->type;
+        if(empty($daily_time_record)){
+            $d = new DailyTimeRecord;
+            $d->slug = Str::random();
+            $d->biometric_user_id = $request->biometric_user_id;
+            $d->employee_no = $request->employee_no;
+            $d->date = $request->date;
+            $d->$type = Carbon::parse($request->time)->format('H:i:s');
+            $d->calculated = null;
+            $d->save();
+            $slug = $d->slug;
+        }else{
+            $daily_time_record->$type = Carbon::parse($request->time)->format('H:i:s');
+            $daily_time_record->calculated = null;
+            $daily_time_record->save();
+
+            $slug = $daily_time_record->slug;
+        }
+
+        $d_e = DTREdits::query()->where('slug','=',$slug)->first();
+
+        if(empty($d_e)){
+            $a = new DTREdits;
+            $a->dtr_slug = $slug;
+            $a->biometric_user_id = $request->biometric_user_id;
+            $a->time = $request->time;
+            $a->type = $request->type;
+            $a->date = $request->date;
+            $a->save();
+        }
+        return [
+            'element_id' => $request->element_id,
+            'time' => Carbon::parse($request->time)->format('H:i'),
+        ];
+
+    }
+
+    public function updateRemarks(Request $request){
+        $request->validate(['remark' => 'required|string|max:10']);
+        if(Auth::user()->employee->employee_no !== $request->employee_no){
+            abort(503,'You are not allowed to perform this action.');
+        }
+        $dtr = DailyTimeRecord::query()
+            ->where('biometric_user_id','=',$request->biometric_user_id)
+            ->where('date','=',$request->date)
+            ->first();
+        if(!empty($dtr)){
+            $dtr->remarks = $request->remark;
+            $dtr->remarks_updated_at = Carbon::now();
+            $dtr->remarks_user_updated = Auth::user()->user_id;
+            $dtr->save();
+            return $request->only(['element_id','remark']);
+        }else{
+            $d = new DailyTimeRecord;
+            $d->employee_no = $request->employee_no;
+            $d->biometric_user_id = $request->biometric_user_id;
+            $d->date = $request->date;
+            $d->remarks = $request->remark;
+            $d->remarks_updated_at = Carbon::now();
+            $d->remarks_user_updated = Auth::user()->user_id;
+            $d->save();
+            return $request->only(['element_id','remark']);
+        }
+
+    }
+
 }

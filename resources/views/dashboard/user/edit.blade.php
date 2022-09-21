@@ -7,152 +7,257 @@ Edit
 @endsection
 
 @section('modal-body')
-<div class="row">
-    <div class="col-md-3">
+    <div class="nav-tabs">
         <div class="row">
-            {!! __form::textbox(
-              '12 firstname', 'firstname', 'text', 'Firstname *', 'Firstname', $user->firstname, '', '', ''
-            ) !!}
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li role="presentation" class="active"><a href="#tab_1_{{$rand}}" data-toggle="tab" aria-expanded="false">ACCESS</a></li>
 
-            {!! __form::textbox(
-                  '12 middlename', 'middlename', 'text', 'Middlename *', 'Middlename', $user->middlename, '', '', ''
-                ) !!}
-
-            {!! __form::textbox(
-              '12 lastname', 'lastname', 'text', 'Lastname *', 'Lastname', $user->lastname, '', '', ''
-            ) !!}
-
-
-
-            {!! __form::textbox(
-                  '12 email', 'email', 'email', 'Email *', 'Email', $user->email, '', '', ''
-                ) !!}
-
-            {!! __form::textbox(
-              '12 position', 'position', 'text', 'Position *', 'Position', $user->position, '', '', ''
-            ) !!}
-
-
-        </div>
-        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-            Access to Employees
-        </p>
-
-        <div class="row">
-            @foreach(\App\Swep\Helpers\Arrays::accessToEmployees() as $item)
-                <div class="col-md-6">
-                    <div class="checkbox no-margin" >
-                        <label>
-                            <input type="checkbox" name="accessToEmployees[]" value="{{$item}}" {{(in_array($item, $user->getAccessToEmployees())) ? 'checked' : ''}}> {{$item}}
-                        </label>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-            Access to Documents
-        </p>
-
-        <div class="row">
-            @foreach(\App\Swep\Helpers\Arrays::accessToDocuments() as $item)
-                <div class="col-md-6">
-                    <div class="radio no-margin">
-                        <label>
-                            <input type="radio" name="accessToDocuments" value="{{$item}}" {{($user->getAccessToDocuments() == $item) ? 'checked':''}}>
-                            {{$item}}
-                        </label>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="col-md-9">
-
-        @php($count = 0)
-        @foreach($by_category as $category => $menus)
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border">
-                    <p class="box-title-sm no-margin"> {{($category == null) ? 'No Category' : $category}}</p>
-                    <div class="box-tools pull-right">
-{{--                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
-{{--                        </button>--}}
-                    </div>
-                </div>
-                <div class="box-body" style="">
-                    <div class="row">
-                            @foreach($menus as $menu)
-                            <div class="col-md-3">
-                                @if($menu->route == 'dashboard.home')
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <i class="fa {{$menu->icon}}"></i>
-                                            {{$menu->name}}
-                                        </div>
-                                        <div class="panel-body" style="min-height: 210px">
-                                            <div class="row">
-                                                {!!
-                                                    __form::select_static2('12', 'dash_type', 'Dashboard type',$user->dash,
-                                                    [
-                                                        'HRU Dashboard' => 'hru',
-                                                        'RECORDS Dashboard' => 'records',
-                                                    ]
-                                                    , '', '', '', '')
-                                                   !!}
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <i class="fa {{$menu->icon}}"></i>
-                                            {{$menu->name}}
-                                            <div class="pull-right">
-                                                <button class="btn btn-xs btn-default clear_btn" type="button">Clear</button>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body" style="min-height: 180px">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <select multiple="" name="submenus[{{$menu->menu_id}}][]" class="form-control select_multiple" size="6">
-                                                        @if($menu->submenu->count() > 0)
-                                                            @foreach($menu->submenu as $submenu)
-                                                                <option value="{{$submenu->submenu_id}}" @if(isset($user_submenus_arr[$submenu->submenu_id])) selected @endif>
-                                                                    {{$submenu->name}}
-                                                                </option>
-                                                            @endforeach
-
-                                                        @endif
-                                                    </select>
-                                                    <span class="help-block" style="font-size: 12px; font-family: 'Product Sans Light'">No module selected</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress xs">
-                                                <div class="progress-bar bg-green" style="width: 0%;" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-
-                            </div>
-
+                            @foreach($by_category as $category => $menus)
+                                <li role="presentation" class=""><a href="#tab_{{($category == null) ? 'NoCategory' : $category}}_{{$rand}}" data-toggle="tab" aria-expanded="false">{{($category == null) ? 'No Category' : \App\Swep\ViewHelpers\__html::sidenav_labeler($category)}}</a></li>
                             @endforeach
 
+
+                        </ul>
                     </div>
                 </div>
             </div>
-        @endforeach
+            <div class="col-md-10">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1_{{$rand}}">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                    Access to Employees
+                                </p>
+
+                                <div class="row">
+                                    @foreach(\App\Swep\Helpers\Arrays::accessToEmployees() as $item)
+                                        <div class="col-md-6">
+                                            <div class="checkbox no-margin" >
+                                                <label>
+                                                    <input type="checkbox" name="accessToEmployees[]" value="{{$item}}" {{(in_array($item, $user->getAccessToEmployees())) ? 'checked' : ''}}> {{$item}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                    Access to Documents
+                                </p>
+
+                                <div class="row">
+                                    @foreach(\App\Swep\Helpers\Arrays::accessToDocuments() as $item)
+                                        <div class="col-md-6">
+                                            <div class="radio no-margin">
+                                                <label>
+                                                    <input type="radio" name="accessToDocuments" value="{{$item}}" {{($user->getAccessToDocuments() == $item) ? 'checked':''}}>
+                                                    {{$item}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
 
 
-        @php($count = 0)
+                    </div>
+                    @foreach($by_category as $category => $menus)
+                        <div class="tab-pane" id="tab_{{($category == null) ? 'NoCategory' : $category}}_{{$rand}}">
+                            <h4>{{($category == null) ? 'No Category' : \App\Swep\ViewHelpers\__html::sidenav_labeler($category)}}</h4>
+                            <div class="row">
+                                @foreach($menus as $menu)
+                                    <div class="col-md-3">
+                                        @if($menu->route == 'dashboard.home')
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <i class="fa {{$menu->icon}}"></i>
+                                                    {{$menu->name}}
+                                                </div>
+                                                <div class="panel-body" style="min-height: 210px">
+                                                    <div class="row">
+                                                        {!!
+                                                            __form::select_static2('12', 'dash_type', 'Dashboard type',$user->dash,
+                                                            [
+                                                                'HRU Dashboard' => 'hru',
+                                                                'RECORDS Dashboard' => 'records',
+                                                            ]
+                                                            , '', '', '', '')
+                                                           !!}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <i class="fa {{$menu->icon}}"></i>
+                                                    {{$menu->name}}
+                                                    <div class="pull-right">
+                                                        <button class="btn btn-xs btn-default clear_btn" type="button">Clear</button>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-body" style="min-height: 180px">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <select multiple="" name="submenus[{{$menu->menu_id}}][]" class="form-control select_multiple" size="6">
+                                                                @if($menu->submenu->count() > 0)
+                                                                    @foreach($menu->submenu as $submenu)
+                                                                        <option value="{{$submenu->submenu_id}}" @if(isset($user_submenus_arr[$submenu->submenu_id])) selected @endif>
+                                                                            {{$submenu->name}}
+                                                                        </option>
+                                                                    @endforeach
+
+                                                                @endif
+                                                            </select>
+                                                            <span class="help-block" style="font-size: 12px; font-family: 'Product Sans Light'">No module selected</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress xs">
+                                                        <div class="progress-bar bg-green" style="width: 0%;" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                    </div>
+
+                                @endforeach
+                            </div>
+
+                        </div>
+                    @endforeach
 
 
+                </div>
+            </div>
+        </div>
 
 
     </div>
-</div>
+
+
+
+{{--<div class="row">--}}
+{{--    <div class="col-md-3">--}}
+{{--        <div class="row">--}}
+{{--            {!! __form::textbox(--}}
+{{--              '12 firstname', 'firstname', 'text', 'Firstname *', 'Firstname', $user->firstname, '', '', ''--}}
+{{--            ) !!}--}}
+
+{{--            {!! __form::textbox(--}}
+{{--                  '12 middlename', 'middlename', 'text', 'Middlename *', 'Middlename', $user->middlename, '', '', ''--}}
+{{--                ) !!}--}}
+
+{{--            {!! __form::textbox(--}}
+{{--              '12 lastname', 'lastname', 'text', 'Lastname *', 'Lastname', $user->lastname, '', '', ''--}}
+{{--            ) !!}--}}
+
+
+
+{{--            {!! __form::textbox(--}}
+{{--                  '12 email', 'email', 'email', 'Email *', 'Email', $user->email, '', '', ''--}}
+{{--                ) !!}--}}
+
+{{--            {!! __form::textbox(--}}
+{{--              '12 position', 'position', 'text', 'Position *', 'Position', $user->position, '', '', ''--}}
+{{--            ) !!}--}}
+
+
+{{--        </div>--}}
+
+{{--    <div class="col-md-9">--}}
+
+{{--        @php($count = 0)--}}
+{{--        @foreach($by_category as $category => $menus)--}}
+{{--            <div class="box box-sm box-default box-solid">--}}
+{{--                <div class="box-header with-border">--}}
+{{--                    <p class="box-title-sm no-margin"> {{($category == null) ? 'No Category' : $category}}</p>--}}
+{{--                    <div class="box-tools pull-right">--}}
+{{--                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="box-body" style="">--}}
+{{--                    <div class="row">--}}
+{{--                            @foreach($menus as $menu)--}}
+{{--                            <div class="col-md-3">--}}
+{{--                                @if($menu->route == 'dashboard.home')--}}
+{{--                                    <div class="panel panel-default">--}}
+{{--                                        <div class="panel-heading">--}}
+{{--                                            <i class="fa {{$menu->icon}}"></i>--}}
+{{--                                            {{$menu->name}}--}}
+{{--                                        </div>--}}
+{{--                                        <div class="panel-body" style="min-height: 210px">--}}
+{{--                                            <div class="row">--}}
+{{--                                                {!!--}}
+{{--                                                    __form::select_static2('12', 'dash_type', 'Dashboard type',$user->dash,--}}
+{{--                                                    [--}}
+{{--                                                        'HRU Dashboard' => 'hru',--}}
+{{--                                                        'RECORDS Dashboard' => 'records',--}}
+{{--                                                    ]--}}
+{{--                                                    , '', '', '', '')--}}
+{{--                                                   !!}--}}
+
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @else--}}
+{{--                                    <div class="panel panel-default">--}}
+{{--                                        <div class="panel-heading">--}}
+{{--                                            <i class="fa {{$menu->icon}}"></i>--}}
+{{--                                            {{$menu->name}}--}}
+{{--                                            <div class="pull-right">--}}
+{{--                                                <button class="btn btn-xs btn-default clear_btn" type="button">Clear</button>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="panel-body" style="min-height: 180px">--}}
+{{--                                            <div class="row">--}}
+{{--                                                <div class="col-sm-12">--}}
+{{--                                                    <select multiple="" name="submenus[{{$menu->menu_id}}][]" class="form-control select_multiple" size="6">--}}
+{{--                                                        @if($menu->submenu->count() > 0)--}}
+{{--                                                            @foreach($menu->submenu as $submenu)--}}
+{{--                                                                <option value="{{$submenu->submenu_id}}" @if(isset($user_submenus_arr[$submenu->submenu_id])) selected @endif>--}}
+{{--                                                                    {{$submenu->name}}--}}
+{{--                                                                </option>--}}
+{{--                                                            @endforeach--}}
+
+{{--                                                        @endif--}}
+{{--                                                    </select>--}}
+{{--                                                    <span class="help-block" style="font-size: 12px; font-family: 'Product Sans Light'">No module selected</span>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="progress xs">--}}
+{{--                                                <div class="progress-bar bg-green" style="width: 0%;" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+
+{{--                            </div>--}}
+
+{{--                            @endforeach--}}
+
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endforeach--}}
+
+
+{{--        @php($count = 0)--}}
+
+
+
+
+{{--    </div>--}}
+{{--</div>--}}
 @endsection
 
 

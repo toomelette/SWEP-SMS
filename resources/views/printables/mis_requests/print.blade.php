@@ -91,7 +91,7 @@
         <div style="width: 75%; float: right">
             <p class="no-margin text-strong">SUGAR REGULATORY ADMINISTRATION</p>
             <p class="no-margin">PLANNING, POLICY, AND SPECIAL PROJECTS DEPARTMENT</p>
-            <p class="no-margin text-strong">MIS SECTION - VISAYAS</p>
+            <p class="no-margin text-strong">MIS SECTION - {{env('SERVER_LOCATION','')}}</p>
         </div>
     </div>
 

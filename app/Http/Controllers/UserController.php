@@ -176,7 +176,7 @@ class UserController extends Controller{
                             if(!Hash::check($default_pword,$data->password)){
                                 $add = '<i class="fa fa-lock text-muted" title="The user has already changed its password."></i>';
                             }
-                            return strtoupper($data->lastname.', '.$data->firstname) .' '.$add;
+                            return strtoupper($data->employee->lastname.', '.$data->employee->firstname) .' '.$add;
                         }
                         return $data->lastname.', '.$data->firstname;
                     })

@@ -16,6 +16,7 @@ use App\Swep\Helpers\Helper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Rats\Zkteco\Lib\ZKTeco;
 
 class DTRService extends BaseService
@@ -120,6 +121,7 @@ class DTRService extends BaseService
                     $db_col = $values[$dtr_raw->type];
                     if(empty($dtr_check)){
                         $dtr = new DailyTimeRecord;
+                        $dtr->slug = Str::random(30);
                         $dtr->$db_col = Carbon::parse($dtr_raw->timestamp)->format('H:i');
                         $dtr->date = Carbon::parse($dtr_raw->timestamp)->format('Y-m-d');
                         $dtr->employee_no = $employees->employee_no;
@@ -174,58 +176,76 @@ class DTRService extends BaseService
                 $late = 0;
                 $undertime = 0;
                 $no_of_computed++;
-                $p_employee = Employee::query()->select('lastname','firstname',DB::raw('"PERM" as type'))->where('employee_no', '=' ,$dtr->employee_no);
-                $jo_employee = JoEmployees::query()->select('lastname','firstname',DB::raw('"JO" as type'))->where('employee_no', '=' ,$dtr->employee_no);
-                $all_employees = $p_employee->union($jo_employee);
-                $employee = $all_employees->first();
-//              $employee->type = 'PERM';
-                if($employee->type == 'JO'){
-                    $latest_time_in = $jo_latest_time_in;
-                    $earliest_time_out = $jo_earliest_time_out;
-                }
+//                $p_employee = Employee::query()->select('lastname','firstname',DB::raw('"PERM" as type'))->where('employee_no', '=' ,$dtr->employee_no);
+//                $jo_employee = JoEmployees::query()->select('lastname','firstname',DB::raw('"JO" as type'))->where('employee_no', '=' ,$dtr->employee_no);
+//                $all_employees = $p_employee->union($jo_employee);
+//                $employee = $all_employees->first();
+////              $employee->type = 'PERM';
+//                if($employee->type == 'JO'){
+//                    $latest_time_in = $jo_latest_time_in;
+//                    $earliest_time_out = $jo_earliest_time_out;
+//                }
+//
+//                if($employee->type == 'PERM'){
+//                    $latest_time_in = $perm_latest_time_in;
+//                    if($dtr->am_in == null || $dtr->am_in == '' || $dtr->am_in > $latest_time_in){
+//                        $earliest_time_out = '18:00';
+//                    }else{
+//                        $earliest_time_out = Carbon::parse($dtr->am_in)->addHours(9)->format('H:i');
+//                    }
+//                }
 
-                if($employee->type == 'PERM'){
-                    $latest_time_in = $perm_latest_time_in;
-                    if($dtr->am_in == null || $dtr->am_in == '' || $dtr->am_in > $latest_time_in){
-                        $earliest_time_out = '18:00';
-                    }else{
-                        $earliest_time_out = Carbon::parse($dtr->am_in)->addHours(9)->format('H:i');
+                $employee = Employee::query()->select('lastname','firstname','locations')->where('employee_no', '=' ,$dtr->employee_no)->first();
+                if(!empty($employee)){
+                    if($employee->locations == 'COS-VISAYAS' || $employee->locations == 'COS-LUZMIN'){
+                        $latest_time_in = $jo_latest_time_in;
+                        $earliest_time_out = $jo_earliest_time_out;
                     }
+
+                    if($employee->locations == 'VISAYAS' || $employee->locations == 'LUZON/MINDANAO'){
+                        $latest_time_in = $perm_latest_time_in;
+                        if($dtr->am_in == null || $dtr->am_in == '' || $dtr->am_in > $latest_time_in){
+                            $earliest_time_out = '18:00';
+                        }else{
+                            $earliest_time_out = Carbon::parse($dtr->am_in)->addHours(9)->format('H:i');
+                        }
+                    }
+                    //AM IN
+                    if($dtr->am_in > $latest_time_in){
+                        $diff = Carbon::parse($dtr->am_in)->diffInMinutes($latest_time_in);
+                        $late = $late+$diff;
+                    }
+
+                    //PM IN
+                    if($dtr->pm_in > '13:00'){
+                        $diff = Carbon::parse($dtr->pm_in)->diffInMinutes('13:00');
+                        $late = $late + $diff;
+                    }
+
+                    //AM OUT
+                    if($dtr->am_out < '12:00'){
+                        $diff = Carbon::parse($dtr->am_out)->diffInMinutes('12:00');
+                        $undertime = $undertime + $diff;
+                    }
+
+                    //PM OUT
+                    if($dtr->pm_out < $earliest_time_out){
+                        $diff = Carbon::parse($dtr->pm_out)->diffInMinutes($earliest_time_out);
+                        $undertime = $undertime + $diff;
+                    }
+
+                    $dtr->calculated = 1;
+                    if(empty($dtr->am_in) || empty($dtr->am_out) || empty($dtr->pm_in) || empty($dtr->pm_out) || $dtr->am_in == '00:00:00' || $dtr->am_out == '00:00:00' || $dtr->pm_in == '00:00:00' || $dtr->pm_out == '00:00:00'){
+                        $dtr->calculated = -1;
+                    }
+                    $dtr->late = $late;
+                    $dtr->undertime = $undertime;
+                    $dtr->save();
                 }
 
-                //AM IN
-                if($dtr->am_in > $latest_time_in){
-                    $diff = Carbon::parse($dtr->am_in)->diffInMinutes($latest_time_in);
-                    $late = $late+$diff;
 
 
-                }
 
-                //PM IN
-                if($dtr->pm_in > '13:00'){
-                    $diff = Carbon::parse($dtr->pm_in)->diffInMinutes('13:00');
-                    $late = $late + $diff;
-                }
-
-                //AM OUT
-                if($dtr->am_out < '12:00'){
-                    $diff = Carbon::parse($dtr->am_out)->diffInMinutes('12:00');
-                    $undertime = $undertime + $diff;
-                }
-
-                //PM OUT
-                if($dtr->pm_out < $earliest_time_out){
-                    $diff = Carbon::parse($dtr->pm_out)->diffInMinutes($earliest_time_out);
-                    $undertime = $undertime + $diff;
-                }
-
-                $dtr->calculated = 1;
-                if(empty($dtr->am_in) || empty($dtr->am_out) || empty($dtr->pm_in) || empty($dtr->pm_out) || $dtr->am_in == '00:00:00' || $dtr->am_out == '00:00:00' || $dtr->pm_in == '00:00:00' || $dtr->pm_out == '00:00:00'){
-                    $dtr->calculated = -1;
-                }
-                $dtr->late = $late;
-                $dtr->undertime = $undertime;
-                $dtr->save();
             }
             if($no_of_computed > 0){
                 $cl = new CronLogs;
