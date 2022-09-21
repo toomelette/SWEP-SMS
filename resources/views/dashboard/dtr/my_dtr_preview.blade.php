@@ -2,6 +2,13 @@
     $ud = \App\Models\UserData::query()->where('user_id','=',\Illuminate\Support\Facades\Auth::user()->user_id)
             ->where('data','=','dtr_edit_intro')
             ->first();
+    if($employee->biometric_user_id !== \Illuminate\Support\Facades\Auth::user()->employee->biometric_user_id){
+        $editable_class = '';
+        $editable_remarks_class = '';
+    }else{
+        $editable_class = 'editable-dtr';
+        $editable_remarks_class = 'editable-remarks';
+    }
 @endphp
 @extends('layouts.modal-content')
 
@@ -84,14 +91,14 @@
                                     <td>
                                         {{$date}}
                                     </td>
-                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->am_in}}" data="{{$month}}-{{$date}}" data-type="am_in" title="Click to edit Time">
+                                    <td  id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{$dtr_array[$month.'-'.$date]->am_in}}" data="{{$month}}-{{$date}}" data-type="am_in" title="Click to edit Time">
                                         @if(isset($dtr_edits_array[$fullDate]['am_in']))
                                             <span class="text-red">{{$dtr_edits_array[$fullDate]['am_in']}}</span>
                                         @else
                                             {!! __html::dtrTime($dtr_array[$month.'-'.$date]->am_in) !!}
                                         @endif
                                     </td>
-                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->am_out}}" data="{{$month}}-{{$date}}" data-type="am_out" title="Click to edit Time">
+                                    <td  id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{$dtr_array[$month.'-'.$date]->am_out}}" data="{{$month}}-{{$date}}" data-type="am_out" title="Click to edit Time">
                                         @if(isset($dtr_edits_array[$fullDate]['am_out']))
                                             <span class="text-red">{{$dtr_edits_array[$fullDate]['am_out']}}</span>
                                         @else
@@ -99,14 +106,14 @@
                                         @endif
 
                                     </td>
-                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->pm_in}}" data="{{$month}}-{{$date}}" data-type="pm_in" title="Click to edit Time">
+                                    <td  id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{$dtr_array[$month.'-'.$date]->pm_in}}" data="{{$month}}-{{$date}}" data-type="pm_in" title="Click to edit Time">
                                         @if(isset($dtr_edits_array[$fullDate]['pm_in']))
                                             <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_in']}}</span>
                                         @else
                                             {!! __html::dtrTime($dtr_array[$month.'-'.$date]->pm_in) !!}
                                         @endif
                                     </td>
-                                    <td  id="{{Str::random(8)}}" class="editable-dtr" val="{{$dtr_array[$month.'-'.$date]->pm_out}}" data="{{$month}}-{{$date}}" data-type="pm_out" title="Click to edit Time">
+                                    <td  id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{$dtr_array[$month.'-'.$date]->pm_out}}" data="{{$month}}-{{$date}}" data-type="pm_out" title="Click to edit Time">
                                         @if(isset($dtr_edits_array[$fullDate]['pm_out']))
                                             <span class="text-red">{{$dtr_edits_array[$fullDate]['pm_out']}}</span>
                                         @else
@@ -134,7 +141,7 @@
                                             {!! $italic_cl !!}
                                         @endif
                                     </td>
-                                    <td class="text-left editable-remarks" id="a{{\Illuminate\Support\Str::random(8)}}" data="{{$month}}-{{$date}}" title="Click to edit remark">
+                                    <td class="text-left {{$editable_remarks_class}}" id="a{{\Illuminate\Support\Str::random(8)}}" data="{{$month}}-{{$date}}" title="Click to edit remark">
                                         @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                             @php($saturdays++)
                                             SATURDAY
@@ -158,15 +165,15 @@
                                         <td>
                                             {{$date}}
                                         </td>
-                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="am_in" title="Click to edit Time"></td>
-                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="am_out" title="Click to edit Time"></td>
-                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="pm_in" title="Click to edit Time"></td>
-                                        <td id="{{Str::random(8)}}" class="editable-dtr" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="pm_out" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="am_in" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="am_out" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="pm_in" title="Click to edit Time"></td>
+                                        <td id="{{Str::random(8)}}" class="{{$editable_class}}" val="{{\Carbon::now()->format('H:i')}}" data="{{$month}}-{{$date}}" data-type="pm_out" title="Click to edit Time"></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-left editable-remarks" id="a{{\Illuminate\Support\Str::random(8)}}" data="{{$month}}-{{$date}}" title="Click to edit remark">
+                                        <td class="text-left {{$editable_remarks_class}}" id="a{{\Illuminate\Support\Str::random(8)}}" data="{{$month}}-{{$date}}" title="Click to edit remark">
                                             @if(\Carbon\Carbon::parse($month.'-'.$date)->format('w') == 6)
                                                 @php($saturdays++)
                                                 SAT
@@ -427,6 +434,7 @@
             $('#print_frame').get(0).contentWindow.print();
         }
 
+    @if($employee->biometric_user_id === \Illuminate\Support\Facades\Auth::user()->employee->biometric_user_id)
         $(".editable-dtr").click(function () {
             let btn = $(this);
             let date = btn.attr('data');
@@ -459,16 +467,16 @@
                             {!! __html::token_header() !!}
                         },
                     })
-                    .then(response => {
-                        $("#"+response.element_id).removeClass('active');
-                        $("#"+response.element_id).html('<span class="text-red">'+response.time+'</span>');
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        Swal.showValidationMessage(
-                            'Error : '+ error.responseJSON.message,
-                        )
-                    })
+                        .then(response => {
+                            $("#"+response.element_id).removeClass('active');
+                            $("#"+response.element_id).html('<span class="text-red">'+response.time+'</span>');
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            Swal.showValidationMessage(
+                                'Error : '+ error.responseJSON.message,
+                            )
+                        })
                 },
                 allowOutsideClick: false,
                 didClose : function () {
@@ -485,8 +493,8 @@
                 }
             })
         });
-        
-        
+
+
         $(".editable-remarks").click(function () {
             let btn = $(this);
             let date = btn.attr('data');
@@ -544,6 +552,7 @@
                 }
             })
         });
+    @endif
 
         $('body').on('click','.swal2-cancel',function () {
 

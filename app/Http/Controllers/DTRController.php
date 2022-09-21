@@ -150,6 +150,7 @@ class DTRController extends  Controller
             'employee' => $employee,
             'dtr_by_year' => $dtr_by_year,
             'col' => 'col-md-3 col-sm-12 col-lg-2',
+            'from' => 'show',
         ]);
         $sections = $view->renderSections();
         return view('dashboard.dtr.show')->with([
@@ -422,7 +423,9 @@ class DTRController extends  Controller
     }
 
     public function updateTimeRecord(Request $request){
-
+        if($request->employee_no !== Auth::user()->employee->employee_no){
+            abort(503,'You are not allowed to edit the Time Record of other employees.');
+        }
         if(!$request->has('time') || $request->time == null){
             abort(503,'Time field is required.');
         }
@@ -433,7 +436,6 @@ class DTRController extends  Controller
         $type = $request->type;
         if(empty($daily_time_record)){
             $d = new DailyTimeRecord;
-            $d->slug = Str::random();
             $d->biometric_user_id = $request->biometric_user_id;
             $d->employee_no = $request->employee_no;
             $d->date = $request->date;
