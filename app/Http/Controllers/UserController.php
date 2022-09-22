@@ -363,7 +363,6 @@ class UserController extends Controller{
 
     public function update(UserEditFormRequest $request, $slug){
 
-
         return $this->user_service->update($request, $slug);
 
     }

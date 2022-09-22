@@ -141,7 +141,7 @@ class UserService extends BaseService{
         $user->update();
         $user->userMenu()->delete();
         $user->userSubmenu()->delete();
-        $user->access()->delete();
+
 
         $user_id = $user->user_id;
 
@@ -167,29 +167,7 @@ class UserService extends BaseService{
             UserSubmenu::insert($submenu_data);
 
         }
-        $access = [];
-        if(!empty($request->accessToEmployees)){
 
-            foreach ( $request->accessToEmployees as $item){
-                array_push($access,[
-                    'user' => $user_id,
-                    'access' => $item,
-                    'for' => 'employees',
-                ]);
-            }
-
-        }
-        if(!empty($request->accessToDocuments)){
-            array_push($access,[
-                'user' => $user_id,
-                'access' => $request->accessToDocuments,
-                'for' => 'documents',
-            ]);
-        }
-
-        if(count($access) > 0){
-            UserAccess::insert($access);
-        }
         return $user->only('slug');
     }
 

@@ -93,9 +93,6 @@ class User extends Authenticatable{
         return $this->hasOne(Employee::class, 'employee_no', 'employee_no');
     }
 
-    public function joEmployee(){
-        return $this->hasOne('App\Models\JoEmployees', 'employee_no', 'employee_no');
-    }
     
     public function employeeUnion(){
         $employee = $this->hasOne('App\Models\Employee', 'employee_no', 'employee_no')

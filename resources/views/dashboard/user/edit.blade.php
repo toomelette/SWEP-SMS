@@ -27,45 +27,6 @@ Edit
             <div class="col-md-10">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1_{{$rand}}">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                    Access to Employees
-                                </p>
-
-                                <div class="row">
-                                    @foreach(\App\Swep\Helpers\Arrays::accessToEmployees() as $item)
-                                        <div class="col-md-6">
-                                            <div class="checkbox no-margin" >
-                                                <label>
-                                                    <input type="checkbox" name="accessToEmployees[]" value="{{$item}}" {{(in_array($item, $user->getAccessToEmployees())) ? 'checked' : ''}}> {{$item}}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
-                                    Access to Documents
-                                </p>
-
-                                <div class="row">
-                                    @foreach(\App\Swep\Helpers\Arrays::accessToDocuments() as $item)
-                                        <div class="col-md-6">
-                                            <div class="radio no-margin">
-                                                <label>
-                                                    <input type="radio" name="accessToDocuments" value="{{$item}}" {{($user->getAccessToDocuments() == $item) ? 'checked':''}}>
-                                                    {{$item}}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
                     @foreach($by_category as $category => $menus)
                         <div class="tab-pane" id="tab_{{($category == null) ? 'NoCategory' : $category}}_{{$rand}}">
