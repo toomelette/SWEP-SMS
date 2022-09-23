@@ -26,6 +26,13 @@ var autonum_settings = {
     digitGroupSeparator : ',',
 };
 
+var autonum_settings_mt = {
+    currencySymbol : '',
+    decimalCharacter : '.',
+    digitGroupSeparator : ',',
+    decimalPlaces : 3,
+};
+
 
 
 
@@ -252,10 +259,10 @@ function unmark_required(target_form){
 function mark_required(target_form, response){
     form_id = $(target_form[0]).attr('id');
     $.each(response.responseJSON.errors, function(i, item){
-        if($("#"+form_id+" ."+i.replace('.','_')).hasClass('minimal') == false){
-            $("#"+form_id+" ."+i.replace('.','_')).append("<span class='help-block'> "+item+" </span>");
+        if($("#"+form_id+" ."+i.replaceAll('.','_')).hasClass('minimal') == false){
+            $("#"+form_id+" ."+i.replaceAll('.','_')).append("<span class='help-block'> "+item+" </span>");
         }
-        $("#"+form_id+" ."+i.replace('.','_')).addClass('has-error');
+        $("#"+form_id+" ."+i.replaceAll('.','_')).addClass('has-error');
 
     });
 }

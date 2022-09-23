@@ -96,7 +96,8 @@
       </div>
     </div>
     <script type="text/javascript">
-      const autonumericElement =  AutoNumeric.multiple('.autonumber');
+      const autonumericElement =  AutoNumeric.multiple('.autonumber',autonum_settings);
+      const autonumericElement_mt =  AutoNumeric.multiple('.autonumber_mt',autonum_settings_mt);
       var find = '';
       @if(request()->has('find'))
         find = '{{request('find')}}';

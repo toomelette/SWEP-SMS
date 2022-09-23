@@ -20,61 +20,7 @@ use Illuminate\Support\Str;
 class AjaxController extends Controller
 {
     public function get($for){
-
-        if($for == 'compute_monthly_salary'){
-            return $this->compute_monthly_salary();
-        }
-        if($for == 'educational_background'){
-            return view('ajax.employee.add_school');
-        }
-
-        if($for == 'eligibility'){
-            return view('ajax.employee.add_eligibility');
-        }
-
-        if($for == 'work_experience'){
-            $rand = Str::random(16);
-            return [
-                'view' => view('ajax.employee.add_work_experience')->with([
-                                'rand' => $rand,
-                            ])->render(),
-                'rand' => $rand,
-            ];
-        }
-
-        if($for == 'close_bulletin'){
-            return $this->close_bulletin();
-        }
-
-        if($for == 'document_person_to'){
-            return $this->document_person_to();
-        }
-        if($for == 'document_person_from'){
-            return $this->document_person_from();
-        }
-        if($for == 'dv_add_item'){
-            return $this->dv_add_item();
-        }
-
-        if($for == 'position_applied'){
-            return $this->position_applied();
-        }
-
-        if($for == 'applicant_courses'){
-            return $this->applicant_courses();
-        }
-        if($for == 'search_active_employees'){
-            return $this->search_active_employees();
-        }
-
-        if($for == 'applicant_filter_position'){
-            return $this->applicant_filter_position();
-        }
-
-        if($for == 'applicant_filter_item_no'){
-            return $this->applicant_filter_item_no();
-        }
-
+        return view('sms.dynamic_rows.'.$for);
     }
     private function applicant_filter_item_no(){
         $arr['results'] = [];

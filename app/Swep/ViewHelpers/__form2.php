@@ -48,6 +48,43 @@ class __form2
               </div>';
     }
 
+    public static function textboxOnly($name,$options = [],$value = null,$input_only = false){
+        $n = new __form2;
+        $n->set($options);
+        $r_o = '';
+        $step = '';
+        if(is_object($value)){
+            $value = $value->$name;
+        }
+        $ext = '';
+
+        if($n->is_multiple == 1){
+            $ext = '[]';
+        }
+        $c_class = '';
+        if($n->container_class != ''){
+            $c_class = $n->container_class;
+        }
+
+        if($n->type == 'date'){
+            $value = ($value != '') ? Carbon::parse($value)->format('Y-m-d') : '';
+        }
+
+        $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
+        $step = ($n->step != '') ? 'step="'.$n->step.'"' : '';
+        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+        $tab_index = ($n->tab_index != '') ?  'tabindex="'.$n->tab_index.'"' : '';
+        $title = ($n->title != '') ? '<i class="fa fa-question-circle" title="'.$n->title.'"></i>' : '';
+
+        if($input_only == true){
+            return '<input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
+             ';
+        }
+        return '<div class="'.$c_class.' col-md-'.$n->cols.' '.$name.'">
+                <input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
+              </div>';
+    }
+
 
     public static function select($name,$options = [],$value = null){
         $n = new __form2;
@@ -116,6 +153,75 @@ class __form2
                     '.$opt_html.'
                   </select>
                 </div>';
+    }
+
+    public static function selectOnly($name,$options = [],$value = null){
+        $n = new __form2;
+        $n->set($options);
+        if(is_object($value)){
+            $value = $value->$name;
+        }
+
+        $ext = '';
+        if($n->is_multiple == 1){
+            $ext = '[]';
+        }
+
+        if ($options['options'] == 'year'){
+            $past = 8;
+            $future = 10;
+            if(isset($options['past'])){
+                $past = $options['past'];
+            }
+            if(isset($options['future'])){
+                $future = $options['future'];
+            }
+            $options['options'] = self::yearsArray($past, $future);
+            if($value == ''){
+                $value = Carbon::now()->format('Y');
+            }
+        }
+        $c_class = '';
+        if($n->container_class != ''){
+            $c_class = $n->container_class;
+        }
+
+        $r_o = '';
+        $r_o = ($n->readonly == 'readonly') ? 'readonly' : '';
+        $id = ($n->id != '') ?  'id="'.$n->id.'"' : '';
+        $opt_html = '';
+        if(isset($options['options'])){
+            if(is_array($options['options'])){
+                foreach ($options['options'] as $key => $option){
+                    if(is_array($option)){
+                        $opt_html = $opt_html.'<optgroup label="'.$key.'">';
+                        foreach ($option as $key2 => $option2){
+                            $sel = '';
+                            if($value == $key2){
+                                $sel = 'selected';
+                            }
+                            $opt_html = $opt_html.'<option value="'.$key2.'" '.$sel.'>'.$option2.'</option>';
+                        }
+                    }else{
+                        $sel = '';
+                        if($value == $key){
+                            $sel = 'selected';
+                        }
+                        $opt_html = $opt_html.'<option value="'.$key.'" '.$sel.'>'.$option.'</option>';
+                    }
+                }
+            }
+        }
+
+
+
+        return '<div class="form-group '.$c_class.' col-md-'.$n->cols .' '.$name.'">
+                <select name="'. $name .$ext.'" '. $id .' class="form-control '.$n->class.'" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
+                    <option value="">Select</option>
+                    '.$opt_html.'
+                  </select>
+              </div>
+                ';
     }
 
     public static function a_select($name,$options = [],$value = null){

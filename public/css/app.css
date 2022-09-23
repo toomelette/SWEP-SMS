@@ -675,3 +675,26 @@ ol.example li.placeholder:before {
     padding: 5px 10px 0px 10px;
     margin-top: 5px;
 }
+
+.autonumber_mt{
+    text-align: right;
+}
+
+.autonumber{
+    text-align: right;
+}
+
+.indent{
+    padding-left: 25px !important;
+}
+
+.sms_form1_table thead tr th:first-child{
+
+    width: 20%;
+}
+
+.sms_form1_table thead tr th:nth-child(4){
+
+    width: 5%;
+}
+
