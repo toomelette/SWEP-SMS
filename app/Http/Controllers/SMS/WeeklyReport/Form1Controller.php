@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 class Form1Controller extends Controller
 {
     public function store(Form1Request $request){
-
         $children = [];
         $weekly_report = new WeeklyReports;
         $weekly_report->slug = Str::random();

@@ -66,9 +66,9 @@
                 <div class="col-md-12">
                     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;font-size: 16px; font-weight: bold">
                         2. Issuances/Carried-over
-                        <button class="btn btn-xs pull-right btn-success add_btn" data="raw_sugar_issuances" type="button"><i class="fa fa-plus"></i> ADD</button>
+                        <button class="btn btn-xs pull-right btn-success add_btn" data="form1_raw_sugar_issuances" type="button"><i class="fa fa-plus"></i> ADD</button>
                     </p>
-                    <table class="table table-bordered table-condensed sms_form1_table" id="raw_sugar_issuances">
+                    <table class="table table-bordered table-condensed sms_form1_table" id="form1_raw_sugar_issuances">
                         <thead>
                         <tr>
                             <th></th>
@@ -78,16 +78,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @include('sms.dynamic_rows.raw_sugar_issuances')
+                            @include('sms.dynamic_rows.form1_raw_sugar_issuances')
                         </tbody>
                     </table>
                 </div>
                 <div class="col-md-12">
                     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;font-size: 16px; font-weight: bold">
                         3. Withdrawals
-                        <button class="btn btn-xs pull-right btn-success add_btn" data="raw_sugar_withdrawals" type="button"><i class="fa fa-plus"></i> ADD</button>
+                        <button class="btn btn-xs pull-right btn-success add_btn" data="form1_raw_sugar_withdrawals" type="button"><i class="fa fa-plus"></i> ADD</button>
                     </p>
-                    <table class="table table-bordered table-condensed sms_form1_table" id="raw_sugar_withdrawals">
+                    <table class="table table-bordered table-condensed sms_form1_table" id="form1_raw_sugar_withdrawals">
                         <thead>
                         <tr>
                             <th></th>
@@ -97,16 +97,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @include('sms.dynamic_rows.raw_sugar_withdrawals')
+                            @include('sms.dynamic_rows.form1_raw_sugar_withdrawals')
                         </tbody>
                     </table>
                 </div>
                 <div class="col-md-12">
                     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;font-size: 16px; font-weight: bold">
                         4. Balance
-                        <button class="btn btn-xs pull-right btn-success add_btn" data="raw_sugar_balance" type="button"><i class="fa fa-plus"></i> ADD</button>
+                        <button class="btn btn-xs pull-right btn-success add_btn" data="form1_raw_sugar_balance" type="button"><i class="fa fa-plus"></i> ADD</button>
                     </p>
-                    <table class="table table-bordered table-condensed sms_form1_table" id="raw_sugar_balance">
+                    <table class="table table-bordered table-condensed sms_form1_table" id="form1_raw_sugar_balance">
                         <thead>
                         <tr>
                             <th></th>
@@ -116,7 +116,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @include('sms.dynamic_rows.raw_sugar_balance')
+                        @include('sms.dynamic_rows.form1_raw_sugar_balance')
                         </tbody>
                     </table>
                 </div>
@@ -203,12 +203,12 @@
                 <div class="col-md-12">
                     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;font-size: 16px; font-weight: bold">
                         13. Mill District Price Monitoring
-                        <button class="btn btn-xs pull-right btn-success add_btn" data="raw_sugar_price_monitoring" type="button"><i class="fa fa-plus"></i> ADD</button>
+                        <button class="btn btn-xs pull-right btn-success add_btn" data="form1_raw_sugar_price_monitoring" type="button"><i class="fa fa-plus"></i> ADD</button>
                     </p>
                     @php
                         $fn = \App\Http\Controllers\SMS\InputFields::getFields('raw_sugar_price_monitoring')
                     @endphp
-                    <table class="table table-bordered table-condensed sms_form1_table" id="raw_sugar_price_monitoring">
+                    <table class="table table-bordered table-condensed sms_form1_table" id="form1_raw_sugar_price_monitoring">
                         <thead>
                         <tr>
                             <th></th>
@@ -217,7 +217,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @include('sms.dynamic_rows.raw_sugar_price_monitoring')
+                        @include('sms.dynamic_rows.form1_raw_sugar_price_monitoring')
                         </tbody>
                     </table>
 
