@@ -14,24 +14,12 @@ class Form1Request extends FormRequest
 
     public function rules(){
         return [
-//            'children.prev.*' =>  'required',
-            'children.*' => 'required',
-                //            'children.*' => 'required|string|max:45',
-//            'children.prev_manufactured' => 'required|string|max:45',
-//            'children.unquedanned' => 'required|string|max:45',
-//            'children.prev_unquedanned' => 'required|string|max:45',
-//            'children.stock_balance' => 'required|string|max:45',
-//            'children.prev_stock_balance' => 'required|string|max:45',
+            'crop_year' => 'required|string',
+            'week_ending' => 'required|date_format:Y-m-d',
+            'report_no' => 'required|string',
+            'dist_no' => 'required|string',
 
-//            'children.issuances_option.*' => 'required|string|max:45',
-//            'children.issuances.*' => 'required|string|max:45',
-//            'children.withdrawals_option.*' => 'required|string|max:45',
-//            'children.withdrawals.*' => 'required|string|max:45',
-//            'children.balance_option.*' => 'required|string|max:45',
-//            'children.balance.*' => 'required|string|max:45',
-//
-//            'unquedanned' => 'nullable|string|max:45',
-
-        ];
+//            'children.current.*' => 'required',
+            ];
     }
 }

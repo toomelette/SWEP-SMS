@@ -203,19 +203,23 @@
                 <div class="col-md-12">
                     <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;font-size: 16px; font-weight: bold">
                         13. Mill District Price Monitoring
+                        <button class="btn btn-xs pull-right btn-success add_btn" data="raw_sugar_price_monitoring" type="button"><i class="fa fa-plus"></i> ADD</button>
                     </p>
                     @php
                         $fn = \App\Http\Controllers\SMS\InputFields::getFields('raw_sugar_price_monitoring')
                     @endphp
-                    <div class="row">
-                        @foreach($fn as $f)
-                            {!! \App\Swep\ViewHelpers\__form2::textbox($f->field,[
-                                'label' => $f->display_name.':',
-                                'cols' => 2,
-                                'class' => 'autonumber'
-                            ]) !!}
-                        @endforeach
-                    </div>
+                    <table class="table table-bordered table-condensed sms_form1_table" id="raw_sugar_price_monitoring">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @include('sms.dynamic_rows.raw_sugar_price_monitoring')
+                        </tbody>
+                    </table>
 
                     <table class="table table-bordered table-condensed sms_form1_table" id="">
                         <thead>
@@ -232,20 +236,28 @@
                             <tr>
                                 <td>RAW</td>
                                 <td>
-                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('wholesale_raw',[]) !!}
+                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('children[current][wholesale_raw]',[
+                                        'container_class' => 'children_current_wholesale_raw',
+                                    ]) !!}
                                 </td>
                                 <td>
-                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('retail_raw',[]) !!}
+                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('children[current][retail_raw]',[
+                                        'container_class' => 'children_current_retail_raw',
+                                    ]) !!}
                                 </td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td>REFINED</td>
                                 <td>
-                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('wholesale_refined',[]) !!}
+                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('children[current][wholesale_refined]',[
+                                        'container_class' => 'children_current_wholesale_refined',
+                                    ]) !!}
                                 </td>
                                 <td>
-                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('retail_refined',[]) !!}
+                                    {!! \App\Swep\ViewHelpers\__form2::textboxOnly('children[current][retail_refined]',[
+                                        'container_class' => 'children_current_retail_refined',
+                                    ]) !!}
                                 </td>
                                 <td></td>
                             </tr>
@@ -260,9 +272,10 @@
                                14. Sugar Distribution Factor
                            </p>
                            <div class="row">
-                               {!! \App\Swep\ViewHelpers\__form2::textbox('dist_factor',[
+                               {!! \App\Swep\ViewHelpers\__form2::textbox('children[current][dist_factor]',[
                                    'label' => 'Sugar Distribution Factor:',
                                    'cols' => 12,
+                                   'container_class' => 'children_current_dist_factor',
                                ]) !!}
                            </div>
                        </div>
