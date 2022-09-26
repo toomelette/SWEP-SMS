@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\SMS;
+namespace App\Models\SMS;
 
 
 use Illuminate\Database\Eloquent\Model;

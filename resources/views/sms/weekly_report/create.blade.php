@@ -3,64 +3,54 @@
 @section('content')
 
 <section class="content-header">
-    <h1>Weekly Report Submission</h1>
+
 </section>
 @endsection
 @section('content2')
 
 <section class="content">
-    <div class="box box-solid">
-        <div class="box-header with-border">
-            <h3 class="box-title">Report:</h3>
+    <div class="login-box">
+        <div class="login-logo">
+            SMS Weekly Report
         </div>
-        <div class="box-body">
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1" data-toggle="tab">SMS Form 1</a></li>
-                    <li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
-                    <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Dropdown <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1">
-                        @include('sms.weekly_report.sms_forms.form_1')
+
+        <div class="login-box-body">
+            <form id="add_report_week_form">
+                @csrf
+
+                    <div class="row">
+                        <div class="form-group  col-md-12">
+                            <label for="crop_year">Mill Code:*</label>
+                            <h4 class="no-margin"><b>{{\Illuminate\Support\Facades\Auth::user()->mill_code}}</b></h4>
+                        </div>
+                        {!! \App\Swep\ViewHelpers\__form2::select('crop_year',[
+                            'label' => 'Crop Year:*',
+                            'cols' => 12,
+                            'options' => \App\Swep\Helpers\Arrays::cropYears(),
+                        ]) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('week_ending',[
+                            'label' => 'Week Ending:*',
+                            'cols' => 12,
+                            'type' => 'date',
+                        ]) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('report_no',[
+                            'label' => 'Report No.:*',
+                            'cols' => 12,
+                            'type' => 'number',
+                            'step' => 1,
+                        ]) !!}
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('dist_no',[
+                            'label' => 'Distribution No:*',
+                            'cols' => 12,
+                            'type' => 'number',
+                            'step' => 1,
+                        ]) !!}
                     </div>
+                <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    <i class="fa fa-check"> </i> SAVE
+                </button>
+            </form>
 
-                    <div class="tab-pane" id="tab_2">
-                        The European languages are members of the same family. Their separate existence is a myth.
-                        For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                        in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                        new common language would be desirable: one could refuse to pay expensive translators. To
-                        achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                        words. If several languages coalesce, the grammar of the resulting language is more simple
-                        and regular than that of the individual languages.
-                    </div>
-
-                    <div class="tab-pane" id="tab_3">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                        like Aldus PageMaker including versions of Lorem Ipsum.
-                    </div>
-
-                </div>
-
-            </div>
         </div>
 
     </div>
@@ -77,6 +67,29 @@
 
 @section('scripts')
 <script type="text/javascript">
+    $("#add_report_week_modal").modal('show');
+
+    $("#add_report_week_form").submit(function (e) {
+        e.preventDefault();
+        let uri = '{{route("dashboard.weekly_report.store")}}';
+        let form = $(this);
+        let rdr = '{{route('dashboard.weekly_report.edit','slug')}}';
+        loading_btn(form);
+        $.ajax({
+            url : uri,
+            data : form.serialize(),
+            type: 'POST',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                window.location = res.slug+'/edit';
+            },
+            error: function (res) {
+                errored(form,res);
+            }
+        })
+    })
     $(".add_btn").click(function () {
         let btn = $(this);
         let data = btn.attr('data');
@@ -115,7 +128,13 @@
                 {!! __html::token_header() !!}
             },
             success: function (res) {
-                succeed(form,false,false);
+                succeed(form,true,false);
+                $(".sms_form1_table").each(function () {
+                    $(this).find('tbody').html('');
+                })
+                $("#form_1 .add_btn").each(function () {
+                    $(this).trigger('click');
+                })
             },
             error: function (res) {
                 errored(form,res);

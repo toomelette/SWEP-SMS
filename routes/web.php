@@ -76,6 +76,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/permission_slips/my_permission_slips','PermissionSlipController@myPermissionSlips')->name('permission_slip.my_permission_slips');
 
     Route::resource('sms_form1','SMS\WeeklyReport\Form1Controller');
+    /** WEEKLY REPORT **/
+    Route::resource('weekly_report','SMS\WeeklyReportController');
+    Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
 });
 
 
@@ -114,9 +117,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** Activity Logs **/
     Route::get('/activity_logs/fetch_properties', 'ActivityLogsController@fetch_properties')->name('activity_logs_fetch_properties');
 
-    /** WEEKLY REPORT **/
-    Route::resource('weekly_report','SMS\WeeklyReportController');
-    Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
+
 });
 
 

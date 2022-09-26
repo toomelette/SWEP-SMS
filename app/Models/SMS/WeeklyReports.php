@@ -25,4 +25,16 @@ class WeeklyReports extends Model
         });
     }
     protected $table = 'weekly_reports';
+
+    public function cropYear(){
+        return $this->belongsTo(CropYears::class,'crop_year','slug');
+    }
+
+    public function details(){
+        return $this->hasMany(WeeklyReportDetails::class, 'weekly_report_slug','slug');
+    }
+
+    public function seriesNos(){
+        return $this->hasMany(WeeklyReportSeriesPcs::class, 'weekly_report_slug','slug');
+    }
 }

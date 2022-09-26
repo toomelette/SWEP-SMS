@@ -8,53 +8,93 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SMS\Form1Request;
 use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
+use App\Models\SMS\WeeklyReportSeriesPcs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Form1Controller extends Controller
 {
     public function store(Form1Request $request){
-        $children = [];
-        $weekly_report = new WeeklyReports;
-        $weekly_report->slug = Str::random();
-        $weekly_report->report_type = 'form_1';
-        $weekly_report->crop_year = $request->crop_year;
-        $weekly_report->dist_no = $request->dist_no;
-        $weekly_report->week_ending = $request->week_ending;
-        $weekly_report->report_no = $request->report_no;
-        $weekly_report->remarks = $request->remarks;
+//        return $request;
+        $details_arr = [];
+        $series = [];
 
-        //store details to array, insert to database as single query
-        if(!empty($request->children['current'])){;
-            foreach ($request->children['current'] as $key => $current){
-                if(!is_array($current)){
-                    array_push($children,[
-                        'slug' => Str::random(25),
-                        'input_field' => $key,
-                        'current_value' => $current,
-                        'prev_value' => (isset($request->children['prev'][$key])) ? $request->children['prev'][$key] : null,
-                        'weekly_report_slug' => $weekly_report->slug,
-                    ]);
-                }else{
-                    foreach ($current as $k => $cur){
-                        array_push($children,[
-                            'slug' => Str::random(25),
-                            'input_field' => $request->children['options'][$key][$k],
-                            'current_value' => $request->children['current'][$key][$k],
-                            'prev_value' => (isset($request->children['prev'][$key][$k])) ? $request->children['prev'][$key][$k]:null,
-                            'weekly_report_slug' => $weekly_report->slug,
-                        ]);
+        if(!empty($request->data)){
+            foreach ($request->data as $form => $children){
+
+                if(!empty($children['current'])){;
+                    foreach ($children['current'] as $key => $current){
+                        if(!is_array($current)){
+                            $prev_val = (isset($children['prev'][$key])) ? $children['prev'][$key] : null;
+                            if($current !== null || $prev_val !== null){
+                                array_push($details_arr,[
+                                    'slug' => Str::random(25),
+                                    'input_field' => $key,
+                                    'current_value' => $current,
+                                    'prev_value' => $prev_val,
+                                    'weekly_report_slug' => $request->weekly_report_slug,
+                                    'form_type' => $form,
+                                    'grouping' => null,
+                                ]);
+                            }
+                        }else{
+                            foreach ($current as $k => $cur){
+                                $prev_val = (isset($children['prev'][$key][$k])) ? $children['prev'][$key][$k]:null;
+                                if($children['current'][$key][$k] != null || $prev_val != null){
+                                    array_push($details_arr,[
+                                        'slug' => Str::random(25),
+                                        'input_field' => $children['options'][$key][$k],
+                                        'current_value' => $children['current'][$key][$k],
+                                        'prev_value' => $prev_val,
+                                        'weekly_report_slug' => $request->weekly_report_slug,
+                                        'form_type' => $form,
+                                        'grouping' => $key,
+                                    ]);
+                                }
+
+                            }
+                        }
+                    }
+                }
+                if(isset($children['series'])){
+                    foreach ($children['series']['options'] as $key => $qi){
+                        if($children['series']['seriesFrom'][$key] != null ||  $children['series']['seriesTo'][$key] != null){
+                            array_push($series,[
+                                'weekly_report_slug' => $request->weekly_report_slug,
+                                'input_field' => $qi ,
+                                'series_from' => $children['series']['seriesFrom'][$key],
+                                'series_to' => $children['series']['seriesTo'][$key],
+                                'no_of_pcs' => $children['series']['seriesTo'][$key] - $children['series']['seriesFrom'][$key] + 1,
+                                'form_type' => $form,
+                            ]);
+                        }
                     }
                 }
             }
+            //push to array the quedan issuances
+
+
         }
 
-        //save weekly report
-        if($weekly_report->save()){
-            //if weekly report is saved, save its details
-            WeeklyReportDetails::insert($children);
-        };
+        $wr = $this->findWeeklyReportBySlug($request->weekly_report_slug);
+
+        $wr->details()->delete();
+        $wr->seriesNos()->delete();
+        //store details to array, insert to database as single query
+
+
+
+
+        WeeklyReportDetails::insert($details_arr);
+        WeeklyReportSeriesPcs::insert($series);
         return $request;
     }
 
+    public function findWeeklyReportBySlug($slug){
+        $wr = WeeklyReports::query()->where('slug','=',$slug)->first();
+        if(empty($wr)){
+            abort(503,'Weekly Report not found.');
+        }
+        return $wr;
+    }
 }
