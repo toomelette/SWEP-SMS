@@ -86,6 +86,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('form5a_issuanceOfSro','SMS\Form5a\IssuanceOfSroController');
     Route::resource('form5a_deliveries','SMS\Form5a\DeliveriesController');
     Route::resource('form5a_servedSros','SMS\Form5a\ServedSrosController');
+
+    Route::resource('form6a_rawSugarReceipts','SMS\Form6a\RawSugarReceiptsController');
+    Route::resource('form6a_quedanRegistry','SMS\Form6a\QuedanRegistryController');
 });
 
 
@@ -106,11 +109,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 	Route::post('/user/unsync_employee/{slug}', 'UserController@unsyncEmployee')->name('user.unsync_employee');
 
 	Route::resource('user', 'UserController');
-
-
-
-
-
 
 	/** MENU **/
 	Route::resource('menu', 'MenuController');

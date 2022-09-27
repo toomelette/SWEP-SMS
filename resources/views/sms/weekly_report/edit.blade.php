@@ -49,6 +49,7 @@
                                     <li><a href="#tab_2" data-toggle="tab">SMS Form 2</a></li>
                                     <li><a href="#tab_5" data-toggle="tab">SMS Form 5</a></li>
                                     <li><a href="#tab_5a" data-toggle="tab">SMS Form 5A</a></li>
+                                    <li><a href="#tab_6a" data-toggle="tab">SMS Form 6A</a></li>
                                     <li class="dropdown">
                                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                             Dropdown <span class="caret"></span>
@@ -84,6 +85,11 @@
                                         <div class="tab-pane active" id="tab_5a">
                                             <h3 class="no-margin">Sugar Release Order and Delivery Report - REFINED</h3>
                                             @include('sms.weekly_report.sms_forms.form_5a')
+                                        </div>
+
+                                        <div class="tab-pane " id="tab_6a">
+                                            <h3 class="no-margin">Quedan Registry</h3>
+                                            @include('sms.weekly_report.sms_forms.form_6a')
                                         </div>
 
                                     </div>
@@ -195,18 +201,56 @@
     </div>
 </div>
 
+<!--FORM 6A-->
+<div class="modal fade" id="add_rawSugarReceipts_modal" tabindex="-1" role="dialog" aria-labelledby="add_rawSugarReceipts_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form6a_add_rawSugarReceipts_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Raw Sugar Receipts</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form6a.raw_sugar_receipts_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_quedanRegistry_modal" tabindex="-1" role="dialog" aria-labelledby="add_quedanRegistry_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form6a_add_quedanRegistry_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Raw Sugar Receipts</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form6a.quedan_registry_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--END OF FORM 6A-->
+
     {!! \App\Swep\ViewHelpers\__html::blank_modal('form5_editModal','') !!}
 @endsection
 
 @section('scripts')
-
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
-
-
-
-
-
     </script>
 
     @include('sms.weekly_report.scripts.form5_issuance_script')
@@ -214,6 +258,10 @@
     @include('sms.weekly_report.scripts.form5_servedSro_script')
 
     @include('sms.weekly_report.scripts.form5a_issuance_script')
+
+    @include('sms.weekly_report.scripts.form6a.raw_sugar_receipts_script')
+    @include('sms.weekly_report.scripts.form6a.quedan_registry_script')
+
     <script type="text/javascript">
 
         $(".add_btn").click(function () {
