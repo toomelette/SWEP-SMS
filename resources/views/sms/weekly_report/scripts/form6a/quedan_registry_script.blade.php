@@ -83,6 +83,7 @@
                 succeed(form,false,false);
                 active_form6a_quedanRegistry = res.slug;
                 quedanRegistry_tbl.draw(false);
+                $("#form6a_add_quedanRegistry_form").reset();
             },
             error: function (res) {
                 errored(form,res);

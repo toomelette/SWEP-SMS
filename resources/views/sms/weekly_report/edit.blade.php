@@ -231,7 +231,7 @@
                 <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Raw Sugar Receipts</h4>
+                    <h4 class="modal-title" id="myModalLabel">Quedan Registry</h4>
                 </div>
                 <div class="modal-body">
                     @include('sms.weekly_report.sms_forms.form6a.quedan_registry_form')
