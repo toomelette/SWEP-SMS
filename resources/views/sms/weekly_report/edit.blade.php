@@ -201,19 +201,33 @@
     </div>
 </div>
 
+<<<<<<< Updated upstream
 <!--FORM 6A-->
 <div class="modal fade" id="add_rawSugarReceipts_modal" tabindex="-1" role="dialog" aria-labelledby="add_rawSugarReceipts_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="form6a_add_rawSugarReceipts_form">
+=======
+<div class="modal fade" id="add_form5a_deliveries_modal" tabindex="-1" role="dialog" aria-labelledby="add_form5a_issuances_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form5a_add_delivery_form">
+>>>>>>> Stashed changes
                 @csrf
                 <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<<<<<<< Updated upstream
                     <h4 class="modal-title" id="myModalLabel">Raw Sugar Receipts</h4>
                 </div>
                 <div class="modal-body">
                     @include('sms.weekly_report.sms_forms.form6a.raw_sugar_receipts_form')
+=======
+                    <h4 class="modal-title" id="myModalLabel">Add Delivery</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form5a.delivery_form')
+>>>>>>> Stashed changes
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
@@ -223,18 +237,32 @@
     </div>
 </div>
 
+<<<<<<< Updated upstream
 <div class="modal fade" id="add_quedanRegistry_modal" tabindex="-1" role="dialog" aria-labelledby="add_quedanRegistry_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="form6a_add_quedanRegistry_form">
+=======
+<div class="modal fade" id="add_form5a_servedSros_modal" tabindex="-1" role="dialog" aria-labelledby="add_form5a_servedSros_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form5a_add_servedSro_form">
+>>>>>>> Stashed changes
                 @csrf
                 <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<<<<<<< Updated upstream
                     <h4 class="modal-title" id="myModalLabel">Raw Sugar Receipts</h4>
                 </div>
                 <div class="modal-body">
                     @include('sms.weekly_report.sms_forms.form6a.quedan_registry_form')
+=======
+                    <h4 class="modal-title" id="myModalLabel">Add Delivery</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form5a.servedSro_form')
+>>>>>>> Stashed changes
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
@@ -243,7 +271,10 @@
         </div>
     </div>
 </div>
+<<<<<<< Updated upstream
 <!--END OF FORM 6A-->
+=======
+>>>>>>> Stashed changes
 
     {!! \App\Swep\ViewHelpers\__html::blank_modal('form5_editModal','') !!}
 @endsection
@@ -258,9 +289,14 @@
     @include('sms.weekly_report.scripts.form5_servedSro_script')
 
     @include('sms.weekly_report.scripts.form5a_issuance_script')
+<<<<<<< Updated upstream
 
     @include('sms.weekly_report.scripts.form6a.raw_sugar_receipts_script')
     @include('sms.weekly_report.scripts.form6a.quedan_registry_script')
+=======
+    @include('sms.weekly_report.scripts.form5a_delivery_script')
+    @include('sms.weekly_report.scripts.form5a_servedSro_script')
+>>>>>>> Stashed changes
 
     <script type="text/javascript">
 
@@ -341,27 +377,7 @@
 
 
 
-        $("#form5a_add_issuance_form").submit(function (e) {
-            e.preventDefault();
-            let form = $(this);
-            loading_btn(form);
-            $.ajax({
-                url : '{{route("dashboard.form5a_issuanceOfSro.store")}}',
-                data : form.serialize(),
-                type: 'POST',
-                headers: {
-                    {!! __html::token_header() !!}
-                },
-                success: function (res) {
-                    succeed(form,false,false);
-                    active_form5_serverSros = res.slug;
-                    servedSros_tbl.draw(false);
-                },
-                error: function (res) {
-                    errored(form,res);
-                }
-            })
-        })
+
     </script>
 
 @endsection

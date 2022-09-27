@@ -17,7 +17,18 @@ class IssuanceOfSroController extends Controller
             $issuances = IssuancesOfSro::query();
             return DataTables::of($issuances)
                 ->addColumn('action',function($data){
-                    return 1;
+                    $destroy_route = "'".route("dashboard.form5a_issuanceOfSro.destroy","slug")."'";
+                    $slug = "'".$data->slug."'";
+                    $button = '<div class="btn-group">
+                                    <button type="button" data="'.$data->slug.'" uri="'.route("dashboard.form5a_issuanceOfSro.edit",$data->slug).'" class="btn btn-sm view_form5Issuance_btn btn-xs form5_edit_btn" data-toggle="modal" data-target="#form5_editModal" title="Edit" data-placement="top">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger btn-xs " data-toggle="tooltip" title="Delete" data-placement="top">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                  
+                                </div>';
+                    return $button;
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -41,4 +52,44 @@ class IssuanceOfSroController extends Controller
         }
         abort(503,'Error saving data.');
     }
+
+
+    public function edit($slug){
+        return view('sms.weekly_report.sms_forms.form5a.issuance_edit')->with([
+            'issuance' => $this->findBySlug($slug),
+        ]);
+    }
+
+    public function update(Request $request,$slug){
+        $i = $this->findBySlug($slug);
+        $i->date_of_issue = $request->date_of_issue;
+        $i->sro_no = $request->sro_no;
+        $i->trader = $request->trader;
+        $i->raw_qty = $request->raw_qty;
+        $i->monitoring_fee_or_no = $request->monitoring_fee_or_no;
+        $i->rsq_no = $request->rsq_no;
+        $i->refined_qty = $request->refined_qty;
+
+        if($i->save()){
+            return $i->only('slug');
+        }
+        abort(503,'Error saving data.');
+    }
+
+    public function findBySlug($slug){
+        $i = IssuancesOfSro::query()->where('slug','=',$slug)->first();
+        if(empty($i)){
+            abort('Data not found.');
+        }
+        return $i;
+    }
+
+    public function destroy($slug){
+        $i = $this->findBySlug($slug);
+        if($i->delete()){
+            return 1;
+        }
+        abort(503,'Error deleting data.');
+    }
+
 }
