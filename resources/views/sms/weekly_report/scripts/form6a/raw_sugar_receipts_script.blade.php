@@ -2,7 +2,7 @@
     //Initialize DataTable
     active_form6a_rawSugarReceipts = '';
     $(document).ready(function () {
-        rawSugarReceipts_tbl = $("#form6a_rawSugarReceipts_table").DataTable({
+        form6_rawSugarReceipts_tbl = $("#form6a_rawSugarReceipts_table").DataTable({
             'dom' : 'lBfrtip',
             "processing": true,
             "serverSide": true,
@@ -34,7 +34,7 @@
                 $('#tbl_loader').fadeOut(function(){
                     $("#form6a_rawSugarReceipts_table_container").fadeIn();
                     if(find != ''){
-                        rawSugarReceipts_tbl.search(find).draw();
+                        form6_rawSugarReceipts_tbl.search(find).draw();
                         setTimeout(function(){
                             active_form6a_rawSugarReceipts = '';
                         },3000);
@@ -43,7 +43,7 @@
                 });
                 @if(\Illuminate\Support\Facades\Request::get('toPage') != null && \Illuminate\Support\Facades\Request::get('mark') != null)
                 setTimeout(function () {
-                    rawSugarReceipts_tbl.page({{\Illuminate\Support\Facades\Request::get('toPage')}}).draw('page');
+                    form6_rawSugarReceipts_tbl.page({{\Illuminate\Support\Facades\Request::get('toPage')}}).draw('page');
                     active_form6a_rawSugarReceipts = '{{\Illuminate\Support\Facades\Request::get("mark")}}';
                     notify('Employee successfully updated.');
                     window.history.pushState({}, document.title, "/dashboard/employee");
@@ -58,7 +58,7 @@
                 // console.log(issuancesOfSro_tbl.page.info().page);
                 $("#form6a_rawSugarReceipts_table a[for='linkToEdit']").each(function () {
                     let orig_uri = $(this).attr('href');
-                    $(this).attr('href',orig_uri+'?page='+rawSugarReceipts_tbl.page.info().page);
+                    $(this).attr('href',orig_uri+'?page='+form6_rawSugarReceipts_tbl.page.info().page);
                 });
 
                 $('[data-toggle="tooltip"]').tooltip();
@@ -85,7 +85,7 @@
             success: function (res) {
                 succeed(form,false,false);
                 active_form6a_rawSugarReceipts = res.slug;
-                rawSugarReceipts_tbl.draw(false);
+                form6_rawSugarReceipts_tbl.draw(false);
             },
             error: function (res) {
                 errored(form,res);

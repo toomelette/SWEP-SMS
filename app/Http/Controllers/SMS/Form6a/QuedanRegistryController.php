@@ -20,7 +20,7 @@ class QuedanRegistryController extends Controller
                     $destroy_route = "'".route("dashboard.form6a_quedanRegistry.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
                     $button = '<div class="btn-group">
-                                    <button type="button" data="'.$data->slug.'" uri="'.route("dashboard.form6a_quedanRegistry.edit",$data->slug).'" class="btn btn-sm view_form6aQuedanRegistry_btn btn-xs form6a_edit_btn" data-toggle="modal" data-target="#form6a_editModal" title="Edit" data-placement="top">
+                                    <button type="button" data="'.$data->slug.'" uri="'.route("dashboard.form6a_quedanRegistry.edit",$data->slug).'" class="btn btn-sm view_form6aQuedanRegistry_btn btn-xs form5_edit_btn" data-toggle="modal" data-target="#form5_editModal" title="Edit" data-placement="top">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger btn-xs " data-toggle="tooltip" title="Delete" data-placement="top">

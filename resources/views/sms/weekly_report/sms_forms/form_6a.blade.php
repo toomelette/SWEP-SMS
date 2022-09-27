@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="box-body" style="">
-                    <button type="button" data-target="#add_registry_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Registry</button>
+                    <button type="button" data-target="#add_quedanRegistry_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Registry</button>
                     <br>
                     <br>
                     <table style="width: 100%;" class="table table-condensed table-bordered" id="form6a_quedanRegistry_table">

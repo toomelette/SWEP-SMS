@@ -46,6 +46,9 @@ class IssuanceOfSroController extends Controller
         $i->liens_or = $request->liens_or;
         $i->sugar_class = $request->sugar_class;
         $i->qty = $request->qty;
+        if($request->has('refining')){
+            $i->refining = 1;
+        }
 
         if($i->save()){
             return $i->only('slug');
@@ -67,6 +70,12 @@ class IssuanceOfSroController extends Controller
         $i->liens_or = $request->liens_or;
         $i->sugar_class = $request->sugar_class;
         $i->qty = $request->qty;
+        $i->refining = null;
+        if($request->has('refining')){
+            $i->refining = 1;
+        }
+
+
         if($i->save()){
             return $i->only('slug');
         }

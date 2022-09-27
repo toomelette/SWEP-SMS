@@ -50,3 +50,11 @@
     (!empty($issuance)) ? $issuance : null
     ) !!}
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <label>
+            <input type="checkbox" name="refining" {{(!empty($issuance) && $issuance->refining == 1) ? 'checked' : ''  }}>
+            Refining
+        </label>
+    </div>
+</div>

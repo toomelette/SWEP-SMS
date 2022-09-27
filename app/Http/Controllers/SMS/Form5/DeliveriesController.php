@@ -43,8 +43,14 @@ class DeliveriesController extends Controller
         $d->trader = $request->trader;
         $d->start_of_withdrawal = $request->start_of_withdrawal;
         $d->sugar_class = $request->sugar_class;
-        $d->qty = $request->qty;
-
+        if($request->charge_to == 'PREV'){
+            $d->qty_prev = $request->qty;
+        }else{
+            $d->qty = $request->qty;
+        }
+        if($request->has('refining')){
+            $d->refining = 1;
+        }
         if($d->save()){
             return $d->only('slug');
         }
@@ -64,6 +70,13 @@ class DeliveriesController extends Controller
         $d->start_of_withdrawal = $request->start_of_withdrawal;
         $d->sugar_class = $request->sugar_class;
         $d->qty = $request->qty;
+
+        $d->refining = null;
+        if($request->has('refining')){
+            $d->refining = 1;
+        }
+
+
         if($d->save()){
             return $d->only('slug');
         }
