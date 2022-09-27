@@ -315,10 +315,14 @@ function load_modal2(btn){
     $(btn.attr('data-target')+" .modal-content").html(modal_loader);
 }
 
+function load_modal3(btn) {
+    $(btn.attr('data-target')+" .modal-content").html('<div class="modal_loader"><h1 class="center-load"><i class="fa fa-spinner fa-spin"></i></h1></div>');
+}
+
 
 function populate_modal2(btn, response){
     target_modal = btn.attr('data-target');
-    $(target_modal +" #modal_loader").fadeOut(function() {
+    $(target_modal +" .modal_loader").fadeOut(function() {
         $(target_modal +" .modal-content").html(response);
         $('.datepicker').each(function(){
             $(this).datepicker({

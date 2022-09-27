@@ -79,6 +79,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** WEEKLY REPORT **/
     Route::resource('weekly_report','SMS\WeeklyReportController');
     Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
+    Route::resource('form5_issuanceOfSro','SMS\Form5\IssuanceOfSroController');
+    Route::resource('form5_deliveries','SMS\Form5\DeliveriesController');
+    Route::resource('form5_servedSros','SMS\Form5\ServedSrosController');
+
+    Route::resource('form5a_issuanceOfSro','SMS\Form5a\IssuanceOfSroController');
+    Route::resource('form5a_deliveries','SMS\Form5a\DeliveriesController');
+    Route::resource('form5a_servedSros','SMS\Form5a\ServedSrosController');
 });
 
 

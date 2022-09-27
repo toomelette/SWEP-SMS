@@ -698,3 +698,8 @@ ol.example li.placeholder:before {
     width: 5%;
 }
 
+.center-load{
+    text-align: center;
+    font-size: 44px;
+    padding: 100px;
+}
