@@ -32,8 +32,28 @@
 
     {!! \App\Swep\ViewHelpers\__form2::textbox('qty',[
         'label' => 'Qty. (MT)',
-        'cols' => 8,
+        'cols' => 6,
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}
+
+    {!! \App\Swep\ViewHelpers\__form2::select('charge_to',[
+        'label' => 'Crop:',
+        'cols' => 6,
+        'options' => [
+            'CURRENT' => 'CURRENT CROP',
+            'PREV' => 'PREVIOUS CROP'
+        ],
+    ],
+    (!empty($delivery)) ? $delivery : 'CURRENT'
+    ) !!}
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label>
+            <input type="checkbox" name="refining" {{(!empty($delivery) && $delivery->refining == 1) ? 'checked' : ''  }}>
+            Refining
+        </label>
+    </div>
 </div>

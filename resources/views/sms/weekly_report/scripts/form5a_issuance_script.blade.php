@@ -70,4 +70,26 @@
 
         style_datatable("#form5a_issuance_table");
     })
+
+    $("#form5a_add_issuance_form").submit(function (e) {
+        e.preventDefault();
+        let form = $(this);
+        loading_btn(form);
+        $.ajax({
+            url : '{{route("dashboard.form5a_issuanceOfSro.store")}}',
+            data : form.serialize(),
+            type: 'POST',
+            headers: {
+                {!! __html::token_header() !!}
+            },
+            success: function (res) {
+                succeed(form,false,false);
+                active_form5a_issuance = res.slug;
+                form5a_issuance_tbl.draw(false);
+            },
+            error: function (res) {
+                errored(form,res);
+            }
+        })
+    })
 </script>

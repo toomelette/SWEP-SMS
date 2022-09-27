@@ -69,8 +69,8 @@
 
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
-                                        <div class="tab-pane " id="tab_1">
-                                            @include('sms.weekly_report.sms_forms.form_1')
+                                        <div class="tab-pane active" id="tab_1">
+                                            @include('sms.weekly_report.sms_forms.form1_new')
                                         </div>
 
                                         <div class="tab-pane " id="tab_2">
@@ -82,7 +82,7 @@
                                             @include('sms.weekly_report.sms_forms.form_5')
                                         </div>
 
-                                        <div class="tab-pane active" id="tab_5a">
+                                        <div class="tab-pane " id="tab_5a">
                                             <h3 class="no-margin">Sugar Release Order and Delivery Report - REFINED</h3>
                                             @include('sms.weekly_report.sms_forms.form_5a')
                                         </div>
@@ -201,12 +201,52 @@
     </div>
 </div>
 
+<div class="modal fade" id="add_form5a_deliveries_modal" tabindex="-1" role="dialog" aria-labelledby="add_form5a_issuances_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form5a_add_delivery_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Delivery</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form5a.delivery_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_form5a_servedSros_modal" tabindex="-1" role="dialog" aria-labelledby="add_form5a_servedSros_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form5a_add_servedSro_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Delivery</h4>
+                </div>
+                <div class="modal-body">
+                @include('sms.weekly_report.sms_forms.form5a.servedSro_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!--FORM 6A-->
 <div class="modal fade" id="add_rawSugarReceipts_modal" tabindex="-1" role="dialog" aria-labelledby="add_rawSugarReceipts_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="form6a_add_rawSugarReceipts_form">
-                @csrf
                 <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -223,11 +263,11 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="add_quedanRegistry_modal" tabindex="-1" role="dialog" aria-labelledby="add_quedanRegistry_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="form6a_add_quedanRegistry_form">
-                @csrf
                 <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -245,6 +285,7 @@
 </div>
 <!--END OF FORM 6A-->
 
+
     {!! \App\Swep\ViewHelpers\__html::blank_modal('form5_editModal','') !!}
 @endsection
 
@@ -258,9 +299,13 @@
     @include('sms.weekly_report.scripts.form5_servedSro_script')
 
     @include('sms.weekly_report.scripts.form5a_issuance_script')
+    @include('sms.weekly_report.scripts.form5a_delivery_script')
+    @include('sms.weekly_report.scripts.form5a_servedSro_script')
+
 
     @include('sms.weekly_report.scripts.form6a.raw_sugar_receipts_script')
     @include('sms.weekly_report.scripts.form6a.quedan_registry_script')
+
 
     <script type="text/javascript">
 
@@ -341,27 +386,7 @@
 
 
 
-        $("#form5a_add_issuance_form").submit(function (e) {
-            e.preventDefault();
-            let form = $(this);
-            loading_btn(form);
-            $.ajax({
-                url : '{{route("dashboard.form5a_issuanceOfSro.store")}}',
-                data : form.serialize(),
-                type: 'POST',
-                headers: {
-                    {!! __html::token_header() !!}
-                },
-                success: function (res) {
-                    succeed(form,false,false);
-                    active_form5_serverSros = res.slug;
-                    servedSros_tbl.draw(false);
-                },
-                error: function (res) {
-                    errored(form,res);
-                }
-            })
-        })
+
     </script>
 
 @endsection
