@@ -250,6 +250,7 @@
 
         </table>
     </div>
+    <hr class="page-break no-print">
     <div id="form2" style="break-after: page">
         <div style="width: 100%; overflow: auto">
             <div style="width: 49%; float: left">
@@ -524,7 +525,7 @@
             </tbody>
         </table>
     </div>
-
+    <hr class="page-break no-print">
     <div id="form5" style="break-after: page">
         <div style="width: 100%; overflow: auto">
             <div style="width: 49%; float: left">
@@ -657,7 +658,7 @@
         </table>
 
     </div>
-
+    <hr class="page-break no-print">
     <div id="form5a" style="break-after: page">
         <div style="width: 100%; overflow: auto">
             <div style="width: 49%; float: left">

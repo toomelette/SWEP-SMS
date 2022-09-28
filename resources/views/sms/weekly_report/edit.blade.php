@@ -11,7 +11,7 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">Report:</h3>
-                <button class="btn btn-success pull-right"><i class="fa fa-print"></i> Print</button>
+                <button class="btn btn-success pull-right" data-target="#print_prev_modal" id="print_prev_btn" data-toggle="modal"><i class="fa fa-print"></i> Print</button>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -287,7 +287,20 @@
     </div>
 </div>
 <!--END OF FORM 6A-->
-
+<div class="modal fade" id="print_prev_modal" tabindex="-1" role="dialog" aria-labelledby="add_quedanRegistry_modal_label">
+    <div class="modal-dialog" style="width: 75%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Print Preview</h4>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-primary pull-right" id="print_btn"><i class="fa fa-print"></i> Print</button><br><br>
+                <iframe class="embed-responsive-item" style="width: 100%; height: 800px" id="allFormsFrame"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 
     {!! \App\Swep\ViewHelpers\__html::blank_modal('form5_editModal','') !!}
 @endsection
@@ -425,6 +438,14 @@
             $("#print_frame").attr('src',uri);
         })
 
+        $("#print_prev_btn").click(function () {
+            $("#allFormsFrame").attr('src','');
+            $("#allFormsFrame").attr('src','{{route("dashboard.weekly_report.print",$wr->slug)}}');
+        })
+        
+        $("#print_btn").click(function () {
+            $("#allFormsFrame").get(0).contentWindow.print();
+        })
 
     </script>
 
