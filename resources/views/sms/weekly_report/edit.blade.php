@@ -89,7 +89,7 @@
                                         </div>
 
                                         <div class="tab-pane " id="tab_6a">
-                                            <h3 class="no-margin">Quedan Registry</h3>
+                                            <h3 class="no-margin">Quedan Registry <button type="button" id="printForm6A" data="{{$wr->slug}}" class="pull-right btn btn-success btn-sm pull-right print_form6a_btn"><i class=" fa fa-print"></i> Print</button> </h3>
                                             @include('sms.weekly_report.sms_forms.form_6a')
                                         </div>
 
@@ -109,6 +109,8 @@
             </div>
 
         </div>
+
+        <iframe src="" id="print_frame" style="display: none"></iframe>
 
     </section>
 
@@ -403,9 +405,24 @@
                     $("#form1_issuances_table tbody").append(res);
                 },
                 error: function (res) {
-
                 }
             })
+        })
+
+        $("#print_frame").on("load",function () {
+            $(this).get(0).contentWindow.print();
+            $(".print_form6a_btn").each(function () {
+                btn = $(this);
+                unwait_this_button(btn);
+            })
+        })
+
+        $("body").on("click",".print_form6a_btn",function () {
+            btn = $(this);
+            wait_this_button(btn);
+            let uri = '{{route("dashboard.form_6a.print_form6a_form","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            $("#print_frame").attr('src',uri);
         })
 
 

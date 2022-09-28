@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\SMS\WeeklyReport\RawSugarController;
 use App\Http\Requests\SMS\WeeklyReportFormRequest;
 use App\Models\SMS\InputFields;
+use App\Models\SMS\CropYears;
+use App\Models\SMS\Form6a\QuedanRegistry;
+use App\Models\SMS\Form6a\RawSugarReceipts;
 use App\Models\SMS\ReportTypes;
 use App\Models\SMS\WeeklyReports;
 use Carbon\Carbon;
@@ -112,6 +115,7 @@ class WeeklyReportController extends Controller
         abort(510,'Weekly Report not found.');
     }
 
+
     public function print($slug){
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
@@ -146,6 +150,17 @@ class WeeklyReportController extends Controller
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
             'input_fields_arr' => $input_fields_arr,
+        ]);
+    }
+    public function printForm6a($slug){
+        $r = $this->findBySlug($slug);
+        $cy = CropYears::query()->where('slug', $r->crop_year)->first();
+        $receiptsList = RawSugarReceipts::query()->where('weekly_report_slug', $slug)->get();
+        $registryList = QuedanRegistry::query()->where('weekly_report_slug', $slug)->get();
+        return view('printables.sms_form.form6a')->with([
+            'cy' => $cy,
+            'r' => $r, 'receiptsList' => $receiptsList,
+            'registryList' => $registryList,
         ]);
     }
 }

@@ -93,39 +93,39 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('form6a_rawSugarReceipts','SMS\Form6a\RawSugarReceiptsController');
 
     Route::resource('form6a_quedanRegistry','SMS\Form6a\QuedanRegistryController');
+    Route::get('/form_6a/{slug}/print','SMS\WeeklyReportController@printForm6a')->name('form_6a.print_form6a_form');
 
 });
 
+    //ADMIN LEVEL ROUTES
+    /** Dashboard **/
+    Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
+        'middleware' => ['check.user_status', 'check.user_route', 'last_activity']
+    ], function () {
 
-//ADMIN LEVEL ROUTES
-/** Dashboard **/
-Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
-    'middleware' => ['check.user_status', 'check.user_route', 'last_activity']
-], function () {
+        /** USER **/
 
-	/** USER **/
+        Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
+        Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
+        Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
+        Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
+        Route::get('/user/{slug}/sync_employee', 'UserController@syncEmployee')->name('user.sync_employee');
+        Route::patch('/user/sync_employee/{slug}', 'UserController@syncEmployeePost')->name('user.sync_employee_post');
+        Route::post('/user/unsync_employee/{slug}', 'UserController@unsyncEmployee')->name('user.unsync_employee');
 
-	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
-	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
-	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
-	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
-	Route::get('/user/{slug}/sync_employee', 'UserController@syncEmployee')->name('user.sync_employee');
-	Route::patch('/user/sync_employee/{slug}', 'UserController@syncEmployeePost')->name('user.sync_employee_post');
-	Route::post('/user/unsync_employee/{slug}', 'UserController@unsyncEmployee')->name('user.unsync_employee');
+        Route::resource('user', 'UserController');
 
-	Route::resource('user', 'UserController');
+        /** MENU **/
+        Route::resource('menu', 'MenuController');
 
-	/** MENU **/
-	Route::resource('menu', 'MenuController');
+        /** MENU **/
+        Route::get('/submenu/fetch','SubmenuController@fetch')->name('submenu.fetch');
+        Route::resource('submenu','SubmenuController');
+        Route::get('/employee/report', 'EmployeeController@report')->name('employee.report');
 
-    /** MENU **/
-    Route::get('/submenu/fetch','SubmenuController@fetch')->name('submenu.fetch');
-	Route::resource('submenu','SubmenuController');
-	Route::get('/employee/report', 'EmployeeController@report')->name('employee.report');
-
-	Route::resource('employee', 'EmployeeController');
-    /** Activity Logs **/
-    Route::get('/activity_logs/fetch_properties', 'ActivityLogsController@fetch_properties')->name('activity_logs_fetch_properties');
+        Route::resource('employee', 'EmployeeController');
+        /** Activity Logs **/
+        Route::get('/activity_logs/fetch_properties', 'ActivityLogsController@fetch_properties')->name('activity_logs_fetch_properties');
 
 
 });
