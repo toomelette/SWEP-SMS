@@ -7,6 +7,13 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta property='og:title' content='SRA | Sugar Monitoring System'/>
+    <meta property='og:image' content='{{asset('images/sra.png')}}'/>
+    <meta property='og:url' content='http://sms.sra.gov.ph/'/>
+    <meta property='og:image:width' content='1200' />
+    <meta property='og:image:height' content='627' />
+    <!-- TYPE BELOW IS PROBABLY: 'website' or 'article' or look on https://ogp.me/#types -->
+    <meta property="og:type" content='website'/>
     @include('layouts.css-plugins')
 
     @yield('extras')
