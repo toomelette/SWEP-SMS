@@ -2,12 +2,19 @@
 
 @section('wrapper')
     <div id="form1" style="break-after: page">
-        <div style="width: 100%; overflow: auto">
-            <div style="width: 49%; float: left">
-                <p class="no-margin text-left" style="font-size: 14px"> <b>SMS Form No. 1</b></p>
-                <p class="no-margin text-left" style="font-size: 12px"> August 2008</p>
+        <div style="width: 100%; overflow: auto" >
+            <div style="width: 49%; float: left; overflow: auto">
+                <div>
+                    <img src="{{asset('images/sra.png')}}" style="width: 50px; float: left; margin-right: 15px;">
+                </div>
+                <p class="no-margin text-left" style="font-size: 14px"> <b>SUGAR REGULATORY ADMINISTRATION</b></p>
+                <p class="no-margin text-left" style="font-size: 12px; margin-bottom: 15px"> Sugar Monirtoring System</p>
+
+                    <p class="no-margin text-left" style="font-size: 14px"> <b>SMS Form No. 1</b></p>
+                    <p class="no-margin text-left" style="font-size: 12px"> August 2022</p>
+
             </div>
-            <div style="width: 49%; float: right">
+            <div style="width: 49%; float: right;">
                 <table style="float: right" class="details-top-right-table">
                     <tr>
                         <td>Crop Year:</td>
@@ -27,9 +34,10 @@
                     </tr>
                 </table>
             </div>
+
         </div>
 
-        <h4 class="no-margin">WEEKLY REPORT ON RAW SUGAR</h4>
+        <h4 class="no-margin"><b>WEEKLY REPORT ON RAW SUGAR</b></h4>
         <p class="no-margin"><i>(Figures in Metric Tons)</i></p>
 
         <table class="table-bordered " style="width: 100%">
@@ -254,8 +262,13 @@
     <div id="form2" style="break-after: page">
         <div style="width: 100%; overflow: auto">
             <div style="width: 49%; float: left">
+                <div>
+                    <img src="{{asset('images/sra.png')}}" style="width: 50px; float: left; margin-right: 15px;">
+                </div>
+                <p class="no-margin text-left" style="font-size: 14px"> <b>SUGAR REGULATORY ADMINISTRATION</b></p>
+                <p class="no-margin text-left" style="font-size: 12px; margin-bottom: 15px"> Sugar Monirtoring System</p>
                 <p class="no-margin text-left" style="font-size: 14px"> <b>SMS Form No. 2</b></p>
-                <p class="no-margin text-left" style="font-size: 12px"> August 2008</p>
+                <p class="no-margin text-left" style="font-size: 12px"> August 2022</p>
             </div>
             <div style="width: 49%; float: right">
                 <table style="float: right" class="details-top-right-table">
@@ -278,7 +291,7 @@
                 </table>
             </div>
         </div>
-        <h4 class="no-margin">WEEKLY REPORT ON RAW SUGAR</h4>
+        <h4 class="no-margin"><b>WEEKLY REPORT ON REFINED SUGAR</b></h4>
 
         <table class="table-bordered " style="width: 100%">
             <thead>
@@ -529,8 +542,14 @@
     <div id="form5" style="break-after: page">
         <div style="width: 100%; overflow: auto">
             <div style="width: 49%; float: left">
+                <div>
+                    <img src="{{asset('images/sra.png')}}" style="width: 50px; float: left; margin-right: 15px;">
+                </div>
+                <p class="no-margin text-left" style="font-size: 14px"> <b>SUGAR REGULATORY ADMINISTRATION</b></p>
+                <p class="no-margin text-left" style="font-size: 12px; margin-bottom: 15px"> Sugar Monirtoring System</p>
+
                 <p class="no-margin text-left" style="font-size: 14px"> <b>SMS Form No. 5</b></p>
-                <p class="no-margin text-left" style="font-size: 12px"> August 2008</p>
+                <p class="no-margin text-left" style="font-size: 12px"> August 2022</p>
             </div>
             <div style="width: 49%; float: right">
                 <table style="float: right" class="details-top-right-table">
@@ -553,7 +572,7 @@
                 </table>
             </div>
         </div>
-        <h4 class="no-margin">SUGAR RELEASE ORDER AND DELIVERY REPORT - RAW</h4>
+        <h4 class="no-margin"><b>SUGAR RELEASE ORDER AND DELIVERY REPORT - RAW</b> </h4>
         <p class="no-margin"><i>(Figures in M.T.)</i></p>
 
         <p class="text-left">A. Issuances of SRO</p>
@@ -662,8 +681,13 @@
     <div id="form5a" style="break-after: page">
         <div style="width: 100%; overflow: auto">
             <div style="width: 49%; float: left">
+                <div>
+                    <img src="{{asset('images/sra.png')}}" style="width: 50px; float: left; margin-right: 15px;">
+                </div>
+                <p class="no-margin text-left" style="font-size: 14px"> <b>SUGAR REGULATORY ADMINISTRATION</b></p>
+                <p class="no-margin text-left" style="font-size: 12px; margin-bottom: 15px"> Sugar Monirtoring System</p>
                 <p class="no-margin text-left" style="font-size: 14px"> <b>SMS Form No. 5A</b></p>
-                <p class="no-margin text-left" style="font-size: 12px"> August 2008</p>
+                <p class="no-margin text-left" style="font-size: 12px"> August 2022</p>
             </div>
             <div style="width: 49%; float: right">
                 <table style="float: right" class="details-top-right-table">
@@ -687,7 +711,7 @@
             </div>
         </div>
 
-        <h4 class="no-margin">SUGAR RELEASE ORDER AND DELIVERY REPORT - REFINED</h4>
+        <h4 class="no-margin"><b>SUGAR RELEASE ORDER AND DELIVERY REPORT - REFINED</b> </h4>
         <p class="no-margin"><i>(Figures in 50-Kg Bags)</i></p>
 
         <p class="text-left">A. Issuances of Refined Sugar Release Order</p>
