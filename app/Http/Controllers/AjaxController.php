@@ -10,7 +10,10 @@ use App\Models\Course;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\HRPayPlanitilla;
+use App\Models\SMS\SugarOrders;
+use App\Models\SMS\WeeklyReports;
 use App\Models\SSL;
+use App\Swep\Helpers\Helper;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
@@ -20,6 +23,15 @@ use Illuminate\Support\Str;
 class AjaxController extends Controller
 {
     public function get($for){
+        if($for == 'issuances_by_sugar_order'){
+
+            return  view('sms.weekly_report.ajax.form1.issuances')->with([
+                'manufactured_current' => Request::get('manufactured_current'),
+                'manufactured_prev' => Request::get('manufactured_prev'),
+                'weekly_report_slug' => Request::get('weekly_report_slug'),
+            ]);
+
+        }
         return view('sms.dynamic_rows.'.$for);
     }
     private function applicant_filter_item_no(){

@@ -167,3 +167,10 @@ table.print-table th,table.print-table td{
 .text-bottom{
     vertical-align: bottom;
 }
+.indent{
+    padding-left: 15px;
+}
+
+.details-top-right-table > tbody > tr > td{
+    padding : 2px !important;
+}

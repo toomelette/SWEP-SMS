@@ -11,6 +11,7 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">Report:</h3>
+                <button class="btn btn-success pull-right"><i class="fa fa-print"></i> Print</button>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -70,7 +71,7 @@
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1">
-                                            @include('sms.weekly_report.sms_forms.form1_new')
+                                            @include('sms.weekly_report.sms_forms.form_1')
                                         </div>
 
                                         <div class="tab-pane " id="tab_2">
@@ -384,7 +385,28 @@
             })
         })
 
+        $(".manufactured").change(function () {
+            let val = $(this).val();
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","issuances_by_sugar_order")}}',
+                data : {
+                    'weekly_report_slug' : '{{$wr->slug}}' ,
+                    'manufactured_current' : $("#manufactured_current").val(),
+                    'manufactured_prev' : $("#manufactured_prev").val(),
+                },
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#form1_issuances_table tbody").html('');
+                    $("#form1_issuances_table tbody").append(res);
+                },
+                error: function (res) {
 
+                }
+            })
+        })
 
 
     </script>

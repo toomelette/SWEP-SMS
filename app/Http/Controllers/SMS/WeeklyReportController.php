@@ -7,6 +7,7 @@ namespace App\Http\Controllers\SMS;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SMS\WeeklyReport\RawSugarController;
 use App\Http\Requests\SMS\WeeklyReportFormRequest;
+use App\Models\SMS\InputFields;
 use App\Models\SMS\ReportTypes;
 use App\Models\SMS\WeeklyReports;
 use Carbon\Carbon;
@@ -109,5 +110,42 @@ class WeeklyReportController extends Controller
             return $wr;
         }
         abort(510,'Weekly Report not found.');
+    }
+
+    public function print($slug){
+        $weekly_report = $this->findBySlug($slug);
+        $details_arr = [];
+        $input_fields_arr = [];
+
+        $ifs = InputFields::query()->get();
+        if(!empty($ifs)){
+            foreach ($ifs as $if){
+                $input_fields_arr[$if->field] = [
+                    'display_name' => $if->display_name,
+                    'prefix' => $if->prefix,
+                ];
+            }
+        }
+
+        if(!empty($weekly_report->details)){
+            foreach ($weekly_report->details as $detail){
+                if($detail->grouping == null){
+                    $details_arr[$detail->form_type][$detail->input_field] = $detail;
+                }else{
+                    $details_arr[$detail->form_type][$detail->grouping][$detail->input_field] = $detail;
+                }
+            }
+        }
+
+        if(!empty($weekly_report->seriesNos)){
+            foreach ($weekly_report->seriesNos as $seriesNo){
+                $details_arr[$seriesNo->form_type]['seriesNos'][$seriesNo->input_field] = $seriesNo;
+            }
+        }
+        return view('sms.printables.formAll')->with([
+            'wr' => $weekly_report,
+            'details_arr' => $details_arr,
+            'input_fields_arr' => $input_fields_arr,
+        ]);
     }
 }

@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('template/bower_components/font-awesome/css/font-awesome.min.css')}}">
-
+    <link rel="stylesheet" href="{{asset('css/print.css')}}?s={{\Illuminate\Support\Str::random()}}">
     <script type="text/javascript" src="{{asset('template/bower_components/jquery/dist/jquery.min.js')}}"></script>
 
 

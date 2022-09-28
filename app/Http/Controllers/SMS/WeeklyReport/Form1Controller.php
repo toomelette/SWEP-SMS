@@ -32,6 +32,7 @@ class Form1Controller extends Controller
                                     'input_field' => $key,
                                     'current_value' => $current,
                                     'prev_value' => $prev_val,
+                                    'text_value' => null,
                                     'weekly_report_slug' => $request->weekly_report_slug,
                                     'form_type' => $form,
                                     'grouping' => null,
@@ -46,6 +47,7 @@ class Form1Controller extends Controller
                                         'input_field' => $children['options'][$key][$k],
                                         'current_value' => $children['current'][$key][$k],
                                         'prev_value' => $prev_val,
+                                        'text_value' => null,
                                         'weekly_report_slug' => $request->weekly_report_slug,
                                         'form_type' => $form,
                                         'grouping' => $key,
@@ -56,6 +58,24 @@ class Form1Controller extends Controller
                         }
                     }
                 }
+                if(isset($children['text'])){
+                    foreach ($children['text'] as $f => $text){
+
+                        array_push($details_arr, [
+                            'slug' => Str::random(25),
+                            'input_field' => $f,
+                            'current_value' => null,
+                            'prev_value' => null,
+                            'text_value' => $text,
+                            'weekly_report_slug' => $request->weekly_report_slug,
+                            'form_type' => $form,
+                            'grouping' => null,
+                        ]);
+
+                    }
+                }
+
+
                 if(isset($children['series'])){
                     foreach ($children['series']['options'] as $key => $qi){
                         if($children['series']['seriesFrom'][$key] != null ||  $children['series']['seriesTo'][$key] != null){
@@ -70,6 +90,7 @@ class Form1Controller extends Controller
                         }
                     }
                 }
+
             }
             //push to array the quedan issuances
 

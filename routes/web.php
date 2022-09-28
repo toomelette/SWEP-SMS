@@ -77,6 +77,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::resource('sms_form1','SMS\WeeklyReport\Form1Controller');
     /** WEEKLY REPORT **/
+
+    Route::get('/weekly_report/{slug}/print','SMS\WeeklyReportController@print')->name('weekly_report.print');
+
     Route::resource('weekly_report','SMS\WeeklyReportController');
     Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
     Route::resource('form5_issuanceOfSro','SMS\Form5\IssuanceOfSroController');
@@ -88,7 +91,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('form5a_servedSros','SMS\Form5a\ServedSrosController');
 
     Route::resource('form6a_rawSugarReceipts','SMS\Form6a\RawSugarReceiptsController');
+
     Route::resource('form6a_quedanRegistry','SMS\Form6a\QuedanRegistryController');
+
 });
 
 
