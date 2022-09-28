@@ -89,6 +89,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::resource('form6a_rawSugarReceipts','SMS\Form6a\RawSugarReceiptsController');
     Route::resource('form6a_quedanRegistry','SMS\Form6a\QuedanRegistryController');
+
+    Route::get('/form_6a/{slug}/print','SMS\WeeklyReportController@printForm6a')->name('form_6a.print_form6a_form');
 });
 
 
