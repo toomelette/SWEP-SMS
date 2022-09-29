@@ -9,6 +9,7 @@ use App\Http\Requests\SMS\Form1Request;
 use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
 use App\Models\SMS\WeeklyReportSeriesPcs;
+use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -27,11 +28,12 @@ class Form1Controller extends Controller
                         if(!is_array($current)){
                             $prev_val = (isset($children['prev'][$key])) ? $children['prev'][$key] : null;
                             if($current !== null || $prev_val !== null){
+
                                 array_push($details_arr,[
                                     'slug' => Str::random(25),
                                     'input_field' => $key,
-                                    'current_value' => $current,
-                                    'prev_value' => $prev_val,
+                                    'current_value' => ($current != null) ? Helper::sanitizeAutonum($current) : null,
+                                    'prev_value' => ($prev_val != null) ? Helper::sanitizeAutonum($prev_val) : null,
                                     'text_value' => null,
                                     'weekly_report_slug' => $request->weekly_report_slug,
                                     'form_type' => $form,
@@ -45,8 +47,8 @@ class Form1Controller extends Controller
                                     array_push($details_arr,[
                                         'slug' => Str::random(25),
                                         'input_field' => $children['options'][$key][$k],
-                                        'current_value' => $children['current'][$key][$k],
-                                        'prev_value' => $prev_val,
+                                        'current_value' => ($children['current'][$key][$k] != null) ? Helper::sanitizeAutonum($children['current'][$key][$k]) : null,
+                                        'prev_value' => ($prev_val != null) ? Helper::sanitizeAutonum($prev_val) : null,
                                         'text_value' => null,
                                         'weekly_report_slug' => $request->weekly_report_slug,
                                         'form_type' => $form,
