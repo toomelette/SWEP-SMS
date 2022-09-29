@@ -115,6 +115,21 @@ class WeeklyReportController extends Controller
         abort(510,'Weekly Report not found.');
     }
 
+    public function destroy($slug){
+        $wr = $this->findBySlug($slug);
+        if($wr->delete()){
+            $wr->details()->delete();
+            $wr->seriesNos()->delete();
+            $wr->form5IssuancesOfSro()->delete();
+            $wr->form5Deliveries()->delete();
+            $wr->form5ServedSros()->delete();
+            $wr->form5aIssuancesOfSro()->delete();
+            $wr->form5aDeliveries()->delete();
+            $wr->form5aServedSros()->delete();
+            return 1;
+        }
+        abort(503,'Error deleting data.');
+    }
 
     public function print($slug){
         $weekly_report = $this->findBySlug($slug);
