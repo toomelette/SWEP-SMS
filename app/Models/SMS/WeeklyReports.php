@@ -59,4 +59,6 @@ class WeeklyReports extends Model
         return $this->hasMany(Form5a\ServedSros::class,'weekly_report_slug','slug');
     }
 
+
+
 }

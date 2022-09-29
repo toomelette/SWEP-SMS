@@ -2,7 +2,7 @@
 <header class="main-header">
   <a href="#" class="logo">
     <span class="logo-mini">A</span>
-    <span class="logo-lg"><b>AFD</b></span>
+    <span class="logo-lg"><b>SMS</b></span>
   </a>
   @php
     $sa = \App\Models\SuSettings::query()->where('setting','=','SERVER_ADDR')->first();
@@ -29,8 +29,8 @@
           <li style="width: 750px;padding-top: 12px"><p style="color: white; font-size: larger">DEVELOPMENT MODE</p></li>
         @endif
           <li class="dropdown tasks-menu">
-            <a href="http://{{$_SERVER['SERVER_NAME']}}/" >
-              <i class="fa fa-home"></i> Lobby Page
+            <a href="#" >
+              <i class="fa fa-calendar"></i> {{Carbon::now()->format('F d, Y')}}
             </a>
           </li>
         <li class="dropdown user user-menu">
