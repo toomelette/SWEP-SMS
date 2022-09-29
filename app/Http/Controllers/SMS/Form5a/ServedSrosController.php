@@ -14,7 +14,8 @@ class ServedSrosController extends Controller
 {
     public function index(){
         if(request()->ajax()){
-            $s = ServedSros::query();
+            $s = ServedSros::query()
+                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
             return DataTables::of($s)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5a_servedSros.destroy","slug")."'";

@@ -5,7 +5,7 @@
             'dom' : 'lBfrtip',
             "processing": true,
             "serverSide": true,
-            "ajax" : '{{route("dashboard.form5a_deliveries.index")}}',
+            "ajax" : '{{route("dashboard.form5a_deliveries.index")}}?weekly_report_slug={{$wr->slug}}',
             "columns": [
                 { "data": "date_of_withdrawal" },
                 { "data": "sro_no" },

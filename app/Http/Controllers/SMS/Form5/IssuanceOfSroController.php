@@ -14,7 +14,8 @@ class IssuanceOfSroController extends Controller
 {
     public function index(){
         if(\request()->ajax()){
-            $issuances = IssuancesOfSro::query();
+            $issuances = IssuancesOfSro::query()
+                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
             return DataTables::of($issuances)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5_issuanceOfSro.destroy","slug")."'";

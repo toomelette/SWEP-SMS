@@ -32,20 +32,6 @@
 
       <div class="content-wrapper" >
 
-{{--          @if(!empty(Auth::user()->employeeUnion))--}}
-{{--            @if(Hash::check(Carbon::parse(Auth::user()->employeeUnion->birthday)->format('mdy'), \Illuminate\Support\Facades\Auth::user()->password))--}}
-{{--              <div class="row" id="change_pass_container">--}}
-{{--                <div class="col-md-12">--}}
-{{--                  <a href="#" id="change_pass_href">--}}
-{{--                    <div class="alert alert-warning" style="margin: 1rem">--}}
-{{--                      <p><b>Your account is at risk. </b> It seems like you haven't changed your password yet. Please change your SWEP Account Password by clicking here.</p>--}}
-{{--                    </div>--}}
-{{--                  </a>--}}
-{{--                </div>--}}
-{{--              </div>--}}
-{{--            @endif--}}
-{{--          @endif--}}
-
             @include('dashboard.home.announcement_banner')
 
         @yield('content')

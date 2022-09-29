@@ -14,7 +14,8 @@ class RawSugarReceiptsController extends Controller
 {
     public function index(){
         if(\request()->ajax()){
-            $receipts = RawSugarReceipts::query();
+            $receipts = RawSugarReceipts::query()
+                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
             return DataTables::of($receipts)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form6a_rawSugarReceipts.destroy","slug")."'";

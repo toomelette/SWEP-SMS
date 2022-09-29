@@ -14,7 +14,8 @@ class DeliveriesController extends Controller
 {
     public function index(){
         if(\request()->ajax()){
-            $deliveries = Deliveries::query();
+            $deliveries = Deliveries::query()
+                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
             return DataTables::of($deliveries)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5_deliveries.destroy","slug")."'";

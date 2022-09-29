@@ -7,7 +7,7 @@
                 'dom' : 'lBfrtip',
                 "processing": true,
                 "serverSide": true,
-                "ajax" : '{{route("dashboard.form6a_rawSugarReceipts.index")}}',
+                "ajax" : '{{route("dashboard.form6a_rawSugarReceipts.index")}}?weekly_report_slug={{$wr->slug}}',
                 "columns": [
                     { "data": "delivery_no" },
                     { "data": "trader" },

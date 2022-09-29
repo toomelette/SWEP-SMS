@@ -5,7 +5,7 @@
             'dom' : 'lBfrtip',
             "processing": true,
             "serverSide": true,
-            "ajax" : '{{route("dashboard.form5_deliveries.index")}}',
+            "ajax" : '{{route("dashboard.form5_deliveries.index")}}?weekly_report_slug={{$wr->slug}}',
             "columns": [
                 { "data": "sro_no" },
                 { "data": "trader" },
