@@ -1,26 +1,26 @@
 @php($rand = \Illuminate\Support\Str::random(5))
 <tr id="tr_{{$rand}}">
     <td>
-        {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form2][options][refinedSugarProduction]['.$rand.']',[
+        {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form4a][options][subsidiaryWithdrawals]['.$rand.']',[
             'label' => 'A',
-            'options' => \App\Models\SMS\InputFields::getFieldsAsArray('refined_sugar_production'),
-            'container_class' => 'data_form2_options_refinedSugarProduction_'.$rand,
+            'options' => \App\Models\SMS\InputFields::getFieldsAsArray('form4a_subsidiaryWithdrawals'),
+            'container_class' => 'data_form4a_options_subsidiaryWithdrawals_'.$rand,
         ],
         (!empty($item->input_field) ? $item->input_field : null)
         ) !!}
     </td>
     <td>
-        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form2][current][refinedSugarProduction]['.$rand.']',[
+        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][subsidiaryWithdrawals]['.$rand.']',[
             'class' => 'text-right autonumber_mt autonumber_mt_'.$rand,
-            'container_class' => 'data_form2_current_refinedSugarProduction_'.$rand,
+            'container_class' => 'data_form4a_current_subsidiaryWithdrawals_'.$rand,
         ],
         (!empty($item->current_value) ? $item->current_value : null)
         ) !!}
     </td>
     <td>
-        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form2][prev][refinedSugarProduction]['.$rand.']',[
+        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][subsidiaryWithdrawals]['.$rand.']',[
             'class' => 'text-right autonumber_mt autonumber_mt_'.$rand,
-            'container_class' => 'data_form2_prev_refinedSugarProduction_'.$rand,
+            'container_class' => 'data_form4a_prev_subsidiaryWithdrawals_'.$rand,
         ],
         (!empty($item->prev_value) ? $item->prev_value : null)
         ) !!}

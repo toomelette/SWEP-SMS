@@ -30,8 +30,10 @@
     </td>
 </tr>
 
-<script>
-    $(".autonumber_mt_{{$rand}}").each(function(){
-        new AutoNumeric(this, autonum_settings_mt);
-    });
-</script>
+@if(\Illuminate\Support\Facades\Request::ajax())
+    <script>
+        $(".autonumber_mt_{{$rand}}").each(function(){
+            new AutoNumeric(this, autonum_settings_mt);
+        });
+    </script>
+@endif
