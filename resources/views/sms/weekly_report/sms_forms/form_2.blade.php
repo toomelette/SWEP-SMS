@@ -1,12 +1,18 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4>Raw Sugar</h4>
+<div class="form-title" style="background-color: #4e984a;">
+    <h4>  WEEKLY REPORT ON REFINED SUGAR
+    </h4>
+</div>
+
+<div class="subform-container">
+    <h4>Raw Sugar</h4>
+    <div class="subform-body">
         <div class="row">
+
             <div class="col-md-12">
 
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
+                        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
                             <p class="no-margin">1. Carry Over <small id="filter-notifier" class="label bg-blue blink"></small></p>
                         </div>
                         <div class="box-body" style="">
@@ -59,7 +65,7 @@
 
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
+                        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
                             <p class="no-margin">2. Receipts: (For Refining)<small id="filter-notifier" class="label bg-blue blink"></small></p>
                         </div>
                         <div class="box-body" style="">
@@ -192,7 +198,7 @@
                 <div class="col-md-12">
                     <div class="panel">
                         <div class="box box-sm box-default box-solid">
-                            <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
+                            <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
                                 <p class="no-margin">{{$f->prefix}} {{$f->display_name}}<small id="filter-notifier" class="label bg-blue blink"></small></p>
                             </div>
                             <div class="box-body" style="">
@@ -233,15 +239,22 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+    </div>
+</div>
 
-            <h4>Refined Sugar</h4>
+
+<div class="subform-container">
+    <h4>Refined Sugar</h4>
+    <div class="subform-body">
+        <div class="row">
             <div class="col-md-12">
                 @php
                     $a = 'refinedSugarProduction';
                 @endphp
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
+                        <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
                             <p class="no-margin">6. Production/Carry-over
                                 <small id="filter-notifier" class="label bg-blue blink"></small>
                                 <button class="btn btn-xs pull-right btn-success add_btn"  style="background-color: #e3e3e3" data="form2_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
@@ -273,7 +286,7 @@
             <div class="col-md-12">
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
+                        <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
                             <p class="no-margin">7. Issuances
                                 <small id="filter-notifier" class="label bg-blue blink"></small>
                             </p>
@@ -326,7 +339,7 @@
                 @endphp
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
+                        <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
                             <p class="no-margin">8. Withdrawals
                                 <small id="filter-notifier" class="label bg-blue blink"></small>
                                 <button class="btn btn-xs pull-right btn-success add_btn" style="background-color: #e3e3e3" data="form2_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
@@ -367,7 +380,7 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="box box-sm box-default box-solid">
-                                <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
+                                <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
                                     <p class="no-margin">{{$f->prefix}} {{$f->display_name}}
                                         <small id="filter-notifier" class="label bg-blue blink"></small>
                                     </p>

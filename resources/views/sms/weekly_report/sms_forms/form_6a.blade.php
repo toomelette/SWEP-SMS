@@ -1,3 +1,7 @@
+<div class="form-title" style="background-color: #4477a3;">
+    <h4> QUEDAN REGISTRY
+    </h4>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel">

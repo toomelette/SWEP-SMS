@@ -46,32 +46,15 @@
                             </div>
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_1" data-toggle="tab">SMS Form 1</a></li>
-                                    <li><a href="#tab_2" data-toggle="tab">SMS Form 2</a></li>
-                                    <li><a href="#tab_3" data-toggle="tab">SMS Form 3</a></li>
-
-
-                                    <li><a href="#tab_3a" data-toggle="tab">SMS Form 3A</a></li>
-                                    <li><a href="#tab_4a" data-toggle="tab">SMS Form 4A</a></li>
-
-
-                                    <li><a href="#tab_5" data-toggle="tab">SMS Form 5</a></li>
-                                    <li><a href="#tab_5a" data-toggle="tab">SMS Form 5A</a></li>
-                                    <li><a href="#tab_6a" data-toggle="tab">SMS Form 6A</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                    <li class="active"><a href="#tab_1" data-toggle="tab"> Form 1</a></li>
+                                    <li><a href="#tab_2" data-toggle="tab"> Form 2</a></li>
+                                    <li><a href="#tab_3" data-toggle="tab"> Form 3</a></li>
+                                    <li><a href="#tab_3a" data-toggle="tab"> Form 3A</a></li>
+                                    <li><a href="#tab_4" data-toggle="tab"> Form 4</a></li>
+                                    <li><a href="#tab_4a" data-toggle="tab"> Form 4A</a></li>
+                                    <li><a href="#tab_5" data-toggle="tab"> Form 5</a></li>
+                                    <li><a href="#tab_5a" data-toggle="tab"> Form 5A</a></li>
+                                    <li><a href="#tab_6a" data-toggle="tab"> Form 6A</a></li>
 
                                     <li class="pull-right">
                                         <button class="btn btn-primary btn-sm pull-right" type="submit"><i class=" fa fa-check"></i> Save as Draft</button>
@@ -88,21 +71,16 @@
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
-                                        <div class="tab-pane active" id="tab_3">
+                                        <div class="tab-pane " id="tab_3">
                                             @include('sms.weekly_report.sms_forms.form_3')
                                         </div>
 
-
-
-
-
-
-
-
-
-
                                         <div class="tab-pane " id="tab_3a">
                                             @include('sms.weekly_report.sms_forms.form_3a')
+                                        </div>
+
+                                        <div class="tab-pane " id="tab_4">
+                                            @include('sms.weekly_report.sms_forms.form_4')
                                         </div>
 
                                         <div class="tab-pane " id="tab_4a">
@@ -110,17 +88,15 @@
                                         </div>
 
                                         <div class="tab-pane " id="tab_5">
-                                            <h3 class="no-margin">Sugar Release Order and Delivery Report - RAW</h3>
                                             @include('sms.weekly_report.sms_forms.form_5')
                                         </div>
 
                                         <div class="tab-pane " id="tab_5a">
-                                            <h3 class="no-margin">Sugar Release Order and Delivery Report - REFINED</h3>
+
                                             @include('sms.weekly_report.sms_forms.form_5a')
                                         </div>
 
                                         <div class="tab-pane " id="tab_6a">
-                                            <h3 class="no-margin">Quedan Registry <button type="button" id="printForm6A" data="{{$wr->slug}}" class="pull-right btn btn-success btn-sm pull-right print_form6a_btn"><i class=" fa fa-print"></i> Print</button> </h3>
                                             @include('sms.weekly_report.sms_forms.form_6a')
                                         </div>
 
