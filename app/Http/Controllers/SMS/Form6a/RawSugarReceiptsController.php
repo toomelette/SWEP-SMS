@@ -6,6 +6,7 @@ namespace App\Http\Controllers\SMS\Form6a;
 
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form6a\RawSugarReceipts;
+use App\SMS\Services\WeeklyReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -36,7 +37,8 @@ class RawSugarReceiptsController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function store(Request $request, WeeklyReportService $weeklyReportService){
+        $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $i = new RawSugarReceipts();
         $i->weekly_report_slug = $request->weekly_report_slug;
         $i->slug = Str::random();
@@ -59,8 +61,9 @@ class RawSugarReceiptsController extends Controller
             'receipts' => $this->findBySlug($slug),
         ]);
     }
-    public function update(Request $request,$slug){
+    public function update(Request $request,$slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         $i->delivery_no = $request->delivery_no;
         $i->trader = $request->trader;
         $i->mill_source = $request->mill_source;
@@ -82,8 +85,9 @@ class RawSugarReceiptsController extends Controller
         return $i;
     }
 
-    public function destroy($slug){
+    public function destroy($slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         if($i->delete()){
             return 1;
         }

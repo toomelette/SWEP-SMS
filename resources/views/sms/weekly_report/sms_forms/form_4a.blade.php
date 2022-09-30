@@ -49,7 +49,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
@@ -93,7 +92,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
@@ -137,7 +135,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
@@ -181,7 +178,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
@@ -278,7 +274,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 @php
@@ -322,7 +317,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 @php
@@ -366,7 +360,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 @php
@@ -410,7 +403,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #a34444;color: white;">
@@ -454,7 +446,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #a34444;color: white;">

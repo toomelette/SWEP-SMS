@@ -18,7 +18,7 @@
                 <table style="float: right" class="details-top-right-table">
                     <tr>
                         <td>Crop Year:</td>
-                        <td><b>{{$wr->cropYear->name}}</b></td>
+                        <td><b>{{$wr->crop_year}}</b></td>
                     </tr>
                     <tr>
                         <td>Mill Code:</td>
@@ -274,7 +274,7 @@
                 <table style="float: right" class="details-top-right-table">
                     <tr>
                         <td>Crop Year:</td>
-                        <td><b>{{$wr->cropYear->name}}</b></td>
+                        <td><b>{{$wr->crop_year}}</b></td>
                     </tr>
                     <tr>
                         <td>Mill Code:</td>
@@ -555,7 +555,7 @@
                 <table style="float: right" class="details-top-right-table">
                     <tr>
                         <td>Crop Year:</td>
-                        <td><b>{{$wr->cropYear->name}}</b></td>
+                        <td><b>{{$wr->crop_year}}</b></td>
                     </tr>
                     <tr>
                         <td>Mill Code:</td>
@@ -693,7 +693,7 @@
                 <table style="float: right" class="details-top-right-table">
                     <tr>
                         <td>Crop Year:</td>
-                        <td><b>{{$wr->cropYear->name}}</b></td>
+                        <td><b>{{$wr->crop_year}}</b></td>
                     </tr>
                     <tr>
                         <td>Mill Code:</td>

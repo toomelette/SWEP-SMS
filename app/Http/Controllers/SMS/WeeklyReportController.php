@@ -13,6 +13,7 @@ use App\Models\SMS\Form6a\QuedanRegistry;
 use App\Models\SMS\Form6a\RawSugarReceipts;
 use App\Models\SMS\ReportTypes;
 use App\Models\SMS\WeeklyReports;
+use App\SMS\Services\WeeklyReportService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,29 +30,24 @@ class WeeklyReportController extends Controller
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.weekly_report.destroy","slug")."'";
                     $slug = "'".$data->slug."'";
-                    $button = '<div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm view_employee_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#show_employee_modal" title="View more" data-placement="left">
-                                        <i class="fa fa-file-text"></i>
-                                    </button>
-                                   
-                                    <a  href="'. route('dashboard.weekly_report.edit', $data->slug).'" for="linkToEdit" type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_jo_employee_btn"  title="Edit" data-placement="top">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <button type="button" data="'.$data->slug.'" onclick="delete_data('.$slug.','.$destroy_route.')" class="btn btn-sm btn-danger delete_jo_employee_btn" data-toggle="tooltip" title="Delete" data-placement="top">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                  
-                                </div>';
-                    return $button;
+                    $editHref = route('dashboard.weekly_report.edit', $data->slug);
+                    return view('sms.weekly_report.action_buttons.weekly_report_index.action')->with([
+                        'data' => $data,
+                        'editHref' => $editHref,
+                        'destroyRoute' => $destroy_route,
+                    ]);
                 })
                 ->addColumn('status',function($data){
-                    return 'Draft';
+                    if($data->status == 1){
+                        return 'SUBMITTED';
+                    }
+                    return 'DRAFT';
                 })
                 ->editColumn('week_ending',function($data){
                     return Carbon::parse($data->week_ending)->format('F d, Y');
                 })
                 ->editColumn('crop_year',function($data){
-                    return $data->cropYear->name;
+                    return $data->crop_year;
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -115,7 +111,8 @@ class WeeklyReportController extends Controller
         abort(510,'Weekly Report not found.');
     }
 
-    public function destroy($slug){
+    public function destroy($slug, WeeklyReportService $weeklyReportService){
+        $weeklyReportService->isNotSubmitted($slug);
         $wr = $this->findBySlug($slug);
         if($wr->delete()){
             $wr->details()->delete();

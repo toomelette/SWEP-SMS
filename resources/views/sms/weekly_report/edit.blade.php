@@ -22,7 +22,7 @@
                             <hr>
 
                             <dt>Crop Year:</dt>
-                            <dd><span style="font-size: 18px">{{$wr->cropYear->name}}</span></dd>
+                            <dd><span style="font-size: 18px">{{$wr->crop_year}}</span></dd>
                             <hr>
 
                             <dt>Week Ending:</dt>
@@ -39,31 +39,32 @@
                     </div>
                     <div class="col-md-9">
                         <form id="form1">@csrf
-                            <div class="row">
-                                <div class="col-md-12">
+                            <fieldset {{$wr->status == 1 ? 'disabled' : null}}>
+                                <div class="row">
+                                    <div class="col-md-12">
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_1" data-toggle="tab"> Form 1</a></li>
-                                    <li><a href="#tab_2" data-toggle="tab"> Form 2</a></li>
-                                    <li><a href="#tab_3" data-toggle="tab"> Form 3</a></li>
-                                    <li><a href="#tab_3a" data-toggle="tab"> Form 3A</a></li>
-                                    <li><a href="#tab_4" data-toggle="tab"> Form 4</a></li>
-                                    <li><a href="#tab_4a" data-toggle="tab"> Form 4A</a></li>
-                                    <li><a href="#tab_5" data-toggle="tab"> Form 5</a></li>
-                                    <li><a href="#tab_5a" data-toggle="tab"> Form 5A</a></li>
-                                    <li><a href="#tab_6a" data-toggle="tab"> Form 6A</a></li>
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#tab_1" data-toggle="tab"> Form 1</a></li>
+                                        <li><a href="#tab_2" data-toggle="tab"> Form 2</a></li>
+                                        <li><a href="#tab_3" data-toggle="tab"> Form 3</a></li>
+                                        <li><a href="#tab_3a" data-toggle="tab"> Form 3A</a></li>
+                                        <li><a href="#tab_4" data-toggle="tab"> Form 4</a></li>
+                                        <li><a href="#tab_4a" data-toggle="tab"> Form 4A</a></li>
+                                        <li><a href="#tab_5" data-toggle="tab"> Form 5</a></li>
+                                        <li><a href="#tab_5a" data-toggle="tab"> Form 5A</a></li>
+                                        <li><a href="#tab_6a" data-toggle="tab"> Form 6A</a></li>
 
-                                    <li class="pull-right">
-                                        <button class="btn btn-primary btn-sm pull-right" type="submit"><i class=" fa fa-check"></i> Save as Draft</button>
-                                    </li>
-                                </ul>
+                                        <li class="pull-right">
+                                            <button class="btn btn-primary btn-sm pull-right" type="submit"><i class=" fa fa-check"></i> Save as Draft</button>
+                                        </li>
+                                    </ul>
 
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="tab_1">
+                                        <div class="tab-pane " id="tab_1">
                                             @include('sms.weekly_report.sms_forms.form_1')
                                         </div>
 
@@ -71,7 +72,7 @@
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
-                                        <div class="tab-pane " id="tab_3">
+                                        <div class="tab-pane active" id="tab_3">
                                             @include('sms.weekly_report.sms_forms.form_3')
                                         </div>
 
@@ -108,7 +109,8 @@
                                         </div>
                                     </div>
                                     <br>
-                            </div>
+                                </div>
+                            </fieldset>
                         </form>
                     </div>
                 </div>

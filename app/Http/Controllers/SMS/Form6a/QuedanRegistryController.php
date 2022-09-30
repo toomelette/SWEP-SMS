@@ -6,6 +6,7 @@ namespace App\Http\Controllers\SMS\Form6a;
 
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form6a\QuedanRegistry;
+use App\SMS\Services\WeeklyReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -37,7 +38,8 @@ class QuedanRegistryController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function store(Request $request, WeeklyReportService $weeklyReportService){
+        $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $i = new QuedanRegistry();
         $i->weekly_report_slug = $request->weekly_report_slug;
         $i->slug = Str::random();
@@ -57,8 +59,9 @@ class QuedanRegistryController extends Controller
             'registry' => $this->findBySlug($slug),
         ]);
     }
-    public function update(Request $request,$slug){
+    public function update(Request $request,$slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         $i->delivery_no = $request->delivery_no;
         $i->trader = $request->trader;
         $i->refined_quedan_sn = $request->refined_quedan_sn;
@@ -77,8 +80,9 @@ class QuedanRegistryController extends Controller
         return $i;
     }
 
-    public function destroy($slug){
+    public function destroy($slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         if($i->delete()){
             return 1;
         }

@@ -9,14 +9,16 @@ use App\Http\Requests\SMS\Form1Request;
 use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
 use App\Models\SMS\WeeklyReportSeriesPcs;
+use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Form1Controller extends Controller
 {
-    public function store(Form1Request $request){
-//        return $request;
+    public function store(Form1Request $request, WeeklyReportService $weeklyReportService){
+        $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
+
         $details_arr = [];
         $series = [];
 

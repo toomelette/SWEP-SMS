@@ -17,7 +17,7 @@ class Arrays
         $arr = [];
         if(!empty($cys)){
             foreach ($cys as $cy){
-                $arr[$cy->slug] = $cy->name;
+                $arr[$cy->name] = $cy->name;
             }
         }
         return $arr;

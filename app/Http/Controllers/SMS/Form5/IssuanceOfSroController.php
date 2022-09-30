@@ -6,6 +6,7 @@ namespace App\Http\Controllers\SMS\Form5;
 
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form5\IssuancesOfSro;
+use App\SMS\Services\WeeklyReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -36,7 +37,8 @@ class IssuanceOfSroController extends Controller
                 ->toJson();
         }
     }
-    public function store(Request $request){
+    public function store(Request $request,WeeklyReportService $weeklyReportService){
+        $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $i = new IssuancesOfSro;
         $i->slug = Str::random();
         $i->weekly_report_slug = $request->weekly_report_slug;
@@ -62,8 +64,9 @@ class IssuanceOfSroController extends Controller
             'issuance' => $this->findBySlug($slug),
         ]);
     }
-    public function update(Request $request,$slug){
+    public function update(Request $request,$slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         $i->sro_no = $request->sro_no;
         $i->trader = $request->trader;
         $i->cea = $request->cea;
@@ -91,11 +94,13 @@ class IssuanceOfSroController extends Controller
         return $i;
     }
 
-    public function destroy($slug){
+    public function destroy($slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         if($i->delete()){
             return 1;
         }
         abort(503,'Error deleting data.');
     }
+
 }

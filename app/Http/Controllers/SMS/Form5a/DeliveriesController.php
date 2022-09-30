@@ -7,6 +7,7 @@ namespace App\Http\Controllers\SMS\Form5a;
 
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form5a\Deliveries;
+use App\SMS\Services\WeeklyReportService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -38,7 +39,8 @@ class DeliveriesController extends Controller
                 ->toJson();
         }
     }
-    public function store(Request $request){
+    public function store(Request $request, WeeklyReportService $weeklyReportService){
+        $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $d = new Deliveries;
         $d->weekly_report_slug = $request->weekly_report_slug;
         $d->slug = Str::random();
@@ -62,8 +64,9 @@ class DeliveriesController extends Controller
         ]);
     }
 
-    public function update(Request $request, $slug){
+    public function update(Request $request, $slug, WeeklyReportService $weeklyReportService){
         $d = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($d->weekly_report_slug);
         $d->date_of_withdrawal = $request->date_of_withdrawal;
         $d->sro_no = $request->sro_no;
         $d->trader = $request->trader;
@@ -85,8 +88,9 @@ class DeliveriesController extends Controller
         }
         return $i;
     }
-    public function destroy($slug){
+    public function destroy($slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
+        $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         if($i->delete()){
             return 1;
         }
