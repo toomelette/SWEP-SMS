@@ -48,9 +48,13 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#tab_1" data-toggle="tab">SMS Form 1</a></li>
                                     <li><a href="#tab_2" data-toggle="tab">SMS Form 2</a></li>
+                                    <li><a href="#tab_3" data-toggle="tab">SMS Form 3</a></li>
+
 
                                     <li><a href="#tab_3a" data-toggle="tab">SMS Form 3A</a></li>
                                     <li><a href="#tab_4a" data-toggle="tab">SMS Form 4A</a></li>
+
+
                                     <li><a href="#tab_5" data-toggle="tab">SMS Form 5</a></li>
                                     <li><a href="#tab_5a" data-toggle="tab">SMS Form 5A</a></li>
                                     <li><a href="#tab_6a" data-toggle="tab">SMS Form 6A</a></li>
@@ -84,6 +88,11 @@
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
+                                        <div class="tab-pane active" id="tab_3">
+                                            @include('sms.weekly_report.sms_forms.form_3')
+                                        </div>
+
+
 
 
 
@@ -99,7 +108,6 @@
                                         <div class="tab-pane " id="tab_4a">
                                             @include('sms.weekly_report.sms_forms.form_4a')
                                         </div>
-
 
                                         <div class="tab-pane " id="tab_5">
                                             <h3 class="no-margin">Sugar Release Order and Delivery Report - RAW</h3>
