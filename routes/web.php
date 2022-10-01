@@ -80,6 +80,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::get('/weekly_report/{slug}/print','SMS\WeeklyReportController@print')->name('weekly_report.print');
 
+    Route::resource('signatories','SMS\SignatoryController');
     Route::resource('weekly_report','SMS\WeeklyReportController');
     Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
     Route::resource('form5_issuanceOfSro','SMS\Form5\IssuanceOfSroController');

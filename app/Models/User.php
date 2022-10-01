@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SMS\SugarMills;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
@@ -93,116 +94,17 @@ class User extends Authenticatable{
         return $this->hasOne(Employee::class, 'employee_no', 'employee_no');
     }
 
-    
-    public function employeeUnion(){
-        $employee = $this->hasOne('App\Models\Employee', 'employee_no', 'employee_no')
-            ->select(DB::raw('
-                firstname,
-                middlename,
-                lastname,
-                biometric_user_id,
-                employee_no,
-                date_of_birth as birthday,
-                email,
-                "PERM" as type
-            '));
-        $jo_emplyoee = $this->hasOne('App\Models\JoEmployees', 'employee_no', 'employee_no')
-            ->select(DB::raw('
-                firstname,
-                middlename,
-                lastname,
-                biometric_user_id,
-                employee_no,
-                birthday,
-                email,
-                "JO" as type
-            '));
 
-        return $employee->union($jo_emplyoee->getQuery());
-    }
-    
-
-
-
-    /** GETTERS **/
-    public function getFullnameShortAttribute(){
-        return strtoupper(substr($this->firstname , 0, 1) . ". " . $this->lastname);
-    }
-
-
-
-
-    public function getFullnameAttribute(){
-        return strtoupper($this->firstname . " " . substr($this->middlename , 0, 1) . ". " . $this->lastname);
-    }
-    
 
     public function actions(){
         return $this->hasMany(Activity::class,'causer_id','id');
     }
 
 
-    public function access(){
-        return $this->hasMany(UserAccess::class,'user','user_id');
-    }
-
-    public function hasAccessToEmployees(...$access){
-        if(is_array($access)){
-            $acc = $this->hasMany(UserAccess::class,'user','user_id')
-                ->where('for','=','employees')
-                ->where(function($query) use ($access){
-                foreach ($access as $item){
-                    $query->orWhere('access','=',$item);
-                }
-            });
-
-            $acc = $acc->count();
-        }
-        if($acc > 0){
-            return true;
-        }else{
-            abort(510,'Your user account does not have enough privilege to do this action.');
-        }
-    }
-
-    public function getAccessToEmployees(){
-        $arr = [];
-        $access = $this->hasMany(UserAccess::class,'user','user_id')->where('for','=','employees')->get();
-        if(!empty($access)){
-            foreach ($access as $acc){
-                array_push($arr,$acc->access);
-            }
-        }
-        return $arr;
+    public function sugarMill(){
+        return $this->hasOne(SugarMills::class,'slug','mill_code');
     }
 
 
-    public function hasAccessToDocuments(...$access){
-        if(is_array($access)){
-            $acc = $this->hasMany(UserAccess::class,'user','user_id')
-                ->where('for','=','documents')
-                ->where(function($query) use ($access){
-                    foreach ($access as $item){
-                        $query->orWhere('access','=',$item);
-                    }
-                });
-
-            $acc = $acc->count();
-        }
-        if($acc > 0){
-            return true;
-        }else{
-            abort(510,'Your user account does not have enough privilege to do this action.');
-        }
-    }
-
-    public function getAccessToDocuments(){
-
-        $access = $this->hasMany(UserAccess::class,'user','user_id')->where('for','=','documents')->first();
-        if(!empty($access)){
-            return $access->access;
-        }
-        return null;
-    }
 
 }

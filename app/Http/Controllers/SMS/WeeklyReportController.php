@@ -13,6 +13,7 @@ use App\Models\SMS\Form6a\QuedanRegistry;
 use App\Models\SMS\Form6a\RawSugarReceipts;
 use App\Models\SMS\ReportTypes;
 use App\Models\SMS\WeeklyReports;
+use App\SMS\Services\SignatoryService;
 use App\SMS\Services\WeeklyReportService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -128,7 +129,7 @@ class WeeklyReportController extends Controller
         abort(503,'Error deleting data.');
     }
 
-    public function print($slug){
+    public function print($slug, SignatoryService $signatoryService){
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         $input_fields_arr = [];
@@ -162,6 +163,7 @@ class WeeklyReportController extends Controller
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
             'input_fields_arr' => $input_fields_arr,
+            'signatories' => $signatoryService->getSavedSignatoriesAsArray(),
         ]);
     }
     public function printForm6a($slug){

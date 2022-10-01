@@ -64,7 +64,7 @@
 
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
-                                        <div class="tab-pane " id="tab_1">
+                                        <div class="tab-pane active" id="tab_1">
                                             @include('sms.weekly_report.sms_forms.form_1')
                                         </div>
 
@@ -72,7 +72,7 @@
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
-                                        <div class="tab-pane active" id="tab_3">
+                                        <div class="tab-pane " id="tab_3">
                                             @include('sms.weekly_report.sms_forms.form_3')
                                         </div>
 
