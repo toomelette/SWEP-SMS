@@ -8,13 +8,17 @@ use App\Models\Applicant;
 use App\Models\ApplicantPositionApplied;
 use App\Models\HRPayPlanitilla;
 use App\Models\SMS\CropYears;
+use App\Models\SMS\SugarMills;
 
 class Arrays
 {
 
-    public static function cropYears(){
+    public static function cropYears($includeEmptySelect = false){
         $cys = CropYears::query()->orderBy('date_start','asc')->get();
         $arr = [];
+        if($includeEmptySelect == true){
+            $arr['ALL'] = 'ALL';
+        }
         if(!empty($cys)){
             foreach ($cys as $cy){
                 $arr[$cy->name] = $cy->name;
@@ -22,6 +26,22 @@ class Arrays
         }
         return $arr;
     }
+
+    public static function millCodes($includeEmptySelect = false){
+        $suagrMills = SugarMills::query()->orderBy('slug','asc')->get();
+        $arr = [];
+        if($includeEmptySelect == true){
+            $arr['ALL'] = 'ALL';
+        }
+        if(!empty($suagrMills)){
+            foreach ($suagrMills as $suagrMill){
+                $arr[$suagrMill->slug] = $suagrMill->slug;
+            }
+        }
+        return $arr;
+    }
+
+
     public static function sex(){
         return [
             'MALE' => 'MALE',

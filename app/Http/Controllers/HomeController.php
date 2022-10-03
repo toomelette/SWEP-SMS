@@ -61,7 +61,7 @@ class HomeController extends Controller{
             ->first();
         $totalRawSugarIssuances = (!empty($wrForThisWeek->form5IssuancesOfSro)) ? $wrForThisWeek->form5IssuancesOfSro()->sum('qty') : null;
         $totalRawSugarDeliveries = !empty($wrForThisWeek->form5IssuancesOfSro) ? $wrForThisWeek->form5Deliveries()->sum('qty') : null;
-        return view('dashboard.home.home')->with([
+        return view('dashboard.home.homeAdmin')->with([
             'totalRawSugarIssuances' => $totalRawSugarIssuances,
             'totalRawSugarDeliveries' => $totalRawSugarDeliveries,
             'closestSundayAhead' => $closestSundayAhead,

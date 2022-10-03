@@ -11,6 +11,7 @@ use App\Models\Document;
 use App\Models\Employee;
 use App\Models\HRPayPlanitilla;
 use App\Models\SMS\SugarOrders;
+use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
 use App\Models\SSL;
 use App\Swep\Helpers\Helper;
@@ -30,175 +31,114 @@ class AjaxController extends Controller
                 'manufactured_prev' => Request::get('manufactured_prev'),
                 'weekly_report_slug' => Request::get('weekly_report_slug'),
             ]);
-
         }
-        return view('sms.dynamic_rows.'.$for);
-    }
-    private function applicant_filter_item_no(){
-        $arr['results'] = [];
-        array_push($arr['results'],['id'=>'','text' => "Don't Filter"]);
-        $ps = HRPayPlanitilla::query()->select('item_no','position')
-            ->where('position','like','%'.Request::get('q').'%')
-            ->orWhere('item_no','like','%'.Request::get('q').'%')
-            ->groupBy('item_no')
-            ->orderBy('item_no','asc')
-            ->limit(20)
-            ->get();
-        if(!empty($ps)){
-            foreach ($ps as $p){
-                array_push($arr['results'],[
-                    'id' => $p->item_no,
-                    'text' => $p->item_no.' - '.$p->position,
-                ]);
+
+        if($for == 'chartAdmin'){
+            $request = Request();
+
+            $a = \App\Models\SMS\CropYears::query()
+                ->where('is_current' ,'=',1)
+                ->first();
+            $cy = $a->name;
+            $weeksNamesArray = [];
+            $weeksArray = [];
+
+            $start_date = \Illuminate\Support\Carbon::parse($a->date_start);
+            while ($start_date->format('Ymd') != Carbon::now()->format('Ymd')){
+                $start_date = $start_date->addDays(1);
+                if($start_date->format('w') == 0){
+                    array_push($weeksNamesArray,$start_date->format('M d, Y'));
+                    $weeksArray[$start_date->format('Y-m-d')] = [];
+
+                }
             }
-        }
-        return $arr;
-    }
-    private function applicant_filter_position(){
-        $arr['results'] = [];
-        array_push($arr['results'],['id'=>'','text' => "Don't Filter"]);
-        $ps = ApplicantPositionApplied::query()->select('position_applied')
-            ->where('position_applied','like','%'.Request::get('q').'%')
-            ->groupBy('position_applied')
-            ->orderBy('position_applied','asc')
-            ->limit(20)
-            ->get();
-        if(!empty($ps)){
-            foreach ($ps as $p){
-                array_push($arr['results'],[
-                    'id' => $p->position_applied,
-                    'text' => $p->position_applied,
-                ]);
+            $productions = [];
+            $withdrawals = [];
+
+            $prods = \App\Models\SMS\WeeklyReports::query()
+                ->where('crop_year','=',$a->name)
+                ->where('mill_code','=',\Illuminate\Support\Facades\Auth::user()->mill_code)
+                ->get();
+
+            $manufactured = WeeklyReportDetails::query()->where('input_field','=','manufactured')
+                            ->where('form_type','=','form1')
+                            ->whereHas('weeklyReport',function ($query) use ($cy, $request){
+                                $q = $query->where('crop_year','=',$cy);
+                                if(!empty($request->mill_code)){
+                                    $q->where('crop_year','=',$cy)->where('mill_code','=',$request->mill_code);
+                                }
+                            })
+                            ->get();
+            foreach ($manufactured as $man){
+                if(isset($weeksArray[$man->weeklyReport->week_ending]['production'])){
+                    $weeksArray[$man->weeklyReport->week_ending]['production'] = $weeksArray[$man->weeklyReport->week_ending]['production'] + $man->current_value;
+                }else{
+                    $weeksArray[$man->weeklyReport->week_ending]['production'] = $man->current_value;
+                }
             }
-        }
-        return $arr;
-    }
-    private function compute_monthly_salary(){
-        $latest = SSL::query()->orderBy('date_implemented','desc')->first();
-        $latest_date_implemented = $latest->date_implemented;
-        $ssl = SSL::query()->where('salary_grade','=',Request::get('sg'))
-            ->where('date_implemented','=',$latest_date_implemented)
-            ->first();
-        $si = 'step'.Request::get('si');
 
-        if(!empty($ssl->$si)){
-            return number_format($ssl->$si,2);
-        }
-        else{
-            return 'N/A';
-        }
-    }
-
-    private function close_bulletin(){
-        $last_slug = request('last_slug');
-        Session::put('last_slug',$last_slug);
-
-        return Session::get('last_slug');
-    }
-
-    private function document_person_to(){
-        $arr['results'] = [];
-        $docs = Document::query()->select('person_to')->where('person_to','like','%'.Request::get("q").'%')->groupBy('person_to')->limit(30)->get();
-        array_push($arr['results'],['id'=>'','text' => "Don't Filter"]);
-        if(!empty($docs)){
-
-            foreach ($docs as $doc){
-                array_push($arr['results'],['id'=>$doc->person_to,'text' => $doc->person_to]);
+            $wids = WeeklyReportDetails::query()->where('grouping','=','withdrawals')
+                ->where('form_type','=','form1')
+                ->whereHas('weeklyReport',function ($query) use ($cy, $request){
+                    $q = $query->where('crop_year','=',$cy);
+                    if(!empty($request->mill_code)){
+                        $q->where('crop_year','=',$cy)->where('mill_code','=',$request->mill_code);
+                    }
+                })
+                ->get();
+            foreach ($wids as $wid){
+                if(!empty($wid->weeklyReport)){
+                    if(isset($weeksArray[$wid->weeklyReport->week_ending]['withdrawals'])){
+                        $weeksArray[$wid->weeklyReport->week_ending]['withdrawals'] = $weeksArray[$wid->weeklyReport->week_ending]['withdrawals'] + $wid->current_value;
+                    }else{
+                        $weeksArray[$wid->weeklyReport->week_ending]['withdrawals'] = $wid->current_value;
+                    }
+                }
             }
-        }
-        return $arr;
-    }
 
-    private function document_person_from(){
-        $arr['results'] = [];
-        $docs = Document::query()->select('person_from')->where('person_from','like','%'.Request::get("q").'%')->groupBy('person_from')->limit(30)->get();
-        array_push($arr['results'],['id'=>'','text' => "Don't Filter"]);
-        if(!empty($docs)){
-            foreach ($docs as $doc){
-                array_push($arr['results'],['id'=>$doc->person_from,'text' => $doc->person_from]);
+            foreach ($weeksArray as $week){
+
+                (isset($week['production'])) ? array_push($productions,$week['production']) : array_push($productions,0);
+                (isset($week['withdrawals'])) ? array_push($withdrawals,$week['withdrawals']) : array_push($withdrawals,0);
+
             }
-        }
-        return $arr;
-    }
 
-    private function dv_add_item(){
-        $rcs = \App\Models\RC::query()->get();
-        $rand = \Illuminate\Support\Str::random(5);
-        return [
-            'view' => view('ajax.disbursement_voucher.add_item')->with([
-                'rcs'=>$rcs,
-                'rand' => $rand,
-            ])->render(),
-            'rand' => $rand,
-        ];
-    }
-
-    private function position_applied(){
-        $arr = [];
-        $pps = HRPayPlanitilla::query()->select('item_no','position')->get();
-        foreach ($pps as $pp){
-            array_push($arr,'ITEM '.$pp->item_no.' - '.$pp->position);
-        }
-        return $arr;
-    }
-
-    private function applicant_courses(){
-        $arr['results'] = [];
-        $courses = Course::query()->where('acronym','like','%'.Request::get("q").'%')
-            ->orWhere('name','like','%'.Request::get("q").'%')
-            ->groupBy('name')->limit(30)->get();
-        if(Request::get('default') == 'Select'){
-            array_push($arr['results'],['id'=>'','text' => "Select"]);
-        }else{
-            array_push($arr['results'],['id'=>'','text' => "Don't Filter"]);
-        }
-        if(!empty($courses)){
-            foreach ($courses as $course){
-                array_push($arr['results'],['id'=>$course->name,'text' => $course->name]);
-            }
-        }
-        return $arr;
-    }
-
-    private function search_active_employees(){
-        if(Request::get('afterTypeahead') == true){
-            $emp = Employee::query()
-                ->select('lastname','firstname','middlename','sex','date_of_birth','civil_status','cell_no')
-                ->where('slug','=',Request::get('id'))->first();
 
             return [
-                'lastname' => $emp->lastname,
-                'firstname' => $emp->firstname,
-                'middlename' => $emp->middlename,
-                'sex' => $emp->sex,
-                'date_of_birth' => Carbon::parse($emp->date_of_birth)->format('Y-m-d'),
-                'civil_status' => $emp->civil_status,
-                'cell_no' => $emp->cell_no,
-                'civil_status' => $emp->civil_status,
+                'labels' => $weeksNamesArray,
+                'data' => [
+                    'productions' => $productions,
+                    'withdrawals' => $withdrawals,
+                ]
             ];
-        }
-        $arr = [];
-        $find = Request::get('query');
 
-        $emps = Employee::query()
-            ->where(function ($query) use($find){
-                $query->where('lastname','like','%'.$find.'%')
-                    ->orWhere('firstname','like','%'.$find.'%')
-                    ->orWhere('middlename','like','%'.$find.'%');
-            })
-            ->limit(10)
-            ->get();
-
-        if(!empty($emps)){
-            foreach ($emps as $emp){
-                array_push($arr,[
-                    'id' => $emp->slug,
-                    'name' => $emp->lastname.', '.$emp->firstname.' '.$emp->middlename,
-                    'sex' => $emp->sex,
-                ]);
-            }
         }
 
-        return $arr;
+
+
+        return view('sms.dynamic_rows.'.$for);
     }
+
+
+    public function unused(){
+
+//                foreach ($prods as $prod){
+//                $man = WeeklyReportDetails::query()->where('input_field','=','manufactured')->where('form_type','=','form1')->sum('current_value');
+//                if(!empty($man)){
+//                    if(isset($weeksArray[$prod->week_ending])){
+//                        $weeksArray[$prod->week_ending]['production'] = $man;
+//                        array_push($productions,$man);
+//                    }
+//                }
+//
+//                $wid = WeeklyReportDetails::query()->where('grouping','=','withdrawals')->where('form_type','=','form1')->sum('current_value');
+//                if(!empty($wid)){
+//                    if(isset($weeksArray[$prod->week_ending])){
+//                        $weeksArray[$prod->week_ending]['withdrawals'] = $wid;
+//                        array_push($withdrawals,$wid);
+//                    }
+//                }
+//            }
+    }
+
 }
