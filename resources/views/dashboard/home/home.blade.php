@@ -72,6 +72,13 @@
                     </div>
 
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <canvas id="productionVsConsumptionChart" height="80"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="box box-sm box-default box-solid">
@@ -85,10 +92,6 @@
                 <canvas id="myChart" width="400" height="80"></canvas>
             </div>
         </div>
-
-
-
-
     </section>
 
 
@@ -98,6 +101,7 @@
 @section('modals')
 
 @endsection
+
 
 @section('scripts')
     <script type="text/javascript">
@@ -157,6 +161,59 @@
                 }
             }
         });
+
+
+
+        //PRODUCTION VS WITHDRAWALS
+            var data = {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Production',
+                        backgroundColor: 'rgb(0, 153, 0)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [],
+                    },
+                    {
+                        label: 'Consumption',
+                        backgroundColor: 'rgb(153, 153, 225)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data:[],
+                    },
+                ]
+            };
+            var config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+            };
+            var productionVsConsumptionChart = new Chart(
+                document.getElementById('productionVsConsumptionChart'),
+                config
+            );
+
+
+        ajax_chart(productionVsConsumptionChart, '{{route("dashboard.ajax.get","chart")}}');
+
+        // function to update our chart
+        function ajax_chart(chart, url, data) {
+            var data = data || {};
+
+            $.getJSON(url, data).done(function(response) {
+
+                chart.data.labels = response.labels;
+                chart.data.datasets[0].data = response.data.productions; // or you can iterate for multiple datasets
+                chart.data.datasets[1].data = response.data.withdrawals;
+                chart.update(); // finally update our chart
+            });
+        }
+
     </script>
 
 @endsection
