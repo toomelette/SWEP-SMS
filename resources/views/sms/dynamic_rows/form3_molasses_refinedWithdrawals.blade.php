@@ -3,7 +3,7 @@
     <td>
         {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form3][options][refinedWithdrawals]['.$rand.']',[
             'label' => 'A',
-            'options' => \App\Models\SMS\InputFields::getFieldsAsArray('form3_molasses_refinedWithdrawals'),
+            'options' => \App\Models\SMS\InputFields::getFieldsAsArray('molasses_withdrawal_refined'),
             'container_class' => 'data_form3_options_refinedWithdrawals_'.$rand,
         ],
         (!empty($item->input_field) ? $item->input_field : null)
