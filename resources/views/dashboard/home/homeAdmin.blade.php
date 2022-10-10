@@ -4,94 +4,111 @@
 
     <section class="content-header">
         <h1>
-            CY: {{$cy->name}} | {{\Illuminate\Support\Facades\Auth::user()->mill_code}}
+            CY: {{$cy->name}}
             <span class="pull-right"><small>Current week ending:</small> {{\Illuminate\Support\Carbon::parse($closestSundayAhead)->format('F d, Y')}}</span>
         </h1>
     </section>
 @endsection
 @section('content2')
     <section class="content">
-        <div class="box box-sm box-default box-solid">
-            <div class="box-header with-border">
-                <p class="no-margin"> Current Week Data <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                <div class="box-tools pull-right">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-title" style="background-color: #4477a3;">
+                    <h4> Wholesale (PESO/LKG) </h4>
                 </div>
-
-            </div>
-            <div class="box-body" style="">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-title" style="background-color: #4477a3;">
-                            <h4> Wholesale (PESO/LKG) </h4>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-xs-3">
 
-                                <div class="small-box bg-aqua">
-                                    <div class="inner">
-                                        <h3>{{number_format($totalRawSugarIssuances,3)}}</h3>
-                                        <p>Raw Sugar Issuances</p>
-                                    </div>
-                                    <div class="icon">
-                                        {{--                                <i class="ion ion-bag"></i>--}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xs-3">
-
-                                <div class="small-box bg-green">
-                                    <div class="inner">
-                                        <h3>{{number_format($totalRawSugarDeliveries,3)}}</h3>
-                                        <p>Raw Sugar Deliveries</p>
-                                    </div>
-                                    <div class="icon">
-                                        {{--                                <i class="ion ion-stats-bars"></i>--}}
-                                    </div>
-                                </div>
+                    <div class="col-lg-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-teal"><i class="ion ion-ios-cart-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">RAW SUGAR</span>
+                                <span class="info-box-number">2,900</span>
+                                <span class="description-percentage text-green">
+                                                <i class="fa fa-caret-up"></i>
+                                                2.21% <small> from previous week</small>
+                                            </span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-title" style="background-color: #4477a3;">
-                            <h4> Weekly Data </h4>
+                    <div class="col-lg-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-teal"><i class="ion ion-ios-cart-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">REFINED SUGAR</span>
+                                <span class="info-box-number">3,150</span>
+                                <span class="description-percentage text-green">
+                                                <i class="fa fa-caret-up"></i>
+                                                2.21% <small> from previous week</small>
+                                            </span>
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-xs-3">
-
-                                <div class="small-box bg-aqua">
-                                    <div class="inner">
-                                        <h3>{{number_format($totalRawSugarIssuances,3)}}</h3>
-                                        <p>Producution</p>
-                                    </div>
-                                    <div class="icon">
-                                        {{--                                <i class="ion ion-bag"></i>--}}
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-title" style="background-color: #4477a3;">
+                    <h4> Weekly Data </h4>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-12">
+                        @php
+                            $thisWeekProd = \App\Models\SMS\Form1\Form1Details::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
+                                $query->where('week_ending','=',$closestSundayAhead);
+                            })->sum('manufactured');
+                            $lastWeekProd = \App\Models\SMS\Form1\Form1Details::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
+                                $query->where('week_ending','=',\Illuminate\Support\Carbon::parse($closestSundayAhead)->subDays(7));
+                            })->sum('manufactured');
+                        @endphp
+                        <div class="info-box">
+                            <span class="info-box-icon bg-production"><i class="ion ion-ios-cart-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">PRODUCTION</span>
+                                <span class="info-box-number">{{number_format($thisWeekProd,3)}} MT</span>
+                                @php $play = 100*($thisWeekProd-$lastWeekProd)/$lastWeekProd; @endphp
+                                <span class="description-percentage {{$play > 0 ? 'text-green':'text-red'}}">
+                                                <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
+                                                {{number_format($play,2)}}% <small>from previous week</small>
+                                            </span>
                             </div>
-                            <div class="col-lg-6 col-xs-3">
 
-                                <div class="small-box bg-green">
-                                    <div class="inner">
-                                        <h3>{{number_format($totalRawSugarDeliveries,3)}}</h3>
-                                        <p>Withdrawals</p>
-                                    </div>
-                                    <div class="icon">
-                                        {{--                                <i class="ion ion-stats-bars"></i>--}}
-                                    </div>
-                                </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 col-xs-12">
+                        @php
+                            $thisWeekWithdrawal = \App\Models\SMS\Form5\Deliveries::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
+                                $query->where('week_ending','=',$closestSundayAhead);
+                            })->sum('qty');
+                            $lastWeekWithdrawal = \App\Models\SMS\Form5\Deliveries::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
+                                $query->where('week_ending','=',\Illuminate\Support\Carbon::parse($closestSundayAhead)->subDays(7));
+                            })->sum('qty');
+                        @endphp
+
+                        <div class="info-box">
+                            <span class="info-box-icon bg-withdrawals"><i class="ion ion-ios-cart-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">WITHDRAWALS</span>
+                                <span class="info-box-number">{{number_format($thisWeekWithdrawal,3)}} MT</span>
+                                @php $play = $thisWeekWithdrawal-$lastWeekWithdrawal > 0 ? 100*($thisWeekWithdrawal-$lastWeekWithdrawal)/$lastWeekWithdrawal : 0; @endphp
+                                <span class="description-percentage {{$play > 0 ? 'text-green':'text-red'}}">
+                                                <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
+                                                {{number_format($play,2)}}% <small>from previous week</small>
+                                            </span>
                             </div>
-
-
 
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
 
         <div class="box box-sm box-default box-solid">
             <div class="box-header with-border">
-                <p class="no-margin"> Current Week Data <small id="filter-notifier" class="label bg-blue blink"></small></p>
+                <p class="no-margin"> Weekly Data <small id="filter-notifier" class="label bg-blue blink"></small></p>
                 <div class="box-tools pull-right">
                 </div>
 
@@ -118,12 +135,31 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div>
-                            <canvas id="productionVsConsumptionChart" height="80"></canvas>
+                            <canvas id="productionVsConsumptionChart" height="75"></canvas>
                         </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-title" style="background-color: #6aa8b1;">
+                            <p> Wholesale (PESO/LKG) </p>
+                        </div>
+                        <canvas id="priceFluctuationChartW" width="400" height="55"></canvas>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-title" style="background-color: #6a75b1;">
+                            <p> Retail (PESO/KILO) </p>
+                        </div>
+                        <canvas id="priceFluctuationChartR" width="400" height="55"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="box box-sm box-default box-solid">
             <div class="box-header with-border">
@@ -137,24 +173,14 @@
                     <div class="col-md-2">
                         <p class="text-center"><b>RAW Production LM vs VIS</b></p>
                         <div>
-                            <canvas id="productionPieChart" height="10" width="25"></canvas>
+                            <canvas id="productionPieChart" height="10]" width="25"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="box box-sm box-default box-solid">
-            <div class="box-header with-border">
-                <p class="no-margin"> PRICE MONITORING (DUMMY DATA) <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                <div class="box-tools pull-right">
-                </div>
 
-            </div>
-            <div class="box-body" style="">
-                <canvas id="myChart" width="400" height="80"></canvas>
-            </div>
-        </div>
     </section>
 
 
@@ -195,53 +221,73 @@
 
 @section('scripts')
     <script type="text/javascript">
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
+
+        //wholesale price
+        const ctx = document.getElementById('priceFluctuationChartW').getContext('2d');
+        const priceFluctuationChartW = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB'],
+                labels: [],
                 datasets: [{
                     label: 'RAW SUGAR',
-                    data: [2500, 2580, 3012, 3056, 2795, 3010],
+                    data: [],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgb(172, 132, 103)',
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgb(172, 132, 103)',
                     ],
-                    borderWidth: 1
+                    borderWidth: 3
                 },
-                    {
-                        label: 'REFINED SUGAR',
-                        data: [3011, 3095, 3150, 3200, 3000, 3010],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+                {
+                    label: 'REFINED SUGAR',
+                    data: [],
+                    backgroundColor: [
+                        'rgb(106, 177, 128)',
+                    ],
+                    borderColor: [
+                        'rgb(106, 177, 128)',
+                    ],
+                    borderWidth:3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+
+        //retail price
+        const ctxR = document.getElementById('priceFluctuationChartR').getContext('2d');
+        const priceFluctuationChartR = new Chart(ctxR, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'RAW SUGAR',
+                    data: [],
+                    backgroundColor: [
+                        'rgb(172, 132, 103)',
+                    ],
+                    borderColor: [
+                        'rgb(172, 132, 103)',
+                    ],
+                    borderWidth: 3
+                },
+                {
+                    label: 'REFINED SUGAR',
+                    data: [],
+                    backgroundColor: [
+                        'rgb(106, 177, 128)',
+                    ],
+                    borderColor: [
+                        'rgb(106, 177, 128)',
+                    ],
+                    borderWidth:3
+                }]
             },
             options: {
                 scales: {
@@ -258,13 +304,13 @@
             datasets: [
                 {
                     label: 'Production',
-                    backgroundColor: 'rgb(255, 128, 0)',
+                    backgroundColor: 'rgb(106, 177, 135)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [],
                 },
                 {
                     label: 'Consumption',
-                    backgroundColor: 'rgb(204, 0, 0)',
+                    backgroundColor: 'rgb(206, 210, 204)',
                     borderColor: 'rgb(255, 99, 132)',
                     data:[],
                 },
@@ -301,7 +347,7 @@
             }]
         };
         var productionPieChartConfig = {
-            type: 'pie',
+            type: 'doughnut',
             data: productionPieChartData,
         };
 
@@ -310,23 +356,34 @@
             productionPieChartConfig
         );
 
-        ajax_chart(productionVsConsumptionChart, '{{route("dashboard.ajax.get","chartAdmin")}}');
+        weeklyChart('{{route("dashboard.ajax.get","chartAdmin")}}');
 
         // function to update our chart
-        function ajax_chart(chart, url, data) {
+        function weeklyChart( url, data) {
             var data = data || {};
             $.getJSON(url, data).done(function(response) {
+                productionVsConsumptionChart.data.labels = response.pVsC.labels;
+                productionVsConsumptionChart.data.datasets[0].data = response.pVsC.data.productions; // or you can iterate for multiple datasets
+                productionVsConsumptionChart.data.datasets[1].data = response.pVsC.data.withdrawals;
+                productionVsConsumptionChart.update(); // finally update our chart
 
-                chart.data.labels = response.labels;
-                chart.data.datasets[0].data = response.data.productions; // or you can iterate for multiple datasets
-                chart.data.datasets[1].data = response.data.withdrawals;
-                chart.update(); // finally update our chart
+                priceFluctuationChartW.data.labels = response.prices.labels;
+                priceFluctuationChartW.data.datasets[0].data = response.prices.data.wholesale_raw;
+                priceFluctuationChartW.data.datasets[1].data = response.prices.data.wholesale_refined;
+                priceFluctuationChartW.update();
+
+                priceFluctuationChartR.data.labels = response.prices.labels;
+                priceFluctuationChartR.data.datasets[0].data = response.prices.data.retail_raw;
+                priceFluctuationChartR.data.datasets[1].data = response.prices.data.retail_refined;
+                priceFluctuationChartR.update();
+
+
             });
         }
 
         $(".formFilter").change(function () {
             let data = $("#filterFrom").serialize();
-            ajax_chart(productionVsConsumptionChart, '{{route("dashboard.ajax.get","chartAdmin")}}?'+data);
+            weeklyChart('{{route("dashboard.ajax.get","chartAdmin")}}?'+data);
         })
     </script>
 

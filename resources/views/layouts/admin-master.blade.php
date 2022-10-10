@@ -239,6 +239,13 @@
         })
       })
 
+      const iCheckRadioOptions = {
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+        increaseArea: '5%' // optional
+      };
+      $(".iCheck").iCheck(iCheckRadioOptions);
+
     </script>
 
     @yield('scripts')
