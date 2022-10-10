@@ -65,7 +65,7 @@
                             <div class="info-box-content">
                                 <span class="info-box-text">PRODUCTION</span>
                                 <span class="info-box-number">{{number_format($thisWeekProd,3)}} MT</span>
-                                @php $play = 100*($thisWeekProd-$lastWeekProd)/$lastWeekProd; @endphp
+                                @php $play = $thisWeekProd-$lastWeekProd > 0 ? 100*($thisWeekProd-$lastWeekProd)/$lastWeekProd: 0; @endphp
                                 <span class="description-percentage {{$play > 0 ? 'text-green':'text-red'}}">
                                                 <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
                                                 {{number_format($play,2)}}% <small>from previous week</small>
