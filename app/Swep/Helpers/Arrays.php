@@ -8,6 +8,7 @@ use App\Models\Applicant;
 use App\Models\ApplicantPositionApplied;
 use App\Models\HRPayPlanitilla;
 use App\Models\SMS\CropYears;
+use App\Models\SMS\SugarClass;
 use App\Models\SMS\SugarMills;
 
 class Arrays
@@ -39,6 +40,24 @@ class Arrays
             }
         }
         return $arr;
+    }
+
+    public static function sugarClasses(){
+        $scs = SugarClass::query()->whereNull('swapping')->get();
+        $scsArr = [];
+        foreach ($scs as $sc){
+            $scsArr[$sc->sugar_class] = $sc->sugar_class;
+        }
+        return $scsArr;
+    }
+
+    public static function sugarClassesForSwapping(){
+        $scs = SugarClass::query()->whereNotNull('swapping')->get();
+        $scsArr = [];
+        foreach ($scs as $sc){
+            $scsArr[$sc->swapping] = $sc->swapping;
+        }
+        return $scsArr;
     }
 
 

@@ -50,7 +50,15 @@
 .table-borderless > thead > tr > th {
     border: none;
 }
-
+label.hover{
+    cursor: pointer;
+}
+[class^="icheckbox_square-"]{
+    margin-right: 5px;
+}
+[class^="iradio_square-"]{
+    margin-right: 5px;
+}
 .news{
     padding: 5px;
     -webkit-transition: background-color .3s;
@@ -706,12 +714,20 @@ ol.example li.placeholder:before {
 
 .form-title{
     color: white;
-    padding: 8px;
+    padding: 5px;
     border-radius: 3px;
     margin-bottom: 5px;
 }
 
 .form-title>h4{
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-title>p{
 
     margin-top: 0px;
     margin-bottom: 0px;
@@ -733,4 +749,12 @@ ol.example li.placeholder:before {
 }
 .subform-container>.subform-body{
     padding-left: 12px;
+}
+
+.bg-production{
+    background-color: #6ab187;
+}
+
+.bg-withdrawals{
+    background-color: #d3d7d1;
 }

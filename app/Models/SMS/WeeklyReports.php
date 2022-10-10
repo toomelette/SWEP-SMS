@@ -44,6 +44,7 @@ class WeeklyReports extends Model
     public function form5Deliveries(){
         return $this->hasMany(Form5\Deliveries::class,'weekly_report_slug','slug');
     }
+
     public function form5ServedSros(){
         return $this->hasMany(Form5\ServedSros::class,'weekly_report_slug','slug');
     }
@@ -59,6 +60,14 @@ class WeeklyReports extends Model
         return $this->hasMany(Form5a\ServedSros::class,'weekly_report_slug','slug');
     }
 
+    public function form1(){
+        return $this->hasOne(Form1\Form1Details::class,'weekly_report_slug','slug');
+    }
 
-
+    public function form5Withdrawals(){
+        return $this->hasMany(Form5\Deliveries::class,'weekly_report_slug','slug')->whereNull('refining');
+    }
+    public function form5WithdrawalsForRefining(){
+        return $this->hasMany(Form5\Deliveries::class,'weekly_report_slug','slug')->whereNotNull('refining');
+    }
 }
