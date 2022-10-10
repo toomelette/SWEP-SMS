@@ -78,7 +78,9 @@ class WeeklyReportController extends Controller
         abort(503,'Error creating week.');
     }
 
-    public function edit($slug){
+    public function edit($slug, WeeklyReportService $weeklyReportService){
+
+//        return $weeklyReportService->form2Computation($slug);
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         if(!empty($weekly_report->details)){
@@ -101,6 +103,8 @@ class WeeklyReportController extends Controller
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
+            'formArray' => $weeklyReportService->computation($slug),
+            'form2Array' => $weeklyReportService->form2Computation($slug),
         ]);
     }
 
@@ -176,5 +180,10 @@ class WeeklyReportController extends Controller
             'r' => $r, 'receiptsList' => $receiptsList,
             'registryList' => $registryList,
         ]);
+    }
+
+    public function test($weekly_report){
+
+
     }
 }

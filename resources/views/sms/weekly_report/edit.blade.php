@@ -36,6 +36,7 @@
                             <dt>Distribution No.:</dt>
                             <dd><span style="font-size: 18px">{{$wr->dist_no}}</span></dd>
                         </dl>
+
                     </div>
                     <div class="col-md-9">
                         <form id="form1">@csrf
@@ -64,11 +65,11 @@
 
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="tab_1">
+                                        <div class="tab-pane " id="tab_1">
                                             @include('sms.weekly_report.sms_forms.form_1')
                                         </div>
 
-                                        <div class="tab-pane " id="tab_2">
+                                        <div class="tab-pane active" id="tab_2">
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
@@ -456,6 +457,54 @@
             $("#allFormsFrame").get(0).contentWindow.print();
         })
 
+        function updateForm1(){
+            let dataArray = $("#form1").serializeArray();
+            $("#form1PreviewTable").css('background-color','#f2fff2');
+            $(dataArray).each(function (i,item) {
+                console.log(item);
+            })
+            $.ajax({
+                url : '{{route("dashboard.ajax.post","form1Preview")}}?weekly_report={{$wr->slug}}',
+                data : $("#form1").serializeArray(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#form1PreviewTable").html(res);
+                    $("#form1PreviewTable").css('background-color','');
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            })
+        }
+        
+        $("body").on("change",".formChanger",function () {
+            updateForm1();
+        })
+
+        $("body").on("click","#form1_raw_sugar_issuances .remove_row_btn",function () {
+            updateForm1();
+        })
+
+        $("#landbankForm").submit(function (e) {
+            e.preventDefault()
+            $.ajax({
+                url : '/landbank?',
+                data : $(this).serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    console.log(res);
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            })
+        })
     </script>
 
 @endsection

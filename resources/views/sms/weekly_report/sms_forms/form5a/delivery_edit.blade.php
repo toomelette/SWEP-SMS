@@ -37,6 +37,8 @@
                 }
             })
         })
+
+        $("#form5_edit_delivery_form_{{$rand}} .iCheck").iCheck(iCheckRadioOptions);
     </script>
 @endsection
 

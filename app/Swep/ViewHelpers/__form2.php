@@ -346,4 +346,29 @@ class __form2
     public function get($array){
         return $this->name.' Hello';
     }
+
+    public static function iRadioH($name,$options,$value = null){
+        $n = new __form2;
+        $n->set($options);
+
+        $elem = '<div class="col-md-'.$n->cols.'">
+                <label>'.$n->label.'</label>
+                <table width="100%"><tr>';
+        if(isset($options['options']) && count($options['options']) > 0){
+            foreach ($options['options'] as $key => $radio){
+                $ck = $key == $value ? 'checked' : '';
+                $elem = $elem.'
+                        <td>
+                            <label>
+                                <input class="iCheck" value="'.$key.'" type="radio" name="'.$name.'" '.$ck.'>
+                                '.$radio.'
+                            </label>
+                        </td>
+                    ';
+            }
+        }
+        $elem = $elem.'</table>
+            </tr></div>';
+        return $elem;
+    }
 }

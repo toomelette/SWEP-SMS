@@ -47,3 +47,17 @@
     (!empty($delivery)) ? $delivery : null
     ) !!}
 </div>
+
+<div class="row">
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('consumption',[
+        'cols' => 6,
+        'label' => 'Domestic/Imported:',
+        'options' => [
+            'DOMESTIC' => 'Domestic',
+            'IMPORTED' => 'Imported',
+        ]
+    ],
+    $delivery->consumption ?? 'DOMESTIC'
+    ) !!}
+
+</div>

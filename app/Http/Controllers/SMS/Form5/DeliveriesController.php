@@ -33,6 +33,9 @@ class DeliveriesController extends Controller
                                 </div>';
                     return $button;
                 })
+                ->editColumn('qty',function($data){
+                    return $data->qty ?? $data->qty_prev;
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
                 ->toJson();
@@ -74,7 +77,15 @@ class DeliveriesController extends Controller
         $d->trader = $request->trader;
         $d->start_of_withdrawal = $request->start_of_withdrawal;
         $d->sugar_class = $request->sugar_class;
+        $d->for_swapping = $request->for_swapping;
         $d->qty = $request->qty;
+        if($request->charge_to == 'PREV'){
+            $d->qty_prev = $request->qty;
+            $d->qty = null;
+        }else{
+            $d->qty = $request->qty;
+            $d->qty_prev = null;
+        }
 
         $d->refining = null;
         if($request->has('refining')){

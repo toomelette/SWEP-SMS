@@ -7,9 +7,7 @@
     <h4>Raw Sugar</h4>
     <div class="subform-body">
         <div class="row">
-
             <div class="col-md-12">
-
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
                         <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
@@ -53,8 +51,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="col-md-12">
@@ -248,6 +244,22 @@
     <h4>Refined Sugar</h4>
     <div class="subform-body">
         <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="box box-sm box-default box-solid">
+                        <div class="box-header with-border"  style="background-color: #4e984a;color: white;">
+                            <p class="no-margin">Summary
+                                <small id="filter-notifier" class="label bg-blue blink"></small>
+                            </p>
+                        </div>
+                        <div class="box-body" style="">
+                            @include('sms.weekly_report.previews.form2')
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="col-md-12">
                 @php
                     $a = 'refinedSugarProduction';

@@ -48,7 +48,12 @@ class IssuanceOfSroController extends Controller
         $i->raw_qty = $request->raw_qty;
         $i->monitoring_fee_or_no = $request->monitoring_fee_or_no;
         $i->rsq_no = $request->rsq_no;
-        $i->refined_qty = $request->refined_qty;
+        if($request->cropCharge == 'CURRENT'){
+            $i->refined_qty = $request->refined_qty;
+        }else{
+            $i->prev_refined_qty = $request->refined_qty;
+        }
+        $i->consumption = $request->consumption;
 
         if($i->save()){
             return $i->only('slug');
@@ -73,6 +78,14 @@ class IssuanceOfSroController extends Controller
         $i->monitoring_fee_or_no = $request->monitoring_fee_or_no;
         $i->rsq_no = $request->rsq_no;
         $i->refined_qty = $request->refined_qty;
+        if($request->cropCharge == 'CURRENT'){
+            $i->refined_qty = $request->refined_qty;
+            $i->prev_refined_qty = null;
+        }else{
+            $i->prev_refined_qty = $request->refined_qty;
+            $i->refined_qty = null;
+        }
+        $i->consumption = $request->consumption;
 
         if($i->save()){
             return $i->only('slug');

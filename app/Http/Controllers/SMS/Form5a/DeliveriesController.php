@@ -51,7 +51,7 @@ class DeliveriesController extends Controller
         $d->qty_premium = $request->qty_premium;
         $d->qty_total = $request->qty_standard + $request->qty_premium;
         $d->remarks = $request->remarks;
-
+        $d->consumption = $request->consumption;
         if($d->save()){
             return $d->only('slug');
         }
@@ -74,7 +74,7 @@ class DeliveriesController extends Controller
         $d->qty_premium = $request->qty_premium;
         $d->qty_total = $request->qty_standard + $request->qty_premium;
         $d->remarks = $request->remarks;
-
+        $d->consumption = $request->consumption;
         if($d->save()){
             return $d->only('slug');
         }

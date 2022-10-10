@@ -131,5 +131,3 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
 });
 
-
-

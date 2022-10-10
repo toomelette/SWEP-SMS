@@ -21,9 +21,16 @@
     (!empty($delivery)) ? $delivery : null
     ) !!}
     {!! \App\Swep\ViewHelpers\__form2::select('sugar_class',[
-        'label' => 'Sugar Class',
-        'cols' => 8,
-        'options' => \App\Models\SMS\InputFields::getFieldsAsArray('raw_sugar_withdrawals'),
+        'label' => 'Sugar Class:',
+        'cols' => 4,
+        'options' => \App\Swep\Helpers\Arrays::sugarClasses(),
+    ],
+    (!empty($delivery)) ? $delivery : null
+    ) !!}
+    {!! \App\Swep\ViewHelpers\__form2::select('for_swapping',[
+        'label' => 'For Swapping:',
+        'cols' => 4,
+        'options' => \App\Swep\Helpers\Arrays::sugarClassesForSwapping(),
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}
@@ -53,7 +60,7 @@
     <div class="col-md-12">
         <label>
             <input type="checkbox" name="refining" {{(!empty($delivery) && $delivery->refining == 1) ? 'checked' : ''  }}>
-            Refining
+            For Refining
         </label>
     </div>
 </div>

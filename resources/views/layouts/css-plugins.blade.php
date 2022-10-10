@@ -15,7 +15,7 @@
 
 <link type="text/css" rel="stylesheet" href="{{asset('template/plugins/toast/jquery.toast.min.css')}}">
 
-<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/iCheck/all.css')}}">
+<link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/iCheck/skins/all.css')}}">
 
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 

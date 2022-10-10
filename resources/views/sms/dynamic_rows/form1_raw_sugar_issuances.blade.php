@@ -1,28 +1,29 @@
 @php($rand = \Illuminate\Support\Str::random(5))
 <tr id="tr_{{$rand}}">
     <td>
-        {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form1][options][issuances]['.$rand.']',[
+        {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form1][rawIssuances][options]['.$rand.']',[
             'label' => 'A',
-            'options' => \App\Models\SMS\InputFields::getFieldsAsArray('raw_sugar_issuances'),
+            'options' => \App\Swep\Helpers\Arrays::sugarClasses(),
             'container_class' => 'data_form1_options_issuances_'.$rand,
+            'class' => 'formChanger',
         ],
-        (!empty($item->input_field) ? $item->input_field : null)
+        (!empty($sugarClass) ? $sugarClass : null)
         ) !!}
     </td>
     <td>
-        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form1][current][issuances]['.$rand.']',[
-            'class' => 'text-right autonumber_mt autonumber_mt_'.$rand,
+        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form1][rawIssuances][current]['.$rand.']',[
+            'class' => 'formChanger text-right autonumber_mt autonumber_mt_'.$rand,
             'container_class' => 'data_form1_current_issuances_'.$rand,
         ],
-        (!empty($item->current_value) ? $item->current_value : null)
+        (!empty($current) ? $current : null)
         ) !!}
     </td>
     <td>
-        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form1][prev][issuances]['.$rand.']',[
-            'class' => 'text-right autonumber_mt autonumber_mt_'.$rand,
+        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form1][rawIssuances][prev]['.$rand.']',[
+            'class' => 'formChanger text-right autonumber_mt autonumber_mt_'.$rand,
             'container_class' => 'data_form1_prev_issuances_'.$rand,
         ],
-        (!empty($item->prev_value) ? $item->prev_value : null)
+        (!empty($prev) ? $prev : null)
         ) !!}
     </td>
     <td>

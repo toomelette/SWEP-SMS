@@ -45,6 +45,30 @@
         'label' => 'Refined Qty',
         'cols' => 4,
     ],
-    (!empty($issuance)) ? $issuance : null
+    $issuance->refined_qty ?? $issuance->prev_refined_qty ?? null
+    ) !!}
+</div>
+
+<div class="row">
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('consumption',[
+        'cols' => 6,
+        'label' => 'Domestic/Imported:',
+        'options' => [
+            'DOMESTIC' => 'Domestic',
+            'IMPORTED' => 'Imported',
+        ]
+    ],
+    $issuance->consumption ?? 'DOMESTIC'
+    ) !!}
+
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
+        'cols' => 6,
+        'label' => 'Crop:',
+        'options' => [
+            'CURRENT' => 'Current Crop',
+            'PREVIOUS' => 'Previous Crop',
+        ]
+    ],
+     !empty($issuance->refined_qty) ? 'CURRENT' : 'PREVIOUS'
     ) !!}
 </div>
