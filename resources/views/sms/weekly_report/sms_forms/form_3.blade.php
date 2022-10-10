@@ -310,7 +310,74 @@
     </div>
 </div>
 
-@php
+<div class="panel">
+    <div class="box box-sm box-default box-solid">
+        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
+            <p class="no-margin">6. Molasses Storage Certificates (Series & No. of Pcs.):<small id="filter-notifier" class="label bg-blue blink"></small></p>
+        </div>
+        <div class="box-body" style="">
+            <table class="table table-bordered table-condensed sms_form3_table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Current Crop</th>
+                    <th>Previous Crop</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Raw</td>
+                    <td>
+
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][rawPrice]',[
+                            'class' => 'autonumber_mt',
+                            'autocomplete' => 'off',
+                            'container_class' => 'data_form3_current_rawPrice',
+                        ],
+                        (isset($details_arr['form3']['rawPrice'])) ? $details_arr['form3']['rawPrice']->current_value : null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][rawPrice]',[
+                            'class' => 'autonumber_mt',
+                            'autocomplete' => 'off',
+                            'container_class' => 'data_form3_prev_rawPrice',
+                        ],
+                        (isset($details_arr['form3']['rawPrice'])) ? $details_arr['form3']['rawPrice']->prev_value : null
+                        ) !!}
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Refined</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][refinedPrice]',[
+                            'class' => 'autonumber_mt',
+                            'autocomplete' => 'off',
+                            'container_class' => 'data_form3_current_refinedPrice',
+                        ],
+                        (isset($details_arr['form3']['refinedPrice'])) ? $details_arr['form3']['refinedPrice']->current_value : null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][refinedPrice]',[
+                            'class' => 'autonumber_mt',
+                            'autocomplete' => 'off',
+                            'container_class' => 'data_form3_prev_refinedPrice',
+                        ],
+                        (isset($details_arr['form3']['refinedPrice'])) ? $details_arr['form3']['refinedPrice']->prev_value : null
+                        ) !!}
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--@php
     $a = 'seriesNos';
 @endphp
 <div class="box box-sm box-default box-solid">
@@ -343,6 +410,7 @@
         </table>
     </div>
 </div>
+-->
 
 <div class="box box-sm box-default box-solid">
     <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
