@@ -22,6 +22,12 @@ use Str;
 
 class WeeklyReportController extends Controller
 {
+    protected  $weeklyReportService;
+    public function __construct(WeeklyReportService $weeklyReportService)
+    {
+        $this->weeklyReportService = $weeklyReportService;
+    }
+
     public function index(){
         if(\request()->ajax()){
             $reports = WeeklyReports::query()
@@ -80,7 +86,7 @@ class WeeklyReportController extends Controller
 
     public function edit($slug, WeeklyReportService $weeklyReportService){
 
-//        return $weeklyReportService->form2Computation($slug);
+//        return $weeklyReportService->computation($slug);
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         if(!empty($weekly_report->details)){
@@ -109,12 +115,14 @@ class WeeklyReportController extends Controller
     }
 
     public function findBySlug($slug){
-        $wr = WeeklyReports::query()->with(['details','seriesNos'])->where('slug','=',$slug)->first();
+        $wr = WeeklyReports::query()->with(['form1','form2','details','seriesNos'])->where('slug','=',$slug)->first();
         if(!empty($wr)){
             return $wr;
         }
         abort(510,'Weekly Report not found.');
     }
+
+
 
     public function destroy($slug, WeeklyReportService $weeklyReportService){
         $weeklyReportService->isNotSubmitted($slug);
@@ -133,7 +141,27 @@ class WeeklyReportController extends Controller
         abort(503,'Error deleting data.');
     }
 
+    public function findPreviousReport($current_weekly_report_slug){
+        $relations = ['form1','form2','details','seriesNos'];
+        $wr = WeeklyReports::query()->with($relations)
+            ->where('slug','=',$current_weekly_report_slug)
+            ->first();
+        if(!empty($wr)){
+            $prev = WeeklyReports::query()->with($relations)
+                ->where('mill_code','=',$wr->mill_code)
+                ->where('crop_year','=', $wr->crop_year)
+                ->where('report_no','=',$wr->report_no - 1)
+                ->first();
+            if(!empty($prev)){
+                return $prev;
+            }
+            return null;
+        }
+        abort(510,'Weekly Report not found.');
+    }
+
     public function print($slug, SignatoryService $signatoryService){
+
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         $input_fields_arr = [];
@@ -163,11 +191,24 @@ class WeeklyReportController extends Controller
                 $details_arr[$seriesNo->form_type]['seriesNos'][$seriesNo->input_field] = $seriesNo;
             }
         }
+
+        if($this->findPreviousReport($slug) == null){
+            $prevForm1 = [];
+        }else{
+            $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
+        }
+
+
+
         return view('sms.printables.formAll')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
             'input_fields_arr' => $input_fields_arr,
             'signatories' => $signatoryService->getSavedSignatoriesAsArray(),
+            'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate'),
+            'form1' => $this->weeklyReportService->computation($slug),
+            'form2' => $this->weeklyReportService->form2Computation($slug),
+            'prevForm1' => $prevForm1,
         ]);
     }
     public function printForm6a($slug){

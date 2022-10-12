@@ -81,7 +81,7 @@ class AjaxController extends Controller
                 ]
             ];
 
-
+         
             $weekStructure = $this->weekStructure('2022-2023',Carbon::now(),[
                 'wholesale_raw' => 0,
                 'wholesale_refined' =>0,
@@ -125,6 +125,10 @@ class AjaxController extends Controller
         if($for == 'chartAdminPriceFluctuation'){
 
 
+        }
+
+        if($for == 'form1Issuance'){
+            return view('sms.dynamic_rows.form1Issuances');
         }
 
         return view('sms.dynamic_rows.'.$for);

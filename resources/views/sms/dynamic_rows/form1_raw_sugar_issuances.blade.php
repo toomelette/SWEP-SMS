@@ -1,4 +1,9 @@
-@php($rand = \Illuminate\Support\Str::random(5))
+@php
+    $rand = \Illuminate\Support\Str::random(5);
+    if(empty($sugarClass)){
+        $sugarClass = '';
+    }
+@endphp
 <tr id="tr_{{$rand}}">
     <td>
         {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form1][rawIssuances][options]['.$rand.']',[
@@ -15,7 +20,7 @@
             'class' => 'formChanger text-right autonumber_mt autonumber_mt_'.$rand,
             'container_class' => 'data_form1_current_issuances_'.$rand,
         ],
-        (!empty($current) ? $current : null)
+        (!empty($data->$sugarClass) ? $data->$sugarClass : null)
         ) !!}
     </td>
     <td>
@@ -23,7 +28,7 @@
             'class' => 'formChanger text-right autonumber_mt autonumber_mt_'.$rand,
             'container_class' => 'data_form1_prev_issuances_'.$rand,
         ],
-        (!empty($prev) ? $prev : null)
+        (!empty($data->{'prev_'.$sugarClass}) ? $data->{'prev_'.$sugarClass} : null)
         ) !!}
     </td>
     <td>

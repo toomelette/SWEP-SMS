@@ -2,8 +2,287 @@
     <h4>  WEEKLY REPORT ON REFINED SUGAR
     </h4>
 </div>
+<form id="form2">
+    <button type="submit" hidden>SUBMIT</button>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered preview-table" id="form2PreviewTable" style="transition: background-color 0.2s linear;">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Current Crop</th>
+                    <th>Previous Crop</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="3" class="text-center text-strong success">RAW SUGAR</td>
+                </tr>
+                <tr>
+                    <td class="text-strong">1. CARRY-OVER</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('carryOver',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->carryOver ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_carryOver',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_carryOver ?? null) !!}
+                    </td>
+                </tr>
 
-<div class="subform-container">
+                <tr>
+                    <td class="text-strong" colspan="3">2. RECEIPTS (For Refining)</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><span class="indent"></span> 2.1 From Raw Mill</td>
+                </tr>
+                <tr>
+                    <td><span class="indent"></span><span class="indent"></span>2.1.1 Covered by SRO</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('coveredBySro',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->coveredBySro ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_coveredBySro',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_coveredBySro ?? null
+                        ) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="indent"></span><span class="indent"></span>2.1.2 Not Covered by SRO</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('notCoveredBySro',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->notCoveredBySro ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_notCoveredBySro',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_notCoveredBySro ?? null
+                        ) !!}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><span class="indent"></span>2.2 Other Mills</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('otherMills',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->otherMills ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_otherMills',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_otherMills ?? null
+                        ) !!}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><span class="indent"></span>2.3 Imported</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('imported',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->imported ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_imported',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_imported ?? null
+                        ) !!}
+                    </td>
+                </tr>
+                <tr for="totalReceipts" class="computation">
+                    <td class="text-right">TOTAL RECEIPTS</td>
+                    <td class="text-right text-strong"></td>
+                    <td class="text-right text-strong"></td>
+                </tr>
+
+                <tr>
+                    <td class="text-strong">3. MELTED</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('melted',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->melted ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_melted',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_melted ?? null
+                        ) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-strong">4. WITHDRAWALS</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('rawWithdrawals',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->rawWithdrawals ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_rawWithdrawals',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_rawWithdrawals ?? null
+                        ) !!}
+                    </td>
+                </tr>
+
+                <tr for="rawBalance" class="computation">
+                    <td class="text-strong">5. BALANCE RAW</td>
+                    <td class="text-right text-strong"></td>
+                    <td class="text-right text-strong"></td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="3" class="text-center text-strong info">REFINED SUGAR</td>
+                </tr>
+                <tr>
+                    <td class="text-strong" colspan="3">6. PRODUCTION/CARRY-OVER</td>
+                </tr>
+                <tr>
+                    <td class="text-strong"><span class="indent"></span> 6.1. DOMESTIC </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prodDomestic',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prodDomestic ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_prodDomestic',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_prodDomestic ?? null
+                        ) !!}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-strong"><span class="indent"></span> 6.2. IMPORTED </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prodImported',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prodImported ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_prodImported',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_prodImported ?? null
+                        ) !!}
+                    </td>
+                </tr>
+                <tr for="totalRefined" class="computation">
+                    <td class="text-strong text-right"> <i>TOTAL REFINED</i> </td>
+                    <td class="text-right text-strong">0</td>
+                    <td class="text-right text-strong">0</td>
+                </tr>
+                <tr>
+                    <td class="text-strong"><span class="indent"></span> 6.3. RETURN TO PROCESS </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prodReturn',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prodReturn ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_prodReturn',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_prodReturn ?? null
+                        ) !!}
+                    </td>
+                </tr>
+                <tr for="totalProduction" class="computation">
+                    <td class="text-strong text-right"> PRODUCTION NET </td>
+                    <td class="text-right text-strong">0</td>
+                    <td class="text-right text-strong">0</td>
+                </tr>
+
+                <tr>
+                    <td class="text-strong" colspan="3">7. ISSUANCES</td>
+                </tr>
+
+
+                <tr for="issuancesDomestic" class="computation">
+                    <td class="text-strong"><span class="indent"></span>7.1 DOMESTIC </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
+
+                <tr for="issuancesImported" class="computation">
+                    <td class="text-strong"><span class="indent"></span>7.2 IMPORTED </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
+
+                <tr>
+                    <td class="text-strong" colspan="3">8. WITHDRAWALS</td>
+                </tr>
+
+                <tr for="withdrawalsDomestic" class="computation">
+                    <td class="text-strong"><span class="indent"></span>8.1 DOMESTIC </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
+
+                <tr for="withdrawalsImported" class="computation">
+                    <td class="text-strong"><span class="indent"></span>8.2 IMPORTED </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
+
+                <tr for="stockBalance" class="computation">
+                    <td class="text-strong">9. STOCK BALANCE </td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0</td>
+                </tr>
+                <tr  for="unquedanned" class="computation">
+                    <td class="text-strong">10. UNQUEDANNED </td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0</td>
+                </tr>
+                <tr  for="stockOnHand" class="computation">
+                    <td class="text-strong">11. STOCK ON HAND </td>
+                    <td class="text-right">0</td>
+                    <td class="text-right">0</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<div class="subform-container" hidden>
     <h4>Raw Sugar</h4>
     <div class="subform-body">
         <div class="row">
@@ -54,11 +333,6 @@
             </div>
 
             <div class="col-md-12">
-                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1;font-size: 16px; font-weight: bold">
-
-                </p>
-
-
                 <div class="panel">
                     <div class="box box-sm box-default box-solid">
                         <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
@@ -240,7 +514,7 @@
 </div>
 
 
-<div class="subform-container">
+<div class="subform-container" hidden>
     <h4>Refined Sugar</h4>
     <div class="subform-body">
         <div class="row">
@@ -253,7 +527,7 @@
                             </p>
                         </div>
                         <div class="box-body" style="">
-                            @include('sms.weekly_report.previews.form2')
+{{--                            @include('sms.weekly_report.previews.form2')--}}
                         </div>
                     </div>
                 </div>

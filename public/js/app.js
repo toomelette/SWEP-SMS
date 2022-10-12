@@ -33,6 +33,13 @@ var autonum_settings_mt = {
     decimalPlaces : 3,
 };
 
+var autonum_settings_lkg = {
+    currencySymbol : '',
+    decimalCharacter : '.',
+    digitGroupSeparator : ',',
+    decimalPlaces : 2,
+};
+
 
 
 
@@ -41,6 +48,13 @@ function autonum_init(){
         new AutoNumeric(this, autonum_settings);
     });
 }
+
+function autonum_init(){
+    $(".autonum_lkg").each(function(){
+        new AutoNumeric(this, autonum_settings_lkg);
+    });
+}
+
 function autonum_init_modal_new(btn){
     setTimeout(function () {
         $(btn.attr('data-target')+" .autonum").each(function(){

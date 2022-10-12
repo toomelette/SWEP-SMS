@@ -76,6 +76,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/permission_slips/my_permission_slips','PermissionSlipController@myPermissionSlips')->name('permission_slip.my_permission_slips');
 
     Route::resource('sms_form1','SMS\WeeklyReport\Form1Controller');
+    Route::resource('sms_form2','SMS\WeeklyReport\Form2Controller');
     /** WEEKLY REPORT **/
 
     Route::get('/weekly_report/{slug}/print','SMS\WeeklyReportController@print')->name('weekly_report.print');

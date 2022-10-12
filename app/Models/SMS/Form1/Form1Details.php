@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Form1Details extends Model
 {
     protected $table = 'form1_details';
+    protected $guarded = [];
     public $timestamps = false;
 
     public function weeklyReport(){

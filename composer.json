@@ -28,7 +28,9 @@
         "spatie/laravel-activitylog": "^3.0",
         "yajra/laravel-datatables": "^1.5",
         "yajra/laravel-datatables-html": "^4.0",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "guzzlehttp/guzzle" : "^7.0.1",
+        "facade/ignition" : "^2.3.6"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

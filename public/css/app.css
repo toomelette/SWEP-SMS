@@ -688,6 +688,10 @@ ol.example li.placeholder:before {
     text-align: right;
 }
 
+.dynamic-select{
+
+}
+
 .autonumber{
     text-align: right;
 }
@@ -757,4 +761,8 @@ ol.example li.placeholder:before {
 
 .bg-withdrawals{
     background-color: #d3d7d1;
+}
+
+.preview-table>thead>tr>th:first-child {
+    width: 30%;
 }

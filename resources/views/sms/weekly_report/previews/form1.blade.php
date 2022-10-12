@@ -1,4 +1,4 @@
-<table class="table table-bordered" id="form1PreviewTable" style="transition: background-color 0.2s linear;">
+<table class="table table-bordered preview-table" id="form1PreviewTable" style="transition: background-color 0.2s linear;">
     <thead>
     <tr>
         <th></th>

@@ -4,16 +4,9 @@
     <span class="logo-mini">A</span>
     <span class="logo-lg"><b>SMS</b></span>
   </a>
-  @php
-    $sa = \App\Models\SuSettings::query()->where('setting','=','SERVER_ADDR')->first();
-    if(empty($sa)){
-      $server_address = '';
-    }else{
-      $server_address = $sa->string_value;
-    }
-  @endphp
 
-  <nav class="navbar navbar-static-top" @if($_SERVER['SERVER_ADDR'] != $server_address)style="background-color: #054629" @endif>
+
+  <nav class="navbar navbar-static-top">
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
@@ -25,9 +18,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
 
-        @if($_SERVER['SERVER_ADDR'] != $server_address)
-          <li style="width: 750px;padding-top: 12px"><p style="color: white; font-size: larger">DEVELOPMENT MODE</p></li>
-        @endif
+
           <li class="dropdown tasks-menu">
             <a href="#" >
               <i class="fa fa-calendar"></i> {{Carbon::now()->format('F d, Y')}}

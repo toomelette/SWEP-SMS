@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" hidden>
                         <div class="form-title" style="background-color: #6a75b1;">
                             <p> Retail (PESO/KILO) </p>
                         </div>
@@ -173,7 +173,19 @@
                     <div class="col-md-2">
                         <p class="text-center"><b>RAW Production LM vs VIS</b></p>
                         <div>
-                            <canvas id="productionPieChart" height="10]" width="25"></canvas>
+                            <canvas id="rawProductionLmVis" height="10" width="25"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="text-center"><b>Refined Production LM vs VIS</b></p>
+                        <div>
+                            <canvas id="refinedProductionLmVis" height="10" width="25"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="text-center"><b>Molasses Production LM vs VIS</b></p>
+                        <div>
+                            <canvas id="molProductionLmVis" height="10" width="25"></canvas>
                         </div>
                     </div>
                 </div>
@@ -191,33 +203,6 @@
 
 @endsection
 
-@php
-    $productionPieArr = [];
-    $productionPieLabelArr = [];
-    $production = \App\Models\SMS\WeeklyReportDetails::query()
-        ->select('input_field','week_ending','current_value','form_type','geog_location','crop_year',DB::raw('sum(current_value) as sumCurrent'))
-        ->leftJoin('weekly_reports' ,'weekly_reports.slug','=','weekly_report_slug')
-        ->leftJoin('sugar_mills','weekly_reports.mill_code','=','sugar_mills.slug')
-        ->where('input_field','=','manufactured')
-        ->where('form_type','=','form1')
-        ->groupBy('geog_location')
-        ->orderBy('geog_location','asc')
-        ->get();
-    if(!empty($production)){
-        foreach ($production as $p){
-            array_push($productionPieArr,$p->sumCurrent);
-            array_push($productionPieLabelArr,$p->geog_location);
-        }
-    }
-
-    $latestWholesaleRawData = \App\Models\SMS\WeeklyReportDetails::query()
-            ->leftJoin('weekly_reports','weekly_reports.slug','=','weekly_report_slug')
-            ->where('input_field','wholesale_raw')
-            ->where('form_type','form1')
-            ->orderBy('week_ending','desc')
-            ->first();
-
-@endphp
 
 @section('scripts')
     <script type="text/javascript">
@@ -334,27 +319,61 @@
 
 
         //PRODUCTIONS PIE GRAPH
-        var productionPieChartData = {
-            labels: {!! json_encode($productionPieLabelArr) !!},
-            datasets: [{
-                label: 'My First Dataset',
-                data: {!! json_encode($productionPieArr) !!},
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                ],
-                hoverOffset: 20
-            }]
-        };
-        var productionPieChartConfig = {
-            type: 'doughnut',
-            data: productionPieChartData,
-        };
-
-        var productionPieChart = new Chart(
-            document.getElementById('productionPieChart'),
-            productionPieChartConfig
+        var rawProductionLmVis = new Chart(document.getElementById('rawProductionLmVis'),{
+                type: 'doughnut',
+                data: {
+                    labels: ['LM','VIS'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [180,44],
+                        backgroundColor: [
+                            'rgb(106, 124, 177)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 20,
+                        cutout: 75
+                    }]
+                },
+            }
         );
+
+        var refinedProductionLmVis = new Chart(document.getElementById('refinedProductionLmVis'),{
+                type: 'doughnut',
+                data: {
+                    labels: ['LM','VIS'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [100,200],
+                        backgroundColor: [
+                            'rgb(106, 124, 177)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 20,
+                        cutout: 75
+                    }]
+                },
+            }
+        );
+
+        var molProductionLmVis = new Chart(document.getElementById('molProductionLmVis'),{
+                type: 'doughnut',
+                data: {
+                    labels: ['LM','VIS'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [322,800],
+                        backgroundColor: [
+                            'rgb(106, 124, 177)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 20,
+                        cutout: 75
+                    }]
+                }
+            }
+        );
+
+
 
         weeklyChart('{{route("dashboard.ajax.get","chartAdmin")}}');
 

@@ -39,7 +39,7 @@
 
                     </div>
                     <div class="col-md-9">
-                        <form id="form1">@csrf
+
                             <fieldset {{$wr->status == 1 ? 'disabled' : null}}>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -65,16 +65,21 @@
 
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
-                                        <div class="tab-pane " id="tab_1">
-                                            @include('sms.weekly_report.sms_forms.form_1')
-                                        </div>
 
-                                        <div class="tab-pane active" id="tab_2">
+                                            <div class="tab-pane active" id="tab_1">
+
+                                                @include('sms.weekly_report.sms_forms.form_1')
+
+                                            </div>
+
+                                        <div class="tab-pane " id="tab_2">
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
                                         <div class="tab-pane " id="tab_3">
+                                            <form id="form11">@csrf
                                             @include('sms.weekly_report.sms_forms.form_3')
+                                            </form>
                                         </div>
 
                                         <div class="tab-pane " id="tab_3a">
@@ -112,7 +117,7 @@
                                     <br>
                                 </div>
                             </fieldset>
-                        </form>
+
                     </div>
                 </div>
 
@@ -305,8 +310,13 @@
                 <h4 class="modal-title" id="myModalLabel">Print Preview</h4>
             </div>
             <div class="modal-body">
-                <button class="btn btn-primary pull-right" id="print_btn"><i class="fa fa-print"></i> Print</button><br><br>
-                <iframe class="embed-responsive-item" style="width: 100%; height: 800px" id="allFormsFrame"></iframe>
+                <div class="loader-container" style="padding: 150px">
+                    <p style="text-align: center; font-size: 72px"><i class="fa fa-spin fa-spinner"></i></p>
+                </div>
+                <div id="iframe-container" hidden>
+                    <button class="btn btn-primary pull-right" id="print_btn"><i class="fa fa-print"></i> Print</button><br><br>
+                    <iframe class="embed-responsive-item" style="width: 100%; height: 800px" id="allFormsFrame"></iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -334,7 +344,11 @@
 
 
     <script type="text/javascript">
-
+        $("#allFormsFrame").on("load",function () {
+            $("#print_prev_modal .loader-container").fadeOut(function () {
+                $("#print_prev_modal #iframe-container").show();
+            })
+        })
         $(".add_btn").click(function () {
             let btn = $(this);
             let data = btn.attr('data');
@@ -361,7 +375,7 @@
             $("#tr_"+data).remove();
         })
 
-        $("#form1").submit(function (e) {
+        $("#form11").submit(function (e) {
             e.preventDefault();
             let form = $(this);
             let uri = '{{route("dashboard.sms_form1.store")}}';
@@ -446,9 +460,13 @@
             let uri = '{{route("dashboard.form_6a.print_form6a_form","slug")}}';
             uri = uri.replace('slug',btn.attr('data'));
             $("#print_frame").attr('src',uri);
+
         })
 
         $("#print_prev_btn").click(function () {
+            $("#print_prev_modal #iframe-container").hide()
+            $("#print_prev_modal .loader-container").show();
+            ;
             $("#allFormsFrame").attr('src','');
             $("#allFormsFrame").attr('src','{{route("dashboard.weekly_report.print",$wr->slug)}}');
         })
@@ -504,7 +522,148 @@
                     console.log(res);
                 }
             })
+        });
+
+        function updateForm2(form = null,type = 'updateOnly'){
+            let uri = '{{route("dashboard.sms_form2.store")}}?wr={{$wr->slug}}';
+            let formData = null;
+            if(type === 'updateOnly'){
+                uri = uri+'&type=updateOnly';
+                formData = null;
+            }else{
+                formData = form.serialize();
+            }
+
+            $.ajax({
+                url : uri,
+                data : formData,
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $.each(res,function (i,item) {
+                        $("#form2PreviewTable tr[for='"+i+"']").children('td').eq(1).html($.number(item.current,2));
+                        $("#form2PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,2));
+                    })
+                    $("#form2PreviewTable .fa").remove();
+                },
+                error: function (res) {
+                    $("tr.computation").each(function () {
+                        $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                    })
+                }
+            })
+        }
+
+        updateForm2(null);
+        updateForm1(null);
+
+        $("#form2").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $("#form2PreviewTable tr.computation").each(function () {
+                $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
+            })
+            updateForm2(form,'insert');
         })
+
+        $("#form2 .form2-input").change(function () {
+            $("#form2").submit();
+        })
+
+        $("#addIssuanceButton").click(function () {
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","form1Issuance")}}',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $(".totalIssuanceTr").before(res);
+                },
+                error: function (res) {
+
+                }
+            })
+        })
+
+
+        function updateForm1(form = null,type = 'updateOnly'){
+            let uri = '{{route("dashboard.sms_form1.store")}}?wr={{$wr->slug}}';
+            let formData = null;
+            if(type === 'updateOnly'){
+                uri = uri+'&type=updateOnly';
+                formData = null;
+            }else{
+                formData = form.serialize();
+            }
+
+            $.ajax({
+                url : uri,
+                data : formData,
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $(".newAppend").each(function () {
+                        $(this).remove();
+                    })
+                    $.each(res,function (i,item) {
+                        $("#form1PreviewTable tr[for='"+i+"']").children('td').eq(1).html($.number(item.current,2));
+                        $("#form1PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,2));
+                    });
+                    $.each(res.withdrawals, function (i,item) {
+                        $("#form1PreviewTable tr[for='withdrawalsTotal']").before('' +
+                            '<tr class="newAppend">' +
+                            '<td><span class="indent"></span>' + i + '</td>'+
+                            '<td class="text-right">' + $.number(item.current,3) + '</td>'+
+                            '<td class="text-right">' + $.number(item.prev,3) + '</td>'+
+                            '</tr>')
+                    });
+                    $.each(res.balances, function (i,item) {
+                        $("#form1PreviewTable tr[for='balancesTotal']").before('' +
+                            '<tr class="newAppend">' +
+                            '<td><span class="indent"></span>' + i + '</td>'+
+                            '<td class="text-right">' + $.number(item.current,3) + '</td>'+
+                            '<td class="text-right">' + $.number(item.prev,3) + '</td>'+
+                            '</tr>')
+                    });
+                },
+                error: function (res) {
+                    $("#form1PreviewTable tr.computation").each(function () {
+                        $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                    })
+                }
+            })
+        }
+
+
+
+        $("#form1").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $("#form1PreviewTable tr.computation").each(function () {
+                $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
+            })
+
+            updateForm1(form,'insert');
+        })
+
+        $("#form1").on('change','.form1-input',function () {
+            $("#form1").submit();
+        })
+
+        $("body").on("click",".removeBtn",function () {
+            $(this).parents('tr').remove();
+            $("#form1").submit();
+        })
+
     </script>
 
 @endsection

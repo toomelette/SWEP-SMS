@@ -64,6 +64,39 @@ class WeeklyReports extends Model
         return $this->hasOne(Form1\Form1Details::class,'weekly_report_slug','slug');
     }
 
+    public function prevForm1(){
+        $prev = WeeklyReports::query()
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','=',$this->report_no-1)
+            ->first();
+        return $prev->form1 ?? null;
+    }
+
+  public function toDateForm1(){
+        $fieldsToSum =  [
+            'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller',
+        ];
+        foreach ($fieldsToSum as $key => $field){
+            $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
+        }
+        $fields = implode(',',$fieldsToSum);
+        $toDate = WeeklyReports::query()
+            ->selectRaw($fields)
+            ->leftJoin('form1_details','form1_details.weekly_report_slug','=','weekly_reports.slug')
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','<=',$this->report_no)
+            ->first();
+        return $toDate ?? null;
+    }
+
+    public function form2(){
+        return $this->hasOne(Form2\Form2Details::class,'weekly_report_slug','slug');
+    }
+
+
+
     public function form5Withdrawals(){
         return $this->hasMany(Form5\Deliveries::class,'weekly_report_slug','slug')->whereNull('refining');
     }
