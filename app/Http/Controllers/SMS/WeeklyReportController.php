@@ -46,9 +46,12 @@ class WeeklyReportController extends Controller
                 })
                 ->addColumn('status',function($data){
                     if($data->status == 1){
-                        return 'SUBMITTED';
+                        return '<span class="label label-success"><i class="fa fa-check"></i> SUBMITTED</span>';
                     }
-                    return 'DRAFT';
+                    if($data->status == -1){
+                        return '<span class="label label-danger"><i class="fa fa-times"></i> CANCELED</span>';
+                    }
+                    return '<span class="label label-default"><i class="fa fa-pencil"></i> DRAFT</span>';
                 })
                 ->editColumn('week_ending',function($data){
                     return Carbon::parse($data->week_ending)->format('F d, Y');
@@ -86,7 +89,7 @@ class WeeklyReportController extends Controller
 
     public function edit($slug, WeeklyReportService $weeklyReportService){
 
-//        return $weeklyReportService->computation($slug);
+//        return $weeklyReportService->form3Computation($slug);
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         if(!empty($weekly_report->details)){
@@ -105,24 +108,29 @@ class WeeklyReportController extends Controller
             }
         }
 
-//        return $details_arr;
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
             'formArray' => $weeklyReportService->computation($slug),
             'form2Array' => $weeklyReportService->form2Computation($slug),
+            'form3Array' => $weeklyReportService->form3Computation($slug),
         ]);
     }
 
     public function findBySlug($slug){
-        $wr = WeeklyReports::query()->with(['form1','form2','details','seriesNos'])->where('slug','=',$slug)->first();
+        $wr = WeeklyReports::query()->with(['form1','form2','form3','details','seriesNos'])->where('slug','=',$slug)->first();
         if(!empty($wr)){
             return $wr;
         }
         abort(510,'Weekly Report not found.');
     }
 
-
+    public function show($slug){
+        $wr = $this->findBySlug($slug);
+        return view('sms.weekly_report.show')->with([
+            'wr' => $wr,
+        ]);
+    }
 
     public function destroy($slug, WeeklyReportService $weeklyReportService){
         $weeklyReportService->isNotSubmitted($slug);
@@ -198,8 +206,6 @@ class WeeklyReportController extends Controller
             $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
         }
 
-
-
         return view('sms.printables.formAll')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
@@ -207,8 +213,13 @@ class WeeklyReportController extends Controller
             'signatories' => $signatoryService->getSavedSignatoriesAsArray(),
             'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate'),
             'form1' => $this->weeklyReportService->computation($slug),
-            'form2' => $this->weeklyReportService->form2Computation($slug),
             'prevForm1' => $prevForm1,
+            'form2' => $this->weeklyReportService->form2Computation($slug),
+            'prevToDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate'),
+            'form3' => $this->weeklyReportService->form3Computation($slug),
+            'prevToDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate'),
         ]);
     }
     public function printForm6a($slug){
@@ -223,8 +234,36 @@ class WeeklyReportController extends Controller
         ]);
     }
 
-    public function test($weekly_report){
+    public function saveAsNew($slug){
+        $wr = $this->findBySlug($slug);
+        $wrNew = $wr->replicate(['status']);
+        $wr->status = -1;
+        $wr->canceled_at = Carbon::now();
+        $wr->user_canceled = Auth::user()->user_id;
+        $wrNew->slug = \Illuminate\Support\Str::random();
 
+        $relations = ['form1','form2','form3'];
+        foreach ($relations as $relation) {
+            if(!empty($wr->{$relation})){
+            $items = $wr->{$relation}->toArray();
+            unset($items['id']);
+            $wrNew->{$relation}()->create($items);
+            }
+        }
+        $wr->save();
+        if($wrNew->save()){
+            return $wrNew->only('slug');
+        }
+    }
 
+    public function submit($slug){
+        $wr = $this->findBySlug($slug);
+        $wr->status  = 1;
+        $wr->submitted_at = Carbon::now();
+        $wr->user_submitted = Auth::user()->user_id;
+        if($wr->save()){
+            return $wr->only('slug');
+        }
+        abort(503, 'Error submitting weekly report.');
     }
 }

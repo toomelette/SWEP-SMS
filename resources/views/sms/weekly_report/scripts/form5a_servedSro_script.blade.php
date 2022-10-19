@@ -28,24 +28,9 @@
                 "order":[[0,'desc']],
                 "responsive": true,
                 "initComplete": function( settings, json ) {
-                    $('#tbl_loader').fadeOut(function(){
-                        $("#form5a_servedSros_table_container").fadeIn();
-                        if(find != ''){
-                            form5a_servedSros_tbl.search(find).draw();
-                            setTimeout(function(){
-                                active_form5_issuancesOfSro = '';
-                            },3000);
-                            window.history.pushState({}, document.title, "/dashboard/employee");
-                        }
-                    });
-                    @if(\Illuminate\Support\Facades\Request::get('toPage') != null && \Illuminate\Support\Facades\Request::get('mark') != null)
-                    setTimeout(function () {
-                        form5a_servedSros_tbl.page({{\Illuminate\Support\Facades\Request::get('toPage')}}).draw('page');
-                        active_form5_issuancesOfSro = '{{\Illuminate\Support\Facades\Request::get("mark")}}';
-                        notify('Employee successfully updated.');
-                        window.history.pushState({}, document.title, "/dashboard/employee");
-                    },700);
-                    @endif
+                    $("#waitBar .progress-bar").css('width','89%');
+                    $("#waitText span").html('Performing calculations');
+                    lastInit();
                 },
                 "language":
                     {
@@ -67,7 +52,7 @@
             })
 
             style_datatable("#form5a_servedSros_table");
-        },500)
+        },1400)
     })
 
     $("#form5a_add_servedSro_form").submit(function (e) {

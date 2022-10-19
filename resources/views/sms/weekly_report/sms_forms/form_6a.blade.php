@@ -3,69 +3,84 @@
     </h4>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                    <p class="no-margin">Raw Sugar Receipts<small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
 
-                <div class="box-body" style="">
-                    <button type="button" data-target="#add_rawSugarReceipts_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Receipts</button>
-                    <br>
-                    <br>
-                    <table style="width: 100%;" class="table table-condensed table-bordered" id="form6a_rawSugarReceipts_table">
-                        <thead>
-                        <tr>
-                            <th>Delivery No.</th>
-                            <th>Trader/Tollee</th>
-                            <th>Mill Source</th>
-                            <th>Raw SRA S.N.</th>
-                            <th>SRA Liens OR #</th>
-                            <th>Qty. (Lkg)</th>
-                            <th>Refined Sugar Equivalent (Lkg)</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border" style="background-color: #4e984a;color: white;">
-                    <p class="no-margin">Quedan Registry<small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
+<h4 class="text-strong">A. Raw Sugar Receipts</h4>
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr class="bg-primary">
+            <th>Delivery No.</th>
+            <th>Trader/Tollee</th>
+            <th>Source</th>
+            <th>Raw SRO #</th>
+            <th>SRA Liens OR #</th>
+            <th>Qty LKG</th>
+            <th>Refined Sugar Eq.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(!empty($wr->form5aIssuancesOfSro))
+            @php
+                $rawTotal = 0;
+                $refinedTotal = 0;
+            @endphp
+            @foreach($wr->form5aIssuancesOfSro as $data)
+                @php
+                    $rawTotal = $rawTotal + $data->raw_qty;
+                    $refinedTotal = $refinedTotal + $data->refined_qty;
+                @endphp
+                <tr>
+                    <td>{{$data->delivery_no}}</td>
+                    <td>{{$data->trader}}</td>
+                    <td>{{$data->source}}</td>
+                    <td>{{$data->sro_no}}</td>
+                    <td>{{$data->liens_or_no}}</td>
+                    <td class="text-right">{{number_format($data->raw_qty,2)}}</td>
+                    <td class="text-right">{{number_format($data->refined_qty,2)}}</td>
+                </tr>
+            @endforeach
+            <tr class="bg-info">
+                <td colspan="5" class="text-strong">TOTAL</td>
+                <td class="text-right text-strong">{{number_format($rawTotal,2)}}</td>
+                <td class="text-right text-strong">{{number_format($refinedTotal,2)}}</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
 
-                <div class="box-body" style="">
-                    <button type="button" data-target="#add_quedanRegistry_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Registry</button>
-                    <br>
-                    <br>
-                    <table style="width: 100%;" class="table table-condensed table-bordered" id="form6a_quedanRegistry_table">
-                        <thead>
-                        <tr>
-                            <th>Delivery No.</th>
-                            <th>Trader/Tollee</th>
-                            <th>Refined Quedan S.N.</th>
-                            <th>Refined Sugar (Lkg)</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
 
-                        </tbody>
-                    </table>
-                </div>
+<h4 class="text-strong">B. Quedan Registry</h4>
+<table class="table table-bordered table-condensed">
+    <thead>
+    <tr class="bg-primary">
+        <th>Delivery No.</th>
+        <th>Trader/Tollee</th>
+        <th>Refined Quedan SN.</th>
+        <th>Refined Sugar (Lkg)</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if(!empty($wr->form5aIssuancesOfSro))
+        @php
+            $refinedTotal = 0;
+        @endphp
+        @foreach($wr->form5aIssuancesOfSro as $data)
+            @php
+                $refinedTotal = $refinedTotal + $data->refined_qty;
+            @endphp
+            <tr>
+                <td>{{$data->deliver_no}}</td>
+                <td>{{$data->trader}}</td>
+                <td>{{$data->rsq_no}}</td>
+                <td class="text-right">{{number_format($data->refined_qty,2)}}</td>
+            </tr>
+        @endforeach
+        <tr class="bg-info">
+            <td colspan="3" class="text-strong">TOTAL</td>
+            <td class="text-right text-strong">{{number_format($refinedTotal,2)}}</td>
+        </tr>
+    @endif
+    </tbody>
+</table>
 
-            </div>
-        </div>
-    </div>
-</div>

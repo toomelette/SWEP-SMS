@@ -9,36 +9,57 @@
 @section('content2')
     <section class="content">
         <div class="box box-solid">
-            <div class="box-header with-border">
+            <div class="box-header with-border" style="display: none !important;">
                 <h3 class="box-title">Report:</h3>
                 <button class="btn btn-success pull-right" data-target="#print_prev_modal" id="print_prev_btn" data-toggle="modal"><i class="fa fa-print"></i> Print</button>
             </div>
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <dl>
-                            <dt>Mill Code:</dt>
-                            <dd><span style="font-size: 18px">{{$wr->mill_code}}</span></dd>
-                            <hr>
 
-                            <dt>Crop Year:</dt>
-                            <dd><span style="font-size: 18px">{{$wr->crop_year}}</span></dd>
-                            <hr>
-
-                            <dt>Week Ending:</dt>
-                            <dd><span style="font-size: 18px">{{\Illuminate\Support\Carbon::parse($wr->week_ending)->format('F d, Y')}}</span></dd>
-                            <hr>
-
-                            <dt>Report No.:</dt>
-                            <dd><span style="font-size: 18px">{{$wr->report_no}}</span></dd>
-                            <hr>
-
-                            <dt>Distribution No.:</dt>
-                            <dd><span style="font-size: 18px">{{$wr->dist_no}}</span></dd>
-                        </dl>
+                <div id="waitBarContainer">
+                    <div class="login-box" style="width: 40%;">
+                        <div class="login-box-body">
+                            <div  id="waitBar"  class="progress progress-sm active">
+                                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 3%">
+                                    <span class="sr-only">20% Complete</span>
+                                </div>
+                            </div>
+                            <p id="waitText" class="text-center">
+                                <i class="fa fa-circle-o-notch fa-spin"></i> <span> Performing calculations</span>
+                            </p>
+                        </div>
 
                     </div>
-                    <div class="col-md-9">
+
+
+                </div>
+
+
+                <div id="reportContainer" hidden>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <dl>
+                                <dt>Mill Code:</dt>
+                                <dd><span style="font-size: 18px">{{$wr->mill_code}}</span></dd>
+                                <hr>
+
+                                <dt>Crop Year:</dt>
+                                <dd><span style="font-size: 18px">{{$wr->crop_year}}</span></dd>
+                                <hr>
+
+                                <dt>Week Ending:</dt>
+                                <dd><span style="font-size: 18px">{{\Illuminate\Support\Carbon::parse($wr->week_ending)->format('F d, Y')}}</span></dd>
+                                <hr>
+
+                                <dt>Report No.:</dt>
+                                <dd><span style="font-size: 18px">{{$wr->report_no}}</span></dd>
+                                <hr>
+
+                                <dt>Distribution No.:</dt>
+                                <dd><span style="font-size: 18px">{{$wr->dist_no}}</span></dd>
+                            </dl>
+
+                        </div>
+                        <div class="col-md-10">
 
                             <fieldset {{$wr->status == 1 ? 'disabled' : null}}>
                                 <div class="row">
@@ -66,24 +87,26 @@
                                     <input name="weekly_report_slug" value="{{$wr->slug}}" hidden>
                                     <div class="tab-content">
 
-                                            <div class="tab-pane active" id="tab_1">
+                                        <div class="tab-pane active" id="tab_1">
 
-                                                @include('sms.weekly_report.sms_forms.form_1')
+                                            @include('sms.weekly_report.sms_forms.form_1')
 
-                                            </div>
+                                        </div>
 
                                         <div class="tab-pane " id="tab_2">
                                             @include('sms.weekly_report.sms_forms.form_2')
                                         </div>
 
                                         <div class="tab-pane " id="tab_3">
-                                            <form id="form11">@csrf
+
                                             @include('sms.weekly_report.sms_forms.form_3')
-                                            </form>
+
                                         </div>
 
                                         <div class="tab-pane " id="tab_3a">
-                                            @include('sms.weekly_report.sms_forms.form_3a')
+                                            <form id="form11">@csrf
+                                                @include('sms.weekly_report.sms_forms.form_3a')
+                                            </form>
                                         </div>
 
                                         <div class="tab-pane " id="tab_4">
@@ -118,6 +141,7 @@
                                 </div>
                             </fieldset>
 
+                        </div>
                     </div>
                 </div>
 
@@ -302,6 +326,28 @@
     </div>
 </div>
 <!--END OF FORM 6A-->
+
+<div class="modal fade" id="addMolassesWithdrawalModal" tabindex="-1" role="dialog" aria-labelledby="add_quedanRegistry_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form3_addMolassesWithdrawalForm">
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Molasses Withdrawal</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form3.withdrawals_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="print_prev_modal" tabindex="-1" role="dialog" aria-labelledby="add_quedanRegistry_modal_label">
     <div class="modal-dialog" style="width: 75%" role="document">
         <div class="modal-content">
@@ -329,6 +375,8 @@
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
     </script>
+
+    @include('sms.weekly_report.scripts.form3_withdrawals_script')
 
     @include('sms.weekly_report.scripts.form5_issuance_script')
     @include('sms.weekly_report.scripts.form5_delivery_script')
@@ -559,6 +607,8 @@
 
         updateForm2(null);
         updateForm1(null);
+        updateForm3(null);
+
 
         $("#form2").submit(function (e) {
             e.preventDefault();
@@ -663,6 +713,87 @@
             $(this).parents('tr').remove();
             $("#form1").submit();
         })
+
+
+        function updateForm3(form = null,type = 'updateOnly'){
+            let uri = '{{route("dashboard.sms_form3.store")}}?wr={{$wr->slug}}';
+            let formData = null;
+            if(type === 'updateOnly'){
+                uri = uri+'&type=updateOnly';
+                formData = null;
+            }else{
+                formData = form.serialize();
+            }
+            $.ajax({
+                url : uri,
+                data : formData,
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#form3PreviewTable .newAppend").each(function () {
+                        $(this).remove();
+                    });
+                    $.each(res,function (i,item) {
+                        $("#form3PreviewTable tr[for='"+i+"']").children('td').eq(1).html($.number(item.current,3));
+                        $("#form3PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,3));
+                    });
+
+                    $.each(res.withdrawalsRaw, function (i,item) {
+                        $("#form3PreviewTable tr[for='totalWithdrawalsRaw']").before('' +
+                            '<tr class="newAppend">' +
+                            '<td><span class="indent"></span>' + i + '</td>'+
+                            '<td class="text-right">' + $.number(item.current,3) + '</td>'+
+                            '<td class="text-right">' + $.number(item.prev,3) + '</td>'+
+                            '</tr>')
+                    });
+                    $.each(res.withdrawalsRefined, function (i,item) {
+                        $("#form3PreviewTable tr[for='totalWithdrawalsRefined']").before('' +
+                            '<tr class="newAppend">' +
+                            '<td><span class="indent"></span>' + i + '</td>'+
+                            '<td class="text-right">' + $.number(item.current,3) + '</td>'+
+                            '<td class="text-right">' + $.number(item.prev,3) + '</td>'+
+                            '</tr>')
+                    });
+
+                },
+                error: function (res) {
+                    $("#form3PreviewTable tr.computation").each(function () {
+                        $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                    })
+                }
+            })
+        }
+
+        $("#form3 .form3-input").change(function () {
+            $("#form3").submit();
+        })
+
+        $("#form3").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $("#form3PreviewTable tr.computation").each(function () {
+                $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
+            })
+            updateForm3(form,'insert');
+        })
+
+
+        function lastInit() {
+            setTimeout(function () {
+                $("#waitBar .progress-bar").css('width','100%');
+                $("#waitText span").html('Loading Forms');
+                $("#waitBarContainer").fadeOut(function(){
+                    $("#reportContainer").fadeIn();
+                    $(".box-header").slideDown();
+                })
+
+            },800)
+        }
+
 
     </script>
 

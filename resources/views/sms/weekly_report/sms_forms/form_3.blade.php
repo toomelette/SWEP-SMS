@@ -2,437 +2,316 @@
     <h4>  WEEKLY REPORT ON MOLASSESS
     </h4>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        @php
-            $a = 'production';
-        @endphp
+<form id="form3">
+    <button type="submit" hidden>Submit</button>
+    <table class="table table-bordered preview-table" id="form3PreviewTable">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Current Crop</th>
+            <th>Previous Crop</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="3" class="text-strong">1. PRODUCTION</td>
+        </tr>
+        <tr>
+            <td>
+                <span class="indent"> 1.1 Manufactued, Raw</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('manufacturedRaw',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->manufacturedRaw ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_manufacturedRaw',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_manufacturedRaw ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="indent"> 1.2 Retention, Adj., Overages, etc.</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('rao',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->rao ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_rao',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_rao ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="indent"> 1.3 Manufactued, Refined</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('manufacturedRefined',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->manufacturedRefined ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_manufacturedRefined',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_manufacturedRefined ?? null) !!}
+            </td>
+        </tr>
+        <tr class="computation" for="totalProduction">
+            <td class="text-right text-strong">
+                TOTAL
+            </td>
+            <td class="text-right text-strong"></td>
+            <td class="text-right text-strong"></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-strong">2. ISSUANCES/CARRY-OVER</td>
+        </tr>
+        <tr>
+            <td>
+                <span class="indent"> 2.1 Planter's Share</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('sharePlanter',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->sharePlanter ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_sharePlanter',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_sharePlanter ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="indent"> 2.2 Mill Share</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('shareMiller',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->shareMiller ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_shareMiller',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_shareMiller ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="indent"> 2.3 Refinery Molasses</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('refineryMolasses',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->refineryMolasses ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_refineryMolasses',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_refineryMolasses ?? null) !!}
+            </td>
+        </tr>
+        <tr class="computation" for="totalIssuances">
+            <td class="text-right text-strong">
+                TOTAL
+            </td>
+            <td class="text-strong text-right"></td>
+            <td class="text-strong text-right"></td>
+        </tr>
 
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                    <p class="no-margin">
-                        1. Production
-                        <small id="filter-notifier" class="label bg-blue blink"></small>
-                        <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form3_molasses_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                    </p>
 
-                </div>
+        <tr>
+            <td colspan="3" class="text-strong">3. WITHDRAWALS</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-strong"><span class="indent"></span> RAW</td>
+        </tr>
 
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form1_table table_dynamic" id="form3_molasses_{{$a}}">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @if(isset($details_arr['form3'][$a]) && count($details_arr['form3'][$a]) > 0)
-                                @foreach($details_arr['form3'][$a] as $$a)
-                                    @include('sms.dynamic_rows.form3_molasses_'.$a,['item' => $$a])
-                                @endforeach
-                            @else
-                                @include('sms.dynamic_rows.form3_molasses_'.$a)
-                            @endif
-                        </tbody>
-                    </table>
+        <tr class="computation" for="totalWithdrawalsRaw">
+            <td class="text-right">
+                <i>TOTAL RAW</i>
+            </td>
+            <td class="text-right"></td>
+            <td class="text-right"></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-strong"><span class="indent"></span> REFINED</td>
+        </tr>
+
+        <tr class="computation" for="totalWithdrawalsRefined">
+            <td class="text-right">
+                <i>TOTAL REFINED</i>
+            </td>
+            <td class="text-right"></td>
+            <td class="text-right"></td>
+        </tr>
+        <tr class="computation" for="totalWithdrawals">
+            <td class="text-right text-strong">
+                TOTAL WITHDRAWALS
+            </td>
+            <td class="text-right text-strong"></td>
+            <td class="text-right text-strong"></td>
+        </tr>
+
+
+        <tr>
+            <td colspan="3" class="text-strong">4. BALANCE</td>
+        </tr>
+
+        <tr class="computation" for="balanceRaw">
+            <td>
+                4.1 Raw
+            </td>
+            <td class="text-right"></td>
+            <td class="text-right"></td>
+        </tr>
+
+        <tr class="computation" for="balanceRefined">
+            <td>
+                4.2 Refined
+            </td>
+            <td class="text-right"></td>
+            <td class="text-right"></td>
+        </tr>
+
+        <tr class="computation" for="totalBalance">
+            <td class="text-right text-strong">
+                TOTAL BALANCE
+            </td>
+            <td class="text-right text-strong"></td>
+            <td class="text-right text-strong"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="box box-sm box-default box-solid">
+                    <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+                        <p class="no-margin">Details of Molasses Withdrawals <small id="filter-notifier" class="label bg-blue blink"></small></p>
+                    </div>
+
+                    <div class="box-body" style="">
+                        <button type="button" data-target="#addMolassesWithdrawalModal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Withdrawals</button>
+                        <br>
+                        <br>
+                        <table style="width: 100%;" class="table table-condensed table-bordered" id="form3_detailsOfMolassesWithdrawals">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>MRO No.</th>
+                                <th>Trader/Owner</th>
+                                <th>Type</th>
+                                <th>Raw/Ref</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="row">
-    <div class="col-md-12">
-        @php
-            $a = 'issuances';
-        @endphp
-
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                    <p class="no-margin">
-                        2. Issuances
-                        <small id="filter-notifier" class="label bg-blue blink"></small>
-                        <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form3_molasses_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                    </p>
-
-                </div>
-
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form1_table table_dynamic" id="form3_molasses_{{$a}}">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($details_arr['form3'][$a]) && count($details_arr['form3'][$a]) > 0)
-                            @foreach($details_arr['form3'][$a] as $$a)
-                                @include('sms.dynamic_rows.form3_molasses_'.$a,['item' => $$a])
-                            @endforeach
-                        @else
-                            @include('sms.dynamic_rows.form3_molasses_'.$a)
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="subform-container">
-    <h4>3. WITHDRAWALS</h4>
-    <div class="subform-body">
-
-        @php
-            $a = 'rawWithdrawals';
-        @endphp
-
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                    <p class="no-margin">
-                        RAW
-                        <small id="filter-notifier" class="label bg-blue blink"></small>
-                        <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form3_molasses_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                    </p>
-
-                </div>
-
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form1_table table_dynamic" id="form3_molasses_{{$a}}">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($details_arr['form3'][$a]) && count($details_arr['form3'][$a]) > 0)
-                            @foreach($details_arr['form3'][$a] as $$a)
-                                @include('sms.dynamic_rows.form3_molasses_'.$a,['item' => $$a])
-                            @endforeach
-                        @else
-                            @include('sms.dynamic_rows.form3_molasses_'.$a)
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-        @php
-            $a = 'refinedWithdrawals';
-        @endphp
-
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                    <p class="no-margin">
-                        REFINED
-                        <small id="filter-notifier" class="label bg-blue blink"></small>
-                        <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form3_molasses_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                    </p>
-
-                </div>
-
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form1_table table_dynamic" id="form3_molasses_{{$a}}">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($details_arr['form3'][$a]) && count($details_arr['form3'][$a]) > 0)
-                            @foreach($details_arr['form3'][$a] as $$a)
-                                @include('sms.dynamic_rows.form3_molasses_'.$a,['item' => $$a])
-                            @endforeach
-                        @else
-                            @include('sms.dynamic_rows.form3_molasses_'.$a)
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="panel">
     <div class="box box-sm box-default box-solid">
-        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
-            <p class="no-margin">4. Balance <small id="filter-notifier" class="label bg-blue blink"></small></p>
+        <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+            <p class="no-margin">
+                6. Molasses Storage Certificates:
+                <small id="filter-notifier" class="label bg-blue blink"></small>
+            </p>
         </div>
         <div class="box-body" style="">
-            <table class="table table-bordered table-condensed sms_form3_table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Current Crop</th>
-                    <th>Previous Crop</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Raw</td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][rawBalance]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_current_rawBalance',
-                        ],
-                        (isset($details_arr['form3']['rawBalance'])) ? $details_arr['form3']['rawBalance']->current_value : null
-                        ) !!}
-                    </td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][rawBalance]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_prev_rawBalance',
-                        ],
-                        (isset($details_arr['form3']['rawBalance'])) ? $details_arr['form3']['rawBalance']->prev_value : null
-                        ) !!}
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Refined</td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][refinedBalance]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_current_refinedBalance',
-                        ],
-                        (isset($details_arr['form3']['refinedBalance'])) ? $details_arr['form3']['refinedBalance']->current_value : null
-                        ) !!}
-                    </td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][refinedBalance]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_prev_refinedBalance',
-                        ],
-                        (isset($details_arr['form3']['refinedBalance'])) ? $details_arr['form3']['refinedBalance']->prev_value : null
-                        ) !!}
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                {!! \App\Swep\ViewHelpers\__form2::textbox('storageCertRaw',[
+                    'label' => 'Raw:',
+                    'cols' => 6,
+                ],
+                $wr->form3->storageCertRaw ?? null
+                ) !!}
+                {!! \App\Swep\ViewHelpers\__form2::textbox('storageCertRefined',[
+                    'label' => 'Refined:',
+                    'cols' => 6,
+                ],
+                $wr->form3->storageCertRefined ?? null
+                ) !!}
+            </div>
         </div>
     </div>
-</div>
 
 
-
-<div class="panel">
     <div class="box box-sm box-default box-solid">
-        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
-            <p class="no-margin">5. Molasses Price (Php/MT) <small id="filter-notifier" class="label bg-blue blink"></small></p>
+        <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+            <p class="no-margin">
+                7. Molasses Distribution Factor:
+                <small id="filter-notifier" class="label bg-blue blink"></small>
+            </p>
         </div>
         <div class="box-body" style="">
-            <table class="table table-bordered table-condensed sms_form3_table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Current Crop</th>
-                    <th>Previous Crop</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Raw</td>
-                    <td>
+            <div class="row">
+                <div class="col-md-6">
 
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][rawPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_current_rawPrice',
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('distFactor',[
+                            'label' => 'Molasses Distribution Factor:',
+                            'cols' => 12,
                         ],
-                        (isset($details_arr['form3']['rawPrice'])) ? $details_arr['form3']['rawPrice']->current_value : null
+                        $wr->form3->distFactor ?? null
                         ) !!}
-                    </td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][rawPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_prev_rawPrice',
-                        ],
-                        (isset($details_arr['form3']['rawPrice'])) ? $details_arr['form3']['rawPrice']->prev_value : null
-                        ) !!}
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Refined</td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][refinedPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_current_refinedPrice',
-                        ],
-                        (isset($details_arr['form3']['refinedPrice'])) ? $details_arr['form3']['refinedPrice']->current_value : null
-                        ) !!}
-                    </td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][refinedPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_prev_refinedPrice',
-                        ],
-                        (isset($details_arr['form3']['refinedPrice'])) ? $details_arr['form3']['refinedPrice']->prev_value : null
-                        ) !!}
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="panel">
-    <div class="box box-sm box-default box-solid">
-        <div class="box-header with-border"  style="background-color: #987e4a;color: white;">
-            <p class="no-margin">6. Molasses Storage Certificates (Series & No. of Pcs.):<small id="filter-notifier" class="label bg-blue blink"></small></p>
-        </div>
-        <div class="box-body" style="">
-            <table class="table table-bordered table-condensed sms_form3_table">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Current Crop</th>
-                    <th>Previous Crop</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Raw</td>
-                    <td>
-
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][rawPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_current_rawPrice',
-                        ],
-                        (isset($details_arr['form3']['rawPrice'])) ? $details_arr['form3']['rawPrice']->current_value : null
-                        ) !!}
-                    </td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][rawPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_prev_rawPrice',
-                        ],
-                        (isset($details_arr['form3']['rawPrice'])) ? $details_arr['form3']['rawPrice']->prev_value : null
-                        ) !!}
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Refined</td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][current][refinedPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_current_refinedPrice',
-                        ],
-                        (isset($details_arr['form3']['refinedPrice'])) ? $details_arr['form3']['refinedPrice']->current_value : null
-                        ) !!}
-                    </td>
-                    <td>
-                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form3][prev][refinedPrice]',[
-                            'class' => 'autonumber_mt',
-                            'autocomplete' => 'off',
-                            'container_class' => 'data_form3_prev_refinedPrice',
-                        ],
-                        (isset($details_arr['form3']['refinedPrice'])) ? $details_arr['form3']['refinedPrice']->prev_value : null
-                        ) !!}
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!--@php
-    $a = 'seriesNos';
-@endphp
-<div class="box box-sm box-default box-solid">
-    <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-        <p class="no-margin">
-            6. Molasses Storage Certificates (Series & No. of Pcs.):
-            <small id="filter-notifier" class="label bg-blue blink"></small>
-            <button class="btn btn-xs pull-right btn-success add_btn" style="background-color: #e3e3e3" data="form3_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-        </p>
-    </div>
-    <div class="box-body" style="">
-        <table class="table table-bordered table-condensed sms_form3_table table_dynamic" id="form3_{{$a}}">
-            <thead>
-            <tr>
-                <th>Sugar Class</th>
-                <th>Series From</th>
-                <th>Series To</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if(isset($details_arr['form3'][$a]) && count($details_arr['form3'][$a]) > 0)
-                @foreach($details_arr['form3'][$a] as $$a)
-                    @include('sms.dynamic_rows.form3_'.$a,['item' => $$a])
-                @endforeach
-            @else
-                @include('sms.dynamic_rows.form3_'.$a)
-            @endif
-            </tbody>
-        </table>
-    </div>
-</div>
--->
-
-<div class="box box-sm box-default box-solid">
-    <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-        <p class="no-margin">
-            7. Molasses Distribution Factor:
-            <small id="filter-notifier" class="label bg-blue blink"></small>
-        </p>
-    </div>
-    <div class="box-body" style="">
-        <div class="row">
-            <div class="col-md-6">
-
-                <div class="row">
-                    {!! \App\Swep\ViewHelpers\__form2::textbox('data[form3][current][dist_factor]',[
-                        'label' => 'Sugar Distribution Factor:',
-                        'cols' => 12,
-                        'container_class' => 'data_form3_current_dist_factor',
-                    ],
-                    (isset($details_arr['form3']['dist_factor'])) ? $details_arr['form3']['dist_factor']->current_value : null
-                    ) !!}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="box box-sm box-default box-solid">
+        <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+            <p class="no-margin">
+                Remarks
+                <small id="filter-notifier" class="label bg-blue blink"></small>
+            </p>
+        </div>
+        <div class="box-body" style="">
+            <div class="row">
+                {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[
+                    'label' => 'Remarks:',
+                    'cols' => 12,
+                ]
+                ) !!}
+            </div>
+        </div>
+    </div>
+
+</form>

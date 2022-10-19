@@ -13,6 +13,7 @@ use App\Models\HRPayPlanitilla;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\Form1\Form1Details;
 use App\Models\SMS\Form5\Deliveries;
+use App\Models\SMS\SugarMills;
 use App\Models\SMS\SugarOrders;
 use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
@@ -120,6 +121,39 @@ class AjaxController extends Controller
 
             return $retArray;
 
+        }
+
+        if($for == 'productionByGeogLoc') {
+            $prods = \DB::table('sugar_mills as sm')
+                ->selectRaw('sm.slug as mill_code, geog_location, sum(manufactured) as RAW,
+                            sum(ifnull(prodDomestic,0)) + sum(ifnull(prodImported,0)) + sum(ifnull(prodReturn,0)) as REFINED,
+                            sum(ifnull(manufacturedRaw,0)) + sum(ifnull(rao,0)) + sum(ifnull(manufacturedRefined,0)) as MOLASSES')
+                ->leftJoin('weekly_reports as wr', 'wr.mill_code', '=', 'sm.slug')
+                ->leftJoin('form1_details as form1', 'form1.weekly_report_slug', '=', 'wr.slug')
+                ->leftJoin('form2_details as form2', 'form2.weekly_report_slug', '=', 'wr.slug')
+                ->leftJoin('form3_details as form3', 'form3.weekly_report_slug', '=', 'wr.slug')
+                ->groupBy('sm.geog_location')
+                ->get();
+            $prodsArr = [];
+            $finalArr = ['RAW' => [], 'REFINED' => [], 'MOLASSES' => []];
+            if (!empty($prods)) {
+                foreach ($prods as $prod) {
+                    $prodsArr[$prod->geog_location]['RAW'] = $prod->RAW;
+                    $prodsArr[$prod->geog_location]['REFINED'] = $prod->REFINED;
+                    $prodsArr[$prod->geog_location]['MOLASSES'] = $prod->MOLASSES;
+                }
+                ksort($prodsArr);
+                foreach ( $prodsArr as $loc => $prodArr){
+                    $finalArr['RAW'][$loc] = $prodArr['RAW'];
+                    $finalArr['REFINED'][$loc] = $prodArr['REFINED'];
+                    $finalArr['MOLASSES'][$loc] = $prodArr['MOLASSES'];
+                }
+            }
+            $finalArr['RAW'] = array_values($finalArr['RAW']);
+            $finalArr['REFINED'] = array_values($finalArr['RAW']);
+            $finalArr['MOLASSES'] = array_values($finalArr['RAW']);
+            return $finalArr;
+            dd($finalArr);
         }
 
         if($for == 'chartAdminPriceFluctuation'){

@@ -201,3 +201,7 @@ table.print-table th,table.print-table td{
     padding-top: 0px !important;
     font-style: italic;
 }
+
+.tr-strong>td{
+   font-weight: bold;
+}

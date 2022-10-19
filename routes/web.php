@@ -77,13 +77,21 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::resource('sms_form1','SMS\WeeklyReport\Form1Controller');
     Route::resource('sms_form2','SMS\WeeklyReport\Form2Controller');
+    Route::resource('sms_form3','SMS\WeeklyReport\Form3Controller');
+    Route::resource('sms_form6a','SMS\WeeklyReport\Form6aController');
     /** WEEKLY REPORT **/
 
     Route::get('/weekly_report/{slug}/print','SMS\WeeklyReportController@print')->name('weekly_report.print');
 
     Route::resource('signatories','SMS\SignatoryController');
+
+    Route::post('weekly_report/{slug}/saveAsNew','SMS\WeeklyReportController@saveAsNew')->name('weekly_report.saveAsNew');
+    Route::post('weekly_report/{slug}/submit','SMS\WeeklyReportController@submit')->name('weekly_report.submit');
     Route::resource('weekly_report','SMS\WeeklyReportController');
     Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
+
+    Route::resource('form3_withdrawals','SMS\Form3\WithdrawalsController');
+
     Route::resource('form5_issuanceOfSro','SMS\Form5\IssuanceOfSroController');
     Route::resource('form5_deliveries','SMS\Form5\DeliveriesController');
     Route::resource('form5_servedSros','SMS\Form5\ServedSrosController');

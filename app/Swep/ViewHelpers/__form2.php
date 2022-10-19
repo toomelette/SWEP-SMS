@@ -353,7 +353,7 @@ class __form2
 
         $elem = '<div class="col-md-'.$n->cols.'">
                 <label>'.$n->label.'</label>
-                <table width="100%"><tr>';
+                <table width="100%" class="radio-options"><tr>';
         if(isset($options['options']) && count($options['options']) > 0){
             foreach ($options['options'] as $key => $radio){
                 $ck = $key == $value ? 'checked' : '';

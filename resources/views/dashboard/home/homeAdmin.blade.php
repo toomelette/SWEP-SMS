@@ -325,7 +325,7 @@
                     labels: ['LM','VIS'],
                     datasets: [{
                         label: 'My First Dataset',
-                        data: [180,44],
+                        data: [],
                         backgroundColor: [
                             'rgb(106, 124, 177)',
                             'rgb(54, 162, 235)',
@@ -343,7 +343,7 @@
                     labels: ['LM','VIS'],
                     datasets: [{
                         label: 'My First Dataset',
-                        data: [100,200],
+                        data: [],
                         backgroundColor: [
                             'rgb(106, 124, 177)',
                             'rgb(54, 162, 235)',
@@ -361,7 +361,7 @@
                     labels: ['LM','VIS'],
                     datasets: [{
                         label: 'My First Dataset',
-                        data: [322,800],
+                        data: [],
                         backgroundColor: [
                             'rgb(106, 124, 177)',
                             'rgb(54, 162, 235)',
@@ -373,8 +373,8 @@
             }
         );
 
-
-
+        
+        
         weeklyChart('{{route("dashboard.ajax.get","chartAdmin")}}');
 
         // function to update our chart
@@ -398,6 +398,18 @@
 
 
             });
+        }
+        productionByLocation('{{route("dashboard.ajax.get","productionByGeogLoc")}}');
+        function productionByLocation(url, data){
+            let d = data || {};
+            $.getJSON(url,d).done(function (response) {
+                rawProductionLmVis.data.datasets[0].data = response.RAW;
+                refinedProductionLmVis.data.datasets[0].data = response.REFINED;
+                molProductionLmVis.data.datasets[0].data = response.MOLASSES;
+                rawProductionLmVis.update();
+                refinedProductionLmVis.update();
+                molProductionLmVis.update();
+            })
         }
 
         $(".formFilter").change(function () {

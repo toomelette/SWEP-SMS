@@ -206,8 +206,8 @@ class Form1Controller extends Controller
             if(!empty($request->issuances)){
                 foreach ($request->issuances['sugarClasses'] as $key => $value){
                     if(!empty($value)){
-                        $toUpdate[$value] = $request->issuances['currentValues'][$key];
-                        $toUpdate['prev_'.$value] = $request->issuances['prevValues'][$key];
+                        $toUpdate[$value] = !empty($request->issuances['currentValues'][$key]) ? Helper::sanitizeAutonum($request->issuances['currentValues'][$key]) : null;
+                        $toUpdate['prev_'.$value] = !empty($request->issuances['prevValues'][$key]) ? Helper::sanitizeAutonum($request->issuances['prevValues'][$key]) : null;
                     }
                 }
             }

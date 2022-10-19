@@ -86,7 +86,23 @@
 
 
 @section('modals')
-
+<div class="modal fade" id="previewReportModal" tabindex="-1" role="dialog" aria-labelledby="previewReportModal_label">
+  <div class="modal-dialog" style="width: 75%" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -117,6 +133,12 @@
                     "orderable" : false,
                     "searchable": false,
                     "class" : 'action4'
+                },
+                {
+                    "targets" : 4,
+                    "orderable" : false,
+                    "searchable": false,
+                    "class" : 'w-8p'
                 },
             ],
             "order":[[0,'desc']],
@@ -173,5 +195,137 @@
                 sms_tbl.search(this.value).draw();
             }
         });
+
+        $("body").on("click",".preview_report_btn",function () {
+            let btn = $(this);
+            load_modal3(btn);
+            let uri  = '{{route("dashboard.weekly_report.show","slug")}}';
+            uri = uri.replace('slug',btn.attr('data'));
+            $.ajax({
+                url : uri,
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                }
+            })
+        })
+
+        $("body").on("click",'.saveAsNewBtn',function () {
+            let btn = $(this);
+            let reportNo = btn.attr('reportNo');
+            let cropYear = btn.attr('cropYear');
+            Swal.fire({
+                title: 'Save as new',
+                html: '<div class="text-left">The following actions will be executed: <br> ' +
+                    '1. Report No. '+reportNo+' | '+cropYear+' will be canceled.<br> ' +
+                    '2. A draft that is a clone of Report No. '+reportNo+' | '+ cropYear +' will be created.' +
+                    '<br><br>' +
+                    'Please resubmit Report No. '+reportNo+' | '+ cropYear +' after reviewing the changes you have made. ' +
+                    '</div>',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                },
+                inputValue: 'bm_uid',
+                showCancelButton: true,
+                confirmButtonText: 'Continue',
+                showLoaderOnConfirm: true,
+                preConfirm: (text) => {
+                    return $.ajax({
+                        url : btn.attr('uri'),
+                        data : {'biometric_user_id':'text' , 'employee' : 'employee'},
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        success: function (res) {
+                            active = res.slug;
+                            sms_tbl.draw(false);
+                            // notify('Weekly ','success');
+                        },
+                        error: function (res) {
+                            if(res.status == 422){
+                                var message = res.responseJSON.errors.biometric_user_id;
+                            }else{
+                                var message = res.responseJSON.message;
+                            }
+                            Swal.showValidationMessage(
+                                'Request failed: ' + message
+                            );
+                        }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        })
+
+        $("body").on("click",'.submitBtn',function () {
+            let btn = $(this);
+            let reportNo = btn.attr('reportNo');
+            let cropYear = btn.attr('cropYear');
+            let weekEnding = btn.attr('weekEnding');
+            Swal.fire({
+                title: 'Submit Weekly Report',
+                html: '<div class="text-left"><b>Details</b>: <br> ' +
+                    'Report No. : '+reportNo+'<br> ' +
+                    'Week Ending : '+ weekEnding +'<br> '+
+                    'Crop Year : '+ cropYear +'<br> '+
+                    '</div>',
+                inputAttributes: {
+                    autocapitalize: 'off',
+                },
+                inputValue: 'bm_uid',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (text) => {
+                    return $.ajax({
+                        url : btn.attr('uri'),
+                        data : {'biometric_user_id':'text' , 'employee' : 'employee'},
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        success: function (res) {
+                            active = res.slug;
+                            sms_tbl.draw(false);
+                            notify('Weekly report was submitted successfully.','success');
+                        },
+                        error: function (res) {
+                            if(res.status == 422){
+                                var message = res.responseJSON.errors.biometric_user_id;
+                            }else{
+                                var message = res.responseJSON.message;
+                            }
+                            Swal.showValidationMessage(
+                                'Request failed: ' + message
+                            );
+                        }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                        .catch(error => {
+
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        })
     </script>
 @endsection

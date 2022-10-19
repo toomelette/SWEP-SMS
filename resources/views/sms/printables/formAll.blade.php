@@ -2,6 +2,7 @@
 
 @section('wrapper')
 
+
     @include('sms.printables.forms.form1')
     <hr class="page-break no-print">
 
@@ -9,8 +10,14 @@
 
     <hr class="page-break no-print">
 
+    @include('sms.printables.forms.form3')
+    <hr class="page-break no-print">
+
     @include('sms.printables.forms.form5')
     <hr class="page-break no-print">
 
     @include('sms.printables.forms.form5a')
+    <hr class="page-break no-print">
+
+    @include('sms.printables.forms.form6a')
 @endsection

@@ -91,10 +91,60 @@ class WeeklyReports extends Model
         return $toDate ?? null;
     }
 
+
+
     public function form2(){
         return $this->hasOne(Form2\Form2Details::class,'weekly_report_slug','slug');
     }
 
+    public function form2ToDateAsOf($report_no){
+        $fieldsToSum = [
+            'weekly_report_slug', 'carryOver', 'coveredBySro', 'notCoveredBySro', 'otherMills', 'imported', 'melted', 'rawWithdrawals', 'prodDomestic', 'prodImported', 'prodReturn', 'prev_carryOver', 'prev_coveredBySro', 'prev_notCoveredBySro', 'prev_otherMills', 'prev_imported', 'prev_melted', 'prev_rawWithdrawals', 'prev_prodDomestic', 'prev_prodImported', 'prev_prodReturn',
+        ];
+        foreach ($fieldsToSum as $key => $field){
+            $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
+        }
+        $fields = implode(',',$fieldsToSum);
+
+        $toDate = WeeklyReports::query()
+            ->selectRaw($fields)
+            ->leftJoin('form2_details','form2_details.weekly_report_slug','=','weekly_reports.slug')
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','<=',$report_no)
+            ->first();
+
+        return $toDate ?? null;
+    }
+
+    public function form3(){
+        return $this->hasOne(Form3\Form3Details::class,'weekly_report_slug','slug');
+    }
+
+
+    public function form3ToDateAsOf($report_no){
+        $fieldsToSum = [
+            'manufacturedRaw', 'rao', 'manufacturedRefined', 'sharePlanter', 'shareMiller', 'refineryMolasses', 'prev_manufacturedRaw', 'prev_rao', 'prev_manufacturedRefined', 'prev_sharePlanter', 'prev_shareMiller', 'prev_refineryMolasses',
+        ];
+        foreach ($fieldsToSum as $key => $field){
+            $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
+        }
+        $fields = implode(',',$fieldsToSum);
+
+        $toDate = WeeklyReports::query()
+            ->selectRaw($fields)
+            ->leftJoin('form3_details','form3_details.weekly_report_slug','=','weekly_reports.slug')
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','<=',$report_no)
+            ->first();
+
+        return $toDate ?? null;
+    }
+
+    public function form3Withdrawals(){
+        return $this->hasMany(Form3\Withdrawals::class,'weekly_report_slug','slug');
+    }
 
 
     public function form5Withdrawals(){

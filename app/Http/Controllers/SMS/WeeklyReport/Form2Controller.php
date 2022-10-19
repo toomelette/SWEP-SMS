@@ -23,7 +23,7 @@ class Form2Controller extends Controller
             Form2Details::updateOrCreate(
                 ['weekly_report_slug' => $request->wr],
                 [
-                    'carryOver'=> Helper::sanitizeAutonum($request->coveredBySro),
+                    'carryOver'=> Helper::sanitizeAutonum($request->carryOver),
                     'coveredBySro'=> Helper::sanitizeAutonum($request->coveredBySro),
                     'notCoveredBySro'=> Helper::sanitizeAutonum($request->notCoveredBySro),
                     'otherMills'=> Helper::sanitizeAutonum($request->otherMills),
@@ -34,7 +34,7 @@ class Form2Controller extends Controller
                     'prodImported'=> Helper::sanitizeAutonum($request->prodImported),
                     'prodReturn'=> Helper::sanitizeAutonum($request->prodReturn),
 
-                    'prev_carryOver'=> Helper::sanitizeAutonum($request->coveredBySro),
+                    'prev_carryOver'=> Helper::sanitizeAutonum($request->prev_carryOver),
                     'prev_coveredBySro'=> Helper::sanitizeAutonum($request->prev_coveredBySro),
                     'prev_notCoveredBySro'=> Helper::sanitizeAutonum($request->prev_notCoveredBySro),
                     'prev_otherMills'=> Helper::sanitizeAutonum($request->prev_otherMills),

@@ -29,7 +29,7 @@
 <link type="text/css" rel="stylesheet" href="{{ asset('template/plugins/datatables/responsive/responsive.dataTables.min.css') }}">
 
 
-{{-- Charts --}}	
+{{-- Charts --}}
 <link rel="stylesheet" href="{{asset('template/bower_components/morris.js/morris.css')}}">
 
 {{-- DATERANGE PICKER --}}
