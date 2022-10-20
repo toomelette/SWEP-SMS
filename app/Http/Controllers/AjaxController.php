@@ -150,10 +150,10 @@ class AjaxController extends Controller
                 }
             }
             $finalArr['RAW'] = array_values($finalArr['RAW']);
-            $finalArr['REFINED'] = array_values($finalArr['RAW']);
-            $finalArr['MOLASSES'] = array_values($finalArr['RAW']);
+            $finalArr['REFINED'] = array_values($finalArr['REFINED']);
+            $finalArr['MOLASSES'] = array_values($finalArr['MOLASSES']);
             return $finalArr;
-            dd($finalArr);
+
         }
 
         if($for == 'chartAdminPriceFluctuation'){

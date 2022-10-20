@@ -59,6 +59,9 @@
                             $lastWeekProd = \App\Models\SMS\Form1\Form1Details::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
                                 $query->where('week_ending','=',\Illuminate\Support\Carbon::parse($closestSundayAhead)->subDays(7));
                             })->sum('manufactured');
+                            if($lastWeekProd == 0){
+                                $lastWeekProd = 1;
+                            }
                         @endphp
                         <div class="info-box">
                             <span class="info-box-icon bg-production"><i class="ion ion-ios-cart-outline"></i></span>
@@ -67,9 +70,9 @@
                                 <span class="info-box-number">{{number_format($thisWeekProd,3)}} MT</span>
                                 @php $play = $thisWeekProd-$lastWeekProd > 0 ? 100*($thisWeekProd-$lastWeekProd)/$lastWeekProd: 0; @endphp
                                 <span class="description-percentage {{$play > 0 ? 'text-green':'text-red'}}">
-                                                <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
-                                                {{number_format($play,2)}}% <small>from previous week</small>
-                                            </span>
+                                    <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
+                                    {{number_format($play,2)}}% <small>from previous week</small>
+                                </span>
                             </div>
 
                         </div>
@@ -83,6 +86,9 @@
                             $lastWeekWithdrawal = \App\Models\SMS\Form5\Deliveries::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
                                 $query->where('week_ending','=',\Illuminate\Support\Carbon::parse($closestSundayAhead)->subDays(7));
                             })->sum('qty');
+                            if($lastWeekWithdrawal == 0){
+                                $lastWeekWithdrawal = 1;
+                            }
                         @endphp
 
                         <div class="info-box">
@@ -186,6 +192,26 @@
                         <p class="text-center"><b>Molasses Production LM vs VIS</b></p>
                         <div>
                             <canvas id="molProductionLmVis" height="10" width="25"></canvas>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <p class="text-center"><b>RAW Withdrawals LM vs VIS</b></p>
+                        <div>
+                            <canvas id="rawWithdrawalsLmVis" height="10" width="25"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="text-center"><b>Refined Withdrawals LM vs VIS</b></p>
+                        <div>
+                            <canvas id="refinedWithdrawalsLmVis" height="10" width="25"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="text-center"><b>Molasses Withdrawals LM vs VIS</b></p>
+                        <div>
+                            <canvas id="molWithdrawalsLmVis" height="10" width="25"></canvas>
                         </div>
                     </div>
                 </div>
@@ -356,6 +382,61 @@
         );
 
         var molProductionLmVis = new Chart(document.getElementById('molProductionLmVis'),{
+                type: 'doughnut',
+                data: {
+                    labels: ['LM','VIS'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [],
+                        backgroundColor: [
+                            'rgb(106, 124, 177)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 20,
+                        cutout: 75
+                    }]
+                }
+            }
+        );
+
+        var rawWithdrawalsLmVis = new Chart(document.getElementById('rawWithdrawalsLmVis'),{
+                type: 'doughnut',
+                data: {
+                    labels: ['LM','VIS'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [],
+                        backgroundColor: [
+                            'rgb(106, 124, 177)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 20,
+                        cutout: 75
+                    }]
+                }
+            }
+        );
+
+
+        var refinedWithdrawalsLmVis = new Chart(document.getElementById('refinedWithdrawalsLmVis'),{
+                type: 'doughnut',
+                data: {
+                    labels: ['LM','VIS'],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [],
+                        backgroundColor: [
+                            'rgb(106, 124, 177)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 20,
+                        cutout: 75
+                    }]
+                }
+            }
+        );
+
+        var molWithdrawalsLmVis = new Chart(document.getElementById('molWithdrawalsLmVis'),{
                 type: 'doughnut',
                 data: {
                     labels: ['LM','VIS'],
