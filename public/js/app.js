@@ -40,6 +40,13 @@ var autonum_settings_lkg = {
     decimalPlaces : 2,
 };
 
+var autonum_settings_distFactor = {
+    currencySymbol : '',
+    decimalCharacter : '.',
+    digitGroupSeparator : ',',
+    decimalPlaces : 10,
+};
+
 
 
 
@@ -52,6 +59,11 @@ function autonum_init(){
 function autonum_init(){
     $(".autonum_lkg").each(function(){
         new AutoNumeric(this, autonum_settings_lkg);
+    });
+}
+function autonum_init(){
+    $(".autonum_distFactor").each(function(){
+        new AutoNumeric(this, autonum_settings_distFactor);
     });
 }
 

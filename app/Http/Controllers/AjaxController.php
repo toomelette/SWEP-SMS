@@ -18,6 +18,7 @@ use App\Models\SMS\SugarOrders;
 use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
 use App\Models\SSL;
+use App\Models\Warehouses;
 use App\Swep\Helpers\Helper;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
@@ -163,6 +164,43 @@ class AjaxController extends Controller
 
         if($for == 'form1Issuance'){
             return view('sms.dynamic_rows.form1Issuances');
+        }
+
+        if($for == 'form4InsertWarehouse'){
+
+            $request = \request();
+            return view('sms.dynamic_rows.form4InsertWarehouse')->with([
+                'transactionType' => $request->get('transactionType'),
+                'sugarType' => $request->get('sugarType'),
+            ]);
+        }
+
+        if($for == 'myWarehouses'){
+            $request = \request();
+//            return $request->get('for');
+            $whs = Warehouses::query()
+                ->where(function($query) use($request){
+                    $query->where('alias','like','%'.$request->get('q').'%')
+                        ->orWhere('name','like','%'.$request->get('q').'%');
+                })
+//                ->where('millCode','=',\Auth::user()->mill_code)
+                ->where('for','=',$request->get('for'))
+                ->limit(10)
+                ->get();
+            $results = [];
+//            return $whs;
+            if(!empty($whs)){
+                foreach ($whs as $wh){
+
+                    array_push($results,[
+                        'id' => $wh->alias,
+                        'text' => $wh->alias.' | '.$wh->name,
+                    ]);
+                }
+            }
+            return [
+                'results' => $results,
+            ];
         }
 
         return view('sms.dynamic_rows.'.$for);

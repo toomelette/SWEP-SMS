@@ -329,7 +329,7 @@
         <tr>
             <td><span class="indent"></span>A:</td>
             <td>
-                {{ \App\Swep\Helpers\Helper::toNumber($wr->form1->price_A,2) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($wr->form1->price_A ?? 0,2) }}
             </td>
             <td>C1:</td>
             <td>

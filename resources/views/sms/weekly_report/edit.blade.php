@@ -104,9 +104,8 @@
                                         </div>
 
                                         <div class="tab-pane " id="tab_3a">
-                                            <form id="form11">@csrf
-                                                @include('sms.weekly_report.sms_forms.form_3a')
-                                            </form>
+                                            @include('sms.weekly_report.sms_forms.form_3a')
+
                                         </div>
 
                                         <div class="tab-pane " id="tab_4">
@@ -369,23 +368,21 @@
 </div>
 
     {!! \App\Swep\ViewHelpers\__html::blank_modal('form5_editModal','') !!}
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('form4_listOfWarehousesModal','') !!}
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('editWarehouseModal','sm') !!}
 @endsection
 
 @section('scripts')
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
     </script>
-
-    @include('sms.weekly_report.scripts.form3_withdrawals_script')
-
-    @include('sms.weekly_report.scripts.form5_issuance_script')
-    @include('sms.weekly_report.scripts.form5_delivery_script')
-    @include('sms.weekly_report.scripts.form5_servedSro_script')
-
-    @include('sms.weekly_report.scripts.form5a_issuance_script')
-    @include('sms.weekly_report.scripts.form5a_delivery_script')
-    @include('sms.weekly_report.scripts.form5a_servedSro_script')
-
+    @include('sms.weekly_report.scripts.7form5a_servedSro_script')
+    @include('sms.weekly_report.scripts.6form5a_issuance_script')
+    @include('sms.weekly_report.scripts.5form5a_delivery_script')
+    @include('sms.weekly_report.scripts.4form5_servedSro_script')
+    @include('sms.weekly_report.scripts.3form5_issuance_script')
+    @include('sms.weekly_report.scripts.2form5_delivery_script')
+    @include('sms.weekly_report.scripts.1form3_withdrawals_script')
 
     @include('sms.weekly_report.scripts.form6a.raw_sugar_receipts_script')
     @include('sms.weekly_report.scripts.form6a.quedan_registry_script')
@@ -524,6 +521,7 @@
         })
 
         function updateForm1(){
+            alert();
             let dataArray = $("#form1").serializeArray();
             $("#form1PreviewTable").css('background-color','#f2fff2');
             $(dataArray).each(function (i,item) {
@@ -682,6 +680,10 @@
                             '<td class="text-right">' + $.number(item.prev,3) + '</td>'+
                             '</tr>')
                     });
+                    $.each(res.fieldsToFill, function (i,item) {
+                        console.log(i);
+                        $("#form1 input[name='"+i+"']").val(item);
+                    });
                 },
                 error: function (res) {
                     $("#form1PreviewTable tr.computation").each(function () {
@@ -795,6 +797,106 @@
         }
 
 
+        $(".form4_listOfWarehousesBtn").click(function () {
+            let btn = $(this);
+            load_modal3(btn);
+            $.ajax({
+                url : '{{route("dashboard.warehouses.index")}}?for='+btn.attr('for'),
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    populate_modal2(btn,res);
+                },
+                error: function (res) {
+                    populate_modal2_error(res);
+                }
+            })
+        })
+
+        $(".insertWarehouseBtn").click(function () {
+            let btn = $(this);
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","form4InsertWarehouse")}}?transactionType='+btn.attr('transactionType')+'&sugarType='+btn.attr('sugarType'),
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("."+btn.attr('before')).before(res);
+                },
+                error: function (res) {
+
+                }
+            })
+        })
+
+        $("#form4").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $.ajax({
+                url : '{{route("dashboard.sms_form4.store")}}?wr={{$wr->slug}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    
+                },
+                error: function (res) {
+             
+                }
+            })
+        })
+
+        $("#form3a").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $.ajax({
+                url : '{{route("dashboard.sms_form3a.store")}}?wr={{$wr->slug}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+
+                },
+                error: function (res) {
+
+                }
+            })
+        })
+
+        $("#form4a").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $.ajax({
+                url : '{{route("dashboard.sms_form4a.store")}}?wr={{$wr->slug}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+
+                },
+                error: function (res) {
+
+                }
+            })
+        })
+
+        $(".select2Warehouses").each(function () {
+            $(this).select2({
+                ajax: {
+                    url: '{{route('dashboard.ajax.get','myWarehouses')}}?for='+$(this).attr('for'),
+                    dataType: 'json'
+                }
+            })
+        });
     </script>
 
 @endsection

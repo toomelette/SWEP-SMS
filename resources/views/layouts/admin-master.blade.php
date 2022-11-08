@@ -17,7 +17,7 @@
     <!-- TYPE BELOW IS PROBABLY: 'website' or 'article' or look on https://ogp.me/#types -->
     <meta property="og:type" content='website'/>
     @include('layouts.css-plugins')
-
+    <script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>
     @yield('extras')
 
   </head>

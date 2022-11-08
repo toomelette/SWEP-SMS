@@ -779,3 +779,9 @@ ol.example li.placeholder:before {
     padding-top: 8px;
     padding-bottom: 5px;
 }
+
+.small-select2 .select2-selection{
+    height: 30px;
+    font-size: 12px;
+    padding-top: 4px;
+}

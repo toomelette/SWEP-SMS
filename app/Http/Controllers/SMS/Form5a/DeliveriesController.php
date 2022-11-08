@@ -75,6 +75,13 @@ class DeliveriesController extends Controller
         $d->qty_total = $request->qty_standard + $request->qty_premium;
         $d->remarks = $request->remarks;
         $d->consumption = $request->consumption;
+        if($request->chargeTo == 'CURRENT'){
+            $d->qty_current = $d->qty_total;
+            $d->qty_prev = null;
+        }else{
+            $d->qty_current = null;
+            $d->qty_prev = $d->qty_total;
+        }
         if($d->save()){
             return $d->only('slug');
         }

@@ -454,8 +454,8 @@
             }
         );
 
-        
-        
+
+
         weeklyChart('{{route("dashboard.ajax.get","chartAdmin")}}');
 
         // function to update our chart

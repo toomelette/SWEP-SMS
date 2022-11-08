@@ -54,7 +54,10 @@ class IssuanceOfSroController extends Controller
         }
 
         if($i->save()){
-            return $i->only('slug');
+            return [
+                'slug' => $i->slug,
+                'totalForm5Issuance' => number_format($i->weeklyReport->form5IssuancesOfSro()->sum('qty'),3),
+            ];
         }
         abort(503,'Error saving data.');
     }
@@ -79,9 +82,11 @@ class IssuanceOfSroController extends Controller
             $i->refining = 1;
         }
 
-
         if($i->save()){
-            return $i->only('slug');
+            return [
+                'slug' => $i->slug,
+                'totalForm5Issuance' => number_format($i->weeklyReport->form5IssuancesOfSro()->sum('qty'),3),
+            ];
         }
         abort(503,'Error saving data.');
     }

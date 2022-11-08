@@ -7,6 +7,7 @@ namespace App\SMS\Services;
 use App\Models\SMS\Form3\Withdrawals;
 use App\Models\SMS\Form5\Deliveries;
 use App\Models\SMS\Form5a\IssuancesOfSro;
+use App\Models\SMS\Subsidiaries;
 use App\Models\SMS\WeeklyReports;
 use App\Swep\Helpers\Arrays;
 use App\Swep\Helpers\Helper;
@@ -153,6 +154,12 @@ class WeeklyReportService
             if(empty($value['current']) && empty($value['prev'])){
                 unset($formArray['balances'][$key]);
             }
+        }
+
+        if($weekly_report->form1->gtcm != 0){
+            $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc * 20 /  $weekly_report->form1->gtcm ,2),2);
+        }else{
+            $formArray['fieldsToFill']['lkgtcGross'] = 0;
         }
 
 
@@ -397,4 +404,14 @@ class WeeklyReportService
         print('<pre>'.print_r($formArray,true).'</pre>');
     }
 
+    public function subsidiaries($weekly_report_slug){
+        $s = Subsidiaries::query()->where('weekly_report_slug','=',$weekly_report_slug)->get();
+        $arr = [];
+        if(!empty($s)){
+            foreach ($s as $item){
+                $arr[$item->sugarType][$item->transactionType][$item->slug] = $item;
+            }
+        }
+        return $arr;
+    }
 }

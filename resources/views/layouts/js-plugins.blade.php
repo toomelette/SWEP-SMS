@@ -1,7 +1,7 @@
 
 
 
-<script type="text/javascript" src="{{ asset('template/bower_components/jquery/dist/jquery.min.js') }}"></script>  
+
 
 <script type="text/javascript" src="{{ asset('template/plugins/jquery-ui/jquery-ui.js') }}"></script>
 

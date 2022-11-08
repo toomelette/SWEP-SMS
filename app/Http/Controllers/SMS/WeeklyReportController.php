@@ -7,11 +7,13 @@ namespace App\Http\Controllers\SMS;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SMS\WeeklyReport\RawSugarController;
 use App\Http\Requests\SMS\WeeklyReportFormRequest;
+use App\Models\SMS\Form1\Form1Details;
+use App\Models\SMS\Form2\Form2Details;
+use App\Models\SMS\Form3\Form3Details;
 use App\Models\SMS\InputFields;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\Form6a\QuedanRegistry;
 use App\Models\SMS\Form6a\RawSugarReceipts;
-use App\Models\SMS\ReportTypes;
 use App\Models\SMS\WeeklyReports;
 use App\SMS\Services\SignatoryService;
 use App\SMS\Services\WeeklyReportService;
@@ -59,6 +61,16 @@ class WeeklyReportController extends Controller
                 ->editColumn('crop_year',function($data){
                     return $data->crop_year;
                 })
+                ->addColumn('details',function($data){
+                    $return = '<small class="text-muted">';
+                    if(!empty($data->submitted_at)){
+                        $return .= '<span class="text-success">Submitted at: '.Carbon::parse($data->submitted_at)->format('m/d/Y h:i A'). '</span> <span class="indent"></span>';
+                    }
+                    if(!empty($data->canceled_at)){
+                        $return .= '<span class="text-danger">Canceled at: '.Carbon::parse($data->canceled_at)->format('m/d/Y h:i A').'</span>';
+                    }
+                    return $return.'</small>';
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
                 ->toJson();
@@ -82,6 +94,9 @@ class WeeklyReportController extends Controller
         $weekly_report->week_ending = $request->week_ending;
         $weekly_report->report_no = $request->report_no;
         if($weekly_report->save()){
+            Form1Details::insert(['weekly_report_slug' => $weekly_report->slug]);
+            Form2Details::insert(['weekly_report_slug' => $weekly_report->slug]);
+            Form3Details::insert(['weekly_report_slug' => $weekly_report->slug]);
             return $weekly_report->only('slug');
         }
         abort(503,'Error creating week.');
@@ -89,7 +104,6 @@ class WeeklyReportController extends Controller
 
     public function edit($slug, WeeklyReportService $weeklyReportService){
 
-//        return $weeklyReportService->form3Computation($slug);
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         if(!empty($weekly_report->details)){
@@ -108,12 +122,14 @@ class WeeklyReportController extends Controller
             }
         }
 
+//        return $weeklyReportService->subsidiaries($slug);
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
             'formArray' => $weeklyReportService->computation($slug),
             'form2Array' => $weeklyReportService->form2Computation($slug),
             'form3Array' => $weeklyReportService->form3Computation($slug),
+            'subsidiaries' => $weeklyReportService->subsidiaries($slug),
         ]);
     }
 

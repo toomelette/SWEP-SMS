@@ -28,6 +28,7 @@
                 },
                 success: function (res) {
                     succeed(form,true,true);
+                    $('dt[for="form5TotalIssuances"]').html(res.totalForm5Issuance);
                     active_form5_issuancesOfSro = res.slug;
                     issuancesOfSro_tbl.draw(false);
                 },
@@ -36,6 +37,7 @@
                 }
             })
         })
+
     </script>
 @endsection
 

@@ -216,7 +216,7 @@ class __form2
 
 
         return '<div class="form-group '.$c_class.' col-md-'.$n->cols .' '.$name.'">
-                <select name="'. $name .$ext.'" '. $id .' class="form-control '.$n->class.'" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
+                <select for="'.$n->for.'" name="'. $name .$ext.'" '. $id .' class="form-control '.$n->class.'" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
                     <option value="">Select</option>
                     '.$opt_html.'
                   </select>
@@ -361,6 +361,31 @@ class __form2
                         <td>
                             <label>
                                 <input class="iCheck" value="'.$key.'" type="radio" name="'.$name.'" '.$ck.'>
+                                '.$radio.'
+                            </label>
+                        </td>
+                    ';
+            }
+        }
+        $elem = $elem.'</table>
+            </tr></div>';
+        return $elem;
+    }
+
+    public static function iCheckH($name,$options,$value = null){
+        $n = new __form2;
+        $n->set($options);
+
+        $elem = '<div class="col-md-'.$n->cols.'">
+                <label>'.$n->label.'</label>
+                <table width="100%" class="radio-options"><tr>';
+        if(isset($options['options']) && count($options['options']) > 0){
+            foreach ($options['options'] as $key => $radio){
+                $ck = $key == $value ? 'checked' : '';
+                $elem = $elem.'
+                        <td>
+                            <label>
+                                <input class="iCheck" value="'.$key.'" type="checkbox" name="'.$name.'" '.$ck.'>
                                 '.$radio.'
                             </label>
                         </td>

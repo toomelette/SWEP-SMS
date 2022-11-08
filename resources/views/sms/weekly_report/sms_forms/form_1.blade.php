@@ -137,7 +137,7 @@
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('tdc',[
                                         'label' => "9. Tons Due Cane",
                                         'cols' => 4,
-                                        'class' => 'text-right autonumber_mt',
+                                        'class' => 'form1-input text-right autonumber_mt',
                                         'container_class' => 'tdc',
                                     ],
                                     $wr->form1->tdc ?? null
@@ -145,7 +145,7 @@
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('gtcm',[
                                         'label' => "10. Gross Tons Cane Milled",
                                         'cols' => 4,
-                                        'class' => 'text-right autonumber_mt',
+                                        'class' => 'form1-input text-right autonumber_mt',
                                         'container_class' => 'gtcm',
                                     ],
                                     $wr->form1->gtcm ?? null
@@ -153,8 +153,9 @@
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('lkgtcGross',[
                                         'label' => "11. LKG/TC Gross",
                                         'cols' => 4,
-                                        'class' => 'text-right autonumber_mt',
+                                        'class' => 'form1-input text-right',
                                         'container_class' => 'lkgtc_gross',
+                                        'readonly' => 'readonly',
                                     ],
                                     $wr->form1->lkgtc_gross ?? null
                                     ) !!}
@@ -163,7 +164,7 @@
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('sharePlanter',[
                                         'label' => "12A. Planter's Share",
                                         'cols' => 4,
-                                        'class' => 'text-right autonumber_mt',
+                                        'class' => 'form1-input text-right autonumber_mt',
                                         'container_class' => 'sharePlanter',
                                     ],
                                     $wr->form1->share_planter ?? null
@@ -171,7 +172,7 @@
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('shareMiller',[
                                         'label' => "12B. Miller's Share:",
                                         'cols' => 4,
-                                        'class' => 'text-right autonumber_mt',
+                                        'class' => 'form1-input text-right autonumber_mt',
                                         'container_class' => 'shareMiller',
                                     ],
                                     $wr->form1->share_miller ?? null
@@ -308,7 +309,7 @@
                                 {!! \App\Swep\ViewHelpers\__form2::textbox('distFactor',[
                                 'label' => "14. Distribution Factor:",
                                 'cols' => 4,
-                                'class' => 'text-right autonumber_mt',
+                                'class' => 'text-right autonum_distFactor',
                                 'container_class' => 'distFactor',
                                 ],
                                 $wr->form1->dist_factor ?? null

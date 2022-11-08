@@ -60,4 +60,17 @@
     $delivery->consumption ?? 'DOMESTIC'
     ) !!}
 
+
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('chargeTo',[
+        'cols' => 6,
+        'label' => 'Crop:',
+        'options' => [
+            'CURRENT' => 'Current',
+            'PREVIOUS' => 'Previous',
+        ]
+    ],
+     (!empty($delivery->qty_prev)) ? 'PREVIOUS' : 'CURRENT'
+    ) !!}
+
+
 </div>

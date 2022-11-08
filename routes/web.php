@@ -77,7 +77,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::resource('sms_form1','SMS\WeeklyReport\Form1Controller');
     Route::resource('sms_form2','SMS\WeeklyReport\Form2Controller');
+
     Route::resource('sms_form3','SMS\WeeklyReport\Form3Controller');
+    Route::resource('sms_form3a','SMS\WeeklyReport\Form3aController');
+
+    Route::resource('sms_form4','SMS\WeeklyReport\Form4Controller');
+    Route::resource('sms_form4a','SMS\WeeklyReport\Form4aController');
+
     Route::resource('sms_form6a','SMS\WeeklyReport\Form6aController');
     /** WEEKLY REPORT **/
 
@@ -87,8 +93,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
     Route::post('weekly_report/{slug}/saveAsNew','SMS\WeeklyReportController@saveAsNew')->name('weekly_report.saveAsNew');
     Route::post('weekly_report/{slug}/submit','SMS\WeeklyReportController@submit')->name('weekly_report.submit');
+
+
+
     Route::resource('weekly_report','SMS\WeeklyReportController');
     Route::resource('weekly_report_raw','SMS\WeeklyReport\RawSugarController');
+
+    Route::get('/admin/weekly_report/{cy}/{reportNo}','SMS\AdminWeeklyReportController@printComparative')->name('admin.weekly_report.printComparative');
 
     Route::resource('form3_withdrawals','SMS\Form3\WithdrawalsController');
 
@@ -105,6 +116,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('form6a_quedanRegistry','SMS\Form6a\QuedanRegistryController');
     Route::get('/form_6a/{slug}/print','SMS\WeeklyReportController@printForm6a')->name('form_6a.print_form6a_form');
 
+    Route::resource('warehouses','SMS\WarehouseController');
 });
 
     //ADMIN LEVEL ROUTES
@@ -140,3 +152,5 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
 });
 
+
+    Route::get('/example','ExampleController@index');

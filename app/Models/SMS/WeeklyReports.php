@@ -4,6 +4,9 @@
 namespace App\Models\SMS;
 
 
+use App\Models\SMS\Form3a\Form3aDetails;
+use App\Models\SMS\Form4\Form4Details;
+use App\Models\SMS\Form4a\Form4aDetails;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -96,6 +99,23 @@ class WeeklyReports extends Model
     public function form2(){
         return $this->hasOne(Form2\Form2Details::class,'weekly_report_slug','slug');
     }
+
+    public function form3a(){
+        return $this->hasOne(Form3aDetails::class,'weekly_report_slug','slug');
+    }
+
+    public function form4(){
+        return $this->hasOne(Form4Details::class,'weekly_report_slug','slug');
+    }
+
+    public function form4a(){
+        return $this->hasOne(Form4aDetails::class,'weekly_report_slug','slug');
+    }
+
+    public function form4Subsidiaries(){
+        return $this->hasMany(Subsidiaries::class,'weekly_report_slug','slug');
+    }
+
 
     public function form2ToDateAsOf($report_no){
         $fieldsToSum = [

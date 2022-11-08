@@ -18,8 +18,10 @@ use App\Models\SMS\WeeklyReports;
 use App\Swep\Services\HomeService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 
@@ -41,6 +43,10 @@ class HomeController extends Controller{
 
 
     public function index(Request $request){
+        $response = new Response('Hello World');
+
+
+
         $cy = CropYears::query()->where('date_start','<=' ,Carbon::now()->format('Ymd'))
             ->where('date_end','>=',Carbon::now()->format('Ymd'))
             ->first();

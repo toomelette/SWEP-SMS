@@ -11,9 +11,17 @@
                 </div>
 
                 <div class="box-body" style="">
-                    <button type="button" data-target="#add_issuances_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Issuances</button>
-                    <br>
-                    <br>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <dl>
+                                <dd>TOTAL:</dd>
+                                <dt  for="form5TotalIssuances">{{number_format($wr->form5IssuancesOfSro()->sum('qty'),3)}}</dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" data-target="#add_issuances_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Issuances</button>
+                        </div>
+                    </div>
                     <table style="width: 100%;" class="table table-condensed table-bordered" id="form5_issuancesOfSro_table">
                         <thead>
                         <tr>

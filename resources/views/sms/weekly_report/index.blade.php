@@ -61,8 +61,9 @@
                             <th >Week Ending</th>
                             <th class="th-20">Crop Year</th>
                             <th >Report No.</th>
-                            <th >Distribution No.</th>
+                            <th >Dist. No.</th>
                             <th >Status</th>
+                            <th >Details</th>
                             <th class="action">Action</th>
                         </tr>
                         </thead>
@@ -122,14 +123,15 @@
                 { "data": "report_no" },
                 { "data": "dist_no" },
                 { "data": "status" },
-                { "data": "action"}
+                { "data": "details"},
+                { "data": "action"},
             ],
             "buttons": [
                 {!! __js::dt_buttons() !!}
             ],
             "columnDefs":[
                 {
-                    "targets" : 5,
+                    "targets" : 6,
                     "orderable" : false,
                     "searchable": false,
                     "class" : 'action4'
@@ -139,6 +141,14 @@
                     "orderable" : false,
                     "searchable": false,
                     "class" : 'w-8p'
+                },
+                {
+                    "targets" : [2,3],
+                    "class" : 'w-8p'
+                },
+                {
+                    "targets" : 5,
+                    "class" : 'w-25p'
                 },
             ],
             "order":[[0,'desc']],
@@ -214,7 +224,7 @@
                     populate_modal2_error(res);
                 }
             })
-        })
+        });
 
         $("body").on("click",'.saveAsNewBtn',function () {
             let btn = $(this);
@@ -270,7 +280,7 @@
                 },
                 allowOutsideClick: () => !Swal.isLoading()
             })
-        })
+        });
 
         $("body").on("click",'.submitBtn',function () {
             let btn = $(this);
@@ -319,10 +329,9 @@
                             throw new Error(response.statusText)
                         }
                         return response.json()
-                    })
-                        .catch(error => {
+                    }).catch(error => {
 
-                        })
+                    })
                 },
                 allowOutsideClick: () => !Swal.isLoading()
             })

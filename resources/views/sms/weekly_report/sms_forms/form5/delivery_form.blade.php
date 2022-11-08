@@ -39,28 +39,40 @@
 
     {!! \App\Swep\ViewHelpers\__form2::textbox('qty',[
         'label' => 'Qty. (MT)',
-        'cols' => 6,
+        'cols' => 5,
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}
 
-    {!! \App\Swep\ViewHelpers\__form2::select('charge_to',[
-        'label' => 'Crop:',
-        'cols' => 6,
-        'options' => [
-            'CURRENT' => 'CURRENT CROP',
-            'PREV' => 'PREVIOUS CROP'
-        ],
+    {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[
+        'label' => 'Remarks:',
+        'cols' => 7,
     ],
-    (!empty($delivery)) ? $delivery : 'CURRENT'
+    (!empty($delivery)) ? $delivery : null
     ) !!}
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <label>
-            <input type="checkbox" name="refining" {{(!empty($delivery) && $delivery->refining == 1) ? 'checked' : ''  }}>
-            For Refining
-        </label>
-    </div>
+
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
+        'cols' => 6,
+        'label' => 'Crop:',
+        'options' => [
+            'CURRENT' => 'Current Crop',
+            'PREVIOUS' => 'Previous Crop',
+        ]
+    ],
+     !empty($delivery->qty_prev) ? 'PREVIOUS' : 'CURRENT'
+    ) !!}
+
+    {!! \App\Swep\ViewHelpers\__form2::iCheckH('refining',[
+        'cols' => 6,
+        'label' => 'Crop:',
+        'options' => [
+            'forRefining' => 'For Refining',
+        ]
+    ],
+     ($delivery->refining ?? 0 == 1) ? 'forRefining' : ''
+    ) !!}
 </div>
+

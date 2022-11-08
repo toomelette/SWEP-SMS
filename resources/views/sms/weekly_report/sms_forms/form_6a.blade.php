@@ -35,7 +35,7 @@
                     <td>{{$data->trader}}</td>
                     <td>{{$data->source}}</td>
                     <td>{{$data->sro_no}}</td>
-                    <td>{{$data->liens_or_no}}</td>
+                    <td>{{$data->liens_or}}</td>
                     <td class="text-right">{{number_format($data->raw_qty,2)}}</td>
                     <td class="text-right">{{number_format($data->refined_qty,2)}}</td>
                 </tr>

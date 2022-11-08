@@ -48,6 +48,14 @@
     $issuance->refined_qty ?? $issuance->prev_refined_qty ?? null
     ) !!}
 </div>
+<div class="row">
+    {!! \App\Swep\ViewHelpers\__form2::textbox('liens_or',[
+        'label' => 'Liens OR#:',
+        'cols' => 4,
+    ],
+    $issuance->liens_or ?? null
+    ) !!}
+</div>
 
 <div class="row">
     {!! \App\Swep\ViewHelpers\__form2::iRadioH('consumption',[

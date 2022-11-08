@@ -3,494 +3,185 @@
     <h4>  MILLSITE & SUBSIDIARY WAREHOUSE INVENTORY REPORT - REFINED
     </h4>
 </div>
-<div class="subform-container">
-    <h4>Refinery Warehouse</h4>
-    <div class="subform-body">
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
-                    <p class="no-margin">1.1 Carry Over <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Carry-over</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][carryOver]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_carryOver',
-                                ],
-                                (isset($details_arr['form4a']['carryOver'])) ? $details_arr['form4a']['carryOver']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][carryOver]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_carryOver',
-                                ],
-                                (isset($details_arr['form4a']['carryOver'])) ? $details_arr['form4a']['carryOver']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
-                    <p class="no-margin">1.2 Net Production <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Net Production</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][netProduction]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_netProduction',
-                                ],
-                                (isset($details_arr['form4a']['netProduction'])) ? $details_arr['form4a']['netProduction']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][netProduction]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_netProduction',
-                                ],
-                                (isset($details_arr['form4a']['netProduction'])) ? $details_arr['form4a']['netProduction']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
-                    <p class="no-margin">1.3 Withdrawals <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Withdrawals</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][withdrawals]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_withdrawals',
-                                ],
-                                (isset($details_arr['form4a']['withdrawals'])) ? $details_arr['form4a']['withdrawals']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][withdrawals]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_withdrawals',
-                                ],
-                                (isset($details_arr['form4a']['withdrawals'])) ? $details_arr['form4a']['withdrawals']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
-                    <p class="no-margin">1.4 Transfers to Subsidiary <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Transfers to Subsidiary</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][transfersToSubsidiary]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_transfersToSubsidiary',
-                                ],
-                                (isset($details_arr['form4a']['transfersToSubsidiary'])) ? $details_arr['form4a']['transfersToSubsidiary']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][transfersToSubsidiary]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_transfersToSubsidiary',
-                                ],
-                                (isset($details_arr['form4a']['transfersToSubsidiary'])) ? $details_arr['form4a']['transfersToSubsidiary']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #b3885a;color: white;">
-                    <p class="no-margin">1.5 Stock Balance <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Stock Balance</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][stockBalance]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_stockBalance',
-                                ],
-                                (isset($details_arr['form4a']['stockBalance'])) ? $details_arr['form4a']['stockBalance']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][stockBalance]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_stockBalance',
-                                ],
-                                (isset($details_arr['form4a']['stockBalance'])) ? $details_arr['form4a']['stockBalance']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<form id="form4a">
+    <button type="submit" hidden>submit</button>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Current Crop</th>
+            <th>Previous Crop</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="3" class="text-strong info">REFINERY WAREHOUSE</td>
+        </tr>
+        <tr>
+            <td><span class="indent"></span> 1.1 Production/Carry-over</td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('carryOver',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->carryOver ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_carryOver',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->prev_carryOver ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td><span class="indent"></span> 1.2 Receipts</td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('receipts',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->receipts ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_receipts',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->prev_receipts ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td><span class="indent"></span> 1.3 Withdrawals</td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('withdrawals',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->withdrawals ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_withdrawals',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->prev_withdrawals ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td><span class="indent"></span> 1.4 Transfers to refinery</td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('transferToRefinery',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->transferToRefinery ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_transferToRefinery',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->prev_transferToRefinery ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td><span class="indent"></span> 1.5 Etc</td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('etc',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->etc ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_etc',[
+                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form4a->prev_etc ?? null) !!}
+            </td>
+        </tr>
+        <tr>
+            <td><span class="indent"></span> 1.6 Stock Balance</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-strong success">
+                SUBSIDIARY WAREHOUSES
+                <button type="button" class="btn btn-xs btn-success pull-right form4_listOfWarehousesBtn" for="REFINED" data-toggle="modal" data-target="#form4_listOfWarehousesModal"><i class="fa fa-list"></i> List of Subsidiary Warehouses</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <span class="indent"></span> 2.1 Carry Over
+                <button type="button" class="btn btn-xs btn-default pull-right insertWarehouseBtn" transactionType="carryOver" sugarType="REFINED" before="form4aCarryOverTotal"><i class="fa fa-plus"></i> Add</button>
+            </td>
+        </tr>
+        @if(!empty($subsidiaries['REFINED']['carryOver']))
+            @foreach($subsidiaries['REFINED']['carryOver'] as $key => $raw)
+                @include('sms.dynamic_rows.form4InsertWarehouse',[
+                    'transactionType' => 'carryOver',
+                    'data' => $raw,
+                    'sugarType' => 'REFINED',
+                    'defaultWarehouse' => $raw,
+                ])
+            @endforeach
+        @endif
+
+        <tr class="form4aCarryOverTotal">
+            <td class="text-strong text-right"> TOTAL</td>
+            <td></td>
+            <td></td>
+        </tr>
 
 
+        <tr>
+            <td colspan="3">
+                <span class="indent"></span> 2.2 Receipts
+                <button type="button" class="btn btn-xs btn-default pull-right insertWarehouseBtn" transactionType="receipts"  sugarType="REFINED" before="form4aReceiptsTotal"><i class="fa fa-plus"></i> Add</button>
+            </td>
+        </tr>
+        @if(!empty($subsidiaries['REFINED']['receipts']))
+            @foreach($subsidiaries['REFINED']['receipts'] as $key => $raw)
+                @include('sms.dynamic_rows.form4InsertWarehouse',[
+                    'transactionType' => 'receipts',
+                    'data' => $raw,
+                    'sugarType' => 'REFINED',
+                    'defaultWarehouse' => $raw,
+                ])
+            @endforeach
+        @endif
 
 
+        <tr class="form4aReceiptsTotal">
+            <td class="text-strong text-right"> TOTAL</td>
+            <td></td>
+            <td></td>
+        </tr>
 
-<div class="subform-container">
-    <h4>Subsidiary Warehouse(s)</h4>
-    <div class="subform-body">
-        <div class="row">
-            <div class="col-md-12">
-                @php
-                    $a = 'subsidiaryCarryOver';
-                @endphp
+        <tr>
+            <td colspan="3">
+                <span class="indent"></span> 2.3 Withdrawals
+                <button type="button" class="btn btn-xs btn-default pull-right insertWarehouseBtn" transactionType="withdrawals" sugarType="REFINED"  before="form4aWithdrawalsTotal"><i class="fa fa-plus"></i> Add</button>
+            </td>
+        </tr>
+        @if(!empty($subsidiaries['REFINED']['withdrawals']))
+            @foreach($subsidiaries['REFINED']['withdrawals'] as $key => $raw)
+                @include('sms.dynamic_rows.form4InsertWarehouse',[
+                    'transactionType' => 'withdrawals',
+                    'data' => $raw,
+                    'sugarType' => 'REFINED',
+                    'defaultWarehouse' => $raw,
+                ])
+            @endforeach
+        @endif
 
-                <div class="panel">
-                    <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #a34444;color: white;">
-                            <p class="no-margin">
-                                2.1 Carry Over
-                                <small id="filter-notifier" class="label bg-blue blink"></small>
-                                <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form4a_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                            </p>
 
-                        </div>
-
-                        <div class="box-body" style="">
-                            <table class="table table-bordered table-condensed sms_form4a_table table_dynamic" id="form4a_{{$a}}">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Current Crop</th>
-                                    <th>Previous Crop</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @if(isset($details_arr['form4a'][$a]) && count($details_arr['form4a'][$a]) > 0)
-                                    @foreach($details_arr['form4a'][$a] as $$a)
-                                        @include('sms.dynamic_rows.form4a_'.$a,['item' => $$a])
-                                    @endforeach
-                                @else
-                                    @include('sms.dynamic_rows.form4a_'.$a)
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                @php
-                    $a = 'subsidiaryReceipts';
-                @endphp
-
-                <div class="panel">
-                    <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #a34444;color: white;">
-                            <p class="no-margin">
-                                2.2 Receipts
-                                <small id="filter-notifier" class="label bg-blue blink"></small>
-                                <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form4a_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                            </p>
-
-                        </div>
-
-                        <div class="box-body" style="">
-                            <table class="table table-bordered table-condensed sms_form4a_table table_dynamic" id="form4a_{{$a}}">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Current Crop</th>
-                                    <th>Previous Crop</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @if(isset($details_arr['form4a'][$a]) && count($details_arr['form4a'][$a]) > 0)
-                                    @foreach($details_arr['form4a'][$a] as $$a)
-                                        @include('sms.dynamic_rows.form4a_'.$a,['item' => $$a])
-                                    @endforeach
-                                @else
-                                    @include('sms.dynamic_rows.form4a_'.$a)
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                @php
-                    $a = 'subsidiaryWithdrawals';
-                @endphp
-
-                <div class="panel">
-                    <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #a34444;color: white;">
-                            <p class="no-margin">
-                                2.3 Withdrawals
-                                <small id="filter-notifier" class="label bg-blue blink"></small>
-                                <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form4a_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                            </p>
-
-                        </div>
-
-                        <div class="box-body" style="">
-                            <table class="table table-bordered table-condensed sms_form4a_table table_dynamic" id="form4a_{{$a}}">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Current Crop</th>
-                                    <th>Previous Crop</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @if(isset($details_arr['form4a'][$a]) && count($details_arr['form4a'][$a]) > 0)
-                                    @foreach($details_arr['form4a'][$a] as $$a)
-                                        @include('sms.dynamic_rows.form4a_'.$a,['item' => $$a])
-                                    @endforeach
-                                @else
-                                    @include('sms.dynamic_rows.form4a_'.$a)
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                @php
-                    $a = 'subsidiaryStockBalance';
-                @endphp
-
-                <div class="panel">
-                    <div class="box box-sm box-default box-solid">
-                        <div class="box-header with-border"  style="background-color: #a34444;color: white;">
-                            <p class="no-margin">
-                                2.4 Stock Balance
-                                <small id="filter-notifier" class="label bg-blue blink"></small>
-                                <button class="btn btn-xs pull-right btn-default add_btn" style="background-color: #e3e3e3" data="form4a_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
-                            </p>
-
-                        </div>
-
-                        <div class="box-body" style="">
-                            <table class="table table-bordered table-condensed sms_form4a_table table_dynamic" id="form4a_{{$a}}">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Current Crop</th>
-                                    <th>Previous Crop</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @if(isset($details_arr['form4a'][$a]) && count($details_arr['form4a'][$a]) > 0)
-                                    @foreach($details_arr['form4a'][$a] as $$a)
-                                        @include('sms.dynamic_rows.form4a_'.$a,['item' => $$a])
-                                    @endforeach
-                                @else
-                                    @include('sms.dynamic_rows.form4a_'.$a)
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #a34444;color: white;">
-                    <p class="no-margin">3. Total Stocks - Millsite and Subsidiary Warehouses <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Millsite and Subsidiary Warehouses</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][totalStocksMillsiteSubsidiary]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_totalStocksMillsiteSubsidiary',
-                                ],
-                                (isset($details_arr['form4a']['totalStocksMillsiteSubsidiary'])) ? $details_arr['form4a']['totalStocksMillsiteSubsidiary']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][totalStocksMillsiteSubsidiary]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_totalStocksMillsiteSubsidiary',
-                                ],
-                                (isset($details_arr['form4a']['totalStocksMillsiteSubsidiary'])) ? $details_arr['form4a']['totalStocksMillsiteSubsidiary']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="box box-sm box-default box-solid">
-                <div class="box-header with-border"  style="background-color: #a34444;color: white;">
-                    <p class="no-margin">4. Total Stocks - Current and Previous Crops<small id="filter-notifier" class="label bg-blue blink"></small></p>
-                </div>
-                <div class="box-body" style="">
-                    <table class="table table-bordered table-condensed sms_form4a_table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Current Crop</th>
-                            <th>Previous Crop</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Current and Previous Crops</td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][current][totalStocksCurrentPrev]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_current_totalStocksCurrentPrev',
-                                ],
-                                (isset($details_arr['form4a']['totalStocksCurrentPrev'])) ? $details_arr['form4a']['totalStocksCurrentPrev']->current_value : null
-                                ) !!}
-                            </td>
-                            <td>
-                                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('data[form4a][prev][totalStocksCurrentPrev]',[
-                                    'class' => 'autonumber_mt',
-                                    'autocomplete' => 'off',
-                                    'container_class' => 'data_form4a_prev_totalStocksCurrentPrev',
-                                ],
-                                (isset($details_arr['form4a']['totalStocksCurrentPrev'])) ? $details_arr['form4a']['totalStocksCurrentPrev']->prev_value : null
-                                ) !!}
-                            </td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+        <tr class="form4aWithdrawalsTotal">
+            <td class="text-strong text-right"> TOTAL</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
 
 

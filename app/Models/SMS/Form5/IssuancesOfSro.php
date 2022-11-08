@@ -4,6 +4,7 @@
 namespace App\Models\SMS\Form5;
 
 
+use App\Models\SMS\WeeklyReports;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,4 +27,8 @@ class IssuancesOfSro extends Model
 
     }
     protected $table = 'form5_issuances_of_sro';
+
+    public function weeklyReport(){
+        return $this->belongsTo(WeeklyReports::class,'weekly_report_slug','slug');
+    }
 }

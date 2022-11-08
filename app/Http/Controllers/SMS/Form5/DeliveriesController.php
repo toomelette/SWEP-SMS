@@ -36,6 +36,12 @@ class DeliveriesController extends Controller
                 ->editColumn('qty',function($data){
                     return $data->qty ?? $data->qty_prev;
                 })
+                ->editColumn('sugar_class',function($data){
+                    if($data->refining == 1){
+                        return $data->sugar_class .' - For Refining';
+                    }
+                    return $data->sugar_class;
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
                 ->toJson();
@@ -50,11 +56,15 @@ class DeliveriesController extends Controller
         $d->trader = $request->trader;
         $d->start_of_withdrawal = $request->start_of_withdrawal;
         $d->sugar_class = $request->sugar_class;
-        if($request->charge_to == 'PREV'){
+        $d->remarks = $request->remarks;
+        if($request->cropCharge == 'PREVIOUS'){
             $d->qty_prev = $request->qty;
+            $d->qty = null;
         }else{
             $d->qty = $request->qty;
+            $d->qty_prev = null;
         }
+
         if($request->has('refining')){
             $d->refining = 1;
         }
@@ -79,7 +89,8 @@ class DeliveriesController extends Controller
         $d->sugar_class = $request->sugar_class;
         $d->for_swapping = $request->for_swapping;
         $d->qty = $request->qty;
-        if($request->charge_to == 'PREV'){
+        $d->remarks = $request->remarks;
+        if($request->cropCharge == 'PREVIOUS'){
             $d->qty_prev = $request->qty;
             $d->qty = null;
         }else{
