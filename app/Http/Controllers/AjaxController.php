@@ -177,18 +177,17 @@ class AjaxController extends Controller
 
         if($for == 'myWarehouses'){
             $request = \request();
-//            return $request->get('for');
             $whs = Warehouses::query()
                 ->where(function($query) use($request){
                     $query->where('alias','like','%'.$request->get('q').'%')
                         ->orWhere('name','like','%'.$request->get('q').'%');
                 })
-//                ->where('millCode','=',\Auth::user()->mill_code)
+                ->where('millCode','=',\Auth::user()->mill_code)
                 ->where('for','=',$request->get('for'))
                 ->limit(10)
                 ->get();
             $results = [];
-//            return $whs;
+
             if(!empty($whs)){
                 foreach ($whs as $wh){
 
@@ -202,6 +201,14 @@ class AjaxController extends Controller
                 'results' => $results,
             ];
         }
+
+
+        if($for == 'seriesNos'){
+            return view('sms.dynamic_rows.insertSeriesNos')->with([
+                'for' => \request('for'),
+            ]);
+        }
+
 
         return view('sms.dynamic_rows.'.$for);
     }

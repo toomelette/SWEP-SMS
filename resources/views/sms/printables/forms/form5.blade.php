@@ -75,7 +75,7 @@
                             <td></td>
                         @endif
                     @endforeach
-                    <td>{{$form5Deliveries->remarks}}</td>
+                    <td>{{($form5Deliveries->refining == 1) ? 'For Refining':''}} {{$form5Deliveries->remarks}} </td>
                 </tr>
             @endforeach
         @endif

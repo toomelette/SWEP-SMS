@@ -51,6 +51,13 @@ class Arrays
         return $scsArr;
     }
 
+    public static function sugarTypes(){
+        return [
+            'RAW' => 'RAW',
+            'REFINED' => 'REFINED',
+        ];
+    }
+
     public static function sugarClassesForSwapping(){
         $scs = SugarClass::query()->whereNotNull('swapping')->get();
         $scsArr = [];

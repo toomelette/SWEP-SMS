@@ -7,6 +7,7 @@ namespace App\Http\Controllers\SMS\WeeklyReport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SMS\Form1Request;
 use App\Models\SMS\Form1\Form1Details;
+use App\Models\SMS\SeriesNos;
 use App\Models\SMS\WeeklyReportDetails;
 use App\Models\SMS\WeeklyReports;
 use App\Models\SMS\WeeklyReportSeriesPcs;
@@ -27,7 +28,7 @@ class Form1Controller extends Controller
     public function store(Request $request){
 
         if($request->type != 'updateOnly'){
-
+            $wr = $this->weeklyReportService->findWeeklyReportBySlug($request->wr);
             $toUpdate = [
                 'manufactured' => Helper::sanitizeAutonum($request->manufactured),
                 'prev_manufactured' => Helper::sanitizeAutonum($request->prev_manufactured),
@@ -55,6 +56,26 @@ class Form1Controller extends Controller
             foreach (Arrays::sugarClasses() as $sugarClass) {
                 $toUpdate[$sugarClass] = null;
                 $toUpdate['prev_'.$sugarClass] = null;
+            }
+            $arr = [];
+            if(!empty($request->seriesNos)){
+                foreach ($request->seriesNos['sugarClass'] as $key => $value){
+                    if($value != null){
+                        array_push($arr,[
+                            'slug' => Str::random(),
+                            'weekly_report_slug' => $request->wr,
+                            'sugarClass' => $value,
+                            'seriesFrom' => $request->seriesNos['seriesFrom'][$key],
+                            'seriesTo' => $request->seriesNos['seriesTo'][$key],
+                            'noOfPcs' => $request->seriesNos['seriesTo'][$key] - $request->seriesNos['seriesFrom'][$key] + 1,
+                            'type' => 'RAW',
+                        ]);
+                    }
+                }
+            }
+            $wr->rawSeriesNos()->delete();
+            if(count($arr) > 0){
+                SeriesNos::insert($arr);
             }
 
             if(!empty($request->issuances)){

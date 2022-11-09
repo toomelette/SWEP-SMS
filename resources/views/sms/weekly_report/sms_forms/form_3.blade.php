@@ -246,27 +246,43 @@
     </div>
 
 
-    <div class="box box-sm box-default box-solid">
-        <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-            <p class="no-margin">
-                6. Molasses Storage Certificates:
-                <small id="filter-notifier" class="label bg-blue blink"></small>
-            </p>
-        </div>
-        <div class="box-body" style="">
-            <div class="row">
-                {!! \App\Swep\ViewHelpers\__form2::textbox('storageCertRaw',[
-                    'label' => 'Raw:',
-                    'cols' => 6,
-                ],
-                $wr->form3->storageCertRaw ?? null
-                ) !!}
-                {!! \App\Swep\ViewHelpers\__form2::textbox('storageCertRefined',[
-                    'label' => 'Refined:',
-                    'cols' => 6,
-                ],
-                $wr->form3->storageCertRefined ?? null
-                ) !!}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-sm box-default box-solid">
+                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+                    <p class="no-margin">
+                        6. Molasses Storage Certificates
+                        <small id="filter-notifier" class="label bg-blue blink"></small>
+                        <button class="btn btn-xs pull-right btn-success add_seriesNos_btn" for="MOLASSES" style="background-color: #e3e3e3" data="form3SeriesNos" type="button"><i class="fa fa-plus"></i> ADD</button>
+                    </p>
+                </div>
+                <div class="box-body" style="">
+                    <table class="table table-bordered table-condensed table_dynamic" id="form3SeriesNos">
+                        <thead>
+                        <tr>
+                            <th>Sugar Class</th>
+                            <th>Series From</th>
+                            <th>Series To</th>
+                            <th>Sugar Type</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if(!empty($seriesNos['MOLASSES']))
+                            @foreach($seriesNos['MOLASSES'] as $seriesNo)
+                                @include('sms.dynamic_rows.insertSeriesNos',[
+                                    'for' => 'MOLASSES',
+                                    'seriesNo' => $seriesNo,
+                                ])
+                            @endforeach
+                        @else
+                            @include('sms.dynamic_rows.insertSeriesNos',[
+                                    'for' => 'MOLASSES',
+                                ])
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -287,6 +303,7 @@
                         {!! \App\Swep\ViewHelpers\__form2::textbox('distFactor',[
                             'label' => 'Molasses Distribution Factor:',
                             'cols' => 12,
+                            'class' => 'form3-input',
                         ],
                         $wr->form3->distFactor ?? null
                         ) !!}
@@ -308,6 +325,7 @@
                 {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[
                     'label' => 'Remarks:',
                     'cols' => 12,
+                    'class' => 'form3-input',
                 ]
                 ) !!}
             </div>

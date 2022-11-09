@@ -105,36 +105,19 @@ class WeeklyReportController extends Controller
     public function edit($slug, WeeklyReportService $weeklyReportService){
 
         $weekly_report = $this->findBySlug($slug);
-        $details_arr = [];
-        if(!empty($weekly_report->details)){
-            foreach ($weekly_report->details as $detail){
-                if($detail->grouping == null){
-                    $details_arr[$detail->form_type][$detail->input_field] = $detail;
-                }else{
-                    $details_arr[$detail->form_type][$detail->grouping][$detail->input_field] = $detail;
-                }
-            }
-        }
 
-        if(!empty($weekly_report->seriesNos)){
-            foreach ($weekly_report->seriesNos as $seriesNo){
-                $details_arr[$seriesNo->form_type]['seriesNos'][$seriesNo->input_field] = $seriesNo;
-            }
-        }
-
-//        return $weeklyReportService->subsidiaries($slug);
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
-            'details_arr' => $details_arr,
             'formArray' => $weeklyReportService->computation($slug),
             'form2Array' => $weeklyReportService->form2Computation($slug),
             'form3Array' => $weeklyReportService->form3Computation($slug),
             'subsidiaries' => $weeklyReportService->subsidiaries($slug),
+            'seriesNos' => $weeklyReportService->seriesNos($slug),
         ]);
     }
 
     public function findBySlug($slug){
-        $wr = WeeklyReports::query()->with(['form1','form2','form3','details','seriesNos'])->where('slug','=',$slug)->first();
+        $wr = WeeklyReports::query()->with(['form1','form2','form3','details'])->where('slug','=',$slug)->first();
         if(!empty($wr)){
             return $wr;
         }

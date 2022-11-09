@@ -215,7 +215,7 @@ class __form2
 
 
 
-        return '<div class="form-group '.$c_class.' col-md-'.$n->cols .' '.$name.'">
+        return '<div class=" '.$c_class.' col-md-'.$n->cols .' '.$name.'">
                 <select for="'.$n->for.'" name="'. $name .$ext.'" '. $id .' class="form-control '.$n->class.'" '. $n->extra_attr .' '.$r_o.' '.$n->required.'>
                     <option value="">Select</option>
                     '.$opt_html.'

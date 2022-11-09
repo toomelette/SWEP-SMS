@@ -13,7 +13,7 @@ $rand = \Illuminate\Support\Str::random();
                     'class' => 'text-right input-sm selectWarehouse_'.$rand .' select2Warehouses',
                     'cols' => 10 ,
                     'container_class' => 'no-margin dynamic-select',
-                    'for' => 'RAW',
+                    'for' => $sugarType,
                 ],
                 $data->warehouseAlias ?? null
                 ) !!}

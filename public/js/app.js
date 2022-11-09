@@ -50,20 +50,16 @@ var autonum_settings_distFactor = {
 
 
 
-function autonum_init(){
-    $(".autonum").each(function(){
-        new AutoNumeric(this, autonum_settings);
-    });
-}
 
-function autonum_init(){
-    $(".autonum_lkg").each(function(){
-        new AutoNumeric(this, autonum_settings_lkg);
-    });
-}
 function autonum_init(){
     $(".autonum_distFactor").each(function(){
         new AutoNumeric(this, autonum_settings_distFactor);
+    });
+    $(".autonum_lkg").each(function(){
+        new AutoNumeric(this, autonum_settings_lkg);
+    });
+    $(".autonum").each(function(){
+        new AutoNumeric(this, autonum_settings);
     });
 }
 
@@ -412,6 +408,19 @@ function unwait_this_button(btn) {
     btn.removeAttr('disabled');
     prent = btn.children('i').parent();
     btn.html(btn.attr('old-i'));
+}
+
+function toast(text){
+    $.toast({
+        text: text, // Text that is to be shown in the toast
+        showHideTransition: 'fade', // fade, slide or plain
+        allowToastClose: false, // Boolean value true or false
+        hideAfter: 1000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+        stack: false, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+        position: 'bottom-center', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+        textAlign: 'center',  // Text alignment i.e. left, right or center
+        loader: false,  // Whether to show loader or not. True by default
+    });
 }
 
 function delete_data(slug,url){

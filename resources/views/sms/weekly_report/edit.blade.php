@@ -79,8 +79,8 @@
                                         <li><a href="#tab_5a" data-toggle="tab"> Form 5A</a></li>
                                         <li><a href="#tab_6a" data-toggle="tab"> Form 6A</a></li>
 
-                                        <li class="pull-right">
-                                            <button class="btn btn-primary btn-sm pull-right" type="submit"><i class=" fa fa-check"></i> Save as Draft</button>
+                                        <li class="pull-right" style="padding-top: 15px">
+                                            <small class="text-info">Changes are auto saved</small>
                                         </li>
                                     </ul>
 
@@ -417,7 +417,9 @@
         $("body").on("click",'.remove_row_btn',function () {
             let btn = $(this);
             let data = btn.attr('data');
+            let form = btn.parents('form');
             $("#tr_"+data).remove();
+            form.submit();
         })
 
         $("#form11").submit(function (e) {
@@ -593,6 +595,9 @@
                         $("#form2PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,2));
                     })
                     $("#form2PreviewTable .fa").remove();
+                    if(type !== 'updateOnly'){
+                        toast('Changes were auto saved.');
+                    }
                 },
                 error: function (res) {
                     $("tr.computation").each(function () {
@@ -661,8 +666,8 @@
                         $(this).remove();
                     })
                     $.each(res,function (i,item) {
-                        $("#form1PreviewTable tr[for='"+i+"']").children('td').eq(1).html($.number(item.current,2));
-                        $("#form1PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,2));
+                        $("#form1PreviewTable tr[for='"+i+"']").children('td').eq(1).html($.number(item.current,3));
+                        $("#form1PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,3));
                     });
                     $.each(res.withdrawals, function (i,item) {
                         $("#form1PreviewTable tr[for='withdrawalsTotal']").before('' +
@@ -684,6 +689,9 @@
                         console.log(i);
                         $("#form1 input[name='"+i+"']").val(item);
                     });
+                    if(type !== 'updateOnly'){
+                        toast('Changes were auto saved.');
+                    }
                 },
                 error: function (res) {
                     $("#form1PreviewTable tr.computation").each(function () {
@@ -758,6 +766,9 @@
                             '<td class="text-right">' + $.number(item.prev,3) + '</td>'+
                             '</tr>')
                     });
+                    if(type !== 'updateOnly'){
+                        toast('Changes were auto saved.');
+                    }
 
                 },
                 error: function (res) {
@@ -897,6 +908,31 @@
                 }
             })
         });
+
+        $(".add_seriesNos_btn").click(function () {
+            let btn = $(this);
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","seriesNos")}}?for='+btn.attr('for'),
+                data : '',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#"+btn.attr('data')+" tbody").append(res);
+                },
+                error: function (res) {
+
+                }
+            })
+        })
+
+        $("body").on("change",".global-form-changer",function () {
+            $(this).parents('form').submit();
+        })
+
+
+
     </script>
 
 @endsection

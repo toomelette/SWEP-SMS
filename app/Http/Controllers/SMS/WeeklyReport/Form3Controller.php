@@ -6,9 +6,11 @@ namespace App\Http\Controllers\SMS\WeeklyReport;
 
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form3\Form3Details;
+use App\Models\SMS\SeriesNos;
 use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Form3Controller extends Controller
 {
@@ -19,6 +21,7 @@ class Form3Controller extends Controller
     }
 
     public function store(Request $request){
+        $wr = $this->weeklyReportService->findWeeklyReportBySlug($request->wr);
         if($request->type != 'updateOnly'){
             Form3Details::updateOrCreate(
                 ['weekly_report_slug' => $request->wr],
@@ -45,6 +48,25 @@ class Form3Controller extends Controller
                     'distFactor' => Helper::sanitizeAutonum($request->distFactor),
                 ]
             );
+            $arr = [];
+            if(!empty($request->seriesNos)){
+                foreach ($request->seriesNos['sugarClass'] as $key => $value){
+                    array_push($arr,[
+                        'slug' => Str::random(),
+                        'weekly_report_slug' => $request->wr,
+                        'sugarClass' => $value,
+                        'seriesFrom' => $request->seriesNos['seriesFrom'][$key],
+                        'seriesTo' => $request->seriesNos['seriesTo'][$key],
+                        'noOfPcs' => $request->seriesNos['seriesTo'][$key] - $request->seriesNos['seriesFrom'][$key] + 1,
+                        'type' => 'MOLASSES',
+                        'sugarType' => $request->seriesNos['sugarType'][$key],
+                    ]);
+                }
+            }
+            $wr->molassesSeriesNos()->delete();
+            if(count($arr) > 0){
+                SeriesNos::insert($arr);
+            }
         }
         return $this->weeklyReportService->form3Computation($request->wr);
     }

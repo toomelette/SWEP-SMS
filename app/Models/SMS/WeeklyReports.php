@@ -37,9 +37,9 @@ class WeeklyReports extends Model
         return $this->hasMany(WeeklyReportDetails::class, 'weekly_report_slug','slug');
     }
 
-    public function seriesNos(){
-        return $this->hasMany(WeeklyReportSeriesPcs::class, 'weekly_report_slug','slug');
-    }
+//    public function seriesNos(){
+//        return $this->hasMany(WeeklyReportSeriesPcs::class, 'weekly_report_slug','slug');
+//    }
 
     public function form5IssuancesOfSro(){
         return $this->hasMany(Form5\IssuancesOfSro::class,'weekly_report_slug','slug');
@@ -172,5 +172,22 @@ class WeeklyReports extends Model
     }
     public function form5WithdrawalsForRefining(){
         return $this->hasMany(Form5\Deliveries::class,'weekly_report_slug','slug')->whereNotNull('refining');
+    }
+
+
+    //SERIES NOS
+    public function seriesNos(){
+        return $this->hasMany(SeriesNos::class,'weekly_report_slug','slug');
+    }
+    public function rawSeriesNos(){
+        return $this->hasMany(SeriesNos::class,'weekly_report_slug','slug')->where('type','=','RAW');
+    }
+
+    public function refinedSeriesNos(){
+        return $this->hasMany(SeriesNos::class,'weekly_report_slug','slug')->where('type','=','REFINED');
+    }
+
+    public function molassesSeriesNos(){
+        return $this->hasMany(SeriesNos::class,'weekly_report_slug','slug')->where('type','=','MOLASSES');
     }
 }

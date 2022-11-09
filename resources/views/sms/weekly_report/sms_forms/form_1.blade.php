@@ -1,12 +1,9 @@
 <form id="form1">
+    <button type="submit" hidden>Save as Draft</button>
     <div class="form-title" style="background-color: #4477a3;">
         <h4>  WEEKLY REPORT ON RAW SUGAR
         </h4>
     </div>
-    <hr class="no-margin">
-    <div class="row">
-        <div class="col-md-12"><button type="submit" class="btn btn-primary btn-sm pull-right">Save as Draft</button></div>
-    </div><br>
 
     <div class="row">
         <div class="col-md-12">
@@ -19,103 +16,103 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-strong">1. MANUFACTURED</td>
-                        <td>
-                            {!! \App\Swep\ViewHelpers\__form2::textboxOnly('manufactured',[
-                                'class' => 'form1-input input-sm text-right autonumber_mt'
-                            ],
-                            $wr->form1->manufactured ?? null
-                            ) !!}
-                        </td>
-                        <td>
-                            {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_manufactured',[
-                                'class' => 'form1-input input-sm text-right autonumber_mt'
-                            ],
-                            $wr->form1->prev_manufactured ?? null) !!}
-                        </td>
-                    </tr>
-                    <tr class="issuanceTr">
-                        <td colspan="3" class="text-strong">
-                            2. ISSUANCES/CARRY-OVER
-                            <button class="btn btn-xs btn-success pull-right" id="addIssuanceButton" type="button"><i class="fa fa-plus"></i> ADD</button>
-                        </td>
-                    </tr>
-                    @foreach(\App\Swep\Helpers\Arrays::sugarClasses() as $sugarClass)
-                        @if(!empty($wr->form1->$sugarClass) || !empty($wr->form1->{'prev_'.$sugarClass}))
-                            @include('sms.dynamic_rows.form1Issuances',[
-                                'sugarClass' => $sugarClass,
-                                'current' => $wr->form1->$sugarClass,
-                                'prev' => $wr->form1->{'prev_'.$sugarClass},
-                            ])
-                         @endif
-                    @endforeach
-                    <tr for="issuancesTotal" class="totalIssuanceTr computation">
-                        <td class="text-strong text-right">
-                            TOTAL
-                        </td>
-                        <td class="text-strong text-right"></td>
-                        <td class="text-strong text-right"></td>
-                    </tr>
+                <tr>
+                    <td class="text-strong">1. MANUFACTURED</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('manufactured',[
+                            'class' => 'form1-input input-sm text-right autonumber_mt'
+                        ],
+                        $wr->form1->manufactured ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_manufactured',[
+                            'class' => 'form1-input input-sm text-right autonumber_mt'
+                        ],
+                        $wr->form1->prev_manufactured ?? null) !!}
+                    </td>
+                </tr>
+                <tr class="issuanceTr">
+                    <td colspan="3" class="text-strong">
+                        2. ISSUANCES/CARRY-OVER
+                        <button class="btn btn-xs btn-success pull-right" id="addIssuanceButton" type="button"><i class="fa fa-plus"></i> ADD</button>
+                    </td>
+                </tr>
+                @foreach(\App\Swep\Helpers\Arrays::sugarClasses() as $sugarClass)
+                    @if(!empty($wr->form1->$sugarClass) || !empty($wr->form1->{'prev_'.$sugarClass}))
+                        @include('sms.dynamic_rows.form1Issuances',[
+                            'sugarClass' => $sugarClass,
+                            'current' => $wr->form1->$sugarClass,
+                            'prev' => $wr->form1->{'prev_'.$sugarClass},
+                        ])
+                    @endif
+                @endforeach
+                <tr for="issuancesTotal" class="totalIssuanceTr computation">
+                    <td class="text-strong text-right">
+                        TOTAL
+                    </td>
+                    <td class="text-strong text-right"></td>
+                    <td class="text-strong text-right"></td>
+                </tr>
 
-                    <tr class="withdrawals">
-                        <td colspan="3" class="text-strong">
-                           3. WITHDRAWALS
-                        </td>
-                    </tr>
+                <tr class="withdrawals">
+                    <td colspan="3" class="text-strong">
+                        3. WITHDRAWALS
+                    </td>
+                </tr>
 
-                    <tr for="withdrawalsTotal" class="computation">
-                        <td class="text-strong text-right">
-                            TOTAL
-                        </td>
-                        <td class="text-right text-strong"></td>
-                        <td class="text-right text-strong"></td>
-                    </tr>
+                <tr for="withdrawalsTotal" class="computation">
+                    <td class="text-strong text-right">
+                        TOTAL
+                    </td>
+                    <td class="text-right text-strong"></td>
+                    <td class="text-right text-strong"></td>
+                </tr>
 
-                    <tr class="">
-                        <td colspan="3" class="text-strong">
-                           4. BALANCES
-                        </td>
-                    </tr>
+                <tr class="">
+                    <td colspan="3" class="text-strong">
+                        4. BALANCES
+                    </td>
+                </tr>
 
-                    <tr for="balancesTotal" class="computation">
-                        <td class="text-strong text-right">
-                            TOTAL
-                        </td>
-                        <td class="text-right text-strong"></td>
-                        <td class="text-right text-strong"></td>
-                    </tr>
+                <tr for="balancesTotal" class="computation">
+                    <td class="text-strong text-right">
+                        TOTAL
+                    </td>
+                    <td class="text-right text-strong"></td>
+                    <td class="text-right text-strong"></td>
+                </tr>
 
 
-                    <tr for="unquedanned" class="computation">
-                        <td class="text-strong">
-                            5. UNQUEDANNED
-                        </td>
-                        <td class="text-right"></td>
-                        <td class="text-right"></td>
-                    </tr>
-                    <tr for="stockBalance" class="computation">
-                        <td class="text-strong">
-                            6. STOCK BALANCE
-                        </td>
-                        <td class="text-right"></td>
-                        <td class="text-right"></td>
-                    </tr>
+                <tr for="unquedanned" class="computation">
+                    <td class="text-strong">
+                        5. UNQUEDANNED
+                    </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
+                <tr for="stockBalance" class="computation">
+                    <td class="text-strong">
+                        6. STOCK BALANCE
+                    </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
 
-                    <tr for="transfersToRefinery" class="computation">
-                        <td class="text-strong">
-                            7. TRANSFERS TO REFINERY
-                        </td>
-                        <td class="text-right"></td>
-                        <td class="text-right"></td>
-                    </tr>
-                    <tr for="physicalStock" class="computation">
-                        <td class="text-strong">
-                           8. PHYSICAL STOCK
-                        </td>
-                        <td class="text-right"></td>
-                        <td class="text-right"></td>
-                    </tr>
+                <tr for="transfersToRefinery" class="computation">
+                    <td class="text-strong">
+                        7. TRANSFERS TO REFINERY
+                    </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
+                <tr for="physicalStock" class="computation">
+                    <td class="text-strong">
+                        8. PHYSICAL STOCK
+                    </td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -217,7 +214,7 @@
                                                     {!! \App\Swep\ViewHelpers\__form2::textboxOnly('price'.$sugarClass,[
                                                         'label' => "Peso / LKG",
                                                         'cols' => 12,
-                                                        'class' => 'text-right autonumber',
+                                                        'class' => 'form1-input text-right autonumber',
                                                         'container_class' => 'price'.$sugarClass,
                                                     ],
                                                     $wr->form1->$col ?? null
@@ -247,7 +244,7 @@
                                             {!! \App\Swep\ViewHelpers\__form2::textboxOnly('wholesaleRaw',[
                                                    'label' => "Wholesale raw price",
                                                    'cols' => 12,
-                                                   'class' => 'text-right autonumber',
+                                                   'class' => 'form1-input text-right autonumber',
                                                    'container_class' => 'wholesaleRaw',
                                                ],
                                                $wr->form1->wholesale_raw ?? null
@@ -257,7 +254,7 @@
                                             {!! \App\Swep\ViewHelpers\__form2::textboxOnly('retailRaw',[
                                                    'label' => "Wholesale raw price",
                                                    'cols' => 12,
-                                                   'class' => 'text-right autonumber',
+                                                   'class' => 'form1-input text-right autonumber',
                                                    'container_class' => 'retailRaw',
                                                ],
                                                $wr->form1->retail_raw ?? null
@@ -271,7 +268,7 @@
                                             {!! \App\Swep\ViewHelpers\__form2::textboxOnly('wholesaleRefined',[
                                                    'label' => "Wholesale raw price",
                                                    'cols' => 12,
-                                                   'class' => 'text-right autonumber',
+                                                   'class' => 'form1-input text-right autonumber',
                                                    'container_class' => 'wholesaleRefined',
                                                ],
                                                $wr->form1->wholesale_refined ?? null
@@ -281,7 +278,7 @@
                                             {!! \App\Swep\ViewHelpers\__form2::textboxOnly('retailRefined',[
                                                    'label' => "Wholesale raw price",
                                                    'cols' => 12,
-                                                   'class' => 'text-right autonumber',
+                                                   'class' => 'form1-input text-right autonumber',
                                                    'container_class' => 'retailRefined',
                                                ],
                                                $wr->form1->retail_refined ?? null
@@ -309,7 +306,7 @@
                                 {!! \App\Swep\ViewHelpers\__form2::textbox('distFactor',[
                                 'label' => "14. Distribution Factor:",
                                 'cols' => 4,
-                                'class' => 'text-right autonum_distFactor',
+                                'class' => 'form1-input text-right autonum_distFactor',
                                 'container_class' => 'distFactor',
                                 ],
                                 $wr->form1->dist_factor ?? null
@@ -319,19 +316,16 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    @php
-                        $a = 'seriesNos';
-                    @endphp
                     <div class="box box-sm box-default box-solid">
                         <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
                             <p class="no-margin">
                                 15. Quedan Issuances Series & No. of PCS.
                                 <small id="filter-notifier" class="label bg-blue blink"></small>
-                                <button class="btn btn-xs pull-right btn-success add_btn" style="background-color: #e3e3e3" data="form1_raw_sugar_{{$a}}" type="button"><i class="fa fa-plus"></i> ADD</button>
+                                <button class="btn btn-xs pull-right btn-success add_seriesNos_btn" for="RAW" style="background-color: #e3e3e3" data="form1SeriesNos" type="button"><i class="fa fa-plus"></i> ADD</button>
                             </p>
                         </div>
                         <div class="box-body" style="">
-                            <table class="table table-bordered table-condensed sms_form1_table table_dynamic" id="form1_raw_sugar_{{$a}}">
+                            <table class="table table-bordered table-condensed sms_form1_table table_dynamic" id="form1SeriesNos">
                                 <thead>
                                 <tr>
                                     <th>Sugar Class</th>
@@ -341,13 +335,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(isset($details_arr['form1'][$a]) && count($details_arr['form1'][$a]) > 0)
-                                    @foreach($details_arr['form1'][$a] as $$a)
-                                        @include('sms.dynamic_rows.form1_raw_sugar_'.$a,['item' => $$a])
-                                    @endforeach
-                                @else
-                                    @include('sms.dynamic_rows.form1_raw_sugar_'.$a)
-                                @endif
+                                    @if(!empty($seriesNos['RAW']))
+                                        @foreach($seriesNos['RAW'] as $seriesNo)
+                                            @include('sms.dynamic_rows.insertSeriesNos',[
+                                                'for' => 'RAW',
+                                                'seriesNo' => $seriesNo,
+                                            ])
+                                        @endforeach
+                                    @else
+                                        @include('sms.dynamic_rows.insertSeriesNos',[
+                                                'for' => 'RAW',
+                                            ])
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -367,7 +366,7 @@
                                 {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[
                                     'label' => "Remarks:",
                                     'cols' => 12,
-                                    'class' => '',
+                                    'class' => 'form1-input',
                                     'container_class' => 'remarks',
                                 ],
                                 $wr->form1->remarks ?? null

@@ -7,6 +7,7 @@ namespace App\SMS\Services;
 use App\Models\SMS\Form3\Withdrawals;
 use App\Models\SMS\Form5\Deliveries;
 use App\Models\SMS\Form5a\IssuancesOfSro;
+use App\Models\SMS\SeriesNos;
 use App\Models\SMS\Subsidiaries;
 use App\Models\SMS\WeeklyReports;
 use App\Swep\Helpers\Arrays;
@@ -292,8 +293,8 @@ class WeeklyReportService
         ];
         //STOCK BALANCE = PROD NET - WITHDRAWALS
         $formArray['stockBalance'] = [
-            'current' => $formArray['totalProduction']['current'] - $formArray['withdrawalTotal']['current'],
-            'prev' => $formArray['totalProduction']['prev'] - $formArray['withdrawalTotal']['prev'],
+            'current' => $formArray['issuancesTotal']['current'] - $formArray['withdrawalTotal']['current'],
+            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalTotal']['prev'],
         ];
 
         //UNQEUDANNED = PROD NET - ISSUANCES
@@ -410,6 +411,17 @@ class WeeklyReportService
         if(!empty($s)){
             foreach ($s as $item){
                 $arr[$item->sugarType][$item->transactionType][$item->slug] = $item;
+            }
+        }
+        return $arr;
+    }
+
+    public function seriesNos($weekly_report_slug){
+        $s = SeriesNos::query()->where('weekly_report_slug','=',$weekly_report_slug)->get();
+        $arr = [];
+        if(!empty($s)){
+            foreach ($s as $item){
+                $arr[$item->type][$item->slug] = $item;
             }
         }
         return $arr;
