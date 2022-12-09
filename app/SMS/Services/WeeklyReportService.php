@@ -46,9 +46,11 @@ class WeeklyReportService
 
         $toDate =  $weekly_report->toDateForm1();
 
+//        return $toDate;
         //MANUFACTURED
         $formArray['manufactured']['current'] = $get=='toDate' ? $toDate->manufactured : $weekly_report->form1->manufactured ?? null;
         $formArray['manufactured']['prev'] = $get=='toDate' ? $toDate->prev_manufactured  : $weekly_report->form1->prev_manufactured ?? null;
+
 
         //ISSUANCES
         $formArray['issuances'] = $valuesStructure;
@@ -162,7 +164,6 @@ class WeeklyReportService
         }else{
             $formArray['fieldsToFill']['lkgtcGross'] = 0;
         }
-
 
         return $formArray;
         echo print('<pre>'.print_r($formArray,true).'</pre>');

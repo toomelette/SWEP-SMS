@@ -85,12 +85,15 @@ class WeeklyReports extends Model
         }
         $fields = implode(',',$fieldsToSum);
         $toDate = WeeklyReports::query()
-            ->selectRaw($fields)
+            ->selectRaw($fields.', status ')
             ->leftJoin('form1_details','form1_details.weekly_report_slug','=','weekly_reports.slug')
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
-            ->where('report_no','<=',$this->report_no)
-            ->first();
+            ->where('report_no','<=',$this->report_no * 1)
+            ->where('status' ,'=',1)
+//            ;
+          ->first();
+//        return $toDate->getBindings();
         return $toDate ?? null;
     }
 
@@ -131,7 +134,8 @@ class WeeklyReports extends Model
             ->leftJoin('form2_details','form2_details.weekly_report_slug','=','weekly_reports.slug')
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
-            ->where('report_no','<=',$report_no)
+            ->where('report_no','<=',$report_no*1)
+            ->where('status' ,'=',1)
             ->first();
 
         return $toDate ?? null;
@@ -156,7 +160,8 @@ class WeeklyReports extends Model
             ->leftJoin('form3_details','form3_details.weekly_report_slug','=','weekly_reports.slug')
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
-            ->where('report_no','<=',$report_no)
+            ->where('report_no','<=',$report_no*1)
+            ->where('status','=',1)
             ->first();
 
         return $toDate ?? null;
