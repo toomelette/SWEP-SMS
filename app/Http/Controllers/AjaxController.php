@@ -47,8 +47,12 @@ class AjaxController extends Controller
             //productions
             $prods = Form1Details::with('weeklyReport')->selectRaw('week_ending, sum(manufactured) as manufacturedTotal')
                 ->leftJoin('weekly_reports','weekly_reports.slug','=','weekly_report_slug');
-            if(Request::has('mill_code') && !empty(Request::get('mill_code'))){
-                $prods = $prods->where('mill_code','=', Request::get('mill_code'));
+            if(\Auth::user()->access == 'ADMIN'){
+                if(Request::has('mill_code') && !empty(Request::get('mill_code'))){
+                    $prods = $prods->where('mill_code','=', Request::get('mill_code'));
+                }
+            }else{
+                $prods = $prods->where('mill_code','=', \Auth::user()->mill_code);
             }
             $prods= $prods->groupBy('week_ending')
                 ->get();

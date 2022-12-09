@@ -120,23 +120,25 @@
 
             </div>
             <div class="box-body" style="">
-                <form id="filterFrom">
-                    <div class="row">
-                        {!! \App\Swep\ViewHelpers\__form2::select('crop_year',[
-                            'label' => 'Crop Year:',
-                            'cols' => 2,
-                            'options' => \App\Swep\Helpers\Arrays::cropYears(),
-                            'class' => 'formFilter',
-                        ]) !!}
+                @if(Auth::user()->access == 'ADMIN')
+                    <form id="filterFrom">
+                        <div class="row">
+                            {!! \App\Swep\ViewHelpers\__form2::select('crop_year',[
+                                'label' => 'Crop Year:',
+                                'cols' => 2,
+                                'options' => \App\Swep\Helpers\Arrays::cropYears(),
+                                'class' => 'formFilter',
+                            ]) !!}
 
-                        {!! \App\Swep\ViewHelpers\__form2::select('mill_code',[
-                            'label' => 'Mill:',
-                            'cols' => 2,
-                            'options' => \App\Swep\Helpers\Arrays::millCodes(),
-                            'class' => 'formFilter',
-                        ]) !!}
-                    </div>
-                </form>
+                            {!! \App\Swep\ViewHelpers\__form2::select('mill_code',[
+                                'label' => 'Mill:',
+                                'cols' => 2,
+                                'options' => \App\Swep\Helpers\Arrays::millCodes(),
+                                'class' => 'formFilter',
+                            ]) !!}
+                        </div>
+                    </form>
+                @endif
 
                 <div class="row">
                     <div class="col-md-12">
