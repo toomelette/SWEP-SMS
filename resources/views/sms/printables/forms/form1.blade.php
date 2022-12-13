@@ -105,7 +105,7 @@
             <td class="text-right">TOTAL</td>
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($form1['withdrawalsTotal']['current'] ?? null ,3)}}</td>
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($prevForm1['withdrawalsTotal']['current'] ?? null ,3,'0.00')}}</td>
-            <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($toDateForm1['withdrawalsTotal']['prev'] ?? null ,3,'0.00')}}</td>
+            <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($toDateForm1['withdrawalsTotal']['current'] ?? null ,3,'0.00')}}</td>
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($form1['withdrawalsTotal']['prev'] ?? null ,3)}}</td>
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($prevForm1['withdrawalsTotal']['prev'] ?? null ,3,'0.00')}}</td>
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($toDateForm1['withdrawalsTotal']['prev'] ?? null ,3,'0.00')}}</td>

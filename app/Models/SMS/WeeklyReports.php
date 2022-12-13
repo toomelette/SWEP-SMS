@@ -90,10 +90,13 @@ class WeeklyReports extends Model
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
             ->where('report_no','<=',$this->report_no * 1)
-            ->where('status' ,'=',1)
+            ->where(function($query){
+                $query->where('status','=',1)
+                ->orWhere('status','=',null);
+            })
 //            ;
           ->first();
-//        return $toDate->getBindings();
+//        dd($toDate->getBindings());
         return $toDate ?? null;
     }
 

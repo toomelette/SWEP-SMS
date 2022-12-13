@@ -74,7 +74,7 @@ class WeeklyReportService
                 ->leftJoin('weekly_reports','weekly_reports.slug','=','form5_deliveries.weekly_report_slug')
                 ->where('crop_year','=',$weekly_report->crop_year)
                 ->where('mill_code','=',$weekly_report->mill_code)
-                ->where('report_no','<=',$weekly_report->report_no)
+                ->where('report_no','<=',$weekly_report->report_no * 1)
                 ->groupBy('refining','sugar_class')
                 ->orderBy('sugar_class','asc')
                 ->get();
@@ -97,11 +97,13 @@ class WeeklyReportService
             }
         }
 
+
         $formArray['withdrawalsTotal']['current'] = array_sum(array_column($formArray['withdrawals'],'current'));
         $formArray['withdrawalsTotal']['prev'] = array_sum(array_column($formArray['withdrawals'],'prev'));
         $formArray['forRefiningTotal']['current'] = array_sum(array_column($formArray['forRefining'],'current'));
         $formArray['forRefiningTotal']['prev'] = array_sum(array_column($formArray['forRefining'],'prev'));
         $formArray['balances']= $valuesStructure;
+
 
         //BALANCES
         foreach ($formArray['issuances'] as $k => $v){
@@ -240,7 +242,7 @@ class WeeklyReportService
                 ->leftJoin('weekly_reports','weekly_reports.slug','=','form5a_issuances_of_sro.weekly_report_slug')
                 ->where('crop_year','=',$weekly_report->crop_year)
                 ->where('mill_code','=', $weekly_report->mill_code)
-                ->where('report_no','<=', $report_no != 0 ? $report_no : $weekly_report->report_no)
+                ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $weekly_report->report_no * 1)
                 ->groupBy('consumption')
                 ->orderBy('consumption','asc')
                 ->get();
@@ -359,7 +361,7 @@ class WeeklyReportService
                 ->leftJoin('weekly_reports','weekly_reports.slug','=','form3_withdrawals.weekly_report_slug')
                 ->where('crop_year','=',$wr->crop_year)
                 ->where('mill_code','=', $wr->mill_code)
-                ->where('report_no','<=', $report_no != 0 ? $report_no : $wr->report_no)
+                ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $wr->report_no * 1)
                 ->groupBy('sugar_type','withdrawal_type')
                 ->get();
         }else{
