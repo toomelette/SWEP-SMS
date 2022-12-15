@@ -427,45 +427,92 @@ function delete_data(slug,url){
     var btn = $("button[data='"+slug+"']");
     btn.parents('#'+slug).addClass('warning');
     url = url.replace('slug',slug);
+
+
     Swal.fire({
         title: 'Please confirm to delete permanently this data.',
-        showDenyButton: false,
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
         showCancelButton: true,
-        confirmButtonText: '<i class="fa fa-trash"></i> DELETE',
-        confirmButtonColor: '#d73925',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
+        confirmButtonColor: '#dd4b39',
+        confirmButtonText: '<i class="fa fa-trash-o"></i> DELETE',
+        showLoaderOnConfirm: true,
+        preConfirm: (email) => {
+            return $.ajax({
                 url : url,
                 type: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
-            success: function (res) {
-                if(res == 1){
-                    btn.parents('#'+slug).addClass('danger');
-                    btn.parents('#'+slug).addClass('animate__animated animate__zoomOutLeft');
-                    notify('Data deleted successfully','success');
-                    setTimeout(function () {
-                        btn.parents('#'+slug).parent('tbody').parent('table').DataTable().draw(false);
-                    },500);
-                }else{
-                    btn.parents('#'+slug).removeClass('warning');
-                    notify('Error deleting data.','danger');
-                }
+            })
+                .then(response => {
+                    return  response;
+                })
+                .catch(error => {
 
-            },
-            error: function (res) {
-                notify(res.responseJSON.message,'danger');
-                btn.parents('#'+slug).removeClass('warning');
-            }
-        });
-            // Swal.fire('Saved!', '', 'success')
-        }else{
-            btn.parents('#'+slug).removeClass('warning');
+                    Swal.showValidationMessage(
+                        'Error : '+ error.responseJSON.message,
+                    )
+                    notify(res.responseJSON.message,'danger');
+                    btn.parents('#'+slug).removeClass('warning');
+                })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            btn.parents('#'+slug).addClass('danger');
+            btn.parents('#'+slug).addClass('animate__animated animate__zoomOutLeft');
+            notify('Data deleted successfully','success');
+            setTimeout(function () {
+                btn.parents('#'+slug).parent('tbody').parent('table').DataTable().draw(false);
+            },500);
         }
     })
+
+
+
+    // Swal.fire({
+    //     title: 'Please confirm to delete permanently this data.',
+    //     showDenyButton: false,
+    //     showCancelButton: true,
+    //     confirmButtonText: '<i class="fa fa-trash"></i> DELETE',
+    //     confirmButtonColor: '#d73925',
+    // }).then((result) => {
+    //     if (result.isConfirmed) {
+    //         $.ajax({
+    //             url : url,
+    //             type: 'DELETE',
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    //             },
+    //         success: function (res) {
+    //             if(res == 1){
+    //                 btn.parents('#'+slug).addClass('danger');
+    //                 btn.parents('#'+slug).addClass('animate__animated animate__zoomOutLeft');
+    //                 notify('Data deleted successfully','success');
+    //                 setTimeout(function () {
+    //                     btn.parents('#'+slug).parent('tbody').parent('table').DataTable().draw(false);
+    //                 },500);
+    //             }else{
+    //                 btn.parents('#'+slug).removeClass('warning');
+    //                 notify('Error deleting data.','danger');
+    //             }
+    //
+    //         },
+    //         error: function (res) {
+    //             notify(res.responseJSON.message,'danger');
+    //             btn.parents('#'+slug).removeClass('warning');
+    //         }
+    //     });
+    //         // Swal.fire('Saved!', '', 'success')
+    //     }else{
+    //         btn.parents('#'+slug).removeClass('warning');
+    //     }
+    // })
 }
 const formatToCurrency = amount => {
     return "" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 };
+

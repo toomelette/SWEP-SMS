@@ -7,8 +7,10 @@ namespace App\Http\Controllers\SMS\Form5a;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form5a\IssuancesOfSro;
 use App\SMS\Services\WeeklyReportService;
+use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use PHPUnit\TextUI\Help;
 use Yajra\DataTables\DataTables;
 
 class IssuanceOfSroController extends Controller
@@ -45,14 +47,14 @@ class IssuanceOfSroController extends Controller
         $i->date_of_issue = $request->date_of_issue;
         $i->sro_no = $request->sro_no;
         $i->trader = $request->trader;
-        $i->raw_qty = $request->raw_qty;
+        $i->raw_qty = Helper::sanitizeAutonum($request->raw_qty);
         $i->monitoring_fee_or_no = $request->monitoring_fee_or_no;
         $i->rsq_no = $request->rsq_no;
         $i->liens_or = $request->liens_or;
         if($request->cropCharge == 'CURRENT'){
-            $i->refined_qty = $request->refined_qty;
+            $i->refined_qty = Helper::sanitizeAutonum($request->refined_qty);
         }else{
-            $i->prev_refined_qty = $request->refined_qty;
+            $i->prev_refined_qty = Helper::sanitizeAutonum($request->refined_qty);
         }
         $i->consumption = $request->consumption;
 
@@ -75,16 +77,16 @@ class IssuanceOfSroController extends Controller
         $i->date_of_issue = $request->date_of_issue;
         $i->sro_no = $request->sro_no;
         $i->trader = $request->trader;
-        $i->raw_qty = $request->raw_qty;
+        $i->raw_qty = Helper::sanitizeAutonum($request->raw_qty);
         $i->monitoring_fee_or_no = $request->monitoring_fee_or_no;
         $i->rsq_no = $request->rsq_no;
         $i->refined_qty = $request->refined_qty;
         $i->liens_or = $request->liens_or;
         if($request->cropCharge == 'CURRENT'){
-            $i->refined_qty = $request->refined_qty;
+            $i->refined_qty = Helper::sanitizeAutonum($request->refined_qty);
             $i->prev_refined_qty = null;
         }else{
-            $i->prev_refined_qty = $request->refined_qty;
+            $i->prev_refined_qty = Helper::sanitizeAutonum($request->refined_qty);
             $i->refined_qty = null;
         }
         $i->consumption = $request->consumption;

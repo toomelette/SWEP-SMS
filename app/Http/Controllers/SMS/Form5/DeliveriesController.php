@@ -7,6 +7,7 @@ namespace App\Http\Controllers\SMS\Form5;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form5\Deliveries;
 use App\SMS\Services\WeeklyReportService;
+use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -58,10 +59,10 @@ class DeliveriesController extends Controller
         $d->sugar_class = $request->sugar_class;
         $d->remarks = $request->remarks;
         if($request->cropCharge == 'PREVIOUS'){
-            $d->qty_prev = $request->qty;
+            $d->qty_prev = Helper::sanitizeAutonum($request->qty);
             $d->qty = null;
         }else{
-            $d->qty = $request->qty;
+            $d->qty = Helper::sanitizeAutonum($request->qty);
             $d->qty_prev = null;
         }
 
@@ -91,10 +92,10 @@ class DeliveriesController extends Controller
         $d->qty = $request->qty;
         $d->remarks = $request->remarks;
         if($request->cropCharge == 'PREVIOUS'){
-            $d->qty_prev = $request->qty;
+            $d->qty_prev = Helper::sanitizeAutonum($request->qty);
             $d->qty = null;
         }else{
-            $d->qty = $request->qty;
+            $d->qty = Helper::sanitizeAutonum($request->qty);
             $d->qty_prev = null;
         }
 

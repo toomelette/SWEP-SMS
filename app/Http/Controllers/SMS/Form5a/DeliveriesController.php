@@ -8,6 +8,7 @@ namespace App\Http\Controllers\SMS\Form5a;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form5a\Deliveries;
 use App\SMS\Services\WeeklyReportService;
+use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -40,6 +41,7 @@ class DeliveriesController extends Controller
         }
     }
     public function store(Request $request, WeeklyReportService $weeklyReportService){
+
         $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $d = new Deliveries;
         $d->weekly_report_slug = $request->weekly_report_slug;
@@ -47,11 +49,20 @@ class DeliveriesController extends Controller
         $d->date_of_withdrawal = $request->date_of_withdrawal;
         $d->sro_no = $request->sro_no;
         $d->trader = $request->trader;
-        $d->qty_standard = $request->qty_standard;
-        $d->qty_premium = $request->qty_premium;
-        $d->qty_total = $request->qty_standard + $request->qty_premium;
+        $d->qty_standard = Helper::sanitizeAutonum($request->qty_standard);
+        $d->qty_premium = Helper::sanitizeAutonum($request->qty_premium);
+        $d->qty_total = $d->qty_standard + $d->qty_premium;
+        if($request->chargeTo == 'CURRENT'){
+            $d->qty_current = $d->qty_total;
+            $d->qty_prev = null;
+        }else{
+            $d->qty_current = null;
+            $d->qty_prev = $d->qty_total;
+        }
+
         $d->remarks = $request->remarks;
         $d->consumption = $request->consumption;
+
         if($d->save()){
             return $d->only('slug');
         }
@@ -70,9 +81,9 @@ class DeliveriesController extends Controller
         $d->date_of_withdrawal = $request->date_of_withdrawal;
         $d->sro_no = $request->sro_no;
         $d->trader = $request->trader;
-        $d->qty_standard = $request->qty_standard;
-        $d->qty_premium = $request->qty_premium;
-        $d->qty_total = $request->qty_standard + $request->qty_premium;
+        $d->qty_standard =  Helper::sanitizeAutonum($request->qty_standard);
+        $d->qty_premium = Helper::sanitizeAutonum($request->qty_premium);
+        $d->qty_total = $d->qty_standard + $d->qty_premium;
         $d->remarks = $request->remarks;
         $d->consumption = $request->consumption;
         if($request->chargeTo == 'CURRENT'){

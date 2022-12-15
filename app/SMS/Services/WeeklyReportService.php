@@ -275,9 +275,10 @@ class WeeklyReportService
 
 
         $formArray['withdrawals'] = [];
+
         //WITHDRAWALS /DELIVERIES
         $ws = $weekly_report->form5aDeliveries()
-            ->selectRaw('consumption, sum(qty_total) as currentTotal')
+            ->selectRaw('consumption, sum(qty_current) as currentTotal, sum(qty_prev) as prevTotal')
             ->groupBy('consumption')
             ->orderBy('consumption','asc')
             ->get();

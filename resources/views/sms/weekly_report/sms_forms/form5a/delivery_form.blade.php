@@ -1,3 +1,4 @@
+@php($rand = \Illuminate\Support\Str::random())
 <div class="row">
     {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_withdrawal',[
         'label' => 'Date of Withdrawal',
@@ -27,6 +28,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('qty_standard',[
         'label' => 'Qty Standard:',
         'cols' => 6,
+        'class' => 'autonumber_mt_'.$rand,
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}
@@ -34,6 +36,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('qty_premium',[
         'label' => 'Qty Premium:',
         'cols' => 6,
+        'class' => 'autonumber_mt_'.$rand,
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}
@@ -74,3 +77,7 @@
 
 
 </div>
+
+<script>
+    const autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber_mt_{{$rand}}',autonum_settings_mt);
+</script>

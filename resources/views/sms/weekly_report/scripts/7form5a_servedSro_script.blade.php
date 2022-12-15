@@ -73,7 +73,7 @@
                 {!! __html::token_header() !!}
             },
             success: function (res) {
-                succeed(form,false,false);
+                succeed(form,true,false);
                 active_form5a_serverSros = res.slug;
                 form5a_servedSros_tbl.draw(false);
             },

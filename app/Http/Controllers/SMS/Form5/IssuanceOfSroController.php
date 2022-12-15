@@ -7,6 +7,7 @@ namespace App\Http\Controllers\SMS\Form5;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form5\IssuancesOfSro;
 use App\SMS\Services\WeeklyReportService;
+use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
@@ -48,7 +49,7 @@ class IssuanceOfSroController extends Controller
         $i->date_of_issue = $request->date_of_issue;
         $i->liens_or = $request->liens_or;
         $i->sugar_class = $request->sugar_class;
-        $i->qty = $request->qty;
+        $i->qty = Helper::sanitizeAutonum($request->qty);
         if($request->has('refining')){
             $i->refining = 1;
         }
@@ -76,7 +77,7 @@ class IssuanceOfSroController extends Controller
         $i->date_of_issue = $request->date_of_issue;
         $i->liens_or = $request->liens_or;
         $i->sugar_class = $request->sugar_class;
-        $i->qty = $request->qty;
+        $i->qty = Helper::sanitizeAutonum($request->qty);
         $i->refining = null;
         if($request->has('refining')){
             $i->refining = 1;

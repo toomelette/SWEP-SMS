@@ -1,3 +1,4 @@
+@php($rand = \Illuminate\Support\Str::random())
 <div class="row">
     {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_issue',[
         'label' => 'Date of Issue',
@@ -24,6 +25,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('raw_qty',[
         'label' => 'Raw Qty',
         'cols' => 4,
+        'class' => 'autonumber_mt_'.$rand,
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}
@@ -44,6 +46,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('refined_qty',[
         'label' => 'Refined Qty',
         'cols' => 4,
+        'class' => 'autonumber_mt_'.$rand,
     ],
     $issuance->refined_qty ?? $issuance->prev_refined_qty ?? null
     ) !!}
@@ -80,3 +83,7 @@
      !empty($issuance->refined_qty) ? 'CURRENT' : 'CURRENT'
     ) !!}
 </div>
+
+<script>
+    const autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber_mt_{{$rand}}',autonum_settings_mt);
+</script>

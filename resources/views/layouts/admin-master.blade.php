@@ -248,6 +248,13 @@
       };
       $(".iCheck").iCheck(iCheckRadioOptions);
 
+
+      $("form").on('reset',function (e) {
+        let id = $(this).attr('id');
+        setTimeout(function () {
+          $('#'+id+' :radio').iCheck('update');
+        })
+      })
     </script>
 
     @yield('scripts')

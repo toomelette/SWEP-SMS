@@ -269,6 +269,9 @@ class Helper
     }
 
     public static function sanitizeAutonum($num){
+        if(empty($num)){
+            return null;
+        }
         $num = str_replace('₱','',$num);
         return str_replace(',','',$num);
     }

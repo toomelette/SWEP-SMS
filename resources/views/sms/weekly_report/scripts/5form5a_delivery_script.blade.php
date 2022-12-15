@@ -76,7 +76,7 @@
                 {!! __html::token_header() !!}
             },
             success: function (res) {
-                succeed(form,false,false);
+                succeed(form,true,false);
                 active_form5a_deliveries = res.slug;
                 form5a_deliveries_tbl.draw(false);
             },
@@ -85,4 +85,7 @@
             }
         })
     })
+
+    
+
 </script>

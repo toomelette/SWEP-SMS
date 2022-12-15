@@ -1,3 +1,4 @@
+@php($rand = \Illuminate\Support\Str::random())
 <div class="row">
     {!! \App\Swep\ViewHelpers\__form2::textbox('sro_no',[
         'label' => 'SRO No.',
@@ -46,6 +47,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('qty',[
         'label' => 'Qty. (MT)',
         'cols' => 6,
+        'class' => 'autonumber_mt_'.$rand,
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}
@@ -58,3 +60,7 @@
         </label>
     </div>
 </div>
+
+<script>
+    const autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber_mt_{{$rand}}',autonum_settings_mt);
+</script>
