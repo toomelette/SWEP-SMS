@@ -33,7 +33,7 @@ class WeeklyReportService
     }
 
 
-    public function computation($slug, $get = null){
+    public function computation($slug, $get = '', $report_no = null){
 
         $weekly_report = $this->findWeeklyReportBySlug($slug);
         $valuesStructure = [];
@@ -46,20 +46,34 @@ class WeeklyReportService
 
         $toDate =  $weekly_report->toDateForm1();
 
-//        return $toDate;
-        //MANUFACTURED
-        $formArray['manufactured']['current'] = $get=='toDate' ? $toDate->manufactured : $weekly_report->form1->manufactured ?? null;
-        $formArray['manufactured']['prev'] = $get=='toDate' ? $toDate->prev_manufactured  : $weekly_report->form1->prev_manufactured ?? null;
+
+        if($get == 'toDate'){
+            $relation = $weekly_report->form1ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+        }else{
+            $relation = $weekly_report->form1;
+        }
+
+        //manufactured
+        $formArray['manufactured'] = $this->makeCurrentPrev($relation->manufactured ?? null, $relation->prev_manufactured ?? null);
+
+
+//        $formArray['manufactured']['current'] = $get=='toDate' ? $toDate->manufactured : $weekly_report->form1->manufactured ?? null;
+//        $formArray['manufactured']['prev'] = $get=='toDate' ? $toDate->prev_manufactured  : $weekly_report->form1->prev_manufactured ?? null;
 
 
         //ISSUANCES
         $formArray['issuances'] = $valuesStructure;
         if(!empty($weekly_report->form1)){
             foreach (Arrays::sugarClasses() as $sugarClass){
-                $formArray['issuances'][$sugarClass]['current'] = $get=='toDate' ? $toDate->$sugarClass :  $weekly_report->form1->$sugarClass;
-                $formArray['issuances'][$sugarClass]['prev'] = $get=='toDate'  ? $toDate->{'prev_'.$sugarClass} : $weekly_report->form1->{'prev_'.$sugarClass};
+//                $formArray['issuances'][$sugarClass]['current'] = $get=='toDate' ? $toDate->$sugarClass :  $weekly_report->form1->$sugarClass;
+//                $formArray['issuances'][$sugarClass]['prev'] = $get=='toDate'  ? $toDate->{'prev_'.$sugarClass} : $weekly_report->form1->{'prev_'.$sugarClass};
+                $formArray['issuances'][$sugarClass] = $this->makeCurrentPrev($relation->$sugarClass ?? null, $relation->{'prev_'.$sugarClass} ?? null);
             }
         }
+
+
+
+
 
         $formArray['issuancesTotal']['current'] = array_sum(array_column($formArray['issuances'],'current'));
         $formArray['issuancesTotal']['prev'] = array_sum(array_column($formArray['issuances'],'prev'));
@@ -74,16 +88,20 @@ class WeeklyReportService
                 ->leftJoin('weekly_reports','weekly_reports.slug','=','form5_deliveries.weekly_report_slug')
                 ->where('crop_year','=',$weekly_report->crop_year)
                 ->where('mill_code','=',$weekly_report->mill_code)
-                ->where('report_no','<=',$weekly_report->report_no * 1)
+                ->where('report_no','<=',$report_no != 0 ? $report_no : $weekly_report->report_no * 1)
+//                ->where('weekly_reports.status' ,'!=', -1)
                 ->groupBy('refining','sugar_class')
                 ->orderBy('sugar_class','asc')
                 ->get();
+//                ->getBindings();
+//            dd($deliveries);
         }else{
             $deliveries = $weekly_report->form5Deliveries()
                 ->selectRaw('refining, sugar_class,sum(qty) as currentTotal, sum(qty_prev) as prevTotal')
                 ->groupBy('refining','sugar_class')
                 ->orderBy('sugar_class','asc')
                 ->get();
+//            dd($deliveries);
         }
         if(!empty($deliveries)){
             foreach ($deliveries as $delivery){
@@ -138,7 +156,14 @@ class WeeklyReportService
             'current' => $formArray['stockBalance']['current'] - $formArray['transfersToRefinery']['current'],
             'prev' => $formArray['stockBalance']['prev'] - $formArray['transfersToRefinery']['prev'],
         ];
+        //TONS DUE CANE
+        $formArray['tdc']['current'] = $relation->tdc;
+        $formArray['gtcm']['current'] = $relation->gtcm;
+        $formArray['lkgtc_gross']['current'] = $relation->lkgtc_gross;
+        $formArray['share_planter']['current'] = $relation->share_planter;
+        $formArray['share_miller']['current'] = $relation->share_miller;
 
+//        dd($formArray);
         //UNSET EMPTY VALUES
         foreach ($formArray['issuances'] as $key => $value){
             if(empty($value['current']) && empty($value['prev'])){
@@ -186,7 +211,7 @@ class WeeklyReportService
         $cp = ['current'=>null,'prev'=>null];
 
         if($get == 'toDate'){
-            $relation = $weekly_report->form2ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no);
+            $relation = $weekly_report->form2ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
         }else{
             $relation = $weekly_report->form2;
         }
@@ -323,7 +348,7 @@ class WeeklyReportService
         $temp = [];
         $wr = $this->findWeeklyReportBySlug($slug);
         if($get == 'toDate'){
-            $relation = $wr->form3ToDateAsOf($report_no != 0 ? $report_no : $wr->report_no);
+            $relation = $wr->form3ToDateAsOf($report_no != 0 ? $report_no * 1 : $wr->report_no * 1);
         }else{
             $relation = $wr->form3;
         }

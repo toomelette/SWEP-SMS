@@ -76,7 +76,7 @@ class WeeklyReports extends Model
         return $prev->form1 ?? null;
     }
 
-  public function toDateForm1(){
+    public function toDateForm1(){
         $fieldsToSum =  [
             'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller',
         ];
@@ -97,6 +97,27 @@ class WeeklyReports extends Model
 //            ;
           ->first();
 //        dd($toDate->getBindings());
+        return $toDate ?? null;
+    }
+
+    public function form1ToDateAsOf($report_no){
+        $fieldsToSum =  [
+            'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller',
+        ];
+        foreach ($fieldsToSum as $key => $field){
+            $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
+        }
+        $fields = implode(',',$fieldsToSum);
+        $toDate = WeeklyReports::query()
+            ->selectRaw($fields)
+            ->leftJoin('form1_details','form1_details.weekly_report_slug','=','weekly_reports.slug')
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','<=',$report_no*1)
+//            ->where('status' ,'=',1)
+            ->first();
+
+        return $toDate ?? null;
         return $toDate ?? null;
     }
 
@@ -163,8 +184,8 @@ class WeeklyReports extends Model
             ->leftJoin('form3_details','form3_details.weekly_report_slug','=','weekly_reports.slug')
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
-            ->where('report_no','<=',$report_no*1)
-            ->where('status','=',1)
+            ->where('report_no','<=',$report_no * 1)
+//            ->where('status','!=',-1)
             ->first();
 
         return $toDate ?? null;
