@@ -26,6 +26,7 @@
               <p>
                 {!! strtoupper(Helper::getUserName()['firstname']) !!}
             </p>
+              <a href="#"> {{\Illuminate\Support\Facades\Auth::user()->mill_code}}</a>
         @endif
       </div>
     </div>

@@ -280,7 +280,32 @@ class UserController extends Controller{
     }
 
 
-    public function store(UserFormRequest $request){
+    public function store(Request $request){
+        $user = new User();
+        $user->slug = Str::random();
+        $user->user_id = rand(1000000,9999999);
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+        $user->temp_password = $request->password;
+        $user->user_type = $request->user_type;
+        $user->lastname = $request->lastname;
+        $user->firstname = $request->firstname;
+        $user->middlename = $request->middlename;
+        $user->birthday = $request->birthday;
+        $user->email = $request->email;
+        $user->position = $request->position;
+        $user->mill_code = $request->mill_code;
+        $user->assoc_coop = $request->assoc_coop;
+        $user->address = $request->address;
+        $user->o_lastname = $request->o_lastname;
+        $user->o_firstname = $request->firstname;
+        $user->o_middlename = $request->middlename;
+
+        if($user->save()){
+            return 1;
+        }
+        abort(503,'Error');
+        return $request;
         if($request->create_from_employee == true){
 
             $employee = $this->findEmployeeBySlug($request->slug);

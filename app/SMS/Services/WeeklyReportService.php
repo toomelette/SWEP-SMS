@@ -10,8 +10,10 @@ use App\Models\SMS\Form5a\IssuancesOfSro;
 use App\Models\SMS\SeriesNos;
 use App\Models\SMS\Subsidiaries;
 use App\Models\SMS\WeeklyReports;
+use App\Models\Warehouses;
 use App\Swep\Helpers\Arrays;
 use App\Swep\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
 use function Doctrine\Common\Cache\Psr6\get;
 
 class WeeklyReportService
@@ -208,7 +210,6 @@ class WeeklyReportService
     public function form2Computation($slug,$get ='' , $report_no = 0){
         $formArray = [];
         $weekly_report = $this->findWeeklyReportBySlug($slug);
-        $cp = ['current'=>null,'prev'=>null];
 
         if($get == 'toDate'){
             $relation = $weekly_report->form2ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
@@ -341,8 +342,7 @@ class WeeklyReportService
         echo print('<pre>'.print_r($formArray,true).'</pre>');
         die();
     }
-    
-    
+
     public function form3Computation($slug,$get='',$report_no = 0){
         $formArray = [];
         $temp = [];
@@ -432,6 +432,71 @@ class WeeklyReportService
 
         return $formArray;
         print('<pre>'.print_r($formArray,true).'</pre>');
+    }
+
+    public function form4aComputation($slug, $get = '',$report_no = 0){
+        $formArray = [];
+        $weekly_report = $this->findWeeklyReportBySlug($slug);
+
+        if($get == 'toDate'){
+            $relation = $weekly_report->form4aToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+        }else{
+            $relation = $weekly_report->form4a;
+        }
+
+        //carryOver
+        $formArray['carryOver'] = $this->makeCurrentPrev($relation->carryOver ?? null, $relation->prev_carryOver ?? null);
+        //receipts
+        $formArray['receipts'] = $this->makeCurrentPrev($relation->receipts ?? null, $relation->prev_receipts ?? null);
+        //withdrawals
+        $formArray['withdrawals'] = $this->makeCurrentPrev($relation->withdrawals ?? null, $relation->prev_withdrawals ?? null);
+        //transferToRefinery
+        $formArray['transferToRefinery'] = $this->makeCurrentPrev($relation->transferToRefinery ?? null, $relation->prev_transferToRefinery ?? null);
+
+
+        //subsidiaries
+        if($get == 'toDate'){
+            $subs = Subsidiaries::query()
+                ->selectRaw('warehouseAlias, name , transactionType, sum(current) as current, sum(prev) as prev')
+                ->leftJoin('weekly_reports','weekly_reports.slug','=','sms_subsidiaries.weekly_report_slug')
+                ->join('warehouses','warehouses.alias','=','sms_subsidiaries.warehouseAlias')
+                ->where('sugarType','=','REFINED')
+                ->where('crop_year','=',$weekly_report->crop_year)
+                ->where('mill_code','=', $weekly_report->mill_code)
+                ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $weekly_report->report_no * 1)
+                ->groupBy('transactionType','alias')
+                ->orderBy('sms_subsidiaries.id','asc')
+                ->get();
+
+        }else{
+            $subs = $weekly_report->form4aSubsidiaries()
+                ->selectRaw('warehouseAlias, name , transactionType, sum(current) as current, sum(prev) as prev')
+                ->leftJoin('warehouses','warehouses.alias','=','sms_subsidiaries.warehouseAlias')
+                ->groupBy('transactionType','alias')
+                ->orderBy('sms_subsidiaries.id','asc')
+                ->get();
+
+        }
+        //list subsidiaries
+        $whs  = Warehouses::query()->where('millCode','=',Auth::user()->mill_code)->get();
+        $warehouseArray = [];
+        if(!empty($whs)){
+            foreach ($whs as $wh){
+                $warehouseArray[$wh->alias]['obj'] = $wh;
+            }
+        }
+        foreach (Arrays::subsidiaryItems() as $key => $item){
+            $formArray['subsidiaries'][$key] = $warehouseArray;
+        }
+
+        if(!empty($subs)){
+            foreach ($subs as $sub){
+                $formArray['subsidiaries'][$sub->transactionType][$sub->warehouseAlias]['current'] = $sub->current;
+                $formArray['subsidiaries'][$sub->transactionType][$sub->warehouseAlias]['prev'] = $sub->prev;
+            }
+        }
+
+        return $formArray;
     }
 
     public function subsidiaries($weekly_report_slug){

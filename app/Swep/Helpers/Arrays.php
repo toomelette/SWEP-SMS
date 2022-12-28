@@ -128,6 +128,20 @@ class Arrays
         ];
     }
 
+    public static function subsidiaryItems(){
+        return [
+            'carryOver' => 'Carry Over',
+            'receipts' => 'Receipts',
+            'withdrawals' => 'Withdrawals',
+        ];
+    }
 
+    public static function userTypes(){
+        return [
+            'ENCODER' => 'ENCODER',
+            'APPROVER' => 'APPROVER',
+            'VIEWER' => 'VIEWER',
+        ];
+    }
 
 }

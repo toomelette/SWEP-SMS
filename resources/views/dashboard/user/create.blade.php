@@ -9,131 +9,102 @@
 <section class="content">
             
     <div class="box">
-        
-      <div class="box-header with-border">
-        <h3 class="box-title">Form</h3>
-        <div class="pull-right">
-            <code>Fields with asterisks(*) are required</code>
-        </div> 
-      </div>
-      
-      <form id="user_create_form" class="form-horizontal" method="POST" autocomplete="off" action="{{ route('dashboard.user.store') }}">
-
-        <div class="box-body">
-
-          <div class="col-md-11">
-                  
-              @csrf
-
-              {!! __form::textbox_inline(
-                  'firstname', 'text', 'Firstname *', 'Firstname', old('firstname'), $errors->has('firstname'), $errors->first('firstname'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'middlename', 'text', 'Middlename *', 'Middlename', old('middlename'), $errors->has('middlename'), $errors->first('middlename'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'lastname', 'text', 'Lastname *', 'Lastname', old('lastname'), $errors->has('lastname'), $errors->first('lastname'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'email', 'email', 'Email *', 'Email', old('email'), $errors->has('email'), $errors->first('email'), ''
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'position', 'text', 'Position *', 'Position / Plantilla', old('position'), $errors->has('position'), $errors->first('position'), 'data-transform="uppercase"'
-              ) !!}
-
-              {!! __form::textbox_inline(
-                  'username', 'text', 'Username *', 'Username', old('username'), $errors->has('username') || Session::has('USER_CREATE_FAIL_USERNAME_EXIST'), $errors->first('username'), ''
-              ) !!}
-
-              {!! __form::password_inline(
-                  'password', 'Password *', 'Password', $errors->has('password'), $errors->first('password'), ''
-              ) !!}
-
-              {!! __form::password_inline(
-                  'password_confirmation', 'Confirm Password *', 'Confirm Password', '', '', ''
-              ) !!}
-
-          </div>
-
-
-          {{-- USER MENU DYNAMIC TABLE GRID --}}
-          <div class="col-md-12" style="padding-top:50px;">
-            <div class="box box-solid">
-              <div class="box-header with-border">
-                <h3 class="box-title">User Menu</h3>
-                <button id="add_row" type="button" class="btn btn-sm bg-green pull-right">Add Row &nbsp;<i class="fa fw fa-plus"></i></button>
-              </div>
-              
-              <div class="box-body no-padding">
-                
-                <table class="table table-bordered">
-
-                  <tr>
-                    <th>Menus *</th>
-                    <th>Menu Modules</th>
-                    <th style="width: 40px"></th>
-                  </tr>
-
-                  <tbody id="table_body">
-
-                    @if(old('menu'))
-                      
-                      @foreach(old('menu') as $key => $value)
-
-                        <tr>
-
-                          <td style="width:450px;">
-                            <select name="menu[]" id="menu" class="form-control menu" style="width: 90%;">
-                              <option value="">Select</option>
-                              @foreach($global_menus_all as $data) 
-                                  <option value="{{ $data->menu_id }}" {!! old('menu.'.$key) == $data->menu_id ? 'selected' : ''!!}>{{ $data->name }}</option>
-                              @endforeach
-                            </select>
-                            <br><small class="text-danger">{{ $errors->first('menu.'.$key) }}</small>
-                          </td>
-
-                          <td style="min-width:50px; min-width:50px; max-width:50px">
-                            <select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width: 80%;">
-                                <option value="">Select</option>
-                                @foreach($global_submenus_all as $data)
-                                    @if(old('submenu') && $data->menu_id == old('menu.'.$key))
-                                        <option value="{{ $data->submenu_id }}" {!! in_array($data->submenu_id, old('submenu')) ? 'selected' : '' !!}>{{$data->name}}</option>
-                                    @else
-                                        <option value="{{ $data->submenu_id }}">{{$data->name}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                          </td>
-
-                          <td>
-                            <button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>
-                          </td>
-
-                        </tr>
-
-                      @endforeach
-
-                    @endif
-
-                    </tbody>
-                </table>
-               
-              </div>
-
+        <form id="add_user_form">
+          <div class="box-header with-border">
+            <h3 class="box-title">Form</h3>
+            <div class="pull-right">
+                <code>Fields with asterisks(*) are required</code>
             </div>
           </div>
+            <div class="box-body">
+                <div class="row">
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('username',[
+                        'cols' => 2,
+                        'label' => 'Username:'
+                    ]) !!}
 
-        </div>
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('password',[
+                        'cols' => 2,
+                        'label' => 'Password:'
+                    ]) !!}
 
-        <div class="box-footer">
-          <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
-        </div>
+                    {!! \App\Swep\ViewHelpers\__form2::select('user_type',[
+                        'cols' => 2,
+                        'label' => 'User Type:',
+                        'options' => \App\Swep\Helpers\Arrays::userTypes(),
+                    ]) !!}
+                </div>
+                <div class="row">
 
-      </form>
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('lastname',[
+                        'cols' => 2,
+                        'label' => 'Registered Last name:'
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('firstname',[
+                        'cols' => 2,
+                        'label' => 'Registered First name:'
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('middlename',[
+                        'cols' => 2,
+                        'label' => 'Registered Middle name:'
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('birthday',[
+                        'cols' => 2,
+                        'label' => 'Date of Birth:',
+                        'type' => 'date',
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('position',[
+                        'cols' => 2,
+                        'label' => 'Position:'
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('phone',[
+                        'cols' => 2,
+                        'label' => 'Phone:'
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('email',[
+                        'cols' => 2,
+                        'label' => 'Email:'
+                    ]) !!}
+                </div>
+                <div class="row">
+                    {!!\App\Swep\ViewHelpers\__form2::select('mill_code',[
+                        'cols' => 2,
+                        'label' => 'Mill Code:',
+                        'options' => \App\Swep\Helpers\Arrays::millCodes(),
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('assoc_coop',[
+                        'cols' => 2,
+                        'label' => 'Assoc. / Coop.:'
+                    ]) !!}
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('address',[
+                        'cols' => 4,
+                        'label' => 'Address:'
+                    ]) !!}
+                </div>
+                <div class="row">
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('o_lastname',[
+                        'cols' => 2,
+                        'label' => 'Official Last Name:'
+                    ]) !!}
+
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('o_firstname',[
+                        'cols' => 2,
+                        'label' => 'Official First Name:'
+                    ]) !!}
+
+                    {!! \App\Swep\ViewHelpers\__form2::textbox('o_middlename',[
+                        'cols' => 2,
+                        'label' => 'Official Middle Name:'
+                    ]) !!}
+                </div>
+            </div>
+
+            <div class="box-footer">
+              <button type="submit" class="btn btn-default">Save <i class="fa fa-fw fa-save"></i></button>
+            </div>
+        </form>
+
+
 
     </div>
 
@@ -162,108 +133,32 @@
 
 
 @section('scripts')
+    <script type="text/javascript">
 
-  <script type="text/javascript">
-
-
-  {!! __js::show_password('password', 'show_password') !!}
-  {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
-  
-
-  @if(Session::has('USER_CREATE_SUCCESS'))
-    $('#user_create').modal('show');
-  @endif
-
-
-  {{-- ADD ROW --}}
-  $(document).ready(function() {
-    $("#add_row").on("click", function() {
-        $('select').select2('destroy');
-        var content ='<tr>' +
-                      '<td style="width:450px;">' +
-                        '<select name="menu[]" id="menu" class="form-control menu" style="width:90%;">' +
-                          '<option value="">Select</option>' +
-                          '@foreach($global_menus_all as $data)' +
-                            '<option value="{{ $data->menu_id }}">{{ $data->name }}</option>' +
-                          '@endforeach' +
-                        '</select>' +
-                      '</td>' +
-
-                      '<td>' +
-                        '<select name="submenu[]" id="submenu" class="form-control submenu" multiple="multiple" data-placeholder="Modules" style="width:80%;">' +
-                          '<option value="">Select</option>' +
-                          '@foreach($global_submenus_all as $data)' +
-                              '<option value="{{ $data->submenu_id }}">{{$data->name}}</option>' +
-                          '@endforeach' +
-                        '</select>' +
-
-                      '</td>' +
-
-                      '<td>' +
-                          '<button id="delete_row" type="button" class="btn btn-sm bg-red"><i class="fa fa-times"></i></button>' +
-                      '</td>' +
-                    '</tr>';
-
-      $("#table_body").append($(content));
-
-      $('.menu').select2({
-        width:400,
-        dropdownParent: $('#table_body')
-      });
-
-      $('.submenu').select2({
-        width:400,
-        dropdownParent: $('#table_body'),
-        closeOnSelect: false,
-      });
-
-    });
-  });
-
-
-  {{-- AJAX Menu to Submenu--}}
-  $(document).ready(function() {
-    $(document).on("change", "#menu", function() {
-        var key = $(this).val();
-        var parent = $(this).closest('tr');
-        console.log(parent);
-        if(key) {
+        $("#add_user_form").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
             $.ajax({
-                headers: {"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")},
-                url: "/api/submenu/select_submenu_byMenuId/" + key,
-                type: "GET",
-                dataType: "json",
-                success:function(data) {   
-
-                    $(parent).find("#submenu").empty();
-
-                    $.each(data, function(key, value) {
-                        $(parent).find("#submenu").append("<option value='" + value.submenu_id + "'>"+ value.name +"</option>");
-                    });
-
-                    $(parent).find("#submenu").append("<option value>Select</option>");
-        
+                url : '{{route("dashboard.user.store")}}',
+                data : form.serialize(),
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    if(res == 1){
+                        form.get(0).reset();
+                        notify('Added successfully','success')
+                    }else{
+                        alert('Error. Check log')
+                    }
+                },
+                error: function (res) {
+                    alert('Error. Check log');
+                    console.log(res);
                 }
-            });
-        }else{
-            $(parent).find("#submenu").empty();
-        }
-    });
-  });
-
-
-  $('.menu').select2({
-    width:400,
-    dropdownParent: $('#table_body')
-  });
-
-  $('.submenu').select2({
-    width:400,
-    dropdownParent: $('#table_body')
-  });
-
-
-
-</script>
+            })
+        })
+    </script>
     
 @endsection
