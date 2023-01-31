@@ -8,6 +8,8 @@ use App\Models\SMS\Form3\Withdrawals;
 use App\Models\SMS\Form5\Deliveries;
 use App\Models\SMS\Form5a\IssuancesOfSro;
 use App\Models\SMS\SeriesNos;
+use App\Models\SMS\Signatories;
+use App\Models\SMS\SignatoriesSaved;
 use App\Models\SMS\Subsidiaries;
 use App\Models\SMS\WeeklyReports;
 use App\Models\Warehouses;
@@ -162,6 +164,7 @@ class WeeklyReportService
         $formArray['tdc']['current'] = $relation->tdc;
         $formArray['gtcm']['current'] = $relation->gtcm;
         $formArray['lkgtc_gross']['current'] = $relation->lkgtc_gross;
+//        $formArray['lkgtc_gross']['current'] = $relation->tdc * 20 / $relation->gtcm;
         $formArray['share_planter']['current'] = $relation->share_planter;
         $formArray['share_miller']['current'] = $relation->share_miller;
 
@@ -669,6 +672,43 @@ class WeeklyReportService
         if(!empty($s)){
             foreach ($s as $item){
                 $arr[$item->type][$item->slug] = $item;
+            }
+        }
+        return $arr;
+    }
+
+
+    public function updateSignatories($weekly_report_slug){
+        $wr = $this->findWeeklyReportBySlug($weekly_report_slug);
+        if($wr->status != 1){
+            $sigs = Signatories::query()->where('mill_code','=',Auth::user()->mill_code)->get();
+            $sArr = [];
+            if(!empty($sigs)){
+                foreach ($sigs as $sig){
+                    array_push($sArr,[
+                        'weekly_report_slug' => $weekly_report_slug,
+                        'form' => $sig->form,
+                        'for' => $sig->for,
+                        'name' => $sig->name,
+                        'position' => $sig->position,
+                    ]);
+                }
+                $wr->savedSignatories()->delete();
+                SignatoriesSaved::insert($sArr);
+            }
+        }
+
+    }
+
+    public function getSignatories($weekly_report_slug){
+        $wr = $this->findWeeklyReportBySlug($weekly_report_slug);
+        $arr = [];
+        if(!empty($wr->savedSignatories)){
+            foreach ($wr->savedSignatories as $sig){
+                $arr[$sig->form][$sig->for] = [
+                    'name' => $sig->name,
+                    'position' => $sig->position,
+                ];
             }
         }
         return $arr;

@@ -262,23 +262,45 @@
             <td></td>
             <td></td>
         </tr>
-
         <tr>
             <td>11. LGK/TC, GROSS	</td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross']['current'] ?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber(
+                ($form1['tdc']['current'] ?? null ) * 20 / ($form1['gtcm']['current']?? null)
+                ,3) }}
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross']['current'] ?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber(
+                ($prevToDateForm1['tdc']['current'] ?? null) * 20 / ($prevToDateForm1['gtcm']['current'] ?? null)
+                ,3) }}
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->lkgtc_gross ?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber(
+                ($wr->toDateForm1()->tdc) * 20 / ($wr->toDateForm1()->gtcm ?? null)
+                ,3) }}
             </td>
             <td class="text-right">
             </td>
             <td></td>
             <td></td>
         </tr>
+
+{{--        <tr>--}}
+{{--            <td>11. LGK/TC, GROSS	</td>--}}
+{{--            <td class="text-right">--}}
+{{--                {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross']['current'] ?? null,3) }}--}}
+{{--            </td>--}}
+{{--            <td class="text-right">--}}
+{{--                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross']['current'] ?? null,3) }}--}}
+{{--            </td>--}}
+{{--            <td class="text-right">--}}
+{{--                {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross']['current'] ?? null ,3) }}--}}
+{{--            </td>--}}
+{{--            <td class="text-right">--}}
+{{--            </td>--}}
+{{--            <td></td>--}}
+{{--            <td></td>--}}
+{{--        </tr>--}}
 
         <tr>
             <td>12. A. PLANTER'S SHARE	</td>

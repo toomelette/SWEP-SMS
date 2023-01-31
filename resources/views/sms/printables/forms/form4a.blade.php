@@ -101,29 +101,23 @@
         <tr>
             <td>Certified:</td>
             <td>Verified:</td>
-            <td>Verfiied:</td>
         </tr>
 
         <tr >
             <td>
-                <u>{{$signatories['form1']['sign1']['name'] ?? null}}</u>
+                <u>{{$signatories['form4a']['sign1']['name'] ?? null}}</u>
             </td>
             <td>
-                <u>{{$signatories['form1']['sign2']['name'] ?? null}}</u>
+                <u>{{$signatories['form4a']['sign2']['name'] ?? null}}</u>
             </td>
-            <td>
-                <u>{{$signatories['form1']['sign3']['name'] ?? null}}</u>
-            </td>
+
         </tr>
         <tr >
             <td>
-                {{$signatories['form1']['sign1']['position'] ?? null}}
+                {{$signatories['form4a']['sign1']['position'] ?? null}}
             </td>
             <td>
-                {{$signatories['form1']['sign2']['position'] ?? null}}
-            </td>
-            <td>
-                {{$signatories['form1']['sign3']['position'] ?? null}}
+                {{$signatories['form4a']['sign2']['position'] ?? null}}
             </td>
         </tr>
     </table>

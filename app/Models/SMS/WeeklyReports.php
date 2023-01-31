@@ -286,4 +286,8 @@ class WeeklyReports extends Model
     public function molassesSeriesNos(){
         return $this->hasMany(SeriesNos::class,'weekly_report_slug','slug')->where('type','=','MOLASSES');
     }
+
+    public function savedSignatories(){
+        return $this->hasMany(SignatoriesSaved::class,'weekly_report_slug','slug');
+    }
 }

@@ -92,19 +92,19 @@
         </tr>
         <tr >
             <td>
-                <u>{{$signatories['form6a']['sign1']['name'] ?? null}}</u>
+                <u>{{$signatories['form5a']['sign1']['name'] ?? null}}</u>
             </td>
             <td>
-                <u>{{$signatories['form6a']['sign2']['name'] ?? null}}</u>
+                <u>{{$signatories['form5a']['sign2']['name'] ?? null}}</u>
             </td>
 
         </tr>
         <tr >
             <td>
-                {{$signatories['form6a']['sign1']['position'] ?? null}}
+                {{$signatories['form5a']['sign1']['position'] ?? null}}
             </td>
             <td>
-                {{$signatories['form6a']['sign2']['position'] ?? null}}
+                {{$signatories['form5a']['sign2']['position'] ?? null}}
             </td>
 
         </tr>

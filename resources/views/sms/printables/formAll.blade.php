@@ -2,7 +2,7 @@
 
 @section('wrapper')
 
-{{--    @include('sms.printables.forms.form4a')--}}
+
     @include('sms.printables.forms.form1')
     <hr class="page-break no-print">
 
@@ -11,6 +11,15 @@
     <hr class="page-break no-print">
 
     @include('sms.printables.forms.form3')
+    <hr class="page-break no-print">
+
+    @include('sms.printables.forms.form3a')
+    <hr class="page-break no-print">
+
+    @include('sms.printables.forms.form4')
+    <hr class="page-break no-print">
+
+    @include('sms.printables.forms.form4a')
     <hr class="page-break no-print">
 
     @include('sms.printables.forms.form5')

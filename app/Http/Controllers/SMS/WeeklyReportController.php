@@ -172,7 +172,7 @@ class WeeklyReportController extends Controller
         $weekly_report = $this->findBySlug($slug);
         $details_arr = [];
         $input_fields_arr = [];
-
+        $this->weeklyReportService->updateSignatories($weekly_report->slug);
         $ifs = InputFields::query()->get();
         if(!empty($ifs)){
             foreach ($ifs as $if){
@@ -210,7 +210,7 @@ class WeeklyReportController extends Controller
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
             'input_fields_arr' => $input_fields_arr,
-            'signatories' => $signatoryService->getSavedSignatoriesAsArray(),
+            'signatories' => $this->weeklyReportService->getSignatories($slug),
 
             'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate'),
             'form1' => $this->weeklyReportService->computation($slug),
@@ -226,6 +226,14 @@ class WeeklyReportController extends Controller
             'form3' => $this->weeklyReportService->form3Computation($slug),
             'prevToDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate', $weekly_report->report_no - 1),
             'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate'),
+
+            'form3a' => $this->weeklyReportService->form3aComputation($slug),
+            'prevToDateForm3a' => $this->weeklyReportService->form3aComputation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm3a' => $this->weeklyReportService->form3aComputation($slug,'toDate'),
+
+            'form4' => $this->weeklyReportService->form4Computation($slug),
+            'prevToDateForm4' => $this->weeklyReportService->form4Computation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm4' => $this->weeklyReportService->form4computation($slug,'toDate'),
 
             'form4a' => $this->weeklyReportService->form4aComputation($slug),
             'prevToDateForm4a' => $this->weeklyReportService->form4aComputation($slug,'toDate', $weekly_report->report_no - 1),

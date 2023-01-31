@@ -153,4 +153,6 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 });
 
 
-    Route::get('/example','ExampleController@index');
+//    Route::get('/example',function(\App\SMS\Services\WeeklyReportService $weeklyReportService){
+//        return $weeklyReportService->getSignatories('Rczu3hpETFTURG86');
+//    });
