@@ -24,38 +24,38 @@
         <tr>
             <td>1. Carry-Over</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['carryOver']['current'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['carryOver']['current'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['carryOver']['current'] ?? null,2)}}</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['carryOver']['prev'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['carryOver']['prev'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['carryOver']['prev'] ?? null,2)}}</td>
         </tr>
         <tr>
             <td>2. Receipts</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['receipts']['current'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['receipts']['current'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['receipts']['current'] ?? null,2)}}</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['receipts']['prev'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['receipts']['prev'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['receipts']['prev'] ?? null,2)}}</td>
         </tr>
         <tr>
             <td>3. Withdrawals</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['withdrawals']['current'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['withdrawals']['current'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['withdrawals']['current'] ?? null,2)}}</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['withdrawals']['prev'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['withdrawals']['prev'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['withdrawals']['prev'] ?? null,2)}}</td>
         </tr>
         <tr>
             <td>4. Transfers to ...</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['transferToRefinery']['current'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['transferToRefinery']['current'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['transferToRefinery']['current'] ?? null,2)}}</td>
             <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form4a['transferToRefinery']['prev'] ?? null,2)}}</td>
-            <td class="text-right"></td>
-            <td class="text-right"></td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm4a['transferToRefinery']['prev'] ?? null,2)}}</td>
+            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm4a['transferToRefinery']['prev'] ?? null,2)}}</td>
         </tr>
         <tr>
             <td colspan="7"><br></td>
@@ -69,17 +69,19 @@
                 @php($total['prev'] = 0)
                 @if(count($subs) > 0)
                     @foreach($subs as $alias => $sub)
-                        @php($total['current'] = $total['current'] + ($sub['current'] ?? 0))
-                        @php($total['prev'] = $total['prev'] + ($sub['prev'] ?? 0))
-                        <tr>
-                            <td><span class="indent"></span> {{$sub['obj']->name ?? null}} ({{$alias}})</td>
-                            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['current'] ?? null,2)}}</td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['prev'] ?? null,2)}}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @if($sub['obj']->for == 'REFINED' )
+                            @php($total['current'] = $total['current'] + ($sub['current'] ?? 0))
+                            @php($total['prev'] = $total['prev'] + ($sub['prev'] ?? 0))
+                            <tr>
+                                <td><span class="indent"></span> {{$sub['obj']->name ?? null}} ({{$alias}})</td>
+                                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['current'] ?? null,2)}}</td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['prev'] ?? null,2)}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        @endif
                     @endforeach
                     <tr>
                         <td class="text-right text-strong">TOTAL</td>
@@ -94,5 +96,35 @@
             @endforeach
         @endif
         </tbody>
+    </table>
+    <table class="sign-table cols-3">
+        <tr>
+            <td>Certified:</td>
+            <td>Verified:</td>
+            <td>Verfiied:</td>
+        </tr>
+
+        <tr >
+            <td>
+                <u>{{$signatories['form1']['sign1']['name'] ?? null}}</u>
+            </td>
+            <td>
+                <u>{{$signatories['form1']['sign2']['name'] ?? null}}</u>
+            </td>
+            <td>
+                <u>{{$signatories['form1']['sign3']['name'] ?? null}}</u>
+            </td>
+        </tr>
+        <tr >
+            <td>
+                {{$signatories['form1']['sign1']['position'] ?? null}}
+            </td>
+            <td>
+                {{$signatories['form1']['sign2']['position'] ?? null}}
+            </td>
+            <td>
+                {{$signatories['form1']['sign3']['position'] ?? null}}
+            </td>
+        </tr>
     </table>
 </div>

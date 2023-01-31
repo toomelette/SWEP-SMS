@@ -611,7 +611,9 @@
         updateForm2(null);
         updateForm1(null);
         updateForm3(null);
-
+        updateForm3a(null);
+        updateForm4(null);
+        updateForm4a(null);
 
         $("#form2").submit(function (e) {
             e.preventDefault();
@@ -721,7 +723,8 @@
 
         $("body").on("click",".removeBtn",function () {
             $(this).parents('tr').remove();
-            $("#form1").submit();
+            $(this).closest('form').submit();
+
         })
 
 
@@ -843,61 +846,144 @@
             })
         })
 
-        $("#form4").submit(function (e) {
-            e.preventDefault();
-            let form = $(this);
+        function updateForm4(form = null,type = 'updateOnly') {
+            let uri = '{{route("dashboard.sms_form4.store")}}?wr={{$wr->slug}}';
+            let formData = null;
+            if(type === 'updateOnly'){
+                uri = uri+'&type=updateOnly';
+                formData = null;
+            }else{
+                formData = form.serialize();
+            }
             $.ajax({
-                url : '{{route("dashboard.sms_form4.store")}}?wr={{$wr->slug}}',
-                data : form.serialize(),
+                url : uri,
+                data : formData,
                 type: 'POST',
                 headers: {
                     {!! __html::token_header() !!}
                 },
                 success: function (res) {
-                    
+                    if(type !== 'updateOnly'){
+                        toast('Changes were auto saved.');
+                    }
+                    $.each(res.totals,function (i,v) {
+                        $("#form4 tr[for='"+i+"']").children('td').eq(1).html(v.current);
+                        $("#form4 tr[for='"+i+"']").children('td').eq(2).html(v.prev);
+                    })
                 },
                 error: function (res) {
-             
+                    $("#form4 tr.computation").each(function () {
+                        $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                    })
                 }
             })
+        }
+        $("#form4").submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            $('#form4 tr.computation').each(function () {
+                $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
+            })
+            updateForm4(form,'insert');
         })
+
+
+
+
+
+
+
+        function updateForm3a(form = null,type = 'updateOnly') {
+            let uri = '{{route("dashboard.sms_form3a.store")}}?wr={{$wr->slug}}';
+            let formData = null;
+            if(type === 'updateOnly'){
+                uri = uri+'&type=updateOnly';
+                formData = null;
+            }else{
+                formData = form.serialize();
+            }
+            $.ajax({
+                url : uri,
+                data : formData,
+                type: 'POST',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    if(type !== 'updateOnly'){
+                        toast('Changes were auto saved.');
+                    }
+                    $.each(res.totals,function (i,v) {
+                        $("#form3a tr[for='"+i+"']").children('td').eq(1).html(v.current);
+                        $("#form3a tr[for='"+i+"']").children('td').eq(2).html(v.prev);
+                    })
+                },
+                error: function (res) {
+                    $("#form3a tr.computation").each(function () {
+                        $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                    })
+                }
+            })
+        }
+
 
         $("#form3a").submit(function (e) {
             e.preventDefault();
             let form = $(this);
+            $('#form3a tr.computation').each(function () {
+                $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
+            })
+            updateForm3a(form,'insert');
+        })
+
+
+
+        function updateForm4a(form = null,type = 'updateOnly'){
+            let uri = '{{route("dashboard.sms_form4a.store")}}?wr={{$wr->slug}}';
+            let formData = null;
+            if(type === 'updateOnly'){
+                uri = uri+'&type=updateOnly';
+                formData = null;
+            }else{
+                formData = form.serialize();
+            }
             $.ajax({
-                url : '{{route("dashboard.sms_form3a.store")}}?wr={{$wr->slug}}',
-                data : form.serialize(),
+                url : uri,
+                data : formData,
                 type: 'POST',
                 headers: {
                     {!! __html::token_header() !!}
                 },
                 success: function (res) {
-
+                    if(type !== 'updateOnly'){
+                        toast('Changes were auto saved.');
+                    }
+                    $.each(res.totals,function (i,v) {
+                        $("#form4a tr[for='"+i+"']").children('td').eq(1).html(v.current);
+                        $("#form4a tr[for='"+i+"']").children('td').eq(2).html(v.prev);
+                    })
                 },
                 error: function (res) {
-
+                    $("#form4a tr.computation").each(function () {
+                        $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                    })
                 }
             })
-        })
+        }
 
         $("#form4a").submit(function (e) {
             e.preventDefault();
             let form = $(this);
-            $.ajax({
-                url : '{{route("dashboard.sms_form4a.store")}}?wr={{$wr->slug}}',
-                data : form.serialize(),
-                type: 'POST',
-                headers: {
-                    {!! __html::token_header() !!}
-                },
-                success: function (res) {
-
-                },
-                error: function (res) {
-
-                }
+            $('#form4a tr.computation').each(function () {
+                $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
             })
+            updateForm4a(form,'insert');
         })
 
         $(".select2Warehouses").each(function () {
@@ -930,6 +1016,8 @@
         $("body").on("change",".global-form-changer",function () {
             $(this).parents('form').submit();
         })
+
+
 
 
 

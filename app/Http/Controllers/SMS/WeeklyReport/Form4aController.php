@@ -7,12 +7,19 @@ namespace App\Http\Controllers\SMS\WeeklyReport;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form4a\Form4aDetails;
 use App\Models\SMS\Subsidiaries;
+use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Form4aController extends Controller
 {
+    protected $weeklyReportService;
+    public function __construct( WeeklyReportService $weeklyReportService )
+    {
+        $this->weeklyReportService = $weeklyReportService;
+    }
+
     public function store(Request $request){
         if($request->type != 'updateOnly'){
             Form4aDetails::updateOrCreate(
@@ -48,12 +55,15 @@ class Form4aController extends Controller
                         }
                     }
                 }
+
                 Subsidiaries::query()
                     ->where('weekly_report_slug','=',$request->wr)
                     ->where('sugarType','=','REFINED')
                     ->delete();
                 Subsidiaries::insert($arr);
             }
+
         }
+        return $this->weeklyReportService->form4aComputation($request->wr);
     }
 }

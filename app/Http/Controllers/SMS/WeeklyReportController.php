@@ -228,6 +228,8 @@ class WeeklyReportController extends Controller
             'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate'),
 
             'form4a' => $this->weeklyReportService->form4aComputation($slug),
+            'prevToDateForm4a' => $this->weeklyReportService->form4aComputation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm4a' => $this->weeklyReportService->form4acomputation($slug,'toDate'),
         ]);
     }
     public function printForm6a($slug){

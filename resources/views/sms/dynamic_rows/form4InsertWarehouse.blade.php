@@ -20,18 +20,34 @@ $rand = \Illuminate\Support\Str::random();
             </div>
         </div>
     </td>
-    <td>
-        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('subsidiaries['.$transactionType.'][current]['.$rand.']',[
-            'class' => 'text-right input-sm'
-        ],
-        $data->current ?? null) !!}
-    </td>
-    <td>
-        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('subsidiaries['.$transactionType.'][prev]['.$rand.']',[
-            'class' => 'text-right input-sm'
-        ],
-        $data->prev ?? null) !!}
-    </td>
+    @if(request()->ajax())
+        <td>
+            {!! \App\Swep\ViewHelpers\__form2::textboxOnly('subsidiaries['.$transactionType.'][current]['.$rand.']',[
+                'class' => 'global-form-changer text-right input-sm autonumber_mt_'.$rand,
+            ],
+            $data->current ?? null) !!}
+        </td>
+        <td>
+            {!! \App\Swep\ViewHelpers\__form2::textboxOnly('subsidiaries['.$transactionType.'][prev]['.$rand.']',[
+                'class' => 'global-form-changer text-right input-sm autonumber_mt_'.$rand,
+            ],
+            $data->prev ?? null) !!}
+        </td>
+
+        @else
+        <td>
+            {!! \App\Swep\ViewHelpers\__form2::textboxOnly('subsidiaries['.$transactionType.'][current]['.$rand.']',[
+                'class' => 'global-form-changer text-right input-sm autonumber_mt'
+            ],
+            $data->current ?? null) !!}
+        </td>
+        <td>
+            {!! \App\Swep\ViewHelpers\__form2::textboxOnly('subsidiaries['.$transactionType.'][prev]['.$rand.']',[
+                'class' => 'global-form-changer text-right input-sm autonumber_mt'
+            ],
+            $data->prev ?? null) !!}
+        </td>
+    @endif
 </tr>
 
 @if(request()->ajax())
@@ -42,6 +58,10 @@ $rand = \Illuminate\Support\Str::random();
                 url: '{{route('dashboard.ajax.get','myWarehouses')}}?for={{$sugarType}}&default=',
                 dataType: 'json'
             }
+        });
+
+        $(".autonumber_mt_{{$rand}}").each(function(){
+            new AutoNumeric(this, autonum_settings_mt);
         });
     </script>
 @else

@@ -8,12 +8,19 @@ use App\Http\Controllers\Controller;
 use App\Models\SMS\Form3\Form3Details;
 use App\Models\SMS\Form3a\Form3aDetails;
 use App\Models\SMS\Subsidiaries;
+use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Form3aController extends Controller
 {
+    protected $weeklyReportService;
+    public function __construct( WeeklyReportService $weeklyReportService )
+    {
+        $this->weeklyReportService = $weeklyReportService;
+    }
+
     public function store(Request $request){
         if($request->type != 'updateOnly'){
             Form3aDetails::updateOrCreate(
@@ -56,5 +63,6 @@ class Form3aController extends Controller
                 Subsidiaries::insert($arr);
             }
         }
+        return $this->weeklyReportService->form3aComputation($request->wr);
     }
 }

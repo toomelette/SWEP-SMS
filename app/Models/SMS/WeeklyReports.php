@@ -130,8 +130,49 @@ class WeeklyReports extends Model
         return $this->hasOne(Form3aDetails::class,'weekly_report_slug','slug');
     }
 
+    public function form3aToDateAsOf($report_no){
+        $fieldsToSum = [
+            'carryOver', 'receipts', 'withdrawals', 'transferToRefinery', 'prev_carryOver', 'prev_receipts', 'prev_withdrawals', 'prev_transferToRefinery',
+        ];
+        foreach ($fieldsToSum as $key => $field){
+            $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
+        }
+        $fields = 'weekly_report_slug, '.implode(',',$fieldsToSum);
+        $toDate = WeeklyReports::query()
+            ->selectRaw($fields)
+            ->leftJoin('form3a_details','form3a_details.weekly_report_slug','=','weekly_reports.slug')
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','<=',$report_no * 1)
+//            ->where('status' ,'=',1)
+            ->first();
+
+        return $toDate ?? null;
+    }
+
     public function form4(){
         return $this->hasOne(Form4Details::class,'weekly_report_slug','slug');
+    }
+
+
+    public function form4ToDateAsOf($report_no){
+        $fieldsToSum = [
+            'carryOver', 'receipts', 'withdrawals', 'transferToRefinery', 'prev_carryOver', 'prev_receipts', 'prev_withdrawals', 'prev_transferToRefinery',
+        ];
+        foreach ($fieldsToSum as $key => $field){
+            $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
+        }
+        $fields = 'weekly_report_slug, '.implode(',',$fieldsToSum);
+        $toDate = WeeklyReports::query()
+            ->selectRaw($fields)
+            ->leftJoin('form4_details','form4_details.weekly_report_slug','=','weekly_reports.slug')
+            ->where('crop_year','=',$this->crop_year)
+            ->where('mill_code','=',$this->mill_code)
+            ->where('report_no','<=',$report_no * 1)
+//            ->where('status' ,'=',1)
+            ->first();
+
+        return $toDate ?? null;
     }
 
     public function form4a(){
@@ -157,12 +198,16 @@ class WeeklyReports extends Model
 
         return $toDate ?? null;
     }
-    public function form4aSubsidiaries(){
-        return $this->hasMany(Subsidiaries::class,'weekly_report_slug','slug')->where('sugarType','=','REFINED');
+    public function form3aSubsidiaries(){
+        return $this->hasMany(Subsidiaries::class,'weekly_report_slug','slug')->where('sugarType','=','MOLASSES');
     }
 
     public function form4Subsidiaries(){
-        return $this->hasMany(Subsidiaries::class,'weekly_report_slug','slug');
+        return $this->hasMany(Subsidiaries::class,'weekly_report_slug','slug')->where('sugarType','=','RAW');
+    }
+
+    public function form4aSubsidiaries(){
+        return $this->hasMany(Subsidiaries::class,'weekly_report_slug','slug')->where('sugarType','=','REFINED');
     }
 
 

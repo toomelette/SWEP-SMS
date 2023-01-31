@@ -55,12 +55,11 @@
     @yield('modals')
       {!! __html::modal_loader() !!}
 
-    <div class="modal fade" id="change_pass_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="change_pass_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <form id="change_pass_form">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Change Password</h4>
               </div>
               <div class="modal-body">
@@ -255,6 +254,10 @@
           $('#'+id+' :radio').iCheck('update');
         })
       })
+
+      @if(Auth::user()->has_changed_password == null)
+        $("#change_pass_modal").modal('show');
+      @endif
     </script>
 
     @yield('scripts')

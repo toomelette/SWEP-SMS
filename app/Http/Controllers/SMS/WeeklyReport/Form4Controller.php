@@ -7,12 +7,19 @@ namespace App\Http\Controllers\SMS\WeeklyReport;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\Form4\Form4Details;
 use App\Models\SMS\Subsidiaries;
+use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Form4Controller extends Controller
 {
+    protected $weeklyReportService;
+    public function __construct( WeeklyReportService $weeklyReportService )
+    {
+        $this->weeklyReportService = $weeklyReportService;
+    }
+
     public function store(Request $request){
         if($request->type != 'updateOnly'){
             Form4Details::updateOrCreate(
@@ -56,6 +63,6 @@ class Form4Controller extends Controller
             }
         }
 
-
+        return $this->weeklyReportService->form4Computation($request->wr);
     }
 }

@@ -22,14 +22,14 @@
             <td><span class="indent"></span> 1.1 Production/Carry-over</td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('carryOver',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->carryOver ?? null
                 ) !!}
             </td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_carryOver',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->prev_carryOver ?? null) !!}
             </td>
@@ -38,14 +38,14 @@
             <td><span class="indent"></span> 1.2 Receipts</td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('receipts',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->receipts ?? null
                 ) !!}
             </td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_receipts',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->prev_receipts ?? null) !!}
             </td>
@@ -54,14 +54,14 @@
             <td><span class="indent"></span> 1.3 Withdrawals</td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('withdrawals',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->withdrawals ?? null
                 ) !!}
             </td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_withdrawals',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->prev_withdrawals ?? null) !!}
             </td>
@@ -70,14 +70,14 @@
             <td><span class="indent"></span> 1.4 Transfers to refinery</td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('transferToRefinery',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->transferToRefinery ?? null
                 ) !!}
             </td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_transferToRefinery',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->prev_transferToRefinery ?? null) !!}
             </td>
@@ -86,14 +86,14 @@
             <td><span class="indent"></span> 1.5 Etc</td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('etc',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->etc ?? null
                 ) !!}
             </td>
             <td>
                 {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_etc',[
-                    'class' => 'form4a-input input-sm text-right autonumber_mt'
+                    'class' => 'global-form-changer form4a-input input-sm text-right autonumber_mt'
                 ],
                 $wr->form4a->prev_etc ?? null) !!}
             </td>
@@ -126,10 +126,10 @@
             @endforeach
         @endif
 
-        <tr class="form4aCarryOverTotal">
+        <tr for="carryOver" class="computation form4aCarryOverTotal">
             <td class="text-strong text-right"> TOTAL</td>
-            <td></td>
-            <td></td>
+            <td class="text-right text-strong"></td>
+            <td class="text-right text-strong"></td>
         </tr>
 
 
@@ -151,10 +151,10 @@
         @endif
 
 
-        <tr class="form4aReceiptsTotal">
+        <tr for="receipts" class="computation form4aReceiptsTotal">
             <td class="text-strong text-right"> TOTAL</td>
-            <td></td>
-            <td></td>
+            <td class="text-right text-strong"></td>
+            <td class="text-right text-strong"></td>
         </tr>
 
         <tr>
@@ -175,10 +175,10 @@
         @endif
 
 
-        <tr class="form4aWithdrawalsTotal">
+        <tr for="withdrawals" class="computation form4aWithdrawalsTotal">
             <td class="text-strong text-right"> TOTAL</td>
-            <td></td>
-            <td></td>
+            <td class="text-right text-strong"></td>
+            <td class="text-right text-strong"></td>
         </tr>
         </tbody>
     </table>

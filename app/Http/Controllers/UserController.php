@@ -273,6 +273,8 @@ class UserController extends Controller{
     public function changePassword(ChangePasswordFormRequest $request){
         $user = Auth::user();
         $user->password = Hash::make($request->password);
+        $user->temp_password = $request->password;
+        $user->has_changed_password = 1;
         if($user->save()){
             return $user->only('slug');
         }
