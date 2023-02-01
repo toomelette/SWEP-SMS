@@ -265,19 +265,34 @@
         <tr>
             <td>11. LGK/TC, GROSS	</td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber(
-                ($form1['tdc']['current'] ?? null ) * 20 / ($form1['gtcm']['current']?? null)
-                ,3) }}
+                @if(!empty($form1['gtcm']['current']))
+                    @if($form1['gtcm']['current'] != 0)
+                        {{ \App\Swep\Helpers\Helper::toNumber(
+                        ($form1['tdc']['current'] ?? null) * 20 / ($form1['gtcm']['current'])
+                        ,3) }}
+                    @endif
+                @endif
+
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber(
-                ($prevToDateForm1['tdc']['current'] ?? null) * 20 / ($prevToDateForm1['gtcm']['current'] ?? null)
-                ,3) }}
+                @if(!empty($prevToDateForm1['gtcm']['current']))
+                    @if($prevToDateForm1['gtcm']['current'] != 0)
+                        {{ \App\Swep\Helpers\Helper::toNumber(
+                        ($prevToDateForm1['tdc']['current']?? null) * 20 / ($prevToDateForm1['gtcm']['current'])
+                        ,3) }}
+                    @endif
+                @endif
+
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber(
-                ($wr->toDateForm1()->tdc) * 20 / ($wr->toDateForm1()->gtcm ?? null)
-                ,3) }}
+                @if(!empty($wr->toDateForm1()->gtcm))
+                    @if($wr->toDateForm1()->gtcm != 0)
+                        {{ \App\Swep\Helpers\Helper::toNumber(
+                        ($wr->toDateForm1()->tdc ?? null) * 20 / ($wr->toDateForm1()->gtcm)
+                        ,3) }}
+                    @endif
+                @endif
+
             </td>
             <td class="text-right">
             </td>

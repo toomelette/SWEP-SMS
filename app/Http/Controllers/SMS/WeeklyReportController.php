@@ -105,7 +105,9 @@ class WeeklyReportController extends Controller
     public function edit($slug, WeeklyReportService $weeklyReportService){
 
         $weekly_report = $this->findBySlug($slug);
-
+        if($weekly_report->mill_code != Auth::user()->mill_code){
+            abort(404,'This report does not belong to your mill code.');
+        }
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
             'formArray' => $weeklyReportService->computation($slug),

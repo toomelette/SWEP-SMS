@@ -21,11 +21,13 @@
             <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
             <p>
               We could not find the page you were looking for.
-              Meanwhile, you may return to Home Page.
-              {{ $exception->getMessage()}}
+              Meanwhile, you may return to Home Page.<br>
+              <b>{{ $exception->getMessage()}}</b>
             </p>
+
             <a class="btn btn-sm btn-warning" href="{{ URL::previous() }}">Go Back!</a>
           </div>
+
         </div>
 
       </section>
