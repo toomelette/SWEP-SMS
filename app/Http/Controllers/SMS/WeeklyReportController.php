@@ -172,6 +172,9 @@ class WeeklyReportController extends Controller
     public function print($slug, SignatoryService $signatoryService){
 
         $weekly_report = $this->findBySlug($slug);
+        if($weekly_report->mill_code != Auth::user()->mill_code){
+            abort(404,'This report does not belong to your mill code.');
+        }
         $details_arr = [];
         $input_fields_arr = [];
         $this->weeklyReportService->updateSignatories($weekly_report->slug);
