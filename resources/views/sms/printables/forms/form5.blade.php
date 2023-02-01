@@ -69,13 +69,13 @@
                     @foreach($usedSugarClassesArray as $class)
                         @if($form5Deliveries->sugar_class == $class)
                             <td class="text-right">
-                                {{($form5Deliveries->qty != null) ? number_format($form5Deliveries->qty,3) : null}}
+                                {!! ($form5Deliveries->qty != null) ? number_format($form5Deliveries->qty,3) : ($form5Deliveries->qty_prev != null ?  number_format($form5Deliveries->qty_prev != null,3) : null) !!}
                             </td>
                         @else
                             <td></td>
                         @endif
                     @endforeach
-                    <td>{{($form5Deliveries->refining == 1) ? 'For Refining':''}} {{$form5Deliveries->remarks}} </td>
+                    <td>{{($form5Deliveries->refining == 1) ? 'For Refining':''}} {{$form5Deliveries->remarks}} {{$form5Deliveries->qty_prev != null ?  'PREVIOUS' : null}}</td>
                 </tr>
             @endforeach
         @endif
