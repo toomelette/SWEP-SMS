@@ -53,6 +53,7 @@ class WeeklyReportService
 
         if($get == 'toDate'){
             $relation = $weekly_report->form1ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+
         }else{
             $relation = $weekly_report->form1;
         }
@@ -93,12 +94,12 @@ class WeeklyReportService
                 ->where('crop_year','=',$weekly_report->crop_year)
                 ->where('mill_code','=',$weekly_report->mill_code)
                 ->where('report_no','<=',$report_no != 0 ? $report_no : $weekly_report->report_no * 1)
-//                ->where('weekly_reports.status' ,'!=', -1)
+                ->where('weekly_reports.status' ,'!=', -1)
                 ->groupBy('refining','sugar_class')
                 ->orderBy('sugar_class','asc')
                 ->get();
-//                ->getBindings();
-//            dd($deliveries);
+
+
         }else{
             $deliveries = $weekly_report->form5Deliveries()
                 ->selectRaw('refining, sugar_class,sum(qty) as currentTotal, sum(qty_prev) as prevTotal')
@@ -124,6 +125,10 @@ class WeeklyReportService
         $formArray['withdrawalsTotal']['prev'] = array_sum(array_column($formArray['withdrawals'],'prev'));
         $formArray['forRefiningTotal']['current'] = array_sum(array_column($formArray['forRefining'],'current'));
         $formArray['forRefiningTotal']['prev'] = array_sum(array_column($formArray['forRefining'],'prev'));
+
+        $formArray['overallWithdrawal']['current'] = ($formArray['withdrawalsTotal']['current'] ?? 0) + ($formArray['forRefiningTotal']['current'] ?? 0);
+        $formArray['overallWithdrawal']['prev'] = ($formArray['withdrawalsTotal']['prev'] ?? 0) + ($formArray['forRefiningTotal']['prev'] ?? 0);
+
         $formArray['balances']= $valuesStructure;
 
 
@@ -161,12 +166,15 @@ class WeeklyReportService
             'prev' => $formArray['stockBalance']['prev'] - $formArray['transfersToRefinery']['prev'],
         ];
         //TONS DUE CANE
-        $formArray['tdc']['current'] = $relation->tdc;
-        $formArray['gtcm']['current'] = $relation->gtcm;
-        $formArray['lkgtc_gross']['current'] = $relation->lkgtc_gross;
+        $formArray['tdc']['current'] = $relation->tdc ?? null;
+        $formArray['gtcm']['current'] = $relation->gtcm ?? null;
+        $formArray['lkgtc_gross']['current'] = $relation->lkgtc_gross ?? null;
+        $formArray['tds']['current'] = $relation->tds ?? null;
+        $formArray['egtcm']['current'] = $relation->egtcm ?? null;
+        $formArray['lkgtc_gross_syrup']['current'] = $relation->lkgtc_gross_syrup ?? null;
 //        $formArray['lkgtc_gross']['current'] = $relation->tdc * 20 / $relation->gtcm;
-        $formArray['share_planter']['current'] = $relation->share_planter;
-        $formArray['share_miller']['current'] = $relation->share_miller;
+        $formArray['share_planter']['current'] = $relation->share_planter ?? null;
+        $formArray['share_miller']['current'] = $relation->share_miller ?? null;
 
 //        dd($formArray);
         //UNSET EMPTY VALUES
@@ -190,12 +198,28 @@ class WeeklyReportService
                 unset($formArray['balances'][$key]);
             }
         }
+        if(!empty($weekly_report->form1)){
+            if($weekly_report->form1->gtcm != 0){
+                $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc * 20 /  $weekly_report->form1->gtcm ,2),2);
+            }else{
+                $formArray['fieldsToFill']['lkgtcGross'] = 0;
+            }
 
-        if($weekly_report->form1->gtcm != 0){
-            $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc * 20 /  $weekly_report->form1->gtcm ,2),2);
+            if($weekly_report->form1->egtcm != 0){
+                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = number_format(round($weekly_report->form1->tds * 20 /  $weekly_report->form1->egtcm ,2),2);
+            }else{
+                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = 0;
+            }
         }else{
             $formArray['fieldsToFill']['lkgtcGross'] = 0;
         }
+
+        if(!empty($weekly_report->form1)){
+
+        }else{
+            $formArray['fieldsToFill']['lkgtcGross'] = 0;
+        }
+
 
         return $formArray;
         echo print('<pre>'.print_r($formArray,true).'</pre>');

@@ -33,6 +33,10 @@ class WeeklyReports extends Model
         return $this->belongsTo(CropYears::class,'crop_year','slug');
     }
 
+    public function sugarMill(){
+        return $this->belongsTo(SugarMills::class,'mill_code','slug');
+    }
+
     public function details(){
         return $this->hasMany(WeeklyReportDetails::class, 'weekly_report_slug','slug');
     }
@@ -94,9 +98,8 @@ class WeeklyReports extends Model
                 $query->where('status','=',1)
                 ->orWhere('status','=',null);
             })
-//            ;
           ->first();
-//        dd($toDate->getBindings());
+
         return $toDate ?? null;
     }
 
@@ -114,9 +117,8 @@ class WeeklyReports extends Model
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
             ->where('report_no','<=',$report_no*1)
-//            ->where('status' ,'=',1)
             ->first();
-
+//        dd($toDate);
         return $toDate ?? null;
     }
 

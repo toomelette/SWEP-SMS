@@ -130,6 +130,10 @@
                                 </p>
                             </div>
                             <div class="box-body" style="">
+                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
+                                    <b>CANE</b>
+                                </p>
+
                                 <div class="row">
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('tdc',[
                                         'label' => "9. Tons Due Cane",
@@ -156,16 +160,55 @@
                                     ],
                                     $wr->form1->lkgtc_gross ?? null
                                     ) !!}
+                                </div>
+
+                                @if($wr->sugarMill->syrup == 1)
+                                    <p class="page-header-sm text-info" style="border-bottom: 1px solid #33a100">
+                                        <b class="text-success">SYRUP</b>
+                                    </p>
+
+                                    <div class="row">
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('tds',[
+                                            'label' => "9. Tons Due Syrup",
+                                            'cols' => 4,
+                                            'class' => 'form1-input text-right autonumber_mt',
+                                            'container_class' => 'tds',
+                                        ],
+                                        $wr->form1->tds ?? null
+                                        ) !!}
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('egtcm',[
+                                            'label' => "10. Equivalent Gross Tons Cane Milled",
+                                            'cols' => 4,
+                                            'class' => 'form1-input text-right autonumber_mt',
+                                            'container_class' => 'egtcm',
+                                        ],
+                                        $wr->form1->egtcm ?? null
+                                        ) !!}
+                                        {!! \App\Swep\ViewHelpers\__form2::textbox('lkgtc_gross_syrup',[
+                                            'label' => "11. LKG/TC Gross",
+                                            'cols' => 4,
+                                            'class' => 'form1-input text-right',
+                                            'container_class' => 'lkgtc_gross_syrup',
+                                            'readonly' => 'readonly',
+                                        ],
+                                        $wr->form1->lkgtc_gross_syrup ?? null
+                                        ) !!}
+                                    </div>
+                                @endif
 
 
+                                <p class="page-header-sm text-info" style="border-bottom: 1px solid #e0a800">
+                                    <b class="text-warning">SHARE</b>
+                                </p>
+                                <div class="row">
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('sharePlanter',[
-                                        'label' => "12A. Planter's Share",
-                                        'cols' => 4,
-                                        'class' => 'form1-input text-right autonumber_mt',
-                                        'container_class' => 'sharePlanter',
-                                    ],
-                                    $wr->form1->share_planter ?? null
-                                    ) !!}
+                                       'label' => "12A. Planter's Share",
+                                       'cols' => 4,
+                                       'class' => 'form1-input text-right autonumber_mt',
+                                       'container_class' => 'sharePlanter',
+                                   ],
+                                   $wr->form1->share_planter ?? null
+                                   ) !!}
                                     {!! \App\Swep\ViewHelpers\__form2::textbox('shareMiller',[
                                         'label' => "12B. Miller's Share:",
                                         'cols' => 4,
@@ -174,7 +217,6 @@
                                     ],
                                     $wr->form1->share_miller ?? null
                                     ) !!}
-
                                 </div>
                             </div>
                         </div>

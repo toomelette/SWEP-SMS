@@ -119,10 +119,12 @@ class WeeklyReportController extends Controller
     }
 
     public function findBySlug($slug){
-        $wr = WeeklyReports::query()->with(['form1','form2','form3','details'])->where('slug','=',$slug)->first();
+        $wr = WeeklyReports::query()->with(['sugarMill','form1','form2','form3','details'])->where('slug','=',$slug)->first();
         if(!empty($wr)){
             return $wr;
         }
+
+
         abort(510,'Weekly Report not found.');
     }
 
@@ -170,8 +172,8 @@ class WeeklyReportController extends Controller
     }
 
     public function print($slug, SignatoryService $signatoryService){
-
         $weekly_report = $this->findBySlug($slug);
+
         if($weekly_report->mill_code != Auth::user()->mill_code){
             abort(404,'This report does not belong to your mill code.');
         }
