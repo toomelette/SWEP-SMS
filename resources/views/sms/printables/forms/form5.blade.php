@@ -69,7 +69,11 @@
                     @foreach($usedSugarClassesArray as $class)
                         @if($form5Deliveries->sugar_class == $class)
                             <td class="text-right">
-                                {!! ($form5Deliveries->qty != null) ? number_format($form5Deliveries->qty,3) : ($form5Deliveries->qty_prev != null ?  number_format($form5Deliveries->qty_prev != null,3) : null) !!}
+                                @if($form5Deliveries->qty != null)
+                                    {{number_format($form5Deliveries->qty,3)}}
+                                @else
+                                    {{number_format($form5Deliveries->qty_prev,3)}}
+                                @endif
                             </td>
                         @else
                             <td></td>
