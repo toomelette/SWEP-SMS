@@ -23,12 +23,20 @@ class WeeklyReportFormRequest extends FormRequest
               'date_format:Y-m-d',
               Rule::unique('weekly_reports')->where(function ($query) use ($week_ending,$crop_year){
                   return $query->where('week_ending' ,'=',$week_ending)
-                      ->where('user_created' ,'=',Auth::user()->user_id)
+                      ->where('mill_code' ,'=',Auth::user()->mill_code)
                       ->where('crop_year','=',$crop_year);
               }),
               new MustBeSunday(),
           ],
-          'report_no' => 'required|string',
+          'report_no' => [
+              'required',
+              'string',
+              Rule::unique('weekly_reports')->where(function ($query) use ($week_ending,$crop_year){
+                  return $query->where('week_ending' ,'=',$week_ending)
+                      ->where('mill_code' ,'=',Auth::user()->mill_code)
+                      ->where('crop_year','=',$crop_year);
+              }),
+          ],
           'dist_no' => 'required|string',
         ];
     }
