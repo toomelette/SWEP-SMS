@@ -114,12 +114,12 @@
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm1['withdrawalsTotal']['prev'] ?? null ,3,'0.00')}}</td>
             <td class="text-right text-strong">{{\App\Swep\Helpers\Helper::toNumber($toDateForm1['withdrawalsTotal']['prev'] ?? null ,3,'0.00')}}</td>
         </tr>
-
+        <tr>
+            <td colspan="7"><span class="indent"></span>3.2. For Refining:</td>
+        </tr>
         @if(isset($form1['forRefining']) || isset($prevToDateForm1['forRefining']) || isset($toDateForm1['forRefining']))
             @if(count($form1['forRefining']) > 0 || count($prevToDateForm1['forRefining']) > 0 || count($toDateForm1['forRefining']) > 0)
-            <tr>
-                <td colspan="7"><span class="indent"></span>3.2. For Refining:</td>
-            </tr>
+
 
             @php
                 $common = array_keys(array_merge($form1['forRefining'],$prevToDateForm1['forRefining'] ?? [] ,$toDateForm1['forRefining'] ));
@@ -314,7 +314,7 @@
                 @if(!empty($form1['gtcm']['current']))
                     @if($form1['gtcm']['current'] != 0)
                         {{ \App\Swep\Helpers\Helper::toNumber(
-                        ($form1['tdc']['current'] ?? null) * 20 / ($form1['gtcm']['current'])
+                        ($form1['tdc']['current'] ?? null) / ($form1['gtcm']['current'])
                         ,3) }}
                     @endif
                 @endif
@@ -324,7 +324,7 @@
                 @if(!empty($prevToDateForm1['gtcm']['current']))
                     @if($prevToDateForm1['gtcm']['current'] != 0)
                         {{ \App\Swep\Helpers\Helper::toNumber(
-                        ($prevToDateForm1['tdc']['current']?? null) * 20 / ($prevToDateForm1['gtcm']['current'])
+                        ($prevToDateForm1['tdc']['current']?? null) / ($prevToDateForm1['gtcm']['current'])
                         ,3) }}
                     @endif
                 @endif
@@ -334,7 +334,7 @@
                 @if(!empty($wr->toDateForm1()->gtcm))
                     @if($wr->toDateForm1()->gtcm != 0)
                         {{ \App\Swep\Helpers\Helper::toNumber(
-                        ($wr->toDateForm1()->tdc ?? null) * 20 / ($wr->toDateForm1()->gtcm)
+                        ($wr->toDateForm1()->tdc ?? null) / ($wr->toDateForm1()->gtcm)
                         ,3) }}
                     @endif
                 @endif
@@ -387,7 +387,7 @@
                     @if(!empty($form1['egtcm']['current']))
                         @if($form1['egtcm']['current'] != 0)
                             {{ \App\Swep\Helpers\Helper::toNumber(
-                            ($form1['tds']['current'] ?? null) * 20 / ($form1['egtcm']['current'])
+                            ($form1['tds']['current'] ?? null) / ($form1['egtcm']['current'])
                             ,3) }}
                         @endif
                     @endif
@@ -397,7 +397,7 @@
                     @if(!empty($prevToDateForm1['egtcm']['current']))
                         @if($prevToDateForm1['egtcm']['current'] != 0)
                             {{ \App\Swep\Helpers\Helper::toNumber(
-                            ($prevToDateForm1['tds']['current']?? null) * 20 / ($prevToDateForm1['egtcm']['current'])
+                            ($prevToDateForm1['tds']['current']?? null) / ($prevToDateForm1['egtcm']['current'])
                             ,3) }}
                         @endif
                     @endif
@@ -407,7 +407,7 @@
                     @if(!empty($wr->toDateForm1()->egtcm))
                         @if($wr->toDateForm1()->egtcm != 0)
                             {{ \App\Swep\Helpers\Helper::toNumber(
-                            ($wr->toDateForm1()->tds ?? null) * 20 / ($wr->toDateForm1()->egtcm)
+                            ($wr->toDateForm1()->tds ?? null) / ($wr->toDateForm1()->egtcm)
                             ,3) }}
                         @endif
                     @endif

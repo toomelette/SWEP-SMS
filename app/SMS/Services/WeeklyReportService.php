@@ -155,10 +155,12 @@ class WeeklyReportService
         ];
 
         //TRANSFERS TO REFINERY = Form2 not covered by sro
-        $formArray['transfersToRefinery'] = [
-            'current' => $weekly_report->form5aIssuancesOfSro()->sum('raw_qty') * 20,
-            'prev' => null,
-        ];
+        if($get == 'toDate'){
+            $form2Relation = $weekly_report->form2ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+        }else{
+            $form2Relation = $weekly_report->form2;
+        }
+        $formArray['transfersToRefinery'] = $this->makeCurrentPrev($form2Relation->notCoveredBySro ?? null, $form2Relation->prev_notCoveredBySro ?? null);
 
         //PHYSICAL STOCK = STOCK BALANCE - TRANSFERS TO REFINERY
         $formArray['physicalStock'] = [
@@ -200,13 +202,13 @@ class WeeklyReportService
         }
         if(!empty($weekly_report->form1)){
             if($weekly_report->form1->gtcm != 0){
-                $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc * 20 /  $weekly_report->form1->gtcm ,2),2);
+                $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc /  $weekly_report->form1->gtcm ,2),2);
             }else{
                 $formArray['fieldsToFill']['lkgtcGross'] = 0;
             }
 
             if($weekly_report->form1->egtcm != 0){
-                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = number_format(round($weekly_report->form1->tds * 20 /  $weekly_report->form1->egtcm ,2),2);
+                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = number_format(round($weekly_report->form1->tds /  $weekly_report->form1->egtcm ,2),2);
             }else{
                 $formArray['fieldsToFill']['lkgtc_gross_syrup'] = 0;
             }

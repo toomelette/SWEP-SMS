@@ -39,7 +39,7 @@
 <div class="row">
 
     {!! \App\Swep\ViewHelpers\__form2::textbox('qty',[
-        'label' => 'Qty. (MT)',
+        'label' => 'Qty. (LKG Bag)',
         'cols' => 5,
         'class' => 'autonumber_mt_'.$rand,
     ],

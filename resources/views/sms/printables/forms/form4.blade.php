@@ -1,8 +1,8 @@
 <div id="form4" style="break-after: page">
     @include('sms.printables.forms.header',['formName' => 'SMS Form No. 4'])
 
-    <h4 class="no-margin"><b>MILLSITE AND SUBSIDIARY WAREHOUSE INVENTORY REPORT - REFINED</b></h4>
-    <p class="no-margin"><i>(Figures in 50kg bags)</i></p>
+    <h4 class="no-margin"><b>MILLSITE AND SUBSIDIARY WAREHOUSE INVENTORY REPORT - RAW</b></h4>
+    <p class="no-margin"><i>(Figures in Metric Tons)</i></p>
 
     <table class="table-bordered " style="width: 100%">
         <thead>
