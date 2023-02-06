@@ -188,6 +188,40 @@ Route::get('/convert',function (\Illuminate\Http\Request $request){
 
     $form1->tdc = $form1->tdc * 20;
     $form1->gtcm = $form1->gtcm * 20;
-//    , , lkgtc_gross, tds, egtcm, lkgtc_gross_syrup, share_planter, share_miller,             dist_factor
+    if($form1->gtcm != 0){
+        $form1->lkgtc_gross = $form1->tdc * 20 / $form1->gtcm;
+    }
+
+    $form1->tds = $form1->tds * 20;
+    $form1->egtcm = $form1->egtcm * 20;
+    if($form1->egtcm != 0){
+        $form1->lkgtc_gross_syrup = $form1->tds * 20 / $form1->lkgtc_gross_syrup;
+    }
+
+    $form1->share_planter = $form1->share_planter * 20;
+    $form1->share_miller = $form1->share_miller * 20;
+
+    $form1->save();
+
+    if(!empty($form5Issuances)){
+        foreach ($form5Issuances as $i){
+            $i->qty = $i->qty * 20;
+            $i->save();
+        }
+    }
+    if(!empty($form5Deliveries)){
+        foreach ($form5Deliveries as $d){
+            if($d->qty != null){
+                $d->qty = $d->qty * 20;
+            }
+
+            if($d->qty_prev != null){
+                $d->qty_prev = $d->prev * 20;
+            }
+            $d->save();
+        }
+    }
+
+    return 1;
 
 });
