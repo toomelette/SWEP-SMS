@@ -2,7 +2,7 @@
     @include('sms.printables.forms.header',['formName' => 'SMS Form No. 4'])
 
     <h4 class="no-margin"><b>MILLSITE AND SUBSIDIARY WAREHOUSE INVENTORY REPORT - RAW</b></h4>
-    <p class="no-margin"><i>(Figures in Metric Tons)</i></p>
+    <p class="no-margin"><i>(Figures in 50-Kg Bags)</i></p>
 
     <table class="table-bordered " style="width: 100%">
         <thead>
