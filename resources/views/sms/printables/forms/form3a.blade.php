@@ -69,18 +69,20 @@
                 @php($total['prev'] = 0)
                 @if(count($subs) > 0)
                     @foreach($subs as $alias => $sub)
-                        @if($sub['obj']->for == 'MOLASSES' )
-                            @php($total['current'] = $total['current'] + ($sub['current'] ?? 0))
-                            @php($total['prev'] = $total['prev'] + ($sub['prev'] ?? 0))
-                            <tr>
-                                <td><span class="indent"></span> {{$sub['obj']->name ?? null}} ({{$alias}})</td>
-                                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['current'] ?? null,2)}}</td>
-                                <td></td>
-                                <td></td>
-                                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['prev'] ?? null,2)}}</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                        @if(!empty($sub['obj']))
+                            @if($sub['obj']->for == 'MOLASSES' )
+                                @php($total['current'] = $total['current'] + ($sub['current'] ?? 0))
+                                @php($total['prev'] = $total['prev'] + ($sub['prev'] ?? 0))
+                                <tr>
+                                    <td><span class="indent"></span> {{$sub['obj']->name ?? null}} ({{$alias}})</td>
+                                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['current'] ?? null,2)}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($sub['prev'] ?? null,2)}}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            @endif
                         @endif
                     @endforeach
                     <tr>
