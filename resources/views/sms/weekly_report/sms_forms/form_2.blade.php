@@ -718,7 +718,7 @@
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
                     <p class="no-margin">
-                        15. Quedan Issuances Series & No. of PCS.
+                        12. Quedan Issuances Series & No. of PCS.
                         <small id="filter-notifier" class="label bg-blue blink"></small>
                         <button class="btn btn-xs pull-right btn-success add_seriesNos_btn" for="REFINED" style="background-color: #e3e3e3" data="form2SeriesNos" type="button"><i class="fa fa-plus"></i> ADD</button>
                     </p>
@@ -752,5 +752,29 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="box box-sm box-default box-solid">
+                <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+                    <p class="no-margin">
+                        Remarks
+                        <small id="filter-notifier" class="label bg-blue blink"></small>
+                    </p>
+                </div>
+                <div class="box-body" style="">
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[
+                            'label' => "Remarks:",
+                            'cols' => 12,
+                            'class' => 'form2-input',
+                            'container_class' => 'remarks',
+                        ],
+                        $wr->form2->remarks ?? null
+                        ) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 </form>

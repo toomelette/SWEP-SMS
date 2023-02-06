@@ -94,7 +94,10 @@ class WeeklyReportService
                 ->where('crop_year','=',$weekly_report->crop_year)
                 ->where('mill_code','=',$weekly_report->mill_code)
                 ->where('report_no','<=',$report_no != 0 ? $report_no : $weekly_report->report_no * 1)
-                ->where('weekly_reports.status' ,'!=', -1)
+                ->where(function($q){
+                    $q->where('weekly_reports.status' ,'!=', -1)
+                        ->orWhere('weekly_reports.status', '=', null);
+                })
                 ->groupBy('refining','sugar_class')
                 ->orderBy('sugar_class','asc')
                 ->get();
@@ -450,6 +453,7 @@ class WeeklyReportService
         $formArray['totalWithdrawals']['current'] = $formArray['totalWithdrawalsRaw']['current']  + $formArray['totalWithdrawalsRefined']['current'];
         $formArray['totalWithdrawals']['prev'] = $formArray['totalWithdrawalsRaw']['prev']  + $formArray['totalWithdrawalsRefined']['prev'];
         //balances ;
+
         $formArray['balanceRaw']['current'] = $formArray['production']['manufacturedRaw']['current'] - $formArray['totalWithdrawalsRaw']['current'];
         $formArray['balanceRaw']['prev'] = $formArray['production']['manufacturedRaw']['prev'] - $formArray['totalWithdrawalsRaw']['prev'];
 

@@ -73,6 +73,7 @@
                                         <li><a href="#tab_2" data-toggle="tab"> Form 2</a></li>
                                         <li><a href="#tab_3" data-toggle="tab"> Form 3</a></li>
                                         <li><a href="#tab_3a" data-toggle="tab"> Form 3A</a></li>
+                                        <li style="display: none"><a href="#tab_3b" data-toggle="tab" > Form 3B</a></li>
                                         <li><a href="#tab_4" data-toggle="tab"> Form 4</a></li>
                                         <li><a href="#tab_4a" data-toggle="tab"> Form 4A</a></li>
                                         <li><a href="#tab_5" data-toggle="tab"> Form 5</a></li>
@@ -103,8 +104,13 @@
 
                                         </div>
 
-                                        <div class="tab-pane " id="tab_3a">
+                                        <div class="tab-pane" id="tab_3a">
                                             @include('sms.weekly_report.sms_forms.form_3a')
+
+                                        </div>
+
+                                        <div class="tab-pane " id="tab_3b" hidden>
+                                            @include('sms.weekly_report.sms_forms.form_3b')
 
                                         </div>
 
@@ -283,6 +289,72 @@
         </div>
     </div>
 </div>
+
+<!--FORM 3B-->
+<div class="modal fade" id="add_form3b_issuances_modal" tabindex="-1" role="dialog" aria-labelledby="add_form3b_issuances_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form3b_add_issuance_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Issuances of SRO</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form3b.issuance_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_form3b_deliveries_modal" tabindex="-1" role="dialog" aria-labelledby="add_form3b_issuances_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form3b_add_delivery_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Delivery</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form3b.delivery_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add_form3b_servedSros_modal" tabindex="-1" role="dialog" aria-labelledby="add_form3b_servedSros_modal_label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="form3b_add_servedSro_form">
+                @csrf
+                <input value="{{$wr->slug}}" name="weekly_report_slug" hidden>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Delivery</h4>
+                </div>
+                <div class="modal-body">
+                    @include('sms.weekly_report.sms_forms.form3b.servedSro_form')
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <!--FORM 6A-->
 <div class="modal fade" id="add_rawSugarReceipts_modal" tabindex="-1" role="dialog" aria-labelledby="add_rawSugarReceipts_modal_label">
     <div class="modal-dialog" role="document">

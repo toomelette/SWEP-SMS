@@ -51,6 +51,19 @@ class Arrays
         return $scsArr;
     }
 
+    public static function form2SugarClasses(){
+        return [
+            'PREMIUM' => 'PREMIUM',
+            'STANDARD' => 'STANDARD',
+        ];
+    }
+    public static function form3SugarClasses(){
+        return [
+            'RAW' => 'RAW',
+            'REFINED' => 'REFINED',
+        ];
+    }
+
     public static function sugarTypes(){
         return [
             'RAW' => 'RAW',

@@ -1,6 +1,13 @@
 <div id="form5a" style="break-after: page">
     @include('sms.printables.forms.header',['formName' => 'SMS Form No. 5A'])
-
+    @php
+        $totals = [
+            'rawQty' => 0,
+            'refinedQty' => 0,
+            'qtyStandard' => 0,
+            'qtyPremium' => 0,
+        ];
+    @endphp
     <h4 class="no-margin"><b>SUGAR RELEASE ORDER AND DELIVERY REPORT - REFINED</b> </h4>
     <p class="no-margin"><i>(Figures in 50-Kg Bags)</i></p>
 
@@ -21,6 +28,10 @@
         <tbody>
         @if(!empty($wr->form5aIssuancesOfSro))
             @foreach($wr->form5aIssuancesOfSro as $form5aIssuancesOfSro)
+                @php
+                    $totals['rawQty'] = $totals['rawQty'] + ($form5aIssuancesOfSro->raw_qty ?? 0);
+                    $totals['refinedQty'] = $totals['refinedQty'] + ($form5aIssuancesOfSro->refined_qty ?? 0)
+                @endphp
                 <tr>
                     <td>{{\Illuminate\Support\Carbon::parse($form5aIssuancesOfSro->date_of_issue)->format('m/d/Y')}}</td>
                     <td>{{$form5aIssuancesOfSro->sro_no}}</td>
@@ -32,6 +43,12 @@
                 </tr>
             @endforeach
         @endif
+        <tr>
+            <td colspan="3" class="text-strong">TOTAL</td>
+            <td class="text-right text-strong">{{number_format( $totals['rawQty'] , 3)}}</td>
+            <td colspan="2"></td>
+            <td class="text-right text-strong">{{number_format( $totals['refinedQty'] , 3)}}</td>
+        </tr>
         </tbody>
     </table>
 
@@ -49,8 +66,14 @@
             <th>Total</th>
             <th>Remarks</th>
         </tr>
+        </thead>
+        <tbody>
         @if(!empty($wr->form5aDeliveries))
             @foreach($wr->form5aDeliveries as $form5aDeliveries)
+                @php
+                    $totals['qtyPremium'] = $totals['qtyPremium'] + ($form5aDeliveries->qty_premium ?? 0);
+                    $totals['qtyStandard'] = $totals['qtyStandard'] + ($form5aDeliveries->qty_standard ?? 0);
+                @endphp
                 <tr>
                     <td>{{\Illuminate\Support\Carbon::parse($form5aDeliveries->date_of_withdrawal)->format('m/d/Y')}}</td>
                     <td>{{$form5aDeliveries->sro_no}}</td>
@@ -62,7 +85,14 @@
                 </tr>
             @endforeach
         @endif
-        </thead>
+            <tr>
+                <td colspan="3" class="text-strong">TOTAL</td>
+                <td class="text-right text-strong">{{ number_format( $totals['qtyStandard'], 3 ) }}</td>
+                <td class="text-right text-strong">{{ number_format( $totals['qtyPremium'], 3 ) }}</td>
+                <td class="text-right text-strong">{{ number_format( $totals['qtyStandard'] +  $totals['qtyPremium'] ,3) }}</td>
+                <td></td>
+            </tr>
+        </tbody>
     </table>
 
     <br>

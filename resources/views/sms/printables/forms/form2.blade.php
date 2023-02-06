@@ -442,6 +442,14 @@
             <td></td>
         </tr>
 
+        <tr>
+            <td>12. Remarks:</td>
+            <td  colspan="5">
+                {{ $wr->form2->remarks ?? null }}
+            </td>
+
+        </tr>
+
 
         </tbody>
     </table>

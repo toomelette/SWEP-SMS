@@ -1,9 +1,26 @@
-@php($rand = \Illuminate\Support\Str::random(5))
+
+@php
+    $rand = \Illuminate\Support\Str::random(5);
+        switch ($for){
+            case  'RAW':
+                $options = \App\Swep\Helpers\Arrays::sugarClasses();
+                break;
+            case 'REFINED':
+                $options = \App\Swep\Helpers\Arrays::form2SugarClasses();
+                break;
+            case 'MOLASSES':
+                $options = \App\Swep\Helpers\Arrays::form3SugarClasses();
+                break;
+            default:
+                $options = [];
+                break;
+        }
+@endphp
 <tr id="tr_{{$rand}}">
     <td>
         {!! \App\Swep\ViewHelpers\__form2::selectOnly('seriesNos[sugarClass]['.$rand.']',[
             'label' => 'A',
-            'options' => \App\Swep\Helpers\Arrays::sugarClasses(),
+            'options' => $options,
             'class' => 'input-sm global-form-changer',
             'container_class' => 'data_form1_series_options_'.$rand,
         ],

@@ -1,4 +1,16 @@
 <div id="form5" style="break-after: page">
+    @php
+        $sugarClasses = $wr->form5Deliveries()->groupBy('sugar_class')->get();
+        $usedSugarClassesArray = ['A','B','C'];
+        if(!empty($sugarClasses)){
+            foreach ($sugarClasses as $sugarClass){
+                if(!in_array($sugarClass->sugar_class,$usedSugarClassesArray)){
+                    array_push($usedSugarClassesArray,$sugarClass->sugar_class);
+                }
+            }
+        }
+
+    @endphp
     @include('sms.printables.forms.header',['formName' => 'SMS Form No. 5'])
     <h4 class="no-margin"><b>SUGAR RELEASE ORDER AND DELIVERY REPORT - RAW</b> </h4>
     <p class="no-margin"><i>(Figures in 50-Kg Bags)</i></p>
@@ -12,12 +24,14 @@
             <th class="text-center">Date of Issue</th>
             <th class="text-center">Liens OR #.</th>
             <th class="text-center">Sugar Class</th>
-            <th class="text-center">Qty. M.T.</th>
+            <th class="text-center">Qty 50-Kg Bags</th>
         </tr>
         </thead>
         <tbody>
+        @php($total = 0);
         @if(!empty($wr->form5IssuancesOfSro))
             @foreach($wr->form5IssuancesOfSro as $form5IssuancesOfSro)
+                @php($total = $total + ($form5IssuancesOfSro->qty ?? 0))
                 <tr>
                     <td>{{$form5IssuancesOfSro->sro_no}}</td>
                     <td>{{$form5IssuancesOfSro->trader}}</td>
@@ -28,21 +42,19 @@
                 </tr>
             @endforeach
         @endif
+        <tr>
+            <td colspan="5" class="text-strong">
+                TOTAL
+            </td>
+            <td class="text-strong text-right">
+                {{number_format($total,3)}}
+            </td>
+        </tr>
         </tbody>
     </table>
     <br>
     <p class="text-left">B. Delivery</p>
-    @php
-        $sugarClasses = $wr->form5Deliveries()->groupBy('sugar_class')->get();
-        $usedSugarClassesArray = ['A','B','C'];
-        if(!empty($sugarClasses)){
-            foreach ($sugarClasses as $sugarClass){
-                if(!in_array($sugarClass->sugar_class,$usedSugarClassesArray)){
-                    array_push($usedSugarClassesArray,$sugarClass->sugar_class);
-                }
-            }
-        }
-    @endphp
+
     <table class="table-bordered details-top-right-table" style="width: 100%">
         <thead>
         <tr>
@@ -52,7 +64,9 @@
             <th rowspan="2" class="text-center">Remarks</th>
         </tr>
         <tr>
+            @php($totals = [])
             @foreach($usedSugarClassesArray as $class)
+                @php($totals[$class] = 0)
                 <td class="text-center" style="width: 10%">
                     {{$class}}
                 </td>
@@ -69,9 +83,12 @@
                     @foreach($usedSugarClassesArray as $class)
                         @if($form5Deliveries->sugar_class == $class)
                             <td class="text-right">
+
                                 @if($form5Deliveries->qty != null)
+                                    @php($totals[$class] = $totals[$class] + $form5Deliveries->qty)
                                     {{number_format($form5Deliveries->qty,3)}}
                                 @else
+                                    @php($totals[$class] = $totals[$class] + $form5Deliveries->qty_prev)
                                     {{number_format($form5Deliveries->qty_prev,3)}}
                                 @endif
                             </td>
@@ -83,6 +100,14 @@
                 </tr>
             @endforeach
         @endif
+        <tr>
+            <td colspan="2"></td>
+            @foreach($usedSugarClassesArray as $class)
+                <td class="text-right">
+                    {{number_format($totals[$class] , 3)}}
+                </td>
+            @endforeach
+        </tr>
         </tbody>
     </table>
     <br>

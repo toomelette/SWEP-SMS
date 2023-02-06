@@ -48,6 +48,7 @@ class Form2Controller extends Controller
                     'prev_prodImported'=> Helper::sanitizeAutonum($request->prev_prodImported),
                     'prev_prodReturn'=> Helper::sanitizeAutonum($request->prev_prodReturn),
 
+                    'remarks' => $request->remarks,
                 ]
             );
             $arr = [];
