@@ -157,6 +157,7 @@ Route::get('/convert',function (\Illuminate\Http\Request $request){
         ->where('mill_code','=',$request->mill_code)
         ->where('report_no','=',$request->report_no)
         ->where('crop_year','=',$request->crop_year)
+        ->where('status','!=',-1)
         ->first();
     $form1 = $wr->form1;
     $form4 = $wr->form4;
