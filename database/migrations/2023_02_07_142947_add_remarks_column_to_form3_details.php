@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateForm3bIssuancesOfSroTable extends Migration
+class AddRemarksColumnToForm3Details extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateForm3bIssuancesOfSroTable extends Migration
      */
     public function up()
     {
-        Schema::create('form3b_issuances_of_sro', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('form3_details', function (Blueprint $table) {
+            $table->longText('remarks')->after('distFactor')->nullable();
         });
     }
 
@@ -26,6 +25,8 @@ class CreateForm3bIssuancesOfSroTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form3b_issuances_of_sro');
+        Schema::table('form3_details', function (Blueprint $table) {
+            $table->dropColumn('remarks');
+        });
     }
 }

@@ -224,6 +224,10 @@
                 {{$wr->form3->distFactor ?? null}}
             </td>
         </tr>
+        <tr>
+            <td>Remarks:</td>
+            <td colspan="3">{{$wr->form3->remarks ?? null}}</td>
+        </tr>
     </table>
     <br>
     <p class="text-strong">DETAILS OF MOLASSES WITHDRAWALS</p>

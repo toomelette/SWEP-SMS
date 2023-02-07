@@ -48,6 +48,7 @@ class Form3Controller extends Controller
                     'storageCertRaw' => $request->storageCertRaw,
                     'storageCertRefined' => $request->storageCertRefined,
                     'distFactor' => Helper::sanitizeAutonum($request->distFactor),
+                    'remarks' => $request->remarks,
                 ]
             );
             $arr = [];
