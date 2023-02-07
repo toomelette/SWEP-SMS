@@ -318,7 +318,7 @@
                 {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross']['current'] ?? null,3) }}
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->lkgtc_gross ?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm1['lkgtc_gross']['current'] ?? null,3) }}
             </td>
             <td class="text-right">
             </td>

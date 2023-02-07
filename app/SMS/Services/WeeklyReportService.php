@@ -190,7 +190,7 @@ class WeeklyReportService
         $formArray['share_planter']['current'] = $relation->share_planter ?? null;
         $formArray['share_miller']['current'] = $relation->share_miller ?? null;
 
-//        dd($formArray);
+
         //UNSET EMPTY VALUES
         foreach ($formArray['issuances'] as $key => $value){
             if(empty($value['current']) && empty($value['prev'])){
@@ -212,21 +212,21 @@ class WeeklyReportService
                 unset($formArray['balances'][$key]);
             }
         }
-//        if(!empty($weekly_report->form1)){
-//            if($weekly_report->form1->gtcm != 0){
-//                $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc * 20 /  $weekly_report->form1->gtcm ,2),2);
-//            }else{
-//                $formArray['fieldsToFill']['lkgtcGross'] = 0;
-//            }
-//
-//            if($weekly_report->form1->egtcm != 0){
-//                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = number_format(round($weekly_report->form1->tds * 20 /  $weekly_report->form1->egtcm ,2),2);
-//            }else{
-//                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = 0;
-//            }
-//        }else{
-//            $formArray['fieldsToFill']['lkgtcGross'] = 0;
-//        }
+        if(!empty($weekly_report->form1)){
+            if($weekly_report->form1->gtcm != 0){
+                $formArray['fieldsToFill']['lkgtcGross'] = Helper::toNumber($formArray['lkgtc_gross']['current'],3);
+            }else{
+                $formArray['fieldsToFill']['lkgtcGross'] = 0;
+            }
+
+            if($weekly_report->form1->egtcm != 0){
+                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = Helper::toNumber($formArray['lkgtc_gross_syrup']['current'],3);
+            }else{
+                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = 0;
+            }
+        }else{
+            $formArray['fieldsToFill']['lkgtcGross'] = 0;
+        }
 
         if(!empty($weekly_report->form1)){
 
