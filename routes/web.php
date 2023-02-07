@@ -111,6 +111,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('form5a_deliveries','SMS\Form5a\DeliveriesController');
     Route::resource('form5a_servedSros','SMS\Form5a\ServedSrosController');
 
+    Route::resource('form3b_issuanceOfSro','SMS\Form3b\IssuanceOfSroController');
+    Route::resource('form3b_deliveries','SMS\Form3b\DeliveriesController');
+    Route::resource('form3b_servedSros','SMS\Form3b\ServedSrosController');
+
     Route::resource('form6a_rawSugarReceipts','SMS\Form6a\RawSugarReceiptsController');
 
     Route::resource('form6a_quedanRegistry','SMS\Form6a\QuedanRegistryController');
@@ -222,6 +226,57 @@ Route::get('/convert',function (\Illuminate\Http\Request $request){
             $d->save();
         }
     }
+
+    return 1;
+
+});
+
+
+Route::get('/revert',function (\Illuminate\Http\Request $request){
+    $wr = \App\Models\SMS\WeeklyReports::query()
+        ->where('mill_code','=',$request->mill_code)
+        ->where('report_no','=',$request->report_no)
+        ->where('crop_year','=',$request->crop_year)
+        ->where('status','!=',-1)
+        ->first();
+    $form1 = $wr->form1;
+
+
+    //form 1
+    $form1->manufactured = $form1->manufactured * 20;
+    $form1->A = $form1->A * 20;
+    $form1->B = $form1->B * 20;
+    $form1->C = $form1->C * 20;
+    $form1->C1 = $form1->C1 * 20;
+    $form1->D = $form1->D * 20;
+    $form1->DX = $form1->DX * 20;
+    $form1->DE = $form1->DE * 20;
+    $form1->DR = $form1->DR * 20;
+    $form1->total_issuance = $form1->total_issuance * 20;
+
+    $form1->prev_manufactured = $form1->prev_manufactured * 20;
+    $form1->prev_A = $form1->prev_A * 20;
+    $form1->prev_B = $form1->prev_B * 20;
+    $form1->prev_C = $form1->prev_C * 20;
+    $form1->prev_C1 = $form1->prev_C1 * 20;
+    $form1->prev_D = $form1->prev_D * 20;
+    $form1->prev_DX = $form1->prev_DX * 20;
+    $form1->prev_DE = $form1->prev_DE * 20;
+    $form1->prev_DR = $form1->prev_DR * 20;
+    $form1->prev_total_issuance = $form1->prev_total_issuance * 20;
+
+    $form1->tdc = $form1->tdc / 20;
+    $form1->gtcm = $form1->gtcm / 20;
+
+
+    $form1->tds = $form1->tds / 20;
+    $form1->egtcm = $form1->egtcm / 20;
+
+
+    $form1->share_planter = $form1->share_planter * 20;
+    $form1->share_miller = $form1->share_miller * 20;
+
+    $form1->save();
 
     return 1;
 

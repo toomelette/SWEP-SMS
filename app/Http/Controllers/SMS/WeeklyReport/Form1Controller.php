@@ -29,15 +29,29 @@ class Form1Controller extends Controller
 
         if($request->type != 'updateOnly'){
             $wr = $this->weeklyReportService->findWeeklyReportBySlug($request->wr);
+            $lkgtc_gross = null;
+            $lkgtc_gross_syrup = null;
+            if($request->gtcm != 0) {
+                $lkgtc_gross = Helper::sanitizeAutonum($request->tdc) * 20 / Helper::sanitizeAutonum($request->gtcm);
+            }
+
+            if($request->egtcm != 0) {
+                $lkgtc_gross_syrup = Helper::sanitizeAutonum($request->tds) * 20 / Helper::sanitizeAutonum($request->egtcm);
+            }
+
+
             $toUpdate = [
                 'manufactured' => Helper::sanitizeAutonum($request->manufactured),
                 'prev_manufactured' => Helper::sanitizeAutonum($request->prev_manufactured),
                     'tdc' => !empty($request->tdc) ? Helper::sanitizeAutonum($request->tdc) : null,
                     'gtcm' => !empty($request->gtcm) ? Helper::sanitizeAutonum($request->gtcm) : null,
-                    'lkgtc_gross' => !empty($request->lkgtcGross) ? Helper::sanitizeAutonum($request->lkgtcGross) : null,
+//                    'lkgtc_gross' => !empty($request->lkgtcGross) ? Helper::sanitizeAutonum($request->lkgtcGross) : null,
+                    'lkgtc_gross' => number_format($lkgtc_gross,2),
+
                     'tds' => !empty($request->tds) ? Helper::sanitizeAutonum($request->tds) : null,
                     'egtcm' => !empty($request->egtcm) ? Helper::sanitizeAutonum($request->egtcm) : null,
-                    'lkgtc_gross_syrup' => !empty($request->lkgtc_gross_syrup) ? Helper::sanitizeAutonum($request->lkgtc_gross_syrup) : null,
+//                    'lkgtc_gross_syrup' => !empty($request->lkgtc_gross_syrup) ? Helper::sanitizeAutonum($request->lkgtc_gross_syrup) : null,
+                    'lkgtc_gross_syrup' => number_format($lkgtc_gross_syrup,2),
                     'share_planter' => !empty($request->sharePlanter) ? Helper::sanitizeAutonum($request->sharePlanter) : null,
                     'share_miller' => !empty($request->shareMiller) ? Helper::sanitizeAutonum($request->shareMiller) : null,
                     'price_A' => !empty($request->priceA) ? Helper::sanitizeAutonum($request->priceA) : null,
@@ -56,6 +70,7 @@ class Form1Controller extends Controller
                     'remarks' => !empty($request->remarks) ? Helper::sanitizeAutonum($request->remarks) : null,
 
             ];
+
             foreach (Arrays::sugarClasses() as $sugarClass) {
                 $toUpdate[$sugarClass] = null;
                 $toUpdate['prev_'.$sugarClass] = null;

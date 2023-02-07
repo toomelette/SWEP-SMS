@@ -30,47 +30,43 @@
     ) !!}
 </div>
 <div class="row">
-    {!! \App\Swep\ViewHelpers\__form2::textbox('liens_or',[
-        'label' => 'Liens O.R. #',
+    {!! \App\Swep\ViewHelpers\__form2::textbox('qty',[
+        'label' => 'Qty (MT) #',
         'cols' => 4,
         'class' => 'autonumber_mt_'.$rand,
     ],
     (!empty($issuance)) ? $issuance : null
-    ) !!}
-    {!! \App\Swep\ViewHelpers\__form2::textbox('rsq_no',[
-        'label' => 'RSQ No.',
-        'cols' => 4,
-    ],
-    (!empty($issuance)) ? $issuance : null
-    ) !!}
-    {!! \App\Swep\ViewHelpers\__form2::textbox('refined_qty',[
-        'label' => 'Refined Qty',
-        'cols' => 4,
-        'class' => 'autonumber_mt_'.$rand,
-    ],
-    $issuance->refined_qty ?? $issuance->prev_refined_qty ?? null
     ) !!}
 </div>
+
+
 <div class="row">
-    {!! \App\Swep\ViewHelpers\__form2::textbox('liens_or',[
-        'label' => 'Liens OR#:',
-        'cols' => 4,
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('withdrawal_type',[
+        'cols' => 12,
+        'label' => 'Domestic/Imported:',
+        'options' => [
+            'EXPORT' => 'Export',
+            'DOMESTIC' => 'Domestic',
+            'DISTILLERY' => 'Distillery',
+            'OTHERS' => 'Others',
+        ]
     ],
-    $issuance->liens_or ?? null
+    $withdrawal->withdrawal_type ?? ''
     ) !!}
 </div>
 
 <div class="row">
-    {!! \App\Swep\ViewHelpers\__form2::iRadioH('consumption',[
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('type',[
         'cols' => 6,
-        'label' => 'Domestic/Imported:',
+        'label' => 'Type:',
         'options' => [
-            'DOMESTIC' => 'Domestic',
-            'IMPORTED' => 'Imported',
+            'RAW' => 'Raw',
+            'REFINED' => 'Refined',
         ]
     ],
-    $issuance->consumption ?? 'DOMESTIC'
+     $withdrawal->sugar_type ?? 'RAW'
     ) !!}
+
 
     {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
         'cols' => 6,
@@ -80,8 +76,9 @@
             'PREVIOUS' => 'Previous Crop',
         ]
     ],
-     !empty($issuance->refined_qty) ? 'CURRENT' : 'CURRENT'
+     !empty($withdrawal->qty_current) ? 'CURRENT' : 'PREVIOUS'
     ) !!}
+
 </div>
 
 <script>

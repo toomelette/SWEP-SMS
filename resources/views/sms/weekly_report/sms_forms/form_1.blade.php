@@ -132,6 +132,7 @@
                             <div class="box-body" style="">
                                 <p class="page-header-sm text-info" style="border-bottom: 1px solid #cedbe1">
                                     <b>CANE</b>
+                                    <span class="pull-right text-danger"><i class="fa fa-warning"></i> <b>Items 9-11: Units must be in METRIC TONS</b></span>
                                 </p>
 
                                 <div class="row">
@@ -165,6 +166,7 @@
                                 @if($wr->sugarMill->syrup == 1)
                                     <p class="page-header-sm text-info" style="border-bottom: 1px solid #33a100">
                                         <b class="text-success">SYRUP</b>
+                                        <span class="pull-right text-danger"><i class="fa fa-warning"></i> <b>Items 9-11: Units must be in METRIC TONS</b></span>
                                     </p>
 
                                     <div class="row">

@@ -308,43 +308,24 @@
             <td></td>
             <td></td>
         </tr>
+
         <tr>
-            <td>11. LGK/TC, GROSS	</td>
+            <td>11. LKG/TC, Gross</td>
             <td class="text-right">
-                @if(!empty($form1['gtcm']['current']))
-                    @if($form1['gtcm']['current'] != 0)
-                        {{ \App\Swep\Helpers\Helper::toNumber(
-                        ($form1['tdc']['current'] ?? null) / ($form1['gtcm']['current'])
-                        ,3) }}
-                    @endif
-                @endif
-
+                {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross']['current']?? null,3) }}
             </td>
             <td class="text-right">
-                @if(!empty($prevToDateForm1['gtcm']['current']))
-                    @if($prevToDateForm1['gtcm']['current'] != 0)
-                        {{ \App\Swep\Helpers\Helper::toNumber(
-                        ($prevToDateForm1['tdc']['current']?? null) / ($prevToDateForm1['gtcm']['current'])
-                        ,3) }}
-                    @endif
-                @endif
-
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross']['current'] ?? null,3) }}
             </td>
             <td class="text-right">
-                @if(!empty($wr->toDateForm1()->gtcm))
-                    @if($wr->toDateForm1()->gtcm != 0)
-                        {{ \App\Swep\Helpers\Helper::toNumber(
-                        ($wr->toDateForm1()->tdc ?? null) / ($wr->toDateForm1()->gtcm)
-                        ,3) }}
-                    @endif
-                @endif
-
+                {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->lkgtc_gross ?? null,3) }}
             </td>
             <td class="text-right">
             </td>
             <td></td>
             <td></td>
         </tr>
+
 
         @if($wr->sugarMill->syrup == 1)
             <tr>
@@ -382,36 +363,15 @@
             </tr>
 
             <tr>
-                <td>11B. LGK/TC, GROSS	</td>
+                <td>11B. LKG/TC, Gross - Syrup</td>
                 <td class="text-right">
-                    @if(!empty($form1['egtcm']['current']))
-                        @if($form1['egtcm']['current'] != 0)
-                            {{ \App\Swep\Helpers\Helper::toNumber(
-                            ($form1['tds']['current'] ?? null) / ($form1['egtcm']['current'])
-                            ,3) }}
-                        @endif
-                    @endif
-
+                    {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross_syrup']['current']?? null,3) }}
                 </td>
                 <td class="text-right">
-                    @if(!empty($prevToDateForm1['egtcm']['current']))
-                        @if($prevToDateForm1['egtcm']['current'] != 0)
-                            {{ \App\Swep\Helpers\Helper::toNumber(
-                            ($prevToDateForm1['tds']['current']?? null) / ($prevToDateForm1['egtcm']['current'])
-                            ,3) }}
-                        @endif
-                    @endif
-
+                    {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross_syrup']['current'] ?? null,3) }}
                 </td>
                 <td class="text-right">
-                    @if(!empty($wr->toDateForm1()->egtcm))
-                        @if($wr->toDateForm1()->egtcm != 0)
-                            {{ \App\Swep\Helpers\Helper::toNumber(
-                            ($wr->toDateForm1()->tds ?? null) / ($wr->toDateForm1()->egtcm)
-                            ,3) }}
-                        @endif
-                    @endif
-
+                    {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->lkgtc_gross_syrup ?? null,3) }}
                 </td>
                 <td class="text-right">
                 </td>

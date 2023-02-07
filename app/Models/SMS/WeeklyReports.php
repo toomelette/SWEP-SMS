@@ -117,6 +117,10 @@ class WeeklyReports extends Model
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
             ->where('report_no','<=',$report_no*1)
+            ->where(function($q){
+                $q->where('status','=',1)
+                    ->orWhere('status','=',null);
+            })
             ->first();
 //        dd($toDate);
         return $toDate ?? null;
@@ -241,7 +245,7 @@ class WeeklyReports extends Model
 
     public function form3ToDateAsOf($report_no){
         $fieldsToSum = [
-            'manufacturedRaw', 'rao', 'manufacturedRefined', 'sharePlanter', 'shareMiller', 'refineryMolasses', 'prev_manufacturedRaw', 'prev_rao', 'prev_manufacturedRefined', 'prev_sharePlanter', 'prev_shareMiller', 'prev_refineryMolasses',
+            'manufacturedRaw', 'rao', 'manufacturedRefined','raoRefined' , 'sharePlanter', 'shareMiller', 'refineryMolasses', 'prev_manufacturedRaw', 'prev_rao', 'prev_manufacturedRefined','prev_raoRefined' ,'prev_sharePlanter', 'prev_shareMiller', 'prev_refineryMolasses',
         ];
         foreach ($fieldsToSum as $key => $field){
             $fieldsToSum[$key] = ' sum('.$field.') as '.$field;

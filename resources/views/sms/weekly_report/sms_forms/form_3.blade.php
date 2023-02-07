@@ -70,6 +70,24 @@
                 $wr->form3->prev_manufacturedRefined ?? null) !!}
             </td>
         </tr>
+        <tr>
+            <td>
+                <span class="indent"> 1.4 Retention, Adj., Overages, etc. - Refined</span>
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('raoRefined',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->rao ?? null
+                ) !!}
+            </td>
+            <td>
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_raoRefined',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_rao ?? null) !!}
+            </td>
+        </tr>
         <tr class="computation" for="totalProduction">
             <td class="text-right text-strong">
                 TOTAL

@@ -109,7 +109,7 @@
 
                                         </div>
 
-                                        <div class="tab-pane " id="tab_3b" hidden>
+                                        <div class="tab-pane " id="tab_3b" >
                                             @include('sms.weekly_report.sms_forms.form_3b')
 
                                         </div>

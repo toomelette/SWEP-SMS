@@ -177,7 +177,7 @@ class WeeklyReportService
         $formArray['tds']['current'] = $relation->tds ?? null;
         $formArray['egtcm']['current'] = $relation->egtcm ?? null;
         $formArray['lkgtc_gross_syrup']['current'] = $relation->lkgtc_gross_syrup ?? null;
-//        $formArray['lkgtc_gross']['current'] = $relation->tdc * 20 / $relation->gtcm;
+
         $formArray['share_planter']['current'] = $relation->share_planter ?? null;
         $formArray['share_miller']['current'] = $relation->share_miller ?? null;
 
@@ -203,21 +203,21 @@ class WeeklyReportService
                 unset($formArray['balances'][$key]);
             }
         }
-        if(!empty($weekly_report->form1)){
-            if($weekly_report->form1->gtcm != 0){
-                $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc /  $weekly_report->form1->gtcm ,2),2);
-            }else{
-                $formArray['fieldsToFill']['lkgtcGross'] = 0;
-            }
-
-            if($weekly_report->form1->egtcm != 0){
-                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = number_format(round($weekly_report->form1->tds /  $weekly_report->form1->egtcm ,2),2);
-            }else{
-                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = 0;
-            }
-        }else{
-            $formArray['fieldsToFill']['lkgtcGross'] = 0;
-        }
+//        if(!empty($weekly_report->form1)){
+//            if($weekly_report->form1->gtcm != 0){
+//                $formArray['fieldsToFill']['lkgtcGross'] = number_format(round($weekly_report->form1->tdc * 20 /  $weekly_report->form1->gtcm ,2),2);
+//            }else{
+//                $formArray['fieldsToFill']['lkgtcGross'] = 0;
+//            }
+//
+//            if($weekly_report->form1->egtcm != 0){
+//                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = number_format(round($weekly_report->form1->tds * 20 /  $weekly_report->form1->egtcm ,2),2);
+//            }else{
+//                $formArray['fieldsToFill']['lkgtc_gross_syrup'] = 0;
+//            }
+//        }else{
+//            $formArray['fieldsToFill']['lkgtcGross'] = 0;
+//        }
 
         if(!empty($weekly_report->form1)){
 
@@ -395,6 +395,11 @@ class WeeklyReportService
         //refined
         $formArray['production']['manufacturedRefined']['current'] = $relation->manufacturedRefined ?? null;
         $formArray['production']['manufacturedRefined']['prev'] = $relation->prev_manufacturedRefined ?? null;
+
+        //raoRefined
+        $formArray['production']['raoRefined']['current'] = $relation->raoRefined ?? null;
+        $formArray['production']['raoRefined']['prev'] = $relation->prev_raoRefined ?? null;
+
         //total production
         $formArray['totalProduction']['current'] = array_sum(array_column($formArray['production'],'current'));
         $formArray['totalProduction']['prev'] = array_sum(array_column($formArray['production'],'prev'));

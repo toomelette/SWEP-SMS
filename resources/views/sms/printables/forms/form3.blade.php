@@ -50,6 +50,15 @@
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['production']['manufacturedRefined']['prev'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['production']['manufacturedRefined']['prev'] ?? null, 3)}}</td>
             </tr>
+            <tr>
+                <td><span class="indent"></span> 1.4  Retention, Adjustment, Overages, etc., Refined</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['production']['raoRefined']['current'] ?? null ,3)}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['production']['raoRefined']['current'] ?? null ,3)}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['production']['raoRefined']['current'] ?? null, 3)}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['production']['raoRefined']['prev'] ?? null ,3)}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['production']['raoRefined']['prev'] ?? null ,3)}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['production']['raoRefined']['prev'] ?? null, 3)}}</td>
+            </tr>
 
             <tr class="tr-strong">
                 <td class="text-right"> TOTAL</td>
