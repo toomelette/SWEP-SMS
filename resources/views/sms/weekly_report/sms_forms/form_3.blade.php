@@ -344,7 +344,8 @@
                     'label' => 'Remarks:',
                     'cols' => 12,
                     'class' => 'form3-input',
-                ]
+                ],
+                $wr->form3->remarks ?? null
                 ) !!}
             </div>
         </div>
