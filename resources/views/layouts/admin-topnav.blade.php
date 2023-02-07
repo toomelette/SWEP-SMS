@@ -17,7 +17,30 @@
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-calculator"></i> MT -> LKG Converter
+          </a>
+          <ul class="dropdown-menu">
+            <li class="user-footer">
+              <div class="row">
+                {!! \App\Swep\ViewHelpers\__form2::textbox('calc_mt',[
+                  'cols' => 12,
+                  'label' => 'Metric Tons',
+                  'class' => 'autonumber_mt'
+                ]) !!}
+              </div>
+              <div class="row">
+                {!! \App\Swep\ViewHelpers\__form2::textbox('calc_mt',[
+                  'cols' => 12,
+                  'label' => 'LKG Bag',
+                  'class' => 'autonumber_mt'
+                ]) !!}
+              </div>
+            </li>
 
+          </ul>
+        </li>
 
           <li class="dropdown tasks-menu">
             <a href="#" >

@@ -425,8 +425,13 @@ class WeeklyReportService
                 ->where('crop_year','=',$wr->crop_year)
                 ->where('mill_code','=', $wr->mill_code)
                 ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $wr->report_no * 1)
+                ->where(function ($q){
+                    $q->where('status','=',1)
+                        ->orWhere('status' ,'=',null);
+                })
                 ->groupBy('sugar_type','withdrawal_type')
                 ->get();
+//            dd($withdrawals);
         }else{
             $withdrawals = $wr->form3Withdrawals()
                 ->selectRaw('sugar_type, withdrawal_type, sum(qty_current) as totalCurrent, sum(qty_prev) as totalPrev')
