@@ -482,11 +482,11 @@ class WeeklyReportService
         $formArray['totalWithdrawals']['prev'] = $formArray['totalWithdrawalsRaw']['prev']  + $formArray['totalWithdrawalsRefined']['prev'];
         //balances ;
 
-        $formArray['balanceRaw']['current'] = $formArray['production']['manufacturedRaw']['current'] - $formArray['totalWithdrawalsRaw']['current'];
-        $formArray['balanceRaw']['prev'] = $formArray['production']['manufacturedRaw']['prev'] - $formArray['totalWithdrawalsRaw']['prev'];
+        $formArray['balanceRaw']['current'] = $formArray['production']['rao']['current'] + $formArray['production']['manufacturedRaw']['current'] - $formArray['totalWithdrawalsRaw']['current'];
+        $formArray['balanceRaw']['prev'] = $formArray['production']['rao']['prev'] + $formArray['production']['manufacturedRaw']['prev'] - $formArray['totalWithdrawalsRaw']['prev'];
 
-        $formArray['balanceRefined']['current'] = $formArray['production']['manufacturedRefined']['current'] - $formArray['totalWithdrawalsRefined']['current'];
-        $formArray['balanceRefined']['prev'] = $formArray['production']['manufacturedRefined']['prev'] - $formArray['totalWithdrawalsRefined']['prev'];
+        $formArray['balanceRefined']['current'] = $formArray['production']['raoRefined']['current'] + $formArray['production']['manufacturedRefined']['current'] - $formArray['totalWithdrawalsRefined']['current'];
+        $formArray['balanceRefined']['prev'] = $formArray['production']['raoRefined']['prev']  + $formArray['production']['manufacturedRefined']['prev'] - $formArray['totalWithdrawalsRefined']['prev'];
 
         $formArray['totalBalance']['current'] = $formArray['balanceRaw']['current'] + $formArray['balanceRefined']['current'];
         $formArray['totalBalance']['prev'] = $formArray['balanceRaw']['prev'] + $formArray['balanceRefined']['prev'];
