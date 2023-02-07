@@ -137,6 +137,19 @@
         })
       })
 
+      $(".calculator").on('input',function () {
+          let thisTrueVal = parseFloat($(this).val().replaceAll(',',''));
+          let inLkg;
+          let inMt;
+          if($(this).attr('name') == 'calc_mt'){
+            inMt = thisTrueVal;
+            inLkg = thisTrueVal * 20;
+            $("#calculator input[name=calc_lkg]").val($.number(inLkg,2));
+          }
+
+
+      })
+
       $("#sidenav_selector").awselect({
         background: "#535c61",
         placeholder_color: "#ffffff",

@@ -448,6 +448,7 @@
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
     </script>
+    @include('sms.weekly_report.scripts.8form3b_issuance_script')
     @include('sms.weekly_report.scripts.7form5a_servedSro_script')
     @include('sms.weekly_report.scripts.6form5a_issuance_script')
     @include('sms.weekly_report.scripts.5form5a_delivery_script')

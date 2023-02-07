@@ -23,19 +23,21 @@
           </a>
           <ul class="dropdown-menu">
             <li class="user-footer">
-              <div class="row">
-                {!! \App\Swep\ViewHelpers\__form2::textbox('calc_mt',[
-                  'cols' => 12,
-                  'label' => 'Metric Tons',
-                  'class' => 'autonumber_mt'
-                ]) !!}
-              </div>
-              <div class="row">
-                {!! \App\Swep\ViewHelpers\__form2::textbox('calc_mt',[
-                  'cols' => 12,
-                  'label' => 'LKG Bag',
-                  'class' => 'autonumber_mt'
-                ]) !!}
+              <div id="calculator">
+                <div class="row">
+                  {!! \App\Swep\ViewHelpers\__form2::textbox('calc_mt',[
+                    'cols' => 12,
+                    'label' => 'Metric Tons',
+                    'class' => 'autonumber_mt calculator'
+                  ]) !!}
+                </div>
+                <div class="row">
+                  {!! \App\Swep\ViewHelpers\__form2::textbox('calc_lkg',[
+                    'cols' => 12,
+                    'label' => 'LKG Bag',
+                    'class' => 'autonumber_mt calculator'
+                  ]) !!}
+                </div>
               </div>
             </li>
 

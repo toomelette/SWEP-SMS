@@ -382,36 +382,37 @@
             <td></td>
             <td></td>
         </tr>
-        @if(!empty($form2['withdrawals']))
-            @foreach($form2['withdrawals'] as $k => $withdrawal)
+        @if(isset($form2['withdrawals']) || isset($prevToDateForm2['withdrawals']) || isset($toDateForm2['withdrawals']))
+            @php
+                $common = array_keys(array_merge($form2['withdrawals'],$prevToDateForm2['withdrawals'] ?? [] ,$toDateForm2['withdrawals'] ));
+                sort($common);
+            @endphp
+            @foreach($common as $value)
                 <tr>
-                    <td><span class="indent"></span> 8.{{$loop->iteration}} {{strtoupper($k)}}</td>
-                    <td class="text-right">
-                        {{\App\Swep\Helpers\Helper::toNumber($withdrawal['current'] ?? null, 3)}}
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-right">
-                        {{\App\Swep\Helpers\Helper::toNumber($withdrawal['prev'] ?? null, 3)}}
-                    </td>
-                    <td></td>
-                    <td></td>
+                    <td><span class="indent"></span> 8.{{$loop->iteration}}. {{strtoupper($value)}}</td>
+                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form2['withdrawals'][$value]['current'] ?? null,3)}}</td>
+                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm2['withdrawals'][$value]['current'] ?? null ,3)}}</td>
+                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm2['withdrawals'][$value]['current'] ?? null ,3)}}</td>
+                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form2['withdrawals'][$value]['prev'] ?? null,3)}}</td>
+                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm2['withdrawals'][$value]['prev'] ?? null ,3)}}</td>
+                    <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm2['withdrawals'][$value]['prev'] ?? null ,3)}}</td>
                 </tr>
             @endforeach
         @endif
+
 
         <tr>
             <td>9. STOCK BALANCE</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['stockBalance']['current'] ?? null,3)  }}
             </td>
-            <td></td>
-            <td></td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['stockBalance']['current'] ?? null,3)  }}</td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['stockBalance']['current'] ?? null,3)  }}</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['stockBalance']['prev'] ?? null,3)  }}
             </td>
-            <td></td>
-            <td></td>
+            <td>{{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['stockBalance']['prev'] ?? null,3)  }}</td>
+            <td>{{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['stockBalance']['prev'] ?? null,3)  }}</td>
         </tr>
 
         <tr>
@@ -419,13 +420,13 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['unquedanned']['current'] ?? null,3)  }}
             </td>
-            <td></td>
-            <td></td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['unquedanned']['current'] ?? null,3)  }}</td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['unquedanned']['current'] ?? null,3)  }}</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['unquedanned']['prev'] ?? null,3)  }}
             </td>
-            <td></td>
-            <td></td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['unquedanned']['prev'] ?? null,3)  }}</td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['unquedanned']['prev'] ?? null,3)  }}</td>
         </tr>
 
         <tr>
@@ -433,13 +434,13 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['stockOnHand']['current'] ?? null,3)  }}
             </td>
-            <td></td>
-            <td></td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['stockOnHand']['current'] ?? null,3)  }}</td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['stockOnHand']['current'] ?? null,3)  }}</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['stockOnHand']['prev'] ?? null,3)  }}
             </td>
-            <td></td>
-            <td></td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['stockOnHand']['prev'] ?? null,3)  }}</td>
+            <td class="text-right">{{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['stockOnHand']['prev'] ?? null,3)  }}</td>
         </tr>
 
         <tr>

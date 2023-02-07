@@ -212,7 +212,6 @@ class WeeklyReportController extends Controller
             $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
         }
 
-//        dd($this->weeklyReportService->form4aComputation($slug,'toDate',10));
         return view('sms.printables.formAll')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,

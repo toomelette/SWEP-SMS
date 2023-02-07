@@ -8,7 +8,7 @@
         },1200)
     })
 
-    function __3Form3bIssuance(){
+    function __8Form3bIssuance(){
         window.form3b_issuance_tbl = $("#form3b_issuance_table").DataTable({
             'dom' : 'lBfrtip',
             "processing": true,

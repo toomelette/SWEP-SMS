@@ -37,7 +37,7 @@
             "initComplete": function( settings, json ) {
                 $("#waitBar .progress-bar").css('width','89%');
                 $("#waitText span").html('Performing calculations');
-
+                __8Form3bIssuance();
                 lastInit();
             },
             "language":

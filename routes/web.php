@@ -111,7 +111,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::resource('form5a_deliveries','SMS\Form5a\DeliveriesController');
     Route::resource('form5a_servedSros','SMS\Form5a\ServedSrosController');
 
-    Route::resource('form3b_issuanceOfSro','SMS\Form3b\IssuanceOfSroController');
+    Route::resource('form3b_issuanceOfSro','SMS\Form3b\IssuanceOfMroController');
     Route::resource('form3b_deliveries','SMS\Form3b\DeliveriesController');
     Route::resource('form3b_servedSros','SMS\Form3b\ServedSrosController');
 

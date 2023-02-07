@@ -335,11 +335,29 @@ class WeeklyReportService
         $formArray['withdrawals'] = [];
 
         //WITHDRAWALS /DELIVERIES
+        if($get == 'toDate') {
+            $ws = \App\Models\SMS\Form5a\Deliveries::query()
+                ->selectRaw('consumption, sum(qty_current) as currentTotal, sum(qty_prev) as prevTotal, weekly_reports.*')
+                ->leftJoin('weekly_reports', 'weekly_reports.slug', '=', 'form5a_deliveries.weekly_report_slug')
+                ->where('crop_year', '=', $weekly_report->crop_year)
+                ->where('mill_code', '=', $weekly_report->mill_code)
+                ->where('report_no', '<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
+                ->where(function ($q) {
+                    $q->where('weekly_reports.status', '!=', -1)
+                        ->orWhere('weekly_reports.status', '=', null);
+                })
+                ->groupBy('consumption')
+                ->orderBy('consumption', 'asc')
+                ->get();
+
+        }else{
         $ws = $weekly_report->form5aDeliveries()
             ->selectRaw('consumption, sum(qty_current) as currentTotal, sum(qty_prev) as prevTotal')
             ->groupBy('consumption')
             ->orderBy('consumption','asc')
             ->get();
+        }
+
         if(!empty($ws)){
             foreach ($ws as $w){
                 $formArray['withdrawals'][strtolower($w->consumption)]['current'] = $w->currentTotal;
