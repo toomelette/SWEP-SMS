@@ -173,10 +173,19 @@ class WeeklyReportService
         //TONS DUE CANE
         $formArray['tdc']['current'] = $relation->tdc ?? null;
         $formArray['gtcm']['current'] = $relation->gtcm ?? null;
-        $formArray['lkgtc_gross']['current'] = $relation->lkgtc_gross ?? null;
+        if(!empty($relation->gtcm) && $relation->gtcm != 0){
+            $formArray['lkgtc_gross']['current'] = ($relation->tdc ?? 0) * 20 / $formArray['gtcm']['current'] ;
+        }else{
+            $formArray['lkgtc_gross']['current'] = 0;
+        }
+
         $formArray['tds']['current'] = $relation->tds ?? null;
         $formArray['egtcm']['current'] = $relation->egtcm ?? null;
-        $formArray['lkgtc_gross_syrup']['current'] = $relation->lkgtc_gross_syrup ?? null;
+        if(!empty($relation->egtcm) && $relation->egtcm != 0){
+            $formArray['lkgtc_gross_syrup']['current'] = ($relation->tds ?? 0) * 20 / $formArray['egtcm']['current'] ;
+        }else{
+            $formArray['lkgtc_gross_syrup']['current'] = 0;
+        }
 
         $formArray['share_planter']['current'] = $relation->share_planter ?? null;
         $formArray['share_miller']['current'] = $relation->share_miller ?? null;
