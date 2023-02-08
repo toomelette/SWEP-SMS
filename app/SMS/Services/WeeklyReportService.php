@@ -380,10 +380,10 @@ class WeeklyReportService
             'current' => isset($formArray['withdrawals']) ?  array_sum(array_column($formArray['withdrawals'],'current')) : null,
             'prev' => isset($formArray['withdrawals']) ?  array_sum(array_column($formArray['withdrawals'],'prev')) : null,
         ];
-        //STOCK BALANCE = PROD NET - WITHDRAWALS
+        //STOCK BALANCE = ISSUANCE - WITHDRAWALS
         $formArray['stockBalance'] = [
-            'current' => $formArray['totalProduction']['current'] - $formArray['withdrawalTotal']['current'],
-            'prev' => $formArray['totalProduction']['prev'] - $formArray['withdrawalTotal']['prev'],
+            'current' => $formArray['issuancesTotal']['current'] - $formArray['withdrawalTotal']['current'],
+            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalTotal']['prev'],
         ];
 
         //UNQEUDANNED = PROD NET - ISSUANCES
@@ -392,6 +392,7 @@ class WeeklyReportService
             'prev' => $formArray['totalProduction']['prev'] - $formArray['issuancesTotal']['prev'],
         ];
         \Hash::make('dds');
+        //STOCK ON HAND = PROD NET - WITHDRAWALS
         $formArray['stockOnHand'] = [
             'current' => $formArray['stockBalance']['current'] + $formArray['unquedanned']['current'],
             'prev' => $formArray['stockBalance']['prev'] + $formArray['unquedanned']['prev'],
