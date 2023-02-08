@@ -382,8 +382,8 @@ class WeeklyReportService
         ];
         //STOCK BALANCE = PROD NET - WITHDRAWALS
         $formArray['stockBalance'] = [
-            'current' => $formArray['issuancesTotal']['current'] - $formArray['withdrawalTotal']['current'],
-            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalTotal']['prev'],
+            'current' => $formArray['totalProduction']['current'] - $formArray['withdrawalTotal']['current'],
+            'prev' => $formArray['totalProduction']['prev'] - $formArray['withdrawalTotal']['prev'],
         ];
 
         //UNQEUDANNED = PROD NET - ISSUANCES
