@@ -394,8 +394,8 @@ class WeeklyReportService
         \Hash::make('dds');
         //STOCK ON HAND = PROD NET - WITHDRAWALS
         $formArray['stockOnHand'] = [
-            'current' => $formArray['totalProduction']['current'] + $formArray['withdrawalTotal']['current'],
-            'prev' => $formArray['totalProduction']['prev'] + $formArray['withdrawalTotal']['prev'],
+            'current' => $formArray['totalProduction']['current'] - $formArray['withdrawalTotal']['current'],
+            'prev' => $formArray['totalProduction']['prev'] - $formArray['withdrawalTotal']['prev'],
         ];
 
         return $formArray;
