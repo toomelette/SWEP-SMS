@@ -230,7 +230,6 @@
         <tr>
             <td colspan="7">6. PRODUCTION/CARRY-OVER</td>
         </tr>
-
         <tr>
             <td><span class="indent"></span> 6.1 DOMESTIC</td>
             <td class="text-right">
@@ -348,9 +347,9 @@
             <td></td>
         </tr>
 
-        @if(!empty($form2['issuances']) || !empty($prevToDateForm2['issuances']))
+        @if(!empty($form2['issuances']) || !empty($prevToDateForm2['issuances']) ||  !empty($toDateForm2['issuances'] ))
             @php
-                $common = array_merge($form2['issuances'], $prevToDateForm2['issuances'] ?? []);
+                $common = array_merge($form2['issuances'] ?? [], $prevToDateForm2['issuances'] ?? [], $toDateForm2['issuances'] ?? []);
             @endphp
             @foreach($common as $k => $val)
                 <tr>
@@ -361,14 +360,18 @@
                     <td class="text-right">
                         {{\App\Swep\Helpers\Helper::toNumber($prevToDateForm2['issuances'][$k]['current'] ?? null, 3)}}
                     </td>
-                    <td></td>
+                    <td class="text-right">
+                        {{\App\Swep\Helpers\Helper::toNumber($toDateForm2['issuances'][$k]['current'] ?? null, 3)}}
+                    </td>
                     <td class="text-right">
                         {{\App\Swep\Helpers\Helper::toNumber($form2['issuances'][$k]['prev'] ?? null, 3)}}
                     </td>
                     <td class="text-right">
                         {{\App\Swep\Helpers\Helper::toNumber($prevToDateForm2['issuances'][$k]['prev'] ?? null, 3)}}
                     </td>
-                    <td></td>
+                    <td class="text-right">
+                        {{\App\Swep\Helpers\Helper::toNumber($toDateForm2['issuances'][$k]['prev'] ?? null, 3)}}
+                    </td>
                 </tr>
             @endforeach
         @endif
