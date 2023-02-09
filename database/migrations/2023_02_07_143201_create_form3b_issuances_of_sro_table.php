@@ -50,7 +50,7 @@ class CreateForm3bIssuancesOfSroTable extends Migration
             $table->string('slug')->nullable();
             $table->string('mro_no')->nullable();
             $table->string('trader')->nullable();
-            $table->date('pcs')->nullable();
+            $table->integer('pcs')->nullable();
             $table->timestamps();
             $table->string('user_created')->nullable();
             $table->string('user_updated')->nullable();

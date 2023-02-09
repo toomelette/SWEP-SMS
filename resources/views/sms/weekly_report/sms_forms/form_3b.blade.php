@@ -8,7 +8,7 @@
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                    <p class="no-margin">Issuances of SRO <small id="filter-notifier" class="label bg-blue blink"></small></p>
+                    <p class="no-margin">Issuances of MRO <small id="filter-notifier" class="label bg-blue blink"></small></p>
                 </div>
 
                 <div class="box-body" style="">
@@ -19,12 +19,10 @@
                         <thead>
                         <tr>
                             <th>Date of Issue</th>
-                            <th>Ref. SRO SN.</th>
-                            <th>Trader/Tollee</th>
-                            <th>Raw Qty</th>
-                            <th>Monitoring Fee OR#</th>
-                            <th>RSQ No.</th>
-                            <th>Refined Qty</th>
+                            <th>MRO No.</th>
+                            <th>Trader/Owner</th>
+                            <th>Liens OR</th>
+                            <th>Qty</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -54,11 +52,9 @@
                         <thead>
                         <tr>
                             <th>Date of Withdrawal</th>
-                            <th>Ref. SRO SN.</th>
-                            <th>Trader/Tollee</th>
-                            <th>Qty Standard</th>
-                            <th>Qty Premium</th>
-                            <th>Total</th>
+                            <th>MRO No.</th>
+                            <th>Trader/Owner</th>
+                            <th>Qty</th>
                             <th>Remarks</th>
                             <th>Action</th>
                         </tr>

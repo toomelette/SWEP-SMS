@@ -38,8 +38,8 @@
             "order":[[0,'desc']],
             "responsive": true,
             "initComplete": function( settings, json ) {
-                $("#waitBar .progress-bar").css('width','35%');
-                $("#waitText span").html('Preparing Form 5');
+                $("#waitBar .progress-bar").css('width','30%');
+                $("#waitText span").html('Populating Form 5 Issuances');
                 __form5ServedSro();
             },
             "language":

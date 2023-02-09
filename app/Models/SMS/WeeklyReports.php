@@ -45,6 +45,19 @@ class WeeklyReports extends Model
 //        return $this->hasMany(WeeklyReportSeriesPcs::class, 'weekly_report_slug','slug');
 //    }
 
+    public function form3bIssuancesOfMro(){
+        return $this->hasMany(Form3b\IssuancesOfMro::class,'weekly_report_slug','slug');
+    }
+    public function form3bDeliveries(){
+        return $this->hasMany(Form3b\Deliveries::class,'weekly_report_slug','slug');
+    }
+
+    public function form3bServedMros(){
+        return $this->hasMany(Form3b\ServedSros::class,'weekly_report_slug','slug');
+    }
+
+
+
     public function form5IssuancesOfSro(){
         return $this->hasMany(Form5\IssuancesOfSro::class,'weekly_report_slug','slug');
     }

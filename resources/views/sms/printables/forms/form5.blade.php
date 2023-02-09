@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        @php($total = 0);
+        @php($total = 0)
         @if(!empty($wr->form5IssuancesOfSro))
             @foreach($wr->form5IssuancesOfSro as $form5IssuancesOfSro)
                 @php($total = $total + ($form5IssuancesOfSro->qty ?? 0))

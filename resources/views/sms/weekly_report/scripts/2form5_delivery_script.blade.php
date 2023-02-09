@@ -37,7 +37,7 @@
             "order":[[0,'desc']],
             "responsive": true,
             "initComplete": function( settings, json ) {
-                $("#waitBar .progress-bar").css('width','21%');
+                $("#waitBar .progress-bar").css('width','20%');
                 $("#waitText span").html('Preparing Form 5');
                 __3Form5Issuance();
             },

@@ -316,7 +316,7 @@
             </td>
         </tr>
         <tr>
-            <td class="text-right">PORDUCTION (NET)</td>
+            <td class="text-right">PRODUCTION (NET)</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['totalProduction']['current'] ?? null,3)  }}
             </td>

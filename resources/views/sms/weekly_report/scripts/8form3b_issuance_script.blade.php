@@ -16,12 +16,10 @@
             "ajax" : '{{route("dashboard.form3b_issuanceOfSro.index")}}?weekly_report_slug={{$wr->slug}}',
             "columns": [
                 { "data": "date_of_issue" },
-                { "data": "sro_no" },
+                { "data": "mro_no" },
                 { "data": "trader" },
-                { "data": "raw_qty" },
-                { "data": "monitoring_fee_or_no" },
-                { "data": "rsq_no" },
-                { "data": "refined_qty" },
+                { "data": "liens_or" },
+                { "data": "qty" },
                 { "data": "action"}
             ],
             "buttons": [
@@ -38,10 +36,9 @@
             "order":[[0,'desc']],
             "responsive": true,
             "initComplete": function( settings, json ) {
-                $("#waitBar .progress-bar").css('width','70%');
-                $("#waitText span").html('Creating tables');
-                __7Form5aServedSro();
-                console.log('a');
+                $("#waitBar .progress-bar").css('width','86%');
+                $("#waitText span").html('Initializing form tables');
+                __82Form3bDeliveries();
             },
             "language":
                 {

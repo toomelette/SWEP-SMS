@@ -38,7 +38,7 @@
             "order":[[0,'desc']],
             "responsive": true,
             "initComplete": function( settings, json ) {
-                $("#waitBar .progress-bar").css('width','70%');
+                $("#waitBar .progress-bar").css('width','60%');
                 $("#waitText span").html('Creating tables');
                 __7Form5aServedSro();
                 console.log('a');

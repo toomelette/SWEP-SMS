@@ -15,6 +15,7 @@
                     <li class="active"><a href="#tab_1" data-toggle="tab">Form 1</a></li>
                     <li><a href="#tab_2" data-toggle="tab">Form 2</a></li>
                     <li><a href="#tab_3" data-toggle="tab">Form 3</a></li>
+                    <li><a href="#tab_3b" data-toggle="tab">Form 3B</a></li>
                     <li><a href="#tab_4" data-toggle="tab">Form 4</a></li>
                     <li><a href="#tab_4a" data-toggle="tab">Form 4A</a></li>
                     <li><a href="#tab_5" data-toggle="tab">Form 5</a></li>
@@ -42,6 +43,14 @@
                             </h4>
                         </div>
                         @include('sms.signatory.tabContents.form3')
+                    </div>
+
+                    <div class="tab-pane" id="tab_3b">
+                        <div class="form-title" style="background-color: #4e984a;">
+                            <h4>  MILLSITE &amp; SUBSIDIARY WAREHOUSE INVENTORY REPORT - MOLASSES
+                            </h4>
+                        </div>
+                        @include('sms.signatory.tabContents.form3b')
                     </div>
 
                     <div class="tab-pane" id="tab_4">

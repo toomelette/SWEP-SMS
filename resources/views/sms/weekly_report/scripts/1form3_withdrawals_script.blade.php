@@ -60,7 +60,7 @@
             "order":[[0,'desc']],
             "responsive": true,
             "initComplete": function( settings, json ) {
-                $("#waitBar .progress-bar").css('width','14%');
+                $("#waitBar .progress-bar").css('width','10%');
                 $("#waitText span").html('Initializing Form 3');
                 __2Form5Deliveries();
             },

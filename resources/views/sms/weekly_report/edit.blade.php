@@ -73,7 +73,7 @@
                                         <li><a href="#tab_2" data-toggle="tab"> Form 2</a></li>
                                         <li><a href="#tab_3" data-toggle="tab"> Form 3</a></li>
                                         <li><a href="#tab_3a" data-toggle="tab"> Form 3A</a></li>
-                                        <li style="display: none"><a href="#tab_3b" data-toggle="tab" > Form 3B</a></li>
+                                        <li style="display: block"><a href="#tab_3b" data-toggle="tab" > Form 3B</a></li>
                                         <li><a href="#tab_4" data-toggle="tab"> Form 4</a></li>
                                         <li><a href="#tab_4a" data-toggle="tab"> Form 4A</a></li>
                                         <li><a href="#tab_5" data-toggle="tab"> Form 5</a></li>
@@ -448,6 +448,8 @@
     <script type="text/javascript">
         modal_loader = $("#modal_loader").parent('div').html();
     </script>
+    @include('sms.weekly_report.scripts.83form3b_servedSro_script')
+    @include('sms.weekly_report.scripts.82form3b_delivery_script')
     @include('sms.weekly_report.scripts.8form3b_issuance_script')
     @include('sms.weekly_report.scripts.7form5a_servedSro_script')
     @include('sms.weekly_report.scripts.6form5a_issuance_script')

@@ -35,7 +35,7 @@
             "order":[[0,'desc']],
             "responsive": true,
             "initComplete": function( settings, json ) {
-                $("#waitBar .progress-bar").css('width','42%');
+                $("#waitBar .progress-bar").css('width','40%');
                 $("#waitText span").html('Preparing Form 5');
                 __5Form5aDeliveries();
             },

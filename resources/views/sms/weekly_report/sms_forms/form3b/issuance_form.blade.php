@@ -40,7 +40,7 @@
 </div>
 
 
-<div class="row">
+<div class="row" style="display: none">
     {!! \App\Swep\ViewHelpers\__form2::iRadioH('withdrawal_type',[
         'cols' => 12,
         'label' => 'Domestic/Imported:',
@@ -55,7 +55,7 @@
     ) !!}
 </div>
 
-<div class="row">
+<div class="row" style="display: none">
     {!! \App\Swep\ViewHelpers\__form2::iRadioH('type',[
         'cols' => 6,
         'label' => 'Type:',
@@ -78,7 +78,6 @@
     ],
      !empty($withdrawal->qty_current) ? 'CURRENT' : 'PREVIOUS'
     ) !!}
-
 </div>
 
 <script>
