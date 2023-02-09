@@ -8,7 +8,7 @@
     (!empty($delivery)) ? $delivery : null
     ) !!}
     {!! \App\Swep\ViewHelpers\__form2::textbox('mro_no',[
-        'label' => 'Ref. SRO S.N.:',
+        'label' => 'MRO:',
         'cols' => 6,
     ],
     (!empty($delivery)) ? $delivery : null

@@ -58,6 +58,12 @@
     ],
     $issuance->liens_or ?? null
     ) !!}
+    {!! \App\Swep\ViewHelpers\__form2::textbox('delivery_no',[
+        'label' => 'Delivery #:',
+        'cols' => 4,
+    ],
+    $issuance->delivery_no ?? null
+    ) !!}
 </div>
 
 <div class="row">

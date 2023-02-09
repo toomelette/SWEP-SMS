@@ -19,7 +19,7 @@
                         <thead>
                         <tr>
                             <th>Date of Issue</th>
-                            <th>Ref. SRO SN.</th>
+                            <th>SRO #</th>
                             <th>Trader/Tollee</th>
                             <th>Raw Qty</th>
                             <th>Monitoring Fee OR#</th>

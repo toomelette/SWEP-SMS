@@ -13,4 +13,10 @@ class SugarMills extends Model
     public function signatories(){
         return $this->hasMany(Signatories::class,'mill_code','slug');
     }
+
+    public function weeklyReportsSubmitted(){
+        return $this->hasMany(WeeklyReports::class,'mill_code','slug')
+            ->where('status','=',1)
+            ->orderBy('week_ending','asc');
+    }
 }

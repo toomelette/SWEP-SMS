@@ -15,6 +15,7 @@ use App\Models\News;
 use App\Models\PermissionSlip;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\WeeklyReports;
+use App\SMS\Services\DashboardService;
 use App\Swep\Services\HomeService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,14 +32,14 @@ class HomeController extends Controller{
 
 
 	protected $home;
+    protected $dashboardService;
 
 
 
-
-    public function __construct(HomeService $home){
+    public function __construct(HomeService $home, DashboardService $dashboardService){
 
         $this->home = $home;
-
+        $this->dashboardService = $dashboardService;
     }
 
 
@@ -67,12 +68,34 @@ class HomeController extends Controller{
             ->first();
         $totalRawSugarIssuances = (!empty($wrForThisWeek->form5IssuancesOfSro)) ? $wrForThisWeek->form5IssuancesOfSro()->sum('qty') : null;
         $totalRawSugarDeliveries = !empty($wrForThisWeek->form5IssuancesOfSro) ? $wrForThisWeek->form5Deliveries()->sum('qty') : null;
+        if(Auth::user()->access == 'ADMIN'){
+
+//            return view('dashboard.home.homeAdmin')->with([
+//                'totalRawSugarIssuances' => $totalRawSugarIssuances,
+//                'totalRawSugarDeliveries' => $totalRawSugarDeliveries,
+//                'closestSundayAhead' => $closestSundayAhead,
+//                'cy' => $cy,
+//            ]);
+
+
+            return view('sms.home.admin.index')->with([
+                'totalRawSugarIssuances' => $totalRawSugarIssuances,
+                'totalRawSugarDeliveries' => $totalRawSugarDeliveries,
+                'closestSundayAhead' => $closestSundayAhead,
+                'prevSunday' => Carbon::parse($closestSundayAhead)->subDays(7),
+                'millGatePricePrev' => $this->dashboardService->getMillGatePrice( Carbon::parse($closestSundayAhead)->subDays(7)),
+                'millGatePriceDiffPerc' => $this->dashboardService->getMillGatePrice( Carbon::parse($closestSundayAhead)->subDays(14)),
+                'cy' => $cy,
+            ]);
+        }
         return view('dashboard.home.homeAdmin')->with([
             'totalRawSugarIssuances' => $totalRawSugarIssuances,
             'totalRawSugarDeliveries' => $totalRawSugarDeliveries,
             'closestSundayAhead' => $closestSundayAhead,
             'cy' => $cy,
         ]);
+
+
     }
 
 }

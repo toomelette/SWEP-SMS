@@ -13,21 +13,21 @@ class CreateForm3bIssuancesOfSroTable extends Migration
      */
     public function up()
     {
-//        Schema::create('form3b_issuances_of_sro', function (Blueprint $table) {
-//            $table->id();
-//            $table->string('weekly_report_slug')->nullable();
-//            $table->string('slug')->nullable();
-//            $table->string('mro_no')->nullable();
-//            $table->string('trader')->nullable();
-//            $table->date('date_of_issue')->nullable();
-//            $table->string('liens_or')->nullable();
-//            $table->decimal('qty',20,3)->nullable();
-//            $table->timestamps();
-//            $table->string('user_created')->nullable();
-//            $table->string('user_updated')->nullable();
-//            $table->string('ip_created')->nullable();
-//            $table->string('ip_updated')->nullable();
-//        });
+        Schema::create('form3b_issuances_of_sro', function (Blueprint $table) {
+            $table->id();
+            $table->string('weekly_report_slug')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('mro_no')->nullable();
+            $table->string('trader')->nullable();
+            $table->date('date_of_issue')->nullable();
+            $table->string('liens_or')->nullable();
+            $table->decimal('qty',20,3)->nullable();
+            $table->timestamps();
+            $table->string('user_created')->nullable();
+            $table->string('user_updated')->nullable();
+            $table->string('ip_created')->nullable();
+            $table->string('ip_updated')->nullable();
+        });
 
         Schema::create('form3b_deliveries', function (Blueprint $table) {
             $table->id();
