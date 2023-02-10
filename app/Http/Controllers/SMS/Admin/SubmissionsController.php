@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SMS\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\SMS\CropYears;
 use App\Models\SMS\SugarMills;
 use App\SMS\Services\WeeklyReportService;
 use Illuminate\Http\Request;
@@ -18,6 +19,13 @@ class SubmissionsController extends Controller
     }
 
     public function index(Request $request){
+        if(!$request->has('cy')){
+            $latestCy = CropYears::query()->orderBy('name','desc')->first();
+            if(!empty($latestCy)){
+                return redirect(route('dashboard.submissions.index').'?cy='.$latestCy->name);
+            }
+            abort(510, 'No crop year found');
+        }
         $arr = [];
         $mills = SugarMills::query()
             ->with(['weeklyReportsSubmitted'])
