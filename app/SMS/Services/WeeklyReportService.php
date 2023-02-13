@@ -147,14 +147,16 @@ class WeeklyReportService
         //UNQUEDANNED = MANUFACTURED - ISSUANCES
         $formArray['unquedanned'] = [
             'current' => $formArray['manufactured']['current'] - array_sum(array_column($formArray['issuances'],'current')),
-            'prev' => $formArray['manufactured']['prev'] - array_sum(array_column($formArray['issuances'],'prev')),
+//            'prev' => $formArray['manufactured']['prev'] - array_sum(array_column($formArray['issuances'],'prev')),
+            'prev' => $formArray['issuancesTotal']['prev'] - array_sum(array_column($formArray['issuances'],'prev')),
         ];
 
 
         //STOCK BALANCE = Manufactured - Withdrawals
         $formArray['stockBalance'] = [
             'current' => $formArray['manufactured']['current'] - $formArray['withdrawalsTotal']['current'] - $formArray['forRefiningTotal']['current'],
-            'prev' => $formArray['manufactured']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
+//            'prev' => $formArray['manufactured']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
+            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
         ];
 
         //TRANSFERS TO REFINERY = Form2 not covered by sro

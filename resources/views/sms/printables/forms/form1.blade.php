@@ -32,7 +32,14 @@
             <td class="text-right">
                 {{\App\Swep\Helpers\Helper::toNumber($toDateForm1['manufactured']['current'] ?? null ,3)}}
             </td>
+            <td></td>
+            <td></td>
+            <td></td>
 
+        </tr>
+
+        <tr>
+            <td colspan="4">2. ISSUANCES/CARRY-OVER</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form1['manufactured']['prev'] ?? null, 3) }}
             </td>
@@ -42,10 +49,6 @@
             <td class="text-right">
                 {{\App\Swep\Helpers\Helper::toNumber($toDateForm1['manufactured']['prev'] ?? null ,3)}}
             </td>
-        </tr>
-
-        <tr>
-            <td colspan="7">2. ISSUANCES/CARRY-OVER</td>
         </tr>
 
         @if(isset($form1['issuances']) || isset($prevToDateForm1['issuances']) || isset($toDateForm1['issuances']))
