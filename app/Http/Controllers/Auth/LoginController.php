@@ -147,7 +147,7 @@ class LoginController extends Controller{
             if(!empty($logout_redirect)){
                 $logout_redirect_link = $logout_redirect->string_value;
             }
-
+            return redirect('/');
             return redirect('http://'.$logout_redirect_link.'/');
             return redirect('/?portal='.$request->portal);
 
