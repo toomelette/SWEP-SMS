@@ -10,7 +10,13 @@
                 <p class="no-margin text-left" style="font-size: 12px"> August 2022</p>
             </td>
             <td style="text-align: right; vertical-align: top">
+                @if($wr->status == 1)
                 {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(65)->generate(route('dashboard.weekly_report.show',$wr->slug).'?src=SCANNER'); !!}
+                @elseif($wr->status == -1)
+                    <p class="text-danger text-strong" style="font-size: 18px">CANCELLED</p>
+                @else
+                    <p class="text-danger text-strong" style="font-size: 18px">DRAFT</p>
+                @endif
             </td>
             <td style="width: 190px; vertical-align: top">
                 <table style="float: right" class="details-top-right-table">

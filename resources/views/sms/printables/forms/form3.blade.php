@@ -207,15 +207,17 @@
             <td>5.2 Refined</td>
             <td class="text-right">{{ !empty($wr->form3) ? number_format($wr->form3->priceRefined,2) : null}}</td>
         </tr>
-        <tr>
-            <td colspan="4" class="text-strong">6. Molasses Storage Certificates</td>
-        </tr>
+
         <tr>
             <td>5.1 Raw</td>
             <td>{{ $wr->form3->storageCertRaw ?? null}}</td>
             <td>5.2 Refined</td>
             <td>{{$wr->form3->storageCertRefined ?? null}}</td>
         </tr>
+        <tr>
+            <td colspan="4" class="text-strong">6. Molasses Storage Certificates:</td>
+        </tr>
+
         <tr>
             <td colspan="2">
                 7. Molasses Distribution Factor:

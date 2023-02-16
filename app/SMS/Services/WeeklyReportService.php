@@ -292,16 +292,30 @@ class WeeklyReportService
         ];
 
 
-        //TOTAL REFINED
-        $formArray['totalProduction'] = [
-            'current' => array_sum(array_column($formArray['production'],'current')),
-            'prev' => array_sum(array_column($formArray['production'],'prev')),
-        ];
+        //TOTAL PRODUCTION
+//        $formArray['totalProduction'] = [
+//            'current' => array_sum(array_column($formArray['production'],'current')),
+//            'prev' => array_sum(array_column($formArray['production'],'prev')),
+//        ];
+//        $formArray['totalProduction'] = [
+//            'current' => $formArray['production']['domestic']['current'] -,
+//            'prev' => array_sum(array_column($formArray['production'],'prev')),
+//        ];
 
+
+        //TOTAL REFINED
         $formArray['totalRefined'] = [
             'current' => $formArray['production']['domestic']['current'] + $formArray['production']['imported']['current'],
             'prev' => $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'],
         ];
+
+        $formArray['totalProduction'] = [
+            'current' => $formArray['totalRefined']['current'] - $formArray['production']['returnToProcess']['current'] ,
+            'prev' =>  $formArray['totalRefined']['prev'] - $formArray['production']['returnToProcess']['prev'],
+        ];
+
+
+
         $formArray['issuances'] = [];
         //ISSUANCES
 
