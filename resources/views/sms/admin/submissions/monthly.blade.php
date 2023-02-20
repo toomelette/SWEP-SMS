@@ -1,6 +1,7 @@
 <section class="content">
     <div class="box box-solid">
         <div class="box-body">
+            <span style="font-size: 20px">{{\Illuminate\Support\Carbon::parse($currentMonth)->format('F, Y')}}</span>
             <div class="btn-group pull-right">
                 <button type="button" data="{{\Illuminate\Support\Carbon::parse($currentMonth)->subMonth(1)->format('Y-m-d')}}" class="navigate-btn btn btn-default"><i class="fa fa-arrow-left"></i></button>
                 <button type="button" data="{{\Illuminate\Support\Carbon::now()->format('Y-m-01')}}" class="navigate-btn btn btn-default">Current</button>
