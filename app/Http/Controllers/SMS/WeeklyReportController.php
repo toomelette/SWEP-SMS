@@ -10,6 +10,7 @@ use App\Http\Requests\SMS\WeeklyReportFormRequest;
 use App\Models\SMS\Form1\Form1Details;
 use App\Models\SMS\Form2\Form2Details;
 use App\Models\SMS\Form3\Form3Details;
+use App\Models\SMS\Form5\IssuancesOfSro;
 use App\Models\SMS\InputFields;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\Form6a\QuedanRegistry;
@@ -107,6 +108,9 @@ class WeeklyReportController extends Controller
         $weekly_report = $this->findBySlug($slug);
         if($weekly_report->mill_code != Auth::user()->mill_code){
             abort(510,'This report does not belong to your mill code.');
+        }
+        if($weekly_report->status == -1){
+            abort(510,'This report has already been cancelled.');
         }
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
@@ -277,9 +281,76 @@ class WeeklyReportController extends Controller
             }
         }
         $wr->save();
+
+        $references = $this->references();
+
+        foreach ($references as $tableName => $reference){
+            $columns = \Schema::getColumnListing($tableName);
+            array_splice($columns,0,1);
+            if(!empty($wr->{$reference['objectRelation']})){
+                $arr = [];
+                foreach ($wr->{$reference['objectRelation']} as $data){
+                    $toPush = [];
+                    foreach ($columns as $col){
+                        $toPush[$col] = $data->$col;
+                        $toPush['slug'] = Str::random();
+                        $toPush['weekly_report_slug'] = $wrNew->slug;
+                    }
+                    array_push($arr,$toPush);
+                }
+                $model  = $reference['model'];
+                $model::insert($arr);
+            }
+        }
+
+
         if($wrNew->save()){
             return $wrNew->only('slug');
         }
+    }
+
+    private function references(){
+        return [
+            'form5_issuances_of_sro' => [
+                'objectRelation' => 'form5IssuancesOfSro',
+                'model' => 'App\Models\SMS\Form5\IssuancesOfSro',
+            ],
+            'form5_deliveries' => [
+                'objectRelation' => 'form5Deliveries',
+                'model' => 'App\Models\SMS\Form5\Deliveries',
+            ],
+            'form5_served_sros' => [
+                'objectRelation' => 'form5ServedSros',
+                'model' => 'App\Models\SMS\Form5\ServedSros',
+            ],
+
+            'form5a_issuances_of_sro' => [
+                'objectRelation' => 'form5aIssuancesOfSro',
+                'model' => 'App\Models\SMS\Form5a\IssuancesOfSro',
+            ],
+            'form5a_deliveries' => [
+                'objectRelation' => 'form5aDeliveries',
+                'model' => 'App\Models\SMS\Form5a\Deliveries',
+            ],
+            'form5a_served_sros' => [
+                'objectRelation' => 'form5aServedSros',
+                'model' => 'App\Models\SMS\Form5a\ServedSros',
+            ],
+
+            'form3b_issuances_of_sro' => [
+                'objectRelation' => 'form3bIssuancesOfMro',
+                'model' => 'App\Models\SMS\Form3b\IssuancesOfMro',
+            ],
+            'form3b_deliveries' => [
+                'objectRelation' => 'form3bDeliveries',
+                'model' => 'App\Models\SMS\Form3b\Deliveries',
+            ],
+            'form3b_served_sros' => [
+                'objectRelation' => 'form3bServedMros',
+                'model' => 'App\Models\SMS\Form3b\ServedSros',
+            ],
+
+        ];
     }
 
     public function submit($slug){
