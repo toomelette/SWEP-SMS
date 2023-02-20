@@ -36,7 +36,7 @@
                         <td>{{$data->delivery_no}}</td>
                         <td>{{$data->trader}}</td>
                         <td>{{$data->source}}</td>
-                        <td>{{$data->sro_no}}</td>
+                        <td class="text-center">{{$data->raw_sro_no}}</td>
                         <td>{{$data->liens_or}}</td>
                         <td class="text-right">{{($data->raw_qty != null ? number_format($data->raw_qty,3) : number_format($data->prev_raw_qty,3) )}}</td>
                         <td class="text-right">{{number_format($data->refined_qty,2)}}</td>

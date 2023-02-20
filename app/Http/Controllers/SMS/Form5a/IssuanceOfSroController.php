@@ -44,6 +44,7 @@ class IssuanceOfSroController extends Controller
         $i = new IssuancesOfSro;
         $i->weekly_report_slug = $request->weekly_report_slug;
         $i->slug = Str::random();
+        $i->raw_sro_no = $request->raw_sro_no;
         $i->date_of_issue = $request->date_of_issue;
         $i->sro_no = $request->sro_no;
         $i->trader = $request->trader;
@@ -75,6 +76,7 @@ class IssuanceOfSroController extends Controller
     public function update(Request $request,$slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
         $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
+        $i->raw_sro_no = $request->raw_sro_no;
         $i->date_of_issue = $request->date_of_issue;
         $i->sro_no = $request->sro_no;
         $i->trader = $request->trader;
