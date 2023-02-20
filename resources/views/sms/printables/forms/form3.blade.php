@@ -220,12 +220,13 @@
 
         @if(!empty($details_arr['MOLASSES']['seriesNos']['RAW']))
             <td colspan="2"> RAW : {{$details_arr['MOLASSES']['seriesNos']['RAW']->seriesFrom}} - {{$details_arr['MOLASSES']['seriesNos']['RAW']->seriesTo}} , {{$details_arr['MOLASSES']['seriesNos']['RAW']->noOfPcs}} PCS</td>
-            <td colspan="2"> REFINED : {{$details_arr['MOLASSES']['seriesNos']['REFINED']->seriesFrom}} - {{$details_arr['MOLASSES']['seriesNos']['REFINED']->seriesTo}} , {{$details_arr['MOLASSES']['seriesNos']['REFINED']->noOfPcs}} PCS</td>
         @else
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
+        @endif
+
+        @if(!empty($details_arr['MOLASSES']['seriesNos']['REFINED']))
+            <td colspan="2"> REFINED : {{$details_arr['MOLASSES']['seriesNos']['REFINED']->seriesFrom}} - {{$details_arr['MOLASSES']['seriesNos']['REFINED']->seriesTo}} , {{$details_arr['MOLASSES']['seriesNos']['REFINED']->noOfPcs}} PCS</td>
         @endif
         <tr>
             <td colspan="2">
