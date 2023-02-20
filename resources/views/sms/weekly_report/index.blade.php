@@ -231,7 +231,7 @@
             let reportNo = btn.attr('reportNo');
             let cropYear = btn.attr('cropYear');
             Swal.fire({
-                title: 'Save as new',
+                title: 'Cancel?',
                 html: '<div class="text-left">The following actions will be executed: <br> ' +
                     '1. Report No. '+reportNo+' | '+cropYear+' will be canceled.<br> ' +
                     '2. A draft that is a clone of Report No. '+reportNo+' | '+ cropYear +' will be created.' +
@@ -244,6 +244,7 @@
                 inputValue: 'bm_uid',
                 showCancelButton: true,
                 confirmButtonText: 'Continue',
+                cancelButtonText: 'Do not cancel',
                 showLoaderOnConfirm: true,
                 preConfirm: (text) => {
                     return $.ajax({
