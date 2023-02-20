@@ -289,10 +289,9 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->tdc ?? null,3) }}
             </td>
-            <td class="text-right">
+            <td class="text-strong" colspan="3">
+                QUEDAN ISSUANCES
             </td>
-            <td></td>
-            <td></td>
         </tr>
 
         <tr>
@@ -306,10 +305,17 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->gtcm ?? null,3) }}
             </td>
-            <td class="text-right">
+            <td class="text-strong">
+                A:
             </td>
-            <td></td>
-            <td></td>
+
+            @if(!empty($details_arr['RAW']['seriesNos']['A']))
+                <td>{{$details_arr['RAW']['seriesNos']['A']->seriesFrom}} - {{$details_arr['RAW']['seriesNos']['A']->seriesTo}}</td>
+                <td>{{$details_arr['RAW']['seriesNos']['A']->noOfPcs}} PCS</td>
+            @else
+                <td></td>
+                <td></td>
+            @endif
         </tr>
 
         <tr>
@@ -323,10 +329,16 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($toDateForm1['lkgtc_gross']['current'] ?? null,3) }}
             </td>
-            <td class="text-right">
+            <td class="text-strong">
+                B:
             </td>
-            <td></td>
-            <td></td>
+            @if(!empty($details_arr['RAW']['seriesNos']['B']))
+                <td>{{$details_arr['RAW']['seriesNos']['B']->seriesFrom}} - {{$details_arr['RAW']['seriesNos']['B']->seriesTo}}</td>
+                <td>{{$details_arr['RAW']['seriesNos']['B']->noOfPcs}} PCS</td>
+            @else
+                <td></td>
+                <td></td>
+            @endif
         </tr>
 
 

@@ -74,11 +74,11 @@
         <div class="panel">
             <div class="box box-sm box-default box-solid">
                 <div class="box-header with-border"  style="background-color: #ac7123;color: white;">
-                    <p class="no-margin">Served SRO<small id="filter-notifier" class="label bg-blue blink"></small></p>
+                    <p class="no-margin">Served MRO<small id="filter-notifier" class="label bg-blue blink"></small></p>
                 </div>
 
                 <div class="box-body" style="">
-                    <button type="button" data-target="#add_form3b_servedSros_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Served SRO</button>
+                    <button type="button" data-target="#add_form3b_servedSros_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Served MRO</button>
                     <br>
                     <br>
                     <table style="width: 100%;" class="table table-condensed table-bordered" id="form3b_servedSros_table">

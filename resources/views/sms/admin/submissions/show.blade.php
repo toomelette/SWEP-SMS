@@ -2,10 +2,11 @@
 @extends('layouts.modal-content')
 
 @section('modal-header')
-
+    {{$wr->mill_code}} | Report no: {{$wr->report_no}} , WE: {{\Illuminate\Support\Carbon::parse($wr->week_ending)->format('M. d, Y')}}
 @endsection
 
 @section('modal-body')
+    Submitted at: {{Carbon::parse($wr->submitted_at)->format('F d, Y | h:i A')}}
     <div id="loaderContainer_{{$rand}}">
         <h1 class="text-center" style="font-size: 72px; padding: 150px">
             <i class="fa fa-spin fa-spinner"></i>

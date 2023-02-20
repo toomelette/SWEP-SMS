@@ -204,7 +204,7 @@ class WeeklyReportController extends Controller
 
         if(!empty($weekly_report->seriesNos)){
             foreach ($weekly_report->seriesNos as $seriesNo){
-                $details_arr[$seriesNo->form_type]['seriesNos'][$seriesNo->input_field] = $seriesNo;
+                $details_arr[$seriesNo->type]['seriesNos'][$seriesNo->sugarClass] = $seriesNo;
             }
         }
 

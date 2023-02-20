@@ -20,18 +20,78 @@ class SubmissionsController extends Controller
     }
 
     public function index(Request $request){
+
+        if($request->ajax()){
+            return $this->byMonth($request->month);
+        }
         if(!$request->has('cy')){
             $latestCy = CropYears::query()->orderBy('name','desc')->first();
             if(!empty($latestCy)){
-                return redirect(route('dashboard.submissions.index').'?cy='.$latestCy->name);
+                return redirect(route('dashboard.submissions.index').'?cy='.$latestCy->name.'&type='.($request->type??'month'));
             }
             abort(510, 'No crop year found');
         }
 
-        $cy = $latestCy = CropYears::query()
-            ->where('name','=',\request('cy'))
-            ->orderBy('name','desc')->first();
+        if($request->has('type') && $request->type == 'year'){
+            return $this->byYear($request);
+        }elseif($request->has('type') && $request->type == 'month'){
+            return view('sms.admin.submissions.index')->with($this->byMonth('2023-01-01'));
+        }
 
+    }
+
+    public function byMonth($month)
+    {
+
+        $weeksArray = [];
+        $dateStarted = $month;
+        $dateEnded = Carbon::parse($month)->addMonth(1)->format('Y-m-d');
+        while ($dateStarted < $dateEnded) {
+            if(Carbon::parse($dateStarted)->dayOfWeek == 0){
+                $weeksArray[Carbon::parse($dateStarted)->format('Y-m-d')] = [];
+            }
+            $dateStarted = Carbon::parse($dateStarted)->addDays(1);
+        }
+        $monthOnly = substr($month,0,7);
+
+        $arr = [];
+        $mills = SugarMills::query()
+            ->with(['weeklyReportsSubmitted'])
+
+            ->orderBy('slug','asc')->get();
+
+        if(!empty($mills)){
+            foreach ($mills as $mill){
+                $arr[$mill->slug] = [
+                    'obj' => $mill,
+                    'weeklyReports' => [],
+                ];
+                $arr[$mill->slug]['weeklyReports'] = $weeksArray;
+
+                if(!empty($mill->weeklyReportsSubmitted)){
+                    foreach ($mill->weeklyReportsSubmitted as $weeklyReportSubmitted){
+                        if(substr($weeklyReportSubmitted->week_ending,0,7) == $monthOnly){
+                            $arr[$mill->slug]['weeklyReports'][$weeklyReportSubmitted->week_ending] = [
+                                'obj' => $weeklyReportSubmitted,
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+        return [
+            'content2' => view('sms.admin.submissions.monthly')->with([
+                'mills' => $arr,
+                'weeksArray' => $weeksArray,
+                'currentMonth' => $month,
+            ])->render()
+        ];
+
+    }
+    public function byYear($request){
+        $cy = $latestCy = CropYears::query()
+            ->where('name','=',$request->cy)
+            ->orderBy('name','desc')->first();
         $weeksArray = [];
         $date_started = $cy->date_start;
         $date_ended = $cy->date_end;
@@ -59,17 +119,17 @@ class SubmissionsController extends Controller
 
                 if(!empty($mill->weeklyReportsSubmitted)){
                     foreach ($mill->weeklyReportsSubmitted as $weeklyReportSubmitted)
-                    $arr[$mill->slug]['weeklyReports'][Carbon::parse($weeklyReportSubmitted->week_ending)->format('Y-m-01')][$weeklyReportSubmitted->week_ending] = [
-                        'obj' => $weeklyReportSubmitted,
-                    ];
+                        $arr[$mill->slug]['weeklyReports'][Carbon::parse($weeklyReportSubmitted->week_ending)->format('Y-m-01')][$weeklyReportSubmitted->week_ending] = [
+                            'obj' => $weeklyReportSubmitted,
+                        ];
                 }
             }
         }
-
-
         return view('sms.admin.submissions.index')->with([
-            'mills' => $arr,
-            'weeksArray' => $weeksArray,
+            'content2' => view('sms.admin.submissions.yearly')->with([
+                'mills' => $arr,
+                'weeksArray' => $weeksArray,
+            ])
         ]);
     }
 
