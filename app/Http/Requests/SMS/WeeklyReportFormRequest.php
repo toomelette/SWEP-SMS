@@ -32,7 +32,7 @@ class WeeklyReportFormRequest extends FormRequest
               'required',
               'string',
               Rule::unique('weekly_reports')->where(function ($query) use ($week_ending,$crop_year){
-                  return $query->where('week_ending' ,'=',$week_ending)
+                  return $query
                       ->where('mill_code' ,'=',Auth::user()->mill_code)
                       ->where('crop_year','=',$crop_year);
               }),

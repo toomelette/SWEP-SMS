@@ -35,7 +35,7 @@ class SubmissionsController extends Controller
         if($request->has('type') && $request->type == 'year'){
             return $this->byYear($request);
         }elseif($request->has('type') && $request->type == 'month'){
-            return view('sms.admin.submissions.index')->with($this->byMonth('2023-01-01'));
+            return view('sms.admin.submissions.index')->with($this->byMonth(Carbon::now()->format('Y-m-01')));
         }
 
     }
