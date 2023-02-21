@@ -191,7 +191,9 @@ table.print-table th,table.print-table td{
     width: 49%;
 }
 
-
+.sign-table{
+    margin-top: 10px;
+}
 .sign-table>tbody>tr:nth-child(2)>td{
     padding-top: 30px !important;
     font-weight: bold;
