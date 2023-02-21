@@ -198,6 +198,25 @@
                         $wr->form2->prev_prodImported ?? null
                         ) !!}
                     </td>
+
+                </tr>
+                <tr>
+                    <td class="text-strong"><span class="indent"></span> 6.3. OVERAGES </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('overage',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->overage ?? null
+                        ) !!}
+                    </td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_overage',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg'
+                        ],
+                        $wr->form2->prev_overage ?? null
+                        ) !!}
+                    </td>
+
                 </tr>
                 <tr for="totalRefined" class="computation">
                     <td class="text-strong text-right"> <i>TOTAL REFINED</i> </td>
@@ -205,7 +224,7 @@
                     <td class="text-right text-strong">0</td>
                 </tr>
                 <tr>
-                    <td class="text-strong"><span class="indent"></span> 6.3. RETURN TO PROCESS </td>
+                    <td class="text-strong"><span class="indent"></span> 6.4. RETURN TO PROCESS </td>
                     <td>
                         {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prodReturn',[
                             'class' => 'form2-input input-sm text-right autonum_lkg'

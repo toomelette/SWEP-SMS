@@ -288,6 +288,7 @@ class WeeklyReportService
         $formArray['production'] = [
             'domestic' => $this->makeCurrentPrev($relation->prodDomestic ?? null,$relation->prev_prodDomestic ?? null),
             'imported' => $this->makeCurrentPrev($relation->prodImported ?? null,$relation->prev_prodImported ?? null),
+            'overage' => $this->makeCurrentPrev($relation->overage ?? null,$relation->prev_overage ?? null),
             'returnToProcess' => $this->makeCurrentPrev($relation->prodReturn ?? null,$relation->prev_prodReturn ?? null),
         ];
 
@@ -305,8 +306,8 @@ class WeeklyReportService
 
         //TOTAL REFINED
         $formArray['totalRefined'] = [
-            'current' => $formArray['production']['domestic']['current'] + $formArray['production']['imported']['current'],
-            'prev' => $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'],
+            'current' => $formArray['production']['domestic']['current'] + $formArray['production']['imported']['current'] + $formArray['production']['overage']['current'],
+            'prev' => $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'] + $formArray['production']['overage']['prev'],
         ];
 
         $formArray['totalProduction'] = [

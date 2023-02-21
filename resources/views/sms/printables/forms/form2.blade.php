@@ -228,7 +228,16 @@
             <td colspan="7">REFINED SUGAR</td>
         </tr>
         <tr>
-            <td colspan="7">6. PRODUCTION/CARRY-OVER</td>
+            <td colspan="4">6. PRODUCTION/CARRY-OVER</td>
+            <td class="text-right text-strong">
+                {{ \App\Swep\Helpers\Helper::toNumber($form2['totalRefined']['prev'] ?? null,3)  }}
+            </td>
+            <td class="text-right text-strong">
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['totalRefined']['prev'] ?? null,3)  }}
+            </td>
+            <td class="text-right text-strong">
+                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['totalRefined']['prev'] ?? null,3)  }}
+            </td>
         </tr>
         <tr>
             <td><span class="indent"></span> 6.1 DOMESTIC</td>
@@ -274,28 +283,49 @@
             </td>
         </tr>
         <tr>
-            <td class="text-right">TOTAL REFINED</td>
+            <td><span class="indent"></span> 6.3 OVERAGES</td>
             <td class="text-right">
+                {{ \App\Swep\Helpers\Helper::toNumber($form2['production']['overage']['current'] ?? null,3)  }}
+            </td>
+            <td class="text-right">
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['production']['overage']['current'] ?? null,3)  }}
+            </td>
+            <td class="text-right">
+                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['production']['overage']['current'] ?? null,3)  }}
+            </td>
+            <td class="text-right">
+                {{ \App\Swep\Helpers\Helper::toNumber($form2['production']['overage']['prev'] ?? null,3)  }}
+            </td>
+            <td class="text-right">
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['production']['overage']['prev'] ?? null,3)  }}
+            </td>
+            <td class="text-right">
+                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['production']['overage']['prev'] ?? null,3)  }}
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right text-strong">TOTAL REFINED</td>
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['totalRefined']['current'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['totalRefined']['current'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['totalRefined']['current'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['totalRefined']['prev'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['totalRefined']['prev'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['totalRefined']['prev'] ?? null,3)  }}
             </td>
         </tr>
         <tr>
-            <td><span class="indent"></span> 6.3 RETURN TO PROCESS</td>
+            <td><span class="indent"></span> 6.4 RETURN TO PROCESS</td>
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['production']['returnToProcess']['current'] ?? null,3)  }}
             </td>
@@ -316,23 +346,23 @@
             </td>
         </tr>
         <tr>
-            <td class="text-right">PRODUCTION (NET)</td>
-            <td class="text-right">
+            <td class="text-right text-strong">PRODUCTION (NET)</td>
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['totalProduction']['current'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['totalProduction']['current'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['totalProduction']['current'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($form2['totalProduction']['prev'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['totalProduction']['prev'] ?? null,3)  }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-strong">
                 {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['totalProduction']['prev'] ?? null,3)  }}
             </td>
         </tr>

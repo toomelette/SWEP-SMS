@@ -35,6 +35,7 @@ class Form2Controller extends Controller
                     'rawWithdrawals'=> Helper::sanitizeAutonum($request->rawWithdrawals),
                     'prodDomestic'=> Helper::sanitizeAutonum($request->prodDomestic),
                     'prodImported'=> Helper::sanitizeAutonum($request->prodImported),
+                    'overage'=> Helper::sanitizeAutonum($request->overage),
                     'prodReturn'=> Helper::sanitizeAutonum($request->prodReturn),
 
                     'prev_carryOver'=> Helper::sanitizeAutonum($request->prev_carryOver),
@@ -46,6 +47,7 @@ class Form2Controller extends Controller
                     'prev_rawWithdrawals'=> Helper::sanitizeAutonum($request->prev_rawWithdrawals),
                     'prev_prodDomestic'=> Helper::sanitizeAutonum($request->prev_prodDomestic),
                     'prev_prodImported'=> Helper::sanitizeAutonum($request->prev_prodImported),
+                    'prev_overage'=> Helper::sanitizeAutonum($request->prev_overage),
                     'prev_prodReturn'=> Helper::sanitizeAutonum($request->prev_prodReturn),
 
                     'remarks' => $request->remarks,
