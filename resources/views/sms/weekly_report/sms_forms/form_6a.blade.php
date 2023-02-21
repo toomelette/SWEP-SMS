@@ -33,7 +33,7 @@
                 <tr>
                     <td>{{$data->delivery_no}}</td>
                     <td>{{$data->trader}}</td>
-                    <td>{{$data->source}}</td>
+                    <td>{{$data->mill_source}}</td>
                     <td>{{$data->sro_no}}</td>
                     <td>{{$data->liens_or}}</td>
                     <td class="text-right">{{number_format($data->raw_qty,2)}}</td>

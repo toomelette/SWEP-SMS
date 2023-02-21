@@ -78,6 +78,12 @@ $issuance->refined_qty ?? $issuance->prev_refined_qty ?? null
     ],
     $issuance->delivery_no ?? null
     ) !!}
+    {!! \App\Swep\ViewHelpers\__form2::textbox('mill_source',[
+        'label' => 'Mill Source:',
+        'cols' => 8,
+    ],
+    $issuance->mill_source ?? null
+    ) !!}
 </div>
 
 <div class="row">

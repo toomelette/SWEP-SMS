@@ -78,6 +78,7 @@ class IssuanceOfSroController extends Controller
         $i->rsq_no = $request->rsq_no;
         $i->liens_or = $request->liens_or;
         $i->delivery_no = $request->delivery_no;
+        $i->mill_source = $request->mill_source;
         if($request->cropCharge == 'CURRENT'){
             $i->refined_qty = Helper::sanitizeAutonum($request->refined_qty);
             $i->prev_refined_qty = null;
@@ -117,6 +118,7 @@ class IssuanceOfSroController extends Controller
         $i->refined_qty = $request->refined_qty;
         $i->liens_or = $request->liens_or;
         $i->delivery_no = $request->delivery_no;
+        $i->mill_source = $request->mill_source;
         if($request->cropCharge == 'CURRENT'){
             $i->refined_qty = Helper::sanitizeAutonum($request->refined_qty);
             $i->prev_refined_qty = null;
