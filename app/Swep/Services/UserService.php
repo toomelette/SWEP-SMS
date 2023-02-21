@@ -132,12 +132,13 @@ class UserService extends BaseService{
 
     public function update($request, $slug){
         $user = $this->user_repo->findBySlug($slug);
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->middlename = $request->middlename;
-        $user->email = $request->email;
-        $user->position = $request->position;
-        $user->dash = $request->dash_type;
+//        $user->firstname = $request->firstname;
+//        $user->lastname = $request->lastname;
+//        $user->middlename = $request->middlename;
+//        $user->email = $request->email;
+//        $user->position = $request->position;
+//        $user->dash = $request->dash_type;
+        $user->mill_code = $request->mill_code;
         $user->update();
         $user->userMenu()->delete();
         $user->userSubmenu()->delete();

@@ -27,6 +27,13 @@ Edit
             <div class="col-md-10">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1_{{$rand}}">
+                        <div class="row">
+                            {!! \App\Swep\ViewHelpers\__form2::select('mill_code',[
+                                'label' => 'Mill Code:',
+                                'cols' => 4,
+                                'options' => \App\Swep\Helpers\Arrays::millCodes(),
+                            ],$user->mill_code) !!}
+                        </div>
                     </div>
                     @foreach($by_category as $category => $menus)
                         <div class="tab-pane" id="tab_{{($category == null) ? 'NoCategory' : $category}}_{{$rand}}">
