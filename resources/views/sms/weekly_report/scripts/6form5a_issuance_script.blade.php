@@ -29,11 +29,15 @@
             ],
             "columnDefs":[
                 {
-                    "targets" : 3,
+                    "targets" : 7,
                     "orderable" : false,
                     "searchable": false,
-                    "class" : 'action4'
+                    "class" : 'action2'
                 },
+                {
+                    'targets' : [3,6],
+                    'class' : 'text-right',
+                }
             ],
             "order":[[0,'desc']],
             "responsive": true,
@@ -48,7 +52,8 @@
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
                 },
             "drawCallback": function(settings){
-                // console.log(servedSros_tbl.page.info().page);
+                $("dt[for='form5aTotalRaw']").html(settings.json.totals.totalIssuances.raw);
+                $("dt[for='form5aTotalRefined']").html(settings.json.totals.totalIssuances.refined);
                 $("#form5a_issuance_table a[for='linkToEdit']").each(function () {
                     let orig_uri = $(this).attr('href');
                     $(this).attr('href',orig_uri+'?page='+form5a_issuance_tbl.page.info().page);
@@ -79,6 +84,7 @@
                 succeed(form,true,false);
                 active_form5a_issuance = res.slug;
                 form5a_issuance_tbl.draw(false);
+                updateTradersList();
             },
             error: function (res) {
                 errored(form,res);

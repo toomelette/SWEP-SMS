@@ -29,11 +29,15 @@
             ],
             "columnDefs":[
                 {
-                    "targets" : 5,
+                    "targets" : 7,
                     "orderable" : false,
                     "searchable": false,
-                    "class" : 'action4'
+                    "class" : 'action2'
                 },
+                {
+                    'targets' : 6,
+                    'class' : 'text-right',
+                }
             ],
             "order":[[0,'desc']],
             "responsive": true,
@@ -46,7 +50,8 @@
                 {
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
                 },
-            "drawCallback": function(settings){
+            "drawCallback": function(settings,json){
+                $("dt[for='form5TotalIssuance']").html(settings.json.totals.totalIssuances);
                 $('[data-toggle="tooltip"]').tooltip();
                 $('[data-toggle="modal"]').tooltip();
                 if(active_form5_issuancesOfSro != ''){
@@ -73,6 +78,7 @@
                 $('dt[for="form5TotalIssuances"]').html(res.totalForm5Issuance);
                 active_form5_issuancesOfSro = res.slug;
                 issuancesOfSro_tbl.draw(false);
+                updateTradersList();
             },
             error: function (res) {
                 errored(form,res);

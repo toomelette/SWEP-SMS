@@ -19,6 +19,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('trader',[
         'label' => 'Trader/Tollee:',
         'cols' => 12,
+        'list' => 'traders',
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}

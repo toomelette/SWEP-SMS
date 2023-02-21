@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SMS\Form5;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SMS\Form5\IssuanceFormRequest;
 use App\Models\SMS\Form5\IssuancesOfSro;
 use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
@@ -14,10 +15,10 @@ use Yajra\DataTables\DataTables;
 
 class IssuanceOfSroController extends Controller
 {
-    public function index(){
-        if(\request()->ajax()){
+    public function index(Request $request){
+        if($request->ajax()){
             $issuances = IssuancesOfSro::query()
-                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
+                ->where('weekly_report_slug','=',$request->weekly_report_slug);
             return DataTables::of($issuances)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5_issuanceOfSro.destroy","slug")."'";
@@ -33,12 +34,22 @@ class IssuanceOfSroController extends Controller
                                 </div>';
                     return $button;
                 })
+                ->editColumn('qty',function($data){
+                    return number_format($data->qty,3);
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
+                ->with('totals',$this->getTotalIssuances($request->weekly_report_slug))
                 ->toJson();
         }
     }
-    public function store(Request $request,WeeklyReportService $weeklyReportService){
+    private function getTotalIssuances($weeklyReport){
+        $i = IssuancesOfSro::query()->where('weekly_report_slug','=',$weeklyReport)->sum('qty');
+        return [
+            'totalIssuances' => number_format($i,3),
+        ];
+    }
+    public function store(IssuanceFormRequest $request,WeeklyReportService $weeklyReportService){
         $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $i = new IssuancesOfSro;
         $i->slug = Str::random();
@@ -57,7 +68,6 @@ class IssuanceOfSroController extends Controller
         if($i->save()){
             return [
                 'slug' => $i->slug,
-                'totalForm5Issuance' => number_format($i->weeklyReport->form5IssuancesOfSro()->sum('qty'),3),
             ];
         }
         abort(503,'Error saving data.');
@@ -68,7 +78,7 @@ class IssuanceOfSroController extends Controller
             'issuance' => $this->findBySlug($slug),
         ]);
     }
-    public function update(Request $request,$slug, WeeklyReportService $weeklyReportService){
+    public function update(IssuanceFormRequest $request,$slug, WeeklyReportService $weeklyReportService){
         $i = $this->findBySlug($slug);
         $weeklyReportService->isNotSubmitted($i->weekly_report_slug);
         $i->sro_no = $request->sro_no;
@@ -86,7 +96,6 @@ class IssuanceOfSroController extends Controller
         if($i->save()){
             return [
                 'slug' => $i->slug,
-                'totalForm5Issuance' => number_format($i->weeklyReport->form5IssuancesOfSro()->sum('qty'),3),
             ];
         }
         abort(503,'Error saving data.');

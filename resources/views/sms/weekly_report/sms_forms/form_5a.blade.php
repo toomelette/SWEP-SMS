@@ -12,9 +12,23 @@
                 </div>
 
                 <div class="box-body" style="">
-                    <button type="button" data-target="#add_form5a_issuances_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Issuances</button>
-                    <br>
-                    <br>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <dl>
+                                <dd>TOTAL RAW:</dd>
+                                <dt  for="form5aTotalRaw"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-2">
+                            <dl>
+                                <dd>TOTAL REFINED:</dd>
+                                <dt  for="form5aTotalRefined"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-8">
+                            <button type="button" data-target="#add_form5a_issuances_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Issuances</button>
+                        </div>
+                    </div>
                     <table style="width: 100%;" class="table table-condensed table-bordered" id="form5a_issuance_table">
                         <thead>
                         <tr>
@@ -47,9 +61,29 @@
                 </div>
 
                 <div class="box-body" style="">
-                    <button type="button" data-target="#add_form5a_deliveries_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Delivery</button>
-                    <br>
-                    <br>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <dl>
+                                <dd>TOTAL:</dd>
+                                <dt  for="form5aTotalDelivery"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-2">
+                            <dl>
+                                <dd>TOTAL STANDARD:</dd>
+                                <dt  for="form5aTotalStandard"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-2">
+                            <dl>
+                                <dd>TOTAL PREMIUM:</dd>
+                                <dt  for="form5aTotalPremium"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" data-target="#add_form5a_deliveries_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Delivery</button>
+                        </div>
+                    </div>
                     <table style="width: 100%;" class="table table-condensed table-bordered" id="form5a_deliveries_table">
                         <thead>
                         <tr>

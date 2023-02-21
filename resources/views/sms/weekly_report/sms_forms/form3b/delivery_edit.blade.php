@@ -31,6 +31,7 @@
                     succeed(form,true,true);
                     active_form3b_deliveries = res.slug;
                     form3b_deliveries_tbl.draw(false);
+                    updateTradersList();
                 },
                 error: function (res) {
                     errored(form,res);

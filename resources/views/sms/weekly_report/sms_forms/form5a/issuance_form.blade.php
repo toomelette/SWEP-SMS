@@ -10,6 +10,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('trader',[
         'label' => 'Trader/Tollee',
         'cols' => 8,
+        'list' => 'traders',
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}
@@ -99,7 +100,7 @@ $issuance->refined_qty ?? $issuance->prev_refined_qty ?? null
             'PREVIOUS' => 'Previous Crop',
         ]
     ],
-     !empty($issuance->refined_qty) ? 'CURRENT' : 'CURRENT'
+     !empty($issuance->refined_qty) ? 'CURRENT' : 'PREVIOUS'
     ) !!}
 </div>
 

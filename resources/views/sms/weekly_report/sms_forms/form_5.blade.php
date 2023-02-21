@@ -15,7 +15,7 @@
                         <div class="col-md-10">
                             <dl>
                                 <dd>TOTAL:</dd>
-                                <dt  for="form5TotalIssuances">{{number_format($wr->form5IssuancesOfSro()->sum('qty'),3)}}</dt>
+                                <dt  for="form5TotalIssuance"></dt>
                             </dl>
                         </div>
                         <div class="col-md-2">
@@ -31,7 +31,7 @@
                             <th>Date of Issue</th>
                             <th>Liens OR</th>
                             <th>Sugar Class</th>
-                            <th>QTY (MT)</th>
+                            <th>QTY (LKG)</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -55,9 +55,29 @@
                 </div>
 
                 <div class="box-body" style="">
-                    <button type="button" data-target="#add_delivery_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Delivery</button>
-                    <br>
-                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <dl>
+                                <dd>TOTAL:</dd>
+                                <dt  for="form5TotalDelivery"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <dl>
+                                <dd>TOTAL Current Crop:</dd>
+                                <dt  for="form5TotalDeliveryCurrent"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <dl>
+                                <dd>TOTAL Previous Crop:</dd>
+                                <dt  for="form5TotalDeliveryPrev"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" data-target="#add_delivery_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Delivery</button>
+                        </div>
+                    </div>
                     <table style="width: 100%;" class="table table-condensed table-bordered" id="form5_deliveries_table">
                         <thead>
                         <tr>

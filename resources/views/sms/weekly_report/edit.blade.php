@@ -158,6 +158,9 @@
 
     </section>
 
+    <datalist id="traders">
+
+    </datalist>
 
 @endsection
 
@@ -883,6 +886,7 @@
                 })
 
             },800)
+            updateTradersList()
         }
 
 
@@ -1093,7 +1097,22 @@
         })
 
 
+        function updateTradersList(){
+            $.ajax({
+                url : '{{route("dashboard.ajax.get","traderListing")}}',
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("datalist#traders").html(res);
 
+                },
+                error: function (res) {
+
+                }
+            })
+        }
 
 
     </script>

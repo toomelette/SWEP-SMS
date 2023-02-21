@@ -30,6 +30,7 @@
                     succeed(form,true,true);
                     active_form5a_issuance = res.slug;
                     form5a_issuance_tbl.draw(false);
+                    updateTradersList();
                 },
                 error: function (res) {
                     errored(form,res);

@@ -31,6 +31,7 @@
                     $('dt[for="form5TotalIssuances"]').html(res.totalForm5Issuance);
                     active_form5_issuancesOfSro = res.slug;
                     issuancesOfSro_tbl.draw(false);
+                    updateTradersList();
                 },
                 error: function (res) {
                     errored(form,res);

@@ -9,6 +9,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('trader',[
         'label' => 'Trader/Owner:',
         'cols' => 8,
+        'list' => 'traders',
     ],
     (!empty($delivery)) ? $delivery : null
     ) !!}
@@ -43,7 +44,7 @@
         'cols' => 5,
         'class' => 'autonumber_mt_'.$rand,
     ],
-    (!empty($delivery)) ? $delivery : null
+    $delivery->qty ?? $delivery->qty_prev ?? null
     ) !!}
 
     {!! \App\Swep\ViewHelpers\__form2::textbox('remarks',[

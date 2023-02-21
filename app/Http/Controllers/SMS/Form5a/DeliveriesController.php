@@ -6,6 +6,7 @@ namespace App\Http\Controllers\SMS\Form5a;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SMS\Form5a\DeliveryFormRequest;
 use App\Models\SMS\Form5a\Deliveries;
 use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
@@ -16,10 +17,10 @@ use Yajra\DataTables\DataTables;
 class DeliveriesController extends Controller
 {
 
-    public function index(){
-        if(\request()->ajax()){
+    public function index(Request $request){
+        if($request->ajax()){
             $deliveries = Deliveries::query()
-                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
+                ->where('weekly_report_slug','=',$request->weekly_report_slug);
             return DataTables::of($deliveries)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5a_deliveries.destroy","slug")."'";
@@ -35,12 +36,38 @@ class DeliveriesController extends Controller
                                 </div>';
                     return $button;
                 })
+                ->editColumn('qty_standard',function($data){
+                    if($data->qty_standard != null){
+                        return number_format($data->qty_standard,3);
+                    }
+                })
+                ->editColumn('qty_premium',function($data){
+                    if($data->qty_premium != null){
+                        return number_format($data->qty_premium,3);
+                    }
+                })
+                ->editColumn('qty_total',function($data){
+                    return number_format($data->qty_total,3);
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
+                ->with('totals',$this->getTotalDeliveries($request->weekly_report_slug))
                 ->toJson();
         }
     }
-    public function store(Request $request, WeeklyReportService $weeklyReportService){
+
+    private function getTotalDeliveries($weeklyReport){
+        $i = Deliveries::query()->selectRaw('sum(qty_standard) as qty_standard, sum(qty_premium) as qty_premium , sum(qty_total) as qty_total')->where('weekly_report_slug','=',$weeklyReport)->first();
+
+        return [
+            'totalDeliveries' => [
+                'qty_standard' => number_format($i->qty_standard,3),
+                'qty_premium' => number_format($i->qty_premium,3),
+                'total' => number_format($i->qty_total,3),
+            ],
+        ];
+    }
+    public function store(DeliveryFormRequest $request, WeeklyReportService $weeklyReportService){
 
         $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $d = new Deliveries;
@@ -75,7 +102,7 @@ class DeliveriesController extends Controller
         ]);
     }
 
-    public function update(Request $request, $slug, WeeklyReportService $weeklyReportService){
+    public function update(DeliveryFormRequest $request, $slug, WeeklyReportService $weeklyReportService){
         $d = $this->findBySlug($slug);
         $weeklyReportService->isNotSubmitted($d->weekly_report_slug);
         $d->date_of_withdrawal = $request->date_of_withdrawal;

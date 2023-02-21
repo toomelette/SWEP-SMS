@@ -30,6 +30,7 @@
                     succeed(form,true,true);
                     active_form3b_issuance = res.slug;
                     form3b_issuance_tbl.draw(false);
+                    updateTradersList();
                 },
                 error: function (res) {
                     errored(form,res);

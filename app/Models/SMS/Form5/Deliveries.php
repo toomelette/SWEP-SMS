@@ -14,4 +14,5 @@ class Deliveries extends Model
     public function weeklyReport(){
         return $this->belongsTo(WeeklyReports::class,'weekly_report_slug','slug');
     }
+
 }

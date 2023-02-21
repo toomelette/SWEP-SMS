@@ -18,6 +18,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('trader',[
         'label' => 'Trader/Owner',
         'cols' => 8,
+        'list' => 'traders',
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}

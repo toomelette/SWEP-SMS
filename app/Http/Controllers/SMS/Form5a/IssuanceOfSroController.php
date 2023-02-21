@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SMS\Form5a;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SMS\Form5a\IssuanceFormRequest;
 use App\Models\SMS\Form5a\IssuancesOfSro;
 use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
@@ -15,10 +16,11 @@ use Yajra\DataTables\DataTables;
 
 class IssuanceOfSroController extends Controller
 {
-    public function index(){
-        if(\request()->ajax()){
+    public function index(Request $request){
+
+        if($request->ajax()){
             $issuances = IssuancesOfSro::query()
-                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
+                ->where('weekly_report_slug','=',$request->weekly_report_slug);
             return DataTables::of($issuances)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5a_issuanceOfSro.destroy","slug")."'";
@@ -34,12 +36,35 @@ class IssuanceOfSroController extends Controller
                                 </div>';
                     return $button;
                 })
+                ->editColumn('raw_qty',function($data){
+                    $num = number_format( $data->raw_qty ?? $data->prev_raw_qty ,3);
+                    if($num != 0){
+                        return $num;
+                    }
+                })
+                ->editColumn('refined_qty',function($data){
+                    $num = number_format( $data->refined_qty ?? $data->prev_refined_qty ,3);
+                    if($num != 0){
+                        return $num;
+                    }
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
+                ->with('totals',$this->getTotalIssuances($request->weekly_report_slug))
                 ->toJson();
         }
     }
-    public function store(Request $request, WeeklyReportService $weeklyReportService){
+
+    private function getTotalIssuances($weeklyReport){
+        $i = IssuancesOfSro::query()->selectRaw('sum(prev_raw_qty) as prev_raw_qty, sum(raw_qty) as raw_qty, sum(refined_qty) as refined_qty, sum(prev_refined_qty) as prev_refined_qty')->where('weekly_report_slug','=',$weeklyReport)->first();
+        return [
+            'totalIssuances' => [
+                'raw' => number_format($i->raw_qty + $i->prev_raw_qty,3),
+                'refined' => number_format($i->refined_qty + $i->prev_refined_qty,3),
+            ]
+        ];
+    }
+    public function store(IssuanceFormRequest $request, WeeklyReportService $weeklyReportService){
         $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $i = new IssuancesOfSro;
         $i->weekly_report_slug = $request->weekly_report_slug;
@@ -55,8 +80,14 @@ class IssuanceOfSroController extends Controller
         $i->delivery_no = $request->delivery_no;
         if($request->cropCharge == 'CURRENT'){
             $i->refined_qty = Helper::sanitizeAutonum($request->refined_qty);
+            $i->prev_refined_qty = null;
+            $i->raw_qty = Helper::sanitizeAutonum($request->raw_qty);
+            $i->prev_raw_qty = null;
         }else{
             $i->prev_refined_qty = Helper::sanitizeAutonum($request->refined_qty);
+            $i->refined_qty = null;
+            $i->prev_raw_qty = Helper::sanitizeAutonum($request->raw_qty);
+            $i->raw_qty = null;
         }
         $i->consumption = $request->consumption;
 
@@ -80,7 +111,7 @@ class IssuanceOfSroController extends Controller
         $i->date_of_issue = $request->date_of_issue;
         $i->sro_no = $request->sro_no;
         $i->trader = $request->trader;
-        $i->raw_qty = Helper::sanitizeAutonum($request->raw_qty);
+
         $i->monitoring_fee_or_no = $request->monitoring_fee_or_no;
         $i->rsq_no = $request->rsq_no;
         $i->refined_qty = $request->refined_qty;
@@ -89,9 +120,13 @@ class IssuanceOfSroController extends Controller
         if($request->cropCharge == 'CURRENT'){
             $i->refined_qty = Helper::sanitizeAutonum($request->refined_qty);
             $i->prev_refined_qty = null;
+            $i->raw_qty = Helper::sanitizeAutonum($request->raw_qty);
+            $i->prev_raw_qty = null;
         }else{
             $i->prev_refined_qty = Helper::sanitizeAutonum($request->refined_qty);
             $i->refined_qty = null;
+            $i->prev_raw_qty = Helper::sanitizeAutonum($request->raw_qty);
+            $i->raw_qty = null;
         }
         $i->consumption = $request->consumption;
 

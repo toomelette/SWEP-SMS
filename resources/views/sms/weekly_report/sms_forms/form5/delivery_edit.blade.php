@@ -31,6 +31,7 @@
                     succeed(form,true,true);
                     active_form5_deliveries = res.slug;
                     deliveries_tbl.draw(false);
+                    updateTradersList();
                 },
                 error: function (res) {
                     errored(form,res);

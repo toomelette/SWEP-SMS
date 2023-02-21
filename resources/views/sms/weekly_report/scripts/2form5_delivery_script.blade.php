@@ -31,8 +31,12 @@
                     "targets" : 5,
                     "orderable" : false,
                     "searchable": false,
-                    "class" : 'action4'
+                    "class" : 'action2'
                 },
+                {
+                    'targets' : 4,
+                    'class' : 'text-right',
+                }
             ],
             "order":[[0,'desc']],
             "responsive": true,
@@ -46,7 +50,9 @@
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
                 },
             "drawCallback": function(settings){
-
+                $("dt[for='form5TotalDelivery']").html(settings.json.totals.totalDeliveries.total);
+                $("dt[for='form5TotalDeliveryCurrent']").html(settings.json.totals.totalDeliveries.current);
+                $("dt[for='form5TotalDeliveryPrev']").html(settings.json.totals.totalDeliveries.prev);
                 $('[data-toggle="tooltip"]').tooltip();
                 $('[data-toggle="modal"]').tooltip();
                 if(active_form5_deliveries != ''){
@@ -73,6 +79,7 @@
                 succeed(form,true,false);
                 active_form5_deliveries = res.slug;
                 deliveries_tbl.draw(false);
+                updateTradersList();
             },
             error: function (res) {
                 errored(form,res);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SMS\Form5;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SMS\Form5\DeliveryFormRequest;
 use App\Models\SMS\Form5\Deliveries;
 use App\SMS\Services\WeeklyReportService;
 use App\Swep\Helpers\Helper;
@@ -15,10 +16,11 @@ use Yajra\DataTables\DataTables;
 class DeliveriesController extends Controller
 {
 
-    public function index(){
-        if(\request()->ajax()){
+    public function index(Request $request){
+
+        if($request->ajax()){
             $deliveries = Deliveries::query()
-                ->where('weekly_report_slug','=',\request('weekly_report_slug'));
+                ->where('weekly_report_slug','=',$request->weekly_report_slug);
             return DataTables::of($deliveries)
                 ->addColumn('action',function($data){
                     $destroy_route = "'".route("dashboard.form5_deliveries.destroy","slug")."'";
@@ -35,7 +37,7 @@ class DeliveriesController extends Controller
                     return $button;
                 })
                 ->editColumn('qty',function($data){
-                    return $data->qty ?? $data->qty_prev;
+                    return number_format($data->qty ?? $data->qty_prev,3);
                 })
                 ->editColumn('sugar_class',function($data){
                     if($data->refining == 1){
@@ -45,10 +47,23 @@ class DeliveriesController extends Controller
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
+                ->with('totals',$this->getTotalDeliveries($request->weekly_report_slug))
                 ->toJson();
         }
     }
-    public function store(Request $request, WeeklyReportService $weeklyReportService){
+
+    private function getTotalDeliveries($weeklyReport){
+        $i = Deliveries::query()->selectRaw('sum(qty) as qty, sum(qty_prev) as qty_prev')->where('weekly_report_slug','=',$weeklyReport)->first();
+
+        return [
+            'totalDeliveries' => [
+                'current' => number_format($i->qty,3),
+                'prev' => number_format($i->qty_prev,3),
+                'total' => number_format($i->qty + $i->qty_prev,3),
+            ],
+        ];
+    }
+    public function store(DeliveryFormRequest $request, WeeklyReportService $weeklyReportService){
         $weeklyReportService->isNotSubmitted($request->weekly_report_slug);
         $d = new Deliveries;
         $d->weekly_report_slug =  $request->weekly_report_slug;
@@ -81,7 +96,7 @@ class DeliveriesController extends Controller
         ]);
     }
 
-    public function update(Request $request,$slug, WeeklyReportService $weeklyReportService){
+    public function update(DeliveryFormRequest $request,$slug, WeeklyReportService $weeklyReportService){
         $d = $this->findBySlug($slug);
         $weeklyReportService->isNotSubmitted($d->weekly_report_slug);
         $d->sro_no = $request->sro_no;

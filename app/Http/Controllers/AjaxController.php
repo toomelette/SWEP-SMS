@@ -12,7 +12,9 @@ use App\Models\Employee;
 use App\Models\HRPayPlanitilla;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\Form1\Form1Details;
+use App\Models\SMS\Form3b\IssuancesOfMro;
 use App\Models\SMS\Form5\Deliveries;
+use App\Models\SMS\Form5\IssuancesOfSro;
 use App\Models\SMS\SugarMills;
 use App\Models\SMS\SugarOrders;
 use App\Models\SMS\WeeklyReportDetails;
@@ -21,6 +23,7 @@ use App\Models\SSL;
 use App\Models\Warehouses;
 use App\Swep\Helpers\Helper;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -206,6 +209,55 @@ class AjaxController extends Controller
             ];
         }
 
+
+        if($for == 'traderListing'){
+            $mill_code = Auth::user()->mill_code;
+            $form5issuance = IssuancesOfSro::query()->select('trader')
+                ->whereHas('weeklyReport',function ($q) use ($mill_code){
+                   return $q->where('mill_code','=',$mill_code);
+                });
+            $form5aissuance = \App\Models\SMS\Form5a\IssuancesOfSro::query()->select('trader')
+                ->whereHas('weeklyReport',function ($q) use ($mill_code){
+                    return $q->where('mill_code','=',$mill_code);
+                });
+
+            $form5delivery = Deliveries::query()->select('trader')
+                ->whereHas('weeklyReport',function ($q) use ($mill_code){
+                    return $q->where('mill_code','=',$mill_code);
+                });
+
+            $form5adelivery = \App\Models\SMS\Form5a\Deliveries::query()->select('trader')
+                ->whereHas('weeklyReport',function ($q) use ($mill_code){
+                    return $q->where('mill_code','=',$mill_code);
+                });
+
+            $form3bissuance = IssuancesOfMro::query()->select('trader')
+                ->whereHas('weeklyReport',function ($q) use ($mill_code){
+                    return $q->where('mill_code','=',$mill_code);
+                });
+
+            $form3bdelivery = \App\Models\SMS\Form3b\Deliveries::query()->select('trader')
+                ->whereHas('weeklyReport',function ($q) use ($mill_code){
+                    return $q->where('mill_code','=',$mill_code);
+                });
+
+            $form5issuance = $form5issuance->union($form5aissuance)
+                ->union($form5delivery)
+                ->union($form5adelivery)
+                ->union($form3bissuance)
+                ->union($form3bdelivery)
+                ->orderBy('trader','asc')
+                ->get();
+            $arr = [];
+            if(!empty($form5issuance)){
+                foreach ($form5issuance as $data){
+                    array_push($arr,$data->trader);
+                }
+            }
+            return view('sms.weekly_report.ajax.datalist.traders')->with([
+                'traders' => $arr,
+            ]);
+        }
 
         if($for == 'seriesNos'){
             return view('sms.dynamic_rows.insertSeriesNos')->with([

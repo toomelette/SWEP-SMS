@@ -27,6 +27,10 @@ class __form2
         if($n->container_class != ''){
             $c_class = $n->container_class;
         }
+        $list = '';
+        if($n->list != ''){
+            $list = 'list="'.$n->list.'"';
+        }
 
         if($n->type == 'date'){
             $value = ($value != '') ? Carbon::parse($value)->format('Y-m-d') : '';
@@ -44,7 +48,7 @@ class __form2
         }
         return '<div class="form-group '.$c_class.' col-md-'.$n->cols.' '.$name.'">
                 <label for="'. $name .'">'.$n->label.'</label> '.$title.'
-                <input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
+                <input class="form-control '.$n->class.'" '.$id.' '.$tab_index.' '.$list.' name="'. $name .$ext.'" type="'.$n->type.'" value="'.$value.'" placeholder="'. $n->placeholder.'" '. $n->extra_attr .' autocomplete="'.$n->autocomplete.'" '.$r_o.' '.$step.' '.$n->required.'>
               </div>';
     }
 
@@ -323,6 +327,7 @@ class __form2
         (!isset($array['for'])) ? $array['for']= '' : false;
         (!isset($array['container_class'])) ? $array['container_class']= '' : false;
         ($array['type'] == '') ?  $array['type'] = 'text' : false;
+        (!isset($array['list'])) ? $array['list']= '' : false;
 
         $this->class = $array['class'];
         $this->cols = $array['cols'];
@@ -342,6 +347,7 @@ class __form2
         $this->required = $array['required'];
         $this->for = $array['for'];
         $this->container_class = $array['container_class'];
+        $this->list = $array['list'];
     }
     public function get($array){
         return $this->name.' Hello';

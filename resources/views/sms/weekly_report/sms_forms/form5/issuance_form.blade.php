@@ -9,6 +9,7 @@
     {!! \App\Swep\ViewHelpers\__form2::textbox('trader',[
         'label' => 'Trader/Owner:',
         'cols' => 8,
+        'list' => 'traders',
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}
@@ -40,7 +41,7 @@
     {!! \App\Swep\ViewHelpers\__form2::select('sugar_class',[
         'label' => 'Sugar Class',
         'cols' => 6,
-        'options' => \App\Models\SMS\InputFields::getFieldsAsArray('sugarClass'),
+        'options' => \App\Swep\Helpers\Arrays::sugarClasses(),
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}

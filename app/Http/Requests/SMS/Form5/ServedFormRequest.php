@@ -4,7 +4,17 @@
 namespace App\Http\Requests\SMS\Form5;
 
 
-class ServedFormRequest
-{
+use Illuminate\Foundation\Http\FormRequest;
 
+class ServedFormRequest extends FormRequest
+{
+    public function authorize(){
+        return true;
+    }
+    
+    public function rules(){
+        return [
+
+        ];
+    }
 }

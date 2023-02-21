@@ -29,11 +29,15 @@
             ],
             "columnDefs":[
                 {
-                    "targets" : 5,
+                    "targets" : 6,
                     "orderable" : false,
                     "searchable": false,
-                    "class" : 'action4'
+                    "class" : 'action2'
                 },
+                {
+                    'targets' : [3,4,5],
+                    'class' : 'text-right',
+                }
             ],
             "order":[[0,'desc']],
             "responsive": true,
@@ -47,7 +51,9 @@
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
                 },
             "drawCallback": function(settings){
-                // console.log(form5a_deliveries_tbl.page.info().page);
+                $("dt[for='form5aTotalStandard']").html(settings.json.totals.totalDeliveries.qty_standard);
+                $("dt[for='form5aTotalPremium']").html(settings.json.totals.totalDeliveries.qty_premium);
+                $("dt[for='form5aTotalDelivery']").html(settings.json.totals.totalDeliveries.total);
                 $("#form5a_deliveries_table a[for='linkToEdit']").each(function () {
                     let orig_uri = $(this).attr('href');
                     $(this).attr('href',orig_uri+'?page='+form5a_deliveries_tbl.page.info().page);
@@ -79,6 +85,7 @@
                 succeed(form,true,false);
                 active_form5a_deliveries = res.slug;
                 form5a_deliveries_tbl.draw(false);
+                updateTradersList();
             },
             error: function (res) {
                 errored(form,res);
