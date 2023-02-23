@@ -8,7 +8,7 @@
             'qtyPremium' => 0,
         ];
     @endphp
-    <h4 class="no-margin"><b>SUGAR RELEASE ORDER AND DELIVERY REPORT - MOLASSES</b> </h4>
+    <h4 class="no-margin"><b>MOLASSES RELEASE ORDER AND DELIVERY REPORT</b> </h4>
     <p class="no-margin"><i>(Figures in Metric Tons)</i></p>
 
     <p class="text-left">A. Issuances of MRO</p>
