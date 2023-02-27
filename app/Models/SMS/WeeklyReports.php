@@ -95,7 +95,7 @@ class WeeklyReports extends Model
 
     public function toDateForm1(){
         $fieldsToSum =  [
-            'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller',
+            'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller', 'tds','egtcm', 'lkgtc_gross_syrup',
         ];
         foreach ($fieldsToSum as $key => $field){
             $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
@@ -118,7 +118,7 @@ class WeeklyReports extends Model
 
     public function form1ToDateAsOf($report_no){
         $fieldsToSum =  [
-            'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller',
+            'manufactured', 'A', 'B', 'C', 'C1', 'D', 'DX', 'DE', 'DR', 'total_issuance', 'prev_manufactured', 'prev_A', 'prev_B', 'prev_C', 'prev_C1', 'prev_D', 'prev_DX', 'prev_DE', 'prev_DR', 'prev_total_issuance', 'tdc', 'gtcm', 'lkgtc_gross', 'share_planter', 'share_miller', 'tds','egtcm', 'lkgtc_gross_syrup',
         ];
         foreach ($fieldsToSum as $key => $field){
             $fieldsToSum[$key] = ' sum('.$field.') as '.$field;
