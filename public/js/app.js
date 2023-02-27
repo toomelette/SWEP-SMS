@@ -31,6 +31,7 @@ var autonum_settings_mt = {
     decimalCharacter : '.',
     digitGroupSeparator : ',',
     decimalPlaces : 3,
+    modifyValueOnWheel: false,
 };
 
 var autonum_settings_lkg = {

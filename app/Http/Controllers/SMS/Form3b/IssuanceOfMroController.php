@@ -31,6 +31,8 @@ class IssuanceOfMroController
                                   
                                 </div>';
                     return $button;
+                })->editColumn('qty',function($data){
+                    return number_format($data->qty,3);
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')

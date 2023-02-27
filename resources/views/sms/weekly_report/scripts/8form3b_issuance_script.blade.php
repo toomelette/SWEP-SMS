@@ -27,11 +27,15 @@
             ],
             "columnDefs":[
                 {
-                    "targets" : 3,
+                    "targets" : 5,
                     "orderable" : false,
                     "searchable": false,
-                    "class" : 'action4'
+                    "class" : 'action2'
                 },
+                {
+                    "targets" : 4,
+                    "class" : 'text-right',
+                }
             ],
             "order":[[0,'desc']],
             "responsive": true,

@@ -17,7 +17,7 @@
             "columns": [
                 { "data": "date_of_withdrawal" },
                 { "data": "mro_no" },
-                { "data": "date_of_withdrawal" },
+                { "data": "trader" },
                 { "data": "qty" },
                 { "data": "remarks" },
                 { "data": "action"}
@@ -30,8 +30,12 @@
                     "targets" : 5,
                     "orderable" : false,
                     "searchable": false,
-                    "class" : 'action4'
+                    "class" : 'action2'
                 },
+                {
+                    "targets" : 3,
+                    "class" : 'text-right',
+                }
             ],
             "order":[[0,'desc']],
             "responsive": true,

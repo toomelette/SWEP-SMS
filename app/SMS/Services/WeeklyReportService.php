@@ -153,10 +153,14 @@ class WeeklyReportService
 
 
         //STOCK BALANCE = Manufactured - Withdrawals
+//        $formArray['stockBalance'] = [
+//            'current' => $formArray['manufactured']['current'] - $formArray['withdrawalsTotal']['current'] - $formArray['forRefiningTotal']['current'],
+////            'prev' => $formArray['manufactured']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
+//            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
+//        ];
         $formArray['stockBalance'] = [
-            'current' => $formArray['manufactured']['current'] - $formArray['withdrawalsTotal']['current'] - $formArray['forRefiningTotal']['current'],
-//            'prev' => $formArray['manufactured']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
-            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
+            'current' => $formArray['balancesTotal']['current'] + $formArray['unquedanned']['current'],
+            'prev' => $formArray['balancesTotal']['prev'] + $formArray['unquedanned']['prev'],
         ];
 
         //TRANSFERS TO REFINERY = Form2 not covered by sro
