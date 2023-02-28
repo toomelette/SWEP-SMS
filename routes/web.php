@@ -233,3 +233,4 @@ Route::get('/convert',function (\Illuminate\Http\Request $request){
 });
 
 Route::get('comparative_gtcm','\App\Http\Controllers\SMS\Admin\RecapController@comparativeGtcm');
+Route::get('raw1','\App\Http\Controllers\SMS\Admin\RecapController@raw1');

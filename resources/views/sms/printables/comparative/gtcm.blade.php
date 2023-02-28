@@ -62,6 +62,8 @@
                                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($mill['lkgtcGross'] ?? null,3,'-')}}</td>
                                 <td></td>
                                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($mill['rawSugarProduction'] ?? null,3,'-')}}</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         @endforeach
                     @endif
