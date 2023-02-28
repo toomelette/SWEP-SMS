@@ -138,7 +138,8 @@ class WeeklyReportService
         //BALANCES
         foreach ($formArray['issuances'] as $k => $v){
             $formArray['balances'][$k]['current'] = $formArray['issuances'][$k]['current'] - $formArray['withdrawals'][$k]['current'] - $formArray['forRefining'][$k]['current'];
-            $formArray['balances'][$k]['prev'] = $formArray['issuances'][$k]['prev'] - $formArray['withdrawals'][$k]['prev'] - $formArray['forRefining'][$k]['prev'];
+//            $formArray['balances'][$k]['prev'] = $formArray['issuances'][$k]['prev'] - $formArray['withdrawals'][$k]['prev'] - $formArray['forRefining'][$k]['prev'];
+            $formArray['balances'][$k]['prev'] = $formArray['manufactured'][$k]['prev'] - $formArray['withdrawals'][$k]['prev'] - $formArray['forRefining'][$k]['prev'];
         }
         $formArray['balancesTotal']['current'] = array_sum(array_column($formArray['balances'],'current'));
         $formArray['balancesTotal']['prev'] = array_sum(array_column($formArray['balances'],'prev'));
