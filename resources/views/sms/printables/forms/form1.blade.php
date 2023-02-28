@@ -305,16 +305,15 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->gtcm ?? null,3) }}
             </td>
-            <td class="text-strong">
-                A:
-            </td>
-
             @if(!empty($details_arr['RAW']['seriesNos']['A']))
-                <td>{{$details_arr['RAW']['seriesNos']['A']->seriesFrom}} - {{$details_arr['RAW']['seriesNos']['A']->seriesTo}}</td>
-                <td>{{$details_arr['RAW']['seriesNos']['A']->noOfPcs}} PCS</td>
+                <td colspan="3">
+                    <span class="text-strong">A: </span>
+                    @foreach($details_arr['RAW']['seriesNos']['A'] as $sn)
+                        {{$sn->seriesFrom ?? null}} - {{$sn->seriesTo ?? null}}  ({{$sn->noOfPcs ?? null}} pcs),
+                    @endforeach
+                </td>
             @else
-                <td></td>
-                <td></td>
+                <td colspan="3"><span class="text-strong">A: </span></td>
             @endif
         </tr>
 
@@ -329,15 +328,17 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($toDateForm1['lkgtc_gross']['current'] ?? null,3) }}
             </td>
-            <td class="text-strong">
-                B:
-            </td>
+
+
             @if(!empty($details_arr['RAW']['seriesNos']['B']))
-                <td>{{$details_arr['RAW']['seriesNos']['B']->seriesFrom}} - {{$details_arr['RAW']['seriesNos']['B']->seriesTo}}</td>
-                <td>{{$details_arr['RAW']['seriesNos']['B']->noOfPcs}} PCS</td>
+                <td colspan="3">
+                    <span class="text-strong">B: </span>
+                @foreach($details_arr['RAW']['seriesNos']['B'] as $sn)
+                    {{$sn->seriesFrom ?? null}} - {{$sn->seriesTo ?? null}}  ({{$sn->noOfPcs ?? null}} pcs),
+                @endforeach
+                </td>
             @else
-                <td></td>
-                <td></td>
+                <td colspan="3"><span class="text-strong">B: </span></td>
             @endif
         </tr>
 
@@ -423,10 +424,16 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->share_planter ?? null,3) }}
             </td>
-            <td class="text-right">
-            </td>
-            <td></td>
-            <td></td>
+            @if(!empty($details_arr['RAW']['seriesNos']['C']))
+                <td colspan="3">
+                    <span class="text-strong">C: </span>
+                    @foreach($details_arr['RAW']['seriesNos']['C'] as $sn)
+                        {{$sn->seriesFrom ?? null}} - {{$sn->seriesTo ?? null}}  ({{$sn->noOfPcs ?? null}} pcs),
+                    @endforeach
+                </td>
+            @else
+                <td colspan="3"><span class="text-strong">C: </span></td>
+            @endif
         </tr>
 
         <tr>
@@ -440,10 +447,16 @@
             <td class="text-right">
                 {{ \App\Swep\Helpers\Helper::toNumber($wr->toDateForm1()->share_miller ?? null,3) }}
             </td>
-            <td class="text-right">
-            </td>
-            <td></td>
-            <td></td>
+            @if(!empty($details_arr['RAW']['seriesNos']['D']))
+                <td colspan="3">
+                    <span class="text-strong">D: </span>
+                    @foreach($details_arr['RAW']['seriesNos']['D'] as $sn)
+                        {{$sn->seriesFrom ?? null}} - {{$sn->seriesTo ?? null}}  ({{$sn->noOfPcs ?? null}} pcs),
+                    @endforeach
+                </td>
+            @else
+                <td colspan="3"><span class="text-strong">D: </span></td>
+            @endif
         </tr>
 
         </tbody>

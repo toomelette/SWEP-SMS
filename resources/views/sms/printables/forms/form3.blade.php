@@ -218,16 +218,33 @@
             <td colspan="4" class="text-strong">6. Molasses Storage Certificates:</td>
         </tr>
 
+
         @if(!empty($details_arr['MOLASSES']['seriesNos']['RAW']))
-            <td colspan="2"> RAW : {{$details_arr['MOLASSES']['seriesNos']['RAW']->seriesFrom}} - {{$details_arr['MOLASSES']['seriesNos']['RAW']->seriesTo}} , {{$details_arr['MOLASSES']['seriesNos']['RAW']->noOfPcs}} PCS</td>
+            <td colspan="2">
+                <span class="text-strong">RAW :</span>
+                @foreach($details_arr['MOLASSES']['seriesNos']['RAW'] as $sn)
+                {{$sn->seriesFrom}} - {{$sn->seriesTo}} ({{$sn->noOfPcs}}) pcs,
+                @endforeach
+            </td>
         @else
-            <td></td>
-            <td></td>
+            <td colspan="2">
+                <span class="text-strong">RAW :</span>
+            </td>
         @endif
 
         @if(!empty($details_arr['MOLASSES']['seriesNos']['REFINED']))
-            <td colspan="2"> REFINED : {{$details_arr['MOLASSES']['seriesNos']['REFINED']->seriesFrom}} - {{$details_arr['MOLASSES']['seriesNos']['REFINED']->seriesTo}} , {{$details_arr['MOLASSES']['seriesNos']['REFINED']->noOfPcs}} PCS</td>
+            <td colspan="2">
+                <span class="text-strong">REFINED :</span>
+                @foreach($details_arr['MOLASSES']['seriesNos']['REFINED'] as $sn)
+                    {{$sn->seriesFrom}} - {{$sn->seriesTo}} ({{$sn->noOfPcs}}) pcs,
+                @endforeach
+            </td>
+        @else
+            <td colspan="2">
+                <span class="text-strong">REFINED :</span>
+            </td>
         @endif
+
         <tr>
             <td colspan="2">
                 7. Molasses Distribution Factor:

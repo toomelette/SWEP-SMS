@@ -477,8 +477,37 @@
         </tr>
 
         <tr>
-            <td>12. Remarks:</td>
-            <td  colspan="5">
+            <td colspan="7">
+                12. REFINED SUGAR QUEDAN ISSUANCES (SERIES & NO. OF PCS)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"><span class="indent"></span>
+                <span class="text-strong">STANDARD:</span>
+                @if(!empty($details_arr['REFINED']['seriesNos']['STANDARD']))
+                        @foreach($details_arr['REFINED']['seriesNos']['STANDARD'] as $sn)
+                            {{$sn->seriesFrom}} - {{$sn->seriesTo}} ({{$sn->noOfPcs}}) pcs,
+                        @endforeach
+                @else
+
+                @endif
+            </td>
+
+            <td colspan="3">
+                <span class="text-strong">PREMIUM:</span>
+                @if(!empty($details_arr['REFINED']['seriesNos']['PREMIUM']))
+                    @foreach($details_arr['REFINED']['seriesNos']['PREMIUM'] as $sn)
+                        {{$sn->seriesFrom}} - {{$sn->seriesTo}} ({{$sn->noOfPcs}}) pcs,
+                    @endforeach
+                @else
+
+                @endif
+            </td>
+
+        </tr>
+        <tr>
+            <td>13. Remarks:</td>
+            <td  colspan=6">
                 {{ $wr->form2->remarks ?? null }}
             </td>
 

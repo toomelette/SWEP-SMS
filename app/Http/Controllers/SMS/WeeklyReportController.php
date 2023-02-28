@@ -196,19 +196,11 @@ class WeeklyReportController extends Controller
             }
         }
 
-        if(!empty($weekly_report->details)){
-            foreach ($weekly_report->details as $detail){
-                if($detail->grouping == null){
-                    $details_arr[$detail->form_type][$detail->input_field] = $detail;
-                }else{
-                    $details_arr[$detail->form_type][$detail->grouping][$detail->input_field] = $detail;
-                }
-            }
-        }
+
 
         if(!empty($weekly_report->seriesNos)){
             foreach ($weekly_report->seriesNos as $seriesNo){
-                $details_arr[$seriesNo->type]['seriesNos'][$seriesNo->sugarClass] = $seriesNo;
+                $details_arr[$seriesNo->type]['seriesNos'][$seriesNo->sugarClass][$seriesNo->slug] = $seriesNo;
             }
         }
 
