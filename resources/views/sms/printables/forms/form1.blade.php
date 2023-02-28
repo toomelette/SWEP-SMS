@@ -8,8 +8,8 @@
         <thead>
         <tr >
             <th rowspan="2"></th>
-            <th colspan="3" class="text-center">CURRENT CROP</th>
-            <th colspan="3" class="text-center">PREVIOUS CROP</th>
+            <th colspan="3" class="text-center" style="width: 35%">CURRENT CROP</th>
+            <th colspan="3" class="text-center" style="width: 35%">PREVIOUS CROP</th>
         </tr>
         <tr>
             <th class="text-center">This Week</th>
