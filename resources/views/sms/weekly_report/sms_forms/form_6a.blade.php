@@ -54,7 +54,7 @@
 <table class="table table-bordered table-condensed">
     <thead>
     <tr class="bg-primary">
-        <th>Delivery No.</th>
+        <th>Refined SRO No.</th>
         <th>Trader/Tollee</th>
         <th>Refined Quedan SN.</th>
         <th>Refined Sugar (Lkg)</th>
@@ -70,7 +70,7 @@
                 $refinedTotal = $refinedTotal + $data->refined_qty;
             @endphp
             <tr>
-                <td>{{$data->deliver_no}}</td>
+                <td>{{$data->sro_no}}</td>
                 <td>{{$data->trader}}</td>
                 <td>{{$data->rsq_no}}</td>
                 <td class="text-right">{{number_format($data->refined_qty,2)}}</td>

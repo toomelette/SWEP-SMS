@@ -111,6 +111,8 @@
             </tr>
 
 
+
+
             <tr>
                 <td colspan="7" class="text-strong">3. WITHDRAWALS</td>
             </tr>
@@ -165,11 +167,23 @@
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['totalWithdrawals']['prev'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['totalWithdrawals']['prev'] ?? null, 3)}}</td>
             </tr>
+
+            <tr class="tr-strong">
+                <td class="">4. NOT COVERED BY MSC</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['notCoveredByMsc']['current'] ?? null ,3, '0.00')}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['notCoveredByMsc']['current'] ?? null ,3, '0.00')}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['notCoveredByMsc']['current'] ?? null, 3, '0.00')}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['notCoveredByMsc']['prev'] ?? null ,3, '0.00')}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['notCoveredByMsc']['prev'] ?? null ,3, '0.00')}}</td>
+                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['notCoveredByMsc']['prev'] ?? null, 3, '0.00')}}</td>
+            </tr>
+
+
             <tr>
-                <td colspan="7" class="text-strong">4. BALANCE</td>
+                <td colspan="7" class="text-strong">5. BALANCE</td>
             </tr>
             <tr>
-                <td><span class="indent"></span> 4.1 Raw</td>
+                <td><span class="indent"></span> 5.1 Raw</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['balanceRaw']['current'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['balanceRaw']['current'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['balanceRaw']['current'] ?? null, 3)}}</td>
@@ -178,7 +192,7 @@
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['balanceRaw']['prev'] ?? null, 3)}}</td>
             </tr>
             <tr>
-                <td><span class="indent"></span> 4.1 Refined</td>
+                <td><span class="indent"></span> 5.2 Refined</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['balanceRefined']['current'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['balanceRefined']['current'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['balanceRefined']['current'] ?? null, 3)}}</td>
@@ -195,27 +209,17 @@
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['totalBalance']['prev'] ?? null ,3)}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['totalBalance']['prev'] ?? null, 3)}}</td>
             </tr>
+            <tr>
+                <td class="text-strong">6. Molasses Price (Php/MT)</td>
+                <td class="text-strong text-right">₱ {{\App\Swep\Helpers\Helper::toNumber($wr->form3->price ?? null,2,'')}}</td>
+                <td colspan="5"></td>
+            </tr>
         </tbody>
     </table>
     <table class="table-bordered " style="width: 100%">
-        <tr>
-            <td colspan="4" class="text-strong">5. Molasses Price (Php/MT)</td>
-        </tr>
-        <tr>
-            <td>5.1 Raw</td>
-            <td class="text-right">{{ !empty($wr->form3) ?  number_format($wr->form3->priceRaw,2) : null}}</td>
-            <td>5.2 Refined</td>
-            <td class="text-right">{{ !empty($wr->form3) ? number_format($wr->form3->priceRefined,2) : null}}</td>
-        </tr>
 
         <tr>
-            <td>5.1 Raw</td>
-            <td>{{ $wr->form3->storageCertRaw ?? null}}</td>
-            <td>5.2 Refined</td>
-            <td>{{$wr->form3->storageCertRefined ?? null}}</td>
-        </tr>
-        <tr>
-            <td colspan="4" class="text-strong">6. Molasses Storage Certificates:</td>
+            <td colspan="4" class="text-strong">7. Molasses Storage Certificates:</td>
         </tr>
 
 
@@ -247,7 +251,7 @@
 
         <tr>
             <td colspan="2">
-                7. Molasses Distribution Factor:
+                8. Molasses Distribution Factor:
             </td>
             <td colspan="2">
                 {{$wr->form3->distFactor ?? null}}

@@ -154,6 +154,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
         Route::get('/activity_logs/fetch_properties', 'ActivityLogsController@fetch_properties')->name('activity_logs_fetch_properties');
 
         Route::resource('submissions','SMS\Admin\SubmissionsController');
+        Route::resource('reports','SMS\Admin\ReportsController');
 
 });
 

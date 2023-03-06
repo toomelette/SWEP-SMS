@@ -163,7 +163,15 @@
                     <td colspan="3" class="text-center text-strong info">REFINED SUGAR</td>
                 </tr>
                 <tr>
-                    <td class="text-strong" colspan="3">6. PRODUCTION/CARRY-OVER</td>
+                    <td class="text-strong" colspan="2">6. PRODUCTION/CARRY-OVER</td>
+                    <td>
+                        {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_refinedCarryOver',[
+                            'class' => 'form2-input input-sm text-right autonum_lkg',
+                            'placeholder' => 'CARRY OVER, PREVIOUS CROP',
+                        ],
+                        $wr->form2->prev_refinedCarryOver ?? null
+                        ) !!}
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-strong"><span class="indent"></span> 6.1. DOMESTIC </td>

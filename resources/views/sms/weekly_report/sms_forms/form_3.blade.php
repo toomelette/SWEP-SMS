@@ -161,6 +161,8 @@
         </tr>
 
 
+
+
         <tr>
             <td colspan="3" class="text-strong">3. WITHDRAWALS</td>
         </tr>
@@ -194,22 +196,28 @@
             <td class="text-right text-strong"></td>
         </tr>
 
-
+        <tr class="computation" for="notCoveredByMsc">
+            <td class="text-strong">
+                4. NOT COVERED BY MSC
+            </td>
+            <td class="text-strong text-right"></td>
+            <td class="text-strong text-right"></td>
+        </tr>
         <tr>
-            <td colspan="3" class="text-strong">4. BALANCE</td>
+            <td colspan="3" class="text-strong">5. BALANCE</td>
         </tr>
 
         <tr class="computation" for="balanceRaw">
-            <td>
-                4.1 Raw
+            <td> <span class="indent"></span>
+                5.1 Raw
             </td>
             <td class="text-right"></td>
             <td class="text-right"></td>
         </tr>
 
         <tr class="computation" for="balanceRefined">
-            <td>
-                4.2 Refined
+            <td> <span class="indent"></span>
+                5.2 Refined
             </td>
             <td class="text-right"></td>
             <td class="text-right"></td>
@@ -262,6 +270,32 @@
             </div>
         </div>
     </div>
+
+    <div class="box box-sm box-default box-solid">
+        <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
+            <p class="no-margin">
+                7. Molasses Price:
+                <small id="filter-notifier" class="label bg-blue blink"></small>
+            </p>
+        </div>
+        <div class="box-body" style="">
+            <div class="row">
+                <div class="col-md-4">
+
+                    <div class="row">
+                        {!! \App\Swep\ViewHelpers\__form2::textbox('price',[
+                            'label' => 'Price:',
+                            'cols' => 12,
+                            'class' => 'form3-input autonum',
+                        ],
+                        $wr->form3->price ?? null
+                        ) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <div class="row">

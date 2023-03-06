@@ -230,13 +230,13 @@
         <tr>
             <td colspan="4">6. PRODUCTION/CARRY-OVER</td>
             <td class="text-right text-strong">
-                {{ \App\Swep\Helpers\Helper::toNumber($form2['totalRefined']['prev'] ?? null,3)  }}
+                {{ \App\Swep\Helpers\Helper::toNumber($form2['production']['refinedCarryOver']['prev'] ?? null,3)  }}
             </td>
             <td class="text-right text-strong">
-                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['totalRefined']['prev'] ?? null,3)  }}
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm2['production']['refinedCarryOver']['prev'] ?? null,3)  }}
             </td>
             <td class="text-right text-strong">
-                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['totalRefined']['prev'] ?? null,3)  }}
+                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm2['production']['refinedCarryOver']['prev'] ?? null,3)  }}
             </td>
         </tr>
         <tr>

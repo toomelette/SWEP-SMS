@@ -291,6 +291,9 @@ class WeeklyReportService
 
         //production
         $formArray['production'] = [
+            'refinedCarryOver' => [
+                'prev' => $relation->prev_refinedCarryOver ?? null,
+            ],
             'domestic' => $this->makeCurrentPrev($relation->prodDomestic ?? null,$relation->prev_prodDomestic ?? null),
             'imported' => $this->makeCurrentPrev($relation->prodImported ?? null,$relation->prev_prodImported ?? null),
             'overage' => $this->makeCurrentPrev($relation->overage ?? null,$relation->prev_overage ?? null),
@@ -312,7 +315,7 @@ class WeeklyReportService
         //TOTAL REFINED
         $formArray['totalRefined'] = [
             'current' => $formArray['production']['domestic']['current'] + $formArray['production']['imported']['current'] + $formArray['production']['overage']['current'],
-            'prev' => $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'] + $formArray['production']['overage']['prev'],
+            'prev' => $formArray['production']['refinedCarryOver']['prev'] + $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'] + $formArray['production']['overage']['prev'],
         ];
 
         $formArray['totalProduction'] = [
@@ -471,6 +474,9 @@ class WeeklyReportService
         $formArray['totalIssuances']['current'] = array_sum(array_column($formArray['issuances'],'current'));
         $formArray['totalIssuances']['prev'] = array_sum(array_column($formArray['issuances'],'prev'));
 
+        //not covered by MSC
+        $formArray['notCoveredByMsc']['current'] = $formArray['totalProduction']['current'] - $formArray['totalIssuances']['current'];
+        $formArray['notCoveredByMsc']['prev'] = $formArray['totalProduction']['prev'] - $formArray['totalIssuances']['prev'];
 
         if($get == 'toDate'){
             $withdrawals = Withdrawals::query()

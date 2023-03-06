@@ -37,7 +37,7 @@
                     <td>{{$form5IssuancesOfSro->trader}}</td>
                     <td class="text-center">{{Carbon::parse($form5IssuancesOfSro->date_of_issue)->format('m/d/Y')}}</td>
                     <td class="text-center">{{$form5IssuancesOfSro->liens_or}}</td>
-                    <td>{{$form5IssuancesOfSro->sugar_class}}</td>
+                    <td class="text-center">{{$form5IssuancesOfSro->sugar_class}} {{($form5IssuancesOfSro->refining == 1 ? ' - Refining' : '')}}</td>
                     <td class="text-right">{{!empty($form5IssuancesOfSro->qty) ? number_format($form5IssuancesOfSro->qty,3) : null}}</td>
                 </tr>
             @endforeach

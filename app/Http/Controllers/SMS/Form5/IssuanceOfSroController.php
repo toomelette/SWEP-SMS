@@ -37,6 +37,9 @@ class IssuanceOfSroController extends Controller
                 ->editColumn('qty',function($data){
                     return number_format($data->qty,3);
                 })
+                ->editColumn('sugar_class',function($data){
+                    return $data->sugar_class. ' '. ($data->refining == 1 ? ' - Refining' : '');
+                })
                 ->escapeColumns([])
                 ->setRowId('slug')
                 ->with('totals',$this->getTotalIssuances($request->weekly_report_slug))
