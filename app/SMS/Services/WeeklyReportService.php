@@ -291,15 +291,16 @@ class WeeklyReportService
 
         //production
         $formArray['production'] = [
-            'refinedCarryOver' => [
-                'prev' => $relation->prev_refinedCarryOver ?? null,
-            ],
             'domestic' => $this->makeCurrentPrev($relation->prodDomestic ?? null,$relation->prev_prodDomestic ?? null),
             'imported' => $this->makeCurrentPrev($relation->prodImported ?? null,$relation->prev_prodImported ?? null),
             'overage' => $this->makeCurrentPrev($relation->overage ?? null,$relation->prev_overage ?? null),
             'returnToProcess' => $this->makeCurrentPrev($relation->prodReturn ?? null,$relation->prev_prodReturn ?? null),
         ];
 
+        //carry Over
+        $formArray['refinedCarryOver'] = [
+            'prev' => $relation->prev_refinedCarryOver ?? null,
+        ];
 
         //TOTAL PRODUCTION
 //        $formArray['totalProduction'] = [
@@ -315,7 +316,7 @@ class WeeklyReportService
         //TOTAL REFINED
         $formArray['totalRefined'] = [
             'current' => $formArray['production']['domestic']['current'] + $formArray['production']['imported']['current'] + $formArray['production']['overage']['current'],
-            'prev' => $formArray['production']['refinedCarryOver']['prev'] + $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'] + $formArray['production']['overage']['prev'],
+            'prev' => $formArray['production']['domestic']['prev'] + $formArray['production']['imported']['prev'] + $formArray['production']['overage']['prev'],
         ];
 
         $formArray['totalProduction'] = [
@@ -412,7 +413,7 @@ class WeeklyReportService
         //STOCK BALANCE = ISSUANCE - WITHDRAWALS
         $formArray['stockBalance'] = [
             'current' => $formArray['issuancesTotal']['current'] - $formArray['withdrawalTotal']['current'],
-            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalTotal']['prev'],
+            'prev' => $formArray['refinedCarryOver']['prev'] + $formArray['issuancesTotal']['prev'] - $formArray['withdrawalTotal']['prev'],
         ];
 
         //UNQEUDANNED = PROD NET - ISSUANCES
@@ -422,9 +423,15 @@ class WeeklyReportService
         ];
         \Hash::make('dds');
         //STOCK ON HAND = PROD NET - WITHDRAWALS
+//        $formArray['stockOnHand'] = [
+//            'current' => $formArray['totalProduction']['current'] - $formArray['withdrawalTotal']['current'],
+//            'prev' => $formArray['totalProduction']['prev'] - $formArray['withdrawalTotal']['prev'],
+//        ];
+
+        //STOCK ON HAND = STOCK BALANCE + UNQUEDANNED
         $formArray['stockOnHand'] = [
-            'current' => $formArray['totalProduction']['current'] - $formArray['withdrawalTotal']['current'],
-            'prev' => $formArray['totalProduction']['prev'] - $formArray['withdrawalTotal']['prev'],
+            'current' => $formArray['stockBalance']['current'] + $formArray['unquedanned']['current'],
+            'prev' => $formArray['stockBalance']['prev'] + $formArray['unquedanned']['prev'],
         ];
 
         return $formArray;
