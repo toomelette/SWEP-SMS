@@ -121,6 +121,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('/form_6a/{slug}/print','SMS\WeeklyReportController@printForm6a')->name('form_6a.print_form6a_form');
 
     Route::resource('warehouses','SMS\WarehouseController');
+    Route::get('recap/comparative_gtcm','\App\Http\Controllers\SMS\Admin\RecapController@comparativeGtcm')->name('recap.comparative_gtcm');
+    Route::get('recap/raw1','\App\Http\Controllers\SMS\Admin\RecapController@raw1')->name('recap.raw1');
+    Route::get('recap/molPWS','\App\Http\Controllers\SMS\Admin\RecapController@molPWS')->name('recap.molPWS');
 });
 
     //ADMIN LEVEL ROUTES
@@ -233,5 +236,4 @@ Route::get('/convert',function (\Illuminate\Http\Request $request){
 
 });
 
-Route::get('comparative_gtcm','\App\Http\Controllers\SMS\Admin\RecapController@comparativeGtcm');
-Route::get('raw1','\App\Http\Controllers\SMS\Admin\RecapController@raw1');
+

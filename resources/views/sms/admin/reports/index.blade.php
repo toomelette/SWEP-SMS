@@ -11,7 +11,7 @@
     <section class="content">
         <div class="box box-solid">
             <div class="box-body">
-                <div class="panel">
+                <div class="panel" hidden>
                     <div class="box box-sm box-default box-solid collapsed-box">
                         <div class="box-header with-border">
                             <p class="no-margin"><i class="fa fa-filter"></i> Advanced Filters <small id="filter-notifier" class="label bg-blue blink"></small></p>
@@ -55,9 +55,9 @@
                 </div>
 
 
-                @include('sms.admin.reports.content',[
-
-                ])
+                <div id="report_container">
+                    @include('sms.admin.reports.content',[])
+                </div>
 
             </div>
 
@@ -75,6 +75,29 @@
 
 @section('scripts')
     <script type="text/javascript">
-
+        $("body").on("click",".navigate-btn",function () {
+            let btn = $(this);
+            let report_no = btn.attr('report_no');
+            let crop_year = btn.attr('crop_year');
+            $(".navigate-btn").each(function () {
+               $(this).attr('disabled','disabled');
+            })
+            btn.parents('#report_container').find('.nav-tabs-custom').html('<div class="text-center" style="font-size: 72px; margin: 100px"><i class="fa fa-circle-o-notch fa-spin"></i></div>');
+            btn.parents('#report_container').find('.nav-tabs-custom').removeClass('nav-tabs-custom');
+            $.ajax({
+                url : '{{route("dashboard.reports.index")}}?type=getContent',
+                data : {'report_no' :  report_no, 'crop_year' : crop_year},
+                type: 'GET',
+                headers: {
+                    {!! __html::token_header() !!}
+                },
+                success: function (res) {
+                    $("#report_container").html(res);
+                },
+                error: function (res) {
+             
+                }
+            })
+        })
     </script>
 @endsection

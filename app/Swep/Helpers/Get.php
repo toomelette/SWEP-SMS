@@ -29,6 +29,8 @@ class Get
     }
 
 
+
+
     public static function currentCropYear(){
         $cy = CropYears::query()->where('is_current','=',1)->first();
         return $cy->name ?? null;
@@ -39,12 +41,7 @@ class Get
             ->select('week_ending','report_no')
             ->where('week_ending','=',$we)
             ->where('crop_year','=',$cy)
-            ->groupBy('wee
-            
-            
-            
-            
-            
-            ')
+            ->groupBy('week_ending')
+            ->first();
     }
 }

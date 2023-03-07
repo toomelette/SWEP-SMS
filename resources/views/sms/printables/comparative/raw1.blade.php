@@ -19,6 +19,8 @@
         </tr>
     </table>
 
+    <p class="text-strong">RAW SUGAR PRODUCTION, WITHDRAWALS & STOCK BALANCES IN (In LKG Bags)</p>
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -155,8 +157,8 @@
                         </tr>
                     @endforeach
 
-                    <tr class="text-strong">
-                        <td colspan="2">
+                    <tr class="text-strong" style="background-color: #f8ffeb">
+                        <td colspan="2" class="text-right">
                             {{$group}} Subtotal
                         </td>
                         @if(!empty($totals[$group]))

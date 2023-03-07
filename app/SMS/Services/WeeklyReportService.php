@@ -539,6 +539,9 @@ class WeeklyReportService
         $formArray['totalBalance']['current'] = $formArray['balanceRaw']['current'] + $formArray['balanceRefined']['current'];
         $formArray['totalBalance']['prev'] = $formArray['balanceRaw']['prev'] + $formArray['balanceRefined']['prev'];
 
+
+        //MolassesDistFactor
+        $formArray['distFactor'] = $relation->distFactor;
         return $formArray;
         print('<pre>'.print_r($formArray,true).'</pre>');
     }
