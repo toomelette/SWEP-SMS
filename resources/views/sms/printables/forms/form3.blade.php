@@ -262,59 +262,7 @@
             <td colspan="3">{{$wr->form3->remarks ?? null}}</td>
         </tr>
     </table>
-    <br>
-    <p class="text-strong">DETAILS OF MOLASSES WITHDRAWALS</p>
-    @php
-        $withdrawalsArr = [];
-        if(!empty($wr->form3Withdrawals)){
-            foreach ( $wr->form3Withdrawals as $withdrawal ){
-                $withdrawalsArr[$withdrawal->sugar_type][$withdrawal->slug] = $withdrawal;
-            }
-        }
-    @endphp
-    <table class="table-bordered details-top-right-table" style="width: 100%">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>MRO#</th>
-                <th>TRADER/OWNER</th>
-                <th>QUANTITY</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!empty($withdrawalsArr))
-                @foreach($withdrawalsArr as $sugarType => $withdrawals)
-                    @php
-                        $totals[$sugarType] = 0;
-                    @endphp
-                    <tr>
-                        <td colspan="4" class="text-strong">{{$sugarType}}:</td>
-                    </tr>
-                    @if(!empty($withdrawals))
-                        @foreach($withdrawals as $withdrawal)
-                            @php
-                                $totals[$sugarType] = $totals[$sugarType] + $withdrawal->qty;
-                            @endphp
-                            <tr>
-                                <td>{{Carbon::parse($withdrawal->date)->format('m/d/Y')}}</td>
-                                <td>{{$withdrawal->mro_no}}</td>
-                                <td>{{$withdrawal->trader}}</td>
-                                <td class="text-right">{{$withdrawal->qty}}</td>
-                            </tr>
-                        @endforeach
-                    @endif
-                    <tr>
-                        <td class="text-right" colspan="3"> TOTAL {{$sugarType}}:</td>
-                        <td class="text-strong text-right"><i>{{number_format($totals[$sugarType],3)}}</i> </td>
-                    </tr>
-                @endforeach
-                    <tr>
-                        <td class="text-right text-strong" colspan="3"> TOTAL:</td>
-                        <td class="text-strong text-right">{{number_format(array_sum($totals),3)}} </td>
-                    </tr>
-            @endif
-        </tbody>
-    </table>
+
     <table class="sign-table cols-3">
         <tr>
             <td>Certified:</td>

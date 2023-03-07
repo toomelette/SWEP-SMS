@@ -112,6 +112,7 @@ class WeeklyReportController extends Controller
         if($weekly_report->status == -1){
             abort(510,'This report has already been cancelled.');
         }
+
         return view('sms.weekly_report.edit')->with([
             'wr' => $weekly_report,
             'formArray' => $weeklyReportService->computation($slug),

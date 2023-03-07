@@ -44,30 +44,44 @@
 
 
 
-<div class="row" style="display:none;">
-    {!! \App\Swep\ViewHelpers\__form2::iRadioH('consumption',[
-        'cols' => 6,
+<div class="row">
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('withdrawal_type',[
+        'cols' => 12,
         'label' => 'Domestic/Imported:',
         'options' => [
+            'EXPORT' => 'Export',
             'DOMESTIC' => 'Domestic',
-            'IMPORTED' => 'Imported',
+            'DISTILLERY' => 'Distillery',
+            'OTHERS' => 'Others',
         ]
     ],
-    $delivery->consumption ?? 'DOMESTIC'
+    $delivery->withdrawal_type ?? ''
+    ) !!}
+</div>
+
+<div class="row">
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('type',[
+        'cols' => 6,
+        'label' => 'Type:',
+        'options' => [
+            'RAW' => 'Raw',
+            'REFINED' => 'Refined',
+        ]
+    ],
+     $delivery->sugar_type ?? 'RAW'
     ) !!}
 
 
-    {!! \App\Swep\ViewHelpers\__form2::iRadioH('chargeTo',[
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
         'cols' => 6,
         'label' => 'Crop:',
         'options' => [
-            'CURRENT' => 'Current',
-            'PREVIOUS' => 'Previous',
+            'CURRENT' => 'Current Crop',
+            'PREVIOUS' => 'Previous Crop',
         ]
     ],
-     (!empty($delivery->qty_prev)) ? 'PREVIOUS' : 'CURRENT'
+     !empty($delivery->qty_current) ? 'CURRENT' : 'PREVIOUS'
     ) !!}
-
 
 </div>
 

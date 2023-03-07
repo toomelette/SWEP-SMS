@@ -287,7 +287,7 @@ class WeeklyReports extends Model
     }
 
     public function form3Withdrawals(){
-        return $this->hasMany(Form3\Withdrawals::class,'weekly_report_slug','slug');
+        return $this->hasMany(Form3b\Deliveries::class,'weekly_report_slug','slug');
     }
 
 

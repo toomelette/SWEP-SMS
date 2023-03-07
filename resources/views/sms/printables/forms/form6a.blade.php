@@ -85,5 +85,28 @@
         </thead>
     </table>
 
+    <table class="sign-table cols-3">
+        <tr>
+            <td>Certified:</td>
+            <td>Verified:</td>
+        </tr>
 
+        <tr >
+            <td>
+                <u>{{$signatories['form6a']['sign1']['name'] ?? null}}</u>
+            </td>
+            <td>
+                <u>{{$signatories['form6a']['sign2']['name'] ?? null}}</u>
+            </td>
+
+        </tr>
+        <tr >
+            <td>
+                {{$signatories['form6a']['sign1']['position'] ?? null}}
+            </td>
+            <td>
+                {{$signatories['form6a']['sign2']['position'] ?? null}}
+            </td>
+        </tr>
+    </table>
 </div>

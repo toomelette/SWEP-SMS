@@ -15,7 +15,7 @@
             "serverSide": true,
             "ajax" : '{{route("dashboard.form3b_deliveries.index")}}?weekly_report_slug={{$wr->slug}}',
             "columns": [
-                { "data": "date_of_withdrawal" },
+                { "data": "date" },
                 { "data": "mro_no" },
                 { "data": "trader" },
                 { "data": "qty" },

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SMS\Form3b;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SMS\Form3b\DeliveryFormRequest;
 use App\Models\SMS\Form3b\Deliveries;
 use App\Swep\Helpers\Helper;
 use Illuminate\Http\Request;
@@ -42,19 +43,27 @@ class DeliveriesController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function store(DeliveryFormRequest $request){
         $d = new Deliveries();
-        $d->slug = Str::random();
         $d->weekly_report_slug = $request->weekly_report_slug;
+        $d->slug = Str::random();
+        $d->date = $request->date;
         $d->mro_no = $request->mro_no;
         $d->trader = $request->trader;
-        $d->date_of_withdrawal = $request->date_of_withdrawal;
+        $d->withdrawal_type = $request->withdrawal_type;
         $d->qty = Helper::sanitizeAutonum($request->qty);
-        $d->remarks = $request->remarks;
+        $d->sugar_type = $request->type;
+        $d->qty_prev = null;
+        $d->qty_current = null;
+        if($request->cropCharge == 'CURRENT'){
+            $d->qty_current = Helper::sanitizeAutonum($request->qty);
+        }else{
+            $d->qty_prev = Helper::sanitizeAutonum($request->qty);
+        }
         if($d->save()){
             return $d->only('slug');
         }
-        abort(503,'Error saving data.');
+        abort(503, 'Error saving data.');
     }
 
     public function edit($slug){
@@ -68,17 +77,25 @@ class DeliveriesController extends Controller
         return $d ?? abort(503,'Delivery not found.');
     }
 
-    public function update(Request $request, $slug){
+    public function update(DeliveryFormRequest $request, $slug){
         $d = $this->findBySlug($slug);
+        $d->date = $request->date;
         $d->mro_no = $request->mro_no;
         $d->trader = $request->trader;
-        $d->date_of_withdrawal = $request->date_of_withdrawal;
+        $d->withdrawal_type = $request->withdrawal_type;
         $d->qty = Helper::sanitizeAutonum($request->qty);
-        $d->remarks = $request->remarks;
+        $d->sugar_type = $request->type;
+        $d->qty_prev = null;
+        $d->qty_current = null;
+        if($request->cropCharge == 'CURRENT'){
+            $d->qty_current = Helper::sanitizeAutonum($request->qty);
+        }else{
+            $d->qty_prev = Helper::sanitizeAutonum($request->qty);
+        }
         if($d->save()){
             return $d->only('slug');
         }
-        abort(503,'Error saving data.');
+        abort(503, 'Error saving data.');
     }
 
     public function destroy($slug){

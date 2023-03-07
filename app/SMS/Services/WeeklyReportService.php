@@ -486,9 +486,9 @@ class WeeklyReportService
         $formArray['notCoveredByMsc']['prev'] = $formArray['totalProduction']['prev'] - $formArray['totalIssuances']['prev'];
 
         if($get == 'toDate'){
-            $withdrawals = Withdrawals::query()
+            $withdrawals = \App\Models\SMS\Form3b\Deliveries::query()
                 ->selectRaw('sugar_type, withdrawal_type, sum(qty_current) as totalCurrent, sum(qty_prev) as totalPrev')
-                ->leftJoin('weekly_reports','weekly_reports.slug','=','form3_withdrawals.weekly_report_slug')
+                ->leftJoin('weekly_reports','weekly_reports.slug','=','form3b_deliveries.weekly_report_slug')
                 ->where('crop_year','=',$wr->crop_year)
                 ->where('mill_code','=', $wr->mill_code)
                 ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $wr->report_no * 1)
@@ -505,7 +505,6 @@ class WeeklyReportService
                 ->groupBy('sugar_type','withdrawal_type')
                 ->get();
         }
-
 
         if(!empty($withdrawals)){
             foreach ($withdrawals as $withdrawal){

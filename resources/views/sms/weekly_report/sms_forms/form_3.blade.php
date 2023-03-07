@@ -1,5 +1,5 @@
 <div class="form-title" style="background-color: #4e984a;">
-    <h4>  WEEKLY REPORT ON MOLASSESS
+    <h4>  WEEKLY REPORT ON MOLASSES
     </h4>
 </div>
 <form id="form3">
@@ -236,40 +236,11 @@
 
 
 
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel">
-                <div class="box box-sm box-default box-solid">
-                    <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
-                        <p class="no-margin">Details of Molasses Withdrawals <small id="filter-notifier" class="label bg-blue blink"></small></p>
-                    </div>
-
-                    <div class="box-body" style="">
-                        <button type="button" data-target="#addMolassesWithdrawalModal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Withdrawals</button>
-                        <br>
-                        <br>
-                        <table style="width: 100%;" class="table table-condensed table-bordered" id="form3_detailsOfMolassesWithdrawals">
-                            <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>MRO No.</th>
-                                <th>Trader/Owner</th>
-                                <th>Type</th>
-                                <th>Raw/Ref</th>
-                                <th>Quantity</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="callout callout-default">
+        <h4>NOTICE!</h4>
+        <p>Withdrawals of Molasses is transferred to <b>FORM 3B DELIVERIES</b></p>
     </div>
+
 
     <div class="box box-sm box-default box-solid">
         <div class="box-header with-border"  style="background-color: #4477a3;color: white;">
@@ -295,6 +266,7 @@
             </div>
         </div>
     </div>
+
 
 
 
