@@ -2,7 +2,7 @@
 
 
 @section('wrapper')
-    <table class="table" style="width: 100%;">
+    <table class="" style="width: 100%;">
         <tr>
             <td style="width: 30%">
                 <p class="no-margin text-strong">THE ADMINISTRATOR</p>
@@ -13,8 +13,21 @@
                 <p class="text-strong">SUGAR REGULATORY ADMINISTRATION</p>
                 <p class="text-strong"> REGULATION DEPARTMENT</p>
             </td>
-            <td style="width: 30%">
-                WEEK:
+            <td style="width: 30%" class="text-top">
+            <table class="tbl-condensed" style="width: 100%">
+                <tbody>
+                <tr>
+                    <td style="width: 50%"></td>
+                    <td>Crop year:</td>
+                    <td class="text-strong">{{\Illuminate\Support\Facades\Request::get('crop_year')}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Report No:</td>
+                    <td class="text-strong">{{\Illuminate\Support\Facades\Request::get('report_no')}}</td>
+                </tr>
+                </tbody>
+            </table>
             </td>
         </tr>
     </table>

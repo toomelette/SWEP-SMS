@@ -207,3 +207,8 @@ table.print-table th,table.print-table td{
 .tr-strong>td{
    font-weight: bold;
 }
+
+
+.tbl-condensed>tbody>tr>td, .tbl-condensed>tbody>tr>th, .tbl-condensed>tfoot>tr>td, .tbl-condensed>tfoot>tr>th, .tbl-condensed>thead>tr>td, .tbl-condensed>thead>tr>th {
+    padding: 0px !important;
+}

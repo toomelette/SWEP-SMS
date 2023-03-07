@@ -99,5 +99,10 @@
                 }
             })
         })
+
+        $("body").on("click",".print-btn",function () {
+            let t = $(this);
+            t.parents('.tab-pane').find('iframe').get(0).contentWindow.print();
+        })
     </script>
 @endsection

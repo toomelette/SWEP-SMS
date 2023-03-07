@@ -122,4 +122,49 @@ class RecapController
             'millsArray' => $comparativeArray,
         ]);
     }
+
+    public function refPWS(Request $request){
+        $report_no = $request->report_no * 1;
+        $crop_year = $request->crop_year;
+
+        $comparativeArray = [];
+        $mills = SugarMills::query()
+            ->where('has_refinery','=',1)
+            ->get();
+        if(!empty($mills)){
+            foreach ($mills as $mill){
+                $comparativeArray[$mill->group][$mill->slug] = [
+                    'weeklyReportSlug' => null,
+                    'form2' => [],
+                ];
+            }
+        }
+
+        //populate slugs
+        $wrs = WeeklyReports::query()
+            ->with('sugarMill')
+            ->select('slug','mill_code')
+            ->where('status','=',1)
+            ->where('report_no','=',$report_no)
+            ->where('crop_year','=',$crop_year)
+            ->whereHas('sugarMill',function ($query){
+                return $query->where('has_refinery','=',1);
+            })
+            ->get();
+        if(!empty($wrs)){
+            foreach ($wrs as $wr){
+                $comparativeArray[$wr->sugarMill->group][$wr->sugarMill->slug]['weeklyReportSlug'] = $wr->slug;
+                $comparativeArray[$wr->sugarMill->group][$wr->sugarMill->slug]['form2'] = [
+                    'thisWeek' => $this->weeklyReportService->form2Computation($wr->slug,'',$report_no),
+                    'prevToDate' => $this->weeklyReportService->form2Computation($wr->slug,'toDate',$report_no - 1),
+                    'toDate' => $this->weeklyReportService->form2Computation($wr->slug,'toDate',$report_no),
+                ];
+            }
+        }
+
+        return view('sms.printables.comparative.refPWS')->with([
+            'millsArray' => $comparativeArray,
+        ]);
+
+    }
 }
