@@ -50,16 +50,31 @@
         'cols' => 6,
         'class' => 'autonumber_mt_'.$rand,
     ],
-    (!empty($issuance)) ? $issuance : null
+    $issuance->qty ?? $issuance->qty_prev ?? null
     ) !!}
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <label>
-            <input type="checkbox" name="refining" {{(!empty($issuance) && $issuance->refining == 1) ? 'checked' : ''  }}>
-            Refining
-        </label>
-    </div>
+
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
+        'cols' => 6,
+        'label' => 'Crop:',
+        'options' => [
+            'CURRENT' => 'Current Crop',
+            'PREVIOUS' => 'Previous Crop',
+        ]
+    ],
+     !empty($issuance->qty_prev) ? 'PREVIOUS' : 'CURRENT'
+    ) !!}
+
+    {!! \App\Swep\ViewHelpers\__form2::iCheckH('refining',[
+        'cols' => 6,
+        'label' => 'Refining:',
+        'options' => [
+            'forRefining' => 'For Refining',
+        ]
+    ],
+     ($issuance->refining ?? 0 == 1) ? 'forRefining' : ''
+    ) !!}
 </div>
 
 <script>

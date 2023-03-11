@@ -51,6 +51,8 @@
                     "processing": "<center><img style='width: 70px' src='{{asset("images/loader.gif")}}'></center>",
                 },
             "drawCallback": function(settings,json){
+                $("dt[for='form5TotalCurrentIssuance']").html(settings.json.totals.totalCurrentIssuances);
+                $("dt[for='form5TotalPrevIssuance']").html(settings.json.totals.totalPrevIssuances);
                 $("dt[for='form5TotalIssuance']").html(settings.json.totals.totalIssuances);
                 $('[data-toggle="tooltip"]').tooltip();
                 $('[data-toggle="modal"]').tooltip();

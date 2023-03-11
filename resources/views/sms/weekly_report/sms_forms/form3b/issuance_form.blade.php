@@ -38,48 +38,22 @@
     ],
     (!empty($issuance)) ? $issuance : null
     ) !!}
-</div>
 
-
-<div class="row" style="display: none">
-    {!! \App\Swep\ViewHelpers\__form2::iRadioH('withdrawal_type',[
-        'cols' => 12,
-        'label' => 'Domestic/Imported:',
-        'options' => [
-            'EXPORT' => 'Export',
-            'DOMESTIC' => 'Domestic',
-            'DISTILLERY' => 'Distillery',
-            'OTHERS' => 'Others',
-        ]
-    ],
-    $withdrawal->withdrawal_type ?? ''
-    ) !!}
-</div>
-
-<div class="row" style="display: none">
     {!! \App\Swep\ViewHelpers\__form2::iRadioH('type',[
-        'cols' => 6,
+        'cols' => 8,
         'label' => 'Type:',
         'options' => [
             'RAW' => 'Raw',
             'REFINED' => 'Refined',
         ]
     ],
-     $withdrawal->sugar_type ?? 'RAW'
+     $issuance->type ?? 'RAW'
     ) !!}
 
-
-    {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
-        'cols' => 6,
-        'label' => 'Crop:',
-        'options' => [
-            'CURRENT' => 'Current Crop',
-            'PREVIOUS' => 'Previous Crop',
-        ]
-    ],
-     !empty($withdrawal->qty_current) ? 'CURRENT' : 'PREVIOUS'
-    ) !!}
 </div>
+
+
+
 
 <script>
     const autonumericElement_{{$rand}} =  AutoNumeric.multiple('.autonumber_mt_{{$rand}}',autonum_settings_mt);

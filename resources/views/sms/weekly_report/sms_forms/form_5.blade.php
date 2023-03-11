@@ -12,13 +12,25 @@
 
                 <div class="box-body" style="">
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-3">
                             <dl>
                                 <dd>TOTAL:</dd>
                                 <dt  for="form5TotalIssuance"></dt>
                             </dl>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
+                            <dl>
+                                <dd>TOTAL Current:</dd>
+                                <dt  for="form5TotalCurrentIssuance"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
+                            <dl>
+                                <dd>TOTAL Previous:</dd>
+                                <dt  for="form5TotalPrevIssuance"></dt>
+                            </dl>
+                        </div>
+                        <div class="col-md-3">
                             <button type="button" data-target="#add_issuances_modal" data-toggle="modal" class="btn btn-success btn-sm pull-right"><i class="fa fa-plus"></i> Add Issuances</button>
                         </div>
                     </div>

@@ -31,14 +31,17 @@
         @php($total = 0)
         @if(!empty($wr->form5IssuancesOfSro))
             @foreach($wr->form5IssuancesOfSro as $form5IssuancesOfSro)
-                @php($total = $total + ($form5IssuancesOfSro->qty ?? 0))
+                @php($total = $total + ($form5IssuancesOfSro->qty ?? $form5IssuancesOfSro->qty_prev))
                 <tr>
                     <td>{{$form5IssuancesOfSro->sro_no}}</td>
                     <td>{{$form5IssuancesOfSro->trader}}</td>
                     <td class="text-center">{{Carbon::parse($form5IssuancesOfSro->date_of_issue)->format('m/d/Y')}}</td>
                     <td class="text-center">{{$form5IssuancesOfSro->liens_or}}</td>
-                    <td class="text-center">{{$form5IssuancesOfSro->sugar_class}} {{($form5IssuancesOfSro->refining == 1 ? ' - Refining' : '')}}</td>
-                    <td class="text-right">{{!empty($form5IssuancesOfSro->qty) ? number_format($form5IssuancesOfSro->qty,3) : null}}</td>
+                    <td class="text-center">
+                        {{$form5IssuancesOfSro->sugar_class}} {{($form5IssuancesOfSro->refining == 1 ? ' - Refining' : '')}}
+                        {{(!empty($form5IssuancesOfSro->qty_prev) ? ', Previous' : null)}}
+                    </td>
+                    <td class="text-right">{{number_format($form5IssuancesOfSro->qty ?? $form5IssuancesOfSro->qty_prev ,3)}}</td>
                 </tr>
             @endforeach
         @endif

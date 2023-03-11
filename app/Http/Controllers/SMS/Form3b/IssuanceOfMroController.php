@@ -49,6 +49,7 @@ class IssuanceOfMroController
         $i->date_of_issue = $request->date_of_issue;
         $i->liens_or = $request->liens_or;
         $i->qty = Helper::sanitizeAutonum($request->qty);
+        $i->type = $request->type;
         if($i->save()){
             return $i->only('slug');
         }
@@ -68,6 +69,7 @@ class IssuanceOfMroController
         $i->date_of_issue = $request->date_of_issue;
         $i->liens_or = $request->liens_or;
         $i->qty = Helper::sanitizeAutonum($request->qty);
+        $i->type = $request->type;
         if($i->save()){
             return $i->only('slug');
         }

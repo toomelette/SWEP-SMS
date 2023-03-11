@@ -1,6 +1,6 @@
 @php($rand = \Illuminate\Support\Str::random())
 <div class="row">
-    {!! \App\Swep\ViewHelpers\__form2::textbox('date_of_withdrawal',[
+    {!! \App\Swep\ViewHelpers\__form2::textbox('date',[
         'label' => 'Date of Withdrawal',
         'cols' => 6,
         'type' => 'date',
