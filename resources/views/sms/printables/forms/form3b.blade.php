@@ -97,7 +97,7 @@
                 <tr>
                     <td>{{$form3bServedMros->mro_no}}</td>
                     <td>{{$form3bServedMros->trader}}</td>
-                    <td>{{$form3bServedMros->quedan_pcs}}</td>
+                    <td>{{$form3bServedMros->pcs}}</td>
                 </tr>
             @endforeach
         @endif

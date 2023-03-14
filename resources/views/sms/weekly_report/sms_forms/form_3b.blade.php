@@ -86,7 +86,7 @@
                         <tr>
                             <th>Ref. SRO SN.</th>
                             <th>Trader/Tollee</th>
-                            <th>No. of Pcs of Quendan</th>
+                            <th>No. of Pcs of Quedan</th>
                             <th>Action</th>
                         </tr>
                         </thead>
