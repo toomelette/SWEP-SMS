@@ -52,6 +52,19 @@
 
 </div>
 
+<div class="row">
+    {!! \App\Swep\ViewHelpers\__form2::iRadioH('cropCharge',[
+        'cols' => 6,
+        'label' => 'Crop:',
+        'options' => [
+            'CURRENT' => 'Current Crop',
+            'PREVIOUS' => 'Previous Crop',
+        ]
+    ],
+     !empty($issuance->qty_prev) ? 'PREVIOUS' : 'CURRENT'
+    ) !!}
+</div>
+
 
 
 

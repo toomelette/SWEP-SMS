@@ -32,7 +32,11 @@ class IssuanceOfMroController
                                 </div>';
                     return $button;
                 })->editColumn('qty',function($data){
-                    return number_format($data->qty,3);
+                    if(!empty($data->qty)){
+                        return number_format($data->qty,3);
+                    }else{
+                        return number_format($data->qty_prev,3);
+                    }
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -48,8 +52,14 @@ class IssuanceOfMroController
         $i->trader = $request->trader;
         $i->date_of_issue = $request->date_of_issue;
         $i->liens_or = $request->liens_or;
-        $i->qty = Helper::sanitizeAutonum($request->qty);
         $i->type = $request->type;
+        $i->qty_prev = null;
+        $i->qty = null;
+        if($request->cropCharge == 'CURRENT'){
+            $i->qty = Helper::sanitizeAutonum($request->qty);
+        }else{
+            $i->qty_prev = Helper::sanitizeAutonum($request->qty);
+        }
         if($i->save()){
             return $i->only('slug');
         }
@@ -68,8 +78,19 @@ class IssuanceOfMroController
         $i->trader = $request->trader;
         $i->date_of_issue = $request->date_of_issue;
         $i->liens_or = $request->liens_or;
-        $i->qty = Helper::sanitizeAutonum($request->qty);
         $i->type = $request->type;
+        $i->qty_prev = null;
+        $i->qty = null;
+        if($request->cropCharge == 'CURRENT'){
+            $i->qty = Helper::sanitizeAutonum($request->qty);
+        }else{
+            $i->qty_prev = Helper::sanitizeAutonum($request->qty);
+        }
+        if($i->save()){
+            return $i->only('slug');
+        }
+
+
         if($i->save()){
             return $i->only('slug');
         }
