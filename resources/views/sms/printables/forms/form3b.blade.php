@@ -28,14 +28,14 @@
         @if(!empty($wr->form3bIssuancesOfMro))
             @foreach($wr->form3bIssuancesOfMro as $form3bIssuancesOfMro)
                 @php
-                    $totals['issuanceTotal'] = $totals['issuanceTotal'] + ($form3bIssuancesOfMro->qty ?? 0);
+                    $totals['issuanceTotal'] = $totals['issuanceTotal'] + ($form3bIssuancesOfMro->qty ?? $form3bIssuancesOfMro->qty_prev);
                 @endphp
                 <tr>
                     <td>{{$form3bIssuancesOfMro->mro_no}}</td>
                     <td>{{$form3bIssuancesOfMro->trader}}</td>
                     <td>{{\Illuminate\Support\Carbon::parse($form3bIssuancesOfMro->date_of_issue)->format('m/d/Y')}}</td>
                     <td>{{$form3bIssuancesOfMro->liens_or}}</td>
-                    <td class="text-right">{{$form3bIssuancesOfMro->qty}}</td>
+                    <td class="text-right">{{number_format($form3bIssuancesOfMro->qty ?? $form3bIssuancesOfMro->qty_prev,3)}}</td>
                 </tr>
             @endforeach
         @endif
