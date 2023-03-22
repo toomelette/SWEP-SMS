@@ -13,7 +13,7 @@
     ) !!}
 
     {!! \App\Swep\ViewHelpers\__form2::textbox('pcs',[
-        'label' => 'No. of pcs of Quedan:',
+        'label' => 'No. of pcs of Storage Certs.:',
         'cols' => 12,
     ],
     (!empty($servedSro)) ? $servedSro : null

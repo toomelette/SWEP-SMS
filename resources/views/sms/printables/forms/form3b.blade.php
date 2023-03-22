@@ -89,7 +89,7 @@
         <tr>
             <th>MRO</th>
             <th>Trader/Tollee</th>
-            <th>No. of Pcs of Quedan</th>
+            <th>No. of Pcs of Storage Certificates</th>
         </tr>
         </thead>
         @if(!empty($wr->form3bServedMros))
