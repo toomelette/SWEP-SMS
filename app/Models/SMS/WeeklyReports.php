@@ -191,7 +191,10 @@ class WeeklyReports extends Model
             ->where('crop_year','=',$this->crop_year)
             ->where('mill_code','=',$this->mill_code)
             ->where('report_no','<=',$report_no * 1)
-//            ->where('status' ,'=',1)
+            ->where(function($q){
+                $q->where('status','=',1)
+                    ->orWhere('status','=',null);
+            })
             ->first();
 
         return $toDate ?? null;
