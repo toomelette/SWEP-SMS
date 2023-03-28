@@ -284,7 +284,7 @@
                     <table class="table table-bordered table-condensed table_dynamic" id="form3SeriesNos">
                         <thead>
                         <tr>
-                            <th>Sugar Class</th>
+                            <th>RAW/REF</th>
                             <th>Series From</th>
                             <th>Series To</th>
                             <th>Sugar Type</th>
