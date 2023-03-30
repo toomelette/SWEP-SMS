@@ -157,4 +157,11 @@ class Arrays
         ];
     }
 
+    public static function geogLocs(){
+        return [
+            'LM' => 'LM',
+            'VIS' => 'VIS',
+        ];
+    }
+
 }

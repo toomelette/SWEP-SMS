@@ -304,7 +304,7 @@ function unwait_button(target_form , type){
     text = '';
     switch(type){
         case 'save' :
-            text = "<i class='fa fa-save'> </i> Save";
+            text = "<i class='fa fa-check'> </i> Save";
             break;
         default:
             text = type;

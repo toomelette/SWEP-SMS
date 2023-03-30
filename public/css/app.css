@@ -473,6 +473,12 @@ ol.example li.placeholder:before {
     }
 }
 
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+
 .bs-example{
     padding: 10px;
     border: 1px solid #c5c5c5;

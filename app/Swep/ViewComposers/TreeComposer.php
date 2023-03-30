@@ -20,14 +20,16 @@ class TreeComposer
             });
 
         //FETCH USER LEVEL MENUS
-        $userLevelMenus = Menu::query()->where('category','=','USER')->orderBy('created_at','asc')->get();
+        if(Auth::user()->no_user_access  != 1){
+            $userLevelMenus = Menu::query()->where('category','=','USER')->orderBy('created_at','asc')->get();
 
-        if(!empty($userLevelMenus)){
-            foreach ($userLevelMenus as $userLevelMenu){
-                if(!empty($userLevelMenu->submenu)){
-                    foreach ($userLevelMenu->submenu as $submenu){
-                        $tree[$userLevelMenu->category][$userLevelMenu->menu_id]['menu_obj']= $userLevelMenu;
-                        $tree[$userLevelMenu->category][$userLevelMenu->menu_id]['submenus'][$submenu->submenu_id] = $submenu;
+            if(!empty($userLevelMenus)){
+                foreach ($userLevelMenus as $userLevelMenu){
+                    if(!empty($userLevelMenu->submenu)){
+                        foreach ($userLevelMenu->submenu as $submenu){
+                            $tree[$userLevelMenu->category][$userLevelMenu->menu_id]['menu_obj']= $userLevelMenu;
+                            $tree[$userLevelMenu->category][$userLevelMenu->menu_id]['submenus'][$submenu->submenu_id] = $submenu;
+                        }
                     }
                 }
             }

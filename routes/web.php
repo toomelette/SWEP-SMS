@@ -162,6 +162,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
 
 });
 
+Route::get('/price','SMS\MarketPriceController@create')
+    ->middleware(['check.user_status', 'check.user_route', 'last_activity'])
+    ->name('dashboard.market_price.create');
+
+Route::post('/price','SMS\MarketPriceController@store')
+    ->middleware(['check.user_status', 'check.user_route', 'last_activity'])
+    ->name('dashboard.market_price.store');
+
 Route::get('/convert',function (\Illuminate\Http\Request $request){
     $wr = \App\Models\SMS\WeeklyReports::query()
         ->where('mill_code','=',$request->mill_code)

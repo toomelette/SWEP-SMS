@@ -17,7 +17,7 @@
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <li class="dropdown user user-menu">
+        <li class="dropdown user user-menu hidden-mobile">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-calculator"></i> MT -> LKG Converter
           </a>
@@ -44,12 +44,12 @@
           </ul>
         </li>
 
-          <li class="dropdown tasks-menu">
+          <li class="dropdown tasks-menu hidden-mobile">
             <a href="#" >
               <i class="fa fa-calendar"></i> {{Carbon::now()->format('F d, Y')}}
             </a>
           </li>
-        <li class="dropdown user user-menu">
+        <li class="dropdown user user-menu ">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{asset('images/avatar.jpeg')}}" class="user-image" alt="User Image">
             @if(Auth::check())
