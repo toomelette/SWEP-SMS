@@ -161,12 +161,20 @@
                             <td class="text-right">{{number_format($value,3)}}</td>
                         @endforeach
                     @endif
-                    <td class="text-right">
-                        {{number_format($totals[$group][3] * 20 / $totals[$group][0],3)}}
-                    </td>
-                    <td class="text-right">
-                        {{number_format($totals[$group][5] * 20 / $totals[$group][2],3)}}
-                    </td>
+                    @if($totals[$group][0] != 0)
+                        <td class="text-right">
+                            {{number_format($totals[$group][3] * 20 / $totals[$group][0],3)}}
+                        </td>
+                    @else
+                        <td></td>
+                    @endif
+                    @if($totals[$group][2] != 0)
+                        <td class="text-right">
+                            {{number_format($totals[$group][5] * 20 / $totals[$group][2],3)}}
+                        </td>
+                    @else
+                        <td></td>
+                    @endif
                 </tr>
             @endforeach
             <tr class="text-strong">
@@ -176,8 +184,18 @@
                 @foreach($template as $key => $val)
                     <td class="text-right">{{number_format(array_sum(array_column($totals,$key)),3)}}</td>
                 @endforeach
-                <td class="text-right">{{number_format(array_sum(array_column($totals,3)) * 20 / array_sum(array_column($totals,0)),3)}}</td>
-                <td class="text-right">{{number_format(array_sum(array_column($totals,5)) * 20 / array_sum(array_column($totals,2)),3)}}</td>
+                @if(array_sum(array_column($totals,0)) != 0)
+                    <td class="text-right">{{number_format(array_sum(array_column($totals,3)) * 20 / array_sum(array_column($totals,0)),3)}}</td>
+                @else
+                    <td></td>
+                @endif
+
+                @if(array_sum(array_column($totals,2)) != 0)
+                    <td class="text-right">{{number_format(array_sum(array_column($totals,5)) * 20 / array_sum(array_column($totals,2)),3)}}</td>
+                @else
+                    <td></td>
+                @endif
+
             </tr>
         @endif
         </tbody>
