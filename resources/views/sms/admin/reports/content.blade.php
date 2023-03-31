@@ -14,6 +14,7 @@
         <li class="active"><a href="#tab_1" data-toggle="tab">RAW PROD., W/D & STOCK BALANCES</a></li>
         <li><a href="#tab_3" data-toggle="tab" >REF PROD., W/D & STOCK BALANCES</a></li>
         <li><a href="#tab_2" data-toggle="tab">MOL PROD., W/D & STOCK BALANCES</a></li>
+        <li><a href="#tab_4" data-toggle="tab">GTCM, TSDC, LKG/TONNE CANE</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
@@ -53,6 +54,20 @@
             <div class="bs-example" id="printFrameContainer_DhGgDnhT5ZzBP7C8" hidden="" style="display: block;">
                 <div class="embed-responsive embed-responsive-16by9" style="height: 1019.938px;">
                     <iframe id="printFrame_DhGgDnhT5ZzddBP7C8" class="embed-responsive-item" src="{{route('dashboard.recap.refPWS')}}?report_no={{\Illuminate\Support\Facades\Request::get('report_no')}}&crop_year={{\Illuminate\Support\Facades\Request::get('crop_year')}}">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane active" id="tab_4">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-sm btn-primary pull-right print-btn" style="margin-bottom: 10px"><i class="fa fa-print"></i> Print</button>
+                </div>
+            </div>
+            <div class="bs-example" id="printFrameContainer_DhGgDnhT5ZzBP7C8" hidden="" style="display: block;">
+                <div class="embed-responsive embed-responsive-16by9" style="height: 1019.938px;">
+                    <iframe  class="embed-responsive-item iframe" src="{{route('dashboard.recap.gtcm')}}?report_no={{\Illuminate\Support\Facades\Request::get('report_no')}}&crop_year={{\Illuminate\Support\Facades\Request::get('crop_year')}}">
                     </iframe>
                 </div>
             </div>

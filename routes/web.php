@@ -125,6 +125,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('recap/raw1','\App\Http\Controllers\SMS\Admin\RecapController@raw1')->name('recap.raw1');
     Route::get('recap/molPWS','\App\Http\Controllers\SMS\Admin\RecapController@molPWS')->name('recap.molPWS');
     Route::get('recap/refPWS','\App\Http\Controllers\SMS\Admin\RecapController@refPWS')->name('recap.refPWS');
+    Route::get('recap/gtcm','\App\Http\Controllers\SMS\Admin\RecapController@gtcm')->name('recap.gtcm');
 });
 
     //ADMIN LEVEL ROUTES
