@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="tab-pane active" id="tab_4">
+        <div class="tab-pane" id="tab_4">
             <div class="row">
                 <div class="col-md-12">
                     <button class="btn btn-sm btn-primary pull-right print-btn" style="margin-bottom: 10px"><i class="fa fa-print"></i> Print</button>
