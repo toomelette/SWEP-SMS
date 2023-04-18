@@ -148,7 +148,7 @@
             @endforeach
         @endif
       @endif
-        @if(!empty(Auth::user()->millAssignments))
+        @if(!empty(Auth::user()->millAssignments()->count() > 0))
             <li class="treeview ">
                 <a href="#" searchable="Users  SU SUPER USER">
                     <i class="fa fa-times"></i> <span>My Mills</span>

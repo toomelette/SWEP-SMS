@@ -27,7 +27,7 @@
             @endif
             @if($data->status == 1)
                 <li>
-                    <a href="#" style="color: #dd4b39" uri="{{route('dashboard.weekly_report.cancel',$data->slug)}}" data="{{$data->slug}}" class="saveAsNewBtn" reportNo="{{$data->report_no}}" cropYear="{{$data->crop_year}}" data-toggle="tooltip" title="Delete" data-placement="top">
+                    <a href="#" style="color: #dd4b39" uri="{{route('dashboard.weekly_report.saveAsNew',$data->slug)}}" data="{{$data->slug}}" class="saveAsNewBtn" reportNo="{{$data->report_no}}" cropYear="{{$data->crop_year}}" data-toggle="tooltip" title="Delete" data-placement="top">
                         <i class="fa fa-times"></i> CANCEL
                     </a>
                 </li>

@@ -297,7 +297,9 @@ class WeeklyReportController extends Controller
 
         foreach ($references as $tableName => $reference){
             $columns = \Schema::getColumnListing($tableName);
-            array_splice($columns,0,1);
+            if (($key = array_search('id', $columns)) !== false) {
+                unset($columns[$key]);
+            }
             if(!empty($wr->{$reference['objectRelation']})){
                 $arr = [];
                 foreach ($wr->{$reference['objectRelation']} as $data){
