@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <p class="text-center"><b>RAW Production by Mill</b></p>
+                    <p class="text-center"><b>RAW Withdrawals by Mill</b></p>
                     <div>
                         <canvas id="rawWithdrawalsByMill" height="10" width="25"></canvas>
                     </div>
