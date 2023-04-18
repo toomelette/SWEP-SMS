@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SMS\MillAssignment;
 use App\Models\SMS\SugarMills;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -105,6 +106,8 @@ class User extends Authenticatable{
         return $this->hasOne(SugarMills::class,'slug','mill_code');
     }
 
-
+    public function millAssignments(){
+        return $this->hasMany(MillAssignment::class,'user_id','user_id');
+    }
 
 }

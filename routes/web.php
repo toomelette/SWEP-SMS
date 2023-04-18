@@ -2,6 +2,7 @@
 
 /** Auth **/
 
+use App\Models\SMS\InputFields;
 use App\Swep\Helpers\Helper;
 use Rats\Zkteco\Lib\ZKTeco;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -88,10 +89,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** WEEKLY REPORT **/
 
     Route::get('/weekly_report/{slug}/print','SMS\WeeklyReportController@print')->name('weekly_report.print');
-
+    Route::get('/weekly_report/{slug}/pdf','SMS\WeeklyReportController@pdf')->name('weekly_report.pdf');
     Route::resource('signatories','SMS\SignatoryController');
 
     Route::post('weekly_report/{slug}/saveAsNew','SMS\WeeklyReportController@saveAsNew')->name('weekly_report.saveAsNew');
+    Route::post('weekly_report/{slug}/cancel','SMS\WeeklyReportController@cancel')->name('weekly_report.cancel');
     Route::post('weekly_report/{slug}/submit','SMS\WeeklyReportController@submit')->name('weekly_report.submit');
 
 
@@ -126,6 +128,11 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('recap/molPWS','\App\Http\Controllers\SMS\Admin\RecapController@molPWS')->name('recap.molPWS');
     Route::get('recap/refPWS','\App\Http\Controllers\SMS\Admin\RecapController@refPWS')->name('recap.refPWS');
     Route::get('recap/gtcm','\App\Http\Controllers\SMS\Admin\RecapController@gtcm')->name('recap.gtcm');
+
+    Route::get('my_mills/{mill_code}','\App\Http\Controllers\SMS\Admin\MyMillsController@index')->name('my_mills.index');
+    Route::get('my_mills/{mill_code}/show','\App\Http\Controllers\SMS\Admin\MyMillsController@show')->name('my_mills.show');
+
+    Route::get('home/weekly_data','HomeController@weeklyData')->name('home.weekly_data');
 });
 
     //ADMIN LEVEL ROUTES
@@ -170,6 +177,7 @@ Route::get('/price','SMS\MarketPriceController@create')
 Route::post('/price','SMS\MarketPriceController@store')
     ->middleware(['check.user_status', 'check.user_route', 'last_activity'])
     ->name('dashboard.market_price.store');
+
 
 Route::get('/convert',function (\Illuminate\Http\Request $request){
     $wr = \App\Models\SMS\WeeklyReports::query()
@@ -245,5 +253,41 @@ Route::get('/convert',function (\Illuminate\Http\Request $request){
     return 1;
 
 });
+Route::get('prepare_calendar',function (\Illuminate\Http\Request $request){
+    $no_of_weeks = 52;
+    $week_no = 1;
+    $start = $request->start;
+    $arr = [];
+    $p = [];
+    for ($x = $week_no; $x <= $no_of_weeks; $x++){
 
+        array_push($p,[
+            'slug' => \Illuminate\Support\Str::random(),
+            'report_no' => $week_no,
+            'week_ending' => \Illuminate\Support\Carbon::parse($request->start)->addDays($week_no * 7 - 7)->format('Y-m-d'),
+            'crop_year' => \Illuminate\Support\Carbon::parse($request->start)->format('Y').'-'.\Illuminate\Support\Carbon::parse($request->start)->addYears(1)->format('Y'),
+        ]);
+        $week_no++;
+    }
+    if(\App\Models\SMS\Calendar::insert($p)){
+        return 'success';
+    }
+    abort(503,'Error');
+});
+
+Route::get('assignCalendarId',function (){
+    $wrs = \App\Models\SMS\WeeklyReports::query()->where('calendar_slug','=',null)->get();
+    foreach ($wrs as $wr){
+
+        $c = \App\Models\SMS\Calendar::query()
+            ->where('report_no','=',$wr->report_no)
+            ->where('week_ending','=',$wr->week_ending)
+            ->first();
+        if(!empty($c)){
+            $wr->calendar_slug = $c->slug;
+            $wr->save();
+        }
+    }
+    return 1;
+});
 

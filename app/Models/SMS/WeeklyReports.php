@@ -324,4 +324,18 @@ class WeeklyReports extends Model
     public function savedSignatories(){
         return $this->hasMany(SignatoriesSaved::class,'weekly_report_slug','slug');
     }
+
+
+    public function requestsForCancellation(){
+        return $this->hasMany(RequestsForCancellation::class,'weekly_report_slug','slug');
+    }
+
+    public function requestsForCancellationNoAction(){
+        return $this->hasMany(RequestsForCancellation::class,'weekly_report_slug','slug')->where('approved_at','=',null);
+    }
+
+    public function reportStatus(){
+        return $this->hasMany(Status::class,'weekly_report_slug','slug');
+    }
+
 }

@@ -24,11 +24,11 @@
                             <div class="info-box-content">
                                 <span class="info-boxs">RAW SUGAR </span><small>as of {{$prevSunday->format('M. d, Y')}}</small>
                                 <span class="info-box-number">
-                                    {{number_format($millGatePricePrev['prices']['raw'],2)}}
+                                    {{number_format($currentWeek['wholesaleRaw'],2)}}
                                 </span>
-                                <span class="description-percentage {{$millGatePricePrev['diff']['raw'] > 0 ?'text-red' :'text-green'}}">
+                                <span class="description-percentage {{$currentWeek['wholesaleRaw'] - $previousWeek['wholesaleRaw'] > 0 ?'text-red' :'text-green'}}">
                                     <i class="fa fa-caret-up"></i>
-                                    {{number_format($millGatePricePrev['diff']['raw'],2)}} <small> from {{\Illuminate\Support\Carbon::parse($prevSunday)->format('M. d')}}</small>
+                                    {{number_format(abs($currentWeek['wholesaleRaw'] - $previousWeek['wholesaleRaw']),2)}} <small> Php from previous week </small>
                                 </span>
                             </div>
                         </div>
@@ -39,11 +39,11 @@
                             <div class="info-box-content">
                                 <span class="info-box-text">REFINED SUGAR</span>
                                 <span class="info-box-number">
-                                    {{number_format($millGatePricePrev['prices']['refined'],2)}}
+                                    {{number_format($currentWeek['wholesaleRefined'],2)}}
                                 </span>
-                                <span class="description-percentage {{$millGatePricePrev['diff']['refined'] > 0 ?'text-red' :'text-green'}}">
+                                <span class="description-percentage {{$currentWeek['wholesaleRefined'] - $previousWeek['wholesaleRefined'] > 0 ?'text-red' :'text-green'}}">
                                     <i class="fa fa-caret-up"></i>
-                                    {{number_format($millGatePricePrev['diff']['refined'],2)}} <small> from {{\Illuminate\Support\Carbon::parse($prevSunday)->format('M. d')}}</small>
+                                    {{number_format(abs($currentWeek['wholesaleRefined'] - $previousWeek['wholesaleRefined']) ,2)}} <small>Php from previous week</small>
                                 </span>
                             </div>
                         </div>
@@ -51,31 +51,20 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-title" style="background-color: #4477a3;">
-                    <h4> Weekly Data </h4>
+                <div class="form-title" style="background-color: #4477a3">
+                    <h4 style="text-align: left"> Weekly Data <span class="pull-right"><small ><a href="{{route("dashboard.home.weekly_data")}}"  style="color: whitesmoke">See more</a></small></span> </h4>
                 </div>
                 <div class="row">
                     <div class="col-lg-6 col-xs-12">
-                        @php
-                            $thisWeekProd = \App\Models\SMS\Form1\Form1Details::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
-                                $query->where('week_ending','=',$closestSundayAhead);
-                            })->sum('manufactured');
-                            $lastWeekProd = \App\Models\SMS\Form1\Form1Details::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
-                                $query->where('week_ending','=',\Illuminate\Support\Carbon::parse($closestSundayAhead)->subDays(7));
-                            })->sum('manufactured');
-                            if($lastWeekProd == 0){
-                                $lastWeekProd = 1;
-                            }
-                        @endphp
+
                         <div class="info-box">
                             <span class="info-box-icon bg-production"><i class="ion ion-ios-cart-outline"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">PRODUCTION</span>
-                                <span class="info-box-number">{{number_format($thisWeekProd,3)}} MT</span>
-                                @php $play = $thisWeekProd-$lastWeekProd > 0 ? 100*($thisWeekProd-$lastWeekProd)/$lastWeekProd: 0; @endphp
-                                <span class="description-percentage {{$play > 0 ? 'text-green':'text-red'}}">
-                                    <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
-                                    {{number_format($play,2)}}% <small>from previous week</small>
+                                <span class="info-box-text">RAW PRODUCTION</span>
+                                <span class="info-box-number">{{number_format($currentWeek['rawProduction'],3)}} LKG</span>
+                                <span class="description-percentage {{$currentWeek['rawProduction'] - $previousWeek['rawProduction'] > 0 ? 'text-green':'text-red'}}">
+                                    <i class="fa fa-caret-{{$currentWeek['rawProduction'] - $previousWeek['rawProduction'] > 0 ? 'up': 'down'}}"></i>
+                                    {{number_format(abs($currentWeek['rawProduction'] - $previousWeek['rawProduction']),2)}} LKG <small>from previous week</small>
                                 </span>
                             </div>
 
@@ -83,28 +72,15 @@
 
                     </div>
                     <div class="col-lg-6 col-xs-12">
-                        @php
-                            $thisWeekWithdrawal = \App\Models\SMS\Form5\Deliveries::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
-                                $query->where('week_ending','=',$closestSundayAhead);
-                            })->sum('qty');
-                            $lastWeekWithdrawal = \App\Models\SMS\Form5\Deliveries::query()->whereHas('weeklyReport',function ($query) use($closestSundayAhead){
-                                $query->where('week_ending','=',\Illuminate\Support\Carbon::parse($closestSundayAhead)->subDays(7));
-                            })->sum('qty');
-                            if($lastWeekWithdrawal == 0){
-                                $lastWeekWithdrawal = 1;
-                            }
-                        @endphp
-
                         <div class="info-box">
                             <span class="info-box-icon bg-withdrawals"><i class="ion ion-ios-cart-outline"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">WITHDRAWALS</span>
-                                <span class="info-box-number">{{number_format($thisWeekWithdrawal,3)}} MT</span>
-                                @php $play = $thisWeekWithdrawal-$lastWeekWithdrawal > 0 ? 100*($thisWeekWithdrawal-$lastWeekWithdrawal)/$lastWeekWithdrawal : 0; @endphp
-                                <span class="description-percentage {{$play > 0 ? 'text-green':'text-red'}}">
-                                                <i class="fa fa-caret-{{$play > 0 ? 'up': 'down'}}"></i>
-                                                {{number_format($play,2)}}% <small>from previous week</small>
-                                            </span>
+                                <span class="info-box-text">RAW WITHDRAWALS</span>
+                                <span class="info-box-number">{{number_format($currentWeek['rawWithdrawals'],3)}} LKG</span>
+                                <span class="description-percentage {{$currentWeek['rawWithdrawals']-$previousWeek['rawWithdrawals'] > 0 ? 'text-green':'text-red'}}">
+                                    <i class="fa fa-caret-{{$currentWeek['rawWithdrawals']-$previousWeek['rawWithdrawals'] > 0 ? 'up': 'down'}}"></i>
+                                    {{number_format(abs($currentWeek['rawWithdrawals']-$previousWeek['rawWithdrawals']),2)}} LKG <small>from previous week</small>
+                                </span>
                             </div>
 
                         </div>
@@ -232,13 +208,12 @@
 
 
 @section('modals')
-
+    {!! \App\Swep\ViewHelpers\__html::blank_modal('weekly_data_modal','lg') !!}
 @endsection
 
 
 @section('scripts')
     <script type="text/javascript">
-
         //wholesale price
         const ctx = document.getElementById('priceFluctuationChartW').getContext('2d');
         const priceFluctuationChartW = new Chart(ctx, {

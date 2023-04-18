@@ -31,7 +31,20 @@
             }
         }
 
-        
+        @font-face {
+            font-family: 'Calibri';
+            src: url({{storage_path('fonts/Calibri.ttf')}}) format('truetype');
+        }
+        .typed {
+            font-family: 'Calibri';
+        }
+        @include('printables.print_layouts.bootstrap')
+
+        .page-break {
+            page-break-after: always;
+        }
+
+
     </style>
 
 </head>

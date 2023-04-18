@@ -31,4 +31,10 @@ class IssuancesOfSro extends Model
     public function weeklyReport(){
         return $this->belongsTo(WeeklyReports::class,'weekly_report_slug','slug');
     }
+
+    public function deliveries(){
+        return $this->hasMany(Deliveries::class,'sro_no','sro_no')->whereHas('weeklyReport',function ($q){
+            $q->where('status','=',1);
+        });
+    }
 }

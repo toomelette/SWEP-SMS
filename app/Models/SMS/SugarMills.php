@@ -19,4 +19,15 @@ class SugarMills extends Model
             ->where('status','=',1)
             ->orderBy('week_ending','asc');
     }
+
+    public function requestsForCancellation(){
+        return $this->hasManyThrough(
+            RequestsForCancellation::class,WeeklyReports::class,'mill_code','weekly_report_slug','slug','slug'
+        );
+    }
+    public function requestsForCancellationNoAction(){
+        return $this->hasManyThrough(
+            RequestsForCancellation::class,WeeklyReports::class,'mill_code','weekly_report_slug','slug','slug'
+        )->where('approved_at','=',null);
+    }
 }

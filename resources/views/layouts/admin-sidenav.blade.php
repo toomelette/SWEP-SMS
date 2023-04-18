@@ -148,7 +148,24 @@
             @endforeach
         @endif
       @endif
+        @if(!empty(Auth::user()->millAssignments))
+            <li class="treeview ">
+                <a href="#" searchable="Users  SU SUPER USER">
+                    <i class="fa fa-times"></i> <span>My Mills</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    @foreach(Auth::user()->millAssignments as $millAssignment)
+                    <li class="">
+                        <a href="{{route('dashboard.my_mills.index',$millAssignment->mill_code)}}"><i class="fa fa-caret-right"></i> {{$millAssignment->mill_code}}</a>
+                    </li>
+                    @endforeach
+                </ul>
 
+            </li>
+        @endif
     </ul>
   </section>
 </aside>

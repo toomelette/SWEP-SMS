@@ -163,5 +163,19 @@ class Arrays
             'VIS' => 'VIS',
         ];
     }
+    public static function sugarMills(){
+        return SugarMills::query()->pluck('slug');
 
+    }
+
+    public static function sugarMillsAssoc(){
+        $arr = [];
+        if(!empty(self::sugarMills())){
+            foreach (self::sugarMills() as $sugarMill){
+                $arr[$sugarMill] = null;
+            }
+        }
+        ksort($arr);
+        return $arr;
+    }
 }
