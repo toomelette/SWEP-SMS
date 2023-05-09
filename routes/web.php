@@ -132,6 +132,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     Route::get('my_mills/{mill_code}','\App\Http\Controllers\SMS\Admin\MyMillsController@index')->name('my_mills.index');
     Route::get('my_mills/{mill_code}/show','\App\Http\Controllers\SMS\Admin\MyMillsController@show')->name('my_mills.show');
 
+    //for non admin
+    Route::get('cancellation/{slug}/preview','\App\Http\Controllers\SMS\Admin\CancellationController@preview')->name('cancellation.preview');
+
+    //for admin
+    Route::patch('cancellation/{slug}/action','\App\Http\Controllers\SMS\Admin\CancellationController@action')->name('cancellation.action');
+
     Route::get('home/weekly_data','HomeController@weeklyData')->name('home.weekly_data');
 });
 

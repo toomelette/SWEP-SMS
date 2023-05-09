@@ -221,7 +221,7 @@ class WeeklyReportService
         }
         if(!empty($weekly_report->form1)){
             if($weekly_report->form1->gtcm != 0){
-                $formArray['fieldsToFill']['lkgtcGross'] = Helper::toNumber($formArray['lkgtc_gross']['current'],3);
+                $formArray['fieldsToFill']['lkgtcGross'] = Helper::toNumber($formArray['lkgtc_gross']['current'],4);
             }else{
                 $formArray['fieldsToFill']['lkgtcGross'] = 0;
             }
@@ -821,5 +821,16 @@ class WeeklyReportService
             }
         }
         return $arr;
+    }
+
+    public function cancellationFilePath($weeklyReportObj){
+        $filename = $weeklyReportObj->calendar->report_no .' - '.$weeklyReportObj->calendar->week_ending.' - '.\Str::random(6).'.pdf';
+        $full_path = 'CANCELLATIONS/'.
+            $weeklyReportObj->calendar->crop_year.'/'.
+            $weeklyReportObj->mill_code.'/'.$filename;
+        return [
+            'filename' => $filename,
+            'full_path' => $full_path,
+        ];
     }
 }

@@ -327,15 +327,22 @@ class WeeklyReports extends Model
 
 
     public function requestsForCancellation(){
-        return $this->hasMany(RequestsForCancellation::class,'weekly_report_slug','slug');
+        return $this->hasMany(RequestsForCancellation::class,'weekly_report_slug','slug')->orderBy('cancelled_at','desc');
     }
 
     public function requestsForCancellationNoAction(){
-        return $this->hasMany(RequestsForCancellation::class,'weekly_report_slug','slug')->where('approved_at','=',null);
+        return $this->hasMany(RequestsForCancellation::class,'weekly_report_slug','slug')->where('action','=',null);
     }
 
     public function reportStatus(){
         return $this->hasMany(Status::class,'weekly_report_slug','slug');
     }
 
+    public function calendar(){
+        return $this->belongsTo(Calendar::class,'calendar_slug','slug');
+    }
+
+    public function latestStatus(){
+        return $this->hasOne(Status::class,'weekly_report_slug','slug')->orderBy('created_at','desc');
+    }
 }

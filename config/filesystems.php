@@ -69,6 +69,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'sms_storage' => [
+            'driver' => 'local',
+            'root' => '/home/swep_sms_storage/',
+        ],
+
     ],
 
 ];

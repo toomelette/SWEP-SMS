@@ -153,13 +153,20 @@
                 <a href="#" searchable="Users  SU SUPER USER">
                     <i class="fa fa-times"></i> <span>My Mills</span>
                     <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
+                      <i class="fa fa-angle-down pull-right"></i>
                     </span>
                 </a>
-                <ul class="treeview-menu">
+                <ul class="treeview-menu" style="display: block">
                     @foreach(Auth::user()->millAssignments as $millAssignment)
                     <li class="">
-                        <a href="{{route('dashboard.my_mills.index',$millAssignment->mill_code)}}"><i class="fa fa-caret-right"></i> {{$millAssignment->mill_code}}</a>
+
+                        <a href="{{route('dashboard.my_mills.index',$millAssignment->mill_code)}}"><i class="fa fa-caret-right"></i> {{$millAssignment->mill_code}}
+                            <span class="pull-right-container">
+                                @if(\App\SMS\Services\CancellationService::getNumberOfActiveRequest($millAssignment->mill_code) != 0 || \App\SMS\Services\CancellationService::getNumberOfActiveRequest($millAssignment->mill_code) != null)
+                                    <small class="label pull-right bg-red">{{\App\SMS\Services\CancellationService::getNumberOfActiveRequest($millAssignment->mill_code)}}</small>
+                                @endif
+                            </span>
+                        </a>
                     </li>
                     @endforeach
                 </ul>

@@ -134,7 +134,7 @@ class Helper
         ];
     }
 
-    public static function civil_status(){
+    public static function civil_(){
         return [
             'Single' => 'Single',
             'Married' => 'Married',

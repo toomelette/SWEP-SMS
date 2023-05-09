@@ -14,8 +14,8 @@
         <h3 class="box-title">Users</h3>
         <div class="pull-right">
           <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_user_employee_modal"><i class="fa fa-user"></i> New user from employee</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_user_modal"><i class="fa fa-plus"></i> New User</button>
+{{--            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add_user_employee_modal"><i class="fa fa-user"></i> New user from employee</button>--}}
+{{--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_user_modal"><i class="fa fa-plus"></i> New User</button>--}}
           </div>
 
         </div>

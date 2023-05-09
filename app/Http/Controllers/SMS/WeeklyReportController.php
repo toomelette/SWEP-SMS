@@ -6,6 +6,7 @@ namespace App\Http\Controllers\SMS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SMS\WeeklyReport\RawSugarController;
+use App\Http\Requests\SMS\CancellationFormRequest;
 use App\Http\Requests\SMS\WeeklyReportFormRequest;
 use App\Models\SMS\Form1\Form1Details;
 use App\Models\SMS\Form2\Form2Details;
@@ -58,6 +59,9 @@ class WeeklyReportController extends Controller
                     if($data->status == -1){
                         return '<span class="label label-danger"><i class="fa fa-times"></i> CANCELED</span>';
                     }
+                    if($data->status == -2){
+                        return '<span class="label label-warning"><i class="fa fa-times"></i> PENDING CANCELLATION REQUEST</span>';
+                    }
                     return '<span class="label label-default"><i class="fa fa-pencil"></i> DRAFT</span>';
                 })
                 ->editColumn('week_ending',function($data){
@@ -67,14 +71,11 @@ class WeeklyReportController extends Controller
                     return $data->crop_year;
                 })
                 ->addColumn('details',function($data){
-                    $return = '<small class="text-muted">';
-                    if(!empty($data->submitted_at)){
-                        $return .= '<span class="text-success">Submitted at: '.Carbon::parse($data->submitted_at)->format('m/d/Y h:i A'). '</span> <span class="indent"></span>';
-                    }
-                    if(!empty($data->canceled_at)){
-                        $return .= '<span class="text-danger">Canceled at: '.Carbon::parse($data->canceled_at)->format('m/d/Y h:i A').'</span>';
-                    }
-                    return $return.'</small>';
+
+                    return view('sms.weekly_report.action_buttons.weekly_report_index.details')->with([
+                        'data' => $data,
+                    ]);
+
                 })
                 ->escapeColumns([])
                 ->setRowId('slug')
@@ -261,17 +262,30 @@ class WeeklyReportController extends Controller
         ]);
     }
 
-    public function cancel($slug){
-        $wr = $this->findBySlug($slug);
+    public function cancel($slug, Request $request){
+        if(!$request->has('reason') || $request->reason == null | $request->reason == ''){
+            abort(503,'Please indicate your reason for cancellation');
+        }
+        $wr = $this->weeklyReportService->findWeeklyReportBySlug($slug);
         if($wr->requestsForCancellationNoAction()->count() > 0){
             abort(503,'This report has a pending request for cancellation.');
         }
+        if($wr->status != 1){
+            abort(503,'Non submitted reports cannot be cancelled');
+        }
+
         $c = new RequestsForCancellation;
+        $c->slug = Str::random();
         $c->weekly_report_slug = $slug;
+        $c->reason = $request->reason;
         $c->cancelled_at = Carbon::now();
         $c->cancelled_by = Auth::user()->user_id;
+        $cancel = $this->weeklyReportService->cancellationFilePath($wr);
+        $c->filename = $cancel['filename'];
+        $c->full_path = $cancel['full_path'];
+        $this->pdf($wr->slug,$c->full_path);
         if($c->save()){
-            $this->statusService->updateStatus($slug,-1,'Cancellation is pending for approval of your designated Regulation Officer.');
+            $this->statusService->updateStatus($slug,-2,'Cancellation is pending for approval of your designated Regulation Officer.');
         }
     }
 
@@ -372,12 +386,13 @@ class WeeklyReportController extends Controller
         $wr->submitted_at = Carbon::now();
         $wr->user_submitted = Auth::user()->user_id;
         if($wr->save()){
+            $this->statusService->updateStatus($slug,1,'Submitted at: '.Carbon::parse($wr->submitted_at)->format('M. d, Y | h:i A'));
             return $wr->only('slug');
         }
         abort(503, 'Error submitting weekly report.');
     }
 
-    public function pdf($slug){
+    public function pdf($slug,$full_path){
         $weekly_report = $this->findBySlug($slug);
 
         if($weekly_report->mill_code != Auth::user()->mill_code){
@@ -446,7 +461,8 @@ class WeeklyReportController extends Controller
             'toDateForm4a' => $this->weeklyReportService->form4acomputation($slug,'toDate'),
         ];
 
-        return $pdf = \PDF::loadView('sms.printables.test',$data)
-            ->stream();
+        $pdf = \PDF::loadView('sms.printables.pdf',$data);
+        \Storage::disk('sms_storage')
+            ->put($full_path,$pdf->output());
     }
 }

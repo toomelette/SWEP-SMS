@@ -62,9 +62,10 @@ class UserController extends Controller{
         $this->assignNames();
 
         $menus = Menu::with('submenu')->get();
-        $users = User::select(['users.*',DB::raw('hr_employees.fullname as fullname')])
-            ->leftJoin('hr_employees','users.employee_no','=', 'hr_employees.employee_no')
-        ->addSelect(['users.*','hr_employees.fullname as fullname']);
+//        $users = User::select(['users.*',DB::raw('hr_employees.fullname as fullname')])
+//            ->leftJoin('hr_employees','users.employee_no','=', 'hr_employees.employee_no')
+//        ->addSelect(['users.*','hr_employees.fullname as fullname']);
+        $users = User::query();
         if(request()->ajax()){
             if(request()->has('draw')){
                 if($request->has('is_online') || $request->has('is_active')){
@@ -81,54 +82,10 @@ class UserController extends Controller{
                     }
                 }
 
-                //check for location
-                $setting = SuSettings::query()->where('setting','users_filter')->first();
-                if(!empty($setting)){
-                    switch ($setting->string_value){
-                        case 'LUZON':
-                            $dt = $users->whereHas('employee',function($a){
-                                $a->where('locations','LUZON/MINDANAO')
-                                    ->orWhere('locations','COS-LUZMIN');
-                            });
-                            break;
-                        case 'VISAYAS':
-                            $dt = $users->whereHas('employee',function($a){
-                                    $a->where('locations','VISAYAS')
-                                        ->orWhere('locations','COS-VISAYAS');
-                                });
-                            break;
-                        default:
-
-                            break;
-                    }
-                }
 
 
 
-                $dt = DataTables::of($users->with(['employee']));
-
-
-                $dt = $dt->order(function ($query) use ($request){
-                        if($request->has('order')){
-                            if($request->order[0]['column'] == 2)
-                            $query->orderBy('last_activity',$request->order[0]['dir']);
-                        }
-
-                    if($request->has('order')){
-                        if($request->order[0]['column'] == 1)
-                            $query->orderBy('lastname',$request->order[0]['dir']);
-                    }
-
-                        if($request->has('order')){
-                            if($request->order[0]['column'] == 0)
-                                $query->orderBy('username',$request->order[0]['dir']);
-                        }
-
-                        if($request->has('order')){
-                            if($request->order[0]['column'] == 3)
-                                $query->orderBy('is_activated',$request->order[0]['dir']);
-                        }
-                    })
+                $dt = DataTables::of($users)
                     ->addColumn('action', function($data){
                         if($data->is_activated == 0){
                             $a = "Activate";
@@ -137,47 +94,13 @@ class UserController extends Controller{
                             $a = "Deactivate";
                             $stat = "active";
                         }
-                        $destroy_route = "'".route("dashboard.user.destroy","slug")."'";
-                        $slug = "'".$data->slug."'";
-                        if(!empty($data->employee)){
-                            $view = '<li><a href="'.route('dashboard.employee.index').'?find='.$data->employee->employee_no.'" target="_blank" class="" data="'.$data->slug.'">View employee</a></li>';
-                        }else{
-                            $view = '';
-                        }
-                        $button = '<div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm view_user_btn" data="'.$data->slug.'" data-toggle="modal" data-target ="#view_user_modal" title="View more" data-placement="left">
-                                    <i class="fa fa-file-text"></i>
-                                </button>
-                               
-                                <button type="button" data="'.$data->slug.'" class="btn btn-default btn-sm edit_user_btn" data-toggle="modal" data-target="#edit_user_modal" title="Edit" data-placement="top">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button type="button" data="'.$data->slug.'" class="btn btn-sm btn-danger delete_user_btn" onclick="delete_data('.$slug.','.$destroy_route.')" data="'.$data->slug.'" data-toggle="tooltip" title="Delete" data-placement="top">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <div class="btn-group">
-                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                  <span class="caret"></span></button>
-                                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a user="'.ucwords(strtolower($data->firstname)).'" href="#" data="'.$data->slug.'" name="'.strtoupper($data->firstname).' '.strtoupper($data->lastname).'" class="ac_dc" status="'.$stat.'" >'.$a.'</a>
-                                    </li>
-                                    <li><a href="#" class="reset_password_btn" data="'.$data->slug.'" fullname="'.strtoupper($data->firstname).' '.strtoupper($data->lastname).'">Reset Password</a></li>
-                                    '.$view.'
-                                  </ul>
-                                </div>
-                                </div>';
-                        return $button;
+
+
+                        return view('dashboard.user.dtActions')->with([
+                            'data' => $data,
+                        ]);
                     })
                     ->editColumn('lastname', function ($data){
-
-                        if(!empty($data->employee)){
-                            $default_pword = Carbon::parse($data->employee->date_of_birth)->format('mdy');
-                            $add = '';
-                            if(!Hash::check($default_pword,$data->password)){
-                                $add = '<i class="fa fa-lock text-muted" title="The user has already changed its password."></i>';
-                            }
-                            return strtoupper($data->employee->lastname.', '.$data->employee->firstname) .' '.$add;
-                        }
                         return $data->lastname.', '.$data->firstname;
                     })
                     ->editColumn('is_online', function($data){
@@ -190,14 +113,7 @@ class UserController extends Controller{
                             return '<span class="label bg-red col-md-12">DEACTIVATED</span>';
                         }
                     })->filter(function($query) use($request){
-                        if(isset($request->search['value'])){
-                            $query->whereHas('employee',function($q) use($request){
-                                $q->where('lastname','like','%'.$request->search['value'].'%')
-                                ->orWhere('middlename','like','%'.$request->search['value'].'%')
-                                ->orWhere('firstname','like','%'.$request->search['value'].'%');
-                            })
-                            ->orWhere('username','like','%'.$request->search['value'].'%');
-                        }
+
                     })
                     ->escapeColumns([])
                     ->setRowId('slug')
@@ -206,44 +122,6 @@ class UserController extends Controller{
                 return $dt;
             }
 
-            if(request()->has('typeahead')){
-
-                $query = request('query');
-                $employees = Employee::query()
-                    ->select(['slug','firstname','middlename','lastname','locations'])
-//                    ->addSelect(DB::raw('"PERM" as type'))
-                    ->where('firstname','like','%'.$query.'%')
-                    ->orWhere('middlename','like','%'.$query.'%')
-                    ->orWhere('lastname','like','%'.$query.'%')
-                    ->doesntHave('user');
-//                return $employees->to
-                $all_employees = $employees->get();
-
-                $list = [];
-                if(!empty($all_employees)){
-                    foreach ($all_employees as $employee){
-                        $to_push = [
-                            'id'=> $employee->slug ,
-                            'name' => strtoupper($employee->lastname.', '.$employee->firstname).' - '.$employee->locations,
-                        ];
-                        array_push($list,$to_push);
-                    }
-                }
-                return $list;
-                return [
-                    ['id' => 'idd', 'name'=> 'name']
-                ];
-            }
-
-            if(request()->has('afterTypeahead')){
-
-                $employee = $this->findEmployeeBySlug($request->id);
-
-                return view('dashboard.user.user_form')->with([
-                    'employee' => $employee,
-                ]);
-                return 1;
-            }
         }
         return view('dashboard.user.index')->with('menus', $menus);
     }

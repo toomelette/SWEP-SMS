@@ -388,6 +388,9 @@ ol.example li.placeholder:before {
 
 
 @media (min-width: 1140px) {
+    .action6{
+        width: 13% !important;
+    }
     .action4{
         width: 17%;
     }

@@ -320,13 +320,13 @@
         <tr>
             <td>11. LKG/TC, Gross</td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross']['current']?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($form1['lkgtc_gross']['current']?? null,4) }}
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross']['current'] ?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['lkgtc_gross']['current'] ?? null,4) }}
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm1['lkgtc_gross']['current'] ?? null,3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($toDateForm1['lkgtc_gross']['current'] ?? null,4) }}
             </td>
 
 

@@ -40,6 +40,7 @@
         }
         @include('printables.print_layouts.bootstrap')
 
+
         .page-break {
             page-break-after: always;
         }
@@ -49,7 +50,7 @@
 
 </head>
 <body onload="" onafterprint="">
-<div class="wrapper" style="overflow:hidden !important; text-align: center">
+<div class="wrapper" style="overflow:hidden !important; text-align: center;">
     @yield('wrapper')
 </div>
 

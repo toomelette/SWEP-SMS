@@ -28,6 +28,6 @@ class SugarMills extends Model
     public function requestsForCancellationNoAction(){
         return $this->hasManyThrough(
             RequestsForCancellation::class,WeeklyReports::class,'mill_code','weekly_report_slug','slug','slug'
-        )->where('approved_at','=',null);
+        )->where('action','=',null);
     }
 }

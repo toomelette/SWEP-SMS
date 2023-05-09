@@ -231,17 +231,20 @@
             let reportNo = btn.attr('reportNo');
             let cropYear = btn.attr('cropYear');
             Swal.fire({
-                title: 'Cancel?',
-                html: '<div class="text-left">The following actions will be executed: <br> ' +
-                    '1. Report No. '+reportNo+' | '+cropYear+' will be canceled.<br> ' +
-                    '2. A draft that is a clone of Report No. '+reportNo+' | '+ cropYear +' will be created.' +
+                title: 'Submit request to cancel',
+                html: '<div class="text-left">The following actions will be performed: <br> ' +
+                    '1. A cancellation request for Report No. '+reportNo+' | '+cropYear+' will be made.<br> ' +
+                    '2. <b>Regulation Officer</b> assigned to your Mill will make actions regarding your request.' +
                     '<br><br>' +
-                    'Please resubmit Report No. '+reportNo+' | '+ cropYear +' after reviewing the changes you have made. ' +
-                    '</div>',
+                    'If <b>APPROVED</b>, this weekly report will be reverted back to <b>DRAFT</b>. <br><br>' +
+                    'If you choose to continue, please wait 30-60 seconds as we prepare your request. This dialog box will close upon successful creation of request.<br>' +
+                    '</div>' +
+                    '<div class="text-center text-danger text-strong"><br>Reason for cancellation:</div>',
+                input : 'textarea',
                 inputAttributes: {
                     autocapitalize: 'off',
                 },
-                inputValue: 'bm_uid',
+                inputValue: '',
                 showCancelButton: true,
                 confirmButtonText: 'Continue',
                 cancelButtonText: 'Do not cancel',
@@ -249,7 +252,7 @@
                 preConfirm: (text) => {
                     return $.ajax({
                         url : btn.attr('uri'),
-                        data : {'biometric_user_id':'text' , 'employee' : 'employee'},
+                        data : {'reason':text},
                         type: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

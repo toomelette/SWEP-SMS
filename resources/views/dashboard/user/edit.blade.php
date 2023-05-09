@@ -1,4 +1,6 @@
-@php($rand = \Illuminate\Support\Str::random())
+@php
+    $rand = \Illuminate\Support\Str::random();
+@endphp
 @extends('layouts.modal-content',['form_id'=>'edit_user_form_'.$rand, 'slug'=> $user->slug,])
 
 
@@ -33,6 +35,24 @@ Edit
                                 'cols' => 4,
                                 'options' => \App\Swep\Helpers\Arrays::millCodes(),
                             ],$user->mill_code) !!}
+                        </div>
+                        <b>MILL ASSIGNMENT (FOR SPRO Only)</b>
+                        <div class="row">
+                            @php
+                                $myMillsArray = \Illuminate\Support\Facades\Auth::user()->millAssignments()->pluck('mill_code')->toArray();
+                            @endphp
+                            @if(!empty(\App\Swep\Helpers\Arrays::sugarMills()))
+                                @foreach(\App\Swep\Helpers\Arrays::sugarMills() as $sugarMill)
+                                    <div class="col-md-2">
+                                        <div class="checkbox no-margin">
+                                            <label>
+                                                <input type="checkbox" name="mill_assignment[]" value="{{$sugarMill}}" {{in_array($sugarMill,$myMillsArray) ? 'checked' : ''}}> {{$sugarMill}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
                         </div>
                     </div>
                     @foreach($by_category as $category => $menus)
