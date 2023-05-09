@@ -7,9 +7,11 @@ namespace App\Swep\Helpers;
 use App\Models\Applicant;
 use App\Models\ApplicantPositionApplied;
 use App\Models\HRPayPlanitilla;
+use App\Models\SMS\Calendar;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\SugarClass;
 use App\Models\SMS\SugarMills;
+use Illuminate\Support\Carbon;
 
 class Arrays
 {
@@ -176,6 +178,17 @@ class Arrays
             }
         }
         ksort($arr);
+        return $arr;
+    }
+
+    public static function calendar(){
+        $arr = [];
+        $calendar = Calendar::query()->get();
+        if(count($calendar) > 0){
+            foreach ($calendar as $c){
+                $arr[$c->crop_year][$c->slug] = str_pad($c->report_no,2,'0',STR_PAD_LEFT).' - '.Carbon::parse($c->week_ending)->format('F d, Y');
+            }
+        }
         return $arr;
     }
 }

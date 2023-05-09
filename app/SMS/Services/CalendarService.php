@@ -31,4 +31,8 @@ class CalendarService
         }
         return $calendar;
     }
+    public function findBySlug($slug){
+        $c = Calendar::query()->where('slug','=',$slug)->first();
+        return $c ?? abort(503,'Calendar not found.');
+    }
 }

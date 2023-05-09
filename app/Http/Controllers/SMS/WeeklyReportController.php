@@ -18,6 +18,7 @@ use App\Models\SMS\Form6a\QuedanRegistry;
 use App\Models\SMS\Form6a\RawSugarReceipts;
 use App\Models\SMS\RequestsForCancellation;
 use App\Models\SMS\WeeklyReports;
+use App\SMS\Services\CalendarService;
 use App\SMS\Services\SignatoryService;
 use App\SMS\Services\StatusService;
 use App\SMS\Services\WeeklyReportService;
@@ -30,10 +31,12 @@ class WeeklyReportController extends Controller
 {
     protected  $weeklyReportService;
     protected  $statusService;
-    public function __construct(WeeklyReportService $weeklyReportService, StatusService $statusService)
+    protected  $calendarService;
+    public function __construct(WeeklyReportService $weeklyReportService, StatusService $statusService, CalendarService $calendarService)
     {
         $this->weeklyReportService = $weeklyReportService;
         $this->statusService = $statusService;
+        $this->calendarService = $calendarService;
     }
 
     public function index(){
@@ -92,13 +95,15 @@ class WeeklyReportController extends Controller
 
 
     public function store(WeeklyReportFormRequest $request){
+        $calendar = $this->calendarService->findBySlug($request->calendar_slug);
         $weekly_report = new WeeklyReports;
         $weekly_report->slug = Str::random();
         $weekly_report->mill_code = Auth::user()->mill_code;
-        $weekly_report->crop_year = $request->crop_year;
+        $weekly_report->crop_year = $calendar->crop_year;
+        $weekly_report->week_ending = $calendar->week_ending;
+        $weekly_report->report_no = $calendar->report_no;
+        $weekly_report->calendar_slug = $calendar->slug;
         $weekly_report->dist_no = $request->dist_no;
-        $weekly_report->week_ending = $request->week_ending;
-        $weekly_report->report_no = $request->report_no;
         if($weekly_report->save()){
             Form1Details::insert(['weekly_report_slug' => $weekly_report->slug]);
             Form2Details::insert(['weekly_report_slug' => $weekly_report->slug]);

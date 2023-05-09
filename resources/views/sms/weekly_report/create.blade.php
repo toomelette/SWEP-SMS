@@ -23,21 +23,27 @@
                             <label for="crop_year">Mill Code:*</label>
                             <h4 class="no-margin"><b>{{\Illuminate\Support\Facades\Auth::user()->mill_code}}</b></h4>
                         </div>
-                        {!! \App\Swep\ViewHelpers\__form2::select('crop_year',[
-                            'label' => 'Crop Year:*',
+
+{{--                        {!! \App\Swep\ViewHelpers\__form2::select('crop_year',[--}}
+{{--                            'label' => 'Crop Year:*',--}}
+{{--                            'cols' => 12,--}}
+{{--                            'options' => \App\Swep\Helpers\Arrays::cropYears(),--}}
+{{--                        ]) !!}--}}
+{{--                        {!! \App\Swep\ViewHelpers\__form2::textbox('week_ending',[--}}
+{{--                            'label' => 'Week Ending:*',--}}
+{{--                            'cols' => 12,--}}
+{{--                            'type' => 'date',--}}
+{{--                        ]) !!}--}}
+{{--                        {!! \App\Swep\ViewHelpers\__form2::textbox('report_no',[--}}
+{{--                            'label' => 'Report No.:*',--}}
+{{--                            'cols' => 12,--}}
+{{--                            'type' => 'number',--}}
+{{--                            'step' => 1,--}}
+{{--                        ]) !!}--}}
+                        {!! \App\Swep\ViewHelpers\__form2::select('calendar_slug',[
+                            'label' => 'Report No.',
                             'cols' => 12,
-                            'options' => \App\Swep\Helpers\Arrays::cropYears(),
-                        ]) !!}
-                        {!! \App\Swep\ViewHelpers\__form2::textbox('week_ending',[
-                            'label' => 'Week Ending:*',
-                            'cols' => 12,
-                            'type' => 'date',
-                        ]) !!}
-                        {!! \App\Swep\ViewHelpers\__form2::textbox('report_no',[
-                            'label' => 'Report No.:*',
-                            'cols' => 12,
-                            'type' => 'number',
-                            'step' => 1,
+                            'options' => \App\Swep\Helpers\Arrays::calendar(),
                         ]) !!}
                         {!! \App\Swep\ViewHelpers\__form2::textbox('dist_no',[
                             'label' => 'Distribution No:*',
