@@ -39,7 +39,8 @@ Edit
                         <b>MILL ASSIGNMENT (FOR SPRO Only)</b>
                         <div class="row">
                             @php
-                                $myMillsArray = \Illuminate\Support\Facades\Auth::user()->millAssignments()->pluck('mill_code')->toArray();
+
+                                $myMillsArray = $user->millAssignments->pluck('mill_code')->toArray();
                             @endphp
                             @if(!empty(\App\Swep\Helpers\Arrays::sugarMills()))
                                 @foreach(\App\Swep\Helpers\Arrays::sugarMills() as $sugarMill)

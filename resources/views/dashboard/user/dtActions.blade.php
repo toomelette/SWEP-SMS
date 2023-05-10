@@ -13,7 +13,6 @@
         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
-
             <li><a href="#" class="reset_password_btn" data="{{$data->slug}}" fullname="{{strtoupper($data->firstname).' '.strtoupper($data->lastname)}}">Reset Password</a></li>
         </ul>
     </div>

@@ -62,6 +62,7 @@
             <tr class="">
               <th class="th-20">Username</th>
               <th >Full Name</th>
+              <th >Mill Code</th>
               <th class="th-10">Status</th>
               <th class="th-10">Account</th>
               <th class="action">Action</th>
@@ -295,6 +296,7 @@
       "columns": [
         { "data": "username" },
         { "data": "lastname" },
+        { "data": "mill_code" },
         { "data": "is_online" },
         { "data": "account_status" },
         { "data": "action" }
@@ -309,16 +311,16 @@
           "class" : 'w-10p'
         },
         {
-          "targets" : [3],
+          "targets" : [4],
           "orderable" : true,
           "class" : 'w-6p'
         },
         {
-          "targets" : 2,
+          "targets" : 3,
           "class" : 'w-6p'
         },
         {
-          "targets" : 4,
+          "targets" : 5,
           "orderable" : false,
           "class" : 'action4'
         },

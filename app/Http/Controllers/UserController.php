@@ -112,8 +112,6 @@ class UserController extends Controller{
                         }else if($data->is_activated == 0){
                             return '<span class="label bg-red col-md-12">DEACTIVATED</span>';
                         }
-                    })->filter(function($query) use($request){
-
                     })
                     ->escapeColumns([])
                     ->setRowId('slug')
@@ -180,7 +178,7 @@ class UserController extends Controller{
         $user->o_lastname = $request->o_lastname;
         $user->o_firstname = $request->firstname;
         $user->o_middlename = $request->middlename;
-
+        $user->is_activated = 1;
         if($user->save()){
             return 1;
         }
