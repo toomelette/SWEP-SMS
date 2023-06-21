@@ -223,7 +223,6 @@ class WeeklyReports extends Model
                     ->orWhere('status','=',null);
             })
             ->first();
-
         return $toDate ?? null;
     }
     public function form3aSubsidiaries(){

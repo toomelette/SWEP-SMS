@@ -699,6 +699,7 @@ class WeeklyReportService
 
         if($get == 'toDate'){
             $relation = $weekly_report->form4aToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+
         }else{
             $relation = $weekly_report->form4a;
         }

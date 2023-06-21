@@ -54,12 +54,15 @@ var autonum_settings_distFactor = {
 
 function autonum_init(){
     $(".autonum_distFactor").each(function(){
+    	$(this).attr('autocomplete','off');
         new AutoNumeric(this, autonum_settings_distFactor);
     });
     $(".autonum_lkg").each(function(){
+    	$(this).attr('autocomplete','off');
         new AutoNumeric(this, autonum_settings_lkg);
     });
     $(".autonum").each(function(){
+    	$(this).attr('autocomplete','off');
         new AutoNumeric(this, autonum_settings);
     });
 }
