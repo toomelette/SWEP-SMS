@@ -24,8 +24,25 @@ class CancellationController extends Controller
 
     public function preview($slug){
         $c =  $this->cancellationService->findBySlug($slug);
-        $path = $c->full_path;
-        return Storage::disk('sms_storage')->download($path);
+//        $path = $c->full_path;
+//        return Storage::disk('sms_storage')->download($path);
+
+        $path = Storage::disk('sms_storage')->path('/'.$c->full_path);
+
+
+        if (!File::exists($path)) {
+            abort(504,'File does not exist.');
+        }
+        $file = File::get($path);
+        $type = File::mimeType($path);
+        $response = response()->make($file, 200);
+//            $response->header("Content-Type", $type)
+//                ->header('Content-disposition' => 'attachment; filename=' . $fileName,);
+        $response->withHeaders([
+            'Content-Type' => $type,
+            'Content-disposition' => 'inline; filename='.$c->filename.'.pdf',
+        ]);
+        return $response;
     }
 
     public function action($slug, Request $request){
