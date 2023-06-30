@@ -25,7 +25,7 @@ class CancellationController extends Controller
     public function preview($slug){
         $c =  $this->cancellationService->findBySlug($slug);
         $path = $c->full_path;
-        return Storage::disk('sms_storage')->response($path);
+        return Storage::disk('sms_storage')->download($path);
     }
 
     public function action($slug, Request $request){
