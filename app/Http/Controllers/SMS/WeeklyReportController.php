@@ -467,7 +467,10 @@ class WeeklyReportController extends Controller
         ];
 
         $pdf = \PDF::loadView('sms.printables.pdf',$data);
-        \Storage::disk('sms_storage')
-            ->put($full_path,$pdf->output());
+        if(\Storage::disk('sms_storage')
+            ->put($full_path,$pdf->output())){
+            return 1;
+        }
+        abort(503, 'Error saving file.');
     }
 }

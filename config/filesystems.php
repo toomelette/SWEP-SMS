@@ -71,7 +71,7 @@ return [
 
         'sms_storage' => [
             'driver' => 'local',
-            'root' => env('SMS_STORAGE','/home/swep_sms_storage/'),
+            'root' => env('SMS_STORAGE','/'),
         ],
 
 
