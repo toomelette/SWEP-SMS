@@ -288,7 +288,7 @@ class WeeklyReportController extends Controller
         $cancel = $this->weeklyReportService->cancellationFilePath($wr);
         $c->filename = $cancel['filename'];
         $c->full_path = $cancel['full_path'];
-        $this->pdf($wr->slug,$c->full_path);
+        $this->pdf($wr->slug,$cancel['full_path']);
         if($c->save()){
             $this->statusService->updateStatus($slug,-2,'Cancellation is pending for approval of your designated Regulation Officer.');
         }
