@@ -158,16 +158,18 @@
                 </a>
                 <ul class="treeview-menu" style="display: block">
                     @foreach(Auth::user()->millAssignments as $millAssignment)
-                    <li class="">
+                        @php( $cancellationService =  new \App\SMS\Services\CancellationService)
+                        <li class="">
 
-                        <a href="{{route('dashboard.my_mills.index',$millAssignment->mill_code)}}"><i class="fa fa-caret-right"></i> {{$millAssignment->mill_code}}
-                            <span class="pull-right-container">
-                                @if(\App\SMS\Services\CancellationService::getNumberOfActiveRequest($millAssignment->mill_code) != 0 || \App\SMS\Services\CancellationService::getNumberOfActiveRequest($millAssignment->mill_code) != null)
-                                    <small class="label pull-right bg-red">{{\App\SMS\Services\CancellationService::getNumberOfActiveRequest($millAssignment->mill_code)}}</small>
-                                @endif
+                            <a href="{{route('dashboard.my_mills.index',$millAssignment->mill_code)}}"><i class="fa fa-caret-right"></i> {{$millAssignment->mill_code}}
+                                <span class="pull-right-container">
+
+                                    @if($cancellationService->getNumberOfActiveRequest($millAssignment->mill_code) != 0 || $cancellationService->getNumberOfActiveRequest($millAssignment->mill_code) != null)
+                                        <small class="label pull-right bg-red">{{$cancellationService->getNumberOfActiveRequest($millAssignment->mill_code)}}</small>
+                                    @endif
                             </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
 
