@@ -489,7 +489,8 @@
                 </div>
 
                 @php
-                    $fn = \App\Models\SMS\InputFields::getFields('refined_sugar_345')
+                    $inputFields = new \App\Models\SMS\InputFields;
+                    $fn = $inputFields->getFields('refined_sugar_345')
                 @endphp
                 @foreach($fn as $f)
                     <div class="col-md-12">
@@ -686,7 +687,7 @@
                 </div>
 
                 @php
-                    $fn = \App\Models\SMS\InputFields::getFields('refined_sugar_9_to_11')
+                    $fn = $inputFields->getFields('refined_sugar_9_to_11')
                 @endphp
                 @foreach($fn as $f)
 

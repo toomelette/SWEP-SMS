@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 
@@ -25,7 +26,9 @@ class Submenu extends Model{
             $submenu->ip_created = request()->ip();
         });
     }
-
+    public function getActivitylogOptions():LogOptions {
+        return LogOptions::defaults();
+    }
     use Sortable, LogsActivity;
 
     protected $table = 'su_submenus';

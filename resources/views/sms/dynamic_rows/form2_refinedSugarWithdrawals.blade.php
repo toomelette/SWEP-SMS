@@ -1,9 +1,14 @@
-@php($rand = \Illuminate\Support\Str::random(5))
+@php
+    $inputFields = new \App\Models\SMS\InputFields;
+    $rand = \Illuminate\Support\Str::random(5);
+@endphp
+
 <tr id="tr_{{$rand}}">
+
     <td>
         {!! \App\Swep\ViewHelpers\__form2::selectOnly('data[form2][options][refinedSugarWithdrawals]['.$rand.']',[
             'label' => 'A',
-            'options' => \App\Models\SMS\InputFields::getFieldsAsArray('refined_sugar_withdrawal'),
+            'options' => $inputFields->getFieldsAsArray('refined_sugar_withdrawal'),
             'container_class' => 'data_form2_options_refinedSugarWithdrawals_'.$rand,
         ],
         (!empty($item->input_field) ? $item->input_field : null)

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\SqlServer\EmpMaster;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 
@@ -96,7 +97,9 @@ class Employee extends Model{
 
     protected $guarded = ['id','slug'];
 
-
+    public function getActivitylogOptions():LogOptions {
+        return LogOptions::defaults();
+    }
 
 
 
