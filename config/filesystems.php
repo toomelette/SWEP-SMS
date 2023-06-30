@@ -74,6 +74,11 @@ return [
             'root' => '/home/swep_sms_storage/',
         ],
 
+        'sms_storage_external' => [
+            'driver' => 'local',
+            'root' => '/external1/swep_sms_storage/',
+        ],
+
     ],
 
 ];
