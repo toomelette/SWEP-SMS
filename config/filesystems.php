@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => env('STORAGE_LOCATION','/home/swep_afd_storage/'),
+            'root' => '/home/swep_afd_storage/',
         ],
 
         'qc' => [
