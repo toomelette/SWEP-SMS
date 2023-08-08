@@ -25,7 +25,7 @@
                                         <p class="no-margin"> {{$crop_year}} <small id="filter-notifier" class="label bg-blue blink"></small></p>
 
                                     </div>
-                                    <div class="box-body" style="">
+                                    <div class="box-body" style="overflow: auto">
                                         <table class="table table-bordered table-condensed">
                                             <thead>
                                                 <tr>
