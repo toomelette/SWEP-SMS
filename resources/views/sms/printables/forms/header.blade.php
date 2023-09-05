@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                         <td>Report No.:</td>
-                        <td><b>{{$wr->report_no}}</b></td>
+                        <td><b>{{$wr->calendar->display_report_no ?? ''}}  </b></td>
                     </tr>
                 </table>
             </td>

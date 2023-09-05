@@ -42,7 +42,7 @@ class WeeklyReportController extends Controller
     public function index(){
         if(\request()->ajax()){
             $reports = WeeklyReports::query()
-                ->with('cropYear')
+                ->with(['cropYear','calendar'])
                 ->where('mill_code','=',Auth::user()->mill_code);
             return \DataTables::of($reports)
                 ->addColumn('action',function($data){
@@ -72,6 +72,9 @@ class WeeklyReportController extends Controller
                 })
                 ->editColumn('crop_year',function($data){
                     return $data->crop_year;
+                })
+                ->editColumn('report_no',function($data){
+                    return $data->calendar->display_report_no;
                 })
                 ->addColumn('details',function($data){
 

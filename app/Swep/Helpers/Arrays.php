@@ -183,7 +183,9 @@ class Arrays
 
     public static function calendar(){
         $arr = [];
-        $calendar = Calendar::query()->get();
+        $calendar = Calendar::query()
+            ->orderBy('report_no','asc')
+            ->get();
         if(count($calendar) > 0){
             foreach ($calendar as $c){
                 $arr[$c->crop_year][$c->slug] = str_pad($c->display_report_no,2,'0',STR_PAD_LEFT).' - '.Carbon::parse($c->week_ending)->format('F d, Y');
