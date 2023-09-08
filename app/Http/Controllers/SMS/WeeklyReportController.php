@@ -230,7 +230,7 @@ class WeeklyReportController extends Controller
             'input_fields_arr' => $input_fields_arr,
             'signatories' => $this->weeklyReportService->getSignatories($slug),
 
-            'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate'),
+            'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate',$weekly_report->report_no),
             'form1' => $this->weeklyReportService->computation($slug),
             'prevForm1' => $prevForm1,
 
@@ -239,11 +239,11 @@ class WeeklyReportController extends Controller
 
             'form2' => $this->weeklyReportService->form2Computation($slug),
             'prevToDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate', $weekly_report->report_no - 1),
-            'toDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate'),
+            'toDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate',$weekly_report->report_no ),
 
             'form3' => $this->weeklyReportService->form3Computation($slug),
             'prevToDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate', $weekly_report->report_no - 1),
-            'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate'),
+            'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate',$weekly_report->report_no),
 
             'form3a' => $this->weeklyReportService->form3aComputation($slug),
             'prevToDateForm3a' => $this->weeklyReportService->form3aComputation($slug,'toDate', $weekly_report->report_no - 1),
@@ -434,6 +434,7 @@ class WeeklyReportController extends Controller
         }else{
             $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
         }
+
 
         $data = [
             'wr' => $weekly_report,

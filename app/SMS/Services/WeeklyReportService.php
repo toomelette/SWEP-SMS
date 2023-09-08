@@ -376,12 +376,14 @@ class WeeklyReportService
 
         //WITHDRAWALS /DELIVERIES
         if($get == 'toDate') {
+
             $ws = \App\Models\SMS\Form5a\Deliveries::query()
                 ->selectRaw('consumption, sum(qty_current) as currentTotal, sum(qty_prev) as prevTotal, weekly_reports.*')
                 ->leftJoin('weekly_reports', 'weekly_reports.slug', '=', 'form5a_deliveries.weekly_report_slug')
                 ->where('crop_year', '=', $weekly_report->crop_year)
                 ->where('mill_code', '=', $weekly_report->mill_code)
-                ->where('report_no', '<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
+//                ->where('report_no', '<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
+                ->where('report_no', '<=', $report_no)
 //                ->where('report_no', '<=', $report_no ?? $weekly_report->report_no * 1)
 
                 ->where(function ($q) {
