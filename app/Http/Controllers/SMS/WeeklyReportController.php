@@ -189,6 +189,118 @@ class WeeklyReportController extends Controller
         abort(510,'Weekly Report not found.');
     }
 
+    public function printSingle($slug, $formNo, SignatoryService $signatoryService){
+        $weekly_report = $this->findBySlug($slug);
+//        dd($formNo);
+
+        if($weekly_report->mill_code != Auth::user()->mill_code){
+            if(Auth::user()->access != 'ADMIN'){
+                abort(404,'This report does not belong to your mill code.');
+            }
+        }
+        $details_arr = [];
+        $input_fields_arr = [];
+        $this->weeklyReportService->updateSignatories($weekly_report->slug);
+        $ifs = InputFields::query()->get();
+        if(!empty($ifs)){
+            foreach ($ifs as $if){
+                $input_fields_arr[$if->field] = [
+                    'display_name' => $if->display_name,
+                    'prefix' => $if->prefix,
+                ];
+            }
+        }
+
+
+
+        if(!empty($weekly_report->seriesNos)){
+            foreach ($weekly_report->seriesNos as $seriesNo){
+                $details_arr[$seriesNo->type]['seriesNos'][$seriesNo->sugarClass][$seriesNo->slug] = $seriesNo;
+            }
+        }
+
+        if($this->findPreviousReport($slug) == null){
+            $prevForm1 = [];
+        }else{
+            $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
+        }
+
+        switch ($formNo)
+        {
+            case "1":
+                return view("sms.printables.singleform.form1")->with([
+                    'wr' => $weekly_report,
+                    'details_arr' => $details_arr,
+                    'input_fields_arr' => $input_fields_arr,
+                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+
+                    'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate',$weekly_report->report_no),
+                    'form1' => $this->weeklyReportService->computation($slug),
+                    'prevForm1' => $prevForm1,
+
+
+                    'prevToDateForm1' => $this->weeklyReportService->computation($slug,'toDate', $weekly_report->report_no - 1),
+                ]);
+                break;
+
+            case "2":
+                return view("sms.printables.singleform.form1")->with([
+                    'wr' => $weekly_report,
+                    'details_arr' => $details_arr,
+                    'input_fields_arr' => $input_fields_arr,
+                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+
+
+                ]);
+                break;
+
+            case "3":
+                return view("sms.printables.singleform.form1")->with([
+                    'wr' => $weekly_report,
+                    'details_arr' => $details_arr,
+                    'input_fields_arr' => $input_fields_arr,
+                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+
+
+                ]);
+                break;
+        }
+
+        return view('sms.printables.formAll')->with([
+            'wr' => $weekly_report,
+            'details_arr' => $details_arr,
+            'input_fields_arr' => $input_fields_arr,
+            'signatories' => $this->weeklyReportService->getSignatories($slug),
+
+            'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate',$weekly_report->report_no),
+            'form1' => $this->weeklyReportService->computation($slug),
+            'prevForm1' => $prevForm1,
+
+
+            'prevToDateForm1' => $this->weeklyReportService->computation($slug,'toDate', $weekly_report->report_no - 1),
+
+            'form2' => $this->weeklyReportService->form2Computation($slug),
+            'prevToDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate',$weekly_report->report_no ),
+
+            'form3' => $this->weeklyReportService->form3Computation($slug),
+            'prevToDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate',$weekly_report->report_no),
+
+            'form3a' => $this->weeklyReportService->form3aComputation($slug),
+            'prevToDateForm3a' => $this->weeklyReportService->form3aComputation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm3a' => $this->weeklyReportService->form3aComputation($slug,'toDate'),
+
+            'form4' => $this->weeklyReportService->form4Computation($slug),
+            'prevToDateForm4' => $this->weeklyReportService->form4Computation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm4' => $this->weeklyReportService->form4computation($slug,'toDate'),
+
+            'form4a' => $this->weeklyReportService->form4aComputation($slug),
+            'prevToDateForm4a' => $this->weeklyReportService->form4aComputation($slug,'toDate', $weekly_report->report_no - 1),
+            'toDateForm4a' => $this->weeklyReportService->form4acomputation($slug,'toDate'),
+        ]);
+    }
+
     public function print($slug, SignatoryService $signatoryService){
         $weekly_report = $this->findBySlug($slug);
 

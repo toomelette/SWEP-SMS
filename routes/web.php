@@ -89,6 +89,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.',
     /** WEEKLY REPORT **/
 
     Route::get('/weekly_report/{slug}/print','SMS\WeeklyReportController@print')->name('weekly_report.print');
+    Route::get('/weekly_report/{slug}/printSingle/{formNo}','SMS\WeeklyReportController@printSingle')->name('weekly_report.printSingle');
     Route::get('/weekly_report/{slug}/pdf','SMS\WeeklyReportController@pdf')->name('weekly_report.pdf');
     Route::resource('signatories','SMS\SignatoryController');
 
