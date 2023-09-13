@@ -538,10 +538,13 @@ class WeeklyReportService
         //balances ;
 
         $formArray['balanceRaw']['current'] = $formArray['production']['rao']['current'] + $formArray['production']['manufacturedRaw']['current'] - $formArray['totalWithdrawalsRaw']['current'];
-        $formArray['balanceRaw']['prev'] = $formArray['production']['rao']['prev'] + $formArray['production']['manufacturedRaw']['prev'] - $formArray['totalWithdrawalsRaw']['prev'];
+        //$formArray['balanceRaw']['prev'] = $formArray['production']['rao']['prev'] + $formArray['production']['manufacturedRaw']['prev'] - $formArray['totalWithdrawalsRaw']['prev'];
+        $formArray['balanceRaw']['prev'] = $formArray['issuances']['sharePlanter']['prev'] + $formArray['issuances']['shareMiller']['prev'] - $formArray['totalWithdrawalsRaw']['prev']; //EDITED 9-13-2023 LOUIS
 
         $formArray['balanceRefined']['current'] = $formArray['production']['raoRefined']['current'] + $formArray['production']['manufacturedRefined']['current'] - $formArray['totalWithdrawalsRefined']['current'];
-        $formArray['balanceRefined']['prev'] = $formArray['production']['raoRefined']['prev']  + $formArray['production']['manufacturedRefined']['prev'] - $formArray['totalWithdrawalsRefined']['prev'];
+        //$formArray['balanceRefined']['prev'] = $formArray['production']['raoRefined']['prev']  + $formArray['production']['manufacturedRefined']['prev'] - $formArray['totalWithdrawalsRefined']['prev'];
+        $formArray['balanceRefined']['prev'] = $formArray['issuances']['refineryMolasses']['prev'] - $formArray['totalWithdrawalsRefined']['prev']; //EDITED 9-13-2023 LOUIS
+
 
         $formArray['totalBalance']['current'] = $formArray['balanceRaw']['current'] + $formArray['balanceRefined']['current'];
         $formArray['totalBalance']['prev'] = $formArray['balanceRaw']['prev'] + $formArray['balanceRefined']['prev'];
