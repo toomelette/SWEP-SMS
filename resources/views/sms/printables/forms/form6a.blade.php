@@ -29,8 +29,8 @@
                 @endphp
                 @foreach($wr->form5aIssuancesOfSro as $data)
                     @php
-                        $rawTotal = $rawTotal + $data->raw_qty;
-                        $refinedTotal = $refinedTotal + $data->refined_qty;
+                        $rawTotal = $rawTotal + $data->raw_qty + $data->prev_raw_qty;
+                        $refinedTotal = $refinedTotal + $data->refined_qty + $data->prev_refined_qty;
                     @endphp
                     <tr>
                         <td>{{$data->delivery_no}}</td>
@@ -39,7 +39,7 @@
                         <td class="text-center">{{$data->raw_sro_no}}</td>
                         <td>{{$data->liens_or}}</td>
                         <td class="text-right">{{($data->raw_qty != null ? number_format($data->raw_qty,3) : number_format($data->prev_raw_qty,3) )}}</td>
-                        <td class="text-right">{{number_format($data->refined_qty,2)}}</td>
+                        <td class="text-right">{{($data->refined_qty != null ? number_format($data->refined_qty,3) : number_format($data->prev_refined_qty,3) )}}</td>
                     </tr>
                 @endforeach
                 <tr >
@@ -68,13 +68,13 @@
                 @endphp
                 @foreach($wr->form5aIssuancesOfSro as $data)
                     @php
-                        $refinedTotal = $refinedTotal + $data->refined_qty;
+                        $refinedTotal = $refinedTotal + $data->refined_qty + $data->prev_refined_qty;
                     @endphp
                     <tr>
                         <td>{{$data->sro_no}}</td>
                         <td>{{$data->trader}}</td>
                         <td>{{$data->rsq_no}}</td>
-                        <td class="text-right">{{number_format($data->refined_qty,2)}}</td>
+                        <td class="text-right">{{($data->refined_qty != null ? number_format($data->refined_qty,3) : number_format($data->prev_refined_qty,3) )}}</td>
                     </tr>
                 @endforeach
                 <tr >
