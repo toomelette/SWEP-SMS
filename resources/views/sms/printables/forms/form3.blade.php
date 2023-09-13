@@ -173,9 +173,12 @@
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['notCoveredByMsc']['current'] ?? null ,3, '0.00')}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['notCoveredByMsc']['current'] ?? null ,3, '0.00')}}</td>
                 <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['notCoveredByMsc']['current'] ?? null, 3, '0.00')}}</td>
-                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['notCoveredByMsc']['prev'] ?? null ,3, '0.00')}}</td>
-                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['notCoveredByMsc']['prev'] ?? null ,3, '0.00')}}</td>
-                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['notCoveredByMsc']['prev'] ?? null, 3, '0.00')}}</td>
+{{--                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($form3['notCoveredByMsc']['prev'] ?? null ,3, '0.00')}}</td>--}}
+{{--                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($prevToDateForm3['notCoveredByMsc']['prev'] ?? null ,3, '0.00')}}</td>--}}
+{{--                <td class="text-right">{{\App\Swep\Helpers\Helper::toNumber($toDateForm3['notCoveredByMsc']['prev'] ?? null, 3, '0.00')}}</td>--}}
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
 
 
