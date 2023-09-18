@@ -488,7 +488,7 @@ class WeeklyReportService
 
         //not covered by MSC
         $formArray['notCoveredByMsc']['current'] = $formArray['totalProduction']['current'] - $formArray['totalIssuances']['current'];
-        $formArray['notCoveredByMsc']['prev'] = $formArray['totalProduction']['prev'] - $formArray['totalIssuances']['prev'];
+        $formArray['notCoveredByMsc']['prev'] =  $relation->prev_notCoveredByMsc ?? null;
 
         if($get == 'toDate'){
             $withdrawals = \App\Models\SMS\Form3b\Deliveries::query()

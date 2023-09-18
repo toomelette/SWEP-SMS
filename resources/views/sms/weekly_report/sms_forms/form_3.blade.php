@@ -197,11 +197,17 @@
         </tr>
 
         <tr class="computation" for="notCoveredByMsc">
+{{--        <tr>--}}
             <td class="text-strong">
                 4. NOT COVERED BY MSC
             </td>
             <td class="text-strong text-right"></td>
-            <td class="text-strong text-right"></td>
+            <td class="text-right except">
+                {!! \App\Swep\ViewHelpers\__form2::textboxOnly('prev_notCoveredByMsc',[
+                    'class' => 'form3-input input-sm text-right autonumber_mt'
+                ],
+                $wr->form3->prev_notCoveredByMsc ?? null) !!}
+            </td>
         </tr>
         <tr>
             <td colspan="3" class="text-strong">5. BALANCE</td>
@@ -238,7 +244,7 @@
 
     <div class="callout callout-default">
         <h4>NOTICE!</h4>
-        <p>Withdrawals of Molasses is transferred to <b>FORM 3B DELIVERIES</b></p>
+        <p>Withdrawals of Molasses were transferred to <b>FORM 3B DELIVERIES</b></p>
     </div>
 
 
