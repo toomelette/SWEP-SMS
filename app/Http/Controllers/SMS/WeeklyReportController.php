@@ -478,6 +478,8 @@ class WeeklyReportController extends Controller
             $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
         }
 
+//        dd($this->weeklyReportService->form3Computation($slug,'toDate', $weekly_report->report_no - 1));
+
         return view('sms.printables.formAll')->with([
             'wr' => $weekly_report,
             'details_arr' => $details_arr,
@@ -535,6 +537,7 @@ class WeeklyReportController extends Controller
         if($wr->status != 1){
             abort(503,'Non submitted reports cannot be cancelled');
         }
+
 
         $c = new RequestsForCancellation;
         $c->slug = Str::random();
@@ -647,6 +650,7 @@ class WeeklyReportController extends Controller
         $wr->status  = 1;
         $wr->submitted_at = Carbon::now();
         $wr->user_submitted = Auth::user()->user_id;
+        $this->weeklyReportService->updateSignatories($slug);
         if($wr->save()){
             $this->statusService->updateStatus($slug,1,'Submitted at: '.Carbon::parse($wr->submitted_at)->format('M. d, Y | h:i A'));
             return $wr->only('slug');

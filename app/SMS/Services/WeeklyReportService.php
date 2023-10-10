@@ -445,11 +445,12 @@ class WeeklyReportService
     }
 
     public function form3Computation($slug,$get='',$report_no = 0){
+
         $formArray = [];
         $temp = [];
         $wr = $this->findWeeklyReportBySlug($slug);
         if($get == 'toDate'){
-            $relation = $wr->form3ToDateAsOf($report_no != 0 ? $report_no * 1 : $wr->report_no * 1);
+            $relation = $wr->form3ToDateAsOf($report_no);
         }else{
             $relation = $wr->form3;
         }
@@ -488,7 +489,8 @@ class WeeklyReportService
 
         //not covered by MSC
         $formArray['notCoveredByMsc']['current'] = $formArray['totalProduction']['current'] - $formArray['totalIssuances']['current'];
-        $formArray['notCoveredByMsc']['prev'] = $formArray['totalProduction']['prev'] - $formArray['totalIssuances']['prev'];
+        $formArray['notCoveredByMsc']['prev'] =  $relation->prev_notCoveredByMsc ?? null;
+
 
         if($get == 'toDate'){
             $withdrawals = \App\Models\SMS\Form3b\Deliveries::query()
@@ -496,15 +498,15 @@ class WeeklyReportService
                 ->leftJoin('weekly_reports','weekly_reports.slug','=','form3b_deliveries.weekly_report_slug')
                 ->where('crop_year','=',$wr->crop_year)
                 ->where('mill_code','=', $wr->mill_code)
-                ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $wr->report_no * 1)
+//                ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $wr->report_no * 1)
 //                ->where('report_no','<=', $report_no ?? $weekly_report->report_no * 1)
+                ->where('report_no', '<=', $report_no)
                 ->where(function ($q){
-                    $q->where('status','=',1)
-                        ->orWhere('status' ,'=',null);
+                    $q->where('weekly_reports.status','!=',-1)
+                        ->orWhere('weekly_reports.status' ,'=',null);
                 })
                 ->groupBy('sugar_type','withdrawal_type')
                 ->get();
-
 
         }else{
             $withdrawals = $wr->form3Withdrawals()

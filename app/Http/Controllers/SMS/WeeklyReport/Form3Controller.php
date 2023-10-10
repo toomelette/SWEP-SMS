@@ -41,6 +41,7 @@ class Form3Controller extends Controller
                     'prev_sharePlanter' => Helper::sanitizeAutonum($request->prev_sharePlanter),
                     'prev_shareMiller' => Helper::sanitizeAutonum($request->prev_shareMiller),
                     'prev_refineryMolasses' => Helper::sanitizeAutonum($request->prev_refineryMolasses),
+                    'prev_notCoveredByMsc' => Helper::sanitizeAutonum($request->prev_notCoveredByMsc),
 
                     'price' => Helper::sanitizeAutonum($request->price),
                     'priceRaw' => Helper::sanitizeAutonum($request->priceRaw),

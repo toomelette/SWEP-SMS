@@ -269,7 +269,7 @@ class WeeklyReports extends Model
 
     public function form3ToDateAsOf($report_no){
         $fieldsToSum = [
-            'manufacturedRaw', 'rao', 'manufacturedRefined','raoRefined' , 'sharePlanter', 'shareMiller', 'refineryMolasses', 'prev_manufacturedRaw', 'prev_rao', 'prev_manufacturedRefined','prev_raoRefined' ,'prev_sharePlanter', 'prev_shareMiller', 'prev_refineryMolasses',
+            'manufacturedRaw', 'rao', 'manufacturedRefined','raoRefined' , 'sharePlanter', 'shareMiller', 'refineryMolasses', 'prev_manufacturedRaw', 'prev_rao', 'prev_manufacturedRefined','prev_raoRefined' ,'prev_sharePlanter', 'prev_shareMiller', 'prev_refineryMolasses', 'prev_notCoveredByMsc',
         ];
         foreach ($fieldsToSum as $key => $field){
             $fieldsToSum[$key] = ' sum('.$field.') as '.$field;

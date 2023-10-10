@@ -828,7 +828,7 @@
                     });
                     $.each(res,function (i,item) {
                         $("#form3PreviewTable tr[for='"+i+"']").children('td').eq(1).html($.number(item.current,3));
-                        $("#form3PreviewTable tr[for='"+i+"']").children('td').eq(2).html($.number(item.prev,3));
+                        $("#form3PreviewTable tr[for='"+i+"']").children('td').eq(2).not('.except').html($.number(item.prev,3));
                     });
 
                     $.each(res.withdrawalsRaw, function (i,item) {
@@ -855,7 +855,7 @@
                 error: function (res) {
                     $("#form3PreviewTable tr.computation").each(function () {
                         $(this).children('td').eq(1).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
-                        $(this).children('td').eq(2).html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
+                        $(this).children('td').eq(2).not('.except').html('<span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span>');
                     })
                 }
             })
@@ -870,7 +870,7 @@
             let form = $(this);
             $("#form3PreviewTable tr.computation").each(function () {
                 $(this).children('td').eq(1).html('<i class="fa fa-spin fa-refresh"></i>');
-                $(this).children('td').eq(2).html('<i class="fa fa-spin fa-refresh"></i>');
+                $(this).children('td').eq(2).not('.except').html('<i class="fa fa-spin fa-refresh"></i>');
             })
             updateForm3(form,'insert');
         })
