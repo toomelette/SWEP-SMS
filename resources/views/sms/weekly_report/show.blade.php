@@ -26,11 +26,12 @@
                         @foreach($forms as $form)
                             <li class="{{$loop->iteration==1?"active":""}}"><a href="#Form{{$form}}_tab{{$rand}}" data-toggle="tab">Form {{$form}}</a></li>
                         @endforeach
+                            <li class="pull-right"><a href="{{route("dashboard.weekly_report.print", $wr->slug)}}" target="_blank" class="text-muted"><i class="fa fa-print"></i> Print All</a></li>
                     </ul>
                     <div class="tab-content">
                         @foreach($forms as $form)
                             <div class="tab-pane {{$loop->iteration==1?"active":""}}" id="Form{{$form}}_tab{{$rand}}">
-                                <button class="btn btn-default btn-sm pull-right" id="print_btn{{$form}}_{{$rand}}" data-toggle="modal"><i class="fa fa-print"></i> Print</button>
+                                <button class="btn btn-default btn-sm pull-right print_button" id="print_btn{{$form}}_{{$rand}}" data-toggle="modal"><i class="fa fa-print"></i> Print</button>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="bs-example" id="printFrameContainer{{$form}}_{{$rand}}">
@@ -100,6 +101,12 @@
     })
     $("#print_btn_{{$rand}}").click(function () {
         $("#printFrame_{{$rand}}").get(0).contentWindow.print();
+    })
+
+    $(".print_button").click(function(){
+        let btn=$(this);
+        let frame=btn.parent(".tab-pane").find("iframe");
+        frame.get(0).contentWindow.print();
     })
 </script>
 @endsection

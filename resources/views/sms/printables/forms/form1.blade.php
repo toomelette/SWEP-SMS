@@ -536,7 +536,7 @@
         <tr>
             <td>Certified:</td>
             <td>Verified:</td>
-            <td>Verfiied:</td>
+            <td>Verified:</td>
         </tr>
 
         <tr >

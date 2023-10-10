@@ -30,3 +30,11 @@
 
     @include('sms.printables.forms.form6a')
 @endsection
+
+@section("scripts")
+    <script type="text/javascript">
+        @if(!Request::has("form"))
+            print();
+        @endif
+    </script>
+@endsection
