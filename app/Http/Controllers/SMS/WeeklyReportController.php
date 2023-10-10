@@ -191,6 +191,7 @@ class WeeklyReportController extends Controller
 
     public function printSingle($slug, $formNo, SignatoryService $signatoryService){
         $weekly_report = $this->findBySlug($slug);
+
 //        dd($formNo);
 
         if($weekly_report->mill_code != Auth::user()->mill_code){
@@ -225,46 +226,182 @@ class WeeklyReportController extends Controller
             $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
         }
 
-        switch ($formNo)
+//        return view("sms.printables.singleform.form".$formNo."print")->with([
+//            'wr' => $weekly_report,
+//            'details_arr' => $details_arr,
+//            'input_fields_arr' => $input_fields_arr,
+//            'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//            'toDateForm'.$formNo => $this->weeklyReportService->computation($slug,'toDate',$weekly_report->report_no),
+//            'form'.$formNo => $this->weeklyReportService->computation($slug),
+//            'prevForm'.$formNo => $prevForm1,
+//
+//
+//            'prevToDateForm'.$formNo => $this->weeklyReportService->computation($slug,'toDate', $weekly_report->report_no - 1),
+//        ]);
+
+        $except = ["3b", "5", "5a", "6a"];
+        if(!in_array($formNo, $except))
         {
-            case "1":
-                return view("sms.printables.singleform.form1")->with([
+            if($formNo == 1) {
+                return view("sms.printables.singleform.form" . $formNo . "print")->with([
                     'wr' => $weekly_report,
                     'details_arr' => $details_arr,
                     'input_fields_arr' => $input_fields_arr,
                     'signatories' => $this->weeklyReportService->getSignatories($slug),
 
-                    'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate',$weekly_report->report_no),
+                    'toDateForm1' => $this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no),
                     'form1' => $this->weeklyReportService->computation($slug),
                     'prevForm1' => $prevForm1,
 
 
-                    'prevToDateForm1' => $this->weeklyReportService->computation($slug,'toDate', $weekly_report->report_no - 1),
+                    'prevToDateForm1' => $this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no - 1),
                 ]);
-                break;
+            }
+            return view("sms.printables.singleform.form".$formNo."print")->with([
+                'wr' => $weekly_report,
+                'details_arr' => $details_arr,
+                'input_fields_arr' => $input_fields_arr,
+                'signatories' => $this->weeklyReportService->getSignatories($slug),
 
-            case "2":
-                return view("sms.printables.singleform.form1")->with([
-                    'wr' => $weekly_report,
-                    'details_arr' => $details_arr,
-                    'input_fields_arr' => $input_fields_arr,
-                    'signatories' => $this->weeklyReportService->getSignatories($slug),
-
-
-                ]);
-                break;
-
-            case "3":
-                return view("sms.printables.singleform.form1")->with([
-                    'wr' => $weekly_report,
-                    'details_arr' => $details_arr,
-                    'input_fields_arr' => $input_fields_arr,
-                    'signatories' => $this->weeklyReportService->getSignatories($slug),
-
-
-                ]);
-                break;
+                'form'.$formNo => $this->weeklyReportService->{"form".$formNo."Computation"}($slug),
+                'prevToDateForm'.$formNo => $this->weeklyReportService->{"form".$formNo."Computation"}($slug,'toDate', $weekly_report->report_no - 1),
+                'toDateForm'.$formNo => $this->weeklyReportService->{"form".$formNo."Computation"}($slug,'toDate',$weekly_report->report_no ),
+            ]);
         }
+        else
+        {
+            return view("sms.printables.singleform.form".$formNo."print")->with([
+                'wr' => $weekly_report,
+                'details_arr' => $details_arr,
+                'input_fields_arr' => $input_fields_arr,
+                'signatories' => $this->weeklyReportService->getSignatories($slug),
+            ]);
+        }
+
+
+        //EDITED 9-13-2023 LOUIS
+//        switch ($formNo)
+//        {
+//            case "1":
+//                return view("sms.printables.singleform.form1print")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//                    'toDateForm1' => $this->weeklyReportService->computation($slug,'toDate',$weekly_report->report_no),
+//                    'form1' => $this->weeklyReportService->computation($slug),
+//                    'prevForm1' => $prevForm1,
+//
+//
+//                    'prevToDateForm1' => $this->weeklyReportService->computation($slug,'toDate', $weekly_report->report_no - 1),
+//                ]);
+//                break;
+//
+//            case "2":
+//                return view("sms.printables.singleform.form2print")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//                    'form2' => $this->weeklyReportService->form2Computation($slug),
+//                    'prevToDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate', $weekly_report->report_no - 1),
+//                    'toDateForm2' => $this->weeklyReportService->form2Computation($slug,'toDate',$weekly_report->report_no ),
+//                ]);
+//                break;
+//
+//            case "3":
+//                return view("sms.printables.singleform.form3print")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//                    'form3' => $this->weeklyReportService->form3Computation($slug),
+//                    'prevToDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate', $weekly_report->report_no - 1),
+//                    'toDateForm3' => $this->weeklyReportService->form3Computation($slug,'toDate',$weekly_report->report_no),
+//                ]);
+//                break;
+//
+//            case "3a":
+//                return view("sms.printables.singleform.form3aprint")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//
+//            case "3b":
+//                return view("sms.printables.singleform.form3bprint")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//
+//            case "4":
+//                return view("sms.printables.singleform.form4print")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//
+//            case "4a":
+//                return view("sms.printables.singleform.form4aprint")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//
+//            case "5":
+//                return view("sms.printables.singleform.form5print")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//
+//            case "5a":
+//                return view("sms.printables.singleform.form5aprint")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//
+//            case "6a":
+//                return view("sms.printables.singleform.form6aprint")->with([
+//                    'wr' => $weekly_report,
+//                    'details_arr' => $details_arr,
+//                    'input_fields_arr' => $input_fields_arr,
+//                    'signatories' => $this->weeklyReportService->getSignatories($slug),
+//
+//
+//                ]);
+//                break;
+//        }
 
         return view('sms.printables.formAll')->with([
             'wr' => $weekly_report,
@@ -301,8 +438,13 @@ class WeeklyReportController extends Controller
         ]);
     }
 
-    public function print($slug, SignatoryService $signatoryService){
+    public function print($slug, SignatoryService $signatoryService, Request $request){
         $weekly_report = $this->findBySlug($slug);
+
+        if($request->has("form") && $request->form!=""){
+            return $this->printSingle($slug, $request->form, $signatoryService);
+        }
+//        dd($request->all());
 
         if($weekly_report->mill_code != Auth::user()->mill_code){
             if(Auth::user()->access != 'ADMIN'){

@@ -44,7 +44,7 @@
                             'sugarClass' => $sugarClass,
                             'current' => $wr->form1->$sugarClass,
                             'prev' => $wr->form1->{'prev_'.$sugarClass},
-                        ])
+                            ])
                     @endif
                 @endforeach
                 <tr for="issuancesTotal" class="totalIssuanceTr computation">

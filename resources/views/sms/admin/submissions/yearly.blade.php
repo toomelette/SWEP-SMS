@@ -13,11 +13,13 @@
                 </tr>
                 </thead>
                 <tbody>
+{{--                {{dd($mills)}}--}}
                 @if(!empty($mills))
                     @foreach($mills as $mill_code => $mill)
 
                         <tr>
                             <td>{{$mill_code}}</td>
+
                             @foreach($mill['weeklyReports'] as $month => $weeks)
                                 <td>
                                     @foreach($weeks as $week_ending => $week)

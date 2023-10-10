@@ -5,7 +5,6 @@
     <hr class="page-break no-print">
 
     @include('sms.printables.forms.form2')
-
     <hr class="page-break no-print">
 
     @include('sms.printables.forms.form3')

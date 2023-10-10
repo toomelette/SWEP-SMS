@@ -19,7 +19,7 @@
       <ul class="nav navbar-nav">
         <li class="dropdown user user-menu hidden-mobile">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-calculator"></i> MT -> LKG Converter
+{{--            <i class="fa fa-calculator"></i> MT -> LKG Converter--}}
           </a>
           <ul class="dropdown-menu">
             <li class="user-footer">

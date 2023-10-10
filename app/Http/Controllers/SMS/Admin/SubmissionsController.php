@@ -7,7 +7,9 @@ namespace App\Http\Controllers\SMS\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SMS\CropYears;
 use App\Models\SMS\SugarMills;
+use App\Models\SMS\WeeklyReports;
 use App\SMS\Services\WeeklyReportService;
+use App\Swep\Helpers\Arrays;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -96,6 +98,8 @@ class SubmissionsController extends Controller
         $date_started = $cy->date_start;
         $date_ended = $cy->date_end;
 
+//        dd($cy);
+
         while ($date_started < $date_ended){
             $weeksArray[Carbon::parse($date_started)->format('Y-m-01')][Carbon::parse($date_started)->format('Y-m-d')] = [];
             $date_started = Carbon::parse($date_started)->addDays(7);
@@ -107,6 +111,7 @@ class SubmissionsController extends Controller
             ->with(['weeklyReportsSubmitted'])
             ->whereHas('weeklyReportsSubmitted',function ($q) use ($request){
                 $q->where('crop_year','=', $request->cy);
+
             })
             ->orderBy('slug','asc')->get();
         if(!empty($mills)){
@@ -117,17 +122,42 @@ class SubmissionsController extends Controller
                 ];
                 $arr[$mill->slug]['weeklyReports'] = $weeksArray;
 
-                if(!empty($mill->weeklyReportsSubmitted)){
-                    foreach ($mill->weeklyReportsSubmitted as $weeklyReportSubmitted)
-                        $arr[$mill->slug]['weeklyReports'][Carbon::parse($weeklyReportSubmitted->week_ending)->format('Y-m-01')][$weeklyReportSubmitted->week_ending] = [
-                            'obj' => $weeklyReportSubmitted,
-                        ];
-                }
+//                dd($weeksArray);
+
+//                if(!empty($mill->weeklyReportsSubmitted)){
+//                    foreach ($mill->weeklyReportsSubmitted as $weeklyReportSubmitted)
+//                        if($weeklyReportSubmitted->week_ending<=$date_ended && $weeklyReportSubmitted->week_ending>=$date_started){
+//                            $arr[$mill->slug]['weeklyReports'][Carbon::parse($weeklyReportSubmitted->week_ending)->format('Y-m-01')][$weeklyReportSubmitted->week_ending] = [
+//                                'obj' => $weeklyReportSubmitted,
+//                            ];
+//                        }
+//
+//                }
             }
         }
+//        $sugarMills = [];
+//        dd($sugarMills);
+
+//        foreach (Arrays::sugarMills()as $sugarMill){
+//            $sugarMills[$sugarMill] = ['weeklyReports'] =
+//        }
+
+        $weekReports = WeeklyReports::query()
+                        ->whereBetween("week_ending",[$cy->date_start,$date_ended])
+                        ->where("status", "=", 1)
+                        ->get();
+        $mills = [];
+//        dd($weekReports);
+        foreach ($weekReports as $weeklyReport){
+            $mills[$weeklyReport->mill_code]['weeklyReports'] = $weeksArray;
+            $mills[$weeklyReport->mill_code]['weeklyReports'][Carbon::parse($weeklyReport->week_ending)->format('Y-m-01')][$weeklyReport->week_ending] = [
+                'obj' => $weeklyReport,
+            ];
+        }
+//        dd($weeklyReport);
         return view('sms.admin.submissions.index')->with([
             'content2' => view('sms.admin.submissions.yearly')->with([
-                'mills' => $arr,
+                'mills' => $mills,
                 'weeksArray' => $weeksArray,
             ])
         ]);
