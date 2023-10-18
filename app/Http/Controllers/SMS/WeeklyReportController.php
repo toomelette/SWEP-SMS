@@ -147,6 +147,7 @@ class WeeklyReportController extends Controller
     }
 
     public function show($slug){
+//        dd($slug);
         $wr = $this->findBySlug($slug);
         return view('sms.weekly_report.show')->with([
             'wr' => $wr,
@@ -192,7 +193,7 @@ class WeeklyReportController extends Controller
     public function printSingle($slug, $formNo, SignatoryService $signatoryService){
         $weekly_report = $this->findBySlug($slug);
 
-//        dd($formNo);
+
 
         if($weekly_report->mill_code != Auth::user()->mill_code){
             if(Auth::user()->access != 'ADMIN'){
@@ -220,11 +221,11 @@ class WeeklyReportController extends Controller
             }
         }
 
-        if($this->findPreviousReport($slug) == null){
-            $prevForm1 = [];
-        }else{
-            $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
-        }
+//        if($this->findPreviousReport($slug) == null){
+//            $prevForm1 = [];
+//        }else{
+//            $prevForm1 = $this->weeklyReportService->computation($this->findPreviousReport($slug)->slug,'toDate');
+//        }
 
 //        return view("sms.printables.singleform.form".$formNo."print")->with([
 //            'wr' => $weekly_report,
@@ -240,6 +241,9 @@ class WeeklyReportController extends Controller
 //            'prevToDateForm'.$formNo => $this->weeklyReportService->computation($slug,'toDate', $weekly_report->report_no - 1),
 //        ]);
 
+//        dd($this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no*1));
+//        return $this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no);
+
         $except = ["3b", "5", "5a", "6a"];
         if(!in_array($formNo, $except))
         {
@@ -250,9 +254,9 @@ class WeeklyReportController extends Controller
                     'input_fields_arr' => $input_fields_arr,
                     'signatories' => $this->weeklyReportService->getSignatories($slug),
 
-                    'toDateForm1' => $this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no),
+                    'toDateForm1' => $this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no*1),
                     'form1' => $this->weeklyReportService->computation($slug),
-                    'prevForm1' => $prevForm1,
+//                    'prevForm1' => $prevForm1,
 
 
                     'prevToDateForm1' => $this->weeklyReportService->computation($slug, 'toDate', $weekly_report->report_no - 1),
@@ -441,10 +445,12 @@ class WeeklyReportController extends Controller
     public function print($slug, SignatoryService $signatoryService, Request $request){
         $weekly_report = $this->findBySlug($slug);
 
+//        dd($request->all());
+
         if($request->has("form") && $request->form!=""){
             return $this->printSingle($slug, $request->form, $signatoryService);
         }
-//        dd($request->all());
+
 
         if($weekly_report->mill_code != Auth::user()->mill_code){
             if(Auth::user()->access != 'ADMIN'){

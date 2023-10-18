@@ -103,6 +103,7 @@ class WeeklyReportService
                 ->orderBy('sugar_class','asc')
                 ->get();
 
+//            dd($deliveries);
 
         }else{
             $deliveries = $weekly_report->form5Deliveries()
@@ -242,6 +243,8 @@ class WeeklyReportService
             $formArray['fieldsToFill']['lkgtcGross'] = 0;
         }
 
+//        dd($report_no);
+//        return $report_no;
 
         return $formArray;
         echo print('<pre>'.print_r($formArray,true).'</pre>');
