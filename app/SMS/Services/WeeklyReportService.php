@@ -161,6 +161,7 @@ class WeeklyReportService
 ////            'prev' => $formArray['manufactured']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
 //            'prev' => $formArray['issuancesTotal']['prev'] - $formArray['withdrawalsTotal']['prev'] - $formArray['forRefiningTotal']['prev'],
 //        ];
+
         $formArray['stockBalance'] = [
             'current' => $formArray['balancesTotal']['current'] + $formArray['unquedanned']['current'],
             'prev' => $formArray['balancesTotal']['prev'] + $formArray['unquedanned']['prev'],
@@ -386,7 +387,7 @@ class WeeklyReportService
                 ->where('crop_year', '=', $weekly_report->crop_year)
                 ->where('mill_code', '=', $weekly_report->mill_code)
 //                ->where('report_no', '<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
-                ->where('report_no', '<=', $report_no)
+                ->where('report_no', '<=', $report_no * 1)
 //                ->where('report_no', '<=', $report_no ?? $weekly_report->report_no * 1)
 
                 ->where(function ($q) {
