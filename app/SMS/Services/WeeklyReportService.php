@@ -52,6 +52,7 @@ class WeeklyReportService
 
 
         if($get == 'toDate'){
+            //LOUIS 11-7-2023 2:28PM
             $relation = $weekly_report->form1ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
 
         }else{
@@ -94,7 +95,8 @@ class WeeklyReportService
                 ->where('crop_year','=',$weekly_report->crop_year)
                 ->where('mill_code','=',$weekly_report->mill_code)
 //                ->where('report_no','<=',$report_no != 0 ? $report_no : $weekly_report->report_no * 1)
-                ->where('report_no','<=', $report_no ?? $weekly_report->report_no * 1)
+                //LOUIS 11-7-2023 2:28PM
+                ->where('report_no','<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
                 ->where(function($q){
                     $q->where('weekly_reports.status' ,'!=', -1)
                         ->orWhere('weekly_reports.status', '=', null);
@@ -504,7 +506,7 @@ class WeeklyReportService
                 ->where('mill_code','=', $wr->mill_code)
 //                ->where('report_no','<=', $report_no != 0 ? $report_no * 1 : $wr->report_no * 1)
 //                ->where('report_no','<=', $report_no ?? $weekly_report->report_no * 1)
-                ->where('report_no', '<=', $report_no)
+                ->where('report_no', '<=', $report_no * 1)
                 ->where(function ($q){
                     $q->where('weekly_reports.status','!=',-1)
                         ->orWhere('weekly_reports.status' ,'=',null);
