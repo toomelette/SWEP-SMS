@@ -41,13 +41,13 @@
         <tr>
             <td colspan="4">2. ISSUANCES/CARRY-OVER</td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($form1['manufactured']['prev'] ?? null, 3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($form1['issuancesTotal']['prev'] ?? null, 3) }}
             </td>
             <td class="text-right">
-                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['manufactured']['prev'] ?? null, 3) }}
+                {{ \App\Swep\Helpers\Helper::toNumber($prevToDateForm1['issuancesTotal']['prev'] ?? null, 3) }}
             </td>
             <td class="text-right">
-                {{\App\Swep\Helpers\Helper::toNumber($toDateForm1['manufactured']['prev'] ?? null ,3)}}
+                {{\App\Swep\Helpers\Helper::toNumber($toDateForm1['issuancesTotal']['prev'] ?? null ,3)}}
             </td>
         </tr>
 

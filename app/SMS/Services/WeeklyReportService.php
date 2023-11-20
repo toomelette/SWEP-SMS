@@ -86,6 +86,7 @@ class WeeklyReportService
         $formArray['withdrawals'] = $valuesStructure;
         $formArray['forRefining'] = $valuesStructure;
 
+//        dd($valuesStructure);
 
         //WITHDRAWALS
         if($get == 'toDate'){
