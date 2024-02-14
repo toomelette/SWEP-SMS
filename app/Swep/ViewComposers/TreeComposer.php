@@ -14,7 +14,7 @@ class TreeComposer
     public function compose($view){
         $tree = [];
 
-        $user_submenus = UserSubmenu::with('submenu')->where('user_id', Auth::user()->user_id)
+        $user_submenus = UserSubmenu::with('submenu.menu')->where('user_id', Auth::user()->user_id)
             ->whereHas('submenu', function ($query) {
                 return $query->where('is_nav', '=', 1);
             });

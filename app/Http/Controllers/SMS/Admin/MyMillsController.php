@@ -109,6 +109,7 @@ class MyMillsController extends Controller
 
     public function sroMonitoring($mill_code){
         $form5Issuances = IssuancesOfSro::query()
+            ->with(["deliveries"])
             ->whereHas('weeklyReport',function ($q) use ($mill_code){
                 $q->where('mill_code','=',$mill_code)
                 ->where('status','=',1);
@@ -121,16 +122,16 @@ class MyMillsController extends Controller
                 return Helper::toNumber($data->qty_prev,3,'');
             })
             ->addColumn('d_c',function($data){
-                return Helper::toNumber($data->deliveries()->sum('qty') ?? 0,3,'');
+                return Helper::toNumber($data->deliveries->sum('qty') ?? 0,3,'');
             })
             ->addColumn('d_p',function($data){
-                return Helper::toNumber($data->deliveries()->sum('qty_prev') ?? 0,3,'');
+                return Helper::toNumber($data->deliveries->sum('qty_prev') ?? 0,3,'');
             })
             ->addColumn('b_c',function($data){
-                return Helper::toNumber($data->qty - ($data->deliveries()->sum('qty') ?? 0),3,'');
+                return Helper::toNumber($data->qty - ($data->deliveries->sum('qty') ?? 0),3,'');
             })
             ->addColumn('b_p',function($data){
-                return Helper::toNumber($data->qty_prev - ($data->deliveries()->sum('qty_prev') ?? 0),3,'');
+                return Helper::toNumber($data->qty_prev - ($data->deliveries->sum('qty_prev') ?? 0),3,'');
             })
             ->addColumn('action',function($data){
                 
