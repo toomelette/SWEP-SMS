@@ -160,7 +160,7 @@
     <div class="content">
       <h1>Currently performing maintenance.</h1>
         <p>Please Proceed to this Link:</p>
-          <a href="http://sms2.sra.gov.ph/">sms2.sra.gov.ph</a>
+          <a href="https://sms2.sra.gov.ph/">sms2.sra.gov.ph</a>
       <p></p>
     </div>
 
