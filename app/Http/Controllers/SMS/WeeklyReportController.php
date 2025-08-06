@@ -534,9 +534,9 @@ class WeeklyReportController extends Controller
 
     public function cancel($slug, Request $request){
 
-//        if(!$request->has('reason') || $request->reason == null | $request->reason == ''){
-//            abort(503,'Please indicate your reason for cancellation');
-//        }
+        if(!$request->has('reason') || $request->reason == null | $request->reason == ''){
+            abort(503,'Please indicate your reason for cancellation');
+        }
 
         $wr = $this->weeklyReportService->findWeeklyReportBySlug($slug);
         if($wr->requestsForCancellationNoAction()->count() > 0){
