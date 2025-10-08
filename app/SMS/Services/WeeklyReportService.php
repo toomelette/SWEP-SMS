@@ -53,7 +53,9 @@ class WeeklyReportService
 
         if($get == 'toDate'){
             //LOUIS 11-7-2023 2:28PM
-            $relation = $weekly_report->form1ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+            $relation = $weekly_report->form1ToDateAsOf(
+                isset($report_no) ? $report_no : $weekly_report->report_no
+            );
 
         }else{
             $relation = $weekly_report->form1;
@@ -97,7 +99,10 @@ class WeeklyReportService
                 ->where('mill_code','=',$weekly_report->mill_code)
 //                ->where('report_no','<=',$report_no != 0 ? $report_no : $weekly_report->report_no * 1)
                 //LOUIS 11-7-2023 2:28PM
-                ->where('report_no','<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
+//                ->where('report_no','<=', $report_no != 0 ? $report_no : $weekly_report->report_no * 1)
+//                    LOUIS 08-10-2025
+//                ->where('report_no','<=', $report_no)
+                ->where('report_no', '<=', isset($report_no) ? $report_no : $weekly_report->report_no)
                 ->where(function($q){
                     $q->where('weekly_reports.status' ,'!=', -1)
                         ->orWhere('weekly_reports.status', '=', null);
@@ -172,7 +177,7 @@ class WeeklyReportService
 
         //TRANSFERS TO REFINERY = Form2 not covered by sro
         if($get == 'toDate'){
-            $form2Relation = $weekly_report->form2ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+            $form2Relation = $weekly_report->form2ToDateAsOf(isset($report_no) ? $report_no : $weekly_report->report_no);
         }else{
             $form2Relation = $weekly_report->form2;
         }
@@ -268,7 +273,7 @@ class WeeklyReportService
         $weekly_report = $this->findWeeklyReportBySlug($slug);
 
         if($get == 'toDate'){
-            $relation = $weekly_report->form2ToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+            $relation = $weekly_report->form2ToDateAsOf(isset($report_no) ? $report_no : $weekly_report->report_no);
         }else{
             $relation = $weekly_report->form2;
         }
@@ -572,7 +577,7 @@ class WeeklyReportService
         $weekly_report = $this->findWeeklyReportBySlug($slug);
 
         if($get == 'toDate'){
-            $relation = $weekly_report->form3aToDateAsOf($report_no != 0 ? $report_no : $weekly_report->report_no * 1);
+            $relation = $weekly_report->form3aToDateAsOf(isset($report_no) ? $report_no : $weekly_report->report_no);
         }else{
             $relation = $weekly_report->form3a;
         }
